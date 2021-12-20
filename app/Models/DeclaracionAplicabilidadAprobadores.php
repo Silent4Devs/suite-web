@@ -57,4 +57,9 @@ class DeclaracionAplicabilidadAprobadores extends Model
     {
         return $this->belongsTo(Empleado::class, 'aprobadores_id');
     }
+
+    public function notificacion()
+    {
+        return $this->hasMany(NotificacionAprobadore::class, 'aprobadores_id', 'id');
+    }
 }

@@ -425,11 +425,11 @@
                                 @endif
                             </div>
                             <div class="col-sm-12 col-lg-4">
-                                <label for="areas"> <span class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
+                                <label for="areas"> <span class="text-sm leading-tight md:text-sm lg:text-sm">
                                         <i class="mr-1 fas fa-building"></i>
                                         Búsqueda por área
                                     </span></label>
-                                <select name="areas" id="areas" class="form-control areas">
+                                <select name="areas" id="areas" class="form-control" >
                                     <option value="" selected disabled>-- Selecciona área --</option>
                                     @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">
@@ -562,7 +562,7 @@
                                 let lista =
                                     `<ul class='list-group' id='empleados-lista'>`;
                                 data ? JSON.parse(data).forEach(usuario => {
-                                        lista += `<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' 
+                                        lista += `<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action'
                                     onClick='seleccionarUsuario("${usuario.id}","${usuario.name}","${usuario.email}");'>
                                     <i class='mr-2 fas fa-user-circle'></i>
                                     ${usuario.name}</button>

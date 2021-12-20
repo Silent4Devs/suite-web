@@ -459,3 +459,16 @@ Breadcrumbs::for('EV360-Evaluacion-Cuestionario', function ($trail, $evaluacion)
 //     $trail->parent('EV360-Objetivos');
 //     $trail->push('Editar Objetivo', route('admin.ev360-objetivos.edit'));
 // });
+
+Breadcrumbs::for('Mi-Perfil', function ($trail) {
+    $trail->push('Mi Perfil', route('admin.inicio-Usuario.index'));
+});
+
+Breadcrumbs::for('Mi-CV', function ($trail, $empleado = null) {
+    $trail->parent('Mi-Perfil');
+    $trail->push('Perfil Profesional', route('admin.miCurriculum', ['empleado' => $empleado]));
+});
+Breadcrumbs::for('Editar-Curriculum', function ($trail, $empleado = null) {
+    $trail->parent('Mi-CV', $empleado);
+    $trail->push('Editar', route('admin.editarCompetencias', ['empleado' => $empleado]));
+});

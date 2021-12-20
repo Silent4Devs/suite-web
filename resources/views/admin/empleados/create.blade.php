@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('content')
     <style>
+        .select2-container {
+            margin-top: 0px !important;
+        }
+
         .screenshot-image {
             width: 150px;
             height: 90px;
@@ -193,1053 +197,916 @@
             </div>
         @endif
         <div class="card-body">
+            <nav>
+                <div class="nav nav-tabs" id="tabsEmpleado" role="tablist">
+                    <a class="nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab"
+                        aria-controls="nav-general" aria-selected="true">
+                        <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
+                        Información General
+                    </a>
+                    <a class="nav-link" id="nav-personal-tab" data-toggle="tab" href="#nav-personal" role="tab"
+                        aria-controls="nav-personal" aria-selected="false">
+                        <i class="mr-2 fas fa-house-user" style="font-size:20px;" style="text-decoration:none;"></i>
+                        Datos Personales
+                    </a>
+                    <a class="nav-link" id="nav-financiera-tab" data-toggle="tab" href="#nav-financiera" role="tab"
+                        aria-controls="nav-financiera" aria-selected="false">
+                        <i class="mr-2 fas fa-wallet" style="font-size:20px;" style="text-decoration:none;"></i>
+                        Datos Financieros
+                    </a>
+                </div>
+            </nav>
             <form method="POST" action="{{ route('admin.empleados.store') }}" enctype="multipart/form-data"
                 id="formCreateEmpleado">
                 @csrf
-                <section id="contenido1" class="mt-4 caja_tab_reveldada">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="caja_botones_menu">
-                                <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-file"
-                                        style="font-size:30px;" style="text-decoration:none;"></i>Información General</a>
-                            </div>
-                            <div class="caja_caja_secciones">
-                                <div class="caja_secciones">
-                                    @include('admin.empleados._form')
-                                </div>
-                            </div>
-
-                                                        <select class="custom-select supervisor" id="inputGroupSelect01"
-                                                            name="supervisor_id">
-                                                            <option selected value="" disabled>-- Selecciona supervisor --
-                                                            </option>
-                                                            @forelse ($empleados as $empleado)
-                                                                <option value="{{ $empleado->id }}">
-                                                                    {{ $empleado->name }}
-                                                                </option>
-                                                            @empty
-                                                                <option value="" disabled>Sin Datos</option>
-                                                            @endforelse
-                                                        </select>
-                                                    </div>
-                                                    @if ($errors->has('supervisor_id'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('supervisor_id') }}
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-3 col-lg-3">
-                                                <div class="form-group">
-                                                    <label class="required" for="puesto_id"><i
-                                                            class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                                                    <div class="row align-items-center">
-                                                        <div class="col-11" style=" margin-top:-9px; margin-right: 10px;">
-                                                            @livewire('puesto-select',['puestos_seleccionado'=>$puestos_seleccionado])
-                                                        </div>
-                                                        <div class="pl-0 col"
-                                                            style="text-align: right;
-                                                                                                                    margin-top: 0px;
-                                                                                                                    margin-left: inherit;">
-                                                            <button id="btnAgregarPuesto" class="text-white btn btn-sm"
-                                                                style="background:#3eb2ad;height: 34px;" data-toggle="modal"
-                                                                data-target="#PuestoModal" title="Agregar Puesto"><i
-                                                                    class="fas fa-plus"></i></button>
-                                                        </div>
-                                                    </div>
-                                                    @livewire('puesto-create')
-                                                    {{-- <select
-                                                        class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
-                                                        name="puesto_id" id="puesto_id"
-                                                        value="{{ old('puesto_id', '') }}" required>
-                                                        <option value="" selected disabled>
-                                                            -- Selecciona un puesto --
-                                                        </option>
-                                                        @foreach ($puestos as $puesto)
-                                                            <option value="{{ $puesto->id }}">{{ $puesto->puesto }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    {{-- <input
-                                                    class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
-                                                    type="text" name="puesto_id" id="puesto_id"
-                                                    value="{{ old('puesto_id', '') }}" required> --}}
-                                                    @if ($errors->has('puesto_id'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('puesto_id') }}
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-sm-3 col-lg-3">
-                                                <div class="form-group">
-                                                    <label class="required" for="perfil_empleado_id"><i
-                                                            class="fas fa-briefcase iconos-crear"></i>Perfil</label>
-                                                    <div class="row align-items-center">
-                                                        <div class="col-11" style=" margin-top:-9px; margin-right: 10px;">
-                                                            @livewire('perfil-select',['perfiles_seleccionado'=>$perfiles_seleccionado])
-                                                        </div>
-                                                        <div class="pl-0 col"
-                                                            style="text-align: right;
-                                                                                                            margin-top: 0px;
-                                                                                                            margin-left: inherit;">
-                                                            <button id="btnAgregarPerfil" class="text-white btn btn-sm"
-                                                                style="background:#3eb2ad;height: 34px;" data-toggle="modal"
-                                                                data-target="#PerfilModal" title="Agregar Perfil"><i
-                                                                    class="fas fa-plus"></i></button>
-                                                        </div>
-                                                    </div>
-                                                    @livewire('perfil-create')
-                                                    {{-- <select
-                                                    class="form-control {{ $errors->has('perfil_empleado_id') ? 'is-invalid' : '' }}"
-                                                    name="perfil_empleado_id" id="perfil_empleado_id"
-                                                    value="{{ old('perfil_empleado_id', '') }}" required>
-                                                    <option value="" selected disabled>
-                                                        -- Selecciona un perfil --
-                                                    </option>
-                                                    @foreach ($perfiles as $perfil)
-                                                        <option value="{{ $perfil->id }}">{{ $perfil->nombre }}
-                                                        </option>
-                                                    @endforeach
-                                                </select> --}}
-                                                    @if ($errors->has('perfil_empleado_id'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('perfil_empleado_id') }}
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-sm-6 col-lg-6">
-                                                <label class="required" for="antiguedad"><i
-                                                        class="fas fa-calendar-alt iconos-crear"></i>Fecha de
-                                                    ingreso</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('antiguedad') ? 'is-invalid' : '' }}"
-                                                    type="date" name="antiguedad" id="antiguedad"
-                                                    value="{{ old('antiguedad', '') }}" required>
-                                                @if ($errors->has('antiguedad'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('antiguedad') }}
-                                                    </div>
-                                                @endif
-
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="genero"><i
-                                                        class="fas fa-user iconos-crear"></i>Género</label>
-                                                <div class="mb-3 input-group">
-                                                    <select class="custom-select genero" id="genero" name="genero">
-                                                        <option selected value="" disabled>-- Selecciona Género --</option>
-                                                        <option value="H" {{ old('genero') == 'H' ? 'selected' : '' }}>
-                                                            Hombre
-                                                        </option>
-                                                        <option value="M" {{ old('genero') == 'M' ? 'selected' : '' }}>
-                                                            Mujer
-                                                        </option>
-                                                        <option value="X" {{ old('genero') == 'X' ? 'selected' : '' }}>
-                                                            Otro
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                @if ($errors->has('genero'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('genero') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="estatus"><i
-                                                        class="fas fa-business-time iconos-crear"></i>Estatus</label>
-                                                <select class="form-control" class="validate" required=""
-                                                    name="estatus">
-                                                    <option value="" disabled selected>Escoga una opción</option>
-                                                    <option value="alta">Alta</option>
-                                                    <option value="baja">Baja</option>
-                                                </select>
-                                                @if ($errors->has('estatus'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('estatus') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="email"><i
-                                                        class="far fa-envelope iconos-crear"></i>Correo
-                                                    electrónico</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                                    type="text" name="email" id="email" value="{{ old('email', '') }}"
-                                                    required>
-                                                @if ($errors->has('email'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('email') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label for="telefono_movil"><i
-                                                        class="fas fa-mobile-alt iconos-crear"></i></i>Teléfono
-                                                    móvil</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('telefono_movil') ? 'is-invalid' : '' }}"
-                                                    type="text" name="telefono_movil" id="telefono_movil"
-                                                    value="{{ old('telefono_movil', '') }}">
-                                                @if ($errors->has('telefono_movil'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('telefono_movil') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-4">
-                                                <label for="telefono"><i class="fas fa-phone iconos-crear"></i>Teléfono
-                                                    oficina</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}"
-                                                    type="text" name="telefono" id="telefono"
-                                                    value="{{ old('telefono', '') }}">
-                                                @if ($errors->has('telefono'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('telefono') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-2">
-                                                <label for="extension"><i
-                                                        class="fas fa-phone-volume iconos-crear"></i>Ext.</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('extension') ? 'is-invalid' : '' }}"
-                                                    type="text" name="extension" id="extension"
-                                                    value="{{ old('extension', '') }}">
-                                                @if ($errors->has('extension'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('extension') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label for="sede_id"><i
-                                                        class="fas fa-building iconos-crear"></i>Sede</label>
-                                                <select
-                                                    class="form-control select2 {{ $errors->has('sede') ? 'is-invalid' : '' }}"
-                                                    name="sede_id" id="sede_id">
-                                                    <option selected value="" disabled>-- Selecciona Sede --</option>
-                                                    @foreach ($sedes as $sede)
-                                                        <option value="{{ $sede->id }}"
-                                                            {{ old('sede_id') == $sede->id ? 'selected' : '' }}>
-                                                            {{ $sede->sede }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has('sede_id'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('sede_id') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-12 col-md-6 ">
-                                                <label for="direccion"><i
-                                                        class="fas fa-map iconos-crear"></i>Dirección</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}"
-                                                    type="text" name="direccion" id="direccion"
-                                                    value="{{ old('direccion', '') }}">
-                                                @if ($errors->has('direccion'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('direccion') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-12 col-md-6">
-                                                <label for="cumpleaños"><i
-                                                        class="fas fa-birthday-cake iconos-crear"></i>Cumpleaños</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('cumpleaños') ? 'is-invalid' : '' }}"
-                                                    type="date" name="cumpleaños" id="cumpleaños"
-                                                    value="{{ old('cumpleaños', '') }}">
-                                                @if ($errors->has('cumpleaños'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('cumpleaños') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="input-group is-invalid">
-                                                    <div class="form-group"
-                                                        style="width: 100%;border: dashed 1px #cecece;">
-                                                        <div class="row" style="padding: 20px 0;">
-                                                            <div
-                                                                class="col-md-5 col-sm-5 col-12 d-flex justify-content-center">
-                                                                <label style="cursor: pointer" for="foto">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <h5>
-                                                                            <i class="fas fa-image iconos-crear"
-                                                                                style="font-size: 20pt;position: relative;top: 4px;"></i>
-                                                                            <span id="texto-imagen" class="pl-2">
-                                                                                Subir imágen
-                                                                                <small class="text-danger"
-                                                                                    style="font-size: 10px">
-                                                                                    (Opcional)</small>
-                                                                            </span>
-                                                                        </h5>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                            <div
-                                                                class="col-sm-2 col-md-2 col-12 d-flex justify-content-center">
-                                                                Ó
-                                                            </div>
-                                                            <div class="col-md-5 col-sm-5 col-12 d-flex justify-content-center"
-                                                                id="avatar_choose">
-                                                                <label style="cursor: pointer">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <h5>
-                                                                            <i class="fas fa-image iconos-crear"
-                                                                                style="font-size: 20pt;position: relative;top: 4px;"></i>
-                                                                            <span id="texto-imagen-avatar"
-                                                                                class="pl-2">
-                                                                                Tomar Foto
-                                                                                <small class="text-danger"
-                                                                                    style="font-size: 10px">
-                                                                                    (Opcional)</small>
-                                                                            </span>
-                                                                        </h5>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <input name="foto" type="file" accept="image/png, image/jpeg"
-                                                            class="form-control-file" id="foto" hidden="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" id="canvasFoto" style="display: none">
-                                            <div class="mt-0 display-cover">
-                                                <span class="badge badge-dark" id="cerrarCanvasFoto">&times;</span>
-                                                <video autoplay></video>
-                                                <canvas class="d-none"></canvas>
-
-                                                <div class="video-options">
-                                                    <select name="" id="" class="custom-select devices">
-                                                        <option value="">Selecciona una cámara</option>
-                                                    </select>
-                                                </div>
-
-                                                <img class="screenshot-image d-none" alt="">
-
-                                                <div class="controls">
-                                                    <button class="btn btn-danger play" title="Iniciar"><i
-                                                            class="fas fa-play-circle"></i></button>
-                                                    <button class="btn btn-info pause d-none" title="Pausar"><i
-                                                            class="fas fa-pause-circle"></i></button>
-                                                    <button class="btn btn-danger stop d-none" title="Detener"><i
-                                                            class="fas fa-stop"></i></button>
-                                                    <button class="btn btn-outline-success screenshot d-none"
-                                                        title="Capturar"><i class="fas fa-image"></i></button>
-                                                </div>
-                                            </div>
-                                            <input type="hidden" id="snapshoot" readonly autocomplete="off"
-                                                name="snap_foto">
-                                        </div>
-                                        {{-- </div> --}}
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-general" role="tabpanel"
+                        aria-labelledby="nav-general-tab">
+                        @include('admin.empleados.form_components.general')
                     </div>
-                </section>
+                    <div class="tab-pane fade" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
+                        @include('admin.empleados.form_components.personal')
+                    </div>
+                    <div class="tab-pane fade" id="nav-financiera" role="tabpanel" aria-labelledby="nav-financiera-tab">
+                        @include('admin.empleados.form_components.financiera')
+                    </div>
+                </div>
+                <div class="text-right form-group col-12">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <button class="btn btn-danger" type="submit" id="btnGuardar">
+                        {{ trans('global.save') }}
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-@endsection
+    {{-- MODAL CROP --}}
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 
-@section('scripts')
-    @parent
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    @endsection
 
-            document.querySelector('#btnGuardar').addEventListener('click', function(e) {
-                e.preventDefault();
-                const formData = new FormData(document.getElementById('formCreateEmpleado'));
-                const url = document.getElementById('formCreateEmpleado').getAttribute('action');
+    @section('scripts')
+        @parent
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
+        <script>
+            var $modal = $('#modal');
+            var image = document.getElementById('image');
+            var cropper;
+            $("body").on("change", ".imageCrop", function(e) {
+                console.log('si');
+                var files = e.target.files;
+                var done = function(url) {
+                    image.src = url;
+                    $modal.modal('show');
+                };
+                var reader;
+                var file;
+                var url;
+                if (files && files.length > 0) {
+                    file = files[0];
+                    if (URL) {
+                        done(URL.createObjectURL(file));
+                    } else if (FileReader) {
+                        reader = new FileReader();
+                        reader.onload = function(e) {
+                            done(reader.result);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
+            $modal.on('shown.bs.modal', function() {
+                cropper = new Cropper(image, {
+                    aspectRatio: 1,
+                    viewMode: 3,
+                    preview: '.preview'
+                });
+            }).on('hidden.bs.modal', function() {
+                cropper.destroy();
+                cropper = null;
+            });
+            $("#crop").click(function() {
+                canvas = cropper.getCroppedCanvas({
+                    minWidth: 256,
+                    minHeight: 256,
+                    maxWidth: 4096,
+                    maxHeight: 4096,
+                    fillColor: '#fff',
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high',
+                });
+                roundedCanvas = getRoundedCanvas(canvas);
 
-                fetch(url, {
-                        method: "POST",
-                        body: formData,
-                        headers: {
-                            Accept: "application/json",
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.errors) {
-                            $.each(data.errors, function(indexInArray, valueOfElement) {
-                                $(`#error_${indexInArray.replaceAll('.','_')}`).text(
-                                    valueOfElement[0]);
-                            });
-                        }
-
-                        if (data.status) {
-                            Swal.fire(
-                                'Empleado Creado',
-                                '',
-                                'success',
-                            )
-                            setTimeout(() => {
-                                window.location.href = "{{ route('admin.empleados.index') }}";
-                            }, 1500);
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
+                roundedCanvas.toBlob(function(blob) {
+                    var url = URL.createObjectURL(blob);
+                    var reader = new FileReader();
+                    const urlRequest = `/admin/empleado/update-image-profile`;
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = function() {
+                        var base64data = reader.result;
+                        $.ajax({
+                            type: "POST",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            dataType: "json",
+                            url: urlRequest,
+                            data: {
+                                'image': base64data
+                            },
+                            success: function(data) {
+                                $modal.modal('hide');
+                                if (data.success) {
+                                    toastr.success(data.success)
+                                }
+                                if (data.error) {
+                                    toastr.error(data.error)
+                                }
+                                setTimeout(() => {
+                                    window.location.href = "/profile/password"
+                                }, 1500);
+                            }
+                        });
+                    }
+                });
             })
-        })
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('.areas').select2({
-                theme: 'bootstrap4',
-            });
-            $('.select-search').select2({
-                theme: 'bootstrap4',
-            });
-            $('.supervisor').select2({
-                theme: 'bootstrap4',
-            });
-            $('#puesto_id').select2({
-                theme: 'bootstrap4',
-            });
-            $('#perfil_empleado_id').select2({
-                theme: 'bootstrap4',
-            });
-            $('#nacionalidad').select2({
-                theme: 'bootstrap4',
-                templateResult: customizeNationalitySelect,
-                templateSelection: customizeNationalitySelect
-            });
 
-            function customizeNationalitySelect(opt) {
-                if (!opt.id) {
-                    return opt.text;
+            function getRoundedCanvas(sourceCanvas) {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                const width = sourceCanvas.width;
+                const height = sourceCanvas.height;
+
+                canvas.width = width;
+                canvas.height = height;
+                context.imageSmoothingEnabled = true;
+                context.drawImage(sourceCanvas, 0, 0, width, height);
+                context.globalCompositeOperation = 'destination-in';
+                context.beginPath();
+                context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
+                context.fill();
+                return canvas;
+            }
+        </script> --}}
+        <script type="module">
+            import {
+                formatNumber,
+                formatCurrency
+            } from "{{ asset('js/money-format/moneyInput.js') }}";
+
+            document.addEventListener('DOMContentLoaded', function() {
+                initInpusToMoneyFormat();
+                inputsToMoneyFormat();
+                const toogleProyectoAsignado = (ocultar) => {
+                    const elProyectoAsignado = document.getElementById('proyecto_asignado');
+                    const containerProyectoAsignado = document.getElementById('c_proyecto_asignado');
+                    const containerEsquemaContratacion = document.getElementById('c_esquema_contratacion');
+                    if (ocultar) {
+                        containerProyectoAsignado.classList.remove('col-sm-6');
+                        containerProyectoAsignado.classList.add('d-none');
+                        containerEsquemaContratacion.classList.remove('col-sm-6');
+                        containerEsquemaContratacion.classList.add('col-sm-12');
+                        elProyectoAsignado.setAttribute('disabled', 'disabled');
+                        elProyectoAsignado.removeAttribute('type');
+                        elProyectoAsignado.setAttribute('type', 'hidden');
+                        elProyectoAsignado.value = "";
+                    } else {
+                        containerProyectoAsignado.classList.add('col-sm-6');
+                        containerProyectoAsignado.classList.remove('d-none');
+                        containerEsquemaContratacion.classList.remove('col-sm-12');
+                        containerEsquemaContratacion.classList.add('col-sm-6');
+                        elProyectoAsignado.removeAttribute('disabled');
+                        elProyectoAsignado.removeAttribute('type');
+                        elProyectoAsignado.setAttribute('type', 'text');
+                    }
                 }
 
-                let optImage = $(opt.element).attr('data-flag');
-                let $opt = $(
-                    `<span>
+                $('#sede_id').on('select2:select', function(e) {
+                    const direction = e.target.options[e.target.selectedIndex].getAttribute('data-direction');
+                    setDirectionOnInput(direction);
+                });
+                $('#tipo_contrato_empleados_id').on('select2:select', function(e) {
+                    const slug = e.target.options[e.target.selectedIndex].getAttribute('data-slug');
+                    console.log(slug);
+                    if (slug === "por-proyecto") {
+                        toogleProyectoAsignado(false);
+                    } else {
+                        toogleProyectoAsignado(true);
+                    }
+                });
+
+                document.getElementById('sede_id').addEventListener('change', function(e) {
+                    const direction = e.target.options[e.target.selectedIndex].getAttribute('data-direction');
+                    setDirectionOnInput(direction);
+                })
+                const setDirectionOnInput = (direction) => {
+                    document.getElementById('direccion').value = direction;
+                }
+            })
+
+            function initInpusToMoneyFormat() {
+                document.querySelectorAll("input[data-type='currency']").forEach(element => {
+                    formatCurrency($(element));
+                })
+            }
+
+            function inputsToMoneyFormat() {
+                $("input[data-type='currency']").on({
+                    init: function() {
+                        console.log(this);
+                    },
+                    keyup: function() {
+                        formatCurrency($(this));
+                    },
+                    blur: function() {
+                        formatCurrency($(this), "blur");
+                    }
+                });
+            }
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                function limpiarErrores() {
+                    document.querySelectorAll('.errores').forEach(item => {
+                        item.innerHTML = "";
+                    })
+                }
+
+                document.querySelector('#btnGuardar').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    const formData = new FormData(document.getElementById('formCreateEmpleado'));
+                    const url = document.getElementById('formCreateEmpleado').getAttribute('action');
+
+                    fetch(url, {
+                            method: "POST",
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.errors) {
+                                $.each(data.errors, function(indexInArray, valueOfElement) {
+                                    $(`#error_${indexInArray.replaceAll('.','_')}`).text(
+                                        valueOfElement[0]);
+                                });
+                                toastr.error(
+                                    'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
+                                );
+                            }
+
+                            if (data.status) {
+                                Swal.fire(
+                                    'Empleado Creado',
+                                    '',
+                                    'success',
+                                )
+                                setTimeout(() => {
+                                    window.location.href =
+                                        "{{ route('admin.empleados.index') }}";
+                                }, 1500);
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                })
+            })
+        </script>
+        <script>
+            $(document).ready(function() {
+                $('.areas').select2({
+                    theme: 'bootstrap4',
+                });
+                $('.select-search').select2({
+                    theme: 'bootstrap4',
+                });
+                $('.supervisor').select2({
+                    theme: 'bootstrap4',
+                });
+                $('#puesto_id').select2({
+                    theme: 'bootstrap4',
+                });
+                $('#perfil_empleado_id').select2({
+                    theme: 'bootstrap4',
+                });
+                $('#nacionalidad').select2({
+                    theme: 'bootstrap4',
+                    templateResult: customizeNationalitySelect,
+                    templateSelection: customizeNationalitySelect
+                });
+
+                function customizeNationalitySelect(opt) {
+                    if (!opt.id) {
+                        return opt.text;
+                    }
+
+                    let optImage = $(opt.element).attr('data-flag');
+                    let $opt = $(
+                        `<span>
                         <img src="${optImage}" class="img-fluid rounded-circle" width="30" height="30"/>
                         ${opt.text}
                     </span>`
-                    // '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' +
-                    // optimage +
-                    // '" class="img-fluid rounded-circle" width="30" height="30"/>' +
-                    // opt.text + '</span>'
-                );
-                return $opt;
-            };
-        });
-    </script>
-    <script>
-        const habilitarFotoBtn = document.getElementById('avatar_choose');
-        const contendorCanvas = document.getElementById('canvasFoto');
-        const closeContenedorCanvas = document.getElementById('cerrarCanvasFoto');
-        habilitarFotoBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            contendorCanvas.style.display = 'grid';
-            document.getElementById("foto").value = "";
-            $("#texto-imagen").text("Subir Imágen");
-        });
-        // feather.replace();
+                        // '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' +
+                        // optimage +
+                        // '" class="img-fluid rounded-circle" width="30" height="30"/>' +
+                        // opt.text + '</span>'
+                    );
+                    return $opt;
+                };
+            });
+        </script>
+        <script>
+            const habilitarFotoBtn = document.getElementById('avatar_choose');
+            const contendorCanvas = document.getElementById('canvasFoto');
+            const closeContenedorCanvas = document.getElementById('cerrarCanvasFoto');
+            habilitarFotoBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                contendorCanvas.style.display = 'grid';
+                document.getElementById("foto").value = "";
+                $("#texto-imagen").text("Subir Imágen");
+            });
+            // feather.replace();
 
-        const controls = document.querySelector('.controls');
-        const cameraOptions = document.querySelector('.video-options>select');
-        const video = document.querySelector('video');
-        const canvas = document.querySelector('canvas');
-        const screenshotImage = document.querySelector('.screenshot-image');
-        const inputShotURL = document.getElementById('snapshoot');
-        const buttons = [...controls.querySelectorAll('button')];
-        let streamStarted = false;
+            const controls = document.querySelector('.controls');
+            const cameraOptions = document.querySelector('.video-options>select');
+            const video = document.querySelector('video');
+            const canvas = document.querySelector('canvas');
+            const screenshotImage = document.querySelector('.screenshot-image');
+            const inputShotURL = document.getElementById('snapshoot');
+            const buttons = [...controls.querySelectorAll('button')];
+            let streamStarted = false;
 
-        const [play, pause, stop, screenshot] = buttons;
+            const [play, pause, stop, screenshot] = buttons;
 
-        const constraints = {
-            video: {
-                width: {
-                    min: 1280,
-                    ideal: 1920,
-                    max: 2560,
-                },
-                height: {
-                    min: 720,
-                    ideal: 1080,
-                    max: 1440
-                },
-            }
-        };
-
-        cameraOptions.onchange = () => {
-            const updatedConstraints = {
-                ...constraints,
-                deviceId: {
-                    exact: cameraOptions.value
+            const constraints = {
+                video: {
+                    width: {
+                        min: 1280,
+                        ideal: 1920,
+                        max: 2560,
+                    },
+                    height: {
+                        min: 720,
+                        ideal: 1080,
+                        max: 1440
+                    },
                 }
             };
 
-            startStream(updatedConstraints);
-        };
-
-        play.onclick = (e) => {
-            e.preventDefault();
-            if (streamStarted) {
-                video.play();
-                play.classList.add('d-none');
-                pause.classList.remove('d-none');
-                return;
-            }
-            if ('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia) {
+            cameraOptions.onchange = () => {
                 const updatedConstraints = {
                     ...constraints,
                     deviceId: {
                         exact: cameraOptions.value
                     }
                 };
+
                 startStream(updatedConstraints);
-            }
-        };
+            };
 
-        const stopStreamedVideo = (e) => {
-            e.preventDefault();
-            const stream = video.srcObject;
-            if (stream != null) {
-                const tracks = stream.getTracks();
-                tracks.forEach(function(track) {
-                    track.stop();
-                });
-                video.srcObject = null;
+            play.onclick = (e) => {
+                e.preventDefault();
+                if (streamStarted) {
+                    video.play();
+                    play.classList.add('d-none');
+                    pause.classList.remove('d-none');
+                    return;
+                }
+                if ('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia) {
+                    const updatedConstraints = {
+                        ...constraints,
+                        deviceId: {
+                            exact: cameraOptions.value
+                        }
+                    };
+                    startStream(updatedConstraints);
+                }
+            };
+
+            const stopStreamedVideo = (e) => {
+                e.preventDefault();
+                const stream = video.srcObject;
+                if (stream != null) {
+                    const tracks = stream.getTracks();
+                    tracks.forEach(function(track) {
+                        track.stop();
+                    });
+                    video.srcObject = null;
+                    play.classList.remove('d-none');
+                    stop.classList.add('d-none');
+                    pause.classList.add('d-none');
+                    screenshot.classList.add('d-none');
+                }
+            }
+
+            const pauseStream = (e) => {
+                e.preventDefault();
+                video.pause();
                 play.classList.remove('d-none');
-                stop.classList.add('d-none');
                 pause.classList.add('d-none');
-                screenshot.classList.add('d-none');
-            }
-        }
+            };
 
-        const pauseStream = (e) => {
-            e.preventDefault();
-            video.pause();
-            play.classList.remove('d-none');
-            pause.classList.add('d-none');
-        };
-
-        const doScreenshot = (e) => {
-            e.preventDefault();
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0);
-            screenshotImage.src = canvas.toDataURL('image/webp');
-            screenshotImage.classList.remove('d-none');
-            let dataURL = canvas.toDataURL();
-            inputShotURL.value = dataURL;
-        };
-        stop.onclick = stopStreamedVideo;
-        pause.onclick = pauseStream;
-        screenshot.onclick = doScreenshot;
-
-        const startStream = async (constraints) => {
-            const stream = await navigator.mediaDevices.getUserMedia(constraints);
-            handleStream(stream);
-        };
-
-
-        const handleStream = (stream) => {
-            video.srcObject = stream;
-            play.classList.add('d-none');
-            pause.classList.remove('d-none');
-            stop.classList.remove('d-none');
-            screenshot.classList.remove('d-none');
-        };
-
-
-        const getCameraSelection = async () => {
-            const devices = await navigator.mediaDevices.enumerateDevices();
-            const videoDevices = devices.filter(device => device.kind === 'videoinput');
-            const options = videoDevices.map(videoDevice => {
-                return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
-            });
-            cameraOptions.innerHTML = options.join('');
-        };
-
-        getCameraSelection();
-
-        document.getElementById('cerrarCanvasFoto').addEventListener('click', function(e) {
-            stopStreamedVideo(e);
-            contendorCanvas.style.display = 'none';
-        });
-
-
-        $('.form-control-file').on('change', function(e) {
-            let inputFile = e.currentTarget;
-            $("#texto-imagen").text(inputFile.files[0].name);
-            let dataURL = canvas.toDataURL();
-            inputShotURL.value = "";
-            stopStreamedVideo(e);
-            contendorCanvas.style.display = 'none';
-        });
-    </script>
-
-
-    <script>
-        $(document).ready(function() {
-            document.getElementById('btnSiguiente').addEventListener('click', function(e) {
+            const doScreenshot = (e) => {
                 e.preventDefault();
-                $("#formEmpleado").removeAttr('action');
-                $("#formEmpleado").attr('action', '{{ route('admin.empleados.storeWithCompetencia') }}');
-                document.getElementById('formEmpleado').submit();
-            })
-            document.getElementById('btnGuardar').addEventListener('click', function(e) {
-                e.preventDefault();
-                $("#formEmpleado").removeAttr('action');
-                $("#formEmpleado").attr('action', '{{ route('admin.empleados.store') }}');
-                document.getElementById('formEmpleado').submit();
-            })
-            window.tblExperiencia = $('#tbl-experiencia').DataTable({
-                buttons: []
-            })
-            window.tblEducacion = $('#tbl-educacion').DataTable({
-                buttons: []
-            })
-            window.tblCurso = $('#tbl-cursos').DataTable({
-                buttons: []
-            })
-            window.tblCertificado = $('#tbl-certificados').DataTable({
-                buttons: []
-            })
-
-            let vigencia_certificado = document.getElementById('vigencia');
-            vigencia_certificado.addEventListener('change', function() {
-                // console.log(this);
-                let vigencia = this.value;
-                let estatus = document.getElementById('vencio_alta');
-                if (Date.parse(vigencia) >= Date.now()) {
-                    estatus.value = "Vigente"
-                    estatus.style.border = "2px solid #57e262";
-                } else {
-                    estatus.value = 'Vencida'
-                    estatus.style.border = "2px solid #FF9C08";
-                }
-            })
-
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            // let url = "{{ route('admin.empleados.get') }}";
-
-
-
-            document.getElementById('btn-agregar-experiencia').addEventListener('click', function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                suscribirExperiencia()
-            })
-
-            document.getElementById('btn-agregar-educacion').addEventListener('click', function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                suscribirEducacion()
-            })
-
-            document.getElementById('btn-suscribir-curso').addEventListener('click', function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                suscribirCurso()
-            })
-
-            document.getElementById('btn-suscribir-certificado').addEventListener('click', function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                suscribirCertificado()
-            })
-
-
-            document.getElementById('btnGuardar').addEventListener('click', function(e) {
-                // e.preventDefault();
-                enviarExperiencia()
-                enviarEducacion()
-                enviarCurso()
-                enviarCertificado()
-            })
-
-        });
-
-
-
-
-
-        function suscribirExperiencia() {
-            //form-participantes
-
-            let experiencias = tblExperiencia.rows().data().toArray();
-            let arrExperiencia = [];
-            experiencias.forEach(experiencia => {
-                arrExperiencia.push(experiencia[0])
-
-            });
-
-            //no se puedan agregar datos que ya estan
-            let nombre = $("#empresa").val();
-            let puesto = $("#puesto_trabajo").val();
-            let descripcion = $("#descripcion").val();
-            let inicio_mes = $("#inicio_mes").val();
-            let fin_mes = $("#fin_mes").val();
-            if (nombre.trim() == '') {
-                document.querySelector('.empresa_error').innerHTML = "El campo empresa es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-            if (puesto.trim() == '') {
-                document.querySelector('.puesto_trabajo_error').innerHTML = "El campo puesto es requerido"
-                // limpiarCamposExperienciaPorId('puesto_trabajo');
-            }
-            if (inicio_mes.trim() == '') {
-                document.querySelector('.inicio_mes_error').innerHTML = "El campo de inicio de puesto laboral es requerido"
-                // limpiarCamposExperienciaPorId('puesto_trabajo');
-            }
-            if (fin_mes.trim() == '') {
-                document.querySelector('.fin_mes_error').innerHTML = "El campo fin de puesto laboral es requerido"
-                // limpiarCamposExperienciaPorId('fin_mes');
-            }
-            if (descripcion.trim() == '') {
-                document.querySelector('.descripcion_error').innerHTML = "El campo de descripción laboral es requerido"
-                // limpiarCamposExperienciaPorId('descripcion_error');
-            }
-            if (nombre.trim() != '' && puesto.trim() != '' && inicio_mes.trim() != '' && fin_mes.trim() != '' && descripcion
-                .trim() != '') {
-                limpiarCamposExperiencia();
-
-
-                if (!arrExperiencia.includes(nombre)) {
-
-
-                    tblExperiencia.row.add([
-                        nombre,
-                        puesto,
-                        descripcion,
-                        inicio_mes,
-                        fin_mes
-                    ]).draw();
-
-                } else {
-                    Swal.fire('Este participante ya ha sido agregado', '', 'error')
-                    limpiarCamposExperiencia();
-                }
-            }
-            //limpia campos
-
-        }
-
-        function limpiarCamposExperiencia() {
-            $("#empresa").val('');
-            $("#puesto_trabajo").val('');
-            $("#descripcion").val('');
-            $("#inicio_mes").val('');
-            $("#fin_mes").val('');
-        }
-
-        function limpiarErrores() {
-            document.querySelectorAll('.errors').forEach(element => {
-                element.innerHTML = ''
-            });
-        }
-
-        function enviarExperiencia() {
-            let experiencias = tblExperiencia.rows().data().toArray();
-            let arrExperiencia = [];
-            experiencias.forEach(experiencia => {
-                arrExperiencia.push(experiencia)
-
-            });
-            document.getElementById('experiencia').value = JSON.stringify(arrExperiencia);
-            console.log(arrExperiencia);
-        }
-
-        function suscribirEducacion() {
-            //form-participantes
-
-            let educacions = tblEducacion.rows().data().toArray();
-            let arrEducacion = [];
-            educacions.forEach(educacion => {
-                arrEducacion.push(educacion[0])
-
-            });
-
-
-            //no se puedan agregar datos que ya estan
-            let institucion = $("#institucion").val();
-            let año_inicio = $("#año_inicio").val();
-            let año_fin = $("#año_fin").val();
-            let nivel = $("#nivel").val();
-
-            if (institucion.trim() == '') {
-                document.querySelector('.institucion_error').innerHTML = "El campo institucion es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-            if (año_inicio.trim() == '') {
-                document.querySelector('.año_inicio_error').innerHTML = "El campo inicio de año es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-            if (año_fin.trim() == '') {
-                document.querySelector('.año_fin_error').innerHTML = "El campo inicio de fin es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-            if (document.getElementById('nivel').value == "") {
-                document.querySelector('.nivel_error').innerHTML = "El campo nivel es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-            if (institucion.trim() != '' && año_inicio.trim() != '' && año_fin.trim() != '' && document.getElementById(
-                    'nivel').value != "") {
-                limpiarCamposEducacion();
-
-
-                if (!arrEducacion.includes(institucion)) {
-                    tblEducacion.row.add([
-                        institucion,
-                        año_inicio,
-                        año_fin,
-                        nivel,
-                    ]).draw();
-
-                } else {
-                    Swal.fire('Este registro ya ha sido agregado', '', 'error')
-                }
-            }
-            //limpia campos
-
-        }
-
-        function limpiarCamposEducacion() {
-            $("#institucion").val('');
-            $("#año_inicio").val('');
-            $("#año_fin").val('');
-            $("#nivel").val('');
-        }
-
-        function enviarEducacion() {
-            let educacions = tblEducacion.rows().data().toArray();
-            let arrEducacion = [];
-            educacions.forEach(educacion => {
-                arrEducacion.push(educacion)
-
-            });
-            document.getElementById('educacion').value = JSON.stringify(arrEducacion);
-            console.log(arrEducacion);
-        }
-
-
-        function suscribirCurso() {
-            //form-participantes
-
-            let cursos = tblCurso.rows().data().toArray();
-            let arrCurso = [];
-            cursos.forEach(curso => {
-                arrCurso.push(curso[0])
-
-            });
-            //no se puedan agregar datos que ya estan
-
-
-            let curso_diplomado = $("#curso_diplomado").val();
-            let tipo = $("#tipo").val();
-            let año = $("#año").val();
-            let duracion = $("#duracion").val();
-
-            if (curso_diplomado.trim() == '') {
-                document.querySelector('.curso_diplomado_error').innerHTML = "El campo curso/diplomado es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-
-            if (document.getElementById('tipo').value == "") {
-                document.querySelector('.tipo_error').innerHTML = "El campo tipo es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-
-            if (año.trim() == '') {
-                document.querySelector('.año_error').innerHTML = "El campo año es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-
-            if (duracion.trim() == '') {
-                document.querySelector('.duracion_error').innerHTML = "El campo duración es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-
-            if (curso_diplomado.trim() != '' && año.trim() != '' && duracion.trim() != '' && document.getElementById('tipo')
-                .value != "") {
-                limpiarCamposCursos();
-
-
-
-                if (!arrCurso.includes(curso_diplomado)) {
-
-                    tblCurso.row.add([
-                        curso_diplomado,
-                        tipo,
-                        año,
-                        duracion,
-                    ]).draw();
-
-                } else {
-                    Swal.fire('Este registro ya ha sido agregado', '', 'error')
-                }
-            }
-        }
-
-        function limpiarCamposCurso() {
-            $("#curso_diplomado").val('');
-            $("#tipo").val('');
-            $("#año").val('');
-            $("#duracion").val('');
-        }
-
-        function enviarCurso() {
-            let cursos = tblCurso.rows().data().toArray();
-            let arrCurso = [];
-            cursos.forEach(curso => {
-                arrCurso.push(curso)
-
-            });
-            document.getElementById('curso').value = JSON.stringify(arrCurso);
-            console.log(arrCurso);
-        }
-
-        function suscribirCertificado() {
-            //form-participantes
-
-            let certificados = tblCertificado.rows().data().toArray();
-            let arrCertificado = [];
-            certificados.forEach(certificado => {
-                arrCertificado.push(certificado[0])
-
-            });
-            //no se puedan agregar datos que ya estan
-            let nombre_certificado = $("#nombre_certificado").val();
-            let vigencia = $("#vigencia").val();
-            let estatus = $("#vencio_alta").val();
-            let evidenciafile = $("#evidencia").prop('files')[0];
-            console.log(evidenciafile.name);
-
-            var file = evidenciafile;
-            var fr = new FileReader();
-            fr.onload = receivedText;
-            //fr.readAsText(file);//fr.readAsBinaryString(file); //as bit work with base64 for example upload to server
-            fr.readAsDataURL(file);
-            console.log(fr);
-            alert(fr);
-
-            if (nombre_certificado.trim() == '') {
-                document.querySelector('.nombre_certificado_error').innerHTML =
-                    "El campo nombre del certificado es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-            if (vigencia.trim() == '') {
-                document.querySelector('.vigencia_error').innerHTML = "El campo vigencia es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-            if (estatus.trim() == '') {
-                document.querySelector('.estatus_error').innerHTML = "El campo estatus es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-
-
-
-            if (nombre_certificado.trim() != '' && vigencia.trim() != '' && estatus.trim() != '') {
-                limpiarCamposCertificados();
-
-                if (!arrCertificado.includes(nombre_certificado)) {
-
-                    tblCertificado.row.add([
-                        nombre_certificado,
-                        vigencia,
-                        estatus,
-                        evidenciafile.name,
-                    ]).draw();
-
-                } else {
-                    Swal.fire('Este registro ya ha sido agregado', '', 'error')
-                }
-            }
-        }
-
-        function limpiarCamposCertificados() {
-            $("#nombre_certificado").val('');
-            $("#vigencia").val('');
-            $("#vencio_alta").val('');
-            $("#evidencia").val('');
-
-        }
-
-        function enviarCertificado() {
-            let certificados = tblCertificado.rows().data().toArray();
-            let arrCertificado = [];
-            certificados.forEach(certificado => {
-                arrCertificado.push(certificado)
-
-            });
-            document.getElementById('certificado').value = JSON.stringify(arrCertificado);
-            console.log(arrCertificado);
-            alert(arrCertificado);
-        }
-    </script>
-
-    <script type="text/javascript">
-        Livewire.on('PerfilStore', () => {
-            $('#PerfilModal').modal('hide');
-            $('.modal-backdrop').hide();
-            toastr.success('Perfil de empleado creado con éxito');
-        });
-
-        Livewire.on('PuestoStore', () => {
-            $('#PuestoModal').modal('hide');
-            $('.modal-backdrop').hide();
-            toastr.success('Puesto de empleado creado con éxito');
-        });
-
-        window.initSelect2 = () => {
-            $('.select2').select2({
-                'theme': 'bootstrap4'
-            });
-        }
-
-        initSelect2();
-
-        Livewire.on('select2', () => {
-            initSelect2();
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var headers = {
-                'Content-Type': 'multipart/form-data',
-                'Accept': 'application/json',
-                'Access-Control-Allow-Origin': 'https://api.flaticon.com/v2'
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                canvas.getContext('2d').drawImage(video, 0, 0);
+                screenshotImage.src = canvas.toDataURL('image/webp');
+                screenshotImage.classList.remove('d-none');
+                let dataURL = canvas.toDataURL();
+                inputShotURL.value = dataURL;
+            };
+            stop.onclick = stopStreamedVideo;
+            pause.onclick = pauseStream;
+            screenshot.onclick = doScreenshot;
+
+            const startStream = async (constraints) => {
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                handleStream(stream);
             };
 
 
-        })
-    </script>
+            const handleStream = (stream) => {
+                video.srcObject = stream;
+                play.classList.add('d-none');
+                pause.classList.remove('d-none');
+                stop.classList.remove('d-none');
+                screenshot.classList.remove('d-none');
+            };
+
+
+            const getCameraSelection = async () => {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const videoDevices = devices.filter(device => device.kind === 'videoinput');
+                const options = videoDevices.map(videoDevice => {
+                    return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
+                });
+                cameraOptions.innerHTML = options.join('');
+            };
+
+            getCameraSelection();
+
+            document.getElementById('cerrarCanvasFoto').addEventListener('click', function(e) {
+                stopStreamedVideo(e);
+                contendorCanvas.style.display = 'none';
+            });
+
+
+            $('.form-control-file').on('change', function(e) {
+                let inputFile = e.currentTarget;
+                $("#texto-imagen").text(inputFile.files[0].name);
+                let dataURL = canvas.toDataURL();
+                inputShotURL.value = "";
+                stopStreamedVideo(e);
+                contendorCanvas.style.display = 'none';
+            });
+        </script>
+
+
+        <script>
+            $(document).ready(function() {
+                document.getElementById('btnSiguiente').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    $("#formEmpleado").removeAttr('action');
+                    $("#formEmpleado").attr('action', '{{ route('admin.empleados.storeWithCompetencia') }}');
+                    document.getElementById('formEmpleado').submit();
+                })
+                document.getElementById('btnGuardar').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    $("#formEmpleado").removeAttr('action');
+                    $("#formEmpleado").attr('action', '{{ route('admin.empleados.store') }}');
+                    document.getElementById('formEmpleado').submit();
+                })
+                window.tblExperiencia = $('#tbl-experiencia').DataTable({
+                    buttons: []
+                })
+                window.tblEducacion = $('#tbl-educacion').DataTable({
+                    buttons: []
+                })
+                window.tblCurso = $('#tbl-cursos').DataTable({
+                    buttons: []
+                })
+                window.tblCertificado = $('#tbl-certificados').DataTable({
+                    buttons: []
+                })
+
+                let vigencia_certificado = document.getElementById('vigencia');
+                vigencia_certificado.addEventListener('change', function() {
+                    // console.log(this);
+                    let vigencia = this.value;
+                    let estatus = document.getElementById('vencio_alta');
+                    if (Date.parse(vigencia) >= Date.now()) {
+                        estatus.value = "Vigente"
+                        estatus.style.border = "2px solid #57e262";
+                    } else {
+                        estatus.value = 'Vencida'
+                        estatus.style.border = "2px solid #FF9C08";
+                    }
+                })
+
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                // let url = "{{ route('admin.empleados.get') }}";
 
 
 
-@endsection
+                document.getElementById('btn-agregar-experiencia').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    suscribirExperiencia()
+                })
+
+                document.getElementById('btn-agregar-educacion').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    suscribirEducacion()
+                })
+
+                document.getElementById('btn-suscribir-curso').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    suscribirCurso()
+                })
+
+                document.getElementById('btn-suscribir-certificado').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    suscribirCertificado()
+                })
+
+
+                document.getElementById('btnGuardar').addEventListener('click', function(e) {
+                    // e.preventDefault();
+                    enviarExperiencia()
+                    enviarEducacion()
+                    enviarCurso()
+                    enviarCertificado()
+                })
+
+            });
+
+
+
+
+
+            function suscribirExperiencia() {
+                //form-participantes
+
+                let experiencias = tblExperiencia.rows().data().toArray();
+                let arrExperiencia = [];
+                experiencias.forEach(experiencia => {
+                    arrExperiencia.push(experiencia[0])
+
+                });
+
+                //no se puedan agregar datos que ya estan
+                let nombre = $("#empresa").val();
+                let puesto = $("#puesto_trabajo").val();
+                let descripcion = $("#descripcion").val();
+                let inicio_mes = $("#inicio_mes").val();
+                let fin_mes = $("#fin_mes").val();
+                if (nombre.trim() == '') {
+                    document.querySelector('.empresa_error').innerHTML = "El campo empresa es requerido"
+                    // limpiarCamposExperienciaPorId('empresa');
+                }
+                if (puesto.trim() == '') {
+                    document.querySelector('.puesto_trabajo_error').innerHTML = "El campo puesto es requerido"
+                    // limpiarCamposExperienciaPorId('puesto_trabajo');
+                }
+                if (inicio_mes.trim() == '') {
+                    document.querySelector('.inicio_mes_error').innerHTML = "El campo de inicio de puesto laboral es requerido"
+                    // limpiarCamposExperienciaPorId('puesto_trabajo');
+                }
+                if (fin_mes.trim() == '') {
+                    document.querySelector('.fin_mes_error').innerHTML = "El campo fin de puesto laboral es requerido"
+                    // limpiarCamposExperienciaPorId('fin_mes');
+                }
+                if (descripcion.trim() == '') {
+                    document.querySelector('.descripcion_error').innerHTML = "El campo de descripción laboral es requerido"
+                    // limpiarCamposExperienciaPorId('descripcion_error');
+                }
+                if (nombre.trim() != '' && puesto.trim() != '' && inicio_mes.trim() != '' && fin_mes.trim() != '' && descripcion
+                    .trim() != '') {
+                    limpiarCamposExperiencia();
+
+
+                    if (!arrExperiencia.includes(nombre)) {
+
+
+                        tblExperiencia.row.add([
+                            nombre,
+                            puesto,
+                            descripcion,
+                            inicio_mes,
+                            fin_mes
+                        ]).draw();
+
+                    } else {
+                        Swal.fire('Este participante ya ha sido agregado', '', 'error')
+                        limpiarCamposExperiencia();
+                    }
+                }
+                //limpia campos
+
+            }
+
+            function limpiarCamposExperiencia() {
+                $("#empresa").val('');
+                $("#puesto_trabajo").val('');
+                $("#descripcion").val('');
+                $("#inicio_mes").val('');
+                $("#fin_mes").val('');
+            }
+
+            function limpiarErrores() {
+                document.querySelectorAll('.errors').forEach(element => {
+                    element.innerHTML = ''
+                });
+            }
+
+            function enviarExperiencia() {
+                let experiencias = tblExperiencia.rows().data().toArray();
+                let arrExperiencia = [];
+                experiencias.forEach(experiencia => {
+                    arrExperiencia.push(experiencia)
+
+                });
+                document.getElementById('experiencia').value = JSON.stringify(arrExperiencia);
+                console.log(arrExperiencia);
+            }
+
+            function suscribirEducacion() {
+                //form-participantes
+
+                let educacions = tblEducacion.rows().data().toArray();
+                let arrEducacion = [];
+                educacions.forEach(educacion => {
+                    arrEducacion.push(educacion[0])
+
+                });
+
+
+                //no se puedan agregar datos que ya estan
+                let institucion = $("#institucion").val();
+                let año_inicio = $("#año_inicio").val();
+                let año_fin = $("#año_fin").val();
+                let nivel = $("#nivel").val();
+
+                if (institucion.trim() == '') {
+                    document.querySelector('.institucion_error').innerHTML = "El campo institucion es requerido"
+                    // limpiarCamposExperienciaPorId('empresa');
+                }
+                if (año_inicio.trim() == '') {
+                    document.querySelector('.año_inicio_error').innerHTML = "El campo inicio de año es requerido"
+                    // limpiarCamposExperienciaPorId('empresa');
+                }
+                if (año_fin.trim() == '') {
+                    document.querySelector('.año_fin_error').innerHTML = "El campo inicio de fin es requerido"
+                    // limpiarCamposExperienciaPorId('empresa');
+                }
+                if (document.getElementById('nivel').value == "") {
+                    document.querySelector('.nivel_error').innerHTML = "El campo nivel es requerido"
+                    // limpiarCamposExperienciaPorId('empresa');
+                }
+                if (institucion.trim() != '' && año_inicio.trim() != '' && año_fin.trim() != '' && document.getElementById(
+                        'nivel').value != "") {
+                    limpiarCamposEducacion();
+
+
+                    if (!arrEducacion.includes(institucion)) {
+                        tblEducacion.row.add([
+                            institucion,
+                            año_inicio,
+                            año_fin,
+                            nivel,
+                        ]).draw();
+
+                    } else {
+                        Swal.fire('Este registro ya ha sido agregado', '', 'error')
+                    }
+                }
+                //limpia campos
+
+            }
+
+            function limpiarCamposEducacion() {
+                $("#institucion").val('');
+                $("#año_inicio").val('');
+                $("#año_fin").val('');
+                $("#nivel").val('');
+            }
+
+            function enviarEducacion() {
+                let educacions = tblEducacion.rows().data().toArray();
+                let arrEducacion = [];
+                educacions.forEach(educacion => {
+                    arrEducacion.push(educacion)
+
+                });
+                document.getElementById('educacion').value = JSON.stringify(arrEducacion);
+                console.log(arrEducacion);
+            }
+
+
+            function suscribirCurso() {
+                //form-participantes
+
+                let cursos = tblCurso.rows().data().toArray();
+                let arrCurso = [];
+                cursos.forEach(curso => {
+                    arrCurso.push(curso[0])
+
+                });
+                //no se puedan agregar datos que ya estan
+
+
+                let curso_diplomado = $("#curso_diplomado").val();
+                let tipo = $("#tipo").val();
+                let año = $("#año").val();
+                let duracion = $("#duracion").val();
+
+                if (curso_diplomado.trim() == '') {
+                    document.querySelector('.curso_diplomado_error').innerHTML = "El campo curso/diplomado es requerido"
+                    // limpiarCamposExperienciaPorId('empresa');
+                }
+
+                if (document.getElementById('tipo').value == "") {
+                    document.querySelector('.tipo_error').innerHTML = "El campo tipo es requerido"
+                    // limpiarCamposExperienciaPorId('empresa');
+                }
+
+                if (año.trim() == '') {
+                    document.querySelector('.año_error').innerHTML = "El campo año es requerido"
+                    // limpiarCamposExperienciaPorId('empresa');
+                }
+
+                if (duracion.trim() == '') {
+                    document.querySelector('.duracion_error').innerHTML = "El campo duración es requerido"
+                    // limpiarCamposExperienciaPorId('empresa');
+                }
+
+                if (curso_diplomado.trim() != '' && año.trim() != '' && duracion.trim() != '' && document.getElementById('tipo')
+                    .value != "") {
+                    limpiarCamposCursos();
+
+
+
+                    if (!arrCurso.includes(curso_diplomado)) {
+
+                        tblCurso.row.add([
+                            curso_diplomado,
+                            tipo,
+                            año,
+                            duracion,
+                        ]).draw();
+
+                    } else {
+                        Swal.fire('Este registro ya ha sido agregado', '', 'error')
+                    }
+                }
+            }
+
+            function limpiarCamposCurso() {
+                $("#curso_diplomado").val('');
+                $("#tipo").val('');
+                $("#año").val('');
+                $("#duracion").val('');
+            }
+
+            function enviarCurso() {
+                let cursos = tblCurso.rows().data().toArray();
+                let arrCurso = [];
+                cursos.forEach(curso => {
+                    arrCurso.push(curso)
+
+                });
+                document.getElementById('curso').value = JSON.stringify(arrCurso);
+                console.log(arrCurso);
+            }
+
+            function suscribirCertificado() {
+                //form-participantes
+
+                let certificados = tblCertificado.rows().data().toArray();
+                let arrCertificado = [];
+                certificados.forEach(certificado => {
+                    arrCertificado.push(certificado[0])
+
+                });
+                //no se puedan agregar datos que ya estan
+                let nombre_certificado = $("#nombre_certificado").val();
+                let vigencia = $("#vigencia").val();
+                let estatus = $("#vencio_alta").val();
+                let evidenciafile = $("#evidencia").prop('files')[0];
+                console.log(evidenciafile.name);
+
+                var file = evidenciafile;
+                var fr = new FileReader();
+                fr.onload = receivedText;
+                //fr.readAsText(file);//fr.readAsBinaryString(file); //as bit work with base64 for example upload to server
+                fr.readAsDataURL(file);
+                console.log(fr);
+                alert(fr);
+
+                if (nombre_certificado.trim() == '') {
+                    document.querySelector('.nombre_certificado_error').innerHTML =
+                        "El campo nombre del certificado es requerido"
+                    // limpiarCamposExperienciaPorId('empresa');
+                }
+                if (vigencia.trim() == '') {
+                    document.querySelector('.vigencia_error').innerHTML = "El campo vigencia es requerido"
+                    // limpiarCamposExperienciaPorId('empresa');
+                }
+                if (estatus.trim() == '') {
+                    document.querySelector('.estatus_error').innerHTML = "El campo estatus es requerido"
+                    // limpiarCamposExperienciaPorId('empresa');
+                }
+
+
+
+                if (nombre_certificado.trim() != '' && vigencia.trim() != '' && estatus.trim() != '') {
+                    limpiarCamposCertificados();
+
+                    if (!arrCertificado.includes(nombre_certificado)) {
+
+                        tblCertificado.row.add([
+                            nombre_certificado,
+                            vigencia,
+                            estatus,
+                            evidenciafile.name,
+                        ]).draw();
+
+                    } else {
+                        Swal.fire('Este registro ya ha sido agregado', '', 'error')
+                    }
+                }
+            }
+
+            function limpiarCamposCertificados() {
+                $("#nombre_certificado").val('');
+                $("#vigencia").val('');
+                $("#vencio_alta").val('');
+                $("#evidencia").val('');
+
+            }
+
+            function enviarCertificado() {
+                let certificados = tblCertificado.rows().data().toArray();
+                let arrCertificado = [];
+                certificados.forEach(certificado => {
+                    arrCertificado.push(certificado)
+
+                });
+                document.getElementById('certificado').value = JSON.stringify(arrCertificado);
+                console.log(arrCertificado);
+                alert(arrCertificado);
+            }
+        </script>
+
+        <script type="text/javascript">
+            Livewire.on('PerfilStore', () => {
+                $('#PerfilModal').modal('hide');
+                $('.modal-backdrop').hide();
+                toastr.success('Perfil de empleado creado con éxito');
+            });
+
+            Livewire.on('PuestoStore', () => {
+                $('#PuestoModal').modal('hide');
+                $('.modal-backdrop').hide();
+                toastr.success('Puesto de empleado creado con éxito');
+            });
+
+            window.initSelect2 = () => {
+                $('.select2').select2({
+                    'theme': 'bootstrap4'
+                });
+            }
+
+            initSelect2();
+
+            Livewire.on('select2', () => {
+                initSelect2();
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var headers = {
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Origin': 'https://api.flaticon.com/v2'
+                };
+
+
+            })
+        </script>
+
+
+
+    @endsection

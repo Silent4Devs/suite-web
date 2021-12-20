@@ -9,7 +9,7 @@
         </div>
 
         <div class="card-body">
-            @livewire('buscar-c-v-component', ['areas' => $areas])
+            @livewire('buscar-c-v-component', ['areas' => $areas,'isPersonal'=>false])
         </div>
     </div>
 
