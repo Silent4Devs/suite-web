@@ -75,7 +75,7 @@ class Empleado extends Model
 
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
-    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso'];
+    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'actual_birdthday', 'actual_aniversary'];
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
         'name',
@@ -126,6 +126,19 @@ class Empleado extends Model
         'pagadora_actual',
         'periodicidad_nomina',
     ];
+
+    public function getActualBirdthdayAttribute()
+    {
+        $birdthday = date('Y').'-'.Carbon::parse($this->cumpleaños)->format('m-d');
+
+        return $birdthday;
+    }
+    public function getActualAniversaryAttribute()
+    {
+        $aniversario = date('Y').'-'.Carbon::parse($this->antiguedad)->format('m-d');
+
+        return $aniversario;
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

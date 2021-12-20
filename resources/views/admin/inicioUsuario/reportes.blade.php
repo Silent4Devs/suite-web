@@ -11,17 +11,36 @@
         display:inline-block;
         margin: 10px;
         cursor: pointer;
+        position: relative;
         color: #888888;
-
-    }
-    .cards_reportes i{
-        font-size: 16pt;
-        margin-right: 10px;
+        background: #f5f5f5;
+        box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+        transition: 0.1s;
     }
     .cards_reportes:hover{
         color: #00abb2;
-        border: 1px solid #00abb2;
+        background: #fff;
+        box-shadow: none;
+        border: 1px solid rgba(0, 0, 0, 0);
     }
+    .cards_reportes:before{
+        content: "";
+        width: 0%;
+        height: 2px;
+        background: #00abb2;
+        position: absolute;
+        bottom: 0;
+    }
+    .cards_reportes:hover:before{
+        content: "";
+        width: 100%;
+        height: 2px;
+        background: #00abb2;
+        position: absolute;
+        bottom: 0;
+        transition: 0.3s;
+    }
+
 
     .cards_alto{
         overflow: hidden;
@@ -34,9 +53,12 @@
         text-align: left;
         display:inline-block;
         margin: 10px;
+        position: relative;
         cursor: pointer;
         color: #888888;
-
+        background: #f5f5f5;
+        box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+        transition: 0.1s;
     }
     .cards_alto i{
         font-size: 16pt;
@@ -44,7 +66,26 @@
     }
     .cards_alto:hover{
         color: #00abb2;
-        border: 1px solid #00abb2;
+        background: #fff;
+        box-shadow: none;
+        border: 1px solid rgba(0, 0, 0, 0);
+    }
+    .cards_alto:before{
+        content: "";
+        width: 0%;
+        height: 2px;
+        background: #00abb2;
+        position: absolute;
+        bottom: 0;
+    }
+    .cards_alto:hover:before{
+        content: "";
+        width: 100%;
+        height: 2px;
+        background: #00abb2;
+        position: absolute;
+        bottom: 0;
+        transition: 0.3s;
     }
 </style>
 

@@ -2,7 +2,7 @@
 @section('content')
 
 
-
+    {{ Breadcrumbs::render('admin.system-calendar') }}
 
 
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
@@ -131,6 +131,9 @@
    }
    .i_calendar_cuadro{
         margin: 0px 8px;
+   }
+   .tui-full-calendar-popup-container .i_calendar_cuadro{
+    opacity: 0.7;
    }
 </style>
 
@@ -334,7 +337,7 @@
                 {
                 id: 'evento{{ $evento->id }}',
                 calendarId: '4',
-                title: 'Evento: {{ $evento->nombre }}',
+                title: '<i class="fas fa-cocktail i_calendar_cuadro"></i> Evento: {{ $evento->nombre }}',
                 category: 'allday',
                 dueDateClass: '',
                 start: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[0])->format("Y-m-d") }}',
@@ -342,12 +345,49 @@
                 isReadOnly : true,
                 },
             @endforeach
+
+
+            @foreach($cumples_aniversarios as $cumple)
+                {
+                    id: 'cumple{{$cumple->id}}',
+                    calendarId: '5',
+                    title: '<i class="fas fa-birthday-cake i_calendar_cuadro"></i> Cumpleaños de {{$cumple->name}}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ $cumple->actual_birdthday }}',
+                    end: '{{ $cumple->actual_birdthday }}',
+                    isReadOnly : true,
+                },
+            @endforeach
+
+
+            @foreach($cumples_aniversarios as $aniversario)
+                {
+                    id: 'aniversario{{$aniversario->id}}',
+                    calendarId: '6',
+                    title: '<i class="fas fa-award i_calendar_cuadro"></i> Aniversario de {{$aniversario->name}}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ $aniversario->actual_aniversary }}',
+                    end: '{{ $aniversario->actual_aniversary }}',
+                    isReadOnly : true,
+                },
+            @endforeach
         ];
     </script>
 
     </script>
     <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+        
+                 
 
+                }, 5000);
+        })
+        
+    </script>
 
 
 

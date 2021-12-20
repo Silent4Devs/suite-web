@@ -4,6 +4,18 @@
 
 @include('partials.flashMessages')
 
+    <style type="text/css">
+        .btn_cargar{
+            border-radius: 100px;
+            border: 1px solid #00abb2;
+            color: #00abb2;
+        }
+        .btn_cargar:hover{
+            color: #fff;
+            background:#00abb2 ;
+        }
+    </style>
+
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="{!! route('admin.amenazas.index') !!}">Inicio</a>
@@ -26,7 +38,7 @@
                     <div>
                         {!! Form::open(['route' => 'carga-amenaza', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="archivo" required>
-                        {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
+                        {!! Form::submit('Cargar excel', ['class' => 'btn btn_cargar']) !!}
                         {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-amenaza', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
@@ -201,7 +213,7 @@
                     <div>
                         {!! Form::open(['route' => 'carga-politica_sgi', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="politica_sgi" required>
-                        {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
+                        {!! Form::submit('Cargar excel', ['class' => 'btn btn_cargar']) !!}
                         {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-politica_sgi', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
@@ -363,7 +375,7 @@
                     <div>
                         {!! Form::open(['route' => 'carga-faqcategoria', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="faqcategoria" required>
-                        {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!} --}}
+                        {!! Form::submit('Cargar excel', ['class' => 'btn btn_cargar']) !!} --}}
                         {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
                         {{-- {!! Form::close() !!} --}}
                     {{-- </div>
