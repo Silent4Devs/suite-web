@@ -29,6 +29,9 @@
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
                         {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-amenaza', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
+                        {!! Form::close() !!}
 
                     </div>
                 </div>
@@ -40,7 +43,9 @@
                         {!! Form::open(['route' => 'carga-vulnerabilidad', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="vulnerabilidad" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-vulnerabilidad', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -52,7 +57,9 @@
                         {!! Form::open(['route' => 'carga-analisis_riego', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="analisis_riego" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-analisis_riego', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -100,7 +107,9 @@
                         {!! Form::open(['route' => 'carga-partes_interesadas', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="partes_interesadas" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-partes_interesadas', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -112,7 +121,9 @@
                         {!! Form::open(['route' => 'carga-matriz_requisitos_legales', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn tn-sm" type="file" name="matriz_requisitos_legales" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-matriz_requisitos_legales', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -123,7 +134,9 @@
                         {!! Form::open(['route' => 'carga-foda', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="foda" required>
                         {!! Form::submit('cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-foda', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -134,7 +147,9 @@
                         {!! Form::open(['route' => 'carga-determinacion_alcance', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn tn-sm" type="file" name="determinacion_alcance" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-determinacion_alcance', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -151,7 +166,9 @@
                         {!! Form::open(['route' => 'carga-comite_seguridad', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="comite_seguridad" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-comite_seguridad', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -161,7 +178,9 @@
                         {!! Form::open(['route' => 'carga-alta_direccion', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="alta_direccion" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-alta_direccion', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -185,6 +204,9 @@
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
                         {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-politica_sgi', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
+                        {!! Form::close() !!}
                     </div>
                 </div>
 
@@ -200,7 +222,9 @@
                         {!! Form::open(['route' => 'carga-categoriacapacitacion', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="categoriacapacitacion" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-categoriacapacitacion', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -212,7 +236,9 @@
                         {!! Form::open(['route' => 'carga-revisiondireccion', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="revisiondireccion" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-revisiondireccion', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -237,7 +263,9 @@
                         {!! Form::open(['route' => 'carga-categoria', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="categoria" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-categoria', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -266,7 +294,9 @@
                         {!! Form::open(['route' => 'carga-puesto', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="puesto" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-puesto', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -315,7 +345,9 @@
                         {!! Form::open(['route' => 'carga-estadoincidente', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="roles" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-estadoincidente', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -360,7 +392,9 @@
                         {!! Form::open(['route' => 'carga-grupo_area', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="grupo_area" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-grupo_area', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -390,17 +424,21 @@
                         {!! Form::open(['route' => 'carga-empleado', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="empleado" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-empleado', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
-                </div> 
+                </div>
                 <div class="form-group col-sm-6">
                     <i class="fa-fw fas fa-laptop iconos-crear"></i>{!! Form::label('activo_inventario', 'Activos/Inventario') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-activo_inventario', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="activo_inventario" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                        {!! Form::open(['route' => 'descarga-activo_inventario', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::submit('Descarga excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
