@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="form-group col-sm-6">
-        <label class="required" for="name"><i class="fas fa-street-view iconos-crear"></i>Nombre</label>
+        <label class="required" for="name"><i class="fas fa-user-circle iconos-crear"></i>Nombre</label>
         <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name"
             value="{{ old('name', $empleado->name) }}" required>
         <small id="error_name" class="text-danger errores"></small>
@@ -22,7 +22,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label class="required" for="n_empleado"><i class="fas fa-street-view iconos-crear"></i>N°
+        <label class="required" for="n_empleado"><i class="fas fa-id-card iconos-crear"></i>N°
             de
             empleado</label>
         <input class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}" type="text" name="n_empleado"
@@ -37,7 +37,7 @@
 </div>
 <div class="row">
     <div class="form-group col-sm-{{ $ceo_exists ? '6' : '12' }}">
-        <label class="required" for="area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+        <label class="required" for="area"><i class="fas fa-puzzle-piece iconos-crear"></i>Área</label>
         <select class="custom-select areas" id="inputGroupSelect01" name="area_id">
             <option selected value="" disabled>-- Selecciona un área --</option>
             @forelse ($areas as $area)
@@ -55,7 +55,7 @@
             <label class="required" for="puesto_id"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
         </div>
         <div class="col-sm-11 col-md-11">
-            <select class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}" name="puesto_id"
+            {{-- <select class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}" name="puesto_id"
                 id="puesto_id" required>
                 <option value="" selected disabled>
                     -- Selecciona un puesto --
@@ -66,14 +66,15 @@
                         {{ $puesto->puesto }}
                     </option>
                 @endforeach
-            </select>
+            </select> --}}
+            @livewire('puesto-select',['puestos_seleccionado'=>$puestos_seleccionado])
             <small id="error_puesto_id" class="text-danger errores"></small>
         </div>
         <div class="col-1 col-md-1 col-sm-1">
             <button id="btnAgregarPuesto" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
                 data-toggle="modal" data-target="#PuestoModal" title="Agregar Puesto"><i
                     class="fas fa-plus"></i></button>
-            @livewire('perfil-select',['perfiles_seleccionado'=>$perfiles_seleccionado])
+
         </div>
 
         @if ($errors->has('puesto_id'))
@@ -146,7 +147,7 @@
         </div>
     </div>
     <div class="form-group col-sm-6">
-        <label class="required" for="genero"><i class="fas fa-user iconos-crear"></i>Género</label>
+        <label class="required" for="genero"><i class="fas fa-venus-mars iconos-crear"></i>Género</label>
         <div class="mb-3 input-group">
             <select class="custom-select genero select-search" id="genero" name="genero">
                 <option selected value="" disabled>-- Selecciona Género --</option>
@@ -235,7 +236,7 @@
             </div>
         @endif
     </div>
-    <div class="form-group col-sm-3">
+    <div class="form-group col-sm-6 col-md-6 col-6">
         <label for="sede_id"><i class="fas fa-building iconos-crear"></i>Sede</label>
         <select class="form-control select-search select2 {{ $errors->has('sede') ? 'is-invalid' : '' }}"
             name="sede_id" id="sede_id">
@@ -253,11 +254,6 @@
             </div>
         @endif
     </div>
-    <div class="form-group col-sm-12 col-md-3">
-        <label for="direccion"><i class="fas fa-map iconos-crear"></i>Dirección</label>
-        <input class="form-control" type="text" name="direccion" id="direccion"
-            value="{{ old('direccion', $empleado->direccion) }}" disabled readonly>
-    </div>
     <div class="form-group col-sm-6">
         <label class="required" for="antiguedad"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de
             ingreso</label>
@@ -270,10 +266,14 @@
                 {{ $errors->first('antiguedad') }}
             </div>
         @endif
-
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-12">
+        <label for="direccion"><i class="fas fa-map iconos-crear"></i>Dirección</label>
+        <input class="form-control" type="text" name="direccion" id="direccion"
+            value="{{ old('direccion', $empleado->direccion) }}" disabled readonly>
     </div>
     <div class="form-group col-sm-4">
-        <label for="tipo_contrato_empleados_id"><i class="fas fa-briefcase iconos-crear"></i>Tipo de
+        <label for="tipo_contrato_empleados_id"><i class="fas fa-file-signature iconos-crear"></i>Tipo de
             contrato</label>
         <select
             class="form-control select-search {{ $errors->has('tipo_contrato_empleados_id') ? 'is-invalid' : '' }}"
@@ -318,7 +318,7 @@
             contrato?</label>
     </div>
     <div class="form-group col-sm-12" id="c_esquema_contratacion">
-        <label for="esquema_contratacion"><i class="fas fa-briefcase iconos-crear"></i>Esquema de
+        <label for="esquema_contratacion"><i class="fas fa-handshake iconos-crear"></i>Esquema de
             contratación</label>
         <select class="form-control select-search {{ $errors->has('esquema_contratacion') ? 'is-invalid' : '' }}"
             name="esquema_contratacion" id="esquema_contratacion">

@@ -29,3 +29,4 @@ storage/logs/
 *.cache
 
 storage/app/public/activos/
+storage/app/public/expedientes/

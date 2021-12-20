@@ -1,6 +1,6 @@
 <div class="row mt-4">
     <div class="form-group col-sm-6">
-        <label for="banco"><i class="fas fa-address-card iconos-crear"></i>Banco</label>
+        <label for="banco"><i class="fas fa-landmark iconos-crear"></i>Banco</label>
         <input class="form-control {{ $errors->has('banco') ? 'is-invalid' : '' }}" type="text" name="banco" id="banco"
             value="{{ old('banco', $empleado->banco) }}">
         <small id="error_banco" class="text-danger"></small>
@@ -11,7 +11,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label for="cuenta_bancaria"><i class="fas fa-address-card iconos-crear"></i>Cuenta
+        <label for="cuenta_bancaria"><i class="fas fa-credit-card iconos-crear"></i>Cuenta
             Bancaria</label>
         <input class="form-control {{ $errors->has('cuenta_bancaria') ? 'is-invalid' : '' }}" type="text"
             name="cuenta_bancaria" id="cuenta_bancaria"
@@ -24,7 +24,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label for="clabe_interbancaria"><i class="fas fa-address-card iconos-crear"></i>Clave
+        <label for="clabe_interbancaria"><i class="fas fa-barcode iconos-crear"></i>Clave
             Interbancaria</label>
         <input class="form-control {{ $errors->has('clabe_interbancaria') ? 'is-invalid' : '' }}" type="text"
             name="clabe_interbancaria" id="clabe_interbancaria"
@@ -37,7 +37,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label for="centro_costos"><i class="fas fa-address-card iconos-crear"></i>Centro de
+        <label for="centro_costos"><i class="fas fa-building iconos-crear"></i>Centro de
             costos</label>
         <input class="form-control {{ $errors->has('centro_costos') ? 'is-invalid' : '' }}" type="text"
             name="centro_costos" id="centro_costos" value="{{ old('centro_costos', $empleado->centro_costos) }}">
@@ -49,7 +49,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label for="salario_bruto"><i class="fas fa-address-card iconos-crear"></i>Salario
+        <label for="salario_bruto"><i class="fas fa-dollar-sign iconos-crear"></i>Salario
             Bruto</label>
         <input data-type='currency' placeholder="$1,000,000.00"
             class="form-control {{ $errors->has('salario_bruto') ? 'is-invalid' : '' }}" type="text"
@@ -62,7 +62,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label for="salario_diario"><i class="fas fa-address-card iconos-crear"></i>Salario
+        <label for="salario_diario"><i class="fas fa-dollar-sign iconos-crear"></i>Salario
             Diario</label>
         <input class="form-control {{ $errors->has('salario_diario') ? 'is-invalid' : '' }}" type="text"
             placeholder="$1,000,000.00" name="salario_diario" id="salario_diario" data-type='currency'
@@ -75,7 +75,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label for="salario_diario_integrado"><i class="fas fa-address-card iconos-crear"></i>Salario Diario
+        <label for="salario_diario_integrado"><i class="fas fa-dollar-sign iconos-crear"></i>Salario Diario
             Integrado</label>
         <input class="form-control {{ $errors->has('salario_diario_integrado') ? 'is-invalid' : '' }}"
             placeholder="$1,000,000.00" type="text" name="salario_diario_integrado" id="salario_diario_integrado"
@@ -88,7 +88,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label for="salario_base_mensual"><i class="fas fa-address-card iconos-crear"></i>Salario Base
+        <label for="salario_base_mensual"><i class="fas fa-dollar-sign iconos-crear"></i>Salario Base
             Mensual</label>
         <input class="form-control {{ $errors->has('salario_base_mensual') ? 'is-invalid' : '' }}" type="text"
             placeholder="$1,000,000.00" data-type='currency' name="salario_base_mensual" id="salario_base_mensual"
@@ -101,7 +101,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label for="pagadora_actual"><i class="fas fa-address-card iconos-crear"></i>Pagadora Actual</label>
+        <label for="pagadora_actual"><i class="fas fa-hand-holding-usd iconos-crear"></i>Pagadora Actual</label>
         <input class="form-control {{ $errors->has('pagadora_actual') ? 'is-invalid' : '' }}" type="text"
             name="pagadora_actual" id="pagadora_actual"
             value="{{ old('pagadora_actual', $empleado->pagadora_actual) }}">
@@ -113,7 +113,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label for="periodicidad_nomina"><i class="fas fa-address-card iconos-crear"></i>Periodicidad de
+        <label for="periodicidad_nomina"><i class="fas fa-sync-alt iconos-crear"></i>Periodicidad de
             nómina</label>
         <select class="select-search form-control {{ $errors->has('periodicidad_nomina') ? 'is-invalid' : '' }}"
             name="periodicidad_nomina" id="periodicidad_nomina">
