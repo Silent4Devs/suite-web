@@ -873,8 +873,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            $("#certificacion").tagsinput('items')
-
             window.limpiarForm = () => {
                 limpiarErrores();
                 document.getElementById('vencio_alta').style.border = 'none'
