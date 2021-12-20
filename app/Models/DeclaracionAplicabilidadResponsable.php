@@ -52,4 +52,9 @@ class DeclaracionAplicabilidadResponsable extends Model
     {
         return $this->belongsTo(Empleado::class, 'empleado_id');
     }
+
+    public function notificacion()
+    {
+        return $this->hasMany(NotificacionAprobadores::class, 'responsables_id', 'id');
+    }
 }

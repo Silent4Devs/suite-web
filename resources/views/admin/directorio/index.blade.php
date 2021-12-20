@@ -1,8 +1,13 @@
-@extends('layouts.admin')
+@extends('layouts.admin_glosario')
 @section('content')
 
 
+
     <style type="text/css">
+        #jquerydata_tablenoabecedario {
+            display: none !important;
+        }
+
         table {
             width: 100%;
         }
@@ -77,22 +82,22 @@
 
     </style>
 
-@can('glosario_create')
+    @can('glosario_create')
 
 
 
 
-<!--
-                                                                        <div style="margin-bottom: 10px;" class="row">
-                                                                            <div class="col-lg-12">
-                                                                                <a class="btn btn-success" href="{{ route('admin.glosarios.create') }}">
-                                                                                    {{ trans('global.add') }} {{ trans('cruds.glosario.title_singular') }}
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                    -->
+        <!--
+                                                                                        <div style="margin-bottom: 10px;" class="row">
+                                                                                            <div class="col-lg-12">
+                                                                                                <a class="btn btn-success" href="{{ route('admin.glosarios.create') }}">
+                                                                                                    {{ trans('global.add') }} {{ trans('cruds.glosario.title_singular') }}
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    -->
 
-@endcan
+    @endcan
 
     <div id="desk" class="mt-5 card" style="">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -137,15 +142,16 @@
 
                             <td>
                                 <div>
-                                    @if (is_null($empleado->area ))
+                                    @if (is_null($empleado->area))
                                         <p>No hay información registrada</p>
                                     @else
-                                         <strong>Área: {{ $empleado->area->area }}</strong>
+                                        <strong>Área: {{ $empleado->area->area }}</strong>
                                     @endif
                                     @if (is_null($empleado->supervisor))
                                         <p>No hay información registrada</p>
                                     @else
-                                    <p>{{ $empleado->supervisor ? $empleado->supervisor->name : 'sin supervisor' }}</p>
+                                        <p>{{ $empleado->supervisor ? $empleado->supervisor->name : 'sin supervisor' }}
+                                        </p>
 
                                     @endif
                                 </div>
@@ -154,16 +160,16 @@
 
                             <td>
                                 <div>
-                                    @if (is_null($empleado->puestoRelacionado ))
+                                    @if (is_null($empleado->puestoRelacionado))
                                         <p>No hay información registrada</p>
                                     @else
-                                    <label><strong
-                                        class="mr-2">Puesto:</strong>{{ $empleado->puestoRelacionado->puesto }}</label>
+                                        <label><strong
+                                                class="mr-2">Puesto:</strong>{{ $empleado->puestoRelacionado->puesto }}</label>
                                     @endif
-                                    @if (is_null($empleado->fecha_ingreso ))
+                                    @if (is_null($empleado->fecha_ingreso))
                                         <p>No hay información registrada</p>
                                     @else
-                                    <p>Ingreso: {{ $empleado->fecha_ingreso }}</p>
+                                        <p>Ingreso: {{ $empleado->fecha_ingreso }}</p>
                                     @endif
 
                                 </div>
@@ -180,164 +186,223 @@
 
     </div>
 
-    @endsection
-    @section('scripts')
-        @parent
+@endsection
+@section('scripts')
+    @parent
 
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
-        <!--Abecedario-->
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-
-
-        <script type="text/javascript">
-            (function() {
-
-                // Search function
-                $.fn.dataTable.Api.register('alphabetSearch()', function(searchTerm) {
-                    this.iterator('table', function(context) {
-                        context.alphabetSearch = searchTerm;
-                    });
-
-                    return this;
-                });
-
-                // Recalculate the alphabet display for updated data
-                $.fn.dataTable.Api.register('alphabetSearch.recalc()', function(searchTerm) {
-                    this.iterator('table', function(context) {
-                        draw(
-                            new $.fn.dataTable.Api(context),
-                            $('div.alphabet', this.table().container())
-                        );
-                    });
-
-                    return this;
-                });
+    <!--Abecedario-->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 
 
-                // Search plug-in
-                $.fn.dataTable.ext.search.push(function(context, searchData) {
-                    // Ensure that there is a search applied to this table before running it
-                    if (!context.alphabetSearch) {
-                        return true;
-                    }
+    <script type="text/javascript">
+        // (function() {
 
-                    if (searchData[1].charAt(0) === context.alphabetSearch) {
-                        return true;
-                    }
+        //     // Search function
+        //     $.fn.dataTable.Api.register('alphabetSearch()', function(searchTerm) {
+        //         this.iterator('table', function(context) {
+        //             context.alphabetSearch = searchTerm;
+        //         });
 
+        //         return this;
+        //     });
 
-                    return false;
-                });
+        //     // Recalculate the alphabet display for updated data
+        //     $.fn.dataTable.Api.register('alphabetSearch.recalc()', function(searchTerm) {
+        //         this.iterator('table', function(context) {
+        //             draw(
+        //                 new $.fn.dataTable.Api(context),
+        //                 $('div.alphabet', this.table().container())
+        //             );
+        //         });
 
-
-                // Private support methods
-                function bin(data) {
-                    var letter, bins = {};
-
-                    for (var i = 0, ien = data.length; i < ien; i++) {
-                        letter = data[i].charAt(0).toUpperCase();
-
-                        if (bins[letter]) {
-                            bins[letter]++;
-                        } else {
-                            bins[letter] = 1;
-                        }
-                    }
-
-                    return bins;
-                }
-
-                function draw(table, alphabet) {
-                    alphabet.empty();
-
-                    var columnData = table.column(1).data();
-                    var bins = bin(columnData);
-
-                    $('<span class="clear active"/>')
-                        .data('letter', '')
-                        .data('match-count', columnData.length)
-                        .html('Todos')
-                        .appendTo(alphabet);
-
-                    for (var i = 0; i < 26; i++) {
-                        var letter = String.fromCharCode(65 + i);
-
-                        $('<span/>')
-                            .data('letter', letter)
-                            .data('match-count', bins[letter] || 0)
-                            .addClass(!bins[letter] ? 'empty' : '')
-                            .html(letter)
-                            .appendTo(alphabet);
-                    }
-
-                    $('<div class="alphabetInfo"></div>')
-                        .appendTo(alphabet);
-                }
+        //         return this;
+        //     });
 
 
-                $.fn.dataTable.AlphabetSearch = function(context) {
-                    var table = new $.fn.dataTable.Api(context);
-                    var alphabet = $('<div class="alphabet"/>');
+        //     // Search plug-in
+        //     $.fn.dataTable.ext.search.push(function(context, searchData) {
+        //         // Ensure that there is a search applied to this table before running it
+        //         if (!context.alphabetSearch) {
+        //             return true;
+        //         }
 
-                    draw(table, alphabet);
-
-                    // Trigger a search
-                    alphabet.on('click', 'span', function() {
-                        alphabet.find('.active').removeClass('active');
-                        $(this).addClass('active');
-
-                        table
-                            .alphabetSearch($(this).data('letter'))
-                            .draw();
-                    });
-
-                    // Mouse events to show helper information
-                    alphabet
-                        .on('mouseenter', 'span', function() {
-                            alphabet
-                                .find('div.alphabetInfo')
-                                .css({
-                                    opacity: 1,
-                                    left: $(this).position().left,
-                                    width: $(this).width()
-                                })
-                                .html($(this).data('match-count'))
-                        })
-                        .on('mouseleave', 'span', function() {
-                            alphabet
-                                .find('div.alphabetInfo')
-                                .css('opacity', 0);
-                        });
-
-                    // API method to get the alphabet container node
-                    this.node = function() {
-                        return alphabet;
-                    };
-                };
-
-                $.fn.DataTable.AlphabetSearch = $.fn.dataTable.AlphabetSearch;
+        //         if (searchData[1].charAt(0) === context.alphabetSearch) {
+        //             return true;
+        //         }
 
 
-                // Register a search plug-in
-                $.fn.dataTable.ext.feature.push({
-                    fnInit: function(settings) {
-                        var search = new $.fn.dataTable.AlphabetSearch(settings);
-                        return search.node();
-                    },
-                    cFeature: 'A'
-                });
-
-            }());
+        //         return false;
+        //     });
 
 
-            $(document).ready(function() {
-                var table = $('#dom').DataTable({
-                    dom: 'Alfrtip',
+        //     // Private support methods
+        //     function bin(data) {
+        //         var letter, bins = {};
+
+        //         for (var i = 0, ien = data.length; i < ien; i++) {
+        //             letter = data[i].charAt(0).toUpperCase();
+
+        //             if (bins[letter]) {
+        //                 bins[letter]++;
+        //             } else {
+        //                 bins[letter] = 1;
+        //             }
+        //         }
+
+        //         return bins;
+        //     }
+
+        //     function draw(table, alphabet) {
+        //         alphabet.empty();
+
+        //         var columnData = table.column(1).data();
+        //         var bins = bin(columnData);
+
+        //         $('<span class="clear active"/>')
+        //             .data('letter', '')
+        //             .data('match-count', columnData.length)
+        //             .html('Todos')
+        //             .appendTo(alphabet);
+
+        //         for (var i = 0; i < 26; i++) {
+        //             var letter = String.fromCharCode(65 + i);
+
+        //             $('<span/>')
+        //                 .data('letter', letter)
+        //                 .data('match-count', bins[letter] || 0)
+        //                 .addClass(!bins[letter] ? 'empty' : '')
+        //                 .html(letter)
+        //                 .appendTo(alphabet);
+        //         }
+
+        //         $('<div class="alphabetInfo"></div>')
+        //             .appendTo(alphabet);
+        //     }
 
 
-                });
+        //     $.fn.dataTable.AlphabetSearch = function(context) {
+        //         var table = new $.fn.dataTable.Api(context);
+        //         var alphabet = $('<div class="alphabet"/>');
+
+        //         draw(table, alphabet);
+
+        //         // Trigger a search
+        //         alphabet.on('click', 'span', function() {
+        //             alphabet.find('.active').removeClass('active');
+        //             $(this).addClass('active');
+
+        //             table
+        //                 .alphabetSearch($(this).data('letter'))
+        //                 .draw();
+        //         });
+
+        //         // Mouse events to show helper information
+        //         alphabet
+        //             .on('mouseenter', 'span', function() {
+        //                 alphabet
+        //                     .find('div.alphabetInfo')
+        //                     .css({
+        //                         opacity: 1,
+        //                         left: $(this).position().left,
+        //                         width: $(this).width()
+        //                     })
+        //                     .html($(this).data('match-count'))
+        //             })
+        //             .on('mouseleave', 'span', function() {
+        //                 alphabet
+        //                     .find('div.alphabetInfo')
+        //                     .css('opacity', 0);
+        //             });
+
+        //         // API method to get the alphabet container node
+        //         this.node = function() {
+        //             return alphabet;
+        //         };
+        //     };
+
+        //     $.fn.DataTable.AlphabetSearch = $.fn.dataTable.AlphabetSearch;
+
+
+            // Register a search plug-in
+        //     $.fn.dataTable.ext.search.push({
+        //         fnInit: function(settings) {
+        //             // console.log(settings);
+        //             // var search = new $.fn.dataTable.AlphabetSearch(settings);
+        //             // return search.node();
+        //             if (!_alphabetSearch) {
+
+        //                 return true;
+        //             }
+
+        //             if (searchData[1].charAt(0) === _alphabetSearch) {
+
+        //                 return true;
+        //             }
+
+        //             return false;
+        //         },
+        //         cFeature: 'A'
+        //     });
+
+        // }());
+
+
+
+        // $(document).ready(function() {
+        //     var table = $('#dom').DataTable({
+        //         dom: 'Alfrtip',
+
+
+        //     });
+        // });
+
+        var _alphabetSearch = '';
+
+        $.fn.dataTable.ext.search.push(function(settings, searchData) {
+            if (!_alphabetSearch) {
+                return true;
+            }
+
+            if (searchData[1].charAt(1) === _alphabetSearch) {
+                return true;
+            }
+
+            return false;
+        });
+
+
+        $(document).ready(function() {
+            var table = $('#dom').DataTable();
+
+            var alphabet = $('<div class="alphabet"/>').append('Search: ');
+
+            $('<span class="clear active"/>')
+                .data('letter', '')
+                .html('None')
+                .appendTo(alphabet);
+
+            for (var i = 0; i < 26; i++) {
+                var letter = String.fromCharCode(65 + i);
+
+                $('<span/>')
+                    .data('letter', letter)
+                    .html(letter)
+                    .appendTo(alphabet);
+            }
+
+            alphabet.insertBefore(table.table().container());
+
+            alphabet.on('click', 'span', function() {
+                alphabet.find('.active').removeClass('active');
+                $(this).addClass('active');
+
+                _alphabetSearch = $(this).data('letter');
+                table.draw();
             });
+        });
+    </script>
 
-        </script>
-    @endsection
+
+@endsection
