@@ -154,10 +154,52 @@
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
 
-                            <a class="btn btn-sm" style="border:none;" title="Visualizar Documento"
-                                href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
-                                <i class="fas fa-eye text-dark" style="font-size: 15px;"></i>
-                            </a>
+
+                        </td>
+                        <td>
+                            {{ $documento->version == 0 ? 'Sin versión actualmente' : $documento->version }}
+                        </td>
+                        <td>
+                            {{ $documento->fecha_dmy ?? '' }}
+                        </td>
+                        <td>
+                            @if ($documento->elaborador)
+                                <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->elaborador->avatar }}"
+                                    class="rounded-circle" alt="{{ $documento->elaborador->name }}"
+                                    title="{{ $documento->elaborador->name }}" width="40">
+                            @else
+                                <span class="badge badge-info">Sin Asignar</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($documento->revisor)
+                                <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->revisor->avatar }}"
+                                    class="rounded-circle" alt="{{ $documento->revisor->name }}"
+                                    title="{{ $documento->revisor->name }}" width="40">
+                            @else
+                                <span class="badge badge-info">Sin Asignar</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($documento->aprobador)
+                                <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->aprobador->avatar }}"
+                                    class="rounded-circle" alt="{{ $documento->aprobador->name }}"
+                                    title="{{ $documento->aprobador->name }}" width="40">
+                            @else
+                                <span class="badge badge-info">Sin Asignar</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($documento->responsable)
+                                <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->responsable->avatar }}"
+                                    class="rounded-circle" alt="{{ $documento->responsable->name }}"
+                                    title="{{ $documento->responsable->name }}" width="40">
+                            @else
+                                <span class="badge badge-info">Sin Asignar</span>
+                            @endif
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
 
                             <a class="btn btn-sm " title="Visualizar revisiones" style="border:none;"
                                 href="{{ route('admin.documentos.renderHistoryReview', $documento->id) }}">
@@ -181,6 +223,14 @@
                     </td>
                 </tr>
 
+                                @if(($documento->estatus == 3) or ($documento->estatus == 4))
+                                    <button class="btn_archivar" title="Archivar" data-toggle="modal" data-target="#alert_aprob_arch{{ $documento->id }}">
+                                        <i class="fas fa-archive"></i>
+                                    </button>
+                                @endif
+                            </div>
+                        </td>
+                    </tr>
             @endforeach
         </tbody>
     </table>
@@ -293,7 +343,7 @@
                                 </th>
                             @endif
 
-                            <td style="text-align: center !important;">
+                             <td  style="text-align: center !important;">
                                 <span class="badge badge-info"
                                     style="background-color:{{ $revision->color_revisiones_estatus }}">{{ mb_strtoupper($revision->estatus_revisiones_formateado) }}</span>
                             </td>
