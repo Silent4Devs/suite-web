@@ -17,10 +17,10 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Str;
 
 class CompetenciasController extends Controller
 {
@@ -226,6 +226,7 @@ class CompetenciasController extends Controller
                 ]);
             }
         }
+
         return response()->json(['status' => 'success', 'message' => 'Documentos cargados con éxito']);
     }
 

@@ -77,7 +77,7 @@ class Empleado extends Model
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
         'avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo',
-        'actual_birdthday', 'actual_aniversary'
+        'actual_birdthday', 'actual_aniversary',
     ];
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
@@ -136,6 +136,7 @@ class Empleado extends Model
 
         return $birdthday;
     }
+
     public function getActualAniversaryAttribute()
     {
         $aniversario = date('Y') . '-' . Carbon::parse($this->antiguedad)->format('m-d');
@@ -177,15 +178,16 @@ class Empleado extends Model
     public function getSaludoAttribute()
     {
         $hora = date('H');
-        $saludo = "";
+        $saludo = '';
         $nombre = explode(' ', $this->name)[0];
-        if ($hora >= "12" && $hora <= "18") {
+        if ($hora >= '12' && $hora <= '18') {
             $saludo = "Buenas Tardes, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
-        } else if ($hora >= "19" && $hora <= "23") {
+        } elseif ($hora >= '19' && $hora <= '23') {
             $saludo = "Buenas Noches, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
         } else {
             $saludo = "Buenos Días, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
         }
+
         return $saludo;
     }
 

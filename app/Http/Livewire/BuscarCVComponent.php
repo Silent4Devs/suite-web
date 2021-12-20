@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Empleado;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -52,7 +51,7 @@ class BuscarCVComponent extends Component
 
     public function updatedAreaId($value)
     {
-        if ($value == "") {
+        if ($value == '') {
             $this->area_id = null;
             $this->empleados = Empleado::get();
         } else {
@@ -64,7 +63,7 @@ class BuscarCVComponent extends Component
 
     public function updatedEmpleadoId($value)
     {
-        if ($value == "") {
+        if ($value == '') {
             $this->empleado_id = null;
         } else {
             $this->empleado_id = $value;
@@ -150,13 +149,12 @@ class BuscarCVComponent extends Component
 
         return view('livewire.buscar-c-v-component', [
             // 'empleadoget' => $empleadoget->get()->first(),
-            'empleadosCV' => $empleadosCV
+            'empleadosCV' => $empleadosCV,
         ]);
     }
 
     public function mostrarCurriculum($empleadoID)
     {
-
         $this->empleadoModel = Empleado::with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->find($empleadoID);
     }
 
