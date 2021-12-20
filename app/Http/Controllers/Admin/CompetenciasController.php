@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class CompetenciasController extends Controller
 {
@@ -204,21 +205,27 @@ class CompetenciasController extends Controller
 
     public function cargarDocumentos(Request $request, Empleado $empleado)
     {
-        $request->validate([
-            'files.*' => 'required|mimes:pdf|max:10000',
+        $request->merge([
+            'empleado_id' => $empleado->id,
         ]);
-        if ($request->hasFile('files')) {
-            $files = $request->file('files');
-            foreach ($files as $file) {
-                if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
-                    EvidenciasDocumentosEmpleados::create([
-                        'documentos' => $file->getClientOriginalName(),
-                        'empleado_id' => $empleado->id,
-                    ]);
-                }
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'numero' => 'required|string|max:255',
+            'documentos' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
+            'empleado_id' => 'required|exists:empleados,id',
+        ]);
+
+        // dd($empleado);
+        $evidencia = EvidenciasDocumentosEmpleados::create($request->all());
+
+        if ($request->hasFile('documentos')) {
+            $file = $request->file('documentos');
+            if (Storage::putFileAs('public/expedientes/' . Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
+                $evidencia->update([
+                    'documentos' => $file->getClientOriginalName(),
+                ]);
             }
         }
-
         return response()->json(['status' => 'success', 'message' => 'Documentos cargados con éxito']);
     }
 
