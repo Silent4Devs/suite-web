@@ -23,6 +23,9 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+    //Modulo Capital Humano
+    Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
+
     //Tipos de contratos
     Route::resource('recursos-humanos/tipos-contratos-empleados', 'RH\TipoContratoEmpleadoController');
     Route::resource('recursos-humanos/entidades-crediticias', 'RH\EntidadCrediticiaController');

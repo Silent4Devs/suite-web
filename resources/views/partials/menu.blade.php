@@ -229,6 +229,13 @@
                         </a>
                     </li>
                 @endcan --}}
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route('admin.capital-humano.index') }}"
+                        class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*') ? 'active' : '' }}">
+                        <i class="fa-fw fas fa-file iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca" style="margin-left:10px;"> Capital </font>
+                    </a>
+                </li>
                 @can('configuracion_empleados_access')
                     <li class="c-sidebar-nav-item">
                         <a href="{{ route('admin.tipos-contratos-empleados.index') }}"
