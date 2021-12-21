@@ -77,6 +77,7 @@ class BuscarCVComponent extends Component
     {
         $this->emit('tagify');
     }
+
     public function updatedCurso()
     {
         $this->emit('tagify');
