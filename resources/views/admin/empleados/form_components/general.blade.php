@@ -114,8 +114,8 @@
     <div class="form-group col-sm-3">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-12">
-                <label class="required" for="perfil_empleado_id"><i
-                        class="fas fa-briefcase iconos-crear"></i>Perfil</label>
+                <label class="required" for="perfil_empleado_id"><i class="fas fa-sitemap iconos-crear"></i>
+                    Nivel Jerárquico</label>
             </div>
             <div class="col-sm-9 col-md-9 col-9 pr-0">
                 <select class="form-control {{ $errors->has('perfil_empleado_id') ? 'is-invalid' : '' }}"

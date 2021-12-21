@@ -21,7 +21,6 @@ class BuscarCVComponent extends Component
     public $empleados;
     public $isPersonal;
     public $curriculums;
-    public $general;
 
     public $empresaExperiencia;
     public $puestoExperiencia;
@@ -29,6 +28,7 @@ class BuscarCVComponent extends Component
     public $certificacion;
     public $curso;
     public $empleadoModel;
+    public $general;
 
     protected $queryString = [
         'area_id' => ['except' => ''],
@@ -38,6 +38,7 @@ class BuscarCVComponent extends Component
         'descripcionExperiencia' => ['except' => ''],
         'certificacion' => ['except' => ''],
         'curso' => ['except' => ''],
+        'general' => ['except' => ''],
     ];
 
     public function clean()
@@ -69,6 +70,15 @@ class BuscarCVComponent extends Component
         } else {
             $this->empleado_id = $value;
         }
+        $this->emit('tagify');
+    }
+
+    public function updatedGeneral()
+    {
+        $this->emit('tagify');
+    }
+    public function updatedCurso()
+    {
         $this->emit('tagify');
     }
 
@@ -113,6 +123,10 @@ class BuscarCVComponent extends Component
                     $queryCurso->where('curso_diploma', 'ILIKE', "%{$this->curso}%");
                 });
             })
+            ->when($this->general, function ($qGeneral) {
+                $qGeneral->where('name', 'ILIKE', "%{$this->general}%");
+            })
+
             ->get();
         $this->empleado = null;
         /*   ->with([
