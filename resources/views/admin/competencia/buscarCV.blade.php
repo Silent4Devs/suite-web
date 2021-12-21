@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-
+    <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     {{ Breadcrumbs::render('admin.competencia.index') }}
 
     <div class="mt-5 card">
@@ -12,8 +12,9 @@
             @livewire('buscar-c-v-component', ['areas' => $areas,'isPersonal'=>false])
         </div>
     </div>
-
-
-
+@endsection
+@section('scripts')
+    <script src="https://unpkg.com/@yaireo/tagify"></script>
+    <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 
 @endsection

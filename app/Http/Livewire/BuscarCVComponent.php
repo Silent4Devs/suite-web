@@ -59,6 +59,7 @@ class BuscarCVComponent extends Component
             $this->empleado_id = null;
             $this->empleados = Empleado::where('area_id', $this->area_id)->get();
         }
+        $this->emit('tagify');
     }
 
     public function updatedEmpleadoId($value)
@@ -68,6 +69,12 @@ class BuscarCVComponent extends Component
         } else {
             $this->empleado_id = $value;
         }
+        $this->emit('tagify');
+    }
+
+    public function updatedCertificacion()
+    {
+        $this->emit('tagify');
     }
 
     public function mount()
@@ -156,6 +163,7 @@ class BuscarCVComponent extends Component
     public function mostrarCurriculum($empleadoID)
     {
         $this->empleadoModel = Empleado::with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->find($empleadoID);
+        $this->emit('tagify');
     }
 
     public function callAlert($tipo, $mensaje, $bool, $test = '')
