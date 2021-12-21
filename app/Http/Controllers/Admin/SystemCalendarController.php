@@ -7,6 +7,7 @@ use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
 use App\Models\Calendario;
 use App\Models\PlanBaseActividade;
+use App\Models\Empleado;
 use App\Models\PlanImplementacion;
 use App\Models\Recurso;
 use Illuminate\Http\Response;
