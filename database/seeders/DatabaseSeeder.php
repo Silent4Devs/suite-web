@@ -24,12 +24,13 @@ class DatabaseSeeder extends Seeder
             EstadoincidentesTableSeeder::class,
             EstusplatrabajoTableSeeder::class,
             ActividadFaseSeeder::class,
-            OrganizacionSeeder::class,
+            // OrganizacionSeeder::class,
             SedeSeeder::class,
             GrupoSeeder::class,
             AreaSeeder::class,
             PuestoSeeder::class,
             PerfilEmpleadosSeeder::class,
+            TipoContratosEmpleadoSeeder::class,
             EmpleadosSeeder::class,
             MacroprocesoSeeder::class,
             DocumentoSeeder::class,
@@ -39,6 +40,8 @@ class DatabaseSeeder extends Seeder
             ClausulasSeeder::class,
             VulnerabilidadesTableSeeder::class,
             AmenazasTableSeeder::class,
+            PanelInicioSeeder::class,
+            PanelOrganizacionSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }

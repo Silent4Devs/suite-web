@@ -5,10 +5,15 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class CertificacionesEmpleados extends Model
 {
     use SoftDeletes;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     protected $table = 'certificaciones_empleados';
 
     protected $dates = [
@@ -32,6 +37,17 @@ class CertificacionesEmpleados extends Model
         'documento',
 
     ];
+
+    protected $appends = ['vigencia_ymd'];
+
+    public function getVigenciaYmdAttribute()
+    {
+        if ($this->vigencia) {
+            return Carbon::parse($this->vigencia)->format('Y-m-d');
+        } else {
+            return null;
+        }
+    }
 
     public function empleado_certificaciones()
     {

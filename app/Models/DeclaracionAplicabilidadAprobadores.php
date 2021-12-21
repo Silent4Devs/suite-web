@@ -5,9 +5,10 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
- * Class DeclaracionAplicabilidadAprobadore
+ * Class DeclaracionAplicabilidadAprobadore.
  *
  * @property int $id
  * @property int|null $declaracion_id
@@ -20,40 +21,45 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  * @property Empleado|null $empleado
- *
- * @package App\Models
  */
 class DeclaracionAplicabilidadAprobadores extends Model
 {
-	use SoftDeletes;
-	protected $table = 'declaracion_aplicabilidad_aprobadores';
+    use SoftDeletes;
+    use QueryCacheable;
 
-	protected $casts = [
-		'declaracion_id' => 'int',
-		'aprobadores_id' => 'int',
-		'estatus' => 'int',
-		'created_at' => 'timestamp without time zone',
-		'updated_at' => 'timestamp without time zone'
-	];
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
+    protected $table = 'declaracion_aplicabilidad_aprobadores';
 
-	protected $dates = [
-		'fecha_aprobacion'
-	];
+    protected $casts = [
+        'declaracion_id' => 'int',
+        'aprobadores_id' => 'int',
+        'estatus' => 'int',
+    ];
 
-	protected $fillable = [
-		'declaracion_id',
-		'aprobadores_id',
-		'estatus',
-		'fecha_aprobacion'
-	];
+    protected $dates = [
+        'fecha_aprobacion',
+    ];
 
-	public function declaracion_aplicabilidad()
-	{
-		return $this->belongsTo(DeclaracionAplicabilidad::class, 'declaracion_id');
-	}
+    protected $fillable = [
+        'declaracion_id',
+        'aprobadores_id',
+        'estatus',
+        'fecha_aprobacion',
+    ];
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class, 'aprobadores_id');
-	}
+    public function declaracion_aplicabilidad()
+    {
+        return $this->belongsTo(DeclaracionAplicabilidad::class, 'declaracion_id');
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'aprobadores_id');
+    }
+
+    public function notificacion()
+    {
+        return $this->hasMany(NotificacionAprobadore::class, 'aprobadores_id', 'id');
+    }
 }

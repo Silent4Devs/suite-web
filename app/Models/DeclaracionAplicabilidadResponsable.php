@@ -1,17 +1,14 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
- * Class DeclaracionAplicabilidadResponsable
- * 
+ * Class DeclaracionAplicabilidadResponsable.
+ *
  * @property int $id
  * @property int|null $declaracion_id
  * @property int|null $empleado_id
@@ -20,39 +17,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- * 
+ *
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  * @property Empleado|null $empleado
- *
- * @package App\Models
  */
 class DeclaracionAplicabilidadResponsable extends Model
 {
-	use SoftDeletes;
-	protected $table = 'declaracion_aplicabilidad_responsables';
+    use SoftDeletes;
+    use QueryCacheable;
 
-	protected $casts = [
-		'declaracion_id' => 'int',
-		'empleado_id' => 'int',
-		'aplica' => 'character varying',
-		'created_at' => 'timestamp without time zone',
-		'updated_at' => 'timestamp without time zone'
-	];
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
+    protected $table = 'declaracion_aplicabilidad_responsables';
 
-	protected $fillable = [
-		'declaracion_id',
-		'empleado_id',
-		'aplica',
-		'justificacion'
-	];
+    protected $casts = [
+        'declaracion_id' => 'int',
+        'empleado_id' => 'int',
+    ];
 
-	public function declaracion_aplicabilidad()
-	{
-		return $this->belongsTo(DeclaracionAplicabilidad::class, 'declaracion_id');
-	}
+    protected $fillable = [
+        'declaracion_id',
+        'empleado_id',
+        'aplica',
+        'justificacion',
+        'notificado',
+    ];
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class);
-	}
+    public function declaracion_aplicabilidad()
+    {
+        return $this->belongsTo(DeclaracionAplicabilidad::class, 'declaracion_id');
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id');
+    }
+
+    public function notificacion()
+    {
+        return $this->hasMany(NotificacionAprobadores::class, 'responsables_id', 'id');
+    }
 }

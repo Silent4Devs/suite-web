@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\RH\BeneficiariosEmpleado;
+use App\Models\RH\ContactosEmergenciaEmpleado;
+use App\Models\RH\DependientesEconomicosEmpleados;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Empleado.
@@ -48,6 +52,11 @@ class Empleado extends Model
 {
     use SoftDeletes;
     use HasFactory;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
+
     protected $table = 'empleados';
 
     protected $casts = [
@@ -66,7 +75,10 @@ class Empleado extends Model
 
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
-    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto'];
+    protected $appends = [
+        'avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo',
+        'actual_birdthday', 'actual_aniversary',
+    ];
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
         'name',
@@ -89,11 +101,57 @@ class Empleado extends Model
         'resumen',
         'puesto_id',
         'perfil_empleado_id',
+        'tipo_contrato_empleados_id', //Agregados para nueva version de perfil de empleado
+        'terminacion_contrato',
+        'renovacion_contrato',
+        'esquema_contratacion',
+        'proyecto_asignado',
+        'domicilio_personal',
+        'telefono_casa',
+        'correo_personal',
+        'estado_civil',
+        'NSS',
+        'CURP',
+        'RFC',
+        'lugar_nacimiento',
+        'nacionalidad',
+        'entidad_crediticias_id',
+        'numero_credito',
+        'descuento',
+        'banco',
+        'cuenta_bancaria',
+        'clabe_interbancaria',
+        'centro_costos',
+        'salario_bruto',
+        'salario_diario',
+        'salario_diario_integrado',
+        'salario_base_mensual',
+        'pagadora_actual',
+        'periodicidad_nomina',
     ];
+
+    public function getActualBirdthdayAttribute()
+    {
+        $birdthday = date('Y') . '-' . Carbon::parse($this->cumpleaños)->format('m-d');
+
+        return $birdthday;
+    }
+
+    public function getActualAniversaryAttribute()
+    {
+        $aniversario = date('Y') . '-' . Carbon::parse($this->antiguedad)->format('m-d');
+
+        return $aniversario;
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function getResumenAttribute($value)
+    {
+        return strip_tags($value);
     }
 
     public function getResourceIdAttribute()
@@ -115,6 +173,22 @@ class Empleado extends Model
         } else {
             return 'Otro Género';
         }
+    }
+
+    public function getSaludoAttribute()
+    {
+        $hora = date('H');
+        $saludo = '';
+        $nombre = explode(' ', $this->name)[0];
+        if ($hora >= '12' && $hora <= '18') {
+            $saludo = "Buenas Tardes, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        } elseif ($hora >= '19' && $hora <= '23') {
+            $saludo = "Buenas Noches, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        } else {
+            $saludo = "Buenos Días, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        }
+
+        return $saludo;
     }
 
     public function getAvatarAttribute()
@@ -302,8 +376,44 @@ class Empleado extends Model
 
     public function getEmpleadosMismaAreaAttribute()
     {
-        $by_area = self::where('area_id', $this->area_id)->pluck('id')->toArray();
+        $by_area = self::where('id', '!=', $this->id)->where('area_id', $this->area_id)->pluck('id')->toArray();
 
         return $by_area;
+    }
+    //declaraciones
+
+    public function getDeclaracionesResponsableAttribute()
+    {
+        $misDeclaraciones = DeclaracionAplicabilidadResponsable::select('id', 'declaracion_id')->where('empleado_id', $this->id)->pluck('declaracion_id')->toArray();
+
+        return $misDeclaraciones;
+    }
+
+    public function getDeclaracionesAprobadorAttribute()
+    {
+        $misDeclaraciones = DeclaracionAplicabilidadAprobadores::select('id', 'declaracion_id')->where('aprobadores_id', $this->id)->pluck('declaracion_id')->toArray();
+
+        return $misDeclaraciones;
+    }
+
+    public function getFechaIngresoAttribute()
+    {
+        return Carbon::parse($this->antiguedad)->format('d-m-Y');
+    }
+
+    // dependientes economicos
+    public function dependientesEconomicos()
+    {
+        return $this->hasMany(DependientesEconomicosEmpleados::class, 'empleado_id', 'id')->orderBy('id');
+    }
+
+    public function contactosEmergencia()
+    {
+        return $this->hasMany(ContactosEmergenciaEmpleado::class, 'empleado_id', 'id')->orderBy('id');
+    }
+
+    public function beneficiarios()
+    {
+        return $this->hasMany(BeneficiariosEmpleado::class, 'empleado_id', 'id')->orderBy('id');
     }
 }

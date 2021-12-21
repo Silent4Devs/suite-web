@@ -274,13 +274,11 @@
                             data: 'activos_afectados'
                         },
                         {
-                            data: 'fecha'
+                            data: 'fecha_creacion'
                         },
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-
-
                                 let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reporto?.avatar}" title="${row.reporto?.name}"></img>`;
 
                                 return html;
@@ -308,7 +306,7 @@
                             data: 'estatus'
                         },
                         {
-                            data: 'fecha_cierre'
+                            data: 'fecha_cerrado'
                         },
                         {
                             data: 'id',
@@ -329,7 +327,7 @@
                                 let html =
                                     `
                 			<div class="botones_tabla">
-                				<a href="/admin/desk/${data}/seguridad-edit/" class="btn archivar"><i class="fas fa-edit"></i></a>`;
+                				<a href="/admin/desk/${data}/seguridad-edit/"><i class="fas fa-edit"></i></a>`;
 
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {

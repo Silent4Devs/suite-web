@@ -1,40 +1,64 @@
 @inject('Documento', 'App\Models\Documento')
+<style>
+    .mayusculatext {
+        text-tranform: lowercase !important;
+    }
+
+</style>
 <div class="card-body datatable-fix">
-    <h5 class="p-0 m-0 text-muted">Solicitados: Documentos que envíe a aprobación</h5>
-    <hr>
+
+    <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        <div class="row w-100">
+            <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                <div class="w-100">
+                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                </div>
+            </div>
+            <div class="col-11">
+                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección encontrará los
+                    documentos que le han sido asignadas para su aprobación, o bien, documentos que usted ha solicitado
+                    se aprueben.
+
+                </p>
+
+            </div>
+        </div>
+    </div>
+    <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #0CA193;">Solicitados: Documentos que envíe a
+        aprobación</h5>
     <table id="tblMisDocumentos" class="table">
         <thead>
             <tr>
-                <th style="vertical-align: top">
+                <th style=" min-width:100px; text-align: center !important;">
                     Código&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
-                <th style="vertical-align: top">
+                <th style=" min-width:200px; text-align: center !important;">
                     Nombre
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top; min-width:90px; text-align: center !important;">
                     Tipo
                 </th>
-
-                <th style="vertical-align: top">
+                <th style="vertical-align: top; text-align: center !important; min-width:100px;">
                     Vinculado&nbsp;a
                 </th>
                 <th style="vertical-align: top">
                     Estatus
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top; text-align: center !important;">
                     Versión
                 </th>
-                <th style="vertical-align: top; min-width:200px;">
+                <th style="vertical-align: top; text-align: center !important; min-width:90px;">
                     Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
                 <th style="vertical-align: top">
                     Elaboró
                 </th>
                 <th style="vertical-align: top">
-                    Revisó
+                    Revisor
                 </th>
                 <th style="vertical-align: top">
-                    Aprobó
+                    Aprobador
                 </th>
                 <th style="vertical-align: top">
                     Responsable
@@ -47,21 +71,21 @@
         <tbody>
             @foreach ($mis_documentos as $documento)
                 <tr>
-                    <td>
+                    <td style=" text-align: center !important;">
                         {{ $documento->codigo ?? '' }}
                     </td>
                     <td>
                         {{ $documento->nombre ?? '' }}
                     </td>
-                    <td style="text-transform: capitalize">
+                    <td style="text-transform: capitalize; text-align: center !important;">
                         {{ $documento->tipo ?? '' }}
                     </td>
                     @if ($documento->proceso_id == null)
-                        <th style="vertical-align: top">
+                        <th style="text-align: center !important; font-weight: normal;">
                             {{ $documento->macroproceso ? $documento->macroproceso->nombre : 'Sin vincular' }}
                         </th>
                     @else
-                        <th style="vertical-align: top">
+                        <th style="text-align: center !important; font-weight: normal;">
                             {{ $documento->proceso ? $documento->proceso->nombre : 'Sin vincular' }}
                         </th>
                     @endif
@@ -83,7 +107,6 @@
                                 @default
                                     <span class="badge badge-info">EN ELABORACIÓN</span>
                             @endswitch
-
                         @endif
                     </td>
                     <td>
@@ -130,12 +153,6 @@
                     </td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-
-                            <a class="btn btn-sm" style="border:none;" title="Visualizar Documento"
-                                href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
-                                <i class="fas fa-eye text-dark" style="font-size: 15px;"></i>
-                            </a>
-
                             <a class="btn btn-sm " title="Visualizar revisiones" style="border:none;"
                                 href="{{ route('admin.documentos.renderHistoryReview', $documento->id) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
@@ -147,28 +164,105 @@
                                         d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
                                 </svg>
                             </a>
+
+                            @if ($documento->estatus == 3 or $documento->estatus == 4)
+                                <button class="btn_archivar" title="Archivar" data-toggle="modal"
+                                    data-target="#alert_aprob_arch{{ $documento->id }}">
+                                    <i class="fas fa-archive"></i>
+                                </button>
+                            @endif
                         </div>
                     </td>
-
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+
+                @if ($documento->estatus == 3 or $documento->estatus == 4)
+                    <button class="btn_archivar" title="Archivar" data-toggle="modal"
+                        data-target="#alert_aprob_arch{{ $documento->id }}">
+                        <i class="fas fa-archive"></i>
+                    </button>
+                @endif
 </div>
+</td>
+</tr>
+@endforeach
+</tbody>
+</table>
+</div>
+
+<div>
+    @foreach ($mis_documentos as $documento)
+        @if (!($documento->archivo == 'archivado'))
+
+            <div class="modal fade" id="alert_aprob_arch{{ $documento->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="delete">
+                                <i class="fas fa-archive icono_delete"></i>
+                                <h1 class="mb-4">Archivar</h1>
+                                <p class="parrafo">¿Esta seguro que desea archivar este registro?</p>
+                                <div class="mt-4">
+                                    <form
+                                        action="{{ route('admin.inicio-Usuario.aprobacion.archivar', $documento->id) }}"
+                                        method="POST">
+                                        @csrf
+                                        <div class="mr-4 cancelar btn btn-outline-secondary" data-dismiss="modal">
+                                            Cancelar</div>
+                                        <button class="eliminar btn btn-info" type="submit">Archivar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endforeach
+</div>
+
 <div class="card-body datatable-fix">
-    <h5 class="p-0 m-0 text-muted">Requeridos: Documentos que debo aprobar</h5>
-    <hr>
+    <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #0CA193;">Requeridos: Documentos que debo aprobar
+    </h5>
     <table id="tabla_usuario_aprobaciones" class="table">
         <thead>
             <tr>
-                <th>Código&nbsp;del&nbsp;Documento</th>
-                <th>Nombre&nbsp;del&nbsp;Documento</th>
-                <th>Versión</th>
-                <th>Tipo</th>
-                <th>Solicitante</th>
-                <th style="min-width:200px;">Fecha&nbsp;de&nbsp;Solicitud</th>
-                <th>Estatus</th>
-                <th>Opciones</th>
+                <th style=" min-width:100px; text-align: center !important;">
+                    Código&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </th>
+                <th style=" min-width:200px; text-align: center !important;">
+                    Nombre
+                </th>
+                <th style="vertical-align: top; min-width:90px; text-align: center !important;">
+                    Tipo
+                </th>
+                <th style="vertical-align: top; text-align: center !important; min-width:150px;">
+                    Vinculado&nbsp;a
+                </th>
+                <th style="vertical-align: top; text-align: center !important;">
+                    Estatus
+                </th>
+                <th style="vertical-align: top; text-align: center !important;">
+                    Versión
+                </th>
+                <th style="vertical-align: top; text-align: center !important; min-width:90px;">
+                    Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </th>
+                <th style="vertical-align: top">
+                    Solicitante
+                </th>
+                <th style="vertical-align: top">
+                    Revisor
+                </th>
+                <th style="vertical-align: top">
+                    Aprobador
+                </th>
+                <th style="vertical-align: top">
+                    Responsable
+                </th>
+                <th style="vertical-align: top">
+                    Visualizar
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -176,25 +270,39 @@
                 @if ($revision->before_level_all_answered)
                     @if ($revision->estatus != $Documento::RECHAZADO_EN_CONSECUENCIA_POR_NIVEL_ANTERIOR)
                         <tr>
-                            <td>
+                            <td style="text-align: center !important;">
                                 {{ Str::limit($revision->documento ? $revision->documento->codigo : 'Sin Código Asignado', 40, '...') }}
                             </td>
                             <td>
                                 @if ($revision->documento)
-                                <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento->id) }}"
-                                    class="text-dark">
-                                    {{ Str::limit($revision->documento ? $revision->documento->nombre : 'Sin Documento Asignado', 40, '...') }}
-                                </a>
+                                    <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento->id) }}"
+                                        class="text-dark">
+                                        {{ Str::limit($revision->documento ? $revision->documento->nombre : 'Sin Documento Asignado', 40, '...') }}
+                                    </a>
                                 @else
-                                Sin revisión
+                                    Sin revisión
                                 @endif
                             </td>
-                            <td>{{ $revision->version }}</td>
                             <td style="text-transform: capitalize;">
                                 {{ $revision->documento ? $revision->documento->tipo : 'El tipo no ha sido asignado' }}
                             </td>
+                            @if ($revision->documento->proceso_id == null)
+                                <th style="text-align: center !important; font-weight: normal;">
+                                    {{ $revision->documento->macroproceso ? $revision->documento->macroproceso->nombre : 'Sin vincular' }}
+                                </th>
+                            @else
+                                <th style="text-align: center !important; font-weight: normal;">
+                                    {{ $revision->documento->proceso ? $revision->documento->proceso->nombre : 'Sin vincular' }}
+                                </th>
+                            @endif
+
+                            <td style="text-align: center !important;">
+                                <span class="badge badge-info"
+                                    style="background-color:{{ $revision->color_revisiones_estatus }}">{{ mb_strtoupper($revision->estatus_revisiones_formateado) }}</span>
                             </td>
-                            <td class="text-center" style="padding: 5px 0;">
+                            <td style="text-align: center !important;">{{ $revision->documento->version }}</td>
+                            <td class="justify-content:center">{{ $revision->fecha_solicitud }}</td>
+                            <td style="text-align: center !important;">
                                 @if ($revision->documento)
                                     @if ($revision->documento->elaborador)
                                         <img class="rounded-circle" style="clip-path: circle(40%);height: 35px"
@@ -206,16 +314,46 @@
                                     Sin Asignar
                                 @endif
                             </td>
-                            <td>{{ $revision->fecha_solicitud }}</td>
-                            <td style="background-color: {{ $revision->color_revisiones_estatus }}">
-                                <span class="badge"
-                                    style="color:white;background-color:{{ $revision->color_revisiones_estatus }}">{{ $revision->estatus_revisiones_formateado }}</span>
+                            <td style="text-align: center !important;">
+                                @if ($revision->documento)
+                                    @if ($revision->documento->revisor)
+                                        <img src="{{ asset('storage/empleados/imagenes/') . '/' . $revision->documento->revisor->avatar }}"
+                                            class="rounded-circle" alt="{{ $revision->documento->revisor->name }}"
+                                            title="{{ $revision->documento->revisor->name }}" width="40">
+                                    @endif
+                                @else
+                                    <span class="badge badge-info">Sin Asignar</span>
+                                @endif
+                            </td>
+                            <td style="text-align: center !important;">
+                                @if ($revision->documento)
+                                    @if ($revision->documento->aprobador)
+                                        <img src="{{ asset('storage/empleados/imagenes/') . '/' . $revision->documento->aprobador->avatar }}"
+                                            class="rounded-circle" alt="{{ $revision->documento->aprobador->name }}"
+                                            title="{{ $revision->documento->aprobador->name }}" width="40">
+                                    @endif
+                                @else
+                                    <span class="badge badge-info">Sin Asignar</span>
+                                @endif
+                            </td>
+                            <td style="text-align: center !important;">
+                                @if ($revision->documento)
+                                    @if ($revision->documento->responsable)
+                                        <img src="{{ asset('storage/empleados/imagenes/') . '/' . $revision->documento->responsable->avatar }}"
+                                            class="rounded-circle"
+                                            alt="{{ $revision->documento->responsable->name }}"
+                                            title="{{ $revision->documento->responsable->name }}" width="40">
+                                    @endif
+                                @else
+                                    <span class="badge badge-info">Sin Asignar</span>
+                                @endif
+                            </td>
                             <td>
                                 @if ($revision->documento)
-                                <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento) }}"
-                                    class="btn btn-sm" style="border:none;" title="Visualizar Documento">
-                                    <i class="fas fa-eye text-dark" style="font-size: 15px;"></i>
-                                </a>
+                                    <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento) }}"
+                                        class="btn btn-sm" style="border:none;" title="Visualizar Documento">
+                                        <i class="fas fa-eye text-dark" style="font-size: 15px;"></i>
+                                    </a>
                                 @endif
                                 @if ($revision->before_level_all_answered)
                                     @if ($revision->estatus == $Documento::SOLICITUD_REVISION)
@@ -249,73 +387,162 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
-            let dtButtons = [];
-            // let dtButtons = [{
-            //         extend: 'csvHtml5',
-            //         title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
-            //         text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-            //         className: "btn-sm rounded pr-2",
-            //         titleAttr: 'Exportar CSV',
-            //         exportOptions: {
-            //             columns: ['th:not(:last-child):visible']
-            //         }
-            //     },
-            //     {
-            //         extend: 'excelHtml5',
-            //         title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
-            //         text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-            //         className: "btn-sm rounded pr-2",
-            //         titleAttr: 'Exportar Excel',
-            //         exportOptions: {
-            //             columns: ['th:not(:last-child):visible']
-            //         }
-            //     },
-            //     {
-            //         extend: 'pdfHtml5',
-            //         title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
-            //         text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-            //         className: "btn-sm rounded pr-2",
-            //         titleAttr: 'Exportar PDF',
-            //         orientation: 'portrait',
-            //         exportOptions: {
-            //             columns: ['th:not(:last-child):visible']
-            //         },
-            //         customize: function(doc) {
-            //             doc.pageMargins = [20, 60, 20, 30];
-            //             // doc.styles.tableHeader.fontSize = 7.5;
-            //             // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-            //         }
-            //     },
-            //     {
-            //         extend: 'print',
-            //         title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
-            //         text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-            //         className: "btn-sm rounded pr-2",
-            //         titleAttr: 'Imprimir',
-            //         exportOptions: {
-            //             columns: ['th:not(:last-child):visible']
-            //         }
-            //     },
-            //     {
-            //         extend: 'colvis',
-            //         text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-            //         className: "btn-sm rounded pr-2",
-            //         titleAttr: 'Seleccionar Columnas',
-            //     },
-            //     {
-            //         extend: 'colvisGroup',
-            //         text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-            //         className: "btn-sm rounded pr-2",
-            //         show: ':hidden',
-            //         titleAttr: 'Ver todo',
-            //     },
-            //     {
-            //         extend: 'colvisRestore',
-            //         text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-            //         className: "btn-sm rounded pr-2",
-            //         titleAttr: 'Restaurar a estado anterior',
-            //     }
-            // ];
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar PDF',
+                    orientation: 'portrait',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    customize: function(doc) {
+                        doc.pageMargins = [20, 60, 20, 30];
+                        // doc.styles.tableHeader.fontSize = 7.5;
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
+            ];
+
+            let btnArchivo = {
+                text: '<i class="pl-2 pr-3 fas fa-archive"></i> Archivo',
+                titleAttr: 'Archivo',
+                url: "{{ route('admin.inicio-Usuario.aprobacion.archivo') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
+                }
+            };
+            dtButtons.push(btnArchivo);
+
+            $("#tblMisDocumentos").DataTable({
+                buttons: dtButtons,
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar PDF',
+                    orientation: 'portrait',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    customize: function(doc) {
+                        doc.pageMargins = [20, 60, 20, 30];
+                        // doc.styles.tableHeader.fontSize = 7.5;
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
+            ];
 
             let btnArchivo = {
                 text: '<i class="pl-2 pr-3 fas fa-archive"></i> Archivo',
@@ -333,10 +560,6 @@
 
             $("#tabla_usuario_aprobaciones").DataTable({
                 buttons: dtButtons,
-            });
-
-            $("#tblMisDocumentos").DataTable({
-                buttons: [],
             });
 
             window.Archivar = function(url, revision_id) {
@@ -420,4 +643,5 @@
             }
         });
     </script>
+
 @endsection

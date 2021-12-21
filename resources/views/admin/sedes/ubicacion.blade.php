@@ -8,27 +8,45 @@
 
     </style>
 
-    <div class="mt-4 card py-2">
+    <div class="py-2 mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Ubicación: </strong> Sedes</h3>
+            <h3 class="mb-1 text-center text-white"><strong> Cómo llegar a &nbsp;</strong>{{$sede->sede}} </h3>
         </div>
 
         <div class="card-body">
+                {{-- <h4 class="mb-1 text-center "><strong> Cómo llegar: </strong>{{ $sede->sede }}</h4> --}}
 
-            <form class="form-inline py-3" id="tracer-form">
-                <div class="d-flex flex-row">
-                    <div class="form-group mr-4">
-                        <a type="button" class="btn btn-success margin-right: 1rem; shadow" data-toggle="tooltip"
-                            data-placement="top" title="Pulse este botón para obtener su dirección actual"
-                            onclick="getCurrentPosition()">
-                            <i class="fas fa-map-marker-alt"></i> Ubicación actual
-                        </a>
+
+            <form class="py-3 form-inline" id="tracer-form">
+
+                <div class="flex-row d-flex">
+                    <div class="row col-4">
+                        <div class="form-group col-9">
+                            <label>Origen</label>
+                            <input type="text" class="shadow-sm form-control input-lg" id="origin"
+                                placeholder="Ingrese un origen" required>
+                        </div>
+                        {{-- <div class="mr-4 form-group col-3">
+                            <div>{{ $sede->sede }}</div>
+                        </div> --}}
+                        <div style="margin-left:-10px;"class="form-group col-3">
+                            <label>&nbsp;</label>
+                            <a type="button" class="shadow btn btn-success" data-toggle="tooltip"
+                                data-placement="top" title="Pulse este botón para obtener su dirección actual"
+                                onclick="getCurrentPosition()">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </a>
+                        </div>
+
                     </div>
-                    <div class="form-group mr-4">
-                        <input type="text" class="form-control shadow-sm input-lg" id="origin"
-                            placeholder="Ingrese un origen" required>
+
+                    <div class="form-group col-3">
+                        <label>Destino</label>
+                         <div style="width:100%;" class="form-control">{{$sede->sede}}</div>
                     </div>
-                    <div class="form-group mr-4">
+
+                    <div class="form-group col-3">
+                        <label>Medio de transporte</label>
                         <select class="form-control" id="travel_mode" name="travel_mode" required>
                             <option value="">Seleccione su tipo de viaje</option>
                             <option value="DRIVING">Auto</option>
@@ -38,7 +56,9 @@
                         </select>
                     </div>
 
-                    <button id="submit" class="btn btn-success shadow" value="Calcular">Buscar</button>
+                    <div class="form-group col-2">
+                         <button id="submit" class="mt-4 shadow btn btn-success" value="Calcular">Ver ruta</button>
+                    </div>
                 </div>
             </form>
 
@@ -58,8 +78,8 @@
 
     </div>
 
-    <div class="d-flex flex-row-reverse">
-        <a href="javascript:window.open('','_self').close();" class="btn btn-success shadow align">Salir</a>
+    <div class="flex-row-reverse d-flex">
+        <a href="javascript:window.open('','_self').close();" class="shadow btn btn-success align">Salir</a>
     </div>
     <br><br>
 

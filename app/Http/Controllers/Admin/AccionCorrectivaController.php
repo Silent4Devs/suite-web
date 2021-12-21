@@ -68,19 +68,18 @@ class AccionCorrectivaController extends Controller
             });
 
             $table->addColumn('fecharegistro', function ($row) {
-                return $row->fecharegistro ? $row->fecharegistro : '';
+                return $row->fecharegistro ? \Carbon\Carbon::parse($row->fecharegistro)->format('d-m-Y') : '';
             });
 
             $table->addColumn('fecha_verificacion', function ($row) {
-                return $row->fecha_verificacion ? $row->fecha_verificacion : '';
+                return $row->fecha_verificacion ? \Carbon\Carbon::parse($row->fecha_verificacion)->format('d-m-Y') : '';
             });
-
             $table->addColumn('estatus', function ($row) {
                 return $row->estatus ? $row->estatus : '';
             });
 
             $table->addColumn('fecha_cierre', function ($row) {
-                return $row->fecha_cierre ? $row->fecha_cierre : '';
+                return $row->fecha_cierre ? \Carbon\Carbon::parse($row->fecha_cierre)->format('d-m-Y') : '';
             });
 
             $table->addColumn('reporto', function ($row) {

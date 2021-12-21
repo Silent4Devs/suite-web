@@ -1,60 +1,61 @@
 @extends('layouts.admin')
 @section('content')
 
-<style>
-    .table tr th:nth-child(3){
-    text-align:center !important;
-    }
-    .img-size {
-        /*  padding: 0;
-            margin: 0; */
-        height: 400px;
-        width: 100%;
-        background-size: contain;
-    }
+    <style>
+        .table tr th:nth-child(3) {
+            text-align: center !important;
+        }
 
-    .modal-content {
+        .img-size {
+            /*  padding: 0;
+                margin: 0; */
+            height: 400px;
+            width: 100%;
+            background-size: contain;
+        }
 
-        height: 400px;
-        border: none;
-    }
+        .modal-content {
 
-    .modal-body {
-        padding: 0;
-    }
+            height: 400px;
+            border: none;
+        }
 
-    .carousel-control-next,
-    .carousel-control-prev {
-        width: 30px;
-        height: 48px;
-        top: 50%;
-    }
+        .modal-body {
+            padding: 0;
+        }
 
-    .carousel-control-next {
-        right: 30px !important;
-    }
+        .carousel-control-next,
+        .carousel-control-prev {
+            width: 30px;
+            height: 48px;
+            top: 50%;
+        }
 
-    .carousel-control-prev {
-        left: 30px;
-    }
+        .carousel-control-next {
+            right: 30px !important;
+        }
 
-    .carousel-control-prev-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-        width: 30px;
-        height: 48px;
-    }
+        .carousel-control-prev {
+            left: 30px;
+        }
 
-    .carousel-control-next-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-        width: 30px;
-        height: 48px;
-    }
+        .carousel-control-prev-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+            width: 30px;
+            height: 48px;
+        }
 
-    .tamaño{
-    width:168px !important;
-    }
+        .carousel-control-next-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+            width: 30px;
+            height: 48px;
+        }
 
-</style>
+        .tamaño {
+            width: 168px !important;
+        }
+
+    </style>
 
     {{ Breadcrumbs::render('admin.comunicacion-sgis.index') }}
 
@@ -62,7 +63,7 @@
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Comunicación SGSI</strong></h3>
+                <h3 class="mb-2 text-center text-white"><strong>Comunicados Generales</strong></h3>
             </div>
         @endcan
 
@@ -175,7 +176,7 @@
 
             ];
 
-       @can('comunicacion_sgi_create')
+            @can('comunicacion_sgi_create')
                 let btnAgregar = {
 
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
@@ -242,14 +243,14 @@
                     {
                         data: 'archivo',
                         name: 'archivo',
-                         render:function(data,type,row,meta){
-                            let archivo="";
-                             let archivos= JSON.parse(data);
-                               archivo=` <div class="container">
+                        render: function(data, type, row, meta) {
+                            let archivo = "";
+                            let archivos = JSON.parse(data);
+                            archivo = ` <div class="container">
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
-                                        <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                        <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;archivos</a>
                                     </div>
                                     </div>
 
@@ -258,8 +259,8 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                         <div class="modal-body">`;
-                                                if(archivos.length>0){
-                                                archivo+=`
+                            if (archivos.length > 0) {
+                                archivo += `
                                             <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
@@ -269,33 +270,32 @@
                                             <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                    <li
-                                                    data-target='#carouselExampleIndicators${row.id}'
-                                                    data-slide-to='${idx}'
-                                                    ></li>`
+                                                        <li
+                                                        data-target='#carouselExampleIndicators${row.id}'
+                                                        data-slide-to='${idx}'
+                                                        ></li>`
                                                     })}
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                    <div class='carousel-item ${idx==0?"active":""}'>
-                                                        <iframe seamless class='img-size' src='{{asset("tmp/uploads/")}}/${archivo.documento}'></iframe>
-                                                    </div>`
+                                                        <div class='carousel-item ${idx==0?"active":""}'>
+                                                            <iframe seamless class='img-size' src='{{ asset('tmp/uploads/') }}/${archivo.documento}'></iframe>
+                                                        </div>`
                                                     })}
 
                                             </div>
 
                                             </div>`;
-                                        }
-                                            else{
-                                                archivo+=`
+                            } else {
+                                archivo += `
                                                 <div class="text-center">
                                                     <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
-                                                    <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:350px !important">
+                                                    <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:350px !important">
                                                     </div>
                                                 `
-                                            }
-                                            archivo+=`</div>
+                            }
+                            archivo += `</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                             <a
@@ -354,6 +354,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

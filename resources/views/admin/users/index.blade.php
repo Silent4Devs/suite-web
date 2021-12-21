@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 @section('content')
 
-<style>
-    .table tr td:nth-child(1){
-        min-width:200px !important;
-    }
+    <style>
+        .table tr td:nth-child(1) {
+            min-width: 200px !important;
+        }
 
-    .table tr td:nth-child(4){
-        min-width:200px !important;
-    }
+        .table tr td:nth-child(4) {
+            min-width: 200px !important;
+        }
 
-</style>
+    </style>
     @can('user_create')
 
-
+        @include('partials.flashMessages')
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Usuarios</strong></h3>
@@ -256,7 +256,7 @@
                         data: 'n_empleado',
                         render: function(data, type, row, meta) {
                             if (data) {
-                                return row.empleado.name;
+                                return row.empleado?.name;
                             } else {
                                 return 'Sin vincular a empleado';
                             }
@@ -266,7 +266,7 @@
                         data: 'n_empleado',
                         render: function(data, type, row, meta) {
                             if (data) {
-                                return row.empleado.area.area;
+                                return row.empleado?.area?.area;
                             } else {
                                 return 'Sin vincular a empleado';
                             }
@@ -276,7 +276,7 @@
                         data: 'n_empleado',
                         render: function(data, type, row, meta) {
                             if (data) {
-                                return row.empleado.puesto;
+                                return row.empleado?.puesto;
                             } else {
                                 return 'Sin vincular a empleado';
                             }
@@ -289,14 +289,21 @@
                             let urlButtonShow = `/admin/users/${data}`;
                             let urlButtonDelete = `/admin/users/${data}`;
                             let urlButtonEdit = `/admin/users/${data}/edit`;
-
+                            let urlButtonTwoFactor = `/admin/users/two-factor/${data}/change`;
+                            let urlButtonBloquearUsuario = `/admin/users/bloqueo/${data}/change`;
                             let htmlBotones = `
                                 <div class="btn-group">
+                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
                                     <button title="${row.n_empleado?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm" onclick="AbrirModal('${data}');">
                                         <i class="fas fa-user-tag"></i>
                                     </button>
-                                    <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    <a href="${urlButtonTwoFactor}" title="${row.two_factor?'Quitar Verificación por dos factores':'Activar verificación por dos factores'}" class="btn btn-sm">
+                                        ${row.two_factor?' <i class="fas fa-key"></i>':' <i class="fas fa-key"></i>'}
+                                    </a>
+                                    <a href="${urlButtonBloquearUsuario}" title="${row.is_active?'Bloquear usuario':'Desbloquear usuario'}" class="btn btn-sm">
+                                        ${row.is_active?' <i class="fas fa-unlock"></i>':' <i class="fas fa-lock"></i>'}
+                                    </a>
                                     <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.name}');"><i class="fas fa-trash-alt"></i></button>
                                 </div>
 

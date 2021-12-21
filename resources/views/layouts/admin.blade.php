@@ -10,7 +10,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>{{ trans('panel.site_title') }}</title>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 
@@ -71,19 +71,19 @@
         .datatable-fix table.dataTable thead .sorting:after {
             opacity: 0.5;
             content: "\f0dc";
-            font-family: "Font Awesome 5 Free";
+            font-family: "FontAwesome";
         }
 
         .datatable-fix table.dataTable thead .sorting_asc:after {
             opacity: 0.5;
             content: "\f0de";
-            font-family: "Font Awesome 5 Free";
+            font-family: "FontAwesome";
         }
 
         .datatable-fix table.dataTable thead .sorting_desc:after {
             opacity: 0.5;
             content: "\f0dd";
-            font-family: "Font Awesome 5 Free";
+            font-family: "FontAwesome";
         }
 
         table.dataTable {
@@ -291,7 +291,8 @@
             clip-path: circle(12px at 50% 50%);
             /* height: 37px; */
         }
-        .img_empleado{
+
+        .img_empleado {
             clip-path: circle(20px at 50% 40%);
             height: 40px;
         }
@@ -303,6 +304,33 @@
 
         .breadcrumb-item.active {
             color: #000000;
+        }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: none;
+        }
+
+        label input.form-control {
+            border: none;
+            border-bottom: 1px solid #b4b4b4;
+            border-radius: unset;
+        }
+
+        label input.form-control:focus,
+        label input.form-control:active,
+        label input.form-control:focus-within {
+            outline: none;
+            border-bottom: 1px solid #7fabfd;
+        }
+
+        table.dataTable thead {
+            background: #F2F2F2 !important;
+        }
+
+        table.dataTable tr th {
+            font-weight: normal;
+            border: none !important;
         }
 
     </style>
@@ -341,6 +369,7 @@
         .caja_botones_menu a.btn_activo,
         .caja_botones_menu a.btn_activo:hover {
             background-color: #fff;
+            box-shadow: 0px -2px 0px 0px;
         }
 
         .caja_botones_menu a:hover {
@@ -386,6 +415,7 @@
 
         .scroll_estilo::-webkit-scrollbar {
             width: 7px;
+            height: 7px;
         }
 
         /* Track */
@@ -872,11 +902,11 @@
 
 
 
-    .table td{
-        text-align: justify !important;
-    }
+        .table td {
+            text-align: justify !important;
+        }
 
-</style>
+    </style>
 
     @yield('styles')
     @livewireStyles
@@ -885,48 +915,48 @@
 <body class="">
     @include('partials.menu')
     <div class=" c-wrapper">
-    <header class="px-3 c-header c-header-fixed" style="border: none;">
-        <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
-            data-class="c-sidebar-show">
-            <i class="fas fa-fw fa-bars iconos_cabecera"></i>
-        </button>
+        <header class="px-3 c-header c-header-fixed" style="border: none;">
+            <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
+                data-class="c-sidebar-show">
+                <i class="fas fa-fw fa-bars iconos_cabecera"></i>
+            </button>
 
 
-        <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="body"
-            data-class="c-sidebar-lg-show" responsive="true">
-            <i id="btnMenu" class="fas fa-fw fa-bars" style=""></i>
-        </button>
+            <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="body"
+                data-class="c-sidebar-lg-show" responsive="true">
+                <i id="btnMenu" class="fas fa-fw fa-bars" style=""></i>
+            </button>
 
 
-        <form class="form-inline col-sm-3" style="position: relative;">
+            <form class="form-inline col-sm-3" style="position: relative;">
 
-            {{-- <select class="form-control mr-sm-4 searchable-field "></select> --}}
-            <input class="form-control buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
-                autocomplete="off" />
-            <i class="fas fa-spinner fa-pulse d-none" id="buscando" style="margin-left:-45px"></i>
-            <div id="resultados_sugeridos"
-                style="background-color: #fff; width:150%; position: absolute;top:50px;left:0">
-            </div>
-        </form>
+                {{-- <select class="form-control mr-sm-4 searchable-field "></select> --}}
+                <input class="form-control buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
+                    autocomplete="off" />
+                <i class="fas fa-spinner fa-pulse d-none" id="buscando" style="margin-left:-45px"></i>
+                <div id="resultados_sugeridos"
+                    style="background-color: #fff; width:150%; position: absolute;top:50px;left:0">
+                </div>
+            </form>
 
-        <ul class="ml-auto c-header-nav">
-            @if (count(config('panel.available_languages', [])) > 1)
-                <li class="c-header-nav-item dropdown d-md-down-none">
-                    <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                        aria-expanded="false">
-                        {{ strtoupper(app()->getLocale()) }}
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        @foreach (config('panel.available_languages') as $langLocale => $langName)
-                            <a class="dropdown-item"
-                                href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
-                                ({{ $langName }})</a>
-                        @endforeach
-                    </div>
-                </li>
-            @endif
+            <ul class="ml-auto c-header-nav">
+                @if (count(config('panel.available_languages', [])) > 1)
+                    <li class="c-header-nav-item dropdown d-md-down-none">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                            aria-expanded="false">
+                            {{ strtoupper(app()->getLocale()) }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            @foreach (config('panel.available_languages') as $langLocale => $langName)
+                                <a class="dropdown-item"
+                                    href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
+                                    ({{ $langName }})</a>
+                            @endforeach
+                        </div>
+                    </li>
+                @endif
 
-            {{-- @livewire('campana-notificaciones-component')
+                {{-- @livewire('campana-notificaciones-component')
                 @livewire('tareas-notificaciones-component')
                 <ul class="ml-auto c-header-nav">
                     <li class="px-2 c-header-nav-item c-d-legacy-none">
@@ -958,33 +988,37 @@
                 </script> --}}
 
 
-            <ul class="ml-auto c-header-nav">
+                <ul class="ml-auto c-header-nav">
 
-                <li class="c-header-nav-item dropdown show"><a class="c-header-nav-link" data-toggle="dropdown" href="#"
-                        role="button" aria-haspopup="true" aria-expanded="false">
-                        <div class="c-avatar">
-                            @if (auth()->user()->empleado)
-                                <img class="rounded-circle" style="height: 37px;clip-path: circle(18px at 50% 50%);"
-                                    src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                    alt="{{ auth()->user()->empleado->name }}">
-                            @else
-                                <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
-                            @endif
-                        </div>
-                    </a>
-                    <div class="pt-0 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px;">
-                        <div class="p-2">
-                            @if (auth()->user()->empleado)
-                                <img class="shadow rounded-circle"
-                                    style="height: 90px;clip-path: circle(43px at 50% 50%);"
-                                    src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                    alt="" srcset="">
-                            @else
-                                <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
-                            @endif
-                        </div>
-                        <div>
-                            {{-- @if (auth()->user()->empleado)
+                    <li class="c-header-nav-item dropdown show"><a class="c-header-nav-link" data-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <div class="">
+                                @if (auth()->user()->empleado)
+                                    <img class="rounded-circle"
+                                        style="max-width: 40px;clip-path: circle(50% at 50% 50%);"
+                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
+                                        alt="{{ auth()->user()->empleado->name }}">
+                                    <span class="ml-2">{!! auth()->user()->empleado->saludo !!}</span>
+                                @else
+                                    <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
+                                @endif
+                            </div>
+                        </a>
+                        <div class="pt-0 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px;">
+                            <div class="p-2">
+                                @if (auth()->user()->empleado)
+                                    <img class="shadow rounded-circle"
+                                        style="max-width: 65px;clip-path: circle(50% at 50% 50%);"
+                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
+                                        alt="" srcset="">
+                                    <p class="m-0 text-muted mt-2" style="font-weight: bold; font-size:13px">
+                                        Hola, {{ auth()->user()->empleado->name }}</p>
+                                @else
+                                    <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
+                                @endif
+                            </div>
+                            <div>
+                                {{-- @if (auth()->user()->empleado)
                                     <p class="m-0" style="font-weight: 600">
                                         {{ auth()->user()->empleado->name }}
                                     </p>
@@ -997,60 +1031,63 @@
                                     {{ auth()->user()->name }}
                                     <span>{{ auth()->user()->empleado->name }}</span>
                                 @endif --}}
-                        </div>
-                        {{-- <div class="py-2 dropdown-header bg-light"><strong>Ajustes</strong></div> --}}
-                        <div class="px-3 mt-3 d-flex justify-content-between">
-                            @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-                                @can('profile_password_edit')
+                            </div>
+                            {{-- <div class="py-2 dropdown-header bg-light"><strong>Ajustes</strong></div> --}}
+                            <div class="px-3 mt-1 d-flex justify-content-center">
+                                @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+                                    @can('profile_password_edit')
 
-                                    <a class="btn btn-sm shadow-xs border p-2 rounded {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
-                                        href="{{ route('profile.password.edit') }}">
-                                        <i class="mr-1 fas fa-user-cog">
-                                        </i>
-                                        Conf. Perfil
-                                    </a>
+                                        <a class="btn btn-sm shadow-xs border p-2 rounded {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                                            href="{{ route('profile.password.edit') }}">
+                                            <i class="mr-1 fas fa-user-cog">
+                                            </i>
+                                            Conf. Perfil
+                                        </a>
 
-                                @endcan
-                            @endif
-                            <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
+                                    @endcan
+                                @endif
+                                {{-- <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
                                 <i class="mr-1 fas fa-fw fa-lock">
                                 </i> Bloquear
-                            </a>
-                            <a class="p-2 border rounded shadow-xs btn btn-sm"
-                                onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                                <i class="mr-1 fas fa-sign-out-alt">
-                                </i> Salir
-                            </a>
+                            </a> --}}
+                                <a class="p-2 border rounded shadow-xs btn btn-sm"
+                                    onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                    <i class="mr-1 fas fa-sign-out-alt">
+                                    </i> Salir
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
 
+                </ul>
             </ul>
-        </ul>
-    </header>
+        </header>
 
-    <div class="c-body">
-        <main class="c-main">
-            <div class="container-fluid" id="app">
-                @if (session('message'))
-                    <div class="mb-2 row">
-                        <div class="col-lg-12">
-                            <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+        <div class="c-body">
+            <main class="c-main">
+                <div class="container-fluid" id="app">
+                    @if (session('message'))
+                        <div class="mb-2 row">
+                            <div class="col-lg-12">
+                                <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+                            </div>
                         </div>
-                    </div>
+                </div>
                 @endif
-                @if ($errors->count() > 0)
-                    <div class="alert alert-danger">
-                        <ul class="list-unstyled">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                <div id="errores_generales_admin_quitar_recursos">
+                    @if ($errors->count() > 0)
+                        <div class="alert alert-danger">
+                            <ul class="list-unstyled">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
                 @yield('content')
 
-            </div>
+        </div>
 
 
         </main>
@@ -1061,6 +1098,9 @@
     <!-- incluir de footer -->
     {{-- @include('partials.footer') --}}
     </div>
+    {{-- daterangepicker --}}
+
+
 
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
@@ -1072,7 +1112,7 @@
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
     </script>
 
-    <script src="{{ asset('push/bin/push.min.js') }}"></script>
+    {{-- <script src="{{ asset('tabantaj/push/bin/push.min.js') }}"></script> --}}
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
     </script> --}}
     {{-- <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script> --}}
@@ -1106,7 +1146,7 @@
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
     <script>
-        window.Laravel = {!! json_encode([
+        window.Laravel.user = {!! json_encode([
     'user' => auth()->check() ? auth()->user()->id : null,
 ]) !!};
     </script>
@@ -1126,8 +1166,12 @@
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
         })
-    </script>
 
+        $(".btn_bajar_scroll").click(function() {
+            $("lemnt_row_menu").fadeIn(0);
+            $('.c-sidebar-nav').delay(1000).scrollTop(900);
+        });
+    </script>
     <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>
@@ -1488,7 +1532,7 @@
 
     @yield('scripts')
 
-    
+
 
 </body>
 

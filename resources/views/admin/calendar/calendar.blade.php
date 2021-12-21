@@ -2,22 +2,22 @@
 @section('content')
 
 
+    {{ Breadcrumbs::render('admin.system-calendar') }}
 
 
-    
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/tui-calendar.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/default.css') }}">
-    
+
 
 
 <style type="text/css">
     .caja{
         width: 50% !important;
         padding: 0;
-        overflow: hidden !important;    
+        overflow: hidden !important;
     }
     #lnb{
         background: rgba(0,0,0,0) !important;
@@ -108,13 +108,40 @@
         display: block;
     }
 
+
+    .tui-full-calendar-weekday-schedule-title{
+        position: relative;
+   }
+    .tui-full-calendar-weekday-schedule-title strong{
+        font-size: 9pt !important;
+        position: absolute;
+        right: 10px;
+   }
+    .tui-full-calendar-weekday-schedule-title strong:before{
+        content: "Inicio:  ";
+   }
+   .dropdown-menu.show{
+        width: 250px !important;
+   }
+
+   .i_calendar{
+        font-size: 11pt;
+        width: 20px;
+        text-align: center;
+   }
+   .i_calendar_cuadro{
+        margin: 0px 8px;
+   }
+   .tui-full-calendar-popup-container .i_calendar_cuadro{
+    opacity: 0.7;
+   }
 </style>
 
 
 
 <div class="card" style="margin-top:50px;">
   <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-      <h3 class="mb-2  text-center text-white"><strong>Calendario</strong></h3>
+      <h3 class="mb-2  text-center text-white"><strong>Calendario de {{ $nombre_organizacion }}</strong></h3>
   </div>
 
     <div class="card-body" style="height: 600px;">
@@ -134,7 +161,7 @@
 
         <div class="caja">
             <div id="lnb">
-                
+
                 <div id="lnb-calendars" class="lnb-calendars">
                     <div>
                         <div class="lnb-calendars-item">
@@ -149,7 +176,7 @@
                     <div id="calendarList" class="lnb-calendars-d1">
                     </div>
                 </div>
-                
+
             </div>
             <div id="right">
                 <div id="menu">
@@ -163,17 +190,17 @@
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
                             <li role="presentation">
                                 <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
-                                    <i class="calendar-icon ic_view_day"></i>Atrasados
+                                    <i class="calendar-icon ic_view_day"></i>Diario
                                 </a>
                             </li>
                             <li role="presentation">
                                 <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
-                                    <i class="calendar-icon ic_view_week"></i>Semanales
+                                    <i class="calendar-icon ic_view_week"></i>Semanal
                                 </a>
                             </li>
                             <li role="presentation">
                                 <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
-                                    <i class="calendar-icon ic_view_month"></i>Mensuales
+                                    <i class="calendar-icon ic_view_month"></i>Mensual
                                 </a>
                             </li>
                             <li role="presentation">
@@ -237,8 +264,8 @@
 
 
 
-    
-    
+
+
     <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
     <script src="https://uicdn.toast.com/tui.time-picker/v2.0.3/tui-time-picker.min.js"></script>
     <script src="https://uicdn.toast.com/tui.date-picker/v4.0.3/tui-date-picker.min.js"></script>
@@ -253,12 +280,12 @@
                 {
                     id: 'planinicio{{$it_plan_base->id}}',
                     calendarId: '1',
-                    title: 'Actividad: {{$it_plan_base->actividad}}',
+                    title: '<i class="fas fa-thumbtack i_calendar_cuadro"></i> Actividad: {{$it_plan_base->actividad}}',
                     category: 'allday',
                     dueDateClass: '',
                     start: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_inicio)->format("Y-m-d") }}',
                     end: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_fin)->format("Y-m-d") }}',
-                    isReadOnly : true, 
+                    isReadOnly : true,
                 },
             @endforeach
 
@@ -266,12 +293,13 @@
                 {
                     id: 'auditoria{{$it_auditoria_internas->id}}',
                     calendarId: '3',
-                    title: 'Alcance: {{$it_auditoria_internas->alcance}}',
+                    title: '<i class="fas fa-clipboard-list i_calendar_cuadro"></i> Alcance: {{$it_auditoria_internas->alcance}}',
                     category: 'allday',
                     dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->format("Y-m-d") }}',
-                    end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->format("Y-m-d") }}',
+                    start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() }}',
+                    end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() }}',
                     isReadOnly : true, 
+
                 },
             @endforeach
 
@@ -281,11 +309,11 @@
 
                     id: 'recursos{{$it_recursos->id}}',
                     calendarId: '2',
-                    title: 'Tipo: {{$it_recursos->cursoscapacitaciones}}',
-                    category: 'allday',
+                    title: '<i class="fas fa-graduation-cap i_calendar_cuadro"></i> Tipo: {{$it_recursos->cursoscapacitaciones}}',
+                    category: 'time',
                     dueDateClass: '',
-                    start: '{{ \Carbon\Carbon::parse($it_recursos->fecha_curso)->format("Y-m-d") }}',
-                    end: '',
+                    start: '{{ \Carbon\Carbon::parse($it_recursos->fecha_curso)->toDateTimeString() }}',
+                    end: '{{ \Carbon\Carbon::parse($it_recursos->fecha_fin)->toDateTimeString() }}',
                     isReadOnly : true,
                 },
 
@@ -295,7 +323,7 @@
                 {
                 id: 'planinicio{{ $it_plan_base->id }}',
                 calendarId: '1',
-                title: 'Actividad: {{ $it_plan_base->name }}',
+                title: '<i class="fas fa-thumbtack i_calendar_cuadro"></i> Actividad: {{ $it_plan_base->name }}',
                 category: 'allday',
                 dueDateClass: '',
                 start: '{{ \Carbon\Carbon::createFromTimestamp(($it_plan_base->start/1000))->toDateString()}}',
@@ -304,15 +332,62 @@
                 isReadOnly : true,
                 },
             @endforeach
+            @foreach ($eventos as $evento)
 
-            
+                {
+                id: 'evento{{ $evento->id }}',
+                calendarId: '4',
+                title: '<i class="fas fa-cocktail i_calendar_cuadro"></i> Evento: {{ $evento->nombre }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[0])->format("Y-m-d") }}',
+                end: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[1])->format("Y-m-d") }}',
+                isReadOnly : true,
+                },
+            @endforeach
 
+
+            @foreach($cumples_aniversarios as $cumple)
+                {
+                    id: 'cumple{{$cumple->id}}',
+                    calendarId: '5',
+                    title: '<i class="fas fa-birthday-cake i_calendar_cuadro"></i> Cumpleaños de {{$cumple->name}}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ $cumple->actual_birdthday }}',
+                    end: '{{ $cumple->actual_birdthday }}',
+                    isReadOnly : true,
+                },
+            @endforeach
+
+
+            @foreach($cumples_aniversarios as $aniversario)
+                {
+                    id: 'aniversario{{$aniversario->id}}',
+                    calendarId: '6',
+                    title: '<i class="fas fa-award i_calendar_cuadro"></i> Aniversario de {{$aniversario->name}}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ $aniversario->actual_aniversary }}',
+                    end: '{{ $aniversario->actual_aniversary }}',
+                    isReadOnly : true,
+                },
+            @endforeach
         ];
     </script>
 
     </script>
     <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+        
+                 
 
+                }, 5000);
+        })
+        
+    </script>
 
 
 

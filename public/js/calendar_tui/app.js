@@ -25,8 +25,15 @@
             },
             time: function(schedule) {
                 return getTimeTemplate(schedule, false);
-            }
-        }
+            },
+            collapseBtnTitle: function() {
+                return '<span class="tui-full-calendar-icon tui-full-calendar-ic-arrow-solid-top">test</span>';
+            },
+        },
+        // month: {daynames: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], // Translate the required 
+        // language.startDayOfWeek: 0,narrowWeekend: true},
+        // week: {daynames: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], // Translate the required 
+        // language.startDayOfWeek: 0,narrowWeekend: true}
     });
 
     // event handlers
@@ -36,6 +43,14 @@
         },
         'clickSchedule': function(e) {
             console.log('clickSchedule', e);
+
+            let encabezado_card = document.querySelector('.tui-full-calendar-schedule-title');
+            let encabezado_card_contenido = encabezado_card.textContent;
+            encabezado_card.innerHTML = encabezado_card_contenido;
+
+            let contenido_card = document.querySelector('span.tui-full-calendar-content');
+            let contenido_card_contenido = contenido_card.textContent;
+            contenido_card.innerHTML = contenido_card_contenido;
         },
         'clickDayname': function(date) {
             console.log('clickDayname', date);
@@ -356,19 +371,19 @@
         var iconClassName;
 
         if (type === 'day') {
-            type = 'Daily';
+            type = 'Diario';
             iconClassName = 'calendar-icon ic_view_day';
         } else if (type === 'week') {
-            type = 'Weekly';
+            type = 'Semanal';
             iconClassName = 'calendar-icon ic_view_week';
         } else if (options.month.visibleWeeksCount === 2) {
-            type = '2 weeks';
+            type = '2 semanas';
             iconClassName = 'calendar-icon ic_view_week';
         } else if (options.month.visibleWeeksCount === 3) {
-            type = '3 weeks';
+            type = '3 semanas';
             iconClassName = 'calendar-icon ic_view_week';
         } else {
-            type = 'Monthly';
+            type = 'Mensual';
             iconClassName = 'calendar-icon ic_view_month';
         }
 
@@ -386,17 +401,18 @@
         var renderRange = document.getElementById('renderRange');
         var options = cal.getOptions();
         var viewName = cal.getViewName();
-
+        moment.months('es');
+        moment.monthsShort('es');
         var html = [];
         if (viewName === 'day') {
-            html.push(currentCalendarDate('YYYY.MM.DD'));
+            html.push(currentCalendarDate('DD MMM YYYY').replace('Jan', 'Ene').replace('Apr', 'Abr').replace('Aug', 'Ago').replace('Dec', 'Dic'));
         } else if (viewName === 'month' &&
             (!options.month.visibleWeeksCount || options.month.visibleWeeksCount > 4)) {
-            html.push(currentCalendarDate('YYYY.MM'));
+            html.push(currentCalendarDate('MMM YYYY').replace('Jan', 'Ene').replace('Apr', 'Abr').replace('Aug', 'Ago').replace('Dec', 'Dic'));
         } else {
-            html.push(moment(cal.getDateRangeStart().getTime()).format('YYYY.MM.DD'));
-            html.push(' ~ ');
-            html.push(moment(cal.getDateRangeEnd().getTime()).format(' MM.DD'));
+            html.push(moment(cal.getDateRangeStart().getTime()).format('DD MMM YYYY').replace('Jan', 'Ene').replace('Apr', 'Abr').replace('Aug', 'Ago').replace('Dec', 'Dic'));
+            html.push(' - ');
+            html.push(moment(cal.getDateRangeEnd().getTime()).format('DD MMM YYYY').replace('Jan', 'Ene').replace('Apr', 'Abr').replace('Aug', 'Ago').replace('Dec', 'Dic'));
         }
         renderRange.innerHTML = html.join('');
     }

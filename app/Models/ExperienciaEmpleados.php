@@ -5,10 +5,15 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class ExperienciaEmpleados extends Model
 {
     use SoftDeletes;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     protected $table = 'experiencia_empleados';
 
     protected $dates = [
@@ -33,6 +38,26 @@ class ExperienciaEmpleados extends Model
         'descripcion',
 
     ];
+
+    protected $appends = ['inicio_mes_ymd', 'fin_mes_ymd'];
+
+    public function getInicioMesYmdAttribute()
+    {
+        if ($this->inicio_mes) {
+            return Carbon::parse($this->inicio_mes)->format('Y-m-d');
+        } else {
+            return null;
+        }
+    }
+
+    public function getFinMesYmdAttribute()
+    {
+        if ($this->inicio_mes) {
+            return Carbon::parse($this->fin_mes)->format('Y-m-d');
+        } else {
+            return null;
+        }
+    }
 
     public function empleado_experiencia()
     {

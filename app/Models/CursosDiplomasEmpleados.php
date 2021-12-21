@@ -5,12 +5,16 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class CursosDiplomasEmpleados extends Model
 {
     use SoftDeletes;
-    protected $table = 'cursos_diplomados_empleados';
+    use QueryCacheable;
 
+    protected $table = 'cursos_diplomados_empleados';
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     protected $dates = [
         'created_at',
         'updated_at',
@@ -38,6 +42,17 @@ class CursosDiplomasEmpleados extends Model
         'duracion',
 
     ];
+
+    protected $appends = ['year_ymd'];
+
+    public function getYearYmdAttribute()
+    {
+        if ($this->año) {
+            return Carbon::parse($this->año)->format('Y-m-d');
+        } else {
+            return null;
+        }
+    }
 
     public function empleado_cursos()
     {
