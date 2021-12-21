@@ -108,6 +108,10 @@ class OrganizacionController extends Controller
             'fecha_constitucion' => $request->fecha_constitucion,
             'num_empleados' => $request->num_empleados,
             'tamano' => $request->tamano,
+            'linkedln' => $request->linkedln,
+            'youtube' => $request->youtube,
+            'facebook' => $request->facebook,
+            'twitter' => $request->twitter,
         ]);
         $this->saveOrUpdateSchedule($request, $organizacions);
 
@@ -225,8 +229,11 @@ class OrganizacionController extends Controller
     public function visualizarOrganizacion()
     {
         $organizacions = Organizacion::first();
-
-        $schedule = Organizacion::find(1)->schedules;
+        // dd($organizacions);
+        $schedule = collect();
+        if ($organizacions) {
+            $schedule = $organizacions->schedules;
+        }
 
         $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 
