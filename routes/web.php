@@ -1137,20 +1137,3 @@ Route::get('ExportPoliticaSgsi', 'ExportExcel@PoliticaSgsi')->name('descarga-pol
 Route::get('ExportGrupoArea', 'ExportExcel@GrupoArea')->name('descarga-grupo_area');
 Route::get('ExportEmpleado', 'ExportExcel@Empleado')->name('descarga-empleado');
 Route::get('ExportActivos', 'ExportExcel@Activos')->name('descarga-activo_inventario');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

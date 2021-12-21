@@ -1840,26 +1840,6 @@ module.exports = {
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-// import Vue from 'vue';
-// import Vuex from 'vuex';
-// import FileManager from 'laravel-file-manager'
-// Vue.use(Vuex);
-// // create Vuex store, if you don't have it
-// const store = new Vuex.Store();
-// Vue.use(FileManager, { store });
-// // Vue.component('file-managers',require("./components/FileManagers.vue").default);
-// const app = new Vue({
-//     el: "#app",
-//     store,
-//     data() {
-//         return {
-//             settings: {
-//                 baseUrl: 'http://tabantaj.test/file-manager',
-//                 lang: 'es',
-//             }
-//         }
-//     }
-// });
 // Laravel Echo
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
