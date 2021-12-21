@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
 use App\Models\Calendario;
+use App\Models\Empleado;
+use App\Models\Organizacion;
 use App\Models\PlanBaseActividade;
 use App\Models\PlanImplementacion;
 use App\Models\Recurso;
@@ -57,6 +59,10 @@ class SystemCalendarController extends Controller
         $recursos = Recurso::get();
         $eventos = Calendario::get();
 
-        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas', 'eventos'));
+        $cumples_aniversarios = Empleado::get();
+        $nombre_organizacion = Organizacion::first();
+        $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';
+
+        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas', 'eventos', 'cumples_aniversarios', 'nombre_organizacion'));
     }
 }

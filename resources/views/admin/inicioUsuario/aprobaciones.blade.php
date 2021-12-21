@@ -25,8 +25,8 @@
             </div>
         </div>
     </div>
-    <h5 class="p-0 m-0 text-muted">Solicitados: Documentos que envíe a aprobación</h5>
-    <hr>
+    <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #0CA193;">Solicitados: Documentos que envíe a
+        aprobación</h5>
     <table id="tblMisDocumentos" class="table">
         <thead>
             <tr>
@@ -109,10 +109,10 @@
                             @endswitch
                         @endif
                     </td>
-                    <td style="text-align: center !important;">
+                    <td>
                         {{ $documento->version == 0 ? 'Sin versión actualmente' : $documento->version }}
                     </td>
-                    <td style="text-align: center !important;">
+                    <td>
                         {{ $documento->fecha_dmy ?? '' }}
                     </td>
                     <td>
@@ -153,12 +153,6 @@
                     </td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-
-                            <a class="btn btn-sm" style="border:none;" title="Visualizar Documento"
-                                href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
-                                <i class="fas fa-eye text-dark" style="font-size: 15px;"></i>
-                            </a>
-
                             <a class="btn btn-sm " title="Visualizar revisiones" style="border:none;"
                                 href="{{ route('admin.documentos.renderHistoryReview', $documento->id) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
@@ -181,9 +175,18 @@
                     </td>
                 </tr>
 
-            @endforeach
-        </tbody>
-    </table>
+                @if ($documento->estatus == 3 or $documento->estatus == 4)
+                    <button class="btn_archivar" title="Archivar" data-toggle="modal"
+                        data-target="#alert_aprob_arch{{ $documento->id }}">
+                        <i class="fas fa-archive"></i>
+                    </button>
+                @endif
+</div>
+</td>
+</tr>
+@endforeach
+</tbody>
+</table>
 </div>
 
 <div>
@@ -219,8 +222,8 @@
 </div>
 
 <div class="card-body datatable-fix">
-    <h5 class="p-0 m-0 text-muted">Requeridos: Documentos que debo aprobar</h5>
-    <hr>
+    <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #0CA193;">Requeridos: Documentos que debo aprobar
+    </h5>
     <table id="tabla_usuario_aprobaciones" class="table">
         <thead>
             <tr>

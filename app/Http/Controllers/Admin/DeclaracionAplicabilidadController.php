@@ -139,7 +139,7 @@ class DeclaracionAplicabilidadController extends Controller
 
                 case 'justificacion':
                     try {
-                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['justificacion'=>$request->value]);
+                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['justificacion'=>$request->value]);
                         // $gapun->justificacion = $request->value;
 
                         return response()->json(['success' => true, 'id'=>$id]);
@@ -150,7 +150,7 @@ class DeclaracionAplicabilidadController extends Controller
                     break;
                 case 'aplica':
                     try {
-                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['aplica'=>$request->value]);
+                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica'=>$request->value]);
                         // $gapun->aplica = $request->value;
                         return response()->json(['success' => true, 'id'=>$id]);
                     } catch (Throwable $e) {

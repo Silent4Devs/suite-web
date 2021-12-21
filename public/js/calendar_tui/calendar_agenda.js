@@ -79,16 +79,32 @@ function hexToRGBA(hex) {
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = 'Eventos';
-    calendar.color = '#000000';
+    calendar.name = '<i class="fas fa-cocktail i_calendar" style="color:#87F378;"></i> Eventos';
+    calendar.color = '#ffffff';
     calendar.bgColor = '#87F378';
     calendar.dragBgColor = '#87F378';
     calendar.borderColor = '#87F378';
     addCalendar(calendar);
 
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = '<i class="fas fa-birthday-cake i_calendar" style="color:#FF9B00;"></i> Cumpleaños';
+    calendar.color = '#ffffff';
+    calendar.bgColor = '#FF9B00';
+    calendar.dragBgColor = '#FF9B00';
+    calendar.borderColor = '#FF9B00';
+    addCalendar(calendar);
 
-
-
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = '<i class="fas fa-award i_calendar" style="color:#DDD30A;"></i> Aniversarios';
+    calendar.color = '#ffffff';
+    calendar.bgColor = '#DDD30A';
+    calendar.dragBgColor = '#DDD30A';
+    calendar.borderColor = '#DDD30A';
+    addCalendar(calendar);
 
 
 

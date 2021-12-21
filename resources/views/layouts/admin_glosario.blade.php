@@ -10,7 +10,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>{{ trans('panel.site_title') }}</title>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 
@@ -47,10 +47,21 @@
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
 
     <style type="text/css">
+        .select2-selection--multiple {
+            overflow: hidden !important;
+            height: auto !important;
+            padding: 0 5px 5px 5px !important;
+        }
+
+        .select2-container {
+            margin-top: 10px !important;
+        }
+
         /*TOASTR*/
-        #toast-container > div{
+        #toast-container>div {
             opacity: 1 !important;
         }
+
         .toast-success {
             /* background-color: #06b966; */
             background-color: #06a755;
@@ -196,7 +207,8 @@
             color: #008186 !important;
         }
 
-        .btn.btn-success, .btn.btn-danger {
+        .btn.btn-success,
+        .btn.btn-danger {
             width: 150px;
             height: 35px;
             background-color: #00abb2 !important;
@@ -205,7 +217,8 @@
             border: none !important;
         }
 
-        .btn.btn-success:hover, .btn.btn-danger:hover {
+        .btn.btn-success:hover,
+        .btn.btn-danger:hover {
             color: #00abb2 !important;
             background-color: rgba(0, 0, 0, 0) !important;
             box-shadow: 0 0 0 1px #00abb2;
@@ -279,6 +292,11 @@
             /* height: 37px; */
         }
 
+        .img_empleado {
+            clip-path: circle(20px at 50% 40%);
+            height: 40px;
+        }
+
         .fm-breadcrumb .breadcrumb.active-manager {
             background-color: ##00abb229;
             margin: -5px 0 0 0;
@@ -289,11 +307,6 @@
         }
 
     </style>
-
-
-
-
-
     {{-- menu tabs --}}
     <style type="text/css">
         .caja_botones_menu {
@@ -329,6 +342,7 @@
         .caja_botones_menu a.btn_activo,
         .caja_botones_menu a.btn_activo:hover {
             background-color: #fff;
+            box-shadow: 0px -2px 0px 0px;
         }
 
         .caja_botones_menu a:hover {
@@ -359,8 +373,6 @@
             opacity: 1 !important;
         }
 
-
-
         .seccion_div {
             overflow: hidden;
             width: 990px;
@@ -372,14 +384,11 @@
             width: 100%;
         }
 
-
-
-
-
         /*scroll style*/
 
         .scroll_estilo::-webkit-scrollbar {
             width: 7px;
+            height: 7px;
         }
 
         /* Track */
@@ -397,475 +406,480 @@
         .scroll_estilo::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.5);
         }
+
     </style>
-
     {{-- Estilos Select 2 --}}
-
-<style>
-    /* line 1, ../scss/core.scss */
-    .select2-selection--multiple {
-        overflow: hidden !important;
-        height: auto !important;
-    }
-
-    .select2-container {
-        box-sizing: border-box;
-        display: inline-block;
-        margin: 0;
-        position: relative;
-        vertical-align: middle;
-    }
-
-    /* line 1, ../scss/_single.scss */
-    .select2-container .select2-selection--single {
-        box-sizing: border-box;
-        cursor: pointer;
-        display: block;
-        height: 38px;
-        user-select: none;
-        -webkit-user-select: none;
-    }
-
-    /* line 12, ../scss/_single.scss */
-    .select2-container .select2-selection--single .select2-selection__rendered {
-        display: block;
-        padding-left: 8px;
-        padding-right: 20px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    /* line 25, ../scss/_single.scss */
-    .select2-container[dir="rtl"] .select2-selection--single .select2-selection__rendered {
-        padding-right: 8px;
-        padding-left: 20px;
-    }
-
-    /* line 1, ../scss/_multiple.scss */
-
-    .select2-container .select2-selection--multiple {
-        box-sizing: border-box;
-        cursor: pointer;
-        display: block;
-        user-select: none;
-        -webkit-user-select: none;
-    }
-
-    /* line 12, ../scss/_multiple.scss */
-    .select2-container .select2-selection--multiple .select2-selection__rendered {
-        display: inline-block;
-        overflow: hidden;
-        padding-left: 8px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    /* line 21, ../scss/_multiple.scss */
-    .select2-container .select2-search--inline {
-        float: left;
-    }
-
-    /* line 24, ../scss/_multiple.scss */
-    .select2-container .select2-search--inline .select2-search__field {
-        box-sizing: border-box;
-        border: none;
-        font-size: 100%;
-        margin-top: 3px;
-        margin-left: 3px;
-    }
-
-    /* line 31, ../scss/_multiple.scss */
-    .select2-container .select2-search--inline .select2-search__field::-webkit-search-cancel-button {
-        -webkit-appearance: none;
-    }
-
-    /* line 1, ../scss/_dropdown.scss */
-    .select2-dropdown {
-        background-color: white;
-        border: 1px solid #DDD;
-        border-radius: 4px;
-        box-sizing: border-box;
-        display: block;
-        position: absolute;
-        left: -100000px;
-        width: 100%;
-        z-index: 1051;
-    }
-
-    /* line 18, ../scss/_dropdown.scss */
-    .select2-results {
-        display: block;
-    }
-
-    /* line 22, ../scss/_dropdown.scss */
-    .select2-results__options {
-        list-style: none;
-        list-style-type: none !important;
-        margin: 0;
-        padding: 0;
-    }
-
-    /* line 28, ../scss/_dropdown.scss */
-    .select2-results__option {
-        padding: 6px;
-        user-select: none;
-        -webkit-user-select: none;
-    }
-
-    /* line 34, ../scss/_dropdown.scss */
-    .select2-results__option[aria-selected] {
-        cursor: pointer;
-    }
-
-    /* line 39, ../scss/_dropdown.scss */
-    .select2-container--open .select2-dropdown {
-        left: 0;
-    }
-
-    /* line 43, ../scss/_dropdown.scss */
-    .select2-container--open .select2-dropdown--above {
-        border-bottom: none;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    /* line 49, ../scss/_dropdown.scss */
-    .select2-container--open .select2-dropdown--below {
-        border-top: none;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }
-
-    /* line 55, ../scss/_dropdown.scss */
-    .select2-search--dropdown {
-        display: block;
-        padding: 7px;
-    }
-
-    /* line 59, ../scss/_dropdown.scss */
-    .select2-search--dropdown .select2-search__field {
-        padding: 4px;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    /* line 64, ../scss/_dropdown.scss */
-    .select2-search--dropdown .select2-search__field::-webkit-search-cancel-button {
-        -webkit-appearance: none;
-    }
-
-    /* line 69, ../scss/_dropdown.scss */
-    .select2-search--dropdown.select2-search--hide {
-        display: none;
-    }
-
-    /* line 15, ../scss/core.scss */
-    .select2-close-mask {
-        border: 0;
-        margin: 0;
-        padding: 0;
-        display: block;
-        position: fixed;
-        left: 0;
-        top: 0;
-        min-height: 100%;
-        min-width: 100%;
-        height: auto;
-        width: auto;
-        opacity: 0;
-        z-index: 99;
-        background-color: #fff;
-        filter: alpha(opacity=0);
-    }
-
-    /* line 1, ../scss/theme/default/_single.scss */
-    .select2-container--default .select2-selection--single {
-        background-color: #f0f0f0;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 2px;
-    }
-
-    /* line 6, ../scss/theme/default/_single.scss */
-    .select2-container--default .select2-selection--single:focus {
-        outline: 0;
-    }
-
-    /* line 10, ../scss/theme/default/_single.scss */
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        color: #444;
-        line-height: 34px;
-    }
-
-    /* line 15, ../scss/theme/default/_single.scss */
-    .select2-container--default .select2-selection--single .select2-selection__clear {
-        cursor: pointer;
-        float: right;
-        font-weight: bold;
-    }
-
-    /* line 21, ../scss/theme/default/_single.scss */
-    .select2-container--default .select2-selection--single .select2-selection__placeholder {
-        color: #999;
-    }
-
-    /* line 25, ../scss/theme/default/_single.scss */
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        height: 36px;
-        position: absolute;
-        top: 1px;
-        right: 1px;
-        width: 20px;
-    }
-
-    /* line 35, ../scss/theme/default/_single.scss */
-    .select2-container--default .select2-selection--single .select2-selection__arrow b {
-        border-color: #888 transparent transparent transparent;
-        border-style: solid;
-        border-width: 5px 4px 0 4px;
-        height: 0;
-        left: 50%;
-        margin-left: -4px;
-        margin-top: -2px;
-        position: absolute;
-        top: 50%;
-        width: 0;
-    }
-
-    /* line 56, ../scss/theme/default/_single.scss */
-    .select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__clear {
-        float: left;
-    }
-
-    /* line 60, ../scss/theme/default/_single.scss */
-    .select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__arrow {
-        left: 1px;
-        right: auto;
-    }
-
-    /* line 68, ../scss/theme/default/_single.scss */
-    .select2-container--default.select2-container--disabled .select2-selection--single {
-        background-color: #eee;
-        cursor: default;
-    }
-
-    /* line 72, ../scss/theme/default/_single.scss */
-    .select2-container--default.select2-container--disabled .select2-selection--single .select2-selection__clear {
-        display: none;
-    }
-
-    /* line 81, ../scss/theme/default/_single.scss */
-    .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
-        border-color: transparent transparent #888 transparent;
-        border-width: 0 4px 5px 4px;
-    }
-
-    /* line 1, ../scss/theme/default/_multiple.scss */
-    .select2-container--default .select2-selection--multiple {
-        background-color: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        -webkit-border-radius: 2px;
-        border-radius: 2px;
-        cursor: text;
-        height: 22px;
-    }
-
-    /* line 7, ../scss/theme/default/_multiple.scss */
-    .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-        box-sizing: border-box;
-        list-style: none;
-        list-style-type: none !important;
-        padding: 0 0 0 4px !important;
-        margin: 0;
-        padding: 0 5px;
-        width: 100%;
-    }
-
-    /* line 15, ../scss/theme/default/_multiple.scss */
-    .select2-container--default .select2-selection--multiple .select2-selection__placeholder {
-        color: #999;
-        margin-top: 5px;
-        float: left;
-    }
-
-    /* line 23, ../scss/theme/default/_multiple.scss */
-    .select2-container--default .select2-selection--multiple .select2-selection__clear {
-        cursor: pointer;
-        float: right;
-        font-weight: bold;
-        margin-top: px;
-        margin-right: 2px;
-    }
-
-    /* line 31, ../scss/theme/default/_multiple.scss */
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        color: #ffffff;
-        background-color: #4a89dc;
-        // border: 1px solid #ddd;
-        border-radius: 2px;
-        cursor: default;
-        float: left;
-        margin-right: 5px;
-        margin-top: 1px;
-        padding: 1px 2px 2px !important;
-    }
-
-    /* line 46, ../scss/theme/default/_multiple.scss */
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-        color: #fff;
-        cursor: pointer;
-        display: inline-block;
-        font-weight: bold;
-        margin-right: 2px;
-    }
-
-    /* line 55, ../scss/theme/default/_multiple.scss */
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
-        color: #333;
-    }
-
-    /* line 63, ../scss/theme/default/_multiple.scss */
-    .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice,
-    .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__placeholder {
-        float: right;
-    }
-
-    /* line 67, ../scss/theme/default/_multiple.scss */
-    .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice {
-        margin-left: 5px;
-        margin-right: auto;
-    }
-
-    /* line 72, ../scss/theme/default/_multiple.scss */
-    .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice__remove {
-        margin-left: 2px;
-        margin-right: auto;
-    }
-
-    /* line 80, ../scss/theme/default/_multiple.scss */
-    .select2-container--default.select2-container--focus .select2-selection--multiple {
-        border: 1px solid #CCC;
-        outline: 0;
-    }
-
-    /* line 87, ../scss/theme/default/_multiple.scss */
-    .select2-container--default.select2-container--disabled .select2-selection--multiple {
-        background-color: #eee;
-        cursor: default;
-    }
-
-    /* line 92, ../scss/theme/default/_multiple.scss */
-    .select2-container--default.select2-container--disabled .select2-selection__choice__remove {
-        display: none;
-    }
-
-    /* line 6, ../scss/theme/default/layout.scss */
-    .select2-container--default.select2-container--open.select2-container--above .select2-selection--single,
-    .select2-container--default.select2-container--open.select2-container--above .select2-selection--multiple {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }
-
-    /* line 13, ../scss/theme/default/layout.scss */
-    .select2-container--default.select2-container--open.select2-container--below .select2-selection--single,
-    .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    /* line 20, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-search--dropdown .select2-search__field {
-        border: 1px solid #DDD;
-    }
-
-    /* line 22, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-search--dropdown .select2-search__field:focus {
-        outline: 0;
-    }
-
-    /* line 29, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-search--inline .select2-search__field {
-        background: transparent;
-        border: none;
-        outline: 0;
-    }
-
-    /* line 36, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results>.select2-results__options {
-        max-height: 200px;
-        overflow-y: auto;
-        padding: 2px !important;
-    }
-
-    /* line 42, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results__option[role=group] {
-        padding: 0;
-    }
-
-    /* line 46, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results__option[aria-disabled=true] {
-        color: #999;
-    }
-
-    /* line 50, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results__option[aria-selected=true] {
-        background-color: #EEE;
-    }
-
-    /* line 54, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results__option .select2-results__option {
-        padding-left: 1em;
-    }
-
-    /* line 57, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results__option .select2-results__option .select2-results__group {
-        padding-left: 0;
-    }
-
-    /* line 61, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results__option .select2-results__option .select2-results__option {
-        margin-left: -1em;
-        padding-left: 2em;
-    }
-
-    /* line 65, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
-        margin-left: -2em;
-        padding-left: 3em;
-    }
-
-    /* line 69, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
-        margin-left: -3em;
-        padding-left: 4em;
-    }
-
-    /* line 73, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
-        margin-left: -4em;
-        padding-left: 5em;
-    }
-
-    /* line 77, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
-        margin-left: -5em;
-        padding-left: 6em;
-    }
-
-    /* line 88, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results__option--highlighted[aria-selected] {
-        background-color: #4a89dc;
-        color: white;
-    }
-
-    /* line 93, ../scss/theme/default/layout.scss */
-    .select2-container--default .select2-results__group {
-        cursor: default;
-        display: block;
-        padding: 6px;
-    }
-
-</style>
+    <style>
+        /* line 1, ../scss/core.scss */
+        .select2-selection--multiple {
+            overflow: hidden !important;
+            height: auto !important;
+        }
+
+        .select2-container {
+            box-sizing: border-box;
+            display: inline-block;
+            margin: 0;
+            position: relative;
+            vertical-align: middle;
+        }
+
+        /* line 1, ../scss/_single.scss */
+        .select2-container .select2-selection--single {
+            box-sizing: border-box;
+            cursor: pointer;
+            display: block;
+            height: 38px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* line 12, ../scss/_single.scss */
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            display: block;
+            padding-left: 8px;
+            padding-right: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* line 25, ../scss/_single.scss */
+        .select2-container[dir="rtl"] .select2-selection--single .select2-selection__rendered {
+            padding-right: 8px;
+            padding-left: 20px;
+        }
+
+        /* line 1, ../scss/_multiple.scss */
+
+        .select2-container .select2-selection--multiple {
+            box-sizing: border-box;
+            cursor: pointer;
+            display: block;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* line 12, ../scss/_multiple.scss */
+        .select2-container .select2-selection--multiple .select2-selection__rendered {
+            display: inline-block;
+            overflow: hidden;
+            padding-left: 8px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* line 21, ../scss/_multiple.scss */
+        .select2-container .select2-search--inline {
+            float: left;
+        }
+
+        /* line 24, ../scss/_multiple.scss */
+        .select2-container .select2-search--inline .select2-search__field {
+            box-sizing: border-box;
+            border: none;
+            font-size: 100%;
+            margin-top: 3px;
+            margin-left: 3px;
+        }
+
+        /* line 31, ../scss/_multiple.scss */
+        .select2-container .select2-search--inline .select2-search__field::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+        }
+
+        /* line 1, ../scss/_dropdown.scss */
+        .select2-dropdown {
+            background-color: white;
+            border: 1px solid #DDD;
+            border-radius: 4px;
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            left: -100000px;
+            width: 100%;
+            z-index: 1051;
+        }
+
+        /* line 18, ../scss/_dropdown.scss */
+        .select2-results {
+            display: block;
+        }
+
+        /* line 22, ../scss/_dropdown.scss */
+        .select2-results__options {
+            list-style: none;
+            list-style-type: none !important;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* line 28, ../scss/_dropdown.scss */
+        .select2-results__option {
+            padding: 6px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* line 34, ../scss/_dropdown.scss */
+        .select2-results__option[aria-selected] {
+            cursor: pointer;
+        }
+
+        /* line 39, ../scss/_dropdown.scss */
+        .select2-container--open .select2-dropdown {
+            left: 0;
+        }
+
+        /* line 43, ../scss/_dropdown.scss */
+        .select2-container--open .select2-dropdown--above {
+            border-bottom: none;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        /* line 49, ../scss/_dropdown.scss */
+        .select2-container--open .select2-dropdown--below {
+            border-top: none;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        /* line 55, ../scss/_dropdown.scss */
+        .select2-search--dropdown {
+            display: block;
+            padding: 7px;
+        }
+
+        /* line 59, ../scss/_dropdown.scss */
+        .select2-search--dropdown .select2-search__field {
+            padding: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* line 64, ../scss/_dropdown.scss */
+        .select2-search--dropdown .select2-search__field::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+        }
+
+        /* line 69, ../scss/_dropdown.scss */
+        .select2-search--dropdown.select2-search--hide {
+            display: none;
+        }
+
+        /* line 15, ../scss/core.scss */
+        .select2-close-mask {
+            border: 0;
+            margin: 0;
+            padding: 0;
+            display: block;
+            position: fixed;
+            left: 0;
+            top: 0;
+            min-height: 100%;
+            min-width: 100%;
+            height: auto;
+            width: auto;
+            opacity: 0;
+            z-index: 99;
+            background-color: #fff;
+            filter: alpha(opacity=0);
+        }
+
+        /* line 1, ../scss/theme/default/_single.scss */
+        .select2-container--default .select2-selection--single {
+            background-color: #f0f0f0;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+        }
+
+        /* line 6, ../scss/theme/default/_single.scss */
+        .select2-container--default .select2-selection--single:focus {
+            outline: 0;
+        }
+
+        /* line 10, ../scss/theme/default/_single.scss */
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #444;
+            line-height: 34px;
+        }
+
+        /* line 15, ../scss/theme/default/_single.scss */
+        .select2-container--default .select2-selection--single .select2-selection__clear {
+            cursor: pointer;
+            float: right;
+            font-weight: bold;
+        }
+
+        /* line 21, ../scss/theme/default/_single.scss */
+        .select2-container--default .select2-selection--single .select2-selection__placeholder {
+            color: #999;
+        }
+
+        /* line 25, ../scss/theme/default/_single.scss */
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 36px;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            width: 20px;
+        }
+
+        /* line 35, ../scss/theme/default/_single.scss */
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #888 transparent transparent transparent;
+            border-style: solid;
+            border-width: 5px 4px 0 4px;
+            height: 0;
+            left: 50%;
+            margin-left: -4px;
+            margin-top: -2px;
+            position: absolute;
+            top: 50%;
+            width: 0;
+        }
+
+        /* line 56, ../scss/theme/default/_single.scss */
+        .select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__clear {
+            float: left;
+        }
+
+        /* line 60, ../scss/theme/default/_single.scss */
+        .select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__arrow {
+            left: 1px;
+            right: auto;
+        }
+
+        /* line 68, ../scss/theme/default/_single.scss */
+        .select2-container--default.select2-container--disabled .select2-selection--single {
+            background-color: #eee;
+            cursor: default;
+        }
+
+        /* line 72, ../scss/theme/default/_single.scss */
+        .select2-container--default.select2-container--disabled .select2-selection--single .select2-selection__clear {
+            display: none;
+        }
+
+        /* line 81, ../scss/theme/default/_single.scss */
+        .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+            border-color: transparent transparent #888 transparent;
+            border-width: 0 4px 5px 4px;
+        }
+
+        /* line 1, ../scss/theme/default/_multiple.scss */
+        .select2-container--default .select2-selection--multiple {
+            background-color: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            -webkit-border-radius: 2px;
+            border-radius: 2px;
+            cursor: text;
+            height: 22px;
+        }
+
+        /* line 7, ../scss/theme/default/_multiple.scss */
+        .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+            box-sizing: border-box;
+            list-style: none;
+            list-style-type: none !important;
+            padding: 0 0 0 4px !important;
+            margin: 0;
+            padding: 0 5px;
+            width: 100%;
+        }
+
+        /* line 15, ../scss/theme/default/_multiple.scss */
+        .select2-container--default .select2-selection--multiple .select2-selection__placeholder {
+            color: #999;
+            margin-top: 5px;
+            float: left;
+        }
+
+        /* line 23, ../scss/theme/default/_multiple.scss */
+        .select2-container--default .select2-selection--multiple .select2-selection__clear {
+            cursor: pointer;
+            float: right;
+            font-weight: bold;
+            margin-top: px;
+            margin-right: 2px;
+        }
+
+        /* line 31, ../scss/theme/default/_multiple.scss */
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            color: #ffffff;
+            background-color: #4a89dc;
+            // border: 1px solid #ddd;
+            border-radius: 2px;
+            cursor: default;
+            float: left;
+            margin-right: 5px;
+            margin-top: 1px;
+            padding: 1px 2px 2px !important;
+        }
+
+        /* line 46, ../scss/theme/default/_multiple.scss */
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: bold;
+            margin-right: 2px;
+        }
+
+        /* line 55, ../scss/theme/default/_multiple.scss */
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+            color: #333;
+        }
+
+        /* line 63, ../scss/theme/default/_multiple.scss */
+        .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice,
+        .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__placeholder {
+            float: right;
+        }
+
+        /* line 67, ../scss/theme/default/_multiple.scss */
+        .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice {
+            margin-left: 5px;
+            margin-right: auto;
+        }
+
+        /* line 72, ../scss/theme/default/_multiple.scss */
+        .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice__remove {
+            margin-left: 2px;
+            margin-right: auto;
+        }
+
+        /* line 80, ../scss/theme/default/_multiple.scss */
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border: 1px solid #CCC;
+            outline: 0;
+        }
+
+        /* line 87, ../scss/theme/default/_multiple.scss */
+        .select2-container--default.select2-container--disabled .select2-selection--multiple {
+            background-color: #eee;
+            cursor: default;
+        }
+
+        /* line 92, ../scss/theme/default/_multiple.scss */
+        .select2-container--default.select2-container--disabled .select2-selection__choice__remove {
+            display: none;
+        }
+
+        /* line 6, ../scss/theme/default/layout.scss */
+        .select2-container--default.select2-container--open.select2-container--above .select2-selection--single,
+        .select2-container--default.select2-container--open.select2-container--above .select2-selection--multiple {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        /* line 13, ../scss/theme/default/layout.scss */
+        .select2-container--default.select2-container--open.select2-container--below .select2-selection--single,
+        .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        /* line 20, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            border: 1px solid #DDD;
+        }
+
+        /* line 22, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-search--dropdown .select2-search__field:focus {
+            outline: 0;
+        }
+
+        /* line 29, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-search--inline .select2-search__field {
+            background: transparent;
+            border: none;
+            outline: 0;
+        }
+
+        /* line 36, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results>.select2-results__options {
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 2px !important;
+        }
+
+        /* line 42, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results__option[role=group] {
+            padding: 0;
+        }
+
+        /* line 46, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results__option[aria-disabled=true] {
+            color: #999;
+        }
+
+        /* line 50, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results__option[aria-selected=true] {
+            background-color: #EEE;
+        }
+
+        /* line 54, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results__option .select2-results__option {
+            padding-left: 1em;
+        }
+
+        /* line 57, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results__option .select2-results__option .select2-results__group {
+            padding-left: 0;
+        }
+
+        /* line 61, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results__option .select2-results__option .select2-results__option {
+            margin-left: -1em;
+            padding-left: 2em;
+        }
+
+        /* line 65, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
+            margin-left: -2em;
+            padding-left: 3em;
+        }
+
+        /* line 69, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
+            margin-left: -3em;
+            padding-left: 4em;
+        }
+
+        /* line 73, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
+            margin-left: -4em;
+            padding-left: 5em;
+        }
+
+        /* line 77, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
+            margin-left: -5em;
+            padding-left: 6em;
+        }
+
+        /* line 88, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #4a89dc;
+            color: white;
+        }
+
+        /* line 93, ../scss/theme/default/layout.scss */
+        .select2-container--default .select2-results__group {
+            cursor: default;
+            display: block;
+            padding: 6px;
+        }
+
+
+
+        .table td {
+            text-align: justify !important;
+        }
+
+    </style>
 
     @yield('styles')
     @livewireStyles
@@ -873,7 +887,7 @@
 
 <body class="">
     @include('partials.menu')
-    <div class="c-wrapper">
+    <div class=" c-wrapper">
         <header class="px-3 c-header c-header-fixed" style="border: none;">
             <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
@@ -985,10 +999,10 @@
                                 @else
                                     {{ auth()->user()->name }}
                                     <span>{{ auth()->user()->empleado->name }}</span>
-                                @endif--}}
+                                @endif --}}
                             </div>
                             {{-- <div class="py-2 dropdown-header bg-light"><strong>Ajustes</strong></div> --}}
-                            <div class="px-3 mt-3 d-flex justify-content-between">
+                            <div class="px-3 mt-3 d-flex justify-content-center">
                                 @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                                     @can('profile_password_edit')
 
@@ -1001,10 +1015,10 @@
 
                                     @endcan
                                 @endif
-                                <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
-                                    <i class="mr-1 fas fa-fw fa-lock">
-                                    </i> Bloquear
-                                </a>
+                                {{-- <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
+                                <i class="mr-1 fas fa-fw fa-lock">
+                                </i> Bloquear
+                            </a> --}}
                                 <a class="p-2 border rounded shadow-xs btn btn-sm"
                                     onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                     <i class="mr-1 fas fa-sign-out-alt">
@@ -1020,8 +1034,6 @@
 
         <div class="c-body">
             <main class="c-main">
-
-
                 <div class="container-fluid" id="app">
                     @if (session('message'))
                         <div class="mb-2 row">
@@ -1029,7 +1041,9 @@
                                 <div class="alert alert-success" role="alert">{{ session('message') }}</div>
                             </div>
                         </div>
-                    @endif
+                    </div>
+                @endif
+                <div id="errores_generales_admin_quitar_recursos">
                     @if ($errors->count() > 0)
                         <div class="alert alert-danger">
                             <ul class="list-unstyled">
@@ -1039,9 +1053,10 @@
                             </ul>
                         </div>
                     @endif
-                    @yield('content')
-
                 </div>
+                @yield('content')
+
+        </div>
 
 
             </main>
@@ -1052,22 +1067,24 @@
         <!-- incluir de footer -->
         {{-- @include('partials.footer') --}}
     </div>
+    {{-- daterangepicker --}}
+
+
 
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
     </script>
-    </script>
-    {{--<script src="{{ asset('tabantaj/push/bin/push.min.js') }}"></script>--}}
+
+    {{-- <script src="{{ asset('tabantaj/push/bin/push.min.js') }}"></script> --}}
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
     </script> --}}
     {{-- <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script> --}}
-
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
@@ -1079,7 +1096,9 @@
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
-   <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    {{-- <script
+        src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"
+        defer></script> --}}
     <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
     {{-- <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -1092,15 +1111,15 @@
     <script src="{{ asset('js/yearpicker.js') }}"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
-
+    <script src="https://cdn.datatables.net/fixedcolumns/4.0.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
     <script>
-        window.Laravel = {!! json_encode([
+        window.Laravel.user = {!! json_encode([
     'user' => auth()->check() ? auth()->user()->id : null,
 ]) !!};
     </script>
-
+    <script src="//unpkg.com/alpinejs" defer></script>
 
     <script src="{{ asset('js/main.js') }}"></script>
 
@@ -1116,6 +1135,11 @@
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
         })
+
+        $(".btn_bajar_scroll").click(function(){
+            $("lemnt_row_menu").fadeIn(0);
+            $('.c-sidebar-nav').delay(1000).scrollTop( 900);
+        });
     </script>
 
     <script>
@@ -1452,10 +1476,6 @@
         });
     </script>
 
-
-
-
-
     <script type="text/javascript">
         $(".caja_botones_menu a").click(function() {
             $(".caja_botones_menu a").removeClass("btn_activo");
@@ -1463,10 +1483,7 @@
         });
     </script>
 
-
-
-
-    {{-- menus tabs--}}
+    {{-- menus tabs --}}
     <script type="text/javascript">
         $(".caja_botones_menu a").click(function() {
             $(".caja_botones_menu a").removeClass("btn_activo");
@@ -1484,6 +1501,7 @@
 
 
     @yield('scripts')
+
 
 
 </body>

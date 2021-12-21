@@ -11,8 +11,8 @@ class BuscarCVComponent extends Component
     use LivewireAlert;
 
     public $areas;
-    public $empleado_id = '';
-    public $area_id = '';
+    public $empleado_id;
+    public $area_id;
     public $empleado_experiencia;
     public $empleado_educacion;
     public $empleado_certificaciones;
@@ -20,6 +20,26 @@ class BuscarCVComponent extends Component
     public $foto_organizacion;
     public $empleados;
     public $isPersonal;
+    public $curriculums;
+
+    public $empresaExperiencia;
+    public $puestoExperiencia;
+    public $descripcionExperiencia;
+    public $certificacion;
+    public $curso;
+    public $empleadoModel;
+    public $general;
+
+    protected $queryString = [
+        'area_id' => ['except' => ''],
+        'empleado_id' => ['except' => ''],
+        'empresaExperiencia' => ['except' => ''],
+        'puestoExperiencia' => ['except' => ''],
+        'descripcionExperiencia' => ['except' => ''],
+        'certificacion' => ['except' => ''],
+        'curso' => ['except' => ''],
+        'general' => ['except' => ''],
+    ];
 
     public function clean()
     {
@@ -32,12 +52,40 @@ class BuscarCVComponent extends Component
 
     public function updatedAreaId($value)
     {
-        $this->area_id = $value;
+        if ($value == '') {
+            $this->area_id = null;
+            $this->empleados = Empleado::get();
+        } else {
+            $this->area_id = $value;
+            $this->empleado_id = null;
+            $this->empleados = Empleado::where('area_id', $this->area_id)->get();
+        }
+        $this->emit('tagify');
     }
 
     public function updatedEmpleadoId($value)
     {
-        $this->empleado_id = $value;
+        if ($value == '') {
+            $this->empleado_id = null;
+        } else {
+            $this->empleado_id = $value;
+        }
+        $this->emit('tagify');
+    }
+
+    public function updatedGeneral()
+    {
+        $this->emit('tagify');
+    }
+
+    public function updatedCurso()
+    {
+        $this->emit('tagify');
+    }
+
+    public function updatedCertificacion()
+    {
+        $this->emit('tagify');
     }
 
     public function mount()
@@ -49,7 +97,53 @@ class BuscarCVComponent extends Component
 
     public function render()
     {
-        $empleadoget = Empleado::select('*')->with('empleado_experiencia');
+        $empleadosCV = Empleado::with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
+            ->when($this->empleado_id, function ($q3) {
+                $q3->where('id', $this->empleado_id);
+            })
+            ->when($this->area_id, function ($q4) {
+                $q4->where('area_id', $this->area_id);
+            })
+            ->when($this->certificacion, function ($q) {
+                $q->whereHas('empleado_certificaciones', function ($query) {
+                    $certificaciones = explode(',', $this->certificacion);
+                    $query->where(function ($queryArr) use ($certificaciones) {
+                        foreach ($certificaciones as $busqueda) {
+                            $queryArr->orWhere('nombre', 'ILIKE', "%{$busqueda}%");
+                        }
+                    });
+                });
+            })
+            ->when($this->curso, function ($qCurso) {
+                $qCurso->whereHas('empleado_cursos', function ($queryCurso) {
+                    $queryCurso->where('curso_diploma', 'ILIKE', "%{$this->curso}%");
+                });
+            })
+            ->when($this->curso, function ($qCurso) {
+                $qCurso->whereHas('empleado_cursos', function ($queryCurso) {
+                    $queryCurso->where('curso_diploma', 'ILIKE', "%{$this->curso}%");
+                });
+            })
+            ->when($this->general, function ($qGeneral) {
+                $qGeneral->where('name', 'ILIKE', "%{$this->general}%");
+            })
+
+            ->get();
+        $this->empleado = null;
+        /*   ->with([
+                'empleado_experiencia' => function ($q1) {
+                    $q1->where('empresa', 'ILIKE', $this->empresaExperiencia)
+                        ->orWhere('puesto', 'ILIKE', $this->puestoExperiencia)
+                        ->orWhere('descripcion', 'ILIKE', $this->descripcionExperiencia);
+                },
+                'empleado_certificaciones' => function ($q5) {
+                    $q5->where('nombre', 'LIKE', $this->certificacion);
+                },
+                'empleado_cursos' => function ($q2) {
+                    $q2->where('curso_diploma', 'ILIKE', $this->curso);
+                }
+            ])*/
+        /*$empleadoget = Empleado::select('*')->with('empleado_experiencia');
 
         if (!$this->isPersonal) {
             if ($this->area_id != '') {
@@ -73,11 +167,18 @@ class BuscarCVComponent extends Component
                 $this->empleado_id = '';
                 $this->empleados = Empleado::select('id', 'area_id', 'name')->get();
             }
-        }
+        }*/
 
         return view('livewire.buscar-c-v-component', [
-            'empleadoget' => $empleadoget->get()->first(),
+            // 'empleadoget' => $empleadoget->get()->first(),
+            'empleadosCV' => $empleadosCV,
         ]);
+    }
+
+    public function mostrarCurriculum($empleadoID)
+    {
+        $this->empleadoModel = Empleado::with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->find($empleadoID);
+        $this->emit('tagify');
     }
 
     public function callAlert($tipo, $mensaje, $bool, $test = '')
