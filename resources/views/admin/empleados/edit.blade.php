@@ -6,8 +6,8 @@
         }
 
         /* .dataTables_scrollHeadInner {
-                                                                            width: auto !important;
-                                                                        } */
+                                                                                            width: auto !important;
+                                                                                        } */
 
         .screenshot-image {
             width: 150px;
@@ -1542,14 +1542,10 @@
                         estatus.value = 'Vencida'
                         estatus.style.border = "2px solid #FF9C08";
                     }
-                })
+                });
 
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+
 
             document.getElementById("btnGuardarDocumento").addEventListener("click", async function(e) {
                 e.preventDefault();
@@ -1803,6 +1799,12 @@
             }
 
             // let url = "{{ route('admin.empleados.get') }}";
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             document.getElementById('btn-agregar-experiencia').addEventListener('click', function(e) {
                 e.preventDefault();
                 limpiarErrores();
@@ -2064,6 +2066,9 @@
             formData.append('esVigente', aplicaVigencia.checked)
             $.ajax({
                 type: "post",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 url: url,
                 data: formData,
                 processData: false,

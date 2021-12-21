@@ -95,7 +95,12 @@
             <div class="col-sm-3 col-3 col-md-3" style="border-right: 1px solid #dadada;">
                 <div class="row" style="margin-bottom:30px;">
                     <div class="col-12">
-                        <p class="text-muted"><i class="fas fa-filter mr-2"></i>BÚSQUEDA GENERAL</p>
+                        <p class="text-muted"><i class="fas fa-filter mr-2"></i>BÚSQUEDA</p>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label class="text-muted" for=""><i class="fas fa-font mr-2"></i>Palabra Clave</label>
+                        <input type="text" class="form-control input-tags" id="general" data-role="tagsinput"
+                            placeholder="Búsca en todo el curriculum" wire:model.debounce.800ms="general">
                     </div>
                     <div class="col-sm-12 col-md-12 mb-3">
                         <label class="text-muted" for="tipoactivo_id"><i

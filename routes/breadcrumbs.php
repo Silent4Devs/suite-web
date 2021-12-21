@@ -3,7 +3,10 @@
 Breadcrumbs::for('admin.iso27001.index', function ($trail) {
     $trail->push('ISO 27001', route('admin.iso27001.index'));
 });
-
+Breadcrumbs::for('dashboard-iso27001', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Dashboard', route('admin.home'));
+});
 Breadcrumbs::for('admin.analisis-brechas.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
