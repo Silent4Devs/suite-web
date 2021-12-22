@@ -396,6 +396,16 @@
             transform: scale(1.1);
         }
 
+        .opciones_felicitar{
+            display: flex;
+            justify-content: space-between;
+        }
+        .opciones_felicitar i{
+            color: #00abb2;
+            font-size: 20pt;
+            cursor: pointer;
+        }
+        
         .modal-backdrop.fade.show{
             display: none !important;
         }
