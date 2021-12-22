@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Empleado;
 use Illuminate\Console\Command;
 use App\Mail\FelicitacionesMail;
+use Illuminate\Support\Facades\Mail;
 
 class EnviarCorreoFelicitaciones extends Command
 {
@@ -40,7 +41,7 @@ class EnviarCorreoFelicitaciones extends Command
     public function handle()
     {
         
-        $empleados = Empleado::whereMonth('cumpleaños', '=', date('m'))->whereDay('cumpleaños', '=', date('d'))->get();
+        $empleados = Empleado::get();
 
         foreach($empleados as $empleado){
             Mail::to($empleado->email)->send(new FelicitacionesMail);
