@@ -10,7 +10,7 @@
     .caja{
         width: 100%;
         height:600px;
-        padding: 0; 
+        padding: 0;
         position: relative;
     }
     #lnb{
@@ -145,7 +145,7 @@
 
 <div class="caja">
     <div id="lnb">
-        
+
         <div id="lnb-calendars" class="lnb-calendars">
             <div>
                 <div class="lnb-calendars-item">
@@ -159,7 +159,7 @@
             </div>
             <div id="calendarList" class="lnb-calendars-d1">
             </div>
-        </div>  
+        </div>
     </div>
     <div id="right">
         <div id="menu">
@@ -248,18 +248,10 @@
 
     <script type="text/javascript">
 
-        
-
          ScheduleList = [
-            
-
-           
-
 
             @foreach($recursos as $it_recursos)
-
                 {
-
                     id: 'recursos{{$it_recursos->id}}',
                     calendarId: '2',
                     title: '<i class="fas fa-graduation-cap i_calendar_cuadro"></i> Curso: {{$it_recursos->cursoscapacitaciones}}',
@@ -277,10 +269,34 @@
                     `,
                     isReadOnly : true,
                 },
-
+            @endforeach
+            @foreach ($eventos as $evento)
+                {
+                id: 'evento{{ $evento->id }}',
+                calendarId: '4',
+                title: '<i class="fas fa-cocktail i_calendar_cuadro"></i> Evento: {{ $evento->nombre }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[0])->format("Y-m-d") }}',
+                end: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[1])->format("Y-m-d") }}',
+                isReadOnly : true,
+                },
             @endforeach
 
-             @foreach($auditoria_internas as $it_auditoria_internas)
+             @foreach ($oficiales as $oficial)
+                {
+                id: 'oficial{{ $oficial->id }}',
+                calendarId: '5',
+                title: '<i class="fas fa-dove i_calendar_cuadro"></i>Festivo: {{ $oficial->nombre }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{  \Carbon\Carbon::parse(explode("-",$oficial->fecha)[0])->format("Y-m-d") }}',
+                end: '{{  \Carbon\Carbon::parse(explode("-",$oficial->fecha)[1])->format("Y-m-d") }}',
+                isReadOnly : true,
+                },
+            @endforeach
+
+            @foreach($auditoria_internas as $it_auditoria_internas)
                 {
                     id: 'auditoria{{$it_auditoria_internas->id}}',
                     calendarId: '3',
@@ -289,7 +305,7 @@
                     dueDateClass: '',
                     start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() }}',
                     end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() }}',
-                    isReadOnly : true, 
+                    isReadOnly : true,
                 },
             @endforeach
 
@@ -307,7 +323,7 @@
                     isReadOnly : true,
                     body:  ` Origen: {{$task->parent}} <br/>
 
-                        Asigandos: 
+                        Asigandos:
                         @foreach ($task->assigs as $assig)
                             @php
                                 $empleado = $Empleado->where('id', intval($assig->resourceId))->first();
@@ -324,10 +340,12 @@
                     `,
                 },
             @endforeach
+
+
         ]
 
 
-        
+
     </script>
 
     <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
@@ -335,7 +353,7 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function(){
             document.getElementById('dropdownMenu-calendarType').addEventListener('change', function(e){
-                
+
             });
         });
     </script>

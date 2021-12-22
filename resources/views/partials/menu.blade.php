@@ -300,12 +300,39 @@
                         <font class="letra_blanca" style="margin-left:10px;"> Evaluación 360° </font>
                     </a>
                 </li>
-                <li class="c-sidebar-nav-item">
+                {{-- <li class="c-sidebar-nav-item">
                     <a href="{{ route('admin.tabla-calendario.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('tabla-calendario') || request()->is('tabla-calendario/*') ? 'active' : '' }}">
                         <i class="fas fa-calendar-check iconos_menu letra_blanca"></i>
                         <font class="letra_blanca">Calendario</font>
                     </a>
+                </li> --}}
+                <li class="c-sidebar-nav-dropdown">
+                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                        <i class="fas fa-calendar-alt iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca " style="margin-left:10px;"> Calendario </font>
+                    </a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.calendario-oficial.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('calendario-oficial') || request()->is('calendario-oficial/*') ? 'active' : '' }}">
+                                <i class="ml-2 fas fa-dove iconos_menu letra_blanca"style="font-size:12pt;"></i>
+                                <font class="letra_blanca" style="margin-left:10px;">Dias Festivos</font>
+                            </a>
+                        </li>
+
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.tabla-calendario.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('tabla-calendario') || request()->is('tabla-calendario/*') ? 'active' : '' }}">
+                                <i class="ml-2 fas fa-gifts iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                <font class="letra_blanca" style="margin-left:10px;">Eventos</font>
+                            </a>
+                        </li>
+
+
+
+                    </ul>
                 </li>
             </ul>
         </li>

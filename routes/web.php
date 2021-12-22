@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Evaluaciones 360
     Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
+
     Route::get('tabla-calendario/index', 'TablaCalendarioController@index')->name('tabla-calendario.index');
     Route::resource('recursos-humanos/calendario', 'TablaCalendarioController')->names([
         'create' => 'tabla-calendario.create',
@@ -43,6 +44,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'edit' => 'tabla-calendario.edit',
         'update' => 'tabla-calendario.update',
         'destroy' => 'tabla-calendario.destroy',
+    ]);
+
+    Route::get('calendario-oficial/index', 'CalendarioOficialController@index')->name('calendario-oficial.index');
+    Route::resource('recursos-humanos/calendario-oficial', 'CalendarioOficialController')->names([
+        'create' => 'calendario-oficial.create',
+        'store' => 'calendario-oficial.store',
+        'show' => 'calendario-oficial.show',
+        'edit' => 'calendario-oficial.edit',
+        'update' => 'calendario-oficial.update',
+        'destroy' => 'calendario-oficial.destroy',
     ]);
 
     //Consulta de evaluación
