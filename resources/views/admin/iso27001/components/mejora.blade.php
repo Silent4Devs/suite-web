@@ -1,5 +1,5 @@
 @can('mejoras_access')
-    <ul>
+    <ul class="mt-4">
         <li><a href="{{ route('admin.accion-correctivas.index') }}">
                 <div>
                     <i class="far fa-thumbs-down"></i>
