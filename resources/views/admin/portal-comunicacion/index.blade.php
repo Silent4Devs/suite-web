@@ -395,23 +395,6 @@
         .btn_link_agenda:hover{
             transform: scale(1.1);
         }
-
-        .opciones_felicitar{
-            display: flex;
-            justify-content: space-between;
-        }
-        .opciones_felicitar i{
-            color: #00abb2;
-            font-size: 20pt;
-            cursor: pointer;
-        }
-
-        .modal-backdrop.fade.show{
-            display: none !important;
-        }
-        .modal-dialog{
-            margin-top: 100px !important;
-        }
     </style>
 
 
@@ -647,7 +630,7 @@
                         <h2 class="titulo-seccion"><i class="mr-3 far fa-user"></i>Nuevos ingresos</h2>
                         <div class="caja_nuevo">
                             @forelse($nuevos as $nuevo)
-                                {{-- <div class="nuevo">
+                                <div class="nuevo">
                                     <div class="img_nuevo">
                                         @if (is_null($nuevo->foto))
                                             <img src="{{ asset('storage/empleados/imagenes/usuario_no_cargado.png') }}"
@@ -669,10 +652,11 @@
                                         <h6 class="mt-3">Fecha de ingreso</h6>
                                         <span>{{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}</span>
                                     </div>
-                                </div> --}}
+                                </div>
                             @empty
                                 <div class="nuevo">No hay nuevos ingresos registrados en este mes.</div>
                             @endforelse
+
                         </div>
 
                         <h2 class="mt-5 titulo-seccion"><i class="mr-3 fas fa-birthday-cake"></i>Cumpleaños</h2>
@@ -707,7 +691,6 @@
 
                                         <span>{{ $inputs['Fecha'] }}</span>
                                     </div>
-
                                         @php
                                             $cumpleaños_felicitados_like_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->count();
 
@@ -756,8 +739,6 @@
                                     </div>
                                   </div>
                                 </div>
-
-
                             @empty
                                 <div class="nuevo">No hay cumpleaños registrados en este mes.</div>
                             @endforelse
