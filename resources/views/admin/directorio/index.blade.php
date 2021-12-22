@@ -80,6 +80,73 @@
             }
         }
 
+        #dom_length label{
+            color:white;
+
+        }
+
+        #dom_length:before{
+            content:"Mostrar" !important;
+            color:#111 !important;
+            margin-right:-30px !important;
+            position:relative;
+            z-index:2;
+
+        }
+
+        #dom_length:after{
+            content:"empleados" !important;
+            color:#111 !important;
+            margin-left:-35px !important;
+            position:relative;
+            z-index:2;
+
+        }
+
+        .responsive-table{
+
+            margin-top:200px !important;
+        }
+
+        #dom_filter label:before{
+            content:"Buscar" !important;
+            color:#111 !important;
+            margin-right:-30px !important;
+            position:relative;
+            z-index:2;
+
+
+        }
+
+        #dom_filter label{
+            color:white;
+        }
+
+        dataTables_filter{
+            padding-bottom: 30px !important;
+        }
+
+        .thead-dark{
+
+            display:none;
+        }
+
+        #dom_length{
+            margin-top:50px!important;
+        }
+
+        #dom_filter{
+            margin-top:-43px!important;
+
+        }
+
+        #dom_wrapper{
+
+            border-bottom: solid 2px #0CA193 !important;
+            width: 100% !important;
+        }
+
+
     </style>
 
     @can('glosario_create')
@@ -105,10 +172,16 @@
         </div>
 
 
-        <div class="card-body datatable-fix">
-            <table id="dom" class="responsive-table" style="width: 100%">
+        <div class="card-body datatable-fix ">
+
+            <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193 !important;">
+            </div>
+
+            <table id="dom" class="responsive-table" style="width: 100%; margin-top:50px !important">
                 <thead class="thead-dark">
+
                     <tr>
+
                         <th></th>
                         <th></th>
                         <th></th>
@@ -116,12 +189,15 @@
 
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="mt-4 mb-3 w-100">
+                    <div class="mt-4 mb-3 w-100">
+                    </div>
                     {{-- @foreach ($sugerencias as $sugerencia) --}}
                     @foreach ($empleados as $empleado)
+
                         <tr>
 
-                            <td>
+                            <td >
 
                                 <img src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}"
                                     class="img_empleado" title="{{ $empleado->name }}">
@@ -143,12 +219,12 @@
                             <td>
                                 <div>
                                     @if (is_null($empleado->area))
-                                        <p>No hay información registrada</p>
+                                        <label>No hay información registrada</label>
                                     @else
                                         <strong>Área: {{ $empleado->area->area }}</strong>
                                     @endif
                                     @if (is_null($empleado->supervisor))
-                                        <p>No hay información registrada</p>
+                                        <label>No hay información registrada</label>
                                     @else
                                         <p>{{ $empleado->supervisor ? $empleado->supervisor->name : 'sin supervisor' }}
                                         </p>
@@ -161,13 +237,13 @@
                             <td>
                                 <div>
                                     @if (is_null($empleado->puestoRelacionado))
-                                        <p>No hay información registrada</p>
+                                        <label>No hay información registrada</label>
                                     @else
-                                        <label><strong
-                                                class="mr-2">Puesto:</strong>{{ $empleado->puestoRelacionado->puesto }}</label>
+                                      <div><strong
+                                                class="mr-2">Puesto:</strong>{{ $empleado->puestoRelacionado->puesto }}</div>
                                     @endif
                                     @if (is_null($empleado->fecha_ingreso))
-                                        <p>No hay información registrada</p>
+                                        <label>No hay información registrada</label>
                                     @else
                                         <p>Ingreso: {{ $empleado->fecha_ingreso }}</p>
                                     @endif
@@ -364,8 +440,8 @@
             if (!_alphabetSearch) {
                 return true;
             }
-
-            if (searchData[1].charAt(1) === _alphabetSearch) {
+            console.log(searchData[1].trim().charAt(0).toUpperCase(), _alphabetSearch);
+            if (searchData[1].trim().charAt(0).toUpperCase()==_alphabetSearch) {
                 return true;
             }
 
@@ -376,11 +452,11 @@
         $(document).ready(function() {
             var table = $('#dom').DataTable();
 
-            var alphabet = $('<div class="alphabet"/>').append('Search: ');
+            var alphabet = $('<div class="alphabet"/>').append('');
 
             $('<span class="clear active"/>')
                 .data('letter', '')
-                .html('None')
+                .html('Todos')
                 .appendTo(alphabet);
 
             for (var i = 0; i < 26; i++) {
@@ -397,11 +473,22 @@
             alphabet.on('click', 'span', function() {
                 alphabet.find('.active').removeClass('active');
                 $(this).addClass('active');
-
+                console.log($(this).data('letter'));
                 _alphabetSearch = $(this).data('letter');
                 table.draw();
             });
         });
+
+
+    </script>
+
+    <script>
+    //   $(document).ready(function(){
+    //     console.log('hola');
+    //     document.querySelector('#dom_length label').replace(Show, "mostrar");
+    //   });
+
+
     </script>
 
 
