@@ -395,6 +395,13 @@
         .btn_link_agenda:hover{
             transform: scale(1.1);
         }
+
+        .modal-backdrop.fade.show{
+            display: none !important;
+        }
+        .modal-dialog{
+            margin-top: 100px !important;
+        }
     </style>
 
 
