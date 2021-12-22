@@ -184,11 +184,16 @@ class CompetenciasController extends Controller
 
     public function buscarcv(Request $request)
     {
-        // dd($request->all());
-
         $areas = Area::get();
 
         return view('admin.competencia.buscarCV', compact('areas'));
+    }
+
+    public function expedientesProfesionales(Request $request)
+    {
+        $areas = Area::get();
+
+        return view('admin.competencia.expedientes', compact('areas'));
     }
 
     public function miCurriculum(Request $request, Empleado $empleado)

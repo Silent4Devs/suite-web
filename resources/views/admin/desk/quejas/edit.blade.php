@@ -3,8 +3,14 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
-@endsection
+    <style>
+        ol.breadcrumb {
+            margin-bottom: 0px;
+        }
 
+    </style>
+@endsection
+{{ Breadcrumbs::render('quejas-edit', $quejas) }}
 @include('partials.flashMessages')
 <div class="card">
     <div class="text-center card-header" style="background-color: #00abb2;">
@@ -97,7 +103,8 @@
                                     hora
                                     de cierre del ticket</label>
 
-                                    <input class="form-control" readonly name="fecha_cierre" type="datetime" value="{{ $quejas->fecha_cierre }}" id="solucion">
+                                <input class="form-control" readonly name="fecha_cierre" type="datetime"
+                                    value="{{ $quejas->fecha_cierre }}" id="solucion">
 
                             </div>
 

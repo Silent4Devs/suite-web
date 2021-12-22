@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Empleado;
 use App\Models\RH\Competencia;
 use App\Models\RH\Evaluacion;
+use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\ObjetivoRespuesta;
 use Illuminate\Pagination\Paginator;

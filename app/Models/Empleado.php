@@ -151,7 +151,7 @@ class Empleado extends Model
 
     public function getResumenAttribute($value)
     {
-        return strip_tags($value);
+        return html_entity_decode(utf8_decode(strip_tags($value)));
     }
 
     public function getResourceIdAttribute()

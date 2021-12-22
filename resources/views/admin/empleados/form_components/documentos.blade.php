@@ -37,18 +37,18 @@
 
     </style>
     {{-- @livewire('expediente-empleado-component', ['empleado' => $empleado]) --}}
-    <form action="{{ route('admin.empleado.storeDocumentos', $empleado) }}" method="POST" id="formDocumentos">
+    <div action="{{ route('admin.empleado.storeDocumentos', $empleado) }}" method="POST" id="formDocumentos">
         <div class="row">
             <div class="form-group col-sm-6">
                 <label for="nombre"><i class="fas fa-edit iconos-crear"></i>Nombre del documento</label>
                 <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
-                    id="nombre" value="{{ old('nombre', '') }}">
+                    id="nombre_doc" value="{{ old('nombre', '') }}">
                 <small id="nombre_error" class="errors text-danger"></small>
             </div>
             <div class="form-group col-sm-6">
                 <label for="numero"><i class="fas fa-barcode iconos-crear"></i>Número</label>
                 <input class="form-control {{ $errors->has('numero') ? 'is-invalid' : '' }}" type="text" name="numero"
-                    id="numero" value="{{ old('numero', '') }}">
+                    id="numero_doc" value="{{ old('numero', '') }}">
                 <small id="numero_error" class="errors text-danger"></small>
             </div>
             <div class="col-sm-12 col-md-12 col-12">
@@ -56,7 +56,7 @@
                     class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>
                 <div class="input-group mb-3">
                     <div class="custom-file">
-                        <input type="file" name="file" class="form-control" id="documentos">
+                        <input type="file" name="file" class="form-control" id="documentos_doc">
                         <small id="file_error" class="errors text-danger"></small>
                         {{-- <label class="custom-file-label" for="inputGroupFile01">Selecciona un archivo</label> --}}
                     </div>
@@ -66,7 +66,7 @@
         <div class="col-12" style="text-align: end">
             <button class="btn btn-success" type="submit" id="btnGuardarDocumento">Guardar</button>
         </div>
-    </form>
+    </div>
     <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
         <table class="table w-100" id="tbl-documentos" style="width:100% !important">
             <thead>
