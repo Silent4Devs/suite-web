@@ -36,6 +36,11 @@ class PanelOrganizacionSeeder extends Seeder
                 'num_empleados' => 'false',
                 'tamano' => 'false',
                 'schedule' => 'false',
+                'linkedln' => 'false',
+                'facebook' => 'false',
+                'youtube' => 'false',
+                'twitter' => 'false',
+                // 'redessociales' => 'false',
             ],
         ];
 

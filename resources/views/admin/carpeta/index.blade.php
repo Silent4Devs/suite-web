@@ -1,12 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-
     @can('carpetum_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
-                <!--<a class="btn btn-success" href="{{ route('admin.carpeta.create') }}">
-                                                                                                                                                {{ trans('global.add') }} {{ trans('cruds.carpetum.title_singular') }}
-                                                                                                                                            </a>-->
             </div>
         </div>
     @endcan
@@ -18,10 +14,10 @@
         </div>
 
 
-        {{-- <file-manager v-bind:settings="settings"></file-manager> --}}
+        <file-manager v-bind:settings="settings"></file-manager>
 
 
-        <div id="fm"></div>
+        {{-- <div id="fm"></div> --}}
 
     </div>
 
@@ -29,5 +25,5 @@
 
 @endsection
 @section('scripts')
-
+    <script src="{{ asset('js/file-storage.js') }}"></script>
 @endsection

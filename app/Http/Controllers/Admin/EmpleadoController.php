@@ -290,7 +290,7 @@ class EmpleadoController extends Controller
         $onlyNull = true;
         foreach ($collection as $collect) {
             foreach ($collect as $item) {
-                if (!is_null($item)) {
+                if (!is_null($item) && (array_key_exists('id', $collect) && $collect['id'] != '0')) {
                     $onlyNull = false;
 
                     return $onlyNull;
@@ -857,7 +857,7 @@ class EmpleadoController extends Controller
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
         $isEditAdmin = true;
-
+        // dd(Empleado::find(63));
         return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin'));
     }
 
@@ -881,7 +881,6 @@ class EmpleadoController extends Controller
                 $validateSupervisor = 'required|exists:empleados,id';
             }
         }
-
         $request->validate([
             'name' => 'required|string',
             'n_empleado' => 'unique:empleados,n_empleado,' . $id,

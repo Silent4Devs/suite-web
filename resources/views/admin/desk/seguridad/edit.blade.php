@@ -3,8 +3,14 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
-@endsection
+    <style>
+        ol.breadcrumb {
+            margin-bottom: 0px;
+        }
 
+    </style>
+@endsection
+{{ Breadcrumbs::render('seguridad-edit',$incidentesSeguridad) }}
 @include('partials.flashMessages')
 <div class="card" id="desk">
     <div class="text-center card-header" style="background-color: #00abb2;">
@@ -110,7 +116,8 @@
                                     hora
                                     de cierre del ticket</label>
 
-                                    <input class="form-control" readonly name="fecha_cierre" type="datetime" value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
+                                <input class="form-control" readonly name="fecha_cierre" type="datetime"
+                                    value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
 
                             </div>
 
@@ -130,9 +137,10 @@
                             </div> --}}
 
                             <div class="form-group col-md-4">
-                                <label for="empleado_asignado_id"><i class="fas fa-user-tie iconos-crear"></i>Asignado</label>
-                                <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="empleado_asignado_id"
-                                    id="empleado_asignado_id">
+                                <label for="empleado_asignado_id"><i
+                                        class="fas fa-user-tie iconos-crear"></i>Asignado</label>
+                                <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}"
+                                    name="empleado_asignado_id" id="empleado_asignado_id">
                                     @foreach ($empleados as $id => $empleado)
                                         <option value="{{ $empleado->id }}"
                                             {{ old('empleado_asignado_id', $incidentesSeguridad->empleado_asignado_id) == $empleado->id ? 'selected' : '' }}>
@@ -162,19 +170,18 @@
                             </div>
 
                             <div class="mt-2 form-group col-md-4">
-                                            <label class="form-label"><i
-                                                    class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
-                                            <select id="select_subcategorias" class="form-control"
-                                                value="{{ $incidentesSeguridad->subcategoria }}" name="subcatgoría">
-                                                <option selected disabled class="option_vacio"></option>
-                                                @foreach ($subcategorias as $subcategoria)
-                                                    <option
-                                                        class="d-none categoria{{ $subcategoria->categoria->id }}"
-                                                        value="{{ $subcategoria->id }}">
-                                                        {{ $subcategoria->subcategoria }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                <label class="form-label"><i
+                                        class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
+                                <select id="select_subcategorias" class="form-control"
+                                    value="{{ $incidentesSeguridad->subcategoria }}" name="subcatgoría">
+                                    <option selected disabled class="option_vacio"></option>
+                                    @foreach ($subcategorias as $subcategoria)
+                                        <option class="d-none categoria{{ $subcategoria->categoria->id }}"
+                                            value="{{ $subcategoria->id }}">
+                                            {{ $subcategoria->subcategoria }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="mt-2 form-group col-md-4">
@@ -367,9 +374,15 @@
                                 <label class="form-label"><i
                                         class="fas fa-chart-line iconos-crear"></i>Urgencia</label>
                                 <select class="form-control" name="urgencia" id="select_urgencia">
-                                    <option data-urgencia="3" {{ old('urgencia', $incidentesSeguridad->urgencia) == 'Alta' ? 'selected' : '' }}>Alta</option>
-                                    <option data-urgencia="2" {{ old('urgencia', $incidentesSeguridad->urgencia) == 'Media' ? 'selected' : '' }}>Media</option>
-                                    <option data-urgencia="1" {{ old('urgencia', $incidentesSeguridad->urgencia) == 'Baja' ? 'selected' : '' }}>Baja</option>
+                                    <option data-urgencia="3"
+                                        {{ old('urgencia', $incidentesSeguridad->urgencia) == 'Alta' ? 'selected' : '' }}>
+                                        Alta</option>
+                                    <option data-urgencia="2"
+                                        {{ old('urgencia', $incidentesSeguridad->urgencia) == 'Media' ? 'selected' : '' }}>
+                                        Media</option>
+                                    <option data-urgencia="1"
+                                        {{ old('urgencia', $incidentesSeguridad->urgencia) == 'Baja' ? 'selected' : '' }}>
+                                        Baja</option>
                                 </select>
                             </div>
 
@@ -377,9 +390,15 @@
                                 <label class="form-label"><i
                                         class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
                                 <select class="form-control" name="impacto" id="select_impacto">
-                                    <option data-impacto="3" {{ old('impacto', $incidentesSeguridad->impacto) == 'Alta' ? 'selected' : '' }}>Alta</option>
-                                    <option data-impacto="2" {{ old('impacto', $incidentesSeguridad->impacto) == 'Media' ? 'selected' : '' }}>Media</option>
-                                    <option data-impacto="1" {{ old('impacto', $incidentesSeguridad->impacto) == 'Baja' ? 'selected' : '' }}>Baja</option>
+                                    <option data-impacto="3"
+                                        {{ old('impacto', $incidentesSeguridad->impacto) == 'Alta' ? 'selected' : '' }}>
+                                        Alta</option>
+                                    <option data-impacto="2"
+                                        {{ old('impacto', $incidentesSeguridad->impacto) == 'Media' ? 'selected' : '' }}>
+                                        Media</option>
+                                    <option data-impacto="1"
+                                        {{ old('impacto', $incidentesSeguridad->impacto) == 'Baja' ? 'selected' : '' }}>
+                                        Baja</option>
                                 </select>
                             </div>
 
@@ -677,20 +696,20 @@
 @section('scripts')
 @parent
 <script type="text/javascript">
-        const formatDate = (current_datetime) => {
+    const formatDate = (current_datetime) => {
         let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
             current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
             ":" + current_datetime.getSeconds();
         return formatted_date;
     }
-    function cambioOpciones()
-    {
+
+    function cambioOpciones() {
         var combo = document.getElementById('opciones');
         var opcion = combo.value;
-        if(opcion == "cerrado"){
+        if (opcion == "cerrado") {
             var fecha = new Date();
             document.getElementById('solucion').value = fecha.toLocaleString().replaceAll("/", "-");
-        }else{
+        } else {
             document.getElementById('solucion').value = "";
         }
     }

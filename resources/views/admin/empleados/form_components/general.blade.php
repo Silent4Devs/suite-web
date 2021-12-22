@@ -114,8 +114,8 @@
     <div class="form-group col-sm-3">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-12">
-                <label class="required" for="perfil_empleado_id"><i
-                        class="fas fa-briefcase iconos-crear"></i>Perfil</label>
+                <label class="required" for="perfil_empleado_id"><i class="fas fa-sitemap iconos-crear"></i>
+                    Nivel Jerárquico</label>
             </div>
             <div class="col-sm-9 col-md-9 col-9 pr-0">
                 <select class="form-control {{ $errors->has('perfil_empleado_id') ? 'is-invalid' : '' }}"
@@ -173,7 +173,7 @@
 <div class="row">
     <div class="form-group col-sm-6">
         <label class="required" for="estatus"><i class="fas fa-business-time iconos-crear"></i>Estatus</label>
-        <select class="form-control validate select-search" required="" name="estatus">
+        <select class="form-control validate" required="" name="estatus">
             <option value="" disabled selected>Escoga una opción</option>
             <option value="alta" {{ old('estatus', $empleado->estatus) == 'alta' ? 'selected' : '' }}>Alta
             </option>
@@ -311,7 +311,7 @@
     </div>
     <div class="text-center custom-control custom-checkbox form-group col-sm-4 align-self-end">
         <input type="checkbox"
-            {{ old('renovacion_contrato', $empleado->renovacion_contrato) == $tipo->id ? 'checked' : '' }}
+            {{ old('renovacion_contrato', $empleado->renovacion_contrato) == true ? 'checked' : '' }}
             class="custom-control-input" id="renovacion_contrato" name="renovacion_contrato">
         <small id="error_renovacion_contrato" class="text-danger errores"></small>
         <label class="custom-control-label" for="renovacion_contrato">¿Renovación de

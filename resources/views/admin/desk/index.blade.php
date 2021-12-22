@@ -40,7 +40,7 @@
     </style>
 
     @include('partials.flashMessages')
-
+    {{ Breadcrumbs::render('centro-atencion') }}
     <div id="desk" class="mt-5 card" style="">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Centro de Atención </strong></h3>

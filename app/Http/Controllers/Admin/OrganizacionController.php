@@ -37,7 +37,7 @@ class OrganizacionController extends Controller
         // dd($schedule);
         $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 
-        $panel_rules = PanelOrganizacion::select('empresa', 'direccion', 'telefono', 'correo', 'pagina_web', 'giro', 'servicios', 'mision', 'vision', 'valores', 'team_id', 'antecedentes', 'logotipo', 'razon_social', 'rfc', 'representante_legal', 'fecha_constitucion', 'num_empleados', 'tamano', 'schedule')->get()->first();
+        $panel_rules = PanelOrganizacion::select('empresa', 'direccion', 'telefono', 'correo', 'pagina_web', 'giro', 'servicios', 'mision', 'vision', 'valores', 'team_id', 'antecedentes', 'logotipo', 'razon_social', 'rfc', 'representante_legal', 'fecha_constitucion', 'num_empleados', 'tamano', 'schedule', 'linkedln', 'facebook', 'youtube', 'twitter')->get()->first();
 
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();
@@ -108,6 +108,10 @@ class OrganizacionController extends Controller
             'fecha_constitucion' => $request->fecha_constitucion,
             'num_empleados' => $request->num_empleados,
             'tamano' => $request->tamano,
+            'linkedln' => $request->linkedln,
+            'youtube' => $request->youtube,
+            'facebook' => $request->facebook,
+            'twitter' => $request->twitter,
         ]);
         $this->saveOrUpdateSchedule($request, $organizacions);
 
@@ -225,12 +229,15 @@ class OrganizacionController extends Controller
     public function visualizarOrganizacion()
     {
         $organizacions = Organizacion::first();
-
-        $schedule = Organizacion::find(1)->schedules;
+        // dd($organizacions);
+        $schedule = collect();
+        if ($organizacions) {
+            $schedule = $organizacions->schedules;
+        }
 
         $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 
-        $panel_rules = PanelOrganizacion::select('empresa', 'direccion', 'telefono', 'correo', 'pagina_web', 'giro', 'servicios', 'mision', 'vision', 'valores', 'team_id', 'antecedentes', 'logotipo', 'razon_social', 'rfc', 'representante_legal', 'fecha_constitucion', 'num_empleados', 'tamano', 'schedule')->get()->first();
+        $panel_rules = PanelOrganizacion::select('empresa', 'direccion', 'telefono', 'correo', 'pagina_web', 'giro', 'servicios', 'mision', 'vision', 'valores', 'team_id', 'antecedentes', 'logotipo', 'razon_social', 'rfc', 'representante_legal', 'fecha_constitucion', 'num_empleados', 'tamano', 'schedule', 'linkedln', 'facebook', 'youtube', 'twitter')->get()->first();
 
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();

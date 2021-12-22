@@ -1,67 +1,69 @@
 @extends('layouts.admin')
 @section('content')
-	<div class="pl-4 pr-4 mt-5 card">
+    {{ Breadcrumbs::render('seguridad-archivo') }}
+    <div class="pl-4 pr-4 mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Archivo Incidentes de Seguridad</strong></h3>
         </div>
 
-	<div class="datatable-fix" style="width: 100%;">
+        <div class="datatable-fix" style="width: 100%;">
 
-	  	<table class="table tabla_incidentes_seguridad">
-	   		<thead>
-	   			<tr>
-	       			<th>ID</th>
-	       			<th>Folio</th>
-	       			<th>Título</th>
-	       			<th>Descripción</th>
-	       			<th>Activos, Afectados</th>
-	       			<th>Fecha</th>
-	       			<th>Quién reporto</th>
-	       			<th>Correo</th>
-	       			<th>Teléfono</th>
-	       			<th>Categoría</th>
-	       			<th>Calificación</th>
-	       			<th>Prioridad</th>
-	       			<th>Estatus</th>
-	       			<th>Asigando a</th>
-	       			<th>Comentarios</th>
-	       			<th>Opciones</th>
-	   			</tr>
-	   		</thead>
-	   		<tbody>
-	   			@foreach($incidentes_seguridad_archivados as $incidentes)
-		   			<tr>
-		       			<td>{{ $incidentes->id }}</td>
-		       			<td>{{ $incidentes->folio }}</td>
-		       			<td>{{ $incidentes->titulo }}</td>
-		       			<td>{{ $incidentes->descripción }}</td>
-		       			<td>{{ $incidentes->activos_afectados }}</td>
-		       			<td>{{ $incidentes->fecha }}</td>
-		       			<td>{{ $incidentes->reporto->name }}</td>
-		       			<td>{{ $incidentes->reporto->email }}</td> {{-- correo --}}
-		       			<td>{{ $incidentes->reporto->telefono }}</td> {{-- telefono --}}
-		       			<td>{{ $incidentes->categoria }}</td>
-		       			<td>{{ $incidentes->clacificacion }}</td>
-		       			<td>{{ $incidentes->prioridad }}</td>
-		       			<td>{{ $incidentes->estatus }}</td>
-		       			<td>{{ $incidentes->asignado ? $incidentes->asignado->name:'sin asignar'}}</td>
-		       			<td>{{ $incidentes->comentarios }}</td>
-		       			<td>
-		       				<a href="{{ route('admin.desk.seguridad-edit', $incidentes->id) }}"><i class="fas fa-edit"></i></a>
-		       			</td>
-		   			</tr>
-	   			@endforeach
-	   		</tbody>
-	   </table>
-	</div>
+            <table class="table tabla_incidentes_seguridad">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Folio</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Activos, Afectados</th>
+                        <th>Fecha</th>
+                        <th>Quién reporto</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Categoría</th>
+                        <th>Calificación</th>
+                        <th>Prioridad</th>
+                        <th>Estatus</th>
+                        <th>Asigando a</th>
+                        <th>Comentarios</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($incidentes_seguridad_archivados as $incidentes)
+                        <tr>
+                            <td>{{ $incidentes->id }}</td>
+                            <td>{{ $incidentes->folio }}</td>
+                            <td>{{ $incidentes->titulo }}</td>
+                            <td>{{ $incidentes->descripción }}</td>
+                            <td>{{ $incidentes->activos_afectados }}</td>
+                            <td>{{ $incidentes->fecha }}</td>
+                            <td>{{ $incidentes->reporto->name }}</td>
+                            <td>{{ $incidentes->reporto->email }}</td> {{-- correo --}}
+                            <td>{{ $incidentes->reporto->telefono }}</td> {{-- telefono --}}
+                            <td>{{ $incidentes->categoria }}</td>
+                            <td>{{ $incidentes->clacificacion }}</td>
+                            <td>{{ $incidentes->prioridad }}</td>
+                            <td>{{ $incidentes->estatus }}</td>
+                            <td>{{ $incidentes->asignado ? $incidentes->asignado->name : 'sin asignar' }}</td>
+                            <td>{{ $incidentes->comentarios }}</td>
+                            <td>
+                                <a href="{{ route('admin.desk.seguridad-edit', $incidentes->id) }}"><i
+                                        class="fas fa-edit"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
-@endsection
-@section('scripts')
-@parent
+    @endsection
+    @section('scripts')
+        @parent
 
-    <script type="text/javascript">
-        $(document).ready(function(){
-            let dtButtons = [{
+        <script type="text/javascript">
+            $(document).ready(function() {
+                let dtButtons = [{
                         extend: 'csvHtml5',
                         title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
                         text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
@@ -128,9 +130,9 @@
                     }
 
                 ];
-            $(".tabla_incidentes_seguridad").DataTable({
-                buttons: dtButtons,
+                $(".tabla_incidentes_seguridad").DataTable({
+                    buttons: dtButtons,
+                });
             });
-        });
-    </script>
-@endsection
+        </script>
+    @endsection

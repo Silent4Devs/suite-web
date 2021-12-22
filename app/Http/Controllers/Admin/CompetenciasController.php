@@ -17,6 +17,7 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -183,11 +184,16 @@ class CompetenciasController extends Controller
 
     public function buscarcv(Request $request)
     {
-        // dd($request->all());
-
         $areas = Area::get();
 
         return view('admin.competencia.buscarCV', compact('areas'));
+    }
+
+    public function expedientesProfesionales(Request $request)
+    {
+        $areas = Area::get();
+
+        return view('admin.competencia.expedientes', compact('areas'));
     }
 
     public function miCurriculum(Request $request, Empleado $empleado)
@@ -204,18 +210,25 @@ class CompetenciasController extends Controller
 
     public function cargarDocumentos(Request $request, Empleado $empleado)
     {
-        $request->validate([
-            'files.*' => 'required|mimes:pdf|max:10000',
+        $request->merge([
+            'empleado_id' => $empleado->id,
         ]);
-        if ($request->hasFile('files')) {
-            $files = $request->file('files');
-            foreach ($files as $file) {
-                if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
-                    EvidenciasDocumentosEmpleados::create([
-                        'documentos' => $file->getClientOriginalName(),
-                        'empleado_id' => $empleado->id,
-                    ]);
-                }
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'numero' => 'required|string|max:255',
+            'documentos' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
+            'empleado_id' => 'required|exists:empleados,id',
+        ]);
+
+        // dd($empleado);
+        $evidencia = EvidenciasDocumentosEmpleados::create($request->all());
+
+        if ($request->hasFile('documentos')) {
+            $file = $request->file('documentos');
+            if (Storage::putFileAs('public/expedientes/' . Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
+                $evidencia->update([
+                    'documentos' => $file->getClientOriginalName(),
+                ]);
             }
         }
 

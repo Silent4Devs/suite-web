@@ -1,13 +1,14 @@
 @extends('layouts.admin')
 @section('content')
+    {{ Breadcrumbs::render('empleados-edit', $empleado) }}
     <style>
         .select2-container {
             margin-top: 0px !important;
         }
 
-        /* .dataTables_scrollHeadInner {
-                                                                            width: auto !important;
-                                                                        } */
+        .nav-tabs .nav-link.active {
+            border-top: solid 2px #3490dc;
+        }
 
         .screenshot-image {
             width: 150px;
@@ -223,10 +224,12 @@
                         </div>
                         <div class="tab-pane fade" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
                             @include('admin.empleados.form_components.personal')
+
                         </div>
                         <div class="tab-pane fade" id="nav-financiera" role="tabpanel"
                             aria-labelledby="nav-financiera-tab">
                             @include('admin.empleados.form_components.financiera')
+
                         </div>
                         <div class="tab-pane fade" id="nav-competencias" role="tabpanel"
                             aria-labelledby="nav-competencias-tab">
@@ -1346,7 +1349,7 @@
                                         <p class="m-0 text-muted" style="font-size:10px">Subir Documento</p>
                                     </label>
                                 </div>
-                                <input type="file" class="form-control d-none" id="documeto${row.id}" data-certificacion-id="${row.id}"/>
+                                <input type="file" class="form-control d-none" id="documento${row.id}" data-certificacion-id="${row.id}"/>
                                 <p class="m-0">
                                     <span class="errors documento_error text-danger"></span>
                                 </p>
@@ -1452,6 +1455,7 @@
                 }
             });
             document.getElementById('tbl-certificados').addEventListener('click', function(e) {
+                console.log('si');
                 if (e.target.tagName == 'I') {
                     if (e.target.classList.contains('removeFile')) {
                         const certificadoId = e.target.getAttribute('data-certificacion-id');
@@ -1542,21 +1546,23 @@
                         estatus.value = 'Vencida'
                         estatus.style.border = "2px solid #FF9C08";
                     }
-                })
+                });
 
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+
 
             document.getElementById("btnGuardarDocumento").addEventListener("click", async function(e) {
                 e.preventDefault();
                 limpiarErrores();
                 let url = $("#formDocumentos").attr("action");
                 const formulario = document.getElementById('formDocumentos');
-                const formData = new FormData(formulario);
+                const formData = new FormData();
+                formData.append('nombre', document.getElementById('nombre_doc').value)
+                formData.append('numero', document.getElementById('numero_doc').value)
+                let documentosDoc = document.getElementById('documentos_doc').files;
+                documentosDoc.forEach(element => {
+                    formData.append('file', element)
+                });
                 try {
                     const response = await fetch(url, {
                         method: 'POST',
@@ -1579,8 +1585,7 @@
                     }
                     if (data.status) {
                         tblDocumentos.ajax.reload();
-                        formulario.reset();
-                        console.log(data.message);
+                        limpiarCamposDocumentos();
                     }
                 } catch (error) {
                     console.log(error);
@@ -1803,6 +1808,12 @@
             }
 
             // let url = "{{ route('admin.empleados.get') }}";
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             document.getElementById('btn-agregar-experiencia').addEventListener('click', function(e) {
                 e.preventDefault();
                 limpiarErrores();
@@ -1836,11 +1847,13 @@
                 if (document.getElementById('formEmpleados')) {
                     formData = new FormData(document.getElementById('formEmpleados'));
                 }
-                let documentos = document.getElementById('documentos').files;
-                if (documentos.length) {
-                    documentos.forEach(element => {
-                        formData.append('files[]', element);
-                    });
+                if (document.getElementById('documentos')) {
+                    let documentos = document.getElementById('documentos').files;
+                    if (documentos.length) {
+                        documentos.forEach(element => {
+                            formData.append('files[]', element);
+                        });
+                    }
                 }
                 let url = "";
                 let method = "POST";
@@ -1896,11 +1909,17 @@
             //form-participantes
 
             let url = $("#formExperiencia").attr("action");
-
+            let formData = new FormData();
+            formData.append('empresa', document.getElementById('empresa').value)
+            formData.append('puesto', document.getElementById('puesto_trabajo').value)
+            formData.append('empleado_id', document.getElementById('empleado_id_experiencia').value)
+            formData.append('inicio_mes', document.getElementById('inicio_mes').value)
+            formData.append('fin_mes', document.getElementById('fin_mes').value)
+            formData.append('descripcion', document.getElementById('descripcion_exp').value)
             $.ajax({
                 type: "post",
                 url: url,
-                data: new FormData(document.getElementById("formExperiencia")),
+                data: formData,
                 processData: false,
                 contentType: false,
                 beforeSend: function() {
@@ -1934,6 +1953,12 @@
             $("#fin_mes").val('');
         }
 
+        function limpiarCamposDocumentos() {
+            $("#nombre_doc").val('');
+            $("#numero_doc").val('');
+            $("#documentos_doc").val('');
+        }
+
         function limpiarErrores() {
             document.querySelectorAll('.errors').forEach(element => {
                 element.innerHTML = ''
@@ -1953,14 +1978,17 @@
 
         function suscribirEducacion() {
             //form-participantes
-
-
             let url = $("#formEducacion").attr("action");
-
+            let formData = new FormData();
+            formData.append('institucion', document.getElementById('institucion_inst').value)
+            formData.append('nivel', document.getElementById('nivel_inst').value)
+            formData.append('año_inicio', document.getElementById('año_inicio_inst').value)
+            formData.append('año_fin', document.getElementById('año_fin_inst').value)
+            formData.append('empleado_id', document.getElementById('empleado_id_inst').value)
             $.ajax({
                 type: "post",
                 url: url,
-                data: new FormData(document.getElementById("formEducacion")),
+                data: formData,
                 processData: false,
                 contentType: false,
                 beforeSend: function() {
@@ -2008,11 +2036,16 @@
         function suscribirCurso() {
 
             let url = $("#formCursos").attr("action");
-
+            let formData = new FormData();
+            formData.append('curso_diploma', document.getElementById('curso_diplomado').value)
+            formData.append('tipo', document.getElementById('tipo').value)
+            formData.append('año', document.getElementById('año').value)
+            formData.append('duracion', document.getElementById('duracion').value)
+            formData.append('empleado_id', document.getElementById('empleado_id_curso').value)
             $.ajax({
                 type: "post",
                 url: url,
-                data: new FormData(document.getElementById("formCursos")),
+                data: formData,
                 processData: false,
                 contentType: false,
                 beforeSend: function() {
@@ -2057,13 +2090,25 @@
         }
 
         function suscribirCertificado() {
-
             let url = $("#formCertificaciones").attr("action");
-            const formData = new FormData(document.getElementById("formCertificaciones"));
+            const formData = new FormData();
+            const nombre_certificado = document.getElementById("nombre_certificado");
+            const vigencia = document.getElementById("vigencia");
+            const vencio_alta = document.getElementById('vencio_alta');
             const aplicaVigencia = document.getElementById('aplicaVigencia');
+            const evidencia = document.getElementById('evidencia');
+            formData.append('nombre', nombre_certificado.value);
             formData.append('esVigente', aplicaVigencia.checked)
+            formData.append('vigencia', vigencia.value);
+            formData.append('estatus', vencio_alta.value);
+            evidencia.files.forEach(element => {
+                formData.append('documento', element);
+            });
             $.ajax({
                 type: "post",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 url: url,
                 data: formData,
                 processData: false,
