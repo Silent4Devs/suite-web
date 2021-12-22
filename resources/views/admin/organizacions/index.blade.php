@@ -69,6 +69,37 @@
             padding: 10px;
             border-radius: 5px;
         }
+        .caja-redes{
+            display: flex;
+            /* justify-content: space-between; */
+            justify-content: center;
+            margin-top: 10px;
+
+        }
+        .redes{
+            all: unset;
+            margin-left: 10px;
+            color: #fff;
+            transition: 0.1s;
+            cursor: pointer;
+
+            background-color:#1BB0B0;
+            width: 50px;
+            height: 50px;
+            border-radius: 100px;
+            display:flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .redes i {
+            font-size: 25pt;
+
+        }
+        .redes:hover{
+            color: #fff;
+            transform: scale(1.1);
+        }
+}
 
     </style>
 
@@ -109,6 +140,12 @@
                         <div class="p-5 col-sm-6">
                             <label for="logotipo"></label>
                             <img class="bg-light" src="{{ url($logotipo) }}" alt="Card image" style="width:100%;">
+                            <div class="caja-redes">
+                                <a class="redes" href='{{ $organizacion->linkedln }}'><i class="fab fa-linkedin"></i></a>
+                                <a class="redes" href='{{ $organizacion->youtube }}'><i class="fab fa-youtube"></i></a>
+                                <a class="redes" href='{{ $organizacion->facebook }}'><i class="fab fa-facebook-square"></i></a>
+                                <a class="redes" href='{{ $organizacion->twitter }}'><i class="fab fa-twitter-square"></i></a>
+                            </div>
                             @if ($errors->has('logotipo'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('logotipo') }}
@@ -225,7 +262,8 @@
                         <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span>
                     </div>
                     @endif
-                    <div class="form-group col-sm-4 col-md-3">
+                    {{-- @if ($panel_rules->redessociales) --}}
+                    {{-- <div class="form-group col-sm-4 col-md-3">
                         <label for="linkedln"><i class="fab fa-linkedin iconos-crear"></i>Linkedln
                         </label>
                         <input class="form-control {{ $errors->has('linkedln') ? 'is-invalid' : '' }}" type="text"
@@ -235,7 +273,6 @@
                                 {{ $errors->first('linkedln') }}
                             </div>
                         @endif
-                        {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span> --}}
                     </div>
                     <div class="form-group col-sm-4 col-md-3">
                         <label for="youtube"><i class="fab fa-youtube iconos-crear"></i>YouTube
@@ -247,7 +284,6 @@
                                 {{ $errors->first('youtube') }}
                             </div>
                         @endif
-                        {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span> --}}
                     </div>
                     <div class="form-group col-sm-4 col-md-3">
                         <label for="facebook"><i class="fab fa-facebook-square iconos-crear"></i>Facebook
@@ -259,7 +295,6 @@
                                 {{ $errors->first('facebook') }}
                             </div>
                         @endif
-                        {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span> --}}
                     </div>
                     <div class="form-group col-sm-4 col-md-3">
                         <label for="twitter"><i class="fab fa-twitter-square iconos-crear"></i>Twitter
@@ -271,8 +306,8 @@
                                 {{ $errors->first('twitter') }}
                             </div>
                         @endif
-                        {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span> --}}
-                    </div>
+                    </div> --}}
+                    {{-- @endif --}}
                     @if ($panel_rules->schedule)
                     <div class="form-group col-12">
                         <table class="table" id="user_table">

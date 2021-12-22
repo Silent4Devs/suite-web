@@ -75,7 +75,10 @@ class Empleado extends Model
 
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
-    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso'];
+    protected $appends = [
+        'avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo',
+        'actual_birdthday', 'actual_aniversary',
+    ];
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
         'name',
@@ -127,9 +130,28 @@ class Empleado extends Model
         'periodicidad_nomina',
     ];
 
+    public function getActualBirdthdayAttribute()
+    {
+        $birdthday = date('Y') . '-' . Carbon::parse($this->cumpleaños)->format('m-d');
+
+        return $birdthday;
+    }
+
+    public function getActualAniversaryAttribute()
+    {
+        $aniversario = date('Y') . '-' . Carbon::parse($this->antiguedad)->format('m-d');
+
+        return $aniversario;
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function getResumenAttribute($value)
+    {
+        return strip_tags($value);
     }
 
     public function getResourceIdAttribute()
@@ -151,6 +173,22 @@ class Empleado extends Model
         } else {
             return 'Otro Género';
         }
+    }
+
+    public function getSaludoAttribute()
+    {
+        $hora = date('H');
+        $saludo = '';
+        $nombre = explode(' ', $this->name)[0];
+        if ($hora >= '12' && $hora <= '18') {
+            $saludo = "Buenas Tardes, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        } elseif ($hora >= '19' && $hora <= '23') {
+            $saludo = "Buenas Noches, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        } else {
+            $saludo = "Buenos Días, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        }
+
+        return $saludo;
     }
 
     public function getAvatarAttribute()

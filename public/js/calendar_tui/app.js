@@ -43,6 +43,14 @@
         },
         'clickSchedule': function(e) {
             console.log('clickSchedule', e);
+
+            let encabezado_card = document.querySelector('.tui-full-calendar-schedule-title');
+            let encabezado_card_contenido = encabezado_card.textContent;
+            encabezado_card.innerHTML = encabezado_card_contenido;
+
+            let contenido_card = document.querySelector('span.tui-full-calendar-content');
+            let contenido_card_contenido = contenido_card.textContent;
+            contenido_card.innerHTML = contenido_card_contenido;
         },
         'clickDayname': function(date) {
             console.log('clickDayname', date);
