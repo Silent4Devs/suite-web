@@ -141,10 +141,18 @@
                             <label for="logotipo"></label>
                             <img class="bg-light" src="{{ url($logotipo) }}" alt="Card image" style="width:100%;">
                             <div class="caja-redes">
+                                @if ($panel_rules->linkedln)
                                 <a class="redes" href='{{ $organizacion->linkedln }}'><i class="fab fa-linkedin"></i></a>
+                                @endif
+                                @if ($panel_rules->youtube)
                                 <a class="redes" href='{{ $organizacion->youtube }}'><i class="fab fa-youtube"></i></a>
+                                @endif
+                                @if ($panel_rules->facebook)
                                 <a class="redes" href='{{ $organizacion->facebook }}'><i class="fab fa-facebook-square"></i></a>
+                                @endif
+                                @if ($panel_rules->twitter)
                                 <a class="redes" href='{{ $organizacion->twitter }}'><i class="fab fa-twitter-square"></i></a>
+                                @endif
                             </div>
                             @if ($errors->has('logotipo'))
                                 <div class="invalid-feedback">
