@@ -403,7 +403,7 @@
         }
         .opciones_felicitar i{
             color: #00abb2;
-            font-size: 20pt;
+            font-size: 15pt;
             cursor: pointer;
         }
         
@@ -411,7 +411,7 @@
             display: none !important;
         }
         .modal-dialog{
-            margin-top: 100px !important;
+            margin-top: 200px !important;
         }
 
     </style>
@@ -631,56 +631,12 @@
                                         <p class="w-100">
 
                                         </p>
-                                        <a href=""></a>
                                     </div>
-                                        @php
-                                            $cumpleaños_felicitados_like_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->count();
-
-                                            $cumpleaños_felicitados_like = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->first();
-
-                                            $cumpleaños_felicitados_comentarios_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', false)->where('comentarios', '!=', null)->count();
-
-                                            $cumpleaños_felicitados_comentarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', false)->where('comentarios', '!=', null)->first();
-                                        @endphp
-                                        @if($cumpleaños_felicitados_like_contador == 0)
-                                            <form class="opciones_felicitar" action="{{asset('admin/portal-comunicacion/cumpleaños/'. $cumple->id)}}" method="POST">
-                                                <button style="all:unset;"><i class="far fa-thumbs-up" style="color:#888;"></i></button>
-                                         @else
-                                            <form class="opciones_felicitar" action="{{asset('admin/portal-comunicacion/cumpleaños-dislike/'. $cumpleaños_felicitados_like->id)}}" method="POST">
-                                            <button style="all:unset;"><i class="fas fa-thumbs-up"></i></button>
-                                        @endif
-                                                @csrf
-                                                <i class="fas fa-comment-dots" data-toggle="modal" data-target="#cumpleaños_comentarios_Modal_{{$cumple->id}}"></i>
-                                            </form>
+                                        
                                 </div>
 
 
-                                <div class="modal fade" id="cumpleaños_comentarios_Modal_{{$cumple->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-
-                                            @if($cumpleaños_felicitados_comentarios_contador == 0)
-                                                <form action="{{asset('admin/portal-comunicacion/cumpleaños_comentarios/'. $cumple->id)}}" method="POST">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label>Comentarios</label>
-                                                        <textarea name="comentarios" class="form-control"></textarea>
-                                             @else
-                                                <form action="{{asset('admin/portal-comunicacion/cumpleaños_comentarios_update/'. $cumpleaños_felicitados_comentarios->id)}}" method="POST">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label>Comentarios</label>
-                                                        <textarea name="comentarios" class="form-control">{{$cumpleaños_felicitados_comentarios->comentarios}}</textarea>
-                                            @endif
-                                                    
-                                                    </div>
-                                                    <button class="btn btn-success">Enviar</button>
-                                                </form>                                          
-                                        </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                
                             @endforelse
                         </div>
                     </div>
@@ -774,6 +730,53 @@
                                                 @endphp
 
                                                 <span>{{ $inputs['Fecha'] }}</span>
+
+                                                @php
+                                                    $cumpleaños_felicitados_like_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->count();
+
+                                                    $cumpleaños_felicitados_like = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->first();
+
+                                                    $cumpleaños_felicitados_comentarios_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', false)->where('comentarios', '!=', null)->count();
+
+                                                    $cumpleaños_felicitados_comentarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', false)->where('comentarios', '!=', null)->first();
+                                                @endphp
+                                                @if($cumpleaños_felicitados_like_contador == 0)
+                                                    <form class="opciones_felicitar" action="{{asset('admin/portal-comunicacion/cumpleaños/'. $cumple->id)}}" method="POST">
+                                                        <button style="all:unset;"><i class="far fa-thumbs-up" style="color:#888;"></i></button>
+                                                 @else
+                                                    <form class="opciones_felicitar" action="{{asset('admin/portal-comunicacion/cumpleaños-dislike/'. $cumpleaños_felicitados_like->id)}}" method="POST">
+                                                    <button style="all:unset;"><i class="fas fa-thumbs-up"></i></button>
+                                                @endif
+                                                        @csrf
+                                                        <i class="fas fa-comment-dots" data-toggle="modal" data-target="#cumpleaños_comentarios_Modal_{{$cumple->id}}"></i>
+                                                    </form>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" id="cumpleaños_comentarios_Modal_{{$cumple->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+
+                                                    @if($cumpleaños_felicitados_comentarios_contador == 0)
+                                                        <form action="{{asset('admin/portal-comunicacion/cumpleaños_comentarios/'. $cumple->id)}}" method="POST">
+                                                            @csrf
+                                                            <div class="form-group">
+                                                                <label>Comentarios</label>
+                                                                <textarea name="comentarios" class="form-control"></textarea>
+                                                     @else
+                                                        <form action="{{asset('admin/portal-comunicacion/cumpleaños_comentarios_update/'. $cumpleaños_felicitados_comentarios->id)}}" method="POST">
+                                                            @csrf
+                                                            <div class="form-group">
+                                                                <label>Comentarios</label>
+                                                                <textarea name="comentarios" class="form-control">{{$cumpleaños_felicitados_comentarios->comentarios}}</textarea>
+                                                    @endif
+                                                            
+                                                            </div>
+                                                            <button class="btn btn-success">Enviar</button>
+                                                        </form>                                          
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     @empty

@@ -220,29 +220,64 @@
                 <div class="row justify-content-center">
                     @if (!$isPersonal)
                         <div class="col-12">
-                            <button class="btn btn-sm btn-primary" x-on:click="open = true"><i
-                                    class="fas fa-arrow-left"></i>Regresar</button>
+                            <button class="btn btn-sm btn_cancelar" x-on:click="open = true"><i
+                                    class="fas fa-arrow-left"></i> Regresar</button>
+
+                            <button onclick="javascript:imprim1(imp1);" class="btn btn-sm btn-success">
+                                <i class="mr-2 fas fa-print"></i>
+                                Imprimir
+                            </button>
+
+                            
                         </div>
                     @endif
                     <div class="mt-4 col-sm-12 col-md-12">
-                        <div class="card" style="background-color:#EDEEF0"
+                        <div id="imp1" class="card" style="background-color:#EDEEF0"
                             style="position-relative; height:auto">
+                            <style type="text/css">
+                                @media print {
+                                    body{
+                                        font-family: arial;
+                                    }
+                                    .caja_logo{
+                                        width: 50%;
+                                    }
+                                    .h5{
+                                        padding: 20px !important;
+                                    }
+                                    .medidas{
+                                        display: flex;
+                                        justify-content: space-between;
+                                    }
+                                    .datos_iz_cv{
+                                        width: 68%;
+                                    }
+                                    .datos_der_cv{
+                                        margin-top: 20px;
+                                        width: 30%;
+                                        color: #fff;
+                                    }
+                                    .dato_mairg{
+                                        margin-top: 25px;
+                                    }
+                                }
+                            </style>
                             <div class="caja_img_logo">
                                 <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 20%;">
                             </div>
                             <div class="row medidas">
-                                <div class="mt-4 ml-4 col-md-7">
+                                <div class="mt-4 ml-4 col-md-7 datos_iz_cv">
                                     <h5 class="py-2 pl-2"
                                         style="color:#fff; font-weight:bold; background-color:#7F7F7F; width:100%">
                                         {{ $empleadoModel->name }}</h5>
-                                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Resumen</span>
                                     </div>
                                     <p style="text-transform:capitalize; text-align:justify">
                                         {{ $empleadoModel->resumen }}
                                     </p>
-                                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Experiencia Profesional</span>
                                     </div>
@@ -263,7 +298,7 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="mt-4 mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Certificaciones</span>
                                     </div>
@@ -282,7 +317,7 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="mt-4 mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Cursos / Diplomados</span>
                                     </div>
@@ -300,7 +335,7 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="mt-4 mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Educación</span>
                                     </div>
@@ -317,7 +352,7 @@
                                         </div>
                                     @endforeach</ul>
                                 </div>
-                                <div class="mt-4 col-md-4">
+                                <div class="mt-4 col-md-4 datos_der_cv">
                                     <div
                                         style="background: linear-gradient(0deg, rgba(69,125,182,1) 0%, rgba(8,170,157,1) 60%); height:100%; padding:10px;">
                                         <div class="text-center w-100"><img class="mt-3"
@@ -570,14 +605,14 @@
                                     <h5 class="py-2 pl-2"
                                     style="color:#fff; font-weight:bold; background-color:#7F7F7F; width:100%">
                                     {{ $empleadoModel->name }}</h5>
-                                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Resumen</span>
                                         </div>
                                         <p style="text-transform:capitalize; text-align:justify">
                                             {{ $empleadoModel->resumen }}
                                     </p>
-                                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Experiencia Profesional</span>
                                     </div>
@@ -598,7 +633,7 @@
                                         </div>
                                     @endforeach
     
-                                    <div class="mt-4 mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Certificaciones</span>
                                     </div>
@@ -617,7 +652,7 @@
                                         </div>
                                     @endforeach
     
-                                    <div class="mt-4 mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Cursos / Diplomados</span>
                                     </div>
@@ -635,7 +670,7 @@
                                         </div>
                                     @endforeach
     
-                                    <div class="mt-4 mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Educación</span>
                                     </div>
@@ -1148,5 +1183,17 @@
             })
         })
     })
+</script>
+
+<script>
+function imprim1(imp1){
+var printContents = document.getElementById('imp1').innerHTML;
+        w = window.open();
+        w.document.write(printContents);
+        w.document.close(); // necessary for IE >= 10
+        w.focus(); // necessary for IE >= 10
+        w.print();
+        w.close();
+        return true;}
 </script>
 </div>

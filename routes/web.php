@@ -46,7 +46,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'destroy' => 'tabla-calendario.destroy',
     ]);
 
-    Route::get('calendario-oficial/index', 'CalendarioOficialController@index')->name('calendario-oficial.index');
     Route::resource('recursos-humanos/calendario-oficial', 'CalendarioOficialController')->names([
         'create' => 'calendario-oficial.create',
         'store' => 'calendario-oficial.store',
