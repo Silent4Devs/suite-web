@@ -728,8 +728,14 @@
                                             @if (\Carbon\Carbon::parse($aniversario->antiguedad)->format('Y') < $hoy->format('Y'))
                                                 <div class="nuevo">
                                                     <div class="img_nuevo">
-                                                        <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
-                                                            class="img_empleado">
+                                                        @forelse($nuevos as $nuevo)
+                                                            <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
+                                                                class="img_empleado">
+                                                        @empty
+                                                            <div class="nuevo">No hay nuevos ingresos registrados
+                                                                en este
+                                                                mes.</div>
+                                                        @endforelse
                                                     </div>
                                                     <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
                                                     <div class="datos_nuevo">
@@ -747,9 +753,10 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                        @empty
-                                            <div class="nuevo">No hay aniversarios registrados en este mes.</div>
-                                        @endforelse
+                                            @empty
+                                                <div class="nuevo">No hay aniversarios registrados en este mes.</div>
+                                            @endforelse
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -758,28 +765,27 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    {{-- @endcan --}}
-@endsection
-@section('scripts')
-    <script src="{{ asset('js/calendar-comunicado.js') }}"></script>
-    <script>
-        /*SEARCH BY USING A CITY NAME (e.g. athens) OR A COMMA-SEPARATED CITY NAME ALONG WITH THE COUNTRY CODE (e.g. athens,gr)*/
-        /*SUBSCRIBE HERE FOR API KEY: https://home.openweathermap.org/users/sign_up*/
-        const apiKey = "4d8fb5b93d4af21d66a2948710284366";
-        let city = 'Mexico';
-        const url =
-            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=es`;
+        {{-- @endcan --}}
+    @endsection
+    @section('scripts')
+        <script src="{{ asset('js/calendar-comunicado.js') }}"></script>
+        <script>
+            /*SEARCH BY USING A CITY NAME (e.g. athens) OR A COMMA-SEPARATED CITY NAME ALONG WITH THE COUNTRY CODE (e.g. athens,gr)*/
+            /*SUBSCRIBE HERE FOR API KEY: https://home.openweathermap.org/users/sign_up*/
+            const apiKey = "4d8fb5b93d4af21d66a2948710284366";
+            let city = 'Mexico';
+            const url =
+                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=es`;
 
-        obtenerClima(url);
+            obtenerClima(url);
 
-        async function obtenerClima(url) {
-            let api = await fetch(url);
-            let response = await api.json();
-            let climaContenedor = document.getElementById('clima');
-            const icon = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${response.weather[0]["icon"]}.svg`;
-            climaContenedor.innerHTML = `
+            async function obtenerClima(url) {
+                let api = await fetch(url);
+                let response = await api.json();
+                let climaContenedor = document.getElementById('clima');
+                const icon = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${response.weather[0]["icon"]}.svg`;
+                climaContenedor.innerHTML = `
             <p class="" style="text-align:left; margin:0;">
                 <i class="fas fa-globe-americas" style="font-size:;"></i>
                 ${response.name}
@@ -798,8 +804,8 @@
                 </div>
             </div>
             `;
-            console.log(response);
-        }
-    </script>
-    <script src="{{ asset('js/calendario-comunicacion.js') }}"></script>
-@endsection
+                console.log(response);
+            }
+        </script>
+        <script src="{{ asset('js/calendario-comunicacion.js') }}"></script>
+    @endsection
