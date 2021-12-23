@@ -1,92 +1,9 @@
 <style type="text/css">
-    .cards_reportes{
-        overflow: hidden;
-        width: 200px;
-        height:60px;
-        padding: 15px 0px;
-        padding-left: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        text-align: left;
-        display:inline-block;
-        margin: 10px;
-        cursor: pointer;
-        position: relative;
-        color: #888888;
-        background: #f5f5f5;
-        box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
-        transition: 0.1s;
-    }
-    .cards_reportes:hover{
-        color: #00abb2;
-        background: #fff;
-        box-shadow: none;
-        border: 1px solid rgba(0, 0, 0, 0);
-    }
-    .cards_reportes:before{
-        content: "";
-        width: 0%;
-        height: 2px;
-        background: #00abb2;
-        position: absolute;
-        bottom: 0;
-    }
-    .cards_reportes:hover:before{
-        content: "";
-        width: 100%;
-        height: 2px;
-        background: #00abb2;
-        position: absolute;
-        bottom: 0;
-        transition: 0.3s;
-    }
+a.btn.btn-success{
+    width: 60% !important;
+    margin-bottom: 10px;
+}
 
-
-    .cards_alto{
-        overflow: hidden;
-        width: 250px;
-        height:60px;
-        padding: 10px 0px;
-        padding-left: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        text-align: left;
-        display:inline-block;
-        margin: 10px;
-        position: relative;
-        cursor: pointer;
-        color: #888888;
-        background: #f5f5f5;
-        box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
-        transition: 0.1s;
-    }
-    .cards_alto i{
-        font-size: 16pt;
-        margin-right: 10px;
-    }
-    .cards_alto:hover{
-        color: #00abb2;
-        background: #fff;
-        box-shadow: none;
-        border: 1px solid rgba(0, 0, 0, 0);
-    }
-    .cards_alto:before{
-        content: "";
-        width: 0%;
-        height: 2px;
-        background: #00abb2;
-        position: absolute;
-        bottom: 0;
-    }
-    .cards_alto:hover:before{
-        content: "";
-        width: 100%;
-        height: 2px;
-        background: #00abb2;
-        position: absolute;
-        bottom: 0;
-        transition: 0.3s;
-    }
 </style>
 
 
@@ -114,14 +31,17 @@
                 <div class="mt-4 mb-3 ml-4 col-9" style="border-bottom: solid 2px #0CA193;">
                     <h6 class="mt-3 mr-1" style="color: #008186; font-weight: bold;">Deseo reportar un:</h6>
                 </div>
+                {{-- <div class="col-4 justify-content-end pr-0" style="text-align:end"> --}}
+
+                {{-- </div> --}}
                 <div class="mt-4  row justify-content:center align-items-center">
                     <div class="text-center col-12">
-                        <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}"  class="cards_alto">
+                        <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}"  class="btn btn-success">
                             <i class="fas fa-exclamation-triangle"></i> Incidente de Seguridad
                         </a>
                     </div>
                     <div class="text-center col-12">
-                        <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}"  class="cards_alto">
+                        <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}"  class="btn btn-success">
                             <i class="fas fa-shield-alt"></i>  Riesgo Identificado
                         </a>
                     </div>
@@ -136,17 +56,17 @@
                 </div>
                 {{-- --}}
                 <div class="mt-4 text-center">
-                    <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="cards_reportes">
+                    <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="btn btn-success">
                         <i class="fas fa-frown"></i> Queja
                     </a>
 
-                    <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="cards_reportes">
+                    <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="btn btn-success">
                         <i class="fas fa-hand-paper"></i> Denuncia
                     </a>
-                    <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
+                    <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="btn btn-success">
                         <i class="fas fa-rocket"></i> Propuesta de Mejora
                     </a>
-                    <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="cards_reportes">
+                    <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="btn btn-success">
                         <i class="fas fa-lightbulb"></i>Sugerencia
                     </a>
                 </div>
