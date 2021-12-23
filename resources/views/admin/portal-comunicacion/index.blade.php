@@ -405,7 +405,8 @@
             style="margin-top:0px !important; ">
             <h3 class="mb-2 text-center text-white"
                 style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Portal de
-                    Comunicación </strong></h3>
+                    Comunicación </strong>
+            </h3>
         </div>
 
         @include('partials.flashMessages')
@@ -461,7 +462,7 @@
                                             } else {
                                                 $imagen = 'img/tabantaj_fondo_blanco.png';
                                             }
-                                            
+
                                         @endphp
                                         <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}">
                                             <div class="img_carrusel"
@@ -510,12 +511,9 @@
                                         } else {
                                             $imagen = 'img/portal_404.png';
                                         }
-                                        
-                                    @endphp
-                                    <style type="text/css">
-                                        height
 
-                                    </style>
+                                    @endphp
+
                                     {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
 
                                     <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');">
@@ -689,8 +687,13 @@
                                     @forelse($cumpleaños as $cumple)
                                         <div class="nuevo">
                                             <div class="img_nuevo">
-                                                <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
-                                                    class="img_empleado">
+                                                @forelse($nuevos as $nuevo)
+                                                    <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
+                                                        class="img_empleado">
+                                                @empty
+                                                    <div class="nuevo">No hay nuevos ingresos registrados en este
+                                                        mes.</div>
+                                                @endforelse
                                             </div>
                                             <h5 class="nombre_nuevo">{{ $cumple->name }}</h5>
                                             <div class="datos_nuevo">
