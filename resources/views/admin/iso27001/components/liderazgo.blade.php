@@ -1,5 +1,5 @@
 @can('liderazgo_access')
-    <ul>
+    <ul class="mt-4">
         <li><a href="{{ route('admin.comiteseguridads.index') }}">
                 <div>
                     <i class="fas fa-shield-alt"></i>

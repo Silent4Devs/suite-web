@@ -1,5 +1,5 @@
 @can('evaluacion_access')
-    <ul>
+    <ul class="mt-4">
         <li><a href="{{ route('admin.indicadores-sgsis.index') }}">
                 <div>
                     <i class="fas fa-list-ul"></i>

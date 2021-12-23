@@ -174,10 +174,34 @@
                 </label>
             </div>
             <div class="form-group col-sm-3">
-                <label class="required" for="redessociales_id"><i class="fab fa-facebook-square iconos-crear"></i>Redes Sociales</label>
+                <label class="required" for="linkedln_id"><i class="fab fa-linkedin iconos-crear"></i>Linkedln</label>
                 <br>
                 <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
-                    <input type="checkbox" wire:model.debounce.800ms="redessociales_id" class="c-switch-input">
+                    <input type="checkbox" wire:model.debounce.800ms="linkedln_id" class="c-switch-input">
+                    <span class="c-switch-slider" data-checked="On" data-unchecked="Off"></span>
+                </label>
+            </div>
+            <div class="form-group col-sm-3">
+                <label class="required" for="facebook_id"><i class="fab fa-facebook-square iconos-crear"></i>Facebook</label>
+                <br>
+                <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
+                    <input type="checkbox" wire:model.debounce.800ms="facebook_id" class="c-switch-input">
+                    <span class="c-switch-slider" data-checked="On" data-unchecked="Off"></span>
+                </label>
+            </div>
+            <div class="form-group col-sm-3">
+                <label class="required" for="youtube_id"><i class="fab fa-youtube iconos-crear"></i>Youtube</label>
+                <br>
+                <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
+                    <input type="checkbox" wire:model.debounce.800ms="youtube_id" class="c-switch-input">
+                    <span class="c-switch-slider" data-checked="On" data-unchecked="Off"></span>
+                </label>
+            </div>
+            <div class="form-group col-sm-3">
+                <label class="required" for="twitter_id"><i class="fab fa-twitter-square iconos-crear"></i>Twitter</label>
+                <br>
+                <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
+                    <input type="checkbox" wire:model.debounce.800ms="twitter_id" class="c-switch-input">
                     <span class="c-switch-slider" data-checked="On" data-unchecked="Off"></span>
                 </label>
             </div>

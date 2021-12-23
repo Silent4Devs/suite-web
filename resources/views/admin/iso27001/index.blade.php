@@ -236,25 +236,27 @@
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-contexto" role="tabpanel" aria-labelledby="nav-contexto-tab">
+                <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
+                    aria-labelledby="nav-contexto-tab">
                     @include('admin.iso27001.components.contexto')
                 </div>
-                <div class="tab-pane fade" id="nav-liderazgo" role="tabpanel" aria-labelledby="nav-liderazgo-tab">
+                <div class="tab-pane mb-4 fade" id="nav-liderazgo" role="tabpanel" aria-labelledby="nav-liderazgo-tab">
                     @include('admin.iso27001.components.liderazgo')
                 </div>
-                <div class="tab-pane fade" id="nav-planificacion" role="tabpanel" aria-labelledby="nav-planificacion-tab">
+                <div class="tab-pane mb-4 fade" id="nav-planificacion" role="tabpanel"
+                    aria-labelledby="nav-planificacion-tab">
                     @include('admin.iso27001.components.planificacion')
                 </div>
-                <div class="tab-pane fade" id="nav-soporte" role="tabpanel" aria-labelledby="nav-soporte-tab">
+                <div class="tab-pane mb-4 fade" id="nav-soporte" role="tabpanel" aria-labelledby="nav-soporte-tab">
                     @include('admin.iso27001.components.soporte')
                 </div>
-                <div class="tab-pane fade" id="nav-operacion" role="tabpanel" aria-labelledby="nav-operacion-tab">
+                <div class="tab-pane mb-4 fade" id="nav-operacion" role="tabpanel" aria-labelledby="nav-operacion-tab">
                     @include('admin.iso27001.components.operacion')
                 </div>
-                <div class="tab-pane fade" id="nav-evaluacion" role="tabpanel" aria-labelledby="nav-evaluacion-tab">
+                <div class="tab-pane mb-4 fade" id="nav-evaluacion" role="tabpanel" aria-labelledby="nav-evaluacion-tab">
                     @include('admin.iso27001.components.evaluacion')
                 </div>
-                <div class="tab-pane fade" id="nav-mejora" role="tabpanel" aria-labelledby="nav-mejora-tab">
+                <div class="tab-pane mb-4 fade" id="nav-mejora" role="tabpanel" aria-labelledby="nav-mejora-tab">
                     @include('admin.iso27001.components.mejora')
                 </div>
             </div>

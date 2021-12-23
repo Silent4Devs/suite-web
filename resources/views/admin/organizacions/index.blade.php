@@ -92,13 +92,15 @@
             justify-content: center;
         }
         .redes i {
-            font-size: 25pt;
+            font-size: 20pt;
 
         }
         .redes:hover{
             color: #fff;
             transform: scale(1.1);
+            text-decoration: none;
         }
+
 }
 
     </style>
@@ -141,10 +143,18 @@
                             <label for="logotipo"></label>
                             <img class="bg-light" src="{{ url($logotipo) }}" alt="Card image" style="width:100%;">
                             <div class="caja-redes">
-                                <a class="redes" href='{{ $organizacion->linkedln }}'><i class="fab fa-linkedin"></i></a>
+                                @if ($panel_rules->linkedln)
+                                <a class="redes" href='{{ $organizacion->linkedln }}'><i class="fab fa-linkedin-in"></i></a>
+                                @endif
+                                @if ($panel_rules->youtube)
                                 <a class="redes" href='{{ $organizacion->youtube }}'><i class="fab fa-youtube"></i></a>
-                                <a class="redes" href='{{ $organizacion->facebook }}'><i class="fab fa-facebook-square"></i></a>
-                                <a class="redes" href='{{ $organizacion->twitter }}'><i class="fab fa-twitter-square"></i></a>
+                                @endif
+                                @if ($panel_rules->facebook)
+                                <a class="redes" href='{{ $organizacion->facebook }}'><i class="fab fa-facebook-f"></i></a>
+                                @endif
+                                @if ($panel_rules->twitter)
+                                <a class="redes" href='{{ $organizacion->twitter }}'><i class="fab fa-twitter"></i></a>
+                                @endif
                             </div>
                             @if ($errors->has('logotipo'))
                                 <div class="invalid-feedback">

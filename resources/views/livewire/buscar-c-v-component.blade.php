@@ -86,7 +86,7 @@
     @else
         <div class="d-flex">
             <a class="ml-auto btn btn-danger btn-md mt-2"
-                href="{{ route('admin.editarCompetencias', $empleado_id) }}">Editar</a>
+                href="{{ route('admin.editarCompetencias', $empleadoModel) }}">Editar</a>
         </div>
     @endif
 
@@ -212,350 +212,351 @@
                 </div>
             @endif
             @if ($empleadoModel)
-                <div x-show="!open">
-                    <div class="row justify-content-center">
+                @if (!$isPersonal)
+                    <div x-show="!open">
+                    @else
+                        <div>
+                @endif
+                <div class="row justify-content-center">
+                    @if (!$isPersonal)
                         <div class="col-12">
                             <button class="btn btn-sm btn-primary" x-on:click="open = true"><i
                                     class="fas fa-arrow-left"></i>Regresar</button>
                         </div>
-                        <div class="mt-4 col-sm-12 col-md-12">
-                            <div class="card" style="background-color:#EDEEF0"
-                                style="position-relative; height:auto">
-                                <div class="caja_img_logo">
-                                    <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 20%;">
-                                </div>
-                                <div class="row medidas">
-                                    <div class="mt-4 ml-4 col-md-7">
-                                        <h5 class="py-2 pl-2"
-                                            style="color:#fff; font-weight:bold; background-color:#7F7F7F; width:100%">
-                                            {{ $empleadoModel->name }}</h5>
-                                        <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
-                                            <span style="font-size: 17px; font-weight: bold;">
-                                                Resumen</span>
-                                        </div>
-                                        <p style="text-transform:capitalize; text-align:justify">
-                                            {{ $empleadoModel->resumen }}
-                                        </p>
-                                        <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
-                                            <span style="font-size: 17px; font-weight: bold;">
-                                                Experiencia Profesional</span>
-                                        </div>
-                                        @foreach ($empleadoModel->empleado_experiencia as $experiencia)
-                                            <div>
-                                                <strong style="color:#00A57E;text-transform: uppercase">
-                                                    {{ $experiencia->empresa }}</strong>
-                                                <br>
-                                                <span
-                                                    style="text-transform:capitalize; font-weight:bold">{{ $experiencia->puesto }}
-                                                </span>
-                                                <br>
-                                                <span style="font-weight:bold">{{ $experiencia->inicio_mes }} -
-                                                    {{ $experiencia->fin_mes }}</span>
-                                                <span style="text-transform:capitalize; text-align:justify">
-                                                    <br>
-                                                    <p style="text-align:justify">{{ $experiencia->descripcion }}</p>
-                                            </div>
-                                        @endforeach
-
-                                        <div class="mt-4 mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
-                                            <span style="font-size: 17px; font-weight: bold;">
-                                                Certificaciones</span>
-                                        </div>
-                                        @foreach ($empleadoModel->empleado_certificaciones as $certificaciones)
-                                            <div>
-                                                <strong style="color:#00A57E;text-transform: uppercase">
-                                                    {{ $certificaciones->nombre }}</strong>
-                                                <br>
-                                                @if ($certificaciones->vigencia && $certificaciones->estatus)
-                                                    <span>{{ $certificaciones->estatus }}</span>
-                                                    <br>
-                                                    <span>{{ $certificaciones->vigencia }}</span>
-                                                @else
-                                                    <span>Permanente - Sin Vigencia</span>
-                                                @endif
-                                            </div>
-                                        @endforeach
-
-                                        <div class="mt-4 mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
-                                            <span style="font-size: 17px; font-weight: bold;">
-                                                Cursos / Diplomados</span>
-                                        </div>
-                                        @foreach ($empleadoModel->empleado_cursos as $cursos)
-                                            <div>
-                                                <strong class="font-weight-bold"
-                                                    style="color:#00A57E;text-transform: uppercase">
-                                                    {{ $cursos->curso_diploma }}</strong>
-                                                <br>
-                                                <span>{{ $cursos->tipo }}</span>
-                                                <br>
-                                                <span>{{ $cursos->año }}</span>
-                                                <br>
-                                                <span>{{ $cursos->duracion }} Horas</span>
-                                            </div>
-                                        @endforeach
-
-                                        <div class="mt-4 mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
-                                            <span style="font-size: 17px; font-weight: bold;">
-                                                Educación</span>
-                                        </div>
-                                        @foreach ($empleadoModel->empleado_educacion as $educacion)
-                                            <div>
-                                                <strong class="font-weight-bold"
-                                                    style="color:#00A57E;text-transform: uppercase">
-                                                    {{ $educacion->institucion }}</strong>
-                                                <br>
-                                                <span
-                                                    style="text-transform:capitalize">{{ $educacion->nivel }}</span>
-                                                <br>
-                                                <span>{{ $educacion->año_inicio }} -
-                                                    {{ $educacion->año_fin }}</span>
-                                            </div>
-                                        @endforeach</ul>
+                    @endif
+                    <div class="mt-4 col-sm-12 col-md-12">
+                        <div class="card" style="background-color:#EDEEF0"
+                            style="position-relative; height:auto">
+                            <div class="caja_img_logo">
+                                <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 20%;">
+                            </div>
+                            <div class="row medidas">
+                                <div class="mt-4 ml-4 col-md-7">
+                                    <h5 class="py-2 pl-2"
+                                        style="color:#fff; font-weight:bold; background-color:#7F7F7F; width:100%">
+                                        {{ $empleadoModel->name }}</h5>
+                                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                        <span style="font-size: 17px; font-weight: bold;">
+                                            Resumen</span>
                                     </div>
-                                    <div class="mt-4 col-md-4">
-                                        <div
-                                            style="background: linear-gradient(0deg, rgba(69,125,182,1) 0%, rgba(8,170,157,1) 60%); height:100%; padding:10px;">
-                                            <div class="text-center w-100"><img class="mt-3"
-                                                    style="height: 100px; clip-path: circle(50px at 50% 50%); margin:auto"
-                                                    src="{{ asset('storage/empleados/imagenes/') . '/' . $empleadoModel->Avatar }}"
-                                                    alt=""></div>
-                                            <div class="mt-3 mb-4 w-100" style="border-bottom: solid 2px #fff;">
-                                                <span class="text-white "
-                                                    style="font-size: 14px; font-weight: bold;">
-                                                    Datos Generales</span>
-                                            </div>
-                                            <strong><i
-                                                    class="ml-2 mr-2 text-white fas fa-map-marker-alt"></i>Dirección</strong>
+                                    <p style="text-transform:capitalize; text-align:justify">
+                                        {{ $empleadoModel->resumen }}
+                                    </p>
+                                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                        <span style="font-size: 17px; font-weight: bold;">
+                                            Experiencia Profesional</span>
+                                    </div>
+                                    @foreach ($empleadoModel->empleado_experiencia as $experiencia)
+                                        <div>
+                                            <strong style="color:#00A57E;text-transform: uppercase">
+                                                {{ $experiencia->empresa }}</strong>
                                             <br>
-                                            <span style="margin-left:28px;">{{ $empleadoModel->telefono }}</span>
+                                            <span
+                                                style="text-transform:capitalize; font-weight:bold">{{ $experiencia->puesto }}
+                                            </span>
                                             <br>
-                                            <strong><i class="ml-2 mr-2 text-white fas fa-phone-alt"></i>Número de
-                                                Teléfono</strong>
+                                            <span style="font-weight:bold">{{ $experiencia->inicio_mes }} -
+                                                {{ $experiencia->fin_mes }}</span>
+                                            <span style="text-transform:capitalize; text-align:justify">
+                                                <br>
+                                                <p style="text-align:justify">{{ $experiencia->descripcion }}</p>
+                                        </div>
+                                    @endforeach
+
+                                    <div class="mt-4 mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                        <span style="font-size: 17px; font-weight: bold;">
+                                            Certificaciones</span>
+                                    </div>
+                                    @foreach ($empleadoModel->empleado_certificaciones as $certificaciones)
+                                        <div>
+                                            <strong style="color:#00A57E;text-transform: uppercase">
+                                                {{ $certificaciones->nombre }}</strong>
                                             <br>
-                                            <span style="margin-left:29px;">{{ $empleadoModel->telefono }}</span>
+                                            @if ($certificaciones->vigencia && $certificaciones->estatus)
+                                                <span>{{ $certificaciones->estatus }}</span>
+                                                <br>
+                                                <span>{{ $certificaciones->vigencia }}</span>
+                                            @else
+                                                <span>Permanente - Sin Vigencia</span>
+                                            @endif
+                                        </div>
+                                    @endforeach
+
+                                    <div class="mt-4 mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                        <span style="font-size: 17px; font-weight: bold;">
+                                            Cursos / Diplomados</span>
+                                    </div>
+                                    @foreach ($empleadoModel->empleado_cursos as $cursos)
+                                        <div>
+                                            <strong class="font-weight-bold"
+                                                style="color:#00A57E;text-transform: uppercase">
+                                                {{ $cursos->curso_diploma }}</strong>
                                             <br>
-                                            <strong><i class="ml-2 mr-2 text-white fas fa-envelope"></i>Correo
-                                                Electrónico</strong>
+                                            <span>{{ $cursos->tipo }}</span>
                                             <br>
-                                            <span style="margin-left:30px;">{{ $empleadoModel->email }}</span>
+                                            <span>{{ $cursos->año }}</span>
+                                            <br>
+                                            <span>{{ $cursos->duracion }} Horas</span>
+                                        </div>
+                                    @endforeach
+
+                                    <div class="mt-4 mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                        <span style="font-size: 17px; font-weight: bold;">
+                                            Educación</span>
+                                    </div>
+                                    @foreach ($empleadoModel->empleado_educacion as $educacion)
+                                        <div>
+                                            <strong class="font-weight-bold"
+                                                style="color:#00A57E;text-transform: uppercase">
+                                                {{ $educacion->institucion }}</strong>
+                                            <br>
+                                            <span style="text-transform:capitalize">{{ $educacion->nivel }}</span>
+                                            <br>
+                                            <span>{{ $educacion->año_inicio }} -
+                                                {{ $educacion->año_fin }}</span>
+                                        </div>
+                                    @endforeach</ul>
+                                </div>
+                                <div class="mt-4 col-md-4">
+                                    <div
+                                        style="background: linear-gradient(0deg, rgba(69,125,182,1) 0%, rgba(8,170,157,1) 60%); height:100%; padding:10px;">
+                                        <div class="text-center w-100"><img class="mt-3"
+                                                style="height: 100px; clip-path: circle(50px at 50% 50%); margin:auto"
+                                                src="{{ asset('storage/empleados/imagenes/') . '/' . $empleadoModel->Avatar }}"
+                                                alt=""></div>
+                                        <div class="mt-3 mb-4 w-100" style="border-bottom: solid 2px #fff;">
+                                            <span class="text-white " style="font-size: 14px; font-weight: bold;">
+                                                Datos Generales</span>
+                                        </div>
+                                        <strong><i
+                                                class="ml-2 mr-2 text-white fas fa-map-marker-alt"></i>Dirección</strong>
+                                        <br>
+                                        <div style="margin-left:28px;">
+                                            <span>{{ $empleadoModel->domicilio_personal }}</span>
+                                        </div>
+                                        <br>
+                                        <strong><i class="ml-2 mr-2 text-white fas fa-phone-alt"></i>Número de
+                                            Teléfono</strong>
+                                        <br>
+                                        <div style="margin-left:28px;">
+                                            <span>{{ $empleadoModel->telefono }}</span>
+                                        </div>
+                                        <br>
+                                        <strong><i class="ml-2 mr-2 text-white fas fa-envelope"></i>Correo
+                                            Electrónico</strong>
+                                        <br>
+                                        <div style="margin-left:28px;">
+                                            <span>{{ $empleadoModel->email }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-5 row px-5">
-                        <div class="col-sm-12 col-md-5 card pt-3">
-                            <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold;"><i
-                                        class="fas fa-folder-open iconos-crear"></i>Documentos</span>
+                </div>
+                <div class="mt-5 row px-5">
+                    <div class="col-sm-12 col-md-5 card pt-3">
+                        <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                            <span style="font-size: 17px; font-weight: bold;"><i
+                                    class="fas fa-folder-open iconos-crear"></i>Documentos</span>
+                        </div>
+                        <br>
+                        @foreach ($empleadoModel->empleado_documentos as $documentos)
+                            <ul>
+                                <a href="{{ asset('storage/documentos_empleados/') . '/' . $documentos->documentos }}"
+                                    style="text-decoration:none" target="_blank" alt=""><span><i
+                                            class="fas fa-file iconos-crear"></i>{{ $documentos->documentos ? $documentos->documentos : 'Sin documento' }}</span></a>
+                            </ul>
+                        @endforeach
+                        @if ($isPersonal)
+                            <div class="text-center">
+                                <label type="button" onclick="event.preventDefault();return false;" data-toggle="modal"
+                                    data-target="#modalDocumentos" style="cursor: pointer;" class="text-center">
+                                    <i class="fas fa-upload text-success" style="font-size: 15px"></i> Subir
+                                    Documento
+                                </label>
                             </div>
-                            <br>
-                            @foreach ($empleadoModel->empleado_documentos as $documentos)
-                                <ul>
-                                    <a href="{{ asset('storage/documentos_empleados/') . '/' . $documentos->documentos }}"
-                                        style="text-decoration:none" target="_blank" alt=""><span><i
-                                                class="fas fa-file iconos-crear"></i>{{ $documentos->documentos ? $documentos->documentos : 'Sin documento' }}</span></a>
-                                </ul>
-                            @endforeach
-                            @if ($isPersonal)
+                            <div class="modal fade" id="modalDocumentos" data-backdrop="static"
+                                data-keyboard="false" tabindex="-1" aria-labelledby="modalDocumentosLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalDocumentosLabel">
+                                                <i class="fas fa-award mr-2"></i> Cargar Documentos
+                                            </h5>
+                                            <button onclick="limpiarForm();event.preventDefault()" type="button"
+                                                class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('admin.cargarDocumentos', $empleadoModel) }}"
+                                                method="POST" id="formCargarDocumento" class="form-group m-0">
+                                                <div class="row">
+                                                    <div class="form-group col-sm-6 col-lg-6 col-md-6">
+                                                        <label for="nombre"><i
+                                                                class="fas fa-file-signature iconos-crear"></i>Nombre</label>
+                                                        <input
+                                                            class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
+                                                            type="text" name="nombre" id="nombre_documento"
+                                                            value="{{ old('nombre', '') }}">
+                                                        <span class="errors nombre_error text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group col-sm-6">
+                                                        <label for="numero"><i
+                                                                class="fas fa-barcode iconos-crear"></i>Número</label>
+                                                        <input
+                                                            class="form-control {{ $errors->has('numero') ? 'is-invalid' : '' }}"
+                                                            type="text" name="numero" id="numero"
+                                                            value="{{ old('numero', '') }}">
+                                                        <span class="errors numero_error text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <input type="file" name="documentos" id="cargarDocumento"
+                                                    class="d-none ">
+                                                <div class="text-center">
+                                                    <label for="cargarDocumento" style="cursor: pointer;"
+                                                        class="text-center m-0"><i class="fas fa-upload text-success"
+                                                            style="font-size: 15px"></i> Subir
+                                                        Documento <small id="infoSelectedDocumento"></small></label>
+                                                </div>
+                                                <div class="text-center">
+                                                    <span class="errors documentos_error text-danger"></span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                onclick="limpiarForm();event.preventDefault()">Cancelar</button>
+                                            <button id="btnCargarDocumento" type="button" class="btn btn-primary"><i
+                                                    class="fas fa-upload mr-2"></i>Cargar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                        @endif
+                    </div>
+                    <div class="col-md col"></div>
+                    <div class="col-sm-12 col-md-5 card pt-3">
+                        <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                            <span style="font-size: 17px; font-weight: bold;"><i
+                                    class="fas fa-folder-open iconos-crear"></i>Certificados</span>
+                        </div>
+                        <br>
+                        @foreach ($empleadoModel->empleado_certificaciones as $certificaciones)
+                            <ul>
+                                <a href="{{ asset('storage/certificados_empleados/') . '/' . $certificaciones->documento }}"
+                                    style="text-decoration:none" target="_blank" alt=""><span><i
+                                            class="fas fa-file iconos-crear"></i>{{ $certificaciones->documento }}</span></a>
+                            </ul>
+                        @endforeach
+                        @if ($isPersonal)
+                            <div x-data="{open:false}">
                                 <div class="text-center">
                                     <label type="button" onclick="event.preventDefault();return false;"
-                                        data-toggle="modal" data-target="#modalDocumentos" style="cursor: pointer;"
+                                        data-toggle="modal" data-target="#modalCertificaciones" style="cursor: pointer;"
                                         class="text-center">
                                         <i class="fas fa-upload text-success" style="font-size: 15px"></i> Subir
-                                        Documento
+                                        Certificación
                                     </label>
                                 </div>
-                                <div class="modal fade" id="modalDocumentos" data-backdrop="static"
-                                    data-keyboard="false" tabindex="-1" aria-labelledby="modalDocumentosLabel"
+                                <div class="modal fade" id="modalCertificaciones" data-backdrop="static"
+                                    data-keyboard="false" tabindex="-1" aria-labelledby="modalCertificacionesLabel"
                                     aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="modalDocumentosLabel">
-                                                    <i class="fas fa-award mr-2"></i> Cargar Documentos
+                                                <h5 class="modal-title" id="modalCertificacionesLabel">
+                                                    <i class="fas fa-award mr-2"></i> Cargar Certificación
                                                 </h5>
-                                                <button onclick="limpiarForm();event.preventDefault()" type="button"
+                                                <button x-on:click="open = false"
+                                                    onclick="limpiarForm();event.preventDefault()" type="button"
                                                     class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route('admin.cargarDocumentos', $empleado_id) }}"
-                                                    method="POST" id="formCargarDocumento" class="form-group m-0">
+                                                <form
+                                                    action="{{ route('admin.cargarCertificacion', $empleadoModel) }}"
+                                                    method="POST" id="formCargarCertificacion" class="form-group m-0">
                                                     <div class="row">
-                                                        <div class="form-group col-sm-6 col-lg-6 col-md-6">
+                                                        <div class="form-group col-sm-12 col-lg-12 col-md-12">
                                                             <label for="nombre"><i
                                                                     class="fas fa-file-signature iconos-crear"></i>Nombre</label>
                                                             <input
                                                                 class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                                                type="text" name="nombre" id="nombre_documento"
+                                                                type="text" name="nombre" id="nombre_certificado"
                                                                 value="{{ old('nombre', '') }}">
                                                             <span class="errors nombre_error text-danger"></span>
                                                         </div>
-                                                        <div class="form-group col-sm-6">
-                                                            <label for="numero"><i
-                                                                    class="fas fa-barcode iconos-crear"></i>Número</label>
-                                                            <input
-                                                                class="form-control {{ $errors->has('numero') ? 'is-invalid' : '' }}"
-                                                                type="text" name="numero" id="numero"
-                                                                value="{{ old('numero', '') }}">
-                                                            <span class="errors numero_error text-danger"></span>
+                                                        <div class="col-12 form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" name="aplicaVigencia"
+                                                                    type="checkbox" id="aplicaVigencia"
+                                                                    x-on:change="open = !open">
+                                                                <label class="form-check-label" for="aplicaVigencia">
+                                                                    ¿Aplica Vigencia?
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div x-show="open" class="col-md-12 row" x-transition>
+                                                            <div class="form-group col-sm-6">
+                                                                <label for="vigencia"><i
+                                                                        class="far fa-calendar-alt iconos-crear"></i>Vigencia</label>
+                                                                <input
+                                                                    class="form-control {{ $errors->has('vigencia') ? 'is-invalid' : '' }}"
+                                                                    type="date" name="vigencia" id="vigencia"
+                                                                    value="{{ old('vigencia', '') }}">
+                                                                <span class="errors vigencia_error text-danger"></span>
+                                                            </div>
+                                                            <div class="form-group col-sm-6">
+                                                                <label for="estatus"><i
+                                                                        class="fas fa-street-view iconos-crear"></i>Estatus</label>
+                                                                <input
+                                                                    class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}"
+                                                                    type="text" name="estatus" id="vencio_alta"
+                                                                    value="{{ old('estatus', '') }}" readonly>
+                                                                <span class="errors estatus_error text-danger"></span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="documentos" id="cargarDocumento"
-                                                        class="d-none ">
+                                                    <input type="file" name="documento" id="cargarCertificacion"
+                                                        class="d-none">
                                                     <div class="text-center">
-                                                        <label for="cargarDocumento" style="cursor: pointer;"
+                                                        <label for="cargarCertificacion" style="cursor: pointer;"
                                                             class="text-center m-0"><i
                                                                 class="fas fa-upload text-success"
                                                                 style="font-size: 15px"></i> Subir
-                                                            Documento <small id="infoSelectedDocumento"></small></label>
+                                                            Certificado <small
+                                                                id="infoSelectedCertificacion"></small></label>
                                                     </div>
                                                     <div class="text-center">
-                                                        <span class="errors documentos_error text-danger"></span>
+                                                        <span class="errors documento_error text-danger"></span>
                                                     </div>
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                                    onclick="limpiarForm();event.preventDefault()">Cancelar</button>
-                                                <button id="btnCargarDocumento" type="button"
+                                                    onclick="limpiarForm();event.preventDefault()"
+                                                    x-on:click="open = false">Cancelar</button>
+                                                <button id="btnCargarCertificado" type="button"
                                                     class="btn btn-primary"><i
                                                         class="fas fa-upload mr-2"></i>Cargar</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                            @endif
-                        </div>
-                        <div class="col-md col"></div>
-                        <div class="col-sm-12 col-md-5 card pt-3">
-                            <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold;"><i
-                                        class="fas fa-folder-open iconos-crear"></i>Certificados</span>
                             </div>
-                            <br>
-                            @foreach ($empleadoModel->empleado_certificaciones as $certificaciones)
-                                <ul>
-                                    <a href="{{ asset('storage/certificados_empleados/') . '/' . $certificaciones->documento }}"
-                                        style="text-decoration:none" target="_blank" alt=""><span><i
-                                                class="fas fa-file iconos-crear"></i>{{ $certificaciones->documento }}</span></a>
-                                </ul>
-                            @endforeach
-                            @if ($isPersonal)
-                                <div x-data="{open:false}">
-                                    <div class="text-center">
-                                        <label type="button" onclick="event.preventDefault();return false;"
-                                            data-toggle="modal" data-target="#modalCertificaciones"
-                                            style="cursor: pointer;" class="text-center">
-                                            <i class="fas fa-upload text-success" style="font-size: 15px"></i> Subir
-                                            Certificación
-                                        </label>
-                                    </div>
-                                    <div class="modal fade" id="modalCertificaciones" data-backdrop="static"
-                                        data-keyboard="false" tabindex="-1" aria-labelledby="modalCertificacionesLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalCertificacionesLabel">
-                                                        <i class="fas fa-award mr-2"></i> Cargar Certificación
-                                                    </h5>
-                                                    <button x-on:click="open = false"
-                                                        onclick="limpiarForm();event.preventDefault()" type="button"
-                                                        class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form
-                                                        action="{{ route('admin.cargarCertificacion', $empleado_id) }}"
-                                                        method="POST" id="formCargarCertificacion"
-                                                        class="form-group m-0">
-                                                        <div class="row">
-                                                            <div class="form-group col-sm-12 col-lg-12 col-md-12">
-                                                                <label for="nombre"><i
-                                                                        class="fas fa-file-signature iconos-crear"></i>Nombre</label>
-                                                                <input
-                                                                    class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                                                    type="text" name="nombre" id="nombre_certificado"
-                                                                    value="{{ old('nombre', '') }}">
-                                                                <span class="errors nombre_error text-danger"></span>
-                                                            </div>
-                                                            <div class="col-12 form-group">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input"
-                                                                        name="aplicaVigencia" type="checkbox"
-                                                                        id="aplicaVigencia" x-on:change="open = !open">
-                                                                    <label class="form-check-label"
-                                                                        for="aplicaVigencia">
-                                                                        ¿Aplica Vigencia?
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div x-show="open" class="col-md-12 row" x-transition>
-                                                                <div class="form-group col-sm-6">
-                                                                    <label for="vigencia"><i
-                                                                            class="far fa-calendar-alt iconos-crear"></i>Vigencia</label>
-                                                                    <input
-                                                                        class="form-control {{ $errors->has('vigencia') ? 'is-invalid' : '' }}"
-                                                                        type="date" name="vigencia" id="vigencia"
-                                                                        value="{{ old('vigencia', '') }}">
-                                                                    <span
-                                                                        class="errors vigencia_error text-danger"></span>
-                                                                </div>
-                                                                <div class="form-group col-sm-6">
-                                                                    <label for="estatus"><i
-                                                                            class="fas fa-street-view iconos-crear"></i>Estatus</label>
-                                                                    <input
-                                                                        class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}"
-                                                                        type="text" name="estatus" id="vencio_alta"
-                                                                        value="{{ old('estatus', '') }}" readonly>
-                                                                    <span
-                                                                        class="errors estatus_error text-danger"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <input type="file" name="documento" id="cargarCertificacion"
-                                                            class="d-none">
-                                                        <div class="text-center">
-                                                            <label for="cargarCertificacion" style="cursor: pointer;"
-                                                                class="text-center m-0"><i
-                                                                    class="fas fa-upload text-success"
-                                                                    style="font-size: 15px"></i> Subir
-                                                                Certificado <small
-                                                                    id="infoSelectedCertificacion"></small></label>
-                                                        </div>
-                                                        <div class="text-center">
-                                                            <span class="errors documento_error text-danger"></span>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal"
-                                                        onclick="limpiarForm();event.preventDefault()"
-                                                        x-on:click="open = false">Cancelar</button>
-                                                    <button id="btnCargarCertificado" type="button"
-                                                        class="btn btn-primary"><i
-                                                            class="fas fa-upload mr-2"></i>Cargar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                        <br>
+                        @endif
                     </div>
+                    <br>
                 </div>
-            @endif
         </div>
-        {{-- @if ($empleado_id != '')
+        @endif
+    </div>
+    {{-- @if ($empleado_id != '')
             <div class="___class_+?11___">
                 <div class="row justify-content-center">
                     <div class="mt-4 col-sm-12 col-md-12">
@@ -896,38 +897,39 @@
         @else
     
         @endif --}}
-    </div>
-    <script src="https://unpkg.com/@yaireo/tagify"></script>
-    <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            window.livewire.on('tagify', function(e) {
-                var input = document.querySelector('#certificacion')
-                var tagify = new Tagify(input, {
-                    dropdown: {
-                        enabled: 0
-                    },
-                })
-                tagify.on('change', (e) => {
-                    let values = [];
-                    if (e.detail.value) {
-                        values = JSON.parse(e.detail.value);
-                    }
-                    let string = "";
-                    values.forEach(element => {
-                        string += `${element.value},`;
-                    });
-
-                    if (e.detail.value) {
-                        let result = string.slice(0, -1);
-                        console.log(result);
-                        @this.set('certificacion', result)
-                    } else {
-                        @this.set('certificacion', null)
-                    }
-                })
-            })
+</div>
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        window.livewire.on('tagify', function(e) {
             var input = document.querySelector('#certificacion')
+            var tagify = new Tagify(input, {
+                dropdown: {
+                    enabled: 0
+                },
+            })
+            tagify.on('change', (e) => {
+                let values = [];
+                if (e.detail.value) {
+                    values = JSON.parse(e.detail.value);
+                }
+                let string = "";
+                values.forEach(element => {
+                    string += `${element.value},`;
+                });
+
+                if (e.detail.value) {
+                    let result = string.slice(0, -1);
+                    console.log(result);
+                    @this.set('certificacion', result)
+                } else {
+                    @this.set('certificacion', null)
+                }
+            })
+        })
+        var input = document.querySelector('#certificacion')
+        if (input) {
             var tagify = new Tagify(input, {
                 dropdown: {
                     enabled: 0
@@ -951,196 +953,200 @@
                     @this.set('certificacion', null)
                 }
             })
-
-            window.limpiarForm = () => {
-                limpiarErrores();
-                document.getElementById('vencio_alta').style.border = 'none'
-                document.getElementById('formCargarCertificacion').reset();
-            }
-            const btnCargarCertificado = document.getElementById('btnCargarCertificado');
-            btnCargarCertificado.addEventListener('click', async (e) => {
-                e.preventDefault();
-                limpiarErrores();
-                console.log('click');
-                const formCargarCertificacion = document.getElementById('formCargarCertificacion');
-                const formData = new FormData(formCargarCertificacion);
-                const aplicaVigencia = document.getElementById('aplicaVigencia');
-                const url = formCargarCertificacion.getAttribute('action');
-                const method = formCargarCertificacion.getAttribute('method');
-                formData.append('esVigente', aplicaVigencia.checked)
-                const response = await fetch(url, {
-                    method: method,
-                    body: formData,
-                    headers: {
-                        Accept: 'application/json',
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                            'content'),
-                    },
-                });
-                const data = await response.json();
-                if (data.errors) {
-                    $.each(data.errors, function(indexInArray,
-                        valueOfElement) {
-                        document.querySelector(`span.${indexInArray}_error`)
-                            .innerHTML =
-                            `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
-                    });
-                }
-                if (data.status === "success") {
-                    Swal.fire(
-                        data.message,
-                        '',
-                        'success'
-                    )
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
-                }
+        }
+    })
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        window.limpiarForm = () => {
+            limpiarErrores();
+            document.getElementById('vencio_alta').style.border = 'none'
+            document.getElementById('formCargarCertificacion').reset();
+        }
+        const btnCargarCertificado = document.getElementById('btnCargarCertificado');
+        btnCargarCertificado.addEventListener('click', async (e) => {
+            e.preventDefault();
+            limpiarErrores();
+            console.log('click');
+            const formCargarCertificacion = document.getElementById('formCargarCertificacion');
+            const formData = new FormData(formCargarCertificacion);
+            const aplicaVigencia = document.getElementById('aplicaVigencia');
+            const url = formCargarCertificacion.getAttribute('action');
+            const method = formCargarCertificacion.getAttribute('method');
+            formData.append('esVigente', aplicaVigencia.checked)
+            const response = await fetch(url, {
+                method: method,
+                body: formData,
+                headers: {
+                    Accept: 'application/json',
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        'content'),
+                },
             });
+            const data = await response.json();
+            if (data.errors) {
+                $.each(data.errors, function(indexInArray,
+                    valueOfElement) {
+                    document.querySelector(`span.${indexInArray}_error`)
+                        .innerHTML =
+                        `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
+                });
+            }
+            if (data.status === "success") {
+                Swal.fire(
+                    data.message,
+                    '',
+                    'success'
+                )
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        });
 
-            const inputCargarCertificacion = document.getElementById('cargarCertificacion');
-            inputCargarCertificacion.addEventListener('change', function(e) {
-                document.getElementById('infoSelectedCertificacion').innerHTML = `
+        const inputCargarCertificacion = document.getElementById('cargarCertificacion');
+        inputCargarCertificacion.addEventListener('change', function(e) {
+            document.getElementById('infoSelectedCertificacion').innerHTML = `
                 ${this.files.length} documento(s) seleccionados
                 <label title="Remover selección" style="cursor: pointer;color:red;">&times;</label>
                 `
-            });
+        });
 
-            const infoSelectedCertificacionElement = document.getElementById('infoSelectedCertificacion');
-            infoSelectedCertificacionElement.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (e.target.tagName == 'LABEL') {
-                    this.innerHTML = "";
-                    console.log(inputCargarCertificacion.files);
-                    inputCargarCertificacion.value = null;
-                    console.log(inputCargarCertificacion.files);
-                }
-            })
-
-            function limpiarErrores() {
-                document.querySelectorAll('.errors').forEach(item => {
-                    item.innerHTML = ""
-                })
+        const infoSelectedCertificacionElement = document.getElementById('infoSelectedCertificacion');
+        infoSelectedCertificacionElement.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (e.target.tagName == 'LABEL') {
+                this.innerHTML = "";
+                console.log(inputCargarCertificacion.files);
+                inputCargarCertificacion.value = null;
+                console.log(inputCargarCertificacion.files);
             }
+        })
 
-            const vigenciaCertificado = document.getElementById('vigencia');
-            vigenciaCertificado.addEventListener('change', function(e) {
-                const vigencia = this.value;
-                const estatus = document.getElementById('vencio_alta');
-                if (Date.parse(vigencia) >= Date.now()) {
-                    estatus.value = "Vigente"
-                    estatus.style.border = "2px solid #57e262";
-                } else {
-                    estatus.value = 'Vencida'
-                    estatus.style.border = "2px solid #FF9C08";
-                }
+        function limpiarErrores() {
+            document.querySelectorAll('.errors').forEach(item => {
+                item.innerHTML = ""
             })
+        }
+
+        const vigenciaCertificado = document.getElementById('vigencia');
+        vigenciaCertificado.addEventListener('change', function(e) {
+            const vigencia = this.value;
+            const estatus = document.getElementById('vencio_alta');
+            if (Date.parse(vigencia) >= Date.now()) {
+                estatus.value = "Vigente"
+                estatus.style.border = "2px solid #57e262";
+            } else {
+                estatus.value = 'Vencida'
+                estatus.style.border = "2px solid #FF9C08";
+            }
+        })
 
 
-            const btnCargarDocumento = document.getElementById('btnCargarDocumento');
-            btnCargarDocumento.addEventListener('click', async (e) => {
-                e.preventDefault();
-                limpiarErrores();
-                console.log('click');
-                const formCargarDocumento = document.getElementById('formCargarDocumento');
-                const formData = new FormData(formCargarDocumento);
-                const url = formCargarDocumento.getAttribute('action');
-                const method = formCargarDocumento.getAttribute('method');
-                const response = await fetch(url, {
-                    method: method,
-                    body: formData,
-                    headers: {
-                        Accept: 'application/json',
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                            'content'),
-                    },
-                });
-                const data = await response.json();
-                if (data.errors) {
-                    $.each(data.errors, function(indexInArray,
-                        valueOfElement) {
-                        document.querySelector(`span.${indexInArray}_error`)
-                            .innerHTML =
-                            `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
-                    });
-                }
-                if (data.status === "success") {
-                    Swal.fire(
-                        data.message,
-                        '',
-                        'success'
-                    )
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
-                }
+        const btnCargarDocumento = document.getElementById('btnCargarDocumento');
+        btnCargarDocumento.addEventListener('click', async (e) => {
+            e.preventDefault();
+            limpiarErrores();
+            console.log('click');
+            const formCargarDocumento = document.getElementById('formCargarDocumento');
+            const formData = new FormData(formCargarDocumento);
+            const url = formCargarDocumento.getAttribute('action');
+            const method = formCargarDocumento.getAttribute('method');
+            const response = await fetch(url, {
+                method: method,
+                body: formData,
+                headers: {
+                    Accept: 'application/json',
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        'content'),
+                },
             });
+            const data = await response.json();
+            if (data.errors) {
+                $.each(data.errors, function(indexInArray,
+                    valueOfElement) {
+                    document.querySelector(`span.${indexInArray}_error`)
+                        .innerHTML =
+                        `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
+                });
+            }
+            if (data.status === "success") {
+                Swal.fire(
+                    data.message,
+                    '',
+                    'success'
+                )
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        });
 
-            const inputCargarDocumento = document.getElementById('cargarDocumento');
-            inputCargarDocumento.addEventListener('change', function(e) {
-                document.getElementById('infoSelectedDocumento').innerHTML = `
+        const inputCargarDocumento = document.getElementById('cargarDocumento');
+        inputCargarDocumento.addEventListener('change', function(e) {
+            document.getElementById('infoSelectedDocumento').innerHTML = `
                 ${this.files.length} documento(s) seleccionados
                 <label title="Remover selección" style="cursor: pointer;color:red;">&times;</label>
                 `
-            });
+        });
 
-            const infoSelectedDocumentoElement = document.getElementById('infoSelectedDocumento');
-            infoSelectedDocumentoElement.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (e.target.tagName == 'LABEL') {
-                    this.innerHTML = "";
-                    console.log(inputCargarDocumento.files);
-                    inputCargarDocumento.value = null;
-                    console.log(inputCargarDocumento.files);
-                }
-            })
+        const infoSelectedDocumentoElement = document.getElementById('infoSelectedDocumento');
+        infoSelectedDocumentoElement.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (e.target.tagName == 'LABEL') {
+                this.innerHTML = "";
+                console.log(inputCargarDocumento.files);
+                inputCargarDocumento.value = null;
+                console.log(inputCargarDocumento.files);
+            }
+        })
 
 
-            const inputFile = document.getElementById('cargarDocumentos');
-            inputFile.addEventListener('change', function(e) {
-                document.getElementById('infoSelected').innerHTML = `
+        const inputFile = document.getElementById('cargarDocumentos');
+        inputFile.addEventListener('change', function(e) {
+            document.getElementById('infoSelected').innerHTML = `
                 ${this.files.length} documento(s) seleccionados
                 `
-                Swal.fire({
-                    title: '¿Desea almacenar estos documentos?',
-                    text: "",
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Cargar',
-                    cancelButtonText: 'No',
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
-                        const formulario = document.getElementById('formCargaDocumentos');
-                        const url = formulario.getAttribute('action');
-                        const method = formulario.getAttribute('method');
-                        const formData = new FormData(formulario);
-                        const response = await fetch(url, {
-                            method: method,
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                    'content'),
-                            },
-                        })
-                        const data = await response.json();
-                        if (data.status === "success") {
-                            Swal.fire(
-                                data.message,
-                                '',
-                                'success'
-                            )
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
-                        }
-                    } else {
-                        document.getElementById('infoSelected').innerHTML = ""
+            Swal.fire({
+                title: '¿Desea almacenar estos documentos?',
+                text: "",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Cargar',
+                cancelButtonText: 'No',
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const formulario = document.getElementById('formCargaDocumentos');
+                    const url = formulario.getAttribute('action');
+                    const method = formulario.getAttribute('method');
+                    const formData = new FormData(formulario);
+                    const response = await fetch(url, {
+                        method: method,
+                        body: formData,
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                'content'),
+                        },
+                    })
+                    const data = await response.json();
+                    if (data.status === "success") {
+                        Swal.fire(
+                            data.message,
+                            '',
+                            'success'
+                        )
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
                     }
-                })
+                } else {
+                    document.getElementById('infoSelected').innerHTML = ""
+                }
             })
         })
-    </script>
+    })
+</script>
 </div>
