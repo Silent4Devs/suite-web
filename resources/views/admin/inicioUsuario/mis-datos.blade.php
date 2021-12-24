@@ -239,16 +239,17 @@
                 <div class="row gutters-sm">
                     <div class="mb-3 col-md-4">
                         <div class="card" style="position:relative;">
-                            <img src="https://images.vexels.com/media/users/3/143347/isolated/preview/c418aa571078b11dcb69704acf1077c4-icono-de-sombrero-de-cumpleanos-3d.png" class="gorro">
+                            @if(($cumpleaños_usuario != null) && ($cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m')))
+                                <img src="https://images.vexels.com/media/users/3/143347/isolated/preview/c418aa571078b11dcb69704acf1077c4-icono-de-sombrero-de-cumpleanos-3d.png" class="gorro">
+                            @endif
                             <div class="cuadro_verde_con_before">
-                                {{-- @if($cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m')) --}}
+                                @if(($cumpleaños_usuario != null) && ($cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m')))
                                     <img src="https://www.gifimages.pics/images/quotes/english/general/gif-for-confetti-multi-colored-52650-166764.gif">
-                                {{-- @endif --}}
+                                @endif
                             </div>
                             <div class="card-body">
                                 <div class="text-center d-flex flex-column align-items-center" style="position:relative;">
-                                    {{-- <img class="img-fluid img-profile" style="position: relative;" src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->avatar : 'user.png' }}"> --}}
-                                        <img class="img-fluid img-profile" style="position: relative;" src="https://images6.fanpop.com/image/photos/36200000/The-Simpsons-image-the-simpsons-36222763-400-401.png">
+                                    <img class="img-fluid img-profile" style="position: relative;" src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->avatar : 'user.png' }}">
                                     <div class="mt-3">
                                         <h4>{{ $usuario->empleado->name }}</h4>
                                         <p class="mb-1 text-secondary">{{ $usuario->empleado->puesto }}</p>
@@ -256,7 +257,9 @@
                                         {{-- <button class="btn btn-primary">Follow</button>
                                         <button class="btn btn-outline-primary">Message</button> --}}
                                     </div>
-                                    <img src="{{asset('img/regalo.png')}}" class="regalo" data-toggle="modal" data-target="#modal_cumple" title="Tus felicitaciones">
+                                    @if(($cumpleaños_usuario != null) && ($cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m')))
+                                        <img src="{{asset('img/regalo.png')}}" class="regalo" data-toggle="modal" data-target="#modal_cumple" title="Tus felicitaciones">
+                                    @endif
                                 </div>
                             </div>
                         </div>
