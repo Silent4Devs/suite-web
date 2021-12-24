@@ -422,7 +422,8 @@
             style="margin-top:0px !important; ">
             <h3 class="mb-2 text-center text-white"
                 style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Portal de
-                    Comunicación </strong></h3>
+                    Comunicación </strong>
+            </h3>
         </div>
 
         @include('partials.flashMessages')
@@ -478,7 +479,7 @@
                                             } else {
                                                 $imagen = 'img/tabantaj_fondo_blanco.png';
                                             }
-                                            
+
                                         @endphp
                                         <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}">
                                             <div class="img_carrusel"
@@ -527,12 +528,9 @@
                                         } else {
                                             $imagen = 'img/portal_404.png';
                                         }
-                                        
-                                    @endphp
-                                    <style type="text/css">
-                                        height
 
-                                    </style>
+                                    @endphp
+
                                     {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
 
                                     <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');">
@@ -646,28 +644,27 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    {{-- @endcan --}}
-@endsection
-@section('scripts')
-    <script src="{{ asset('js/calendar-comunicado.js') }}"></script>
-    <script>
-        /*SEARCH BY USING A CITY NAME (e.g. athens) OR A COMMA-SEPARATED CITY NAME ALONG WITH THE COUNTRY CODE (e.g. athens,gr)*/
-        /*SUBSCRIBE HERE FOR API KEY: https://home.openweathermap.org/users/sign_up*/
-        const apiKey = "4d8fb5b93d4af21d66a2948710284366";
-        let city = 'Mexico';
-        const url =
-            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=es`;
+        {{-- @endcan --}}
+    @endsection
+    @section('scripts')
+        <script src="{{ asset('js/calendar-comunicado.js') }}"></script>
+        <script>
+            /*SEARCH BY USING A CITY NAME (e.g. athens) OR A COMMA-SEPARATED CITY NAME ALONG WITH THE COUNTRY CODE (e.g. athens,gr)*/
+            /*SUBSCRIBE HERE FOR API KEY: https://home.openweathermap.org/users/sign_up*/
+            const apiKey = "4d8fb5b93d4af21d66a2948710284366";
+            let city = 'Mexico';
+            const url =
+                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=es`;
 
-        obtenerClima(url);
+            obtenerClima(url);
 
-        async function obtenerClima(url) {
-            let api = await fetch(url);
-            let response = await api.json();
-            let climaContenedor = document.getElementById('clima');
-            const icon = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${response.weather[0]["icon"]}.svg`;
-            climaContenedor.innerHTML = `
+            async function obtenerClima(url) {
+                let api = await fetch(url);
+                let response = await api.json();
+                let climaContenedor = document.getElementById('clima');
+                const icon = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${response.weather[0]["icon"]}.svg`;
+                climaContenedor.innerHTML = `
             <p class="" style="text-align:left; margin:0;">
                 <i class="fas fa-globe-americas" style="font-size:;"></i>
                 ${response.name}
@@ -686,8 +683,8 @@
                 </div>
             </div>
             `;
-            console.log(response);
-        }
-    </script>
-    <script src="{{ asset('js/calendario-comunicacion.js') }}"></script>
-@endsection
+                console.log(response);
+            }
+        </script>
+        <script src="{{ asset('js/calendario-comunicacion.js') }}"></script>
+    @endsection
