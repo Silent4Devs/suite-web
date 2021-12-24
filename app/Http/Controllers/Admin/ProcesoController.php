@@ -10,6 +10,7 @@ use App\Models\HistorialVersionesDocumento;
 use App\Models\IndicadoresSgsi;
 use App\Models\Macroproceso;
 use App\Models\MatrizRiesgo;
+use App\Models\Organizacion;
 use App\Models\Proceso;
 use App\Models\RevisionDocumento;
 use Carbon\Carbon;
@@ -178,9 +179,10 @@ class ProcesoController extends Controller
 
         $macros_mapa = Macroproceso::get();
         $procesos_mapa = Proceso::get();
+        $organizacion = Organizacion::first();
         $exist_no_publicado = Proceso::select('estatus')->where('estatus', Proceso::NO_ACTIVO)->exists();
 
-        return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado'));
+        return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado','organizacion'));
     }
 
     public function obtenerDocumentoProcesos($documento)

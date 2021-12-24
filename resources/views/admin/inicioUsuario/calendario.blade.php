@@ -283,11 +283,38 @@
                 },
             @endforeach
 
+            @foreach($cumples_aniversarios as $cumple)
+                {
+                    id: 'cumple{{$cumple->id}}',
+                    calendarId: '5',
+                    title: '<i class="fas fa-birthday-cake i_calendar_cuadro"></i> Cumpleaños de {{$cumple->name}}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ $cumple->actual_birdthday }}',
+                    end: '{{ $cumple->actual_birdthday }}',
+                    isReadOnly : true,
+                },
+            @endforeach
+
+
+            @foreach($cumples_aniversarios as $aniversario)
+                {
+                    id: 'aniversario{{$aniversario->id}}',
+                    calendarId: '6',
+                    title: '<i class="fas fa-award i_calendar_cuadro"></i> Aniversario de {{$aniversario->name}}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ $aniversario->actual_aniversary }}',
+                    end: '{{ $aniversario->actual_aniversary }}',
+                    isReadOnly : true,
+                },
+            @endforeach
+
              @foreach ($oficiales as $oficial)
                 {
                 id: 'oficial{{ $oficial->id }}',
-                calendarId: '5',
-                title: '<i class="fas fa-dove i_calendar_cuadro"></i>Festivo: {{ $oficial->nombre }}',
+                calendarId: '7',
+                title: '<i class="fas fa-drum i_calendar_cuadro"></i>Festivo: {{ $oficial->nombre }}',
                 category: 'allday',
                 dueDateClass: '',
                 start: '{{  \Carbon\Carbon::parse(explode("-",$oficial->fecha)[0])->format("Y-m-d") }}',
