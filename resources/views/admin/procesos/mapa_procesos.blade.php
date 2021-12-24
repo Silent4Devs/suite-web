@@ -357,6 +357,11 @@
         </div>
     @endif
 
+    <div class="card-body">
+        <div class="py-2 text-center form-group col-12 text-uppercase" style="background-color:#1BB0B0; border-radius:100px; color: white;"><h4>MAPA DE PROCESOS DE {{ $organizacion->empresa}}</h4></div>
+    </div>
+
+
     <div class="col-12 text-right">
         <a href="{{route("admin.areas.exportar")}}" class="mr-5"><i class="fas fa-file-csv" style="font-size:18pt;"></i></a>
         <a href="{{route("admin.areas.exportar")}}" class="mr-5"><i class="fas fa-camera" style="font-size:18pt;"></i></a>

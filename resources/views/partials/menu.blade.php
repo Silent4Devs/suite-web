@@ -317,7 +317,7 @@
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.calendario-oficial.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('calendario-oficial') || request()->is('calendario-oficial/*') ? 'active' : '' }}">
-                                <i class="ml-2 fas fa-dove iconos_menu letra_blanca"style="font-size:12pt;"></i>
+                                <i class="ml-2 fas fa-drum iconos_menu letra_blanca"style="font-size:12pt;"></i>
                                 <font class="letra_blanca" style="margin-left:10px;">Dias Festivos</font>
                             </a>
                         </li>

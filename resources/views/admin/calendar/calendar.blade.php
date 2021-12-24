@@ -378,7 +378,7 @@
                 {
                 id: 'oficial{{ $oficial->id }}',
                 calendarId: '7',
-                title: '<i class="fas fa-dove i_calendar_cuadro"></i> Festivo: {{ $oficial->nombre }}',
+                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Festivo: {{ $oficial->nombre }}',
                 category: 'allday',
                 dueDateClass: '',
                 start: '{{  \Carbon\Carbon::parse(explode("-",$oficial->fecha)[0])->format("Y-m-d") }}',
