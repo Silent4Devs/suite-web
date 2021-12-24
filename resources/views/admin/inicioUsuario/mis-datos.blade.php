@@ -531,7 +531,7 @@
                                 <div class="row">
                                     @if ($panel_rules->cumpleaños)
                                         <div class="col-3 text-muted" style="font-size:12px">
-                                            {{ $usuario->empleado->cumpleaños ? $usuario->empleado->cumpleaños : 'Dato no registrado' }}
+                                            {{ \Carbon\Carbon::parse ($usuario->empleado->cumpleaños)->format('d-m-Y') ? :  'Dato no registrado' }}
                                         </div>
                                     @endif
                                     @if ($panel_rules->perfil)

@@ -109,7 +109,7 @@ function hexToRGBA(hex) {
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = '<i class="fas fa-dove i_calendar" style="color:#25F4E4;"></i>Festivos';
+    calendar.name = '<i class="fas fa-drum i_calendar" style="color:#25F4E4;"></i>Festivos';
     calendar.color = '#000000';
     calendar.bgColor = '#25F4E4';
     calendar.dragBgColor = '#25F4E4';
