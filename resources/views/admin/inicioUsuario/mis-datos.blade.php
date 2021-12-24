@@ -158,21 +158,79 @@
     }
 
     .cuadro_verde_con_before {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .cuadro_verde_con_before:before {
-        content: "";
         background: #00abb2;
         position: absolute;
         width: 100%;
-        height: 100px;
+        height: 120px;
         top: 0;
         z-index: 0;
+        overflow: hidden;
+        border-top-right-radius: 6px;
+        border-top-left-radius: 6px;
+    }
+    .cuadro_verde_con_before img{
+        width: 100%;
+    }
+    .gorro{
+        position: absolute;
+        width: 60px;
+        z-index: 1;
+        left: 50%;
+        margin-top: -20px;
+        transform: rotate(25deg);
+    }
+    .regalo{
+        width: 40px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        animation: regalo 0.35s alternate infinite ease-out;
+        cursor: pointer;
+    }
+    .regalo:hover{
+        transform: scale(1.15);
     }
 
+    @keyframes regalo{
+        0% {
+            bottom: 0;
+          }
+          100% {
+            bottom: 7px;
+          }
+    }
 </style>
+
+
+
+<div class="modal fade" id="modal_cumple" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Feliz Cumpleaños <strong>{{ $usuario->empleado->name }}</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        likes: {{$cumpleaños_felicitados_like_contador}}
+
+        <ul> <h4> Comentarios </h4>
+            @foreach($cumpleaños_felicitados_comentarios as $coment_cumple)
+                <li>Nombre:{{$coment_cumple->id}}
+                    <br>{{$coment_cumple->comentarios}}</li>
+            @endforeach
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <div class="card-body">
     <div class="row">
@@ -180,11 +238,17 @@
             <div class="main-body">
                 <div class="row gutters-sm">
                     <div class="mb-3 col-md-4">
-                        <div class="card cuadro_verde_con_before">
+                        <div class="card" style="position:relative;">
+                            <img src="https://images.vexels.com/media/users/3/143347/isolated/preview/c418aa571078b11dcb69704acf1077c4-icono-de-sombrero-de-cumpleanos-3d.png" class="gorro">
+                            <div class="cuadro_verde_con_before">
+                                {{-- @if($cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m')) --}}
+                                    <img src="https://www.gifimages.pics/images/quotes/english/general/gif-for-confetti-multi-colored-52650-166764.gif">
+                                {{-- @endif --}}
+                            </div>
                             <div class="card-body">
-                                <div class="text-center d-flex flex-column align-items-center">
-                                    <img class="img-fluid img-profile" style="position: relative;"
-                                        src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->avatar : 'user.png' }}">
+                                <div class="text-center d-flex flex-column align-items-center" style="position:relative;">
+                                    {{-- <img class="img-fluid img-profile" style="position: relative;" src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->avatar : 'user.png' }}"> --}}
+                                        <img class="img-fluid img-profile" style="position: relative;" src="https://images6.fanpop.com/image/photos/36200000/The-Simpsons-image-the-simpsons-36222763-400-401.png">
                                     <div class="mt-3">
                                         <h4>{{ $usuario->empleado->name }}</h4>
                                         <p class="mb-1 text-secondary">{{ $usuario->empleado->puesto }}</p>
@@ -192,6 +256,7 @@
                                         {{-- <button class="btn btn-primary">Follow</button>
                                         <button class="btn btn-outline-primary">Message</button> --}}
                                     </div>
+                                    <img src="{{asset('img/regalo.png')}}" class="regalo" data-toggle="modal" data-target="#modal_cumple" title="Tus felicitaciones">
                                 </div>
                             </div>
                         </div>

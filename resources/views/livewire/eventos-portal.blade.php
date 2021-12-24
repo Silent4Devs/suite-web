@@ -90,46 +90,42 @@
                             @php
                                 $cumpleaños_felicitados_like_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->count();
 
-                                $cumpleaños_felicitados_like = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->first();
+                                $cumpleaños_felicitados_like = App\Models\FelicitarCumpleaños::select('id', 'felicitador_id', 'created_at', 'created_at')->where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->first();
 
                                 $cumpleaños_felicitados_comentarios_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', false)->where('comentarios', '!=', null)->count();
 
                                 $cumpleaños_felicitados_comentarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)->where('felicitador_id', auth()->user()->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', false)->where('comentarios', '!=', null)->first();
                             @endphp
-                            @if($cumpleaños_felicitados_like_contador == 0)
-                                <form class="opciones_felicitar" action="{{asset('admin/portal-comunicacion/cumpleaños/'. $cumple->id)}}" method="POST">
-                                    <button style="all:unset;"><i class="far fa-thumbs-up" style="color:#888;"></i></button>
-                             @else
-                                <form class="opciones_felicitar" action="{{asset('admin/portal-comunicacion/cumpleaños-dislike/'. $cumpleaños_felicitados_like->id)}}" method="POST">
-                                <button style="all:unset;"><i class="fas fa-thumbs-up"></i></button>
-                            @endif
-                                    @csrf
-                                    <i class="fas fa-comment-dots" data-toggle="modal" data-target="#cumpleaños_comentarios_Modal_{{$cumple->id}}"></i>
-                                </form>
+                            <div class="opciones_felicitar">
+                                @if($cumpleaños_felicitados_like_contador == 0)
+                                    <button style="all:unset;" wire:click="felicitarCumpleaños({{$cumple->id}})"><i class="far fa-thumbs-up" style="color:#888;"></i> <font style="color:#888;">{{$cumpleaños_felicitados_like_contador}}</font></button>
+                                 @else
+                                    <button style="all:unset;" wire:click="felicitarCumpleañosDislike({{$cumpleaños_felicitados_like->id}})"><i class="fas fa-thumbs-up"></i> <font style="color:#00abb2;">{{$cumpleaños_felicitados_like_contador}}</font></button>
+                                @endif
+                                <i class="fas fa-comment-dots" data-toggle="modal" data-target="#cumpleaños_comentarios_Modal_{{$cumple->id}}"></i>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="modal fade" id="cumpleaños_comentarios_Modal_{{$cumple->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="cumpleaños_comentarios_Modal_{{$cumple->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <div class="modal-body">
+                                <div class="modal-body" >
 
+                                <label>Comentarios {{$cumple->id}}</label>                               
                                 @if($cumpleaños_felicitados_comentarios_contador == 0)
-                                    <form action="{{asset('admin/portal-comunicacion/cumpleaños_comentarios/'. $cumple->id)}}" method="POST">
-                                        @csrf
+                                    <form wire:submit.prevent="felicitarCumplesComentarios({{$cumple->id}})">
                                         <div class="form-group">
-                                            <label>Comentarios</label>
-                                            <textarea name="comentarios" class="form-control"></textarea>
+                                            <textarea wire:model="comentarios" class="form-control"></textarea>sin comntes
                                  @else
-                                    <form action="{{asset('admin/portal-comunicacion/cumpleaños_comentarios_update/'. $cumpleaños_felicitados_comentarios->id)}}" method="POST">
+                                    <form wire:submit.prevent="felicitarCumplesComentariosUpdate({{$cumpleaños_felicitados_comentarios->id}})">
                                         @csrf
                                         <div class="form-group">
-                                            <label>Comentarios</label>
-                                            <textarea name="comentarios" class="form-control">{{$cumpleaños_felicitados_comentarios->comentarios}}</textarea>
+                                            <textarea wire:model="comentarios_update" class="form-control">{{$cumpleaños_felicitados_comentarios->comentarios}}</textarea>con coments
                                 @endif
                                         
                                         </div>
-                                        <button class="btn btn-success">Enviar</button>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
                                     </form>                                          
                                 </div>
                             </div>
