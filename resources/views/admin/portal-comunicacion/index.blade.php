@@ -397,6 +397,23 @@
             transform: scale(1.1);
         }
 
+        .opciones_felicitar{
+            display: flex;
+            justify-content: space-between;
+        }
+        .opciones_felicitar i{
+            color: #00abb2;
+            font-size: 15pt;
+            cursor: pointer;
+        }
+        
+        .modal-backdrop.fade.show{
+            display: none !important;
+        }
+        .modal-dialog{
+            margin-top: 200px !important;
+        }
+
     </style>
 
 
@@ -612,156 +629,18 @@
                                         <p class="w-100">
 
                                         </p>
-                                        <a href=""></a>
                                     </div>
+                                        
                                 </div>
+
+
+                                
                             @endforelse
                         </div>
                     </div>
                 </div>
                 <div class="col-3">
-                    <div class="row">
-                        <div class="col-lg-12 caja_btn_silent">
-                            <a class="btn-silent" href="{{ asset('admin/organizacions') }}"><i
-                                    class="mr-2 fas fa-building"></i>
-                                <span>Organización</span></a>
-                            <a class="btn-silent" href="{{ asset('admin/sedes/organizacion') }}"><i
-                                    class="mr-2 fas fa-map-marked-alt "></i> <span>Sedes</span></a>
-                            <a href="{{ route('admin.areas.renderJerarquia') }}" class="btn-silent">
-                                <i class="fab fa-adn iconos_menu mr-2"></i>
-                                <span>Áreas</span>
-                            </a>
-                            <a href="{{ route('admin.procesos.mapa') }}" class="btn-silent">
-                                <i class="fas fa-dice-d20 iconos_menu mr-2"></i>
-                                <span> Mapa de procesos </span>
-                            </a>
-                            <a class="btn-silent" href="{{ asset('admin/organigrama') }}"><i
-                                    class="mr-2 fas fa-sitemap"></i>
-                                <span>Organigrama</span></a>
-                            <a class="btn-silent" href="{{ asset('admin/directorio') }}"><i
-                                    class=" mr-2 fas fa-address-book"></i> <span>Directorio</span></a>
-                            <a class="btn-silent" href="{{ asset('admin/documentos/publicados') }}"><i
-                                    class="mr-2 fas fa-folder"></i> <span>Documentos</span></a>
-                            <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}"><i
-                                    class="mr-2 fas fa-file"></i> <span>Política SGSI</span></a>
-                            <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}"><i
-                                    class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
-
-                            @if ($empleado_asignado)
-                                <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}"><i
-                                        class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
-                            @endif
-
-                        </div>
-                        <div class="mt-5 col-lg-12">
-                            <div class="cuadro_empleados scroll_estilo">
-                                <h2 class="titulo-seccion"><i class="mr-3 far fa-user"></i>Nuevos ingresos</h2>
-                                <div class="caja_nuevo">
-                                    @forelse($nuevos as $nuevo)
-                                        <div class="nuevo">
-                                            <div class="img_nuevo">
-                                                <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
-                                                    class="img_empleado">
-                                            </div>
-                                            <h5 class="nombre_nuevo">{{ $nuevo->name }}</h5>
-                                            <div class="datos_nuevo">
-                                                <p>{{ $nuevo->puesto }}<br>
-                                                    @if (is_null($nuevo->area->area))
-                                                        No hay Area
-                                                    @else
-                                                        {{ $nuevo->area->area }}
-                                                    @endif
-                                                </p>
-                                                <h6 class="mt-3">Fecha de ingreso</h6>
-                                                <span>{{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}</span>
-                                            </div>
-                                        </div>
-                                    @empty
-                                        <div class="nuevo">No hay nuevos ingresos registrados en este mes.</div>
-                                    @endforelse
-
-                                </div>
-
-                                <h2 class="mt-5 titulo-seccion"><i class="mr-3 fas fa-birthday-cake"></i>Cumpleaños</h2>
-                                <div class="caja_nuevo">
-                                    @forelse($cumpleaños as $cumple)
-                                        <div class="nuevo">
-                                            <div class="img_nuevo">
-                                                @forelse($nuevos as $nuevo)
-                                                    <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
-                                                        class="img_empleado">
-                                                @empty
-                                                    <div class="nuevo">No hay nuevos ingresos registrados en este
-                                                        mes.</div>
-                                                @endforelse
-                                            </div>
-                                            <h5 class="nombre_nuevo">{{ $cumple->name }}</h5>
-                                            <div class="datos_nuevo">
-                                                <p>{{ $cumple->puesto }}<br>
-                                                    @if (is_null($cumple->area->area))
-                                                        No hay Area
-                                                    @else
-                                                        {{ $cumple->area->area }}
-                                                    @endif
-                                                </p>
-                                                <h6 class="mt-3">Fecha de cumpleaños</h6>
-                                                @php
-                                                    $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                                                    $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
-                                                    $mes = $meses[$fecha->format('n') - 1];
-                                                    $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
-                                                @endphp
-
-                                                <span>{{ $inputs['Fecha'] }}</span>
-                                            </div>
-                                        </div>
-                                    @empty
-                                        <div class="nuevo">No hay cumpleaños registrados en este mes.</div>
-                                    @endforelse
-                                </div>
-
-                                <h2 class="mt-5 titulo-seccion"><i class="mr-3 fas fa-medal"></i>Aniversarios</h2>
-                                <div class="caja_nuevo">
-                                    <div class="caja_nuevo">
-                                        @forelse($aniversarios as $aniversario)
-
-                                            @if (\Carbon\Carbon::parse($aniversario->antiguedad)->format('Y') < $hoy->format('Y'))
-                                                <div class="nuevo">
-                                                    <div class="img_nuevo">
-                                                        @forelse($nuevos as $nuevo)
-                                                            <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
-                                                                class="img_empleado">
-                                                        @empty
-                                                            <div class="nuevo">No hay nuevos ingresos registrados
-                                                                en este
-                                                                mes.</div>
-                                                        @endforelse
-                                                    </div>
-                                                    <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
-                                                    <div class="datos_nuevo">
-                                                        <p>{{ $aniversario->puesto }}<br>
-                                                            @if (is_null($aniversario->area->area))
-                                                                No hay Area
-                                                            @else
-                                                                {{ $aniversario->area->area }}
-                                                            @endif
-                                                        </p>
-                                                        <h6 class="mt-3">Antigüedad</h6>
-                                                        <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }}
-                                                            año(s)
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            @empty
-                                                <div class="nuevo">No hay aniversarios registrados en este mes.</div>
-                                            @endforelse
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @livewire('eventos-portal')
                 </div>
             </div>
         </div>

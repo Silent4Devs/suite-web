@@ -76,6 +76,7 @@ function hexToRGBA(hex) {
     calendar.borderColor = '#00a9ff';
     addCalendar(calendar);
 
+
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
