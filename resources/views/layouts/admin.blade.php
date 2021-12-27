@@ -293,7 +293,7 @@
         }
 
         .img_empleado {
-            clip-path: circle(20px at 50% 40%);
+            clip-path: circle(20px at 50% 50%);
             height: 40px;
         }
 
@@ -990,13 +990,14 @@
 
                 <ul class="ml-auto c-header-nav">
 
-                    <li class="c-header-nav-item dropdown show"><a class="c-header-nav-link" data-toggle="dropdown"
+                    <li class="c-header-nav-item dropdown show">
+                        <a class="c-header-nav-link" data-toggle="dropdown"
                             href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="">
+                            <div style="width:100%; display: flex; align-items: center;">
                                 @if (auth()->user()->empleado)
-                                    <img class="rounded-circle"
-                                        style="max-width: 40px;clip-path: circle(50% at 50% 50%);"
-                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
+                                    <img class="img_empleado"
+                                        style=""
+                                        src="https://cdn.psychologytoday.com/sites/default/files/styles/article-inline-half-caption/public/field_blog_entry_images/2018-09/shutterstock_648907024.jpg?itok=0hb44OrI"
                                         alt="{{ auth()->user()->empleado->name }}">
                                     <span class="ml-2">{!! auth()->user()->empleado->saludo !!}</span>
                                 @else

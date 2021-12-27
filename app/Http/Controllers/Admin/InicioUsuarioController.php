@@ -224,7 +224,7 @@ class InicioUsuarioController extends Controller
 
         $cumpleaños_felicitados_comentarios = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', false)->where('comentarios', '!=', null)->get();
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones','oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios'));
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones','oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
