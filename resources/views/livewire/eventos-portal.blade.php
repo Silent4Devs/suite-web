@@ -63,10 +63,9 @@
                 @forelse($cumpleaños as $cumple)
                     <div class="nuevo">
                         <div class="img_nuevo">
-                            @foreach ($nuevos as $nuevo)
-                                <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
+                                <img src="{{ asset('storage/empleados/imagenes/' . $cumple->avatar) }}"
                                     class="img_empleado">
-                            @endforeach
+                            
                         </div>
                         <h5 class="nombre_nuevo">{{ $cumple->name }}</h5>
                         <div class="datos_nuevo">
@@ -177,10 +176,8 @@
                     @if (\Carbon\Carbon::parse($aniversario->antiguedad)->format('Y') < $hoy->format('Y'))
                         <div class="nuevo">
                             <div class="img_nuevo">
-                                @foreach ($nuevos as $nuevo)
-                                    <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
+                                    <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
                                         class="img_empleado">
-                                @endforeach
                             </div>
                             <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
                             <div class="datos_nuevo">
