@@ -1,5 +1,5 @@
 @can('soporte_access')
-    <ul>
+    <ul class="mt-4">
         <li><a href="#" data-ventana="capacitacion" data-ruta="Capacitaciones" class="btn_ventana_menu">
                 <div>
                     <i class="fas fa-chalkboard-teacher"></i>

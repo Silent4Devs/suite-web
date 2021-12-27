@@ -12,7 +12,6 @@ class DatabaseSeeder extends Seeder
 
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
-            PermissionRoleTableSeeder::class,
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
             GapunoTableSeeder::class,
@@ -24,7 +23,7 @@ class DatabaseSeeder extends Seeder
             EstadoincidentesTableSeeder::class,
             EstusplatrabajoTableSeeder::class,
             ActividadFaseSeeder::class,
-            // OrganizacionSeeder::class,
+            OrganizacionSeeder::class,
             SedeSeeder::class,
             GrupoSeeder::class,
             AreaSeeder::class,
@@ -42,6 +41,7 @@ class DatabaseSeeder extends Seeder
             AmenazasTableSeeder::class,
             PanelInicioSeeder::class,
             PanelOrganizacionSeeder::class,
+            PermissionRoleTableSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }

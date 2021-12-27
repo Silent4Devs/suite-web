@@ -1,5 +1,5 @@
 @can('planificacion_access')
-    <ul>
+    <ul class="mt-4">
         <li><a href="#" data-ventana="riesgos" data-ruta="Análisis de riesgos" class="btn_ventana_menu">
                 <div>
                     <i class="fas fa-exclamation-triangle"></i>

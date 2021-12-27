@@ -298,7 +298,7 @@
                     dueDateClass: '',
                     start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() }}',
                     end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() }}',
-                    isReadOnly : true, 
+                    isReadOnly : true,
 
                 },
             @endforeach
@@ -373,6 +373,19 @@
                     isReadOnly : true,
                 },
             @endforeach
+             @foreach ($oficiales as $oficial)
+
+                {
+                id: 'oficial{{ $oficial->id }}',
+                calendarId: '7',
+                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Festivo: {{ $oficial->nombre }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{  \Carbon\Carbon::parse(explode("-",$oficial->fecha)[0])->format("Y-m-d") }}',
+                end: '{{  \Carbon\Carbon::parse(explode("-",$oficial->fecha)[1])->format("Y-m-d") }}',
+                isReadOnly : true,
+                },
+            @endforeach
         ];
     </script>
 
@@ -381,12 +394,12 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
-        
-                 
+
+
 
                 }, 5000);
         })
-        
+
     </script>
 
 

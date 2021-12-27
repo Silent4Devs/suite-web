@@ -1,5 +1,29 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+          .dataTables_length label{
+            color:white;
+
+        }
+
+        .dataTables_length:before{
+            content:"Mostrar" !important;
+            color:#111 !important;
+            margin-right:-30px !important;
+            position:relative;
+            z-index:2;
+
+        }
+
+        .dataTables_length:after{
+            content:"empleados" !important;
+            color:#111 !important;
+            margin-left:-35px !important;
+            position:relative;
+            z-index:2;
+
+        }
+    </style>
     <div class="mt-5 card">
         @can('configuracion_empleados_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -165,7 +189,7 @@
                 dtButtons.push(btnAgregar);
 
                 let btnConf = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Configurar mi perfil',
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Configurar mis datos',
                 titleAttr: 'conf',
                 url: "{{ url('admin/panel-inicio') }}",
                 className: "btn-xs btn-primary rounded ml-2 pr-3",

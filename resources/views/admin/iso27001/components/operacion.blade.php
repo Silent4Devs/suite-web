@@ -1,5 +1,5 @@
 @can('operacion_access')
-    <ul>
+    <ul class="mt-4">
         <li><a href="{{ route('admin.planificacion-controls.index') }}">
                 <div>
                     <i class="fas fa-clipboard-list"></i>

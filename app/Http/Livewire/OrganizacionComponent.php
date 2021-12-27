@@ -32,7 +32,12 @@ class OrganizacionComponent extends Component
     public $num_empleados_id;
     public $tamano_id;
     public $schedule_id;
-    public $redessociales_id;
+    public $linkedln_id;
+    public $facebook_id;
+    public $youtube_id;
+    public $twitter_id;
+
+
 
     public function mount()
     {
@@ -57,7 +62,11 @@ class OrganizacionComponent extends Component
         $this->num_empleados_id = $this->panel->num_empleados;
         $this->tamano_id = $this->panel->tamano;
         $this->schedule_id = $this->panel->schedule;
-        $this->redessociales_id = $this->panel->redessociales;
+        $this->linkedln_id = $this->panel->linkedln;
+        $this->facebook_id = $this->panel->facebook;
+        $this->youtube_id = $this->panel->youtube;
+        $this->twitter_id = $this->panel->twitter;
+
     }
 
     public function render()
@@ -226,10 +235,31 @@ class OrganizacionComponent extends Component
         $this->callAlert('success', 'La información se actualizo correctamente', false);
     }
 
-    public function updatedRedesSocialesId($value)
+    public function updatedLinkedlnId($value)
     {
-        $this->redessociales_id = $value;
-        $this->panel->redessociales = $this->redessociales_id;
+        $this->linkedln_id = $value;
+        $this->panel->linkedln = $this->linkedln_id;
+        $this->panel->save();
+        $this->callAlert('success', 'La información se actualizo correctamente', false);
+    }
+    public function updatedFacebookId($value)
+    {
+        $this->facebook_id = $value;
+        $this->panel->facebook = $this->facebook_id;
+        $this->panel->save();
+        $this->callAlert('success', 'La información se actualizo correctamente', false);
+    }
+    public function updatedYoutubeId($value)
+    {
+        $this->youtube_id = $value;
+        $this->panel->youtube = $this->youtube_id;
+        $this->panel->save();
+        $this->callAlert('success', 'La información se actualizo correctamente', false);
+    }
+    public function updatedTwitterId($value)
+    {
+        $this->twitter_id = $value;
+        $this->panel->twitter = $this->twitter_id;
         $this->panel->save();
         $this->callAlert('success', 'La información se actualizo correctamente', false);
     }

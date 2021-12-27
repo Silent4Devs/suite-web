@@ -1,5 +1,5 @@
 @can('contexto_access')
-    <ul>
+    <ul class="mt-4">
         <li><a href="{{ url('/admin/analisisdebrechas') }}">
                 <div>
                     <i class="fas fa-search"></i>

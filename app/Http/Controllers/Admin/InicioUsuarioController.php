@@ -9,6 +9,7 @@ use App\Models\Area;
 use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
 use App\Models\Calendario;
+use App\Models\CalendarioOficial;
 use App\Models\Denuncias;
 use App\Models\Documento;
 use App\Models\Empleado;
@@ -31,6 +32,7 @@ use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\SubcategoriaIncidente;
+use App\Models\FelicitarCumpleaños;
 use App\Models\Sugerencias;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -41,6 +43,9 @@ class InicioUsuarioController extends Controller
 {
     public function index()
     {
+
+        $hoy = Carbon::now();
+        $hoy->toDateString();
         abort_if(Gate::denies('mi_perfil_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $usuario = auth()->user();
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
@@ -109,6 +114,8 @@ class InicioUsuarioController extends Controller
         $empleado = auth()->user()->empleado;
         $recursos = collect();
         $eventos = Calendario::get();
+        $oficiales = CalendarioOficial::get();
+        $cumples_aniversarios = Empleado::get();
         if ($usuario->empleado) {
             $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function ($query) use ($empleado) {
                 $query->where('auditoria_interno_empleado.empleado_id', $empleado->id);
@@ -209,7 +216,15 @@ class InicioUsuarioController extends Controller
             $activos = false;
         }
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos'));
+
+        $cumpleaños_usuario = Carbon::parse($usuario->empleado->cumpleaños)->format('d-m');
+
+
+        $cumpleaños_felicitados_like_contador = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->count();
+
+        $cumpleaños_felicitados_comentarios = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', false)->where('comentarios', '!=', null)->get();
+
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones','oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
