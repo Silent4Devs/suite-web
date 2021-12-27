@@ -17,6 +17,7 @@ use App\Models\EvidenciasDenuncia;
 use App\Models\EvidenciasQueja;
 use App\Models\EvidenciasRiesgo;
 use App\Models\EvidenciasSeguridad;
+use App\Models\FelicitarCumpleaños;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
 use App\Models\PanelInicioRule;
@@ -32,7 +33,6 @@ use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\SubcategoriaIncidente;
-use App\Models\FelicitarCumpleaños;
 use App\Models\Sugerencias;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -43,7 +43,6 @@ class InicioUsuarioController extends Controller
 {
     public function index()
     {
-
         $hoy = Carbon::now();
         $hoy->toDateString();
         abort_if(Gate::denies('mi_perfil_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -216,9 +215,7 @@ class InicioUsuarioController extends Controller
             $activos = false;
         }
 
-
         $cumpleaños_usuario = Carbon::parse($usuario->empleado->cumpleaños)->format('d-m');
-
 
         $cumpleaños_felicitados_like_contador = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->count();
 

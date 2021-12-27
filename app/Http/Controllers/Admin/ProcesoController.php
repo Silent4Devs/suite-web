@@ -182,7 +182,7 @@ class ProcesoController extends Controller
         $organizacion = Organizacion::first();
         $exist_no_publicado = Proceso::select('estatus')->where('estatus', Proceso::NO_ACTIVO)->exists();
 
-        return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado','organizacion'));
+        return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado', 'organizacion'));
     }
 
     public function obtenerDocumentoProcesos($documento)
