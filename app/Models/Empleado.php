@@ -63,6 +63,8 @@ class Empleado extends Model
         'supervisor_id' => 'int',
         'area_id' => 'int',
         'sede_id' => 'int',
+        'mostrar_telefono' => 'boolean'
+
     ];
 
     public static $searchable = [
@@ -128,6 +130,7 @@ class Empleado extends Model
         'salario_base_mensual',
         'pagadora_actual',
         'periodicidad_nomina',
+        'mostrar_telefono',
     ];
 
     public function getActualBirdthdayAttribute()

@@ -1185,6 +1185,7 @@ class EmpleadoController extends Controller
 
     public function updateInformationProfile(Request $request)
     {
+
         $empleadoID = auth()->user()->empleado->id;
         $empleado = Empleado::find($empleadoID);
         $request->validate([
@@ -1196,6 +1197,7 @@ class EmpleadoController extends Controller
         $empleado->update([
             'name' => $request->name,
             // 'email'=>$request->email,
+            'mostrar_telefono' => $request->has("mostrar_telefono"),
             'cumpleaños' => $request->cumpleaños,
             'telefono_movil' => $request->telefono_movil,
         ]);

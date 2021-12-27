@@ -10,7 +10,7 @@ class DirectorioEmpleadosController extends Controller
 {
     public function index(Request $request)
     {
-        $empleados = Empleado::select('id', 'name', 'puesto_id', 'genero', 'foto', 'telefono_movil', 'area_id', 'supervisor_id', 'antiguedad')->with('area', 'puestoRelacionado', 'supervisor')->get();
+        $empleados = Empleado::select('id', 'name', 'puesto_id', 'genero', 'foto', 'telefono_movil', 'area_id', 'supervisor_id', 'antiguedad','mostrar_telefono')->with('area', 'puestoRelacionado', 'supervisor')->get();
 
         return view('admin.directorio.index', compact('empleados'));
     }
