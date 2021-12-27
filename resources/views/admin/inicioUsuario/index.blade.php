@@ -5,7 +5,9 @@
         body {
             background-color: #fff;
         }
-
+        html{
+            overflow-y: scroll !important;
+        }
         .info-personal .caja_img_perfil {
             border-radius: 100px;
             height: 100px;
