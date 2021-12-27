@@ -125,7 +125,8 @@
                                     <button style="all:unset;"
                                         wire:click="felicitarCumpleañosDislike({{ $cumpleaños_felicitados_like->id }})"><i
                                             class="fas fa-thumbs-up"></i>
-                                        <font style="color:#00abb2;">{{ $cumpleaños_felicitados_like_contador }}</font>
+                                        <font style="color:#00abb2;">{{ $cumpleaños_felicitados_like_contador }}
+                                        </font>
                                     </button>
                                 @endif
                                 <i class="fas fa-comment-dots" data-toggle="modal"
@@ -176,8 +177,10 @@
                     @if (\Carbon\Carbon::parse($aniversario->antiguedad)->format('Y') < $hoy->format('Y'))
                         <div class="nuevo">
                             <div class="img_nuevo">
-                                <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
-                                    class="img_empleado">
+                                @foreach ($nuevos as $nuevo)
+                                    <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
+                                        class="img_empleado">
+                                @endforeach
                             </div>
                             <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
                             <div class="datos_nuevo">
