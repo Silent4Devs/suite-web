@@ -379,9 +379,7 @@
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function(){
-            document.getElementById('dropdownMenu-calendarType').addEventListener('change', function(e){
-
-            });
+            $(".tui-full-calendar-weekday-schedule-title").attr("title", "");
         });
     </script>
 @endsection
