@@ -14,14 +14,13 @@
         </div>
             <div class="card-body">
                 <div class="py-1 text-center form-group col-12" style="background-color:#1BB0B0; border-radius:100px; color: white;">Control de Eventos</div>
-
-                @include('partials.flashMessages')
-                <div class="card-body datatable-fix">
+                    @include('partials.flashMessages')
+                    <div class="card-body datatable-fix">
                     @include('admin.tabla-calendario.table')
+                    </div>
                 </div>
             </div>
-                </div>
-            </div>
+        </div>
     </div>
 
     @endsection

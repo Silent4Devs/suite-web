@@ -293,8 +293,8 @@
                             <select class="revisoresSelect" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
                                 ${responsableselects?.map ((responsable,idx)=>{
                                     return`
-                                                <option ${responsable.declaraciones_responsable?.includes(row.id)?'selected':''} data-image='${responsable.foto}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>
-                                                                ${responsable.name }</option>`})}
+                                                    <option ${responsable.declaraciones_responsable?.includes(row.id)?'selected':''} data-avatar='${responsable.avatar}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>
+                                                                    ${responsable.name }</option>`})}
                             </select>`;
                             $(`select#responsables${row.id}`).select2({
                                 theme: 'bootstrap4',
@@ -328,7 +328,7 @@
                                     if (data.estatus == 'limite_alcanzado') {
                                         const usuarioSeleccionado = $(
                                             `select#responsables${row.id} option[data-id-empleado="${responsable}"]`
-                                            );
+                                        );
                                         usuarioSeleccionado.prop('selected', false);
                                         $(`select#responsables${row.id}`).trigger(
                                             'change.select2');
@@ -337,7 +337,7 @@
                                     if (data.estatus == 'ya_es_aprobador') {
                                         const usuarioSeleccionadoResp = $(
                                             `select#responsables${row.id} option[data-id-empleado="${responsable}"]`
-                                            );
+                                        );
                                         usuarioSeleccionadoResp.prop('selected', false);
                                         $(`select#responsables${row.id}`).trigger(
                                             'change.select2');
@@ -373,7 +373,7 @@
                                     toastr.success(data.message);
                                 }).
                                 catch(error => console.log)
-                                console.log(declaracion, responsable);
+
                             });
                             return responsableselect;
                         }
@@ -388,8 +388,8 @@
                         <select class="revisoresSelect" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple" data-id='${row.id}'>
                             ${aprobadoreselects?.map ((aprobador,idx)=>{
                                 return`
-                                                        <option ${aprobador.declaraciones_aprobador?.includes(row.id)?'selected':''} data-image='${aprobador.foto}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>
-                                                            ${aprobador.name }</option>`})}
+                                                            <option ${aprobador.declaraciones_aprobador?.includes(row.id)?'selected':''} data-avatar='${aprobador.avatar}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>
+                                                                ${aprobador.name }</option>`})}
                                 </select>`;
                             $(`select#aprobadores${row.id}`).select2({
                                 theme: 'bootstrap4',
@@ -423,7 +423,7 @@
                                     if (data.estatus == 'limite_alcanzado') {
                                         const usuarioSeleccionado = $(
                                             `select#aprobadores${row.id} option[data-id-empleado="${aprobador}"]`
-                                            );
+                                        );
                                         usuarioSeleccionado.prop('selected', false);
                                         $(`select#aprobadores${row.id}`).trigger(
                                             'change.select2');
@@ -431,16 +431,15 @@
                                     if (data.estatus == 'ya_es_responsable') {
                                         const usuarioSeleccionadoAprob = $(
                                             `select#aprobadores${row.id} option[data-id-empleado="${aprobador}"]`
-                                            );
+                                        );
                                         usuarioSeleccionadoAprob.prop('selected',
-                                        false);
+                                            false);
                                         $(`select#aprobadores${row.id}`).trigger(
                                             'change.select2');
                                     }
                                     toastr.success(data.message);
                                 }).
                                 catch(error => console.log)
-                                console.log(empleadoId);
                             });
                             $(`select#aprobadores${row.id}`).on('select2:unselect', function(e) {
                                 const declaracion = this.getAttribute('data-id');
@@ -504,11 +503,11 @@
 
             window.enviarCorreo = (e, tipo) => {
                 let enviarRadio = document.getElementsByName('contact');
-                let dataRadio="";
+                let dataRadio = "";
                 for (var i = 0, length = enviarRadio.length; i < length; i++) {
                     if (enviarRadio[i].checked) {
                         // do whatever you want with the checked radio
-                    dataRadio=enviarRadio[i].value;
+                        dataRadio = enviarRadio[i].value;
                         // only one radio can be logically checked, don't check the rest
                         break;
                     }
@@ -556,7 +555,7 @@
             $('.revisoresSelect').select2({
                 theme: 'bootstrap4',
                 templateResult: formatState,
-                templateSelection: formatStateMulti
+                templateSelection: formatState
             });
 
             $(`select#responsables`).select2({
@@ -567,71 +566,25 @@
 
         });
 
-        window.formatStateMulti = (opt) => {
-            if (!opt.id) {
-                return opt.text;
-            }
-
-            var optimage = $(opt.element).attr('data-image');
-            var gender = $(opt.element).attr('data-gender');
-            if (!optimage) {
-                let foto = 'ususario_no_cargado.png'
-                if (gender == 'M') {
-                    foto = 'woman.png';
-                }
-
-                if (gender == 'H') {
-                    foto = 'man.png';
-                }
-
-                var $opt = $(
-                    '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' + foto +
-                    '" class="img-fluid rounded-circle" width="30" height="30"/></span>'
-                );
-                return $opt;
-            } else {
-                var $opt = $(
-                    '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' + optimage +
-                    '" class="img-fluid rounded-circle" width="30" height="30"/></span>'
-                );
-                return $opt;
-            }
-        };
-
         window.formatState = (opt) => {
-            if (!opt.id) {
+            if(!opt.id) {
                 return opt.text;
             }
+            var optimage = $(opt.element).attr('data-avatar');
 
-            var optimage = $(opt.element).attr('data-image');
-            var gender = $(opt.element).attr('data-gender');
-            if (!optimage) {
-                let foto = 'ususario_no_cargado.png'
-                if (gender == 'M') {
-                    foto = 'woman.png';
-                }
+            var $opt = $(
+                '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' +
+                optimage +
+                '" class="img-fluid rounded-circle" width="30" height="30"/>' +
+                opt.text + '</span>'
+            );
 
-                if (gender == 'H') {
-                    foto = 'man.png';
-                }
-
-                var $opt = $(
-                    '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' + foto +
-                    '" class="img-fluid rounded-circle" width=25 height=25/> ' +
-                    opt.text + '</span>'
-                );
-                return $opt;
-            } else {
-                var $opt = $(
-                    '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' + optimage +
-                    '" class="img-fluid rounded-circle" width=25 height=25/> ' +
-                    opt.text + '</span>'
-                );
-                return $opt;
-            }
-
+            return $opt;
         };
+
+
     </script>
 
 
 @endsection
+
