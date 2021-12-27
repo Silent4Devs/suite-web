@@ -15,7 +15,6 @@ class AddMostrarTelefonoToEmpleadosTable extends Migration
     {
         Schema::table('empleados', function (Blueprint $table) {
             $table->boolean('mostrar_telefono')->default(false);
-
         });
     }
 
