@@ -5,7 +5,7 @@
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Puestos</strong></h3>
+                <h3 class="mb-2 text-center text-white"><strong>Perfiles de Puestos</strong></h3>
             </div>
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -160,13 +160,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},

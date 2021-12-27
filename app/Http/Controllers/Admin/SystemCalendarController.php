@@ -10,7 +10,6 @@ use App\Models\CalendarioOficial;
 use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\PlanBaseActividade;
-use App\Models\Empleado;
 use App\Models\PlanImplementacion;
 use App\Models\Recurso;
 use Illuminate\Http\Response;
@@ -60,12 +59,12 @@ class SystemCalendarController extends Controller
         // dd($auditoria_internas);
         $recursos = Recurso::get();
         $eventos = Calendario::get();
-        $oficiales=CalendarioOficial::get();
+        $oficiales = CalendarioOficial::get();
 
         $cumples_aniversarios = Empleado::get();
         $nombre_organizacion = Organizacion::first();
         $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';
 
-        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas', 'eventos','oficiales', 'cumples_aniversarios', 'nombre_organizacion'));
+        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas', 'eventos', 'oficiales', 'cumples_aniversarios', 'nombre_organizacion'));
     }
 }

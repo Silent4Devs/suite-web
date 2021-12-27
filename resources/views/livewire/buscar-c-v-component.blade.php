@@ -274,7 +274,7 @@
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Resumen</span>
                                     </div>
-                                    <p style="text-transform:capitalize; text-align:justify">
+                                    <p style="text-align:justify">
                                         {{ $empleadoModel->resumen }}
                                     </p>
                                     <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">

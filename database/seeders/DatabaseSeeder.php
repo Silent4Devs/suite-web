@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             PanelInicioSeeder::class,
             PanelOrganizacionSeeder::class,
             PermissionRoleTableSeeder::class,
+            LanguageSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }

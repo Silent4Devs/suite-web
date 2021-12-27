@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\FelicitacionesMail;
 use App\Models\Empleado;
 use Illuminate\Console\Command;
-use App\Mail\FelicitacionesMail;
 use Illuminate\Support\Facades\Mail;
 
 class EnviarCorreoFelicitaciones extends Command
@@ -40,10 +40,9 @@ class EnviarCorreoFelicitaciones extends Command
      */
     public function handle()
     {
-        
         $empleados = Empleado::get();
 
-        foreach($empleados as $empleado){
+        foreach ($empleados as $empleado) {
             Mail::to($empleado->email)->send(new FelicitacionesMail);
         }
     }
