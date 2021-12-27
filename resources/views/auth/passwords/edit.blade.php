@@ -177,6 +177,11 @@
                                                     </div>
                                                 @endif
                                             </div>
+                                            <div class="form-group form-check">
+                                                <input type="checkbox" class="form-check-input" id="ValidacionNumero" name="mostrar_telefono" {{auth()->user()->empleado->mostrar_telefono ? "checked": ""}}>
+                                                <label class="form-check-label" for="exampleCheck1">Mostrar mi telefono en directorio organizacional</label>
+                                            </div>
+
                                             <div class="form-group" style="text-align: end">
                                                 <button class="btn btn-danger" type="submit">
                                                     {{ trans('global.save') }}
