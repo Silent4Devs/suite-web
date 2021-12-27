@@ -8,7 +8,6 @@ use App\Models\AuditoriaInterna;
 use App\Models\Calendario;
 use App\Models\CalendarioOficial;
 use App\Models\Empleado;
-use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\PlanBaseActividade;
 use App\Models\PlanImplementacion;
