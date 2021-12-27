@@ -2,6 +2,13 @@
 a.btn.btn-success{
     width: 60% !important;
     margin-bottom: 10px;
+    text-align: left;
+}
+a.btn.btn-success i{
+    margin-left: 20%;
+}
+.smargin i{
+    margin-left: 10px !important;
 }
 
 </style>
@@ -36,12 +43,12 @@ a.btn.btn-success{
                 {{-- </div> --}}
                 <div class="mt-4  row justify-content:center align-items-center">
                     <div class="text-center col-12">
-                        <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}"  class="btn btn-success">
+                        <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}"  class="btn btn-success smargin">
                             <i class="fas fa-exclamation-triangle"></i> Incidente de Seguridad
                         </a>
                     </div>
                     <div class="text-center col-12">
-                        <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}"  class="btn btn-success">
+                        <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}"  class="btn btn-success smargin">
                             <i class="fas fa-shield-alt"></i>  Riesgo Identificado
                         </a>
                     </div>
