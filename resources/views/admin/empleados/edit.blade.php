@@ -1,6 +1,16 @@
 @extends('layouts.admin')
 @section('content')
-    {{ Breadcrumbs::render('empleados-edit', $empleado) }}
+    @if ($isEditAdmin)
+        {{ Breadcrumbs::render('empleados-edit', $empleado) }}
+    @else
+        <style>
+            .breadcrumb {
+                margin-bottom: 0 !important;
+            }
+
+        </style>
+        {{ Breadcrumbs::render('Editar-Curriculum', $empleado) }}
+    @endif
     <style>
         .select2-container {
             margin-top: 0px !important;
@@ -171,10 +181,6 @@
             display: none;
         }
 
-        .breadcrumb {
-            margin-bottom: 0 !important;
-        }
-
         .collapse:not(.show) {
             display: inline;
         }
@@ -250,7 +256,6 @@
                 </div>
             </div>
         @else
-            {{ Breadcrumbs::render('Editar-Curriculum', $empleado) }}
             <div class="p-4">
                 <div class="mt-4 text-center form-group"
                     style="background-color:#1BB0B0; border-radius: 100px; color: white;">
