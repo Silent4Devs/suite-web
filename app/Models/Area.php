@@ -63,10 +63,11 @@ class Area extends Model
         'id_grupo',
         'id_reporta',
         'descripcion',
+        'foto_area',
         'team_id',
     ];
 
-    protected $appends = ['grupo_name'];
+    protected $appends = ['grupo_name','area_foto'];
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -132,4 +133,20 @@ class Area extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function getAreaFotoAttribute()
+    {
+        $foto_url = asset('public/img/areas.jpg');
+
+        if($this->foto_area){
+
+        $foto_url = asset("storage/areas/imagenes/ {$this->foto_area}");
+
+        }
+
+        return $foto_url;
+
+    }
+
+
 }

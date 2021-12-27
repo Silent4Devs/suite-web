@@ -135,15 +135,18 @@ class PanelDeclaracionController extends Controller
         $declaracion = $request->declaracion;
         $responsable = $request->responsable;
         $existResponsable = DeclaracionAplicabilidadResponsable::select('declaracion_id')->where('declaracion_id', $declaracion)->exists();
-        // dd($existResponsable);
+
         $isReasignable = DeclaracionAplicabilidadResponsable::select('declaracion_id')->where('declaracion_id', $declaracion)->whereNull('empleado_id')->exists();
-        $readyExistResponsable = DeclaracionAplicabilidadAprobadores::select('declaracion_id')->where('declaracion_id', $declaracion)->where('aprobadores_id', $responsable)->exists();
+
+        $readyExistResponsable = DeclaracionAplicabilidadAprobadores::select('declaracion_id')
+        ->where('declaracion_id', $declaracion)->where('aprobadores_id', $responsable)->exists();
         if ($readyExistResponsable) {
             return response()->json(['estatus'=>'ya_es_aprobador', 'message'=>'Ya fue asignado aprobador'], 200);
         } else {
             if (!$existResponsable) {
                 $exists = DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
                 if (!$exists) {
+                    // dd($responsable);
                     DeclaracionAplicabilidadResponsable::create([
                     'declaracion_id' => $declaracion,
                     'empleado_id'=>$responsable,
