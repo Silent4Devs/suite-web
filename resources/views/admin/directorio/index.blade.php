@@ -207,11 +207,16 @@
                             <td>
                                 <div>
                                     <strong style="color:#0CA193;">{{ $empleado->name }}</strong>
-                                    @if (is_null($empleado->telefono_movil))
+                                  @if ($empleado->mostrar_telefono)
+
+                                        @if (is_null($empleado->telefono_movil))
                                         <p>Sin teléfono</p>
-                                    @else
-                                        <p><i class="mr-2 fas fa-phone"></i>{{ $empleado->telefono_movil }} </p>
-                                    @endif
+                                        @else
+                                            <p><i class="mr-2 fas fa-phone"></i>{{ $empleado->telefono_movil }} </p>
+                                        @endif
+                                        @else
+                                        <p><i class="mr-2 fas fa-phone"></i>Sin telefono  </p>
+                                  @endif
                                 </div>
 
                             </td>
@@ -242,10 +247,10 @@
                                       <div><strong
                                                 class="mr-2">Puesto:</strong>{{ $empleado->puestoRelacionado->puesto }}</div>
                                     @endif
-                                    @if (is_null($empleado->fecha_ingreso))
+                                    @if (is_null($empleado->email))
                                         <label>No hay información registrada</label>
                                     @else
-                                        <p>Ingreso: {{ $empleado->fecha_ingreso }}</p>
+                                        <p class="text-muted">{{ $empleado->email }}</p>
                                     @endif
 
                                 </div>

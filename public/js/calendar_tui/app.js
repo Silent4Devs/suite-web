@@ -468,3 +468,21 @@
     });
     calendarList.innerHTML = html.join('\n');
 })();
+
+$('.lnb-calendars-item').click(function(){
+    $('.lnb-calendars-item').click(function(){
+        $('.lnb-calendars-item:hover i').toggleClass('desactivo_lnb');
+        console.log('click');
+     });
+});
+
+
+// $('.lnb-calendars-item:first').click(function(){
+// $('.lnb-calendars-item:first').click(function(){
+//     if (document.querySelector('span[style="border-color: rgb(255, 85, 131); background-color: rgb(255, 85, 131);"]')) {
+//         $('.lnb-calendars-item i').addClass('desactivo_lnb');
+//     }else{
+//         $('.lnb-calendars-item i').removeClass('desactivo_lnb');
+//     }
+// });
+// });

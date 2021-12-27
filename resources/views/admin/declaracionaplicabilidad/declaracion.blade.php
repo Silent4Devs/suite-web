@@ -130,11 +130,14 @@
                                             </td>
                                             <td>
                                                 @foreach ($responsables as $responsable)
+                                                    @if (is_null($responsable))
                                                     @if ($responsable->declaracion_id == $g5s->id)
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $responsable->empleado->name }}">
                                                     @endif
+                                                    @endif
+
                                                 @endforeach
                                             </td>
                                             <td>
@@ -1862,11 +1865,13 @@
                                             </td>
                                             <td>
                                                 @foreach ($responsables as $responsable)
+                                                @if(is_null($responsable))
                                                     @if ($responsable->declaracion_id == $g82s->id)
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $responsable->empleado->name }}">
                                                     @endif
+                                                @endif
                                                 @endforeach
                                             </td>
                                             <td>

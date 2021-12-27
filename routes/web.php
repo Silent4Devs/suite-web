@@ -46,7 +46,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'destroy' => 'tabla-calendario.destroy',
     ]);
 
-    Route::get('calendario-oficial/index', 'CalendarioOficialController@index')->name('calendario-oficial.index');
+    // Route::get('calendario-oficial/index', 'CalendarioOficialController@index')->name('calendario-oficial.index');
     Route::resource('recursos-humanos/calendario-oficial', 'CalendarioOficialController')->names([
         'create' => 'calendario-oficial.create',
         'store' => 'calendario-oficial.store',
@@ -170,6 +170,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::view('soporte', 'admin.soporte.index')->name('soporte.index');
 
     Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
+    Route::post('portal-comunicacion/cumpleaños/{id}', 'PortalComunicacionController@felicitarCumpleaños')->name('portal-comunicacion.cumples');
+    Route::post('portal-comunicacion/cumpleaños-dislike/{id}', 'PortalComunicacionController@felicitarCumpleañosDislike')->name('portal-comunicacion.cumples-dislike');
+    Route::post('portal-comunicacion/cumpleaños_comentarios/{id}', 'PortalComunicacionController@felicitarCumplesComentarios')->name('portal-comunicacion.cumples-comentarios');
+    Route::post('portal-comunicacion/cumpleaños_comentarios_update/{id}', 'PortalComunicacionController@felicitarCumplesComentariosUpdate')->name('portal-comunicacion.cumples-comentarios-update');
     Route::resource('portal-comunicacion', 'PortalComunicacionController');
 
     Route::post('plantTrabajoBase/bloqueo/mostrar', 'LockedPlanTrabajoController@getLockedToPlanTrabajo')->name('lockedPlan.getLockedToPlanTrabajo');

@@ -436,6 +436,9 @@
                                             <span><i class="mr-1 fas fa-building"></i></span> {{ $area->area }}
                                         </option>
                                     @endforeach
+                                    <option id="ver_todos_option" value=null>
+                                        <span><i class="mr-1 fas fa-building">Todas las areas</i></span>
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-sm-12 col-lg-4" id="tools_box">
@@ -702,9 +705,11 @@
 
             let areas = document.querySelector("#areas");
             areas.addEventListener('change', function(event) {
-                let area_id = event.target.value;
-                orientacion = localStorage.getItem('orientationOrgChart');
-                renderOrganigrama(OrgChart, orientacion, null, true, area_id);
+                if($("#areas option:selected").attr("id") != "ver_todos_option"){
+                    let area_id = event.target.value;
+                    orientacion = localStorage.getItem('orientationOrgChart');
+                    renderOrganigrama(OrgChart, orientacion, null, true, area_id);
+                }
             });
             $('.areas').select2({
                 theme: 'bootstrap4',
@@ -718,6 +723,26 @@
                 document.querySelector("#output").innerHTML = 70;
                 document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
                 renderOrganigrama(OrgChart, orientacion, null, true, area_id);
+            });
+
+
+            document.querySelector('#areas').addEventListener('change', function(e) {
+                    e.preventDefault();
+                    if($("#areas option:selected").attr("id") == "ver_todos_option"){
+                        document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
+                        $('.areas').val(null).trigger('change');
+                        document.querySelector("#participantes_search").value = "";
+                        document.querySelector("#zoomer").value = 70;
+                        document.querySelector("#output").innerHTML = 70;
+                        contador = 0;
+                        orientacion = orientaciones[contador];
+                        localStorage.setItem('orientationOrgChart', orientaciones[contador]);
+                        img.src =
+                            `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
+                        renderOrganigrama(OrgChart, orientacion);
+                        console.log("funcion");
+                    }
+
             });
 
             $("#reloadOrg").click(function(e) {

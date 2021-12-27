@@ -533,6 +533,11 @@ Breadcrumbs::for('centro-atencion', function ($trail) {
     $trail->push('Centro de atención', route('admin.desk.index'));
 });
 
+Breadcrumbs::for('mapa-procesos', function ($trail) {
+    $trail->parent('Portal de Comunicación');
+    $trail->push('Mapa de procesos', route('admin.procesos.vistas.mapa_procesos'));
+});
+
 Breadcrumbs::for('seguridad-create', function ($trail) {
     $trail->parent('centro-atencion');
     $trail->push('Incidentes de Seguridad');

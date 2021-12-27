@@ -79,14 +79,14 @@ class CalendarioOficialController extends Controller
 
     public function edit($calendario)
     {
-        $calendario=CalendarioOficial::find($calendario);
+        $calendario = CalendarioOficial::find($calendario);
 
         return view('admin.calendario-oficial.edit', compact('calendario'));
     }
 
     public function update(Request $request, $calendario)
     {
-        $calendario=CalendarioOficial::find($calendario);
+        $calendario = CalendarioOficial::find($calendario);
         $fecha = $calendario->update($request->all());
 
         return redirect(route('admin.calendario-oficial.index'))->with(['success'=>'Registro Actualizado']);
@@ -94,7 +94,7 @@ class CalendarioOficialController extends Controller
 
     public function destroy($calendario)
     {
-        $calendario=CalendarioOficial::find($calendario);
+        $calendario = CalendarioOficial::find($calendario);
         $calendario->delete();
 
         return redirect(route('admin.calendario-oficial.index'))->with(['success'=>'Registro Eliminado']);
