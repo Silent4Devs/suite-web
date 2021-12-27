@@ -137,7 +137,6 @@ class PanelDeclaracionController extends Controller
         $existResponsable = DeclaracionAplicabilidadResponsable::select('declaracion_id')->where('declaracion_id', $declaracion)->exists();
 
         $isReasignable = DeclaracionAplicabilidadResponsable::select('declaracion_id')->where('declaracion_id', $declaracion)->whereNull('empleado_id')->exists();
-
         $readyExistResponsable = DeclaracionAplicabilidadAprobadores::select('declaracion_id')
         ->where('declaracion_id', $declaracion)->where('aprobadores_id', $responsable)->exists();
         if ($readyExistResponsable) {
