@@ -247,10 +247,10 @@
                                       <div><strong
                                                 class="mr-2">Puesto:</strong>{{ $empleado->puestoRelacionado->puesto }}</div>
                                     @endif
-                                    @if (is_null($empleado->fecha_ingreso))
+                                    @if (is_null($empleado->email))
                                         <label>No hay información registrada</label>
                                     @else
-                                        <p>Ingreso: {{ $empleado->fecha_ingreso }}</p>
+                                        <p class="text-muted">{{ $empleado->email }}</p>
                                     @endif
 
                                 </div>

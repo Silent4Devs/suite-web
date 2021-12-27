@@ -846,7 +846,7 @@
 
                 <div class="btnCerrar" style="color:${color}">X</div>
                                 <div class="row justify-content-center">
-                                    <div class="ml-5 bg-white rounded shadow-sm col-12 justify-content-center" style=" background-color:${color}!important">
+                                    <div class="ml-5 mt-5 bg-white rounded shadow-sm col-12 justify-content-center" style=" background-color:${color}!important">
                                         <p class="text-center text-white"> ${nombre} </p>
                                     </div>
 

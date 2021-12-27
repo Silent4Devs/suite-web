@@ -37,8 +37,6 @@ class OrganizacionComponent extends Component
     public $youtube_id;
     public $twitter_id;
 
-
-
     public function mount()
     {
         $this->panel = PanelOrganizacion::first();
@@ -66,7 +64,6 @@ class OrganizacionComponent extends Component
         $this->facebook_id = $this->panel->facebook;
         $this->youtube_id = $this->panel->youtube;
         $this->twitter_id = $this->panel->twitter;
-
     }
 
     public function render()
@@ -242,6 +239,7 @@ class OrganizacionComponent extends Component
         $this->panel->save();
         $this->callAlert('success', 'La información se actualizo correctamente', false);
     }
+
     public function updatedFacebookId($value)
     {
         $this->facebook_id = $value;
@@ -249,6 +247,7 @@ class OrganizacionComponent extends Component
         $this->panel->save();
         $this->callAlert('success', 'La información se actualizo correctamente', false);
     }
+
     public function updatedYoutubeId($value)
     {
         $this->youtube_id = $value;
@@ -256,6 +255,7 @@ class OrganizacionComponent extends Component
         $this->panel->save();
         $this->callAlert('success', 'La información se actualizo correctamente', false);
     }
+
     public function updatedTwitterId($value)
     {
         $this->twitter_id = $value;
