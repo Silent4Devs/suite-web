@@ -63,7 +63,7 @@ class Empleado extends Model
         'supervisor_id' => 'int',
         'area_id' => 'int',
         'sede_id' => 'int',
-        'mostrar_telefono' => 'boolean'
+        'mostrar_telefono' => 'boolean',
 
     ];
 
