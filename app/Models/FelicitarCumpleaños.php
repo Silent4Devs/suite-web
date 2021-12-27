@@ -18,7 +18,6 @@ class FelicitarCumpleaños extends Model
         'like',
     ];
 
-
     public function cumpleañero()
     {
         return $this->belongsTo(Empleado::class, 'cumpleañero_id');

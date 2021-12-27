@@ -62,6 +62,8 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
                     </div>
+
+
                 </div>
 
                 <div class="row">
@@ -89,7 +91,22 @@
                         </div>
                     @endif
 
-                    <div class="form-group col-sm-{{ $direccion_exists ? '6' : '12' }}">
+                    <div class="form-group col-sm-6">
+                        <label for="foto_area"> <i class="fas fa-images iconos-crear"></i>Fotografía del área</label>
+                                <input type="file"name="foto_area"
+                                    class="form-control {{ $errors->has('foto_area') ? 'is-invalid' : '' }}"
+                                     accept="image/*" value="{{ old('foto_area', '') }}">
+
+                        @if ($errors->has('foto_area'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('foto_area') }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-{{ $direccion_exists ? '12' : '12' }}">
                         <label for="descripcion"><i class="fas fa-pencil-alt iconos-crear"></i>Descripción</label>
                         <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"
                             name="descripcion" id="descripcion">{{ old('descripcion', '') }}</textarea>
@@ -101,6 +118,7 @@
                         <span class="help-block">{{ trans('cruds.area.fields.area_helper') }}</span>
                     </div>
                 </div>
+
                 <div class="text-right form-group col-12" style="margin-left:15px;">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">

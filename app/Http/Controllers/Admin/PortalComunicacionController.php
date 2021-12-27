@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\ComunicacionSgi;
 use App\Models\Documento;
 use App\Models\Empleado;
-use App\Models\Organizacione;
 use App\Models\FelicitarCumpleaños;
+use App\Models\Organizacione;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -113,12 +113,8 @@ class PortalComunicacionController extends Controller
         return view('admin.portal-comunicacion.reportes', compact('organizacions'));
     }
 
-
-    
-
     public function felicitarCumpleaños($cumpleañero_id)
     {
-
         $felicitar = FelicitarCumpleaños::create([
             'cumpleañero_id' => $cumpleañero_id,
             'felicitador_id' => auth()->user()->empleado->id,
@@ -138,11 +134,8 @@ class PortalComunicacionController extends Controller
         return redirect()->route('admin.portal-comunicacion.index')->with('success', 'DisLike generado');
     }
 
-    
-
     public function felicitarCumplesComentarios(Request $request, $cumpleañero_id)
     {
-
         $comentario = FelicitarCumpleaños::create([
             'cumpleañero_id' => $cumpleañero_id,
             'felicitador_id' => auth()->user()->empleado->id,
@@ -161,8 +154,4 @@ class PortalComunicacionController extends Controller
 
         return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Comentario actualizado');
     }
-
-    
-
-    
 }
