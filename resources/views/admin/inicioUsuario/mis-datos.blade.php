@@ -202,34 +202,34 @@
 </style>
 
 
+@if(($cumpleaños_usuario != null) && ($cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m')))
+    <div class="modal fade" id="modal_cumple" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Feliz Cumpleaños <strong>{{ $usuario->empleado->name }}</strong></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            likes: {{$cumpleaños_felicitados_like_contador}}
 
-<div class="modal fade" id="modal_cumple" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Feliz Cumpleaños <strong>{{ $usuario->empleado->name }}</strong></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        likes: {{$cumpleaños_felicitados_like_contador}}
-
-        <ul> <h4> Comentarios </h4>
-            @foreach($cumpleaños_felicitados_comentarios as $coment_cumple)
-                <li>Nombre:{{$coment_cumple->id}}
-                    <br>{{$coment_cumple->comentarios}}</li>
-            @endforeach
-        </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+            <ul> <h4> Comentarios </h4>
+                @foreach($cumpleaños_felicitados_comentarios as $coment_cumple)
+                    <li>Nombre:{{$coment_cumple->id}}
+                        <br>{{$coment_cumple->comentarios}}</li>
+                @endforeach
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
+@endif
 
 
 <div class="card-body">
