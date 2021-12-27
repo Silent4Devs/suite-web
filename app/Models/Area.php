@@ -67,7 +67,7 @@ class Area extends Model
         'team_id',
     ];
 
-    protected $appends = ['grupo_name','area_foto'];
+    protected $appends = ['grupo_name', 'area_foto'];
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -138,15 +138,10 @@ class Area extends Model
     {
         $foto_url = asset('public/img/areas.jpg');
 
-        if($this->foto_area){
-
-        $foto_url = asset("storage/areas/imagenes/ {$this->foto_area}");
-
+        if ($this->foto_area) {
+            $foto_url = asset("storage/areas/imagenes/ {$this->foto_area}");
         }
 
         return $foto_url;
-
     }
-
-
 }
