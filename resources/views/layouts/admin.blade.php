@@ -997,7 +997,7 @@
                                 @if (auth()->user()->empleado)
                                     <img class="img_empleado"
                                         style=""
-                                        src="https://cdn.psychologytoday.com/sites/default/files/styles/article-inline-half-caption/public/field_blog_entry_images/2018-09/shutterstock_648907024.jpg?itok=0hb44OrI"
+                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
                                         alt="{{ auth()->user()->empleado->name }}">
                                     <span class="ml-2">{!! auth()->user()->empleado->saludo !!}</span>
                                 @else
