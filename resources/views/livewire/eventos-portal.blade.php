@@ -33,7 +33,7 @@
     </div>
     <div class="mt-5 col-lg-12">
         <div class="cuadro_empleados scroll_estilo">
-            <h2 class="titulo-seccion"><i class="mr-3 far fa-user"></i>Nuevos ingresos</h2>
+            <h2 class="titulo-seccion mt-1"><i class="mr-3 far fa-user"></i>Nuevos ingresos</h2>
             <div class="caja_nuevo">
                 @forelse($nuevos as $nuevo)
                     <div class="nuevo">
