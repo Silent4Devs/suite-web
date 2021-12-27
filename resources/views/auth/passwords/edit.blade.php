@@ -37,7 +37,7 @@
                 @include('partials.flashMessages')
                 <div class="mt-4 text-center form-group"
                     style="background-color:#1BB0B0; border-radius: 100px; color: white;">
-                    CONFIGURACIÓN DE MI PERFIL
+                    CONFIGURAR PERFIL
                 </div>
                 <div class="row">
                     <div class="col-sm-6 col-lg-6 col-6">
