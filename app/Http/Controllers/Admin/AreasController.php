@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Area;
-use Intervention\Image\Facades\Image;
-use App\Models\Team;
-use App\Models\Grupo;
 use App\Exports\AreasExport;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Requests\MassDestroyAreaRequest;
+use App\Http\Requests\StoreAreaRequest;
+use App\Models\Area;
+use App\Models\Grupo;
 use App\Models\Organizacion;
+use App\Models\Team;
+use Gate;
+use Illuminate\Auth\Access\Gate as AccessGate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Http\Requests\StoreAreaRequest;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UpdateAreaRequest;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\MassDestroyAreaRequest;
-use Illuminate\Auth\Access\Gate as AccessGate;
+use Intervention\Image\Facades\Image;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Controllers\Traits\CsvImportTrait;
+use Yajra\DataTables\Facades\DataTables;
 
 class AreasController extends Controller
 {
@@ -106,7 +105,7 @@ class AreasController extends Controller
             $validateReporta = 'required|exists:areas,id';
         }
 
-        $area= Area::create($request->all());
+        $area = Area::create($request->all());
 
         $image = null;
         if ($request->file('foto_area') != null or !empty($request->file('foto_area'))) {
@@ -125,7 +124,6 @@ class AreasController extends Controller
         $area->update([
             'foto_area' => $image,
         ]);
-
 
         $request->validate([
             'area' => 'required|string',
@@ -164,16 +162,15 @@ class AreasController extends Controller
             }
         }
 
-
-        $image = $area ->foto_area;
+        $image = $area->foto_area;
         if ($request->file('foto_area') != null or !empty($request->file('foto_area'))) {
 
             //Si existe la imagen entonces se elimina al editarla
 
-            $isExists = Storage::disk('public')->exists('areas' . $area ->foto_area);
+            $isExists = Storage::disk('public')->exists('areas' . $area->foto_area);
             if ($isExists) {
                 if ($area->foto_area != null) {
-                    unlink(storage_path('/app/public/areas' . $area ->foto_area));
+                    unlink(storage_path('/app/public/areas' . $area->foto_area));
                 }
             }
             $extension = pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_EXTENSION);
