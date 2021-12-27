@@ -25,8 +25,8 @@
             </div>
         </div>
     </div>
-    <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #0CA193;">Solicitados: Documentos que envíe a
-        aprobación</h5>
+    <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #0CA193;">Solicitados: Documentos que me deben
+        aprobar</h5>
     <table id="tblMisDocumentos" class="table">
         <thead>
             <tr>
@@ -39,31 +39,31 @@
                 <th style="vertical-align: top; min-width:90px; text-align: center !important;">
                     Tipo
                 </th>
-                <th style="vertical-align: top; text-align: center !important; min-width:100px;">
+                <th style="vertical-align: top; text-align: center !important; min-width:150px;">
                     Vinculado&nbsp;a
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top  min-width:150px; text-align: center !important;">
                     Estatus
                 </th>
-                <th style="vertical-align: top; text-align: center !important;">
+                <th style="vertical-align: top; text-align: center !important; min-width:80px;">
                     Versión
                 </th>
                 <th style="vertical-align: top; text-align: center !important; min-width:90px;">
                     Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top min-width:50px;">
                     Elaboró
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top  min-width:50px;">
                     Revisor
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top  min-width:50px;">
                     Aprobador
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top  min-width:50px;">
                     Responsable
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top  min-width:80px;">
                     Visualizar
                 </th>
             </tr>
@@ -81,15 +81,15 @@
                         {{ $documento->tipo ?? '' }}
                     </td>
                     @if ($documento->proceso_id == null)
-                        <th style="text-align: center !important; font-weight: normal;">
+                        <td style="text-align: center !important; font-weight: normal;">
                             {{ $documento->macroproceso ? $documento->macroproceso->nombre : 'Sin vincular' }}
-                        </th>
+                        </td>
                     @else
-                        <th style="text-align: center !important; font-weight: normal;">
+                        <td style="text-align: center !important; font-weight: normal;">
                             {{ $documento->proceso ? $documento->proceso->nombre : 'Sin vincular' }}
-                        </th>
+                        </td>
                     @endif
-                    <td>
+                    <td style="text-align: center !important;">
                         @if ($documento->estatus)
                             @switch($documento->estatus)
                                 @case(1)
@@ -109,7 +109,7 @@
                             @endswitch
                         @endif
                     </td>
-                    <td>
+                    <td style="text-align: center !important;">
                         {{ $documento->version == 0 ? 'Sin versión actualmente' : $documento->version }}
                     </td>
                     <td>
@@ -239,28 +239,28 @@
                 <th style="vertical-align: top; text-align: center !important; min-width:150px;">
                     Vinculado&nbsp;a
                 </th>
-                <th style="vertical-align: top; text-align: center !important;">
+                <th style="vertical-align: top; text-align: center !important; min-width:150px;">
                     Estatus
                 </th>
-                <th style="vertical-align: top; text-align: center !important;">
+                <th style="vertical-align: top; text-align: center !important; min-width:80px;">
                     Versión
                 </th>
                 <th style="vertical-align: top; text-align: center !important; min-width:90px;">
                     Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top  min-width:50px;">
                     Solicitante
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top  min-width:50px;">
                     Revisor
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top  min-width:50px;">
                     Aprobador
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top  min-width:50px;">
                     Responsable
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top  min-width:80px;">
                     Visualizar
                 </th>
             </tr>
@@ -287,13 +287,13 @@
                                 {{ $revision->documento ? $revision->documento->tipo : 'El tipo no ha sido asignado' }}
                             </td>
                             @if ($revision->documento->proceso_id == null)
-                                <th style="text-align: center !important; font-weight: normal;">
+                                <td style="text-align: center !important; font-weight: normal;">
                                     {{ $revision->documento->macroproceso ? $revision->documento->macroproceso->nombre : 'Sin vincular' }}
-                                </th>
+                                </td>
                             @else
-                                <th style="text-align: center !important; font-weight: normal;">
+                                <td style="text-align: center !important; font-weight: normal;">
                                     {{ $revision->documento->proceso ? $revision->documento->proceso->nombre : 'Sin vincular' }}
-                                </th>
+                                </td>
                             @endif
 
                             <td style="text-align: center !important;">
