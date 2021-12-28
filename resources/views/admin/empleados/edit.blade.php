@@ -1168,13 +1168,67 @@
                         }
                     },
                     {
+                        data: 'fecha_fin_ymd',
+                        name: 'fecha_fin_ymd',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return `<input class="form-control" type="date" value="${data}" data-name-input="fecha_fin" data-curso-id="${row.id}" />
+                                <span class="errors fecha_fin_error text-danger"></span>`;
+
+                            } else {
+                                return `<input class="form-control" type="date" value="" data-name-input="fecha_fin" data-curso-id="${row.id}" />
+                                <span class="errors fecha_fin_error text-danger"></span>`;
+                            }
+                        }
+                    },
+                    {
                         data: 'duracion',
                         name: 'duracion',
                         render: function(data, type, row, meta) {
                             return `
-                            <input class="form-control" type="number" value="${data}" data-name-input="duracion" data-curso-id="${row.id}" />
-                            <span class="errors duracion_error text-danger"></span>
+                            <div class="form-control" 
+                                type="number" 
+                                data-name-input="duracion" 
+                                data-name-input-id="duracion${row.id}" 
+                                data-curso-id="${row.id}" 
+                            />
+                            <small>${data} Día(s)</small>
+                            </div>
                             `;
+                        }
+                    },
+                    {
+                        data: 'file',
+                        name: 'file',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                const pdfFile = "{{ asset('img/pdf-file.png') }}";
+                                const assetDocumentosUrl =
+                                    "{{ asset('storage/cursos_empleados/') }}";
+                                return `
+                            <div class="text-center" style="position:relative;">
+                                <a target="_blank" class="text-center" href="${assetDocumentosUrl}/${data}" title="${data}">
+                                    <img style="width:35px" src="${pdfFile}" class="img-fluid" alt="${data}" />
+                                    <p class="m-0 text-muted" style="font-size:10px">${data.substring(0,35)}...</p>
+                                </a>
+                                <i data-curso-id="${row.id}" class="fas fa-times-circle removeFileCurso" style="position:absolute; top:0;right: 58px;"></i>
+                            </div>
+                            `;
+                            } else {
+                                return `
+                                <div class="text-center">
+                                    <label for="documento_curso${row.id}" class="text-center">
+                                        <img src="{{ asset('img/upload-pdf.png') }}" style="width:40px" />
+                                        <p class="m-0 text-muted" style="font-size:10px">Subir Documento</p>
+                                    </label>
+                                </div>
+                                <input type="file" class="form-control d-none" id="documento_curso${row.id}" data-curso-id="${row.id}"/>
+                                <p class="m-0">
+                                    <span class="errors file_error text-danger"></span>
+                                </p>
+                                `;
+                            }
+
                         }
                     },
                     {
@@ -1219,6 +1273,31 @@
                         })
                         const data = await response.json();
                         console.log(data);
+                        if (e.target.type == 'date') {
+                            let elemento_duracion = document.querySelector(
+                                `div[data-name-input-id="duracion${cursoId}"]`)
+                            elemento_duracion.innerHTML =
+                                `<small>${data.curso.duracion} Día(s)</small>`;
+                        }
+                    } else if (e.target.type == 'file') {
+                        const cursoId = e.target.getAttribute('data-curso-id');
+                        console.log(cursoId);
+                        const formData = new FormData();
+                        e.target.files.forEach(element => {
+                            formData.append('file', element);
+                        });
+                        const url =
+                            `/admin/empleados/update/${cursoId}/competencias-curso`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'),
+                            },
+                        })
+                        tblCurso.ajax.reload();
                     }
                 }
             });
@@ -1243,6 +1322,42 @@
                         })
                         const data = await response.json();
                         console.log(data);
+                    }
+                }
+            });
+            document.getElementById('tbl-cursos').addEventListener('click', function(e) {
+                console.log('si');
+                if (e.target.tagName == 'I') {
+                    if (e.target.classList.contains('removeFileCurso')) {
+                        const cursoId = e.target.getAttribute('data-curso-id');
+                        Swal.fire({
+                            title: 'Estás seguro de eliminar el archivo?',
+                            text: "Esto no se puede revertir!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si',
+                            cancelButtonText: "No",
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                const url =
+                                    `/admin/empleados/${cursoId}/delete-file-curso`;
+                                const response = await fetch(url, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                console.log(data);
+                                tblCurso.ajax.reload();
+                            }
+                        })
+
                     }
                 }
             });
@@ -2045,7 +2160,12 @@
             formData.append('curso_diploma', document.getElementById('curso_diplomado').value)
             formData.append('tipo', document.getElementById('tipo').value)
             formData.append('año', document.getElementById('año').value)
-            formData.append('duracion', document.getElementById('duracion').value)
+            // formData.append('duracion', document.getElementById('duracion').value)
+            let archivos = document.getElementById('file_curso').files;
+            archivos.forEach(element => {
+                formData.append('file', element);
+            });
+            formData.append('fecha_fin', document.getElementById('fecha_fin').value)
             formData.append('empleado_id', document.getElementById('empleado_id_curso').value)
             $.ajax({
                 type: "post",
@@ -2081,6 +2201,8 @@
             $("#tipo").val('');
             $("#año").val('');
             $("#duracion").val('');
+            $("#fecha_fin").val('');
+            $("#file_curso").val('');
         }
 
         function enviarCurso() {
