@@ -269,6 +269,6 @@ class AreasController extends Controller
     {
         // abort_if(AccessGate::denies('configuracion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return Excel::download(new AreasExport, 'areas.xlsx');
+        return Excel::download(new AreasExport, 'areas.csv');
     }
 }

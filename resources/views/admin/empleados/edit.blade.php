@@ -1,6 +1,16 @@
 @extends('layouts.admin')
 @section('content')
-    {{ Breadcrumbs::render('empleados-edit', $empleado) }}
+    @if ($isEditAdmin)
+        {{ Breadcrumbs::render('empleados-edit', $empleado) }}
+    @else
+        <style>
+            .breadcrumb {
+                margin-bottom: 0 !important;
+            }
+
+        </style>
+        {{ Breadcrumbs::render('Editar-Curriculum', $empleado) }}
+    @endif
     <style>
         .select2-container {
             margin-top: 0px !important;
@@ -171,10 +181,6 @@
             display: none;
         }
 
-        .breadcrumb {
-            margin-bottom: 0 !important;
-        }
-
         .collapse:not(.show) {
             display: inline;
         }
@@ -250,7 +256,6 @@
                 </div>
             </div>
         @else
-            {{ Breadcrumbs::render('Editar-Curriculum', $empleado) }}
             <div class="p-4">
                 <div class="mt-4 text-center form-group"
                     style="background-color:#1BB0B0; border-radius: 100px; color: white;">
@@ -267,64 +272,6 @@
                 </div>
             </div>
         @endif
-
-
-        <div class="card-body">
-            @if (!$isEditAdmin)
-
-            @endif
-            <div class="caja_botones_menu">
-                @if ($isEditAdmin)
-                    {{-- <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-file"
-                            style="font-size:30px;" style="text-decoration:none;"></i>Información
-                        General</a>
-                    <a href="#" data-tabs="contenido2" class="resizeDT"><i class="mr-2 fas fa-flag-checkered"
-                            style="font-size:30px;"></i>Competencias</a> --}}
-                @else
-                @endif
-            </div>
-
-
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="caja_caja_secciones">
-                        <div class="caja_secciones">
-                            @if ($isEditAdmin)
-                                <section id="contenido1" class="mt-4 {{ $isEditAdmin ? 'caja_tab_reveldada' : '' }}">
-                                    <div>
-                                        {{-- <form method="POST"
-                                            action="{{ route('admin.empleados.update', [$empleado->id]) }}"
-                                            enctype="multipart/form-data" id="formEmpleados">
-                                            @method('PUT')
-                                            @csrf
-                                            <div class="mb-3 text-center row justify-content-center">
-                                                <div class="text-center col-sm-2 w-50 text-light card-title"
-                                                    style="background-color:#1BB0B0">
-                                                    Imágen Actual
-                                                </div>
-                                                <div class="col-sm-12"><img class="ml-3"
-                                                        src="{{ asset('storage/empleados/imagenes/' . $empleado->foto) }}"
-                                                        style="width:80px ">
-                                                </div>
-
-                                            </div>
-                                            @include('admin.empleados._form')
-                                        </form> --}}
-                                    </div>
-                                </section>
-                            @endif
-                            <section id="contenido2" class="mt-4 ml-2 {{ !$isEditAdmin ? 'caja_tab_reveldada' : '' }}">
-                                @if (!$isEditAdmin)
-
-                                @endif
-                                {{-- @include('admin.empleados.components._competencias_form') --}}
-                            </section>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection
 @section('scripts')
@@ -338,6 +285,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             initInpusToMoneyFormat();
             inputsToMoneyFormat();
+            const setDirectionOnInput = (direction) => {
+                if (document.getElementById('direccion')) {
+                    document.getElementById('direccion').value = direction;
+                }
+            }
+            let direccion_empleado_actual = @json($empleado->sede ? $empleado->sede->direccion : null);
+            setDirectionOnInput(direccion_empleado_actual);
             const toogleProyectoAsignado = (ocultar) => {
                 const elProyectoAsignado = document.getElementById('proyecto_asignado');
                 const containerProyectoAsignado = document.getElementById('c_proyecto_asignado');
@@ -376,13 +330,15 @@
                 }
             });
 
-            document.getElementById('sede_id').addEventListener('change', function(e) {
-                const direction = e.target.options[e.target.selectedIndex].getAttribute('data-direction');
-                setDirectionOnInput(direction);
-            })
-            const setDirectionOnInput = (direction) => {
-                document.getElementById('direccion').value = direction;
+            if (document.getElementById('sede_id')) {
+
+                document.getElementById('sede_id').addEventListener('change', function(e) {
+                    const direction = e.target.options[e.target.selectedIndex].getAttribute(
+                        'data-direction');
+                    setDirectionOnInput(direction);
+                })
             }
+
         })
 
         function initInpusToMoneyFormat() {
@@ -555,12 +511,14 @@
         const habilitarFotoBtn = document.getElementById('avatar_choose');
         const contendorCanvas = document.getElementById('canvasFoto');
         const closeContenedorCanvas = document.getElementById('cerrarCanvasFoto');
-        habilitarFotoBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            contendorCanvas.style.display = 'grid';
-            document.getElementById("foto").value = "";
-            $("#texto-imagen").text("Subir Imágen");
-        });
+        if (habilitarFotoBtn) {
+            habilitarFotoBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                contendorCanvas.style.display = 'grid';
+                document.getElementById("foto").value = "";
+                $("#texto-imagen").text("Subir Imágen");
+            });
+        }
         // feather.replace();
 
         const controls = document.querySelector('.controls');
@@ -569,6 +527,9 @@
         const canvas = document.querySelector('canvas');
         const screenshotImage = document.querySelector('.screenshot-image');
         const inputShotURL = document.getElementById('snapshoot');
+        if (controls) {
+
+        }
         const buttons = [...controls.querySelectorAll('button')];
         let streamStarted = false;
 
@@ -939,6 +900,22 @@
                         }
                     },
                     {
+                        data: 'titulo_obtenido',
+                        name: 'titulo_obtenido',
+                        render: function(data, type, row, meta) {
+                            if (!data) {
+                                return `
+                                <input class="form-control" type="text" value="" placeholder="Dato no registrado" data-name-input="titulo_obtenido" data-educacion-id="${row.id}" />
+                                <span class="errors titulo_obtenido_error text-danger"></span>
+                                `;
+                            }
+                            return `
+                            <input class="form-control" type="text" value="${data}" data-name-input="titulo_obtenido" data-educacion-id="${row.id}" />
+                            <span class="errors titulo_obtenido_error text-danger"></span>
+                            `;
+                        }
+                    },
+                    {
                         data: 'nivel',
                         name: 'nivel',
                         render: function(data, type, row, meta) {
@@ -1163,13 +1140,67 @@
                         }
                     },
                     {
+                        data: 'fecha_fin_ymd',
+                        name: 'fecha_fin_ymd',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return `<input class="form-control" type="date" value="${data}" data-name-input="fecha_fin" data-curso-id="${row.id}" />
+                                <span class="errors fecha_fin_error text-danger"></span>`;
+
+                            } else {
+                                return `<input class="form-control" type="date" value="" data-name-input="fecha_fin" data-curso-id="${row.id}" />
+                                <span class="errors fecha_fin_error text-danger"></span>`;
+                            }
+                        }
+                    },
+                    {
                         data: 'duracion',
                         name: 'duracion',
                         render: function(data, type, row, meta) {
                             return `
-                            <input class="form-control" type="number" value="${data}" data-name-input="duracion" data-curso-id="${row.id}" />
-                            <span class="errors duracion_error text-danger"></span>
+                            <div class="form-control" 
+                                type="number" 
+                                data-name-input="duracion" 
+                                data-name-input-id="duracion${row.id}" 
+                                data-curso-id="${row.id}" 
+                            />
+                            <small>${data} Día(s)</small>
+                            </div>
                             `;
+                        }
+                    },
+                    {
+                        data: 'file',
+                        name: 'file',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                const pdfFile = "{{ asset('img/pdf-file.png') }}";
+                                const assetDocumentosUrl =
+                                    "{{ asset('storage/cursos_empleados/') }}";
+                                return `
+                            <div class="text-center" style="position:relative;">
+                                <a target="_blank" class="text-center" href="${assetDocumentosUrl}/${data}" title="${data}">
+                                    <img style="width:35px" src="${pdfFile}" class="img-fluid" alt="${data}" />
+                                    <p class="m-0 text-muted" style="font-size:10px">${data.substring(0,35)}...</p>
+                                </a>
+                                <i data-curso-id="${row.id}" class="fas fa-times-circle removeFileCurso" style="position:absolute; top:0;right: 58px;"></i>
+                            </div>
+                            `;
+                            } else {
+                                return `
+                                <div class="text-center">
+                                    <label for="documento_curso${row.id}" class="text-center">
+                                        <img src="{{ asset('img/upload-pdf.png') }}" style="width:40px" />
+                                        <p class="m-0 text-muted" style="font-size:10px">Subir Documento</p>
+                                    </label>
+                                </div>
+                                <input type="file" class="form-control d-none" id="documento_curso${row.id}" data-curso-id="${row.id}"/>
+                                <p class="m-0">
+                                    <span class="errors file_error text-danger"></span>
+                                </p>
+                                `;
+                            }
+
                         }
                     },
                     {
@@ -1214,6 +1245,31 @@
                         })
                         const data = await response.json();
                         console.log(data);
+                        if (e.target.type == 'date') {
+                            let elemento_duracion = document.querySelector(
+                                `div[data-name-input-id="duracion${cursoId}"]`)
+                            elemento_duracion.innerHTML =
+                                `<small>${data.curso.duracion} Día(s)</small>`;
+                        }
+                    } else if (e.target.type == 'file') {
+                        const cursoId = e.target.getAttribute('data-curso-id');
+                        console.log(cursoId);
+                        const formData = new FormData();
+                        e.target.files.forEach(element => {
+                            formData.append('file', element);
+                        });
+                        const url =
+                            `/admin/empleados/update/${cursoId}/competencias-curso`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'),
+                            },
+                        })
+                        tblCurso.ajax.reload();
                     }
                 }
             });
@@ -1238,6 +1294,42 @@
                         })
                         const data = await response.json();
                         console.log(data);
+                    }
+                }
+            });
+            document.getElementById('tbl-cursos').addEventListener('click', function(e) {
+                console.log('si');
+                if (e.target.tagName == 'I') {
+                    if (e.target.classList.contains('removeFileCurso')) {
+                        const cursoId = e.target.getAttribute('data-curso-id');
+                        Swal.fire({
+                            title: 'Estás seguro de eliminar el archivo?',
+                            text: "Esto no se puede revertir!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si',
+                            cancelButtonText: "No",
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                const url =
+                                    `/admin/empleados/${cursoId}/delete-file-curso`;
+                                const response = await fetch(url, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                console.log(data);
+                                tblCurso.ajax.reload();
+                            }
+                        })
+
                     }
                 }
             });
@@ -1550,47 +1642,50 @@
 
 
 
+            if (document.getElementById("btnGuardarDocumento")) {
 
-            document.getElementById("btnGuardarDocumento").addEventListener("click", async function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                let url = $("#formDocumentos").attr("action");
-                const formulario = document.getElementById('formDocumentos');
-                const formData = new FormData();
-                formData.append('nombre', document.getElementById('nombre_doc').value)
-                formData.append('numero', document.getElementById('numero_doc').value)
-                let documentosDoc = document.getElementById('documentos_doc').files;
-                documentosDoc.forEach(element => {
-                    formData.append('file', element)
-                });
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            Accept: "application/json",
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                'content'),
-                        },
+
+                document.getElementById("btnGuardarDocumento").addEventListener("click", async function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    let url = $("#formDocumentos").attr("action");
+                    const formulario = document.getElementById('formDocumentos');
+                    const formData = new FormData();
+                    formData.append('nombre', document.getElementById('nombre_doc').value)
+                    formData.append('numero', document.getElementById('numero_doc').value)
+                    let documentosDoc = document.getElementById('documentos_doc').files;
+                    documentosDoc.forEach(element => {
+                        formData.append('file', element)
                     });
-                    const data = await response.json();
-                    if (data.errors) {
-                        $.each(data.errors, function(indexInArray, valueOfElement) {
-                            $(`#${indexInArray.replaceAll('.','_')}_error`).text(
-                                valueOfElement[0]);
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'),
+                            },
                         });
-                        toastr.error(
-                            'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
-                        );
+                        const data = await response.json();
+                        if (data.errors) {
+                            $.each(data.errors, function(indexInArray, valueOfElement) {
+                                $(`#${indexInArray.replaceAll('.','_')}_error`).text(
+                                    valueOfElement[0]);
+                            });
+                            toastr.error(
+                                'Por favor revise que la información ingresa sea correcta'
+                            );
+                        }
+                        if (data.status) {
+                            tblDocumentos.ajax.reload();
+                            limpiarCamposDocumentos();
+                        }
+                    } catch (error) {
+                        console.log(error);
                     }
-                    if (data.status) {
-                        tblDocumentos.ajax.reload();
-                        limpiarCamposDocumentos();
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            })
+                })
+            }
 
             window.tblDocumentos = $('#tbl-documentos').DataTable({
                 buttons: [],
@@ -1669,103 +1764,106 @@
                 ],
             })
             //Eventos para editar registros
-            document.getElementById('tbl-documentos').addEventListener('change', async function(e) {
-                if (e.target.tagName == 'INPUT') {
-                    if (e.target.type == 'file') {
-                        const documentoId = e.target.getAttribute('data-documento-id');
-                        const typeInput = e.target.getAttribute('data-name-input');
-                        const files = e.target.files;
-                        const formData = new FormData();
-                        files.forEach(element => {
-                            formData.append(typeInput, element);
-                        });
-                        const url =
-                            `/admin/empleados/update/${documentoId}/documentos`;
-                        try {
-                            const response = await fetch(url, {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    Accept: "application/json",
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content'),
-                                },
-                            })
-                            const data = await response.json();
-                            tblDocumentos.ajax.reload();
-                            console.log(data);
-                        } catch (error) {
-                            console.log(error);
-                        }
-                    }
-                }
-            });
-            document.getElementById('tbl-documentos').addEventListener('keyup', async function(e) {
-                if (e.target.tagName == 'INPUT') {
-                    if (e.target.type == 'text') {
-                        const documentoId = e.target.getAttribute('data-documento-id');
-                        const typeInput = e.target.getAttribute('data-name-input');
-                        const value = e.target.value;
-                        const formData = new FormData();
-                        formData.append(typeInput, value);
-                        const url =
-                            `/admin/empleados/update/${documentoId}/documentos`;
-                        try {
-                            const response = await fetch(url, {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    Accept: "application/json",
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content'),
-                                },
-                            })
-                            const data = await response.json();
-                            console.log(data);
-                        } catch (error) {
-                            console.log(error);
-                        }
-                    }
-                }
-            });
-            document.getElementById('tbl-documentos').addEventListener('click', function(e) {
-                if (e.target.tagName == 'I') {
-                    if (e.target.classList.contains('removeFile')) {
-                        const documentoId = e.target.getAttribute('data-documento-id');
-                        Swal.fire({
-                            title: 'Estás seguro de eliminar el documento?',
-                            text: "Esto no se puede revertir!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Si',
-                            cancelButtonText: "No",
-                        }).then(async (result) => {
-                            if (result.isConfirmed) {
-                                const url =
-                                    `/admin/empleados/${documentoId}/delete-file-documento`;
-                                try {
-                                    const response = await fetch(url, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            Accept: "application/json",
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                                .attr(
-                                                    'content'),
-                                        },
-                                    })
-                                    const data = await response.json();
-                                    tblDocumentos.ajax.reload();
-                                } catch (error) {
-                                    console.log(error);
-                                }
+            if (document.getElementById('tbl-documentos')) {
+                document.getElementById('tbl-documentos').addEventListener('change', async function(e) {
+                    if (e.target.tagName == 'INPUT') {
+                        if (e.target.type == 'file') {
+                            const documentoId = e.target.getAttribute('data-documento-id');
+                            const typeInput = e.target.getAttribute('data-name-input');
+                            const files = e.target.files;
+                            const formData = new FormData();
+                            files.forEach(element => {
+                                formData.append(typeInput, element);
+                            });
+                            const url =
+                                `/admin/empleados/update/${documentoId}/documentos`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                tblDocumentos.ajax.reload();
+                                console.log(data);
+                            } catch (error) {
+                                console.log(error);
                             }
-                        })
-
+                        }
                     }
-                }
-            });
+                });
+                document.getElementById('tbl-documentos').addEventListener('keyup', async function(e) {
+                    if (e.target.tagName == 'INPUT') {
+                        if (e.target.type == 'text') {
+                            const documentoId = e.target.getAttribute('data-documento-id');
+                            const typeInput = e.target.getAttribute('data-name-input');
+                            const value = e.target.value;
+                            const formData = new FormData();
+                            formData.append(typeInput, value);
+                            const url =
+                                `/admin/empleados/update/${documentoId}/documentos`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                console.log(data);
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        }
+                    }
+                });
+                document.getElementById('tbl-documentos').addEventListener('click', function(e) {
+                    if (e.target.tagName == 'I') {
+                        if (e.target.classList.contains('removeFile')) {
+                            const documentoId = e.target.getAttribute('data-documento-id');
+                            Swal.fire({
+                                title: 'Estás seguro de eliminar el documento?',
+                                text: "Esto no se puede revertir!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Si',
+                                cancelButtonText: "No",
+                            }).then(async (result) => {
+                                if (result.isConfirmed) {
+                                    const url =
+                                        `/admin/empleados/${documentoId}/delete-file-documento`;
+                                    try {
+                                        const response = await fetch(url, {
+                                            method: 'DELETE',
+                                            headers: {
+                                                Accept: "application/json",
+                                                'X-CSRF-TOKEN': $(
+                                                        'meta[name="csrf-token"]')
+                                                    .attr(
+                                                        'content'),
+                                            },
+                                        })
+                                        const data = await response.json();
+                                        tblDocumentos.ajax.reload();
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                }
+                            })
+
+                        }
+                    }
+                });
+            }
             window.EliminarDocumento = function(url, documentoId) {
                 Swal.fire({
                     title: 'Estás seguro de eliminar?',
@@ -1981,6 +2079,7 @@
             let url = $("#formEducacion").attr("action");
             let formData = new FormData();
             formData.append('institucion', document.getElementById('institucion_inst').value)
+            formData.append('titulo_obtenido', document.getElementById('titulo_obtenido_inst').value)
             formData.append('nivel', document.getElementById('nivel_inst').value)
             formData.append('año_inicio', document.getElementById('año_inicio_inst').value)
             formData.append('año_fin', document.getElementById('año_fin_inst').value)
@@ -2018,6 +2117,7 @@
             $("#institucion").val('');
             $("#año_inicio").val('');
             $("#año_fin").val('');
+            $("#titulo_obtenido").val('');
             $("#nivel").val('');
         }
 
@@ -2040,7 +2140,12 @@
             formData.append('curso_diploma', document.getElementById('curso_diplomado').value)
             formData.append('tipo', document.getElementById('tipo').value)
             formData.append('año', document.getElementById('año').value)
-            formData.append('duracion', document.getElementById('duracion').value)
+            // formData.append('duracion', document.getElementById('duracion').value)
+            let archivos = document.getElementById('file_curso').files;
+            archivos.forEach(element => {
+                formData.append('file', element);
+            });
+            formData.append('fecha_fin', document.getElementById('fecha_fin').value)
             formData.append('empleado_id', document.getElementById('empleado_id_curso').value)
             $.ajax({
                 type: "post",
@@ -2076,6 +2181,8 @@
             $("#tipo").val('');
             $("#año").val('');
             $("#duracion").val('');
+            $("#fecha_fin").val('');
+            $("#file_curso").val('');
         }
 
         function enviarCurso() {

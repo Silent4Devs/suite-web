@@ -17,6 +17,12 @@ class EducacionEmpleados extends Model
     protected $table = 'educacion_empleados';
 
     const NivelSelect = [
+        'Primaria' => 'Primaria',
+        'Secundaria' => 'Secundaria',
+        'Preparatoria' => 'Preparatoria',
+        'Bachillerato' => 'Bachillerato',
+        'Técnico' => 'Técnico',
+        'Ingeniería' => 'Ingeniería',
         'Licenciatura' => 'Licenciatura',
         'Maestria'     => 'Maestria',
         'Doctorado'    => 'Doctorado',
@@ -42,7 +48,7 @@ class EducacionEmpleados extends Model
         'nivel',
         'año_inicio',
         'año_fin',
-
+        'titulo_obtenido',
     ];
 
     protected $appends = ['year_inicio_ymd', 'year_fin_ymd'];

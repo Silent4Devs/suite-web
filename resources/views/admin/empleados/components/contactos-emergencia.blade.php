@@ -15,7 +15,7 @@
             let position = number - 1;
             let html = `<tr>
                 <td>
-                    <input class="form-control" type="hidden" name="contactos_emergencia[${position}][id]" value="0">
+                    <input class="form-control" type="hidden" name="contactos_emergencia[${position}][id]">
                     <input class="form-control" type="text" name="contactos_emergencia[${position}][nombre]">
                     <small class="text-danger" id="error_contactos_emergencia_${position}_nombre"></small>
                 </td>    

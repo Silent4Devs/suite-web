@@ -319,7 +319,7 @@
                     </div> --}}
                     {{-- @endif --}}
                     @if ($panel_rules->schedule)
-                    <div class="form-group col-12">
+                    <div class="form-group col-6">
                         <table class="table" id="user_table">
                             <tbody>
                                 <div class=" row col-12 p-0 m-0">

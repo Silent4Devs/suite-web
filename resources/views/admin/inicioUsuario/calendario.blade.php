@@ -65,9 +65,9 @@
         position: relative;
     }
     .calendar-icon.ic-arrow-line-right::before{
-        content: ">";
+        content: "»";
         position: absolute;
-        transform: scale(1.3);
+        transform: scale(1.8);
         font-size: 10pt;
         width: 100%;
         height: 100%;
@@ -76,11 +76,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        font-weight: bolder;
+        font-family: arial rounded mt;
+        font-style: normal !important;
     }
     .calendar-icon.ic-arrow-line-left::before{
-        content: "<";
+        content: "»";
         position: absolute;
-        transform: scale(1.3);
+        transform: scale(1.8) rotate(180deg);
         font-size: 10pt;
         width: 100%;
         height: 100%;
@@ -89,6 +92,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        font-weight: bolder;
+        font-family: arial rounded mt;
+        font-style: normal !important;
     }
     a:hover{
         text-decoration: none !important;
@@ -379,9 +385,7 @@
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function(){
-            document.getElementById('dropdownMenu-calendarType').addEventListener('change', function(e){
-
-            });
+            $(".tui-full-calendar-weekday-schedule-title").attr("title", "");
         });
     </script>
 @endsection

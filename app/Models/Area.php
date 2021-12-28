@@ -134,7 +134,17 @@ class Area extends Model
         return $this->hasMany(User::class);
     }
 
-    public function getFotoRutaAttribute()
+    public function puesto()
+    {
+        return $this->hasMany(Puesto::class, 'id_area');
+    }
+
+    public function matriz_riesgos()
+    {
+        return $this->hasMany(MatrizRiesgo::class, 'id_responsable');
+    }
+
+    public function getAreaFotoAttribute()
     {
         $foto_url = asset('img/areas.jpg');
         if ($this->foto_area) {
