@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('content')
     {{-- @can('planes_accion_access') --}}
-    <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Planes de Acción </strong></h3>
+    <div class="mt-3 card">
+        <div class="" style="display:flex; justify-content:center">
+                <h3 class="text-center text-white mt-4" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px; width:90%;"><strong>Planes de acción </strong></h3>
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -94,7 +94,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         doc.styles.tableHeader.fontSize = 8.5;
-                        doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10 
+                        doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -171,7 +171,7 @@
                                     html = `<span class="badge badge-danger">${progress} %</span>`;
                                 }
                                 return html;
-                            }                    
+                            }
                         }
                         return "<span class='badge badge-primary'>Sin progreso calculable</span>"
                     }
@@ -228,7 +228,7 @@
                         } else {
                             urlVerPlanAccion = `/admin/planes-de-accion/${data}`;
                         }
-                        let botones = `   
+                        let botones = `
                             <div class="btn-group">
                                 <a class="btn" href="${urlEditarPlanAccion}" title="Editar Plan de Acción"><i class="fas fa-edit"></i></a>
                                 <a class="btn" href="${urlVerPlanAccion}" title="Visualizar Plan de Acción"><i class="fas fa-stream"></i></a>

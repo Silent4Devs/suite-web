@@ -139,40 +139,29 @@
 
 
 
-<div class="card" style="margin-top:50px;">
-  <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-      <h3 class="mb-2  text-center text-white"><strong>Calendario de {{ $nombre_organizacion }}</strong></h3>
-  </div>
-
-    <div class="card-body" style="height: 600px;">
+    <div class="card" style="margin-top:50px;">
 
 
-
-
-       {{--  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' /> --}}
-
-        {{-- <div id='calendar'></div> --}}
-
-
-
-
-
-
-
-        <div class="caja">
-            <div id="lnb">
-
-                <div id="lnb-calendars" class="lnb-calendars">
-                    <div>
-                        <div class="lnb-calendars-item">
-                            <label>
+            <div class="card" style="box-shadow: none; background-color: transparent;">
+                <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
+                    style="margin-top:0px !important; ">
+                    <h3 class="mt-2 text-center text-white" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Calendario de {{ $nombre_organizacion }} </strong></h3>
+                </div>
+            </div>
+            <div class="card-body" style="height: 700px;">
+                <div class="caja">
+                    <div id="lnb">
+                        <div id="lnb-calendars" class="lnb-calendars">
+                            <div>
+                                <div class="lnb-calendars-item">
+                                <label>
                                 <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
                                 <span style="">
                                     <span style="margin-left: 20px; width: 100px !important; position: absolute;">Ver Todos</span>
                                 </span>
-                            </label>
-                        </div>
-                    </div>
+                                 </label>
+                                 </div>
+                            </div>
                     <div id="calendarList" class="lnb-calendars-d1">
                     </div>
                 </div>
