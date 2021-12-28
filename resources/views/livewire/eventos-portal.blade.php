@@ -19,7 +19,7 @@
         <a class="btn-silent" href="{{ asset('admin/documentos/publicados') }}"><i class="mr-2 fas fa-folder"></i>
             <span>Documentos</span></a>
         <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}"><i
-                class="mr-2 fas fa-file"></i> <span>Política SGSI</span></a>
+                class="mr-2 fas fa-file"></i> <span>Políticas</span></a>
         <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}"><i
                 class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
 
