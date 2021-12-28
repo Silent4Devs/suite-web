@@ -228,7 +228,7 @@
                                 Imprimir
                             </button>
 
-                            
+
                         </div>
                     @endif
                     <div class="mt-4 col-sm-12 col-md-12">
@@ -236,31 +236,38 @@
                             style="position-relative; height:auto">
                             <style type="text/css">
                                 @media print {
-                                    body{
+                                    body {
                                         font-family: arial;
                                     }
-                                    .caja_logo{
+
+                                    .caja_logo {
                                         width: 50%;
                                     }
-                                    .h5{
+
+                                    .h5 {
                                         padding: 20px !important;
                                     }
-                                    .medidas{
+
+                                    .medidas {
                                         display: flex;
                                         justify-content: space-between;
                                     }
-                                    .datos_iz_cv{
+
+                                    .datos_iz_cv {
                                         width: 68%;
                                     }
-                                    .datos_der_cv{
+
+                                    .datos_der_cv {
                                         margin-top: 20px;
                                         width: 30%;
                                         color: #fff;
                                     }
-                                    .dato_mairg{
+
+                                    .dato_mairg {
                                         margin-top: 25px;
                                     }
                                 }
+
                             </style>
                             <div class="caja_img_logo">
                                 <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 20%;">
@@ -290,8 +297,12 @@
                                                 style="text-transform:capitalize; font-weight:bold">{{ $experiencia->puesto }}
                                             </span>
                                             <br>
-                                            <span style="font-weight:bold">{{ $experiencia->inicio_mes }} -
-                                                {{ $experiencia->fin_mes }}</span>
+                                            <span>
+                                                Del
+                                                <strong>{{ \Carbon\Carbon::parse($experiencia->inicio_mes)->format('d/m/Y') }}</strong>
+                                                al
+                                                <strong>{{ \Carbon\Carbon::parse($experiencia->fin_mes)->format('d/m/Y') }}</strong>
+                                            </span>
                                             <span style="text-transform:capitalize; text-align:justify">
                                                 <br>
                                                 <p style="text-align:justify">{{ $experiencia->descripcion }}</p>
@@ -308,9 +319,10 @@
                                                 {{ $certificaciones->nombre }}</strong>
                                             <br>
                                             @if ($certificaciones->vigencia && $certificaciones->estatus)
-                                                <span>{{ $certificaciones->estatus }}</span>
-                                                <br>
-                                                <span>{{ $certificaciones->vigencia }}</span>
+                                                <span>{{ $certificaciones->estatus }}
+                                                    {{ Str::lower($certificaciones->estatus) == 'vencida' ? 'el' : 'al' }}
+                                                    <strong>{{ \Carbon\Carbon::parse($certificaciones->vigencia)->format('d/m/Y') }}</strong>
+                                                </span>
                                             @else
                                                 <span>Permanente - Sin Vigencia</span>
                                             @endif
@@ -319,7 +331,7 @@
 
                                     <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
-                                            Cursos / Diplomados</span>
+                                            Capacitaciones</span>
                                     </div>
                                     @foreach ($empleadoModel->empleado_cursos as $cursos)
                                         <div>
@@ -329,15 +341,18 @@
                                             <br>
                                             <span>{{ $cursos->tipo }}</span>
                                             <br>
-                                            <span>{{ $cursos->año }}</span>
+                                            <span>Del
+                                                <strong>{{ \Carbon\Carbon::parse($cursos->año)->format('d/m/Y') }}</strong>
+                                                al
+                                                <strong>{{ \Carbon\Carbon::parse($cursos->fecha_fin)->format('d/m/Y') }}</strong></span>
                                             <br>
-                                            <span>{{ $cursos->duracion }} Horas</span>
+                                            <span>{{ $cursos->duracion }} Día(s)</span>
                                         </div>
                                     @endforeach
 
                                     <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
-                                            Educación</span>
+                                            Educación Académica</span>
                                     </div>
                                     @foreach ($empleadoModel->empleado_educacion as $educacion)
                                         <div>
@@ -347,8 +362,12 @@
                                             <br>
                                             <span style="text-transform:capitalize">{{ $educacion->nivel }}</span>
                                             <br>
-                                            <span>{{ $educacion->año_inicio }} -
-                                                {{ $educacion->año_fin }}</span>
+                                            <span>
+                                                Del
+                                                <strong>{{ \Carbon\Carbon::parse($educacion->año_inicio)->format('d/m/Y') }}</strong>
+                                                al
+                                                <strong>{{ \Carbon\Carbon::parse($educacion->año_fin)->format('d/m/Y') }}</strong>
+                                            </span>
                                         </div>
                                     @endforeach</ul>
                                 </div>
@@ -367,7 +386,7 @@
                                                 class="ml-2 mr-2 text-white fas fa-map-marker-alt"></i>Dirección</strong>
                                         <br>
                                         <div style="margin-left:28px;">
-                                            <span>{{ $empleadoModel->domicilio_personal }}</span>
+                                            <span>{{ $empleadoModel->sede ? $empleadoModel->sede->direccion : 'Dato no definido' }}</span>
                                         </div>
                                         <br>
                                         <strong><i class="ml-2 mr-2 text-white fas fa-phone-alt"></i>Número de
@@ -393,13 +412,13 @@
                     <div class="col-sm-12 col-md-5 card pt-3">
                         <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
                             <span style="font-size: 17px; font-weight: bold;"><i
-                                    class="fas fa-folder-open iconos-crear"></i>Documentos</span>
+                                    class="fas fa-folder-open iconos-crear"></i>Documentos Personales</span>
                         </div>
                         <br>
                         @foreach ($empleadoModel->empleado_documentos as $documentos)
                             <ul>
-                                <a href="{{ asset('storage/documentos_empleados/') . '/' . $documentos->documentos }}"
-                                    style="text-decoration:none" target="_blank" alt=""><span><i
+                                <a href="{{ $documentos->ruta_documento }}" style="text-decoration:none"
+                                    target="_blank" alt=""><span><i
                                             class="fas fa-file iconos-crear"></i>{{ $documentos->documentos ? $documentos->documentos : 'Sin documento' }}</span></a>
                             </ul>
                         @endforeach
@@ -1186,14 +1205,15 @@
 </script>
 
 <script>
-function imprim1(imp1){
-var printContents = document.getElementById('imp1').innerHTML;
+    function imprim1(imp1) {
+        var printContents = document.getElementById('imp1').innerHTML;
         w = window.open();
         w.document.write(printContents);
         w.document.close(); // necessary for IE >= 10
         w.focus(); // necessary for IE >= 10
         w.print();
         w.close();
-        return true;}
+        return true;
+    }
 </script>
 </div>

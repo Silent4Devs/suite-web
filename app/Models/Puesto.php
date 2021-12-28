@@ -45,9 +45,6 @@ class Puesto extends Model
         'genero',
         'estado_civil',
 
-
-
-
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -64,21 +61,26 @@ class Puesto extends Model
     {
         return $this->hasMany('App\Models\RH\CompetenciaPuesto', 'puesto_id', 'id');
     }
+
     public function area()
     {
         return $this->belongsTo(Area::class, 'id_area');
     }
+
     public function empleados()
     {
         return $this->belongsTo(Empleado::class, 'id_reporta');
     }
 
-    public function language(){
-        return $this->belongsToMany('\App\Language','puesto_idioma_porcentaje_pivot')
+    public function language()
+    {
+        return $this->belongsToMany('\App\Language', 'puesto_idioma_porcentaje_pivot')
             ->withPivot('id_idioma');
     }
-    public function porcentaje(){
-        return $this->belongsToMany('\App\Porcentaje','puesto_idioma_porcentaje_pivot')
+
+    public function porcentaje()
+    {
+        return $this->belongsToMany('\App\Porcentaje', 'puesto_idioma_porcentaje_pivot')
             ->withPivot('id_porcentaje');
     }
 }

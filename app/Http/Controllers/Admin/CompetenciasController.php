@@ -215,7 +215,7 @@ class CompetenciasController extends Controller
         ]);
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'numero' => 'required|string|max:255',
+            // 'numero' => 'required|string|max:255',
             'documentos' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
             'empleado_id' => 'required|exists:empleados,id',
         ]);

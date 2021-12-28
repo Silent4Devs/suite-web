@@ -419,6 +419,7 @@ class Empleado extends Model
     {
         return $this->hasMany(BeneficiariosEmpleado::class, 'empleado_id', 'id')->orderBy('id');
     }
+
     public function puesto()
     {
         return $this->hasMany(Puesto::class, 'id_reporta');
