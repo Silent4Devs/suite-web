@@ -63,7 +63,7 @@ class Empleado extends Model
         'supervisor_id' => 'int',
         'area_id' => 'int',
         'sede_id' => 'int',
-        'mostrar_telefono' => 'boolean'
+        'mostrar_telefono' => 'boolean',
 
     ];
 
@@ -418,5 +418,10 @@ class Empleado extends Model
     public function beneficiarios()
     {
         return $this->hasMany(BeneficiariosEmpleado::class, 'empleado_id', 'id')->orderBy('id');
+    }
+
+    public function puesto()
+    {
+        return $this->hasMany(Puesto::class, 'id_reporta');
     }
 }

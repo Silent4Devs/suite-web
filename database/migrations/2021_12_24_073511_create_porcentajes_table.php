@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddMostrarTelefonoToEmpleadosTable extends Migration
+class CreatePorcentajesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddMostrarTelefonoToEmpleadosTable extends Migration
      */
     public function up()
     {
-        Schema::table('empleados', function (Blueprint $table) {
-            $table->boolean('mostrar_telefono')->default(false);
+        Schema::create('porcentajes', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('porcentaje')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class AddMostrarTelefonoToEmpleadosTable extends Migration
      */
     public function down()
     {
-        Schema::table('empleados', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('porcentajes');
     }
 }

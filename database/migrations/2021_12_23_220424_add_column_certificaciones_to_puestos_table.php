@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddMostrarTelefonoToEmpleadosTable extends Migration
+class AddColumnCertificacionesToPuestosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddMostrarTelefonoToEmpleadosTable extends Migration
      */
     public function up()
     {
-        Schema::table('empleados', function (Blueprint $table) {
-            $table->boolean('mostrar_telefono')->default(false);
+        Schema::table('puestos', function (Blueprint $table) {
+            $table->longText('certificaciones')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class AddMostrarTelefonoToEmpleadosTable extends Migration
      */
     public function down()
     {
-        Schema::table('empleados', function (Blueprint $table) {
+        Schema::table('puestos', function (Blueprint $table) {
             //
         });
     }
