@@ -266,6 +266,10 @@
             right: 70px;
         }
 
+        /* #shot_screen{
+            width:100% !important;
+        } */
+
     </style>
     <style>
         .range-slider {
@@ -877,7 +881,13 @@
     </script>
 
 
+    <script>
+    $(document).ready(function(){
+        $(".side.img-nav").attr("src", "https://massnegocios.com/images/cultura-organizacional-1.jpg");
+    });
 
+
+    </script>
 
 
 @endsection
