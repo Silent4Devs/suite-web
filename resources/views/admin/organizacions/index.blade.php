@@ -137,7 +137,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    @if ($panel_rules->logotipo)
+                    @if ($panel_rules->logotipo )
                     <div class="row col-12 justify-content-center d-flex" style="margin-top:-85px;">
                         <div class="p-5 col-sm-6">
                             <label for="logotipo"></label>
