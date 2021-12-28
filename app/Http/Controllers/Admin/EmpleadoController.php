@@ -709,7 +709,7 @@ class EmpleadoController extends Controller
 
             $curso->update($request->all());
             $curso->update([
-                'duracion' => Carbon::parse($curso->año)->diffInDays($curso->fecha_fin) + 1
+                'duracion' => Carbon::parse($curso->año)->diffInDays($curso->fecha_fin) + 1,
             ]);
         }
         if (array_key_exists('fecha_fin', $request->all())) {
@@ -719,7 +719,7 @@ class EmpleadoController extends Controller
 
             $curso->update($request->all());
             $curso->update([
-                'duracion' => Carbon::parse($curso->año)->diffInDays($curso->fecha_fin) + 1
+                'duracion' => Carbon::parse($curso->año)->diffInDays($curso->fecha_fin) + 1,
             ]);
         }
 
@@ -745,12 +745,12 @@ class EmpleadoController extends Controller
                 'file' => $fileNameToStore,
             ]);
         }
+
         return response()->json(['status' => 'success', 'message' => 'Curso Actualizado', 'curso' => $curso]);
     }
 
     public function deleteFileCurso(Request $request, CursosDiplomasEmpleados $curso)
     {
-
         $curso->update([
             'file' => null,
         ]);

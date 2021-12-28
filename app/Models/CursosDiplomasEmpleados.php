@@ -60,6 +60,7 @@ class CursosDiplomasEmpleados extends Model
             return null;
         }
     }
+
     public function getFechaFinYmdAttribute()
     {
         if ($this->fecha_fin) {
@@ -68,6 +69,7 @@ class CursosDiplomasEmpleados extends Model
             return null;
         }
     }
+
     public function empleado_cursos()
     {
         return $this->belongsTo(Empleado::class, 'empleado_id');
