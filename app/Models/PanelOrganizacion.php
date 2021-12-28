@@ -12,6 +12,6 @@ class PanelOrganizacion extends Model
     use QueryCacheable;
 
     protected $table = 'panel_organizacions';
-    public $cacheFor = 3600;
+    public $cacheFor = 1800;
     protected static $flushCacheOnUpdate = true;
 }

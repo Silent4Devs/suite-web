@@ -650,3 +650,8 @@ Breadcrumbs::for('Editar-Curriculum', function ($trail, $empleado = null) {
     $trail->parent('Mi-CV', $empleado);
     $trail->push('Editar', route('admin.editarCompetencias', ['empleado' => $empleado]));
 });
+
+Breadcrumbs::for('admin.mapa-procesos', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Mapa de Procesos');
+});

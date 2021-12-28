@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-lg-12 caja_btn_silent">
-        <a class="btn-silent" href="{{ asset('admin/organizacions') }}"><i class="mr-2 fas fa-building"></i>
+        <a class="btn-silent" href="{{ asset('admin/organizacions/visualizarorganizacion') }}"><i
+                class="mr-2 fas fa-building"></i>
             <span>Organización</span></a>
         <a class="btn-silent" href="{{ asset('admin/sedes/organizacion') }}"><i
                 class="mr-2 fas fa-map-marked-alt "></i> <span>Sedes</span></a>
@@ -19,7 +20,7 @@
         <a class="btn-silent" href="{{ asset('admin/documentos/publicados') }}"><i class="mr-2 fas fa-folder"></i>
             <span>Documentos</span></a>
         <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}"><i
-                class="mr-2 fas fa-file"></i> <span>Política SGSI</span></a>
+                class="mr-2 fas fa-file"></i> <span>Políticas</span></a>
         <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}"><i
                 class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
 
@@ -140,22 +141,21 @@
                             <div class="modal-content">
                                 <div class="modal-body">
 
-                                    <label>Comentarios {{ $cumple->id }}</label>
-                                    @if ($cumpleaños_felicitados_comentarios_contador == 0)
-                                        <form wire:submit.prevent="felicitarCumplesComentarios({{ $cumple->id }})">
-                                            <div class="form-group">
-                                                <textarea wire:model="comentarios" class="form-control"></textarea>sin
-                                                comntes
-                                            @else
-                                                <form
-                                                    wire:submit.prevent="felicitarCumplesComentariosUpdate({{ $cumpleaños_felicitados_comentarios->id }})">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <textarea wire:model="comentarios_update"
-                                                            class="form-control">{{ $cumpleaños_felicitados_comentarios->comentarios }}</textarea>con
-                                                        coments
-                                    @endif
+                                <label>Comentarios {{$cumple->id}}</label>
+                                @if($cumpleaños_felicitados_comentarios_contador == 0)
+                                    <form wire:submit.prevent="felicitarCumplesComentarios({{$cumple->id}})">
+                                        <div class="form-group">
+                                            <textarea wire:model="comentarios" class="form-control"></textarea>sin comntes
+                                 @else
+                                    <form wire:submit.prevent="felicitarCumplesComentariosUpdate({{$cumpleaños_felicitados_comentarios->id}})">
+                                        @csrf
+                                        <div class="form-group">
+                                            <textarea wire:model="comentarios_update" class="form-control">{{$cumpleaños_felicitados_comentarios->comentarios}}</textarea>con coments
+                                @endif
 
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                    </form>
                                 </div>
                                 <button type="submit" class="btn btn-success">Enviar</button>
                                 </form>
@@ -201,5 +201,4 @@
             </div>
         </div>
     </div>
-</div>
 </div>

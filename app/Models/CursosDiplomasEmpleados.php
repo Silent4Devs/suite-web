@@ -24,6 +24,12 @@ class CursosDiplomasEmpleados extends Model
     const TipoSelect = [
         'Curso' => 'Curso',
         'Diplomado' => 'Diplomado',
+        'Taller' => 'Taller',
+        'Seminario' => 'Seminario',
+        'Coloquio' => 'Coloquio',
+        'Congreso' => 'Congreso',
+        'Foro' => 'Foro',
+        'Simposio' => 'Simposio',
     ];
 
     protected $casts = [
@@ -40,15 +46,25 @@ class CursosDiplomasEmpleados extends Model
         'tipo',
         'año',
         'duracion',
-
+        'fecha_fin',
+        'file',
     ];
 
-    protected $appends = ['year_ymd'];
+    protected $appends = ['year_ymd', 'fecha_fin_ymd'];
 
     public function getYearYmdAttribute()
     {
         if ($this->año) {
             return Carbon::parse($this->año)->format('Y-m-d');
+        } else {
+            return null;
+        }
+    }
+
+    public function getFechaFinYmdAttribute()
+    {
+        if ($this->fecha_fin) {
+            return Carbon::parse($this->fecha_fin)->format('Y-m-d');
         } else {
             return null;
         }

@@ -99,4 +99,9 @@ class Organizacion extends Model
     {
         return $this->hasMany('App\Models\Schedule', 'organizacions_id')->orderBy('id');
     }
+
+    public function panel()
+    {
+        return $this->hasMany(PanelOrganizacion::class);
+    }
 }

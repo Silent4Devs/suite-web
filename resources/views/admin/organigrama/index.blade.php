@@ -363,6 +363,11 @@
             border: 0;
         }
 
+        .supervisor img {
+            height: 80px !important;
+        }
+
+
     </style>
 @endsection
 
