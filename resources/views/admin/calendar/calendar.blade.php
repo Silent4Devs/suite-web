@@ -32,8 +32,9 @@
     #calendar{
         width: 100%;
         overflow: hidden;
-        overflow-y: scroll;
+        /* overflow-y: scroll; */
         border: none !important;
+        height: auto !important;
     }
     #calendarList span{
         margin-left: 0px;
@@ -140,10 +141,17 @@
 
 
 <div class="card" style="margin-top:50px;">
-  <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-      <h3 class="mb-2  text-center text-white"><strong>Calendario de {{ $nombre_organizacion }}</strong></h3>
+  <div class="col-md-9 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-10px; ">
+      {{-- <h3 class="mb-2  text-center text-white"><strong>Calendario de {{ $nombre_organizacion }}</strong></h3> --}}
+      <h3 class="mb-2 text-center text-white"
+                style="background: #00abb2;color: white !important;padding: 3px;border-radius: 8px;"><strong>Calendario de {{ $nombre_organizacion }}</strong>
+      </h3>
   </div>
 
+        <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
+            style="margin-top:0px !important; ">
+
+        </div>
     <div class="card-body" style="height: 600px;">
 
 

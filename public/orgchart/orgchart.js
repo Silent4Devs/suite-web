@@ -432,7 +432,7 @@ export default class OrgChart {
       console.log(dataSourceJSON);
       photo_info.classList.add('side');
       photo_info.classList.add('img-nav');
-      photo_info.src = "https://massnegocios.com/images/cultura-organizacional-1.jpg";
+      photo_info.src = `${dataSourceJSON.foto_ruta}`
       div_img.appendChild(photo_info);
 
       //title
@@ -463,11 +463,13 @@ export default class OrgChart {
             photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;
           }
           content_more += `
-                <div class="supervisor">
-                <h4 class="supervisor-title">Supervisado Por:</h4>
-                <img src="https://image.flaticon.com/icons/png/512/994/994382.png" alt="Admin" class="rounded mb-2" style="height: 80px;width: 80px;margin: auto;">
-                <p class="supervisor-name"><i class="fas fa-user"></i><span>${dataSourceJSON.supervisor.area}</span></p>
-                <p class="supervisor-puesto"><i class="fas fa-info-circle"></i><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
+                <div class="supervisor justify-content-center" >
+                <h4 class="supervisor-title">Responsable del área:</h4>
+                <img class="justify-content-center" src="{{ asset('storage/empleados/imagenes') }}/${dataSourceJSON.supervisor.avatar}"
+                class="img_empleado" title=${dataSourceJSON.supervisor.name} style="text-center" >
+                <p style="font-size:1vw;font-weight: bold text-center">${dataSourceJSON.supervisor.name}</p>
+                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.area}</span></p>
+                <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
               </div>
             `;
         }
@@ -1866,7 +1868,8 @@ export default class OrgChart {
         mask = chartContainer.querySelector(':scope > .mask'),
         sourceChart = chartContainer.querySelector('.charContainerAll:not(.hidden)'),
         flag = opts.direction === 'l2r' || opts.direction === 'r2l' || opts.direction === 'b2t';
-      let tableAll = document.querySelector('.charContainerAll');
+        console.log()
+        let tableAll = document.querySelector('.charContainerAll');
       if (!mask) {
         mask = document.createElement('div');
         mask.setAttribute('class', 'mask');
@@ -1877,6 +1880,7 @@ export default class OrgChart {
       }
       chartContainer.classList.add('canvasContainer');
       let zoomActual = document.querySelector("#zoomer").value;
+     if(opts.typeOrgChart !='area'){
       if (flag) {
         let contenedorL2R = document.querySelector('.orgchart').classList.contains('l2r');
         let contenedorR2L = document.querySelector('.orgchart').classList.contains('r2l');
@@ -1904,10 +1908,19 @@ export default class OrgChart {
           document.querySelector('.orgchart').classList.add('t2b');
         }
       }
+    }
+    else if (opts.typeOrgChart == 'area'){
+        // document.querySelector('.orgchart').classList.remove('l2r');
+        // document.querySelector('.orgchart').style = "";
+        document.querySelector("#zoomer").value = 70;
+        document.querySelector("#output").innerHTML = 70;
+        document.querySelector('.orgchart').classList.add('l2r');
+    }
       window.html2canvas(sourceChart, {
-        // 'width': flag ? sourceChart.clientHeight : sourceChart.clientWidth,
+        // 'width': 1000,
         'height': tableAll.clientHeight + 100,
         'onclone': function (cloneDoc) {
+
           // let canvasContainer = cloneDoc.querySelector('.canvasContainer');
           // canvasContainer.style.overflow = 'visible';
           // canvasContainer.querySelector('.orgchart:not(.hidden)').transform = '';

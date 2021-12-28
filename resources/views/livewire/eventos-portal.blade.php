@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12 caja_btn_silent">
-        <a class="btn-silent" href="{{ asset('admin/organizacions') }}"><i
+        <a class="btn-silent" href="{{ asset('admin/organizacions/visualizarorganizacion') }}"><i
                 class="mr-2 fas fa-building"></i>
             <span>Organización</span></a>
         <a class="btn-silent" href="{{ asset('admin/sedes/organizacion') }}"><i
@@ -112,7 +112,7 @@
                             <div class="modal-content">
                                 <div class="modal-body" >
 
-                                <label>Comentarios {{$cumple->id}}</label>                               
+                                <label>Comentarios {{$cumple->id}}</label>
                                 @if($cumpleaños_felicitados_comentarios_contador == 0)
                                     <form wire:submit.prevent="felicitarCumplesComentarios({{$cumple->id}})">
                                         <div class="form-group">
@@ -123,10 +123,10 @@
                                         <div class="form-group">
                                             <textarea wire:model="comentarios_update" class="form-control">{{$cumpleaños_felicitados_comentarios->comentarios}}</textarea>con coments
                                 @endif
-                                        
+
                                         </div>
                                         <button type="submit" class="btn btn-success">Enviar</button>
-                                    </form>                                          
+                                    </form>
                                 </div>
                             </div>
                         </div>

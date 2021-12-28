@@ -38,7 +38,6 @@ class OrganizacionController extends Controller
         $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 
         $panel_rules = PanelOrganizacion::select('empresa', 'direccion', 'telefono', 'correo', 'pagina_web', 'giro', 'servicios', 'mision', 'vision', 'valores', 'team_id', 'antecedentes', 'logotipo', 'razon_social', 'rfc', 'representante_legal', 'fecha_constitucion', 'num_empleados', 'tamano', 'schedule', 'linkedln', 'facebook', 'youtube', 'twitter')->get()->first();
-
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();
 
