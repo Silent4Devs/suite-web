@@ -110,7 +110,7 @@
 
     <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
         <span style="font-size: 17px; font-weight: bold;">
-            Cursos / Diplomados</span>
+            Capacitaciones</span>
     </div>
 
 
@@ -118,9 +118,7 @@
         <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" id="empleado_id_curso" />
         <div class="row">
             <div class="form-group col-sm-12">
-                <label for="curso_diplomado"><i class="fas fa-certificate iconos-crear"></i>Nombre
-                    del curso /
-                    diplomado</label>
+                <label for="curso_diplomado"><i class="fas fa-certificate iconos-crear"></i>Nombre</label>
                 <input class="form-control {{ $errors->has('curso_diplomado') ? 'is-invalid' : '' }}" type="text"
                     name="curso_diploma" id="curso_diplomado" value="{{ old('curso_diplomado', '') }}">
                 <span class="errors curso_diploma_error text-danger"></span>
@@ -142,21 +140,33 @@
                 <span class="errors tipo_error text-danger"></span>
             </div>
             <div class="form-group col-sm-3">
-                <label for="año"><i class="far fa-calendar-alt iconos-crear"></i>Año</label>
+                <label for="año"><i class="far fa-calendar-alt iconos-crear"></i>Inicio</label>
                 <input class="form-control {{ $errors->has('año') ? 'is-invalid' : '' }}" type="date" name="año"
                     id="año" value="{{ old('año', '') }}">
                 <span class="errors año_error text-danger"></span>
             </div>
             <div class="form-group col-sm-3">
+                <label for="fecha_fin"><i class="far fa-calendar-alt iconos-crear"></i>Fin</label>
+                <input class="form-control {{ $errors->has('fecha_fin') ? 'is-invalid' : '' }}" type="date"
+                    name="fecha_fin" id="fecha_fin" value="{{ old('fecha_fin', '') }}">
+                <span class="errors fecha_fin_error text-danger"></span>
+            </div>
+            {{-- <div class="form-group col-sm-3">
                 <label for="duracion"><i class="fas fa-clock iconos-crear"></i>Duración
                     (Hrs)</label>
                 <input class="form-control {{ $errors->has('duracion') ? 'is-invalid' : '' }}" type="number"
                     name="duracion" id="duracion" value="{{ old('duracion', '') }}">
                 <span class="errors duracion_error text-danger"></span>
+            </div> --}}
+            <div class="mt-3 col-sm-12 form-group">
+                <label for="file"><i class="fas fa-folder-open iconos-crear"></i>Adjuntar
+                    Archivo</label>
+                <div class="custom-file">
+                    <input type="file" name="file" id="file_curso" aria-describedby="inputGroupFileAddon01">
+                    <span class="errors file_error text-danger"></span>
+                </div>
             </div>
         </div>
-
-
         <div class="mb-5 col-12">
             <button id="btn-suscribir-curso" type="submit" class="mr-3 btn btn-sm btn-success"
                 style="float: right; position: relative;">
@@ -173,8 +183,10 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Tipo</th>
-                    <th>Año</th>
-                    <th>Duración</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Duración&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Archivo</th>
                     <th>Eliminar</th>
                 </tr>
 

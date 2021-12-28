@@ -347,6 +347,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleados/store/{empleado}/competencias-certificaciones', 'EmpleadoController@storeCertificaciones')->name('empleados.storeCertificaciones');
     Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', 'EmpleadoController@deleteCertificaciones')->name('empleados.deleteCertificaciones');
     Route::post('empleados/update/{curso}/competencias-curso', 'EmpleadoController@updateCurso')->name('empleados.updateCurso');
+    Route::delete('empleados/{curso}/delete-file-curso', 'EmpleadoController@deleteFileCurso')->name('empleados.deleteFileCurso');
     Route::post('empleados/store/{empleado}/competencias-cursos', 'EmpleadoController@storeCursos')->name('empleados.storeCursos');
     Route::delete('empleados/delete/{curso}/competencias-cursos', 'EmpleadoController@deleteCursos')->name('empleados.deleteCursos');
     Route::post('empleados/update/{experiencia}/competencias-experiencia', 'EmpleadoController@updateExperiencia')->name('empleados.updateExperiencia');
