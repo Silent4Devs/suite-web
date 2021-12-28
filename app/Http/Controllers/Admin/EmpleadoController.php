@@ -629,6 +629,7 @@ class EmpleadoController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Certificado Actualizado']);
     }
+
     // public function deleteDocumento(Request $request,  $certificacion)
     // {
     //     $certificacion->update([
@@ -639,14 +640,18 @@ class EmpleadoController extends Controller
 
     public function storeCursos(Request $request, $empleado)
     {
+        $request->merge(['duracion' => Carbon::parse($request->año)->diffInDays($request->fecha_fin) + 1]);
         $request->validate([
             'curso_diploma' => 'required|string|max:255',
             'tipo' => 'required',
-            'año' => 'required|date',
+            'año' => 'required|date|before_or_equal:fecha_fin',
+            'fecha_fin' => 'required|date|after_or_equal:año',
             'duracion' => 'required',
             'empleado_id' => 'required|exists:empleados,id',
+        ], [
+            'curso_diploma.required' => 'El campo nombre es requerido',
+            'año.required' => 'El campo fecha inicio es requerido',
         ]);
-        // dd($request->all());
         if ($request->ajax()) {
             $empleado = Empleado::find(intval($empleado));
             $curso = CursosDiplomasEmpleados::create([
@@ -654,9 +659,25 @@ class EmpleadoController extends Controller
                 'curso_diploma' => $request->curso_diploma,
                 'tipo' =>  $request->tipo,
                 'año' =>  $request->año,
+                'fecha_fin' =>  $request->fecha_fin,
                 'duracion' =>  $request->duracion,
             ]);
 
+            if ($request->hasFile('file')) {
+                $filenameWithExt = $request->file('file')->getClientOriginalName();
+                //Get just filename
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Get just ext
+                $extension = $request->file('file')->getClientOriginalExtension();
+                // Filename to store
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                // Upload Image
+                $path = $request->file('file')->storeAs('public/cursos_empleados', $fileNameToStore);
+
+                $curso->update([
+                    'file' => $fileNameToStore,
+                ]);
+            }
             if ($curso) {
                 return response()->json(['success' => true]);
             } else {
@@ -671,25 +692,68 @@ class EmpleadoController extends Controller
             $request->validate([
                 'curso_diploma' => 'required|string|max:255',
             ]);
+            $curso->update($request->all());
         }
 
         if (array_key_exists('tipo', $request->all())) {
             $request->validate([
                 'tipo' => 'required|string|max:255',
             ]);
+            $curso->update($request->all());
         }
+
         if (array_key_exists('año', $request->all())) {
             $request->validate([
-                'año' => 'required|date',
+                'año' => "required|date|before_or_equal:{$curso->fecha_fin}",
+            ]);
+
+            $curso->update($request->all());
+            $curso->update([
+                'duracion' => Carbon::parse($curso->año)->diffInDays($curso->fecha_fin) + 1,
             ]);
         }
+        if (array_key_exists('fecha_fin', $request->all())) {
+            $request->validate([
+                'fecha_fin' => "required|date|after_or_equal:{$curso->año}",
+            ]);
+
+            $curso->update($request->all());
+            $curso->update([
+                'duracion' => Carbon::parse($curso->año)->diffInDays($curso->fecha_fin) + 1,
+            ]);
+        }
+
         if (array_key_exists('duracion', $request->all())) {
             $request->validate([
                 'duracion' => 'required|numeric|min:1',
             ]);
+            $curso->update($request->all());
         }
 
-        $curso->update($request->all());
+        if ($request->hasFile('file')) {
+            $filenameWithExt = $request->file('file')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('file')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $path = $request->file('file')->storeAs('public/cursos_empleados', $fileNameToStore);
+
+            $curso->update([
+                'file' => $fileNameToStore,
+            ]);
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Curso Actualizado', 'curso' => $curso]);
+    }
+
+    public function deleteFileCurso(Request $request, CursosDiplomasEmpleados $curso)
+    {
+        $curso->update([
+            'file' => null,
+        ]);
 
         return response()->json(['status' => 'success', 'message' => 'Curso Actualizado']);
     }
