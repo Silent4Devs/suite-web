@@ -830,7 +830,7 @@ class EmpleadoController extends Controller
             'año_inicio' => 'required|date',
             'año_fin' => 'required|date',
             'empleado_id' => 'required|exists:empleados,id',
-
+            'titulo_obtenido' => 'required|string|max:255',
         ]);
         // dd($request->all());
         if ($request->ajax()) {
@@ -841,6 +841,7 @@ class EmpleadoController extends Controller
                 'nivel' =>  $request->nivel,
                 'año_inicio' =>  $request->año_inicio,
                 'año_fin' =>  $request->año_fin,
+                'titulo_obtenido' =>  $request->titulo_obtenido,
             ]);
 
             if ($educacion) {
@@ -871,6 +872,11 @@ class EmpleadoController extends Controller
         if (array_key_exists('año_fin', $request->all())) {
             $request->validate([
                 'año_fin' => 'required|date',
+            ]);
+        }
+        if (array_key_exists('titulo_obtenido', $request->all())) {
+            $request->validate([
+                'titulo_obtenido' => 'required|string|max:255',
             ]);
         }
 

@@ -272,64 +272,6 @@
                 </div>
             </div>
         @endif
-
-
-        <div class="card-body">
-            @if (!$isEditAdmin)
-
-            @endif
-            <div class="caja_botones_menu">
-                @if ($isEditAdmin)
-                    {{-- <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-file"
-                            style="font-size:30px;" style="text-decoration:none;"></i>Información
-                        General</a>
-                    <a href="#" data-tabs="contenido2" class="resizeDT"><i class="mr-2 fas fa-flag-checkered"
-                            style="font-size:30px;"></i>Competencias</a> --}}
-                @else
-                @endif
-            </div>
-
-
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="caja_caja_secciones">
-                        <div class="caja_secciones">
-                            @if ($isEditAdmin)
-                                <section id="contenido1" class="mt-4 {{ $isEditAdmin ? 'caja_tab_reveldada' : '' }}">
-                                    <div>
-                                        {{-- <form method="POST"
-                                            action="{{ route('admin.empleados.update', [$empleado->id]) }}"
-                                            enctype="multipart/form-data" id="formEmpleados">
-                                            @method('PUT')
-                                            @csrf
-                                            <div class="mb-3 text-center row justify-content-center">
-                                                <div class="text-center col-sm-2 w-50 text-light card-title"
-                                                    style="background-color:#1BB0B0">
-                                                    Imágen Actual
-                                                </div>
-                                                <div class="col-sm-12"><img class="ml-3"
-                                                        src="{{ asset('storage/empleados/imagenes/' . $empleado->foto) }}"
-                                                        style="width:80px ">
-                                                </div>
-
-                                            </div>
-                                            @include('admin.empleados._form')
-                                        </form> --}}
-                                    </div>
-                                </section>
-                            @endif
-                            <section id="contenido2" class="mt-4 ml-2 {{ !$isEditAdmin ? 'caja_tab_reveldada' : '' }}">
-                                @if (!$isEditAdmin)
-
-                                @endif
-                                {{-- @include('admin.empleados.components._competencias_form') --}}
-                            </section>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection
 @section('scripts')
@@ -343,6 +285,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             initInpusToMoneyFormat();
             inputsToMoneyFormat();
+            const setDirectionOnInput = (direction) => {
+                if (document.getElementById('direccion')) {
+                    document.getElementById('direccion').value = direction;
+                }
+            }
+            let direccion_empleado_actual = @json($empleado->sede ? $empleado->sede->direccion : null);
+            setDirectionOnInput(direccion_empleado_actual);
             const toogleProyectoAsignado = (ocultar) => {
                 const elProyectoAsignado = document.getElementById('proyecto_asignado');
                 const containerProyectoAsignado = document.getElementById('c_proyecto_asignado');
@@ -381,13 +330,15 @@
                 }
             });
 
-            document.getElementById('sede_id').addEventListener('change', function(e) {
-                const direction = e.target.options[e.target.selectedIndex].getAttribute('data-direction');
-                setDirectionOnInput(direction);
-            })
-            const setDirectionOnInput = (direction) => {
-                document.getElementById('direccion').value = direction;
+            if (document.getElementById('sede_id')) {
+
+                document.getElementById('sede_id').addEventListener('change', function(e) {
+                    const direction = e.target.options[e.target.selectedIndex].getAttribute(
+                        'data-direction');
+                    setDirectionOnInput(direction);
+                })
             }
+
         })
 
         function initInpusToMoneyFormat() {
@@ -560,12 +511,14 @@
         const habilitarFotoBtn = document.getElementById('avatar_choose');
         const contendorCanvas = document.getElementById('canvasFoto');
         const closeContenedorCanvas = document.getElementById('cerrarCanvasFoto');
-        habilitarFotoBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            contendorCanvas.style.display = 'grid';
-            document.getElementById("foto").value = "";
-            $("#texto-imagen").text("Subir Imágen");
-        });
+        if (habilitarFotoBtn) {
+            habilitarFotoBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                contendorCanvas.style.display = 'grid';
+                document.getElementById("foto").value = "";
+                $("#texto-imagen").text("Subir Imágen");
+            });
+        }
         // feather.replace();
 
         const controls = document.querySelector('.controls');
@@ -574,6 +527,9 @@
         const canvas = document.querySelector('canvas');
         const screenshotImage = document.querySelector('.screenshot-image');
         const inputShotURL = document.getElementById('snapshoot');
+        if (controls) {
+
+        }
         const buttons = [...controls.querySelectorAll('button')];
         let streamStarted = false;
 
@@ -940,6 +896,22 @@
                             return `
                             <input class="form-control" type="text" value="${data}" data-name-input="institucion" data-educacion-id="${row.id}" />
                             <span class="errors institucion_error text-danger"></span>
+                            `;
+                        }
+                    },
+                    {
+                        data: 'titulo_obtenido',
+                        name: 'titulo_obtenido',
+                        render: function(data, type, row, meta) {
+                            if (!data) {
+                                return `
+                                <input class="form-control" type="text" value="" placeholder="Dato no registrado" data-name-input="titulo_obtenido" data-educacion-id="${row.id}" />
+                                <span class="errors titulo_obtenido_error text-danger"></span>
+                                `;
+                            }
+                            return `
+                            <input class="form-control" type="text" value="${data}" data-name-input="titulo_obtenido" data-educacion-id="${row.id}" />
+                            <span class="errors titulo_obtenido_error text-danger"></span>
                             `;
                         }
                     },
@@ -1670,47 +1642,50 @@
 
 
 
+            if (document.getElementById("btnGuardarDocumento")) {
 
-            document.getElementById("btnGuardarDocumento").addEventListener("click", async function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                let url = $("#formDocumentos").attr("action");
-                const formulario = document.getElementById('formDocumentos');
-                const formData = new FormData();
-                formData.append('nombre', document.getElementById('nombre_doc').value)
-                formData.append('numero', document.getElementById('numero_doc').value)
-                let documentosDoc = document.getElementById('documentos_doc').files;
-                documentosDoc.forEach(element => {
-                    formData.append('file', element)
-                });
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            Accept: "application/json",
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                'content'),
-                        },
+
+                document.getElementById("btnGuardarDocumento").addEventListener("click", async function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    let url = $("#formDocumentos").attr("action");
+                    const formulario = document.getElementById('formDocumentos');
+                    const formData = new FormData();
+                    formData.append('nombre', document.getElementById('nombre_doc').value)
+                    formData.append('numero', document.getElementById('numero_doc').value)
+                    let documentosDoc = document.getElementById('documentos_doc').files;
+                    documentosDoc.forEach(element => {
+                        formData.append('file', element)
                     });
-                    const data = await response.json();
-                    if (data.errors) {
-                        $.each(data.errors, function(indexInArray, valueOfElement) {
-                            $(`#${indexInArray.replaceAll('.','_')}_error`).text(
-                                valueOfElement[0]);
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'),
+                            },
                         });
-                        toastr.error(
-                            'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
-                        );
+                        const data = await response.json();
+                        if (data.errors) {
+                            $.each(data.errors, function(indexInArray, valueOfElement) {
+                                $(`#${indexInArray.replaceAll('.','_')}_error`).text(
+                                    valueOfElement[0]);
+                            });
+                            toastr.error(
+                                'Por favor revise que la información ingresa sea correcta'
+                            );
+                        }
+                        if (data.status) {
+                            tblDocumentos.ajax.reload();
+                            limpiarCamposDocumentos();
+                        }
+                    } catch (error) {
+                        console.log(error);
                     }
-                    if (data.status) {
-                        tblDocumentos.ajax.reload();
-                        limpiarCamposDocumentos();
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            })
+                })
+            }
 
             window.tblDocumentos = $('#tbl-documentos').DataTable({
                 buttons: [],
@@ -1789,103 +1764,106 @@
                 ],
             })
             //Eventos para editar registros
-            document.getElementById('tbl-documentos').addEventListener('change', async function(e) {
-                if (e.target.tagName == 'INPUT') {
-                    if (e.target.type == 'file') {
-                        const documentoId = e.target.getAttribute('data-documento-id');
-                        const typeInput = e.target.getAttribute('data-name-input');
-                        const files = e.target.files;
-                        const formData = new FormData();
-                        files.forEach(element => {
-                            formData.append(typeInput, element);
-                        });
-                        const url =
-                            `/admin/empleados/update/${documentoId}/documentos`;
-                        try {
-                            const response = await fetch(url, {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    Accept: "application/json",
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content'),
-                                },
-                            })
-                            const data = await response.json();
-                            tblDocumentos.ajax.reload();
-                            console.log(data);
-                        } catch (error) {
-                            console.log(error);
-                        }
-                    }
-                }
-            });
-            document.getElementById('tbl-documentos').addEventListener('keyup', async function(e) {
-                if (e.target.tagName == 'INPUT') {
-                    if (e.target.type == 'text') {
-                        const documentoId = e.target.getAttribute('data-documento-id');
-                        const typeInput = e.target.getAttribute('data-name-input');
-                        const value = e.target.value;
-                        const formData = new FormData();
-                        formData.append(typeInput, value);
-                        const url =
-                            `/admin/empleados/update/${documentoId}/documentos`;
-                        try {
-                            const response = await fetch(url, {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    Accept: "application/json",
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content'),
-                                },
-                            })
-                            const data = await response.json();
-                            console.log(data);
-                        } catch (error) {
-                            console.log(error);
-                        }
-                    }
-                }
-            });
-            document.getElementById('tbl-documentos').addEventListener('click', function(e) {
-                if (e.target.tagName == 'I') {
-                    if (e.target.classList.contains('removeFile')) {
-                        const documentoId = e.target.getAttribute('data-documento-id');
-                        Swal.fire({
-                            title: 'Estás seguro de eliminar el documento?',
-                            text: "Esto no se puede revertir!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Si',
-                            cancelButtonText: "No",
-                        }).then(async (result) => {
-                            if (result.isConfirmed) {
-                                const url =
-                                    `/admin/empleados/${documentoId}/delete-file-documento`;
-                                try {
-                                    const response = await fetch(url, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            Accept: "application/json",
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                                .attr(
-                                                    'content'),
-                                        },
-                                    })
-                                    const data = await response.json();
-                                    tblDocumentos.ajax.reload();
-                                } catch (error) {
-                                    console.log(error);
-                                }
+            if (document.getElementById('tbl-documentos')) {
+                document.getElementById('tbl-documentos').addEventListener('change', async function(e) {
+                    if (e.target.tagName == 'INPUT') {
+                        if (e.target.type == 'file') {
+                            const documentoId = e.target.getAttribute('data-documento-id');
+                            const typeInput = e.target.getAttribute('data-name-input');
+                            const files = e.target.files;
+                            const formData = new FormData();
+                            files.forEach(element => {
+                                formData.append(typeInput, element);
+                            });
+                            const url =
+                                `/admin/empleados/update/${documentoId}/documentos`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                tblDocumentos.ajax.reload();
+                                console.log(data);
+                            } catch (error) {
+                                console.log(error);
                             }
-                        })
-
+                        }
                     }
-                }
-            });
+                });
+                document.getElementById('tbl-documentos').addEventListener('keyup', async function(e) {
+                    if (e.target.tagName == 'INPUT') {
+                        if (e.target.type == 'text') {
+                            const documentoId = e.target.getAttribute('data-documento-id');
+                            const typeInput = e.target.getAttribute('data-name-input');
+                            const value = e.target.value;
+                            const formData = new FormData();
+                            formData.append(typeInput, value);
+                            const url =
+                                `/admin/empleados/update/${documentoId}/documentos`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                console.log(data);
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        }
+                    }
+                });
+                document.getElementById('tbl-documentos').addEventListener('click', function(e) {
+                    if (e.target.tagName == 'I') {
+                        if (e.target.classList.contains('removeFile')) {
+                            const documentoId = e.target.getAttribute('data-documento-id');
+                            Swal.fire({
+                                title: 'Estás seguro de eliminar el documento?',
+                                text: "Esto no se puede revertir!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Si',
+                                cancelButtonText: "No",
+                            }).then(async (result) => {
+                                if (result.isConfirmed) {
+                                    const url =
+                                        `/admin/empleados/${documentoId}/delete-file-documento`;
+                                    try {
+                                        const response = await fetch(url, {
+                                            method: 'DELETE',
+                                            headers: {
+                                                Accept: "application/json",
+                                                'X-CSRF-TOKEN': $(
+                                                        'meta[name="csrf-token"]')
+                                                    .attr(
+                                                        'content'),
+                                            },
+                                        })
+                                        const data = await response.json();
+                                        tblDocumentos.ajax.reload();
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                }
+                            })
+
+                        }
+                    }
+                });
+            }
             window.EliminarDocumento = function(url, documentoId) {
                 Swal.fire({
                     title: 'Estás seguro de eliminar?',
@@ -2101,6 +2079,7 @@
             let url = $("#formEducacion").attr("action");
             let formData = new FormData();
             formData.append('institucion', document.getElementById('institucion_inst').value)
+            formData.append('titulo_obtenido', document.getElementById('titulo_obtenido_inst').value)
             formData.append('nivel', document.getElementById('nivel_inst').value)
             formData.append('año_inicio', document.getElementById('año_inicio_inst').value)
             formData.append('año_fin', document.getElementById('año_fin_inst').value)
@@ -2138,6 +2117,7 @@
             $("#institucion").val('');
             $("#año_inicio").val('');
             $("#año_fin").val('');
+            $("#titulo_obtenido").val('');
             $("#nivel").val('');
         }
 

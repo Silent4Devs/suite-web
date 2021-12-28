@@ -9,34 +9,35 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Porcentaje
+ * Class Porcentaje.
  *
  * @property int $id
  * @property character varying|null $porcentaje
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
- *
- * @package App\Models
  */
 class Porcentaje extends Model
 {
-	protected $table = 'porcentajes';
+    protected $table = 'porcentajes';
 
-	protected $casts = [
-		'porcentaje' => 'string',
+    protected $casts = [
+        'porcentaje' => 'string',
 
-	];
+    ];
 
-	protected $fillable = [
-		'porcentaje'
-	];
+    protected $fillable = [
+        'porcentaje',
+    ];
 
-    public function language(){
-        return $this->belongsToMany('\App\Language','puesto_idioma_porcentaje_pivot')
+    public function language()
+    {
+        return $this->belongsToMany('\App\Language', 'puesto_idioma_porcentaje_pivot')
             ->withPivot('id_idioma');
     }
-    public function puesto(){
-        return $this->belongsToMany('\App\Puesto','puesto_idioma_porcentaje_pivot')
+
+    public function puesto()
+    {
+        return $this->belongsToMany('\App\Puesto', 'puesto_idioma_porcentaje_pivot')
             ->withPivot('id_puesto');
     }
 }

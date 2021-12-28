@@ -295,7 +295,7 @@
     <input type="hidden" name="experiencia" value="" id="experiencia">
     <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
         <span style="font-size: 17px; font-weight: bold;">
-            Educación</span>
+            Educación Académica</span>
     </div>
     <div method="POST" action="{{ route('admin.empleados.storeEducacion', [$empleado->id]) }}" id="formEducacion"
         enctype="multipart/form-data">
@@ -303,14 +303,18 @@
         <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" id="empleado_id_inst" />
 
         <div class="row">
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-12">
                 <label for="institucion"><i class="fas fa-school iconos-crear"></i>Institución</label>
                 <input class="form-control {{ $errors->has('institucion') ? 'is-invalid' : '' }}" type="text"
                     name="institucion" id="institucion_inst" value="{{ old('institucion', '') }}">
                 <span class="errors institucion_error text-danger"></span>
             </div>
-
-
+            <div class="form-group col-sm-6">
+                <label for="titulo_obtenido"><i class="fas fa-school iconos-crear"></i>Titulo Obtenido</label>
+                <input class="form-control {{ $errors->has('titulo_obtenido') ? 'is-invalid' : '' }}" type="text"
+                    name="titulo_obtenido" id="titulo_obtenido_inst" value="{{ old('titulo_obtenido', '') }}">
+                <span class="errors titulo_obtenido_error text-danger"></span>
+            </div>
             <div class="form-group col-sm-6">
                 <label for="nivel"><i class="fas fa-graduation-cap iconos-crear"></i>Nivel de
                     estudios</label>
@@ -328,8 +332,6 @@
                 <span class="errors nivel_error text-danger"></span>
             </div>
         </div>
-
-
         <div class="row">
             <div class="form-group col-sm-6">
                 <label for="año_inicio"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
@@ -337,19 +339,13 @@
                     name="año_inicio" id="año_inicio_inst" value="{{ old('año_inicio', '') }}">
                 <span class="errors año_inicio_error text-danger"></span>
             </div>
-
-
-
             <div class="form-group col-sm-6">
                 <label for="año_fin"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
                 <input class="form-control {{ $errors->has('año_fin') ? 'is-invalid' : '' }}" type="date"
                     name="año_fin" id="año_fin_inst" value="{{ old('año_fin', '') }}">
                 <span class="errors año_fin_error text-danger"></span>
             </div>
-
         </div>
-
-
         <div class="mb-5 col-12">
             <button id="btn-agregar-educacion" type="submit" class="mr-3 btn btn-sm btn-success"
                 style="float: right; position: relative;">
@@ -363,9 +359,9 @@
             <thead>
                 <tr>
                     <th>Institución</th>
+                    <th>Titulo</th>
                     <th>Nivel</th>
                     <th>Inicio</th>
-                    {{-- <th scope="col">Área</th> --}}
                     <th>Fin</th>
                     <th>Eliminar</th>
                 </tr>

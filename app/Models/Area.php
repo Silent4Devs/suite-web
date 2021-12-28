@@ -138,6 +138,7 @@ class Area extends Model
     {
         return $this->hasMany(Puesto::class, 'id_area');
     }
+
     public function matriz_riesgos()
     {
         return $this->hasMany(MatrizRiesgo::class, 'id_responsable');
