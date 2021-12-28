@@ -14,7 +14,6 @@ class AddColumnsToPuestosTable extends Migration
     public function up()
     {
         Schema::table('puestos', function (Blueprint $table) {
-
             $table->unsignedBigInteger('id_reporta')->nullable();
             $table->unsignedBigInteger('id_area')->nullable();
             $table->longText('estudios')->nullable();
@@ -30,7 +29,6 @@ class AddColumnsToPuestosTable extends Migration
 
             $table->foreign('id_reporta')->references('id')->on('empleados');
             $table->foreign('id_area')->references('id')->on('areas');
-
         });
     }
 
