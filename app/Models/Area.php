@@ -137,7 +137,7 @@ class Area extends Model
     public function getFotoRutaAttribute()
     {
         $foto_url = asset('img/areas.jpg');
-        if ($this->foto_area){
+        if ($this->foto_area) {
             $foto_url = asset("storage/areas/{$this->foto_area}");
         }
 

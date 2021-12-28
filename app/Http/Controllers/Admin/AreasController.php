@@ -167,16 +167,16 @@ class AreasController extends Controller
 
             //Si existe la imagen entonces se elimina al editarla
 
-            $isExists = Storage::disk('public')->exists('/app/public/areas/'  . $area->foto_area);
+            $isExists = Storage::disk('public')->exists('/app/public/areas/' . $area->foto_area);
             if ($isExists) {
                 if ($area->foto_area != null) {
-                    unlink(storage_path('/app/public/areas/'  . $area->foto_area));
+                    unlink(storage_path('/app/public/areas/' . $area->foto_area));
                 }
             }
             $extension = pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_EXTENSION);
             $name_image = basename(pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
             $new_name_image = 'UID_' . $area->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() .  '/app/public/areas/'  . $new_name_image;
+            $route = storage_path() . '/app/public/areas/' . $new_name_image;
             $image = $new_name_image;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto_area'));
