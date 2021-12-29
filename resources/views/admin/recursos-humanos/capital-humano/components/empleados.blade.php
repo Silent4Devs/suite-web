@@ -23,6 +23,12 @@
                 Expedientes Profesionales
             </div>
         </a></li>
+    <li><a href="{{ route('admin.organigrama.index') }}">
+            <div>
+                <i class="fas fa-sitemap"></i>
+                Organigrama
+            </div>
+        </a></li>
     <li><a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
             <div>
                 <i class="fas fa-chalkboard-teacher"></i>
@@ -48,6 +54,20 @@
                 </a></li>
         </ul>
     </div>
+    <li><a href="{{ route('admin.tipos-contratos-empleados.index') }}">
+            <div>
+                <i class="fas fa-sitemap"></i>
+                Tipos de contratos
+            </div>
+        </a>
+    </li>
+    <li><a href="{{ route('admin.entidades-crediticias.index') }}">
+            <div>
+                <i class="fas fa-sitemap"></i>
+                Entidades Crediticias
+            </div>
+        </a>
+    </li>
     <li>
         <a href="#">
             <div>

@@ -5,15 +5,15 @@
                 Calendario Corporativo
             </div>
         </a></li>
-    <li><a href="#">
+    <li><a href="{{ route('admin.calendario-oficial.index') }}">
             <div>
-                <i class="fas fa-calendar-day"></i>
-                Diás Festivos
+                <i class="fas fa-drum"></i>
+                Días Festivos
             </div>
         </a></li>
-    <li><a href="#">
+    <li><a href="{{ route('admin.tabla-calendario.index') }}">
             <div>
-                <i class="fas fa-question"></i>
+                <i class="fas fa-gifts"></i>
                 Eventos
             </div>
         </a></li>
