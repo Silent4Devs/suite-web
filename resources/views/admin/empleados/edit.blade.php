@@ -1640,11 +1640,260 @@
                     }
                 });
 
+            // IDIOMAS
+            window.tblIdiomas = $('#tbl-idiomas').DataTable({
+                buttons: [],
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
+                ajax: "{{ route('admin.idiomas-empleados.index', $empleado->id) }}",
+                columns: [{
+                        data: 'nombre',
+                        name: 'nombre',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <input class="form-control" type="text" value="${data}" data-name-input="nombre" data-idioma-id="${row.id}" />
+                            <span class="errors nombre_error text-danger"></span>
+                            `;
+                        }
+                    },
+                    {
+                        data: 'nivel',
+                        name: 'nivel',
+                        render: function(data, type, row, meta) {
+                            let select = `
+                            <select class="form-control" data-idioma-id="${row.id}" data-name-input="nivel">
+                                <option value="" disabled selected>
+                                    Selecciona una opción
+                                </option>`;
+                            let opciones = @json(App\Models\IdiomaEmpleado::NIVELES);
+                            for (const key in opciones) {
+                                select += `
+                                    <option value="${key}" ${data == key ? ' selected':''}>
+                                        ${key}
+                                    </option>
+                                `;
+                            }
+                            select += `
+                            <span class="errors nivel_error text-danger"></span>
+                            </select>
+                            `;
+                            return select;
+                        }
+                    },
+                    {
+                        data: 'porcentaje',
+                        name: 'porcentaje',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <input class="form-control" type="number" value="${data}" data-name-input="porcentaje" data-idioma-id="${row.id}" />
+                            <span class="errors porcentaje_error text-danger"></span>
+                            `;
+                        }
+                    },
+                    {
+                        data: 'certificado',
+                        name: 'certificado',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                const pdfFile = "{{ asset('img/pdf-file.png') }}";
+                                const assetDocumentosUrl =
+                                    "{{ asset('storage/idiomas_empleados/') }}";
+                                return `
+                            <div class="text-center" style="position:relative;">
+                                <a target="_blank" class="text-center" href="${assetDocumentosUrl}/${data}" title="${data}">
+                                    <img style="width:35px" src="${pdfFile}" class="img-fluid" alt="${data}" />
+                                    <p class="m-0 text-muted" style="font-size:10px">${data.substring(0,35)}...</p>
+                                </a>
+                                <i data-idioma-id="${row.id}" class="fas fa-times-circle removeFileIdioma" style="position:absolute; top:0;right: 58px;"></i>
+                            </div>
+                            `;
+                            } else {
+                                return `
+                                <div class="text-center">
+                                    <label for="documento_curso${row.id}" class="text-center">
+                                        <img src="{{ asset('img/upload-pdf.png') }}" style="width:40px" />
+                                        <p class="m-0 text-muted" style="font-size:10px">Subir Documento</p>
+                                    </label>
+                                </div>
+                                <input type="file" class="form-control d-none" id="documento_curso${row.id}" data-idioma-id="${row.id}"/>
+                                <p class="m-0">
+                                    <span class="errors file_error text-danger"></span>
+                                </p>
+                                `;
+                            }
 
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, route, meta) {
+                            let urlEliminar =
+                                `/admin/competencia/idiomas-empleados/${data}`;
+                            let html = `
+                            <button onclick="event.preventDefault(); EliminarIdioma('${urlEliminar}','${data}')" class="btn btn-sm text-primary"><i class="fas fa-trash-alt" style="color:#fd0000"></i></button>
+                            `;
+                            return html;
+                        }
+                    },
 
+                ],
+                orderCellsTop: true,
+                order: [
+                    [1, 'desc']
+                ],
+
+            })
+            //Eventos para editar registros
+            document.getElementById('tbl-idiomas').addEventListener('change', async function(e) {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') {
+                    if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
+                        'number') {
+                        const idiomaID = e.target.getAttribute('data-idioma-id');
+                        const typeInput = e.target.getAttribute('data-name-input');
+                        const value = e.target.value;
+                        console.log(idiomaID);
+                        const formData = new FormData();
+                        formData.append(typeInput, value);
+                        const url =
+                            `/admin/competencia/${idiomaID}/idiomas`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data);
+                    } else if (e.target.type == 'file') {
+                        const idiomaID = e.target.getAttribute('data-idioma-id');
+                        console.log(idiomaID);
+                        const formData = new FormData();
+                        e.target.files.forEach(element => {
+                            formData.append('certificado', element);
+                        });
+                        const url =
+                            `/admin/competencia/${idiomaID}/idiomas`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'),
+                            },
+                        })
+                        tblIdiomas.ajax.reload();
+                    }
+                }
+            });
+            document.getElementById('tbl-idiomas').addEventListener('keyup', async function(e) {
+                if (e.target.tagName == 'INPUT') {
+                    if (e.target.type == 'text' || e.target.type == 'number') {
+                        const idiomaID = e.target.getAttribute('data-idioma-id');
+                        const typeInput = e.target.getAttribute('data-name-input');
+                        const value = e.target.value;
+                        const formData = new FormData();
+                        formData.append(typeInput, value);
+                        const url =
+                            `/admin/competencia/${idiomaID}/idiomas`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data);
+                    }
+                }
+            });
+            document.getElementById('tbl-idiomas').addEventListener('click', function(e) {
+                if (e.target.tagName == 'I') {
+                    if (e.target.classList.contains('removeFileIdioma')) {
+                        const idiomaID = e.target.getAttribute('data-idioma-id');
+                        Swal.fire({
+                            title: 'Estás seguro de eliminar el archivo?',
+                            text: "Esto no se puede revertir!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si',
+                            cancelButtonText: "No",
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                const url =
+                                    `/admin/competencia/${idiomaID}/idiomas-delete-certificado`;
+                                const response = await fetch(url, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                console.log(data);
+                                tblIdiomas.ajax.reload();
+                            }
+                        })
+
+                    }
+                }
+            });
+            window.EliminarIdioma = function(url, cursoId) {
+                Swal.fire({
+                    title: 'Estás seguro de eliminar?',
+                    text: "Esto no se puede revertir!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si',
+                    cancelButtonText: "No",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "delete",
+                            url: url,
+                            data: {
+                                cursoId
+                            },
+                            beforeSend: function() {
+                                toastr.info("Eliminando idioma");
+                            },
+                            success: function(response) {
+                                if (response.status == "success") {
+                                    toastr.success("Idioma eliminado");
+                                    tblIdiomas.ajax.reload();
+                                }
+                            },
+                            error: function(request, status, error) {
+                                console.log(error)
+                                $.each(request.responseJSON.errors, function(indexInArray,
+
+                                    valueOfElement) {
+                                    console.log(valueOfElement, indexInArray);
+                                    $(`span.${indexInArray}_error`).text(
+                                        valueOfElement[0]);
+
+                                });
+                            }
+                        });
+                    }
+                })
+            }
+            // FIN IDIOMAS
             if (document.getElementById("btnGuardarDocumento")) {
-
-
                 document.getElementById("btnGuardarDocumento").addEventListener("click", async function(e) {
                     e.preventDefault();
                     limpiarErrores();
@@ -1936,6 +2185,12 @@
                 suscribirCertificado()
             })
 
+            document.getElementById('btn-agregar-idioma').addEventListener('click', function(e) {
+                e.preventDefault();
+                limpiarErrores();
+                suscribirIdioma()
+            })
+
 
             document.getElementById('btnGuardar').addEventListener('click', function(e) {
                 // e.preventDefault();
@@ -2194,6 +2449,55 @@
             });
             document.getElementById('curso').value = JSON.stringify(arrCurso);
             console.log(arrCurso);
+        }
+
+        function suscribirIdioma() {
+
+            let url = $("#formIdiomas").attr("action");
+            let formData = new FormData();
+            formData.append('nombre', document.getElementById('nombre_idioma').value)
+            formData.append('nivel', document.getElementById('nivel_idioma').value)
+            formData.append('porcentaje', document.getElementById('porcentaje_idioma').value)
+            // formData.append('duracion', document.getElementById('duracion').value)
+            let archivos = document.getElementById('certificado_idioma').files;
+            archivos.forEach(element => {
+                formData.append('certificado', element);
+            });
+            formData.append('empleado_id', document.getElementById('empleado_id_idioma').value)
+            $.ajax({
+                type: "post",
+                url: url,
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    toastr.info("Guardando Idioma");
+                },
+                success: function(response) {
+                    if (response.status == 'success') {
+                        toastr.success("Idioma guardado");
+                        limpiarCamposIdioma();
+                        tblIdiomas.ajax.reload();
+                    }
+                },
+                error: function(request, status, error) {
+                    console.log(error)
+                    $.each(request.responseJSON.errors, function(indexInArray,
+
+                        valueOfElement) {
+                        console.log(valueOfElement, indexInArray);
+                        $(`span.${indexInArray}_error`).text(valueOfElement[0]);
+
+                    });
+                }
+            });
+        }
+
+        function limpiarCamposIdioma() {
+            $("#nombre").val('');
+            $("#nivel").val('');
+            $("#porcentaje").val('');
+            $("#certificado").val('');
         }
 
         function suscribirCertificado() {

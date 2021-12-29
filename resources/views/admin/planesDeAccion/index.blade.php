@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('content')
     {{-- @can('planes_accion_access') --}}
-    <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Planes de Acción </strong></h3>
+    <div class="mt-3 card">
+        <div class="" style="display:flex; justify-content:center">
+                <h3 class="text-center text-white mt-4" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px; width:90%;"><strong>Planes de acción </strong></h3>
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
