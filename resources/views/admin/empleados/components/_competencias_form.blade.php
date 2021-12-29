@@ -291,8 +291,8 @@
             </tbody>
         </table>
     </div>
-
     <input type="hidden" name="experiencia" value="" id="experiencia">
+
     <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
         <span style="font-size: 17px; font-weight: bold;">
             Educación Académica</span>
@@ -353,7 +353,6 @@
             </button>
         </div>
     </div>
-
     <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
         <table class="table w-100" id="tbl-educacion">
             <thead>
@@ -371,16 +370,78 @@
         </table>
     </div>
     <input type="hidden" name="educacion" value="" id="educacion">
-    {{-- <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+
+    {{-- IDIOMAS --}}
+    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
         <span style="font-size: 17px; font-weight: bold;">
-            Expediente del Empleado</span>
+            Idiomas</span>
     </div>
-    <div class="mt-3 col-sm-12 form-group px-0">
-        <label for="documentos"><i class="fas fa-folder-open iconos-crear"></i>Documentos</label><i
-            class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>
-        <div class="custom-file">
-            <input type="file" name="files[]" multiple class="form-control" id="documentos">
+    <div method="POST" action="{{ route('admin.idiomas-empleados.store', [$empleado->id]) }}" id="formIdiomas"
+        enctype="multipart/form-data">
+        <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" id="empleado_id_idioma" />
+        <div class="row">
+            <div class="form-group col-sm-5">
+                <label for="nombre"><i class="fas fa-school iconos-crear"></i>Nombre</label>
+                <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
+                    name="nombre" id="nombre_idioma" value="{{ old('nombre', '') }}">
+                <span class="errors nombre_error text-danger"></span>
+            </div>
+            <div class="form-group col-sm-5">
+                <label for="nivel"><i class="fas fa-graduation-cap iconos-crear"></i>Nivel</label>
+                <select class="form-control {{ $errors->has('nivel') ? 'is-invalid' : '' }}" name="nivel"
+                    id="nivel_idioma">
+                    <option value disabled {{ old('nivel', null) === null ? 'selected' : '' }}>
+                        Selecciona una opción</option>
+                    @foreach (App\Models\IdiomaEmpleado::NIVELES as $key => $label)
+                        <option value="{{ $key }}"
+                            {{ old('nivel', '') === (string) $key ? 'selected' : '' }}>
+                            {{ $label }}
+                        </option>
+                    @endforeach
+                </select>
+                <span class="errors nivel_error text-danger"></span>
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="porcentaje"><i class="far fa-percent iconos-crear"></i>Porcentaje</label>
+                <input style="padding-left: 20px;"
+                    class="form-control {{ $errors->has('porcentaje') ? 'is-invalid' : '' }}" type="number"
+                    name="porcentaje" id="porcentaje_idioma" value="{{ old('porcentaje', '') }}">
+                {{-- <i class="far fa-percent iconos-crear"
+                    style="position: absolute;top: 44px;left: 20px;font-size: 13px;"></i> --}}
+                <span class="errors porcentaje_error text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-3 col-sm-12 form-group">
+                <label for="certificado"><i class="fas fa-folder-open iconos-crear"></i>Certificado</label>
+                <div class="custom-file">
+                    <input type="file" name="certificado" id="certificado_idioma"
+                        aria-describedby="inputGroupFileAddon01">
+                    <span class="errors certificado_error text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="mb-5 col-12">
+            <button id="btn-agregar-idioma" type="submit" class="mr-3 btn btn-sm btn-success"
+                style="float: right; position: relative;">
+                Agregar
+            </button>
         </div>
     </div>
-    <div class="col-sm-12 col-md-12 col-12 px-0" id="documentosGrid"></div> --}}
+    <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
+        <table class="table w-100" id="tbl-idiomas">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Nivel</th>
+                    <th>Porcentaje</th>
+                    <th>Certificado</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <input type="hidden" name="idioma" value="" id="idioma">
 </div>
