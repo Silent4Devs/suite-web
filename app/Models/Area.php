@@ -144,7 +144,7 @@ class Area extends Model
         return $this->hasMany(MatrizRiesgo::class, 'id_responsable');
     }
 
-    public function getAreaFotoAttribute()
+    public function getFotoRutaAttribute()
     {
         $foto_url = asset('img/areas.jpg');
         if ($this->foto_area) {
