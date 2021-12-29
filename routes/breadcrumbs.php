@@ -401,7 +401,7 @@ Breadcrumbs::for('perfil-puesto', function ($trail) {
     $trail->push('Perfiles de Puestos', route('admin.puestos.index'));
 });
 Breadcrumbs::for('areas-render', function ($trail) {
-    $trail->push('Portal de comunicación',route('admin.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Áreas', route('admin.areas.renderJerarquia'));
 });
 Breadcrumbs::for('perfil-puesto-create', function ($trail) {
