@@ -655,3 +655,9 @@ Breadcrumbs::for('admin.mapa-procesos', function ($trail) {
     $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Mapa de Procesos');
 });
+
+Breadcrumbs::for('admin.visualizarorganizacion', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Organización');
+});
+
