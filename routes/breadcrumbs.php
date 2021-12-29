@@ -65,7 +65,7 @@ Breadcrumbs::for('admin.alcance-sgsis.create', function ($trail) {
     $trail->push('Formulario', route('admin.alcance-sgsis.create'));
 });
 
-// Breadcrumbs::for('admin..index', function ($trail) {
+// Breadcrumbs::for('admin..index', function ($trail) {perfil-puesto
 // $trail->parent('admin.iso27001.index');                   generar reporte-------------
 // $trail->push('', route('admin..index'));
 // });
@@ -400,6 +400,10 @@ Breadcrumbs::for('perfil-puesto', function ($trail) {
     $trail->push('Empleados');
     $trail->push('Perfiles de Puestos', route('admin.puestos.index'));
 });
+Breadcrumbs::for('areas-render', function ($trail) {
+    $trail->push('Portal de comunicación',route('admin.portal-comunicacion.index'));
+    $trail->push('Áreas', route('admin.areas.renderJerarquia'));
+});
 Breadcrumbs::for('perfil-puesto-create', function ($trail) {
     $trail->parent('perfil-puesto');
     $trail->push('Crear', route('admin.puestos.create'));
@@ -645,4 +649,9 @@ Breadcrumbs::for('Mi-CV', function ($trail, $empleado = null) {
 Breadcrumbs::for('Editar-Curriculum', function ($trail, $empleado = null) {
     $trail->parent('Mi-CV', $empleado);
     $trail->push('Editar', route('admin.editarCompetencias', ['empleado' => $empleado]));
+});
+
+Breadcrumbs::for('admin.mapa-procesos', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Mapa de Procesos');
 });

@@ -204,9 +204,9 @@
                         name: 'area'
                     },
                     {
-                        data: 'area_foto',
+                        data: 'foto_ruta',
                         render: function(data, type, row, meta) {
-                            return `<img src="${data}">`;
+                            return `<img src="${data}" style="width:${data!=""?"50px":"80px"}">`;
                         }
                     },
                     {
