@@ -12,11 +12,11 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisdeRiesgosController extends Controller
 {
-
     public function menu()
     {
         return view('admin.analisis-riesgos.menu-buttons');
     }
+
     /**
      * Display a listing of the resource.
      *
