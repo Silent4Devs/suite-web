@@ -330,7 +330,10 @@ class Empleado extends Model
     {
         return $this->hasMany(CertificacionesEmpleados::class);
     }
-
+    public function idiomas()
+    {
+        return $this->hasMany(IdiomaEmpleado::class, 'empleado_id', 'id');
+    }
     public function empleado_cursos()
     {
         return $this->hasMany(CursosDiplomasEmpleados::class);

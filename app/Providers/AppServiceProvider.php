@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        Carbon::setLocale(config('app.locale'));
+        // Carbon::setLocale(config('app.locale'));
         Paginator::useBootstrap();
         Session::extend('Custom', function ($app) {
             $files = new Filesystem('/s');
