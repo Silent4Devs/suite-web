@@ -59,7 +59,7 @@ function hexToRGBA(hex) {
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = '<i class="fas fa-graduation-cap i_calendar" style="color:#ff5583;"></i> Cursos';
+    calendar.name = '<i class="fas fa-graduation-cap i_calendar" style="color:#ff5583;"></i> Capacitaciones';
     calendar.color = '#ffffff';
     calendar.bgColor = '#ff5583';
     calendar.dragBgColor = '#ff5583';
@@ -79,41 +79,41 @@ function hexToRGBA(hex) {
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = '<i class="fas fa-cocktail i_calendar" style="color:#87F378;"></i> Eventos';
+    calendar.name = '<i class="fas fa-cocktail i_calendar" style="color:#3FBD35;"></i> Eventos';
     calendar.color = '#000000';
-    calendar.bgColor = '#87F378';
-    calendar.dragBgColor = '#87F378';
-    calendar.borderColor = '#87F378';
+    calendar.bgColor = '#3FBD35';
+    calendar.dragBgColor = '#3FBD35';
+    calendar.borderColor = '#3FBD35';
     addCalendar(calendar);
 
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = '<i class="fas fa-birthday-cake i_calendar" style="color:#FF9B00;"></i> Cumpleaños';
+    calendar.name = '<i class="fas fa-birthday-cake i_calendar" style="color:#FF9033;"></i> Cumpleaños';
     calendar.color = '#ffffff';
-    calendar.bgColor = '#FF9B00';
-    calendar.dragBgColor = '#FF9B00';
-    calendar.borderColor = '#FF9B00';
+    calendar.bgColor = '#FF9033';
+    calendar.dragBgColor = '#FF9033';
+    calendar.borderColor = '#FF9033';
     addCalendar(calendar);
 
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = '<i class="fas fa-award i_calendar" style="color:#DDD30A;"></i> Aniversarios';
+    calendar.name = '<i class="fas fa-award i_calendar" style="color:#D24646;"></i> Aniversarios';
     calendar.color = '#ffffff';
-    calendar.bgColor = '#DDD30A';
-    calendar.dragBgColor = '#DDD30A';
-    calendar.borderColor = '#DDD30A';
+    calendar.bgColor = '#D24646';
+    calendar.dragBgColor = '#D24646';
+    calendar.borderColor = '#D24646';
     addCalendar(calendar);
 
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = '<i class="fas fa-drum i_calendar" style="color:#25F4E4;"></i>Festivos';
+    calendar.name = '<i class="fas fa-drum i_calendar" style="color:#297CC6;"></i> Festivos';
     calendar.color = '#000000';
-    calendar.bgColor = '#25F4E4';
-    calendar.dragBgColor = '#25F4E4';
-    calendar.borderColor = '#25F4E4';
+    calendar.bgColor = '#297CC6';
+    calendar.dragBgColor = '#297CC6';
+    calendar.borderColor = '#297CC6';
     addCalendar(calendar);
 
 

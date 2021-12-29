@@ -112,26 +112,6 @@
     .tui-full-calendar-weekday-grid-more-schedules{
         position: relative !important;
    }
-   .tui-full-calendar-weekday-grid-more-schedules:after{
-        content: "más";
-        position: absolute;
-        background-color: #fff;
-        z-index: 1;
-        padding: 0 5px  !important;
-        left: 15px;
-   }
-
-   .tui-full-calendar-weekday-schedule-title{
-        position: relative;
-   }
-    .tui-full-calendar-weekday-schedule-title strong{
-        font-size: 9pt !important;
-        position: absolute;
-        right: 10px;
-   }
-    .tui-full-calendar-weekday-schedule-title strong:before{
-        content: "Inicio:  ";
-   }
    .dropdown-menu.show{
         width: 250px !important;
    }

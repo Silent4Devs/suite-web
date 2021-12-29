@@ -71,32 +71,6 @@
         height: 30px;
         position: relative;
     }
-    .calendar-icon.ic-arrow-line-right::before{
-        content: ">";
-        position: absolute;
-        transform: scale(1.3);
-        font-size: 10pt;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .calendar-icon.ic-arrow-line-left::before{
-        content: "<";
-        position: absolute;
-        transform: scale(1.3);
-        font-size: 10pt;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
     a:hover{
         text-decoration: none !important;
     }
@@ -113,14 +87,7 @@
     .tui-full-calendar-weekday-schedule-title{
         position: relative;
    }
-    .tui-full-calendar-weekday-schedule-title strong{
-        font-size: 9pt !important;
-        position: absolute;
-        right: 10px;
-   }
-    .tui-full-calendar-weekday-schedule-title strong:before{
-        content: "Inicio:  ";
-   }
+
    .dropdown-menu.show{
         width: 250px !important;
    }
@@ -133,8 +100,15 @@
    .i_calendar_cuadro{
         margin: 0px 8px;
    }
-   .tui-full-calendar-popup-container .i_calendar_cuadro{
-    opacity: 0.7;
+
+
+
+   .tui-full-calendar-schedule-title{
+        word-break: unset !important;
+   }
+
+   .tui-full-calendar-schedule-title i{
+        display: none !important;
    }
 </style>
 
@@ -269,11 +243,6 @@
 
 @section('scripts')
 @parent
-
-
-
-
-
     <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
     <script src="https://uicdn.toast.com/tui.time-picker/v2.0.3/tui-time-picker.min.js"></script>
     <script src="https://uicdn.toast.com/tui.date-picker/v4.0.3/tui-date-picker.min.js"></script>
@@ -294,6 +263,10 @@
                     start: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_inicio)->format("Y-m-d") }}',
                     end: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_fin)->format("Y-m-d") }}',
                     isReadOnly : true,
+                    body: `
+                       <font style="font-weight: bold;">Inicio:</font> ${@json($it_plan_base->fecha_inicio->format("d-m-Y"))}<br>
+                       <font style="font-weight: bold;">Fin:</font> ${@json($it_plan_base->fecha_fin->format("d-m-Y"))}<br>
+                    `,
                 },
             @endforeach
 
@@ -307,7 +280,10 @@
                     start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() }}',
                     end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() }}',
                     isReadOnly : true,
-
+                    body: `
+                       <font style="font-weight: bold;">Inicio:</font> ${@json($it_auditoria_internas->fecha_inicio->format("d-m-Y"))}<br>
+                       <font style="font-weight: bold;">Fin:</font> ${@json($it_auditoria_internas->fecha_fin->format("d-m-Y"))}<br>
+                    `,
                 },
             @endforeach
 
@@ -323,6 +299,14 @@
                     start: '{{ \Carbon\Carbon::parse($it_recursos->fecha_curso)->toDateTimeString() }}',
                     end: '{{ \Carbon\Carbon::parse($it_recursos->fecha_fin)->toDateTimeString() }}',
                     isReadOnly : true,
+                     body: `
+                        <font style="font-weight: bold;">Categoria:</font> ${@json($it_recursos->tipo)}<br>
+                        <font style="font-weight: bold;">Inicio:</font> ${@json($it_recursos->fecha_curso)} horas<br>
+                        <font style="font-weight: bold;">Fin:</font> ${@json($it_recursos->fecha_fin)} horas<br>
+                        <font style="font-weight: bold;">Duración:</font> ${@json($it_recursos->duracion)} horas<br>
+                        <font style="font-weight: bold;">Instructor:</font> ${@json($it_recursos->instructor)}<br>
+                        <font style="font-weight: bold;">${@json($it_recursos->modalidad)=='presencial' ? 'Ubicación' : 'Link'}: </font>${@json($it_recursos->modalidad)=='presencial' ? @json($it_recursos->ubicacion) : '<a href="'+@json($it_recursos->ubicacion)+'">'+@json($it_recursos->ubicacion)+'</a> '} <br>
+                    `,
                 },
 
             @endforeach
@@ -338,6 +322,12 @@
 
                 end: '{{ \Carbon\Carbon::createFromTimestamp(($it_plan_base->end/1000))->toDateString()}}',
                 isReadOnly : true,
+                body: `
+                       <font style="font-weight: bold;">Inicio:</font> ${@json(\Carbon\Carbon::createFromTimestamp(($it_plan_base->start/1000))->toDateString())}<br>
+                       <font style="font-weight: bold;">Fin:</font> ${@json(\Carbon\Carbon::createFromTimestamp(($it_plan_base->end/1000))->toDateString())}<br>
+                       <font style="font-weight: bold;">Duracion:</font> ${@json($it_plan_base->duration)} dias<br>
+                       <font style="font-weight: bold;">Progreso:</font> ${@json($it_plan_base->progress)}%<br>
+                    `,
                 },
             @endforeach
             @foreach ($eventos as $evento)
@@ -351,6 +341,14 @@
                 start: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[0])->format("Y-m-d") }}',
                 end: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[1])->format("Y-m-d") }}',
                 isReadOnly : true,
+                body: `
+                        <font style="font-weight: bold;">Categoria:</font> ${@json($it_recursos->tipo)}<br>
+                        <font style="font-weight: bold;">Inicio:</font> ${@json($it_recursos->fecha_curso)} horas<br>
+                        <font style="font-weight: bold;">Fin:</font> ${@json($it_recursos->fecha_fin)} horas<br>
+                        <font style="font-weight: bold;">Duración:</font> ${@json($it_recursos->duracion)} horas<br>
+                        <font style="font-weight: bold;">Instructor:</font> ${@json($it_recursos->instructor)}<br>
+                        <font style="font-weight: bold;">${@json($it_recursos->modalidad)=='presencial' ? 'Ubicación' : 'Link'}: </font>${@json($it_recursos->modalidad)=='presencial' ? @json($it_recursos->ubicacion) : '<a href="'+@json($it_recursos->ubicacion)+'">'+@json($it_recursos->ubicacion)+'</a> '} <br>
+                    `,
                 },
             @endforeach
 
@@ -359,12 +357,18 @@
                 {
                     id: 'cumple{{$cumple->id}}',
                     calendarId: '5',
-                    title: '<i class="fas fa-birthday-cake i_calendar_cuadro"></i> Cumpleaños de {{$cumple->name}}',
+                    title: '<i class="fas fa-birthday-cake i_calendar_cuadro"></i> Cumpleaños de {{ $cumple->name}} ',
                     category: 'allday',
                     dueDateClass: '',
                     start: '{{ $cumple->actual_birdthday }}',
                     end: '{{ $cumple->actual_birdthday }}',
                     isReadOnly : true,
+                    body: `
+                        <font style="font-weight: bold;">Cumpleaños:</font> ${@json(\Carbon\Carbon::parse($cumple->cumpleaños)->format('d-m'))}<br>
+                        <font style="font-weight: bold;">Area:</font> ${@json($cumple->area->area)}<br>
+                        <font style="font-weight: bold;">Puesto:</font> ${@json($cumple->puesto)}<br>
+                        
+                    `,
                 },
             @endforeach
 
@@ -379,6 +383,12 @@
                     start: '{{ $aniversario->actual_aniversary }}',
                     end: '{{ $aniversario->actual_aniversary }}',
                     isReadOnly : true,
+                    body: `
+                        <font style="font-weight: bold;">Cumpleaños:</font> ${@json(\Carbon\Carbon::parse($aniversario->antiguedad)->format('d-m'))}<br>
+                        <font style="font-weight: bold;">Area:</font> ${@json($aniversario->area->area)}<br>
+                        <font style="font-weight: bold;">Puesto:</font> ${@json($aniversario->puesto)}<br>
+                        
+                    `,
                 },
             @endforeach
              @foreach ($oficiales as $oficial)
@@ -405,9 +415,15 @@
 
 
 
-                }, 5000);
+            }, 5000);
         })
 
+    </script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function(){
+            $(".tui-full-calendar-weekday-schedule-title").attr("title", "");
+        });
     </script>
 
 

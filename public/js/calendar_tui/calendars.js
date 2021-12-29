@@ -59,7 +59,7 @@ function hexToRGBA(hex) {
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = '<i class="fas fa-graduation-cap i_calendar" style="color:#ff5583;"></i> Mis Cursos';
+    calendar.name = '<i class="fas fa-graduation-cap i_calendar" style="color:#ff5583;"></i> Mis Capacitaciones';
     calendar.color = '#ffffff';
     calendar.bgColor = '#ff5583';
     calendar.dragBgColor = '#ff5583';

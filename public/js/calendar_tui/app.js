@@ -475,11 +475,12 @@
     calendarList.innerHTML = html.join('\n');
 })();
 
-$('.lnb-calendars-item').click(function(){
-    $('.lnb-calendars-item').click(function(){
-        $('.lnb-calendars-item:hover i').toggleClass('desactivo_lnb');
-        console.log('click');
-     });
+
+
+$(".tui-full-calendar-weekday-schedule-title").attr("title", "");
+
+$('.lnb-calendars-item').mouseover(function(){
+    $(".tui-full-calendar-weekday-schedule-title").attr("title", "");
 });
 
 
