@@ -14,7 +14,7 @@
 			background-image: url(../img/implementacion/fondo_consultoria.jpg);
 			background-size: cover;
 			background-color: #ccc;
-			font-family: calibri;
+			/* font-family: calibri; */
 		}
 		.tiulo {
 			width: 100%;
@@ -31,31 +31,16 @@
 			color: #30289d;
 		}
 		.info{
-			width: 475px;
+			/* width: 475px;
+			 */
 			margin: 0;
-			margin-top: 30px;
-			font-size: 17pt;
+
+			font-size: 12pt;
 			font-weight: lighter;
-			float: right;
-			margin-right: 10%;
+			/* float: right; */
+			/* margin-right: 10%; */
 			text-align: center;
 			color: #05192c;
-		}
-		.caja_btn{
-			width: 400px;
-			height: 200px;
-			float: left;
-			margin-top: 20px;
-			margin-left: 190px;
-		}
-		.caja_btn img{
-			height: 40px;
-			transition: 0.1s;
-		}
-		.caja_btn img:hover{
-			transform: scale(1.1);
-			filter: saturate(150%);
-			opacity: 0.8;
 		}
 		.boton{
 			float: left;
@@ -70,19 +55,18 @@
 		.correo{
 			margin-left: 40px;
 		}
-		.btn_consultores{
+		/* .btn_consultores {
 			width: 140px;
 			height: 37px;
 			border: 1px solid #fff;
-			position: absolute;
-			bottom: 30px;
-			left: 30px;
+
 			color: #fff;
 			font-size: 12pt;
 			border-radius: 8px;
 			box-shadow: 0px 0px 5px -1px;
 			cursor: pointer;
-
+			margin:auto;
+			
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -92,12 +76,14 @@
 			color: #888888;
 			box-shadow: none;
 			transition: 0.1s;
-		}
-		.tabla_consultores{
+		} */
+
+		.tabla_consultores, .tabla_soporte{
 			width: 100%;
 			margin-top: 30px;
 			display: none;
 		}
+
 		.contacto table{
 			width: 670px;
 			margin: auto;
@@ -127,7 +113,7 @@
 			background-color: rgba(0,0,0,0.5);
 		}
 		.btn_cerrar{
-			display: none;
+			/* display: none; */
 			width: 50px;
 			height: 50px;
 			right: 30px;
@@ -143,67 +129,83 @@
 			transform: scale(1.1);
 		}
 
-
-
-
-
-		@media(max-width: 1100px){
-			.contacto table{
-				width: 100%;
-			}
+		.btn.btn-success:hover{
+			background-color:#00abb2 !important;
+			color:#fff !important;
 		}
-		@media(max-width: 796px){
-			.info{
-				width: 90%;
-				margin-right: 5%;
-			}
-			.contacto table{
-				width: 100%;
-			}
-			.contacto table tr{
-				display: flex;
-				flex-direction: column;
-			}
-			.tabla_consultores{
-				width: 100%;
-				height: 450px;
-				overflow-y: scroll;
-				overflow-x: hidden;
-			}
+		.secundario_revelado .tabla_consultores{
+			display:block !important;
 		}
-		@media(max-width: 600px){
-			.caja_btn{
-				margin-left: 5%;
-			}
-			.contacto{
-				height: 600px;
-			}
+		.secundario_revelado .genreal{
+			display:none !important;
 		}
+		.tercero_revelado .tabla_soporte{
+			display:block !important;
+		}
+		.tercero_revelado .genreal{
+			display:none !important;
+		}
+		.tabla_soporte{
+			display:none;
+		}
+		.card_equipos{
+			background-color:rgba(255,255,255, 0.4);
+			width:350px;
+			padding:25px;
+			border-radius:6px;
+			box-shadow:0px 0px 5px 1px rgba(0,0,0,0.3);
+			margin-top:35px;
+
+		}
+		.info strong{
+			font-size:16pt;
+			font-weight: bold;
+			color:#30289d;
+		}
+		.caja_btn{
+			margin-bottom:25px;
+		}
+		.caja_btn i{
+			/* font-size:25pt; */
+			margin-right:10px;
+			transform:scale(1.4);
+		}
+}
+
+	
 	</style>
 
 
-	<div class="card card-body">
+	<div class="card card-body caja_general_soporte">
 		<div class="contacto">
-
-			<div class="btn_cerrar"><i class="far fa-times-circle icono_cerrar"></i></div>
-
-			<div class="btn_consultores">Consultores</div>
-
 			<div class="genreal">
-				<p class="tiulo">¿CÓMO PODEMOS APOYARTE? &nbsp;&nbsp; <font>CONTÁCTANOS</font></p>
-
-				<p class="info">
-					Si quieres asesoría por parte de nuestros expertos contáctanos a través de nuestros siguientes medios.
-				</p>
-
-				<div class="caja_btn">
-					<div class="boton cel"><a href="tel:525525115770"><img src="../img/implementacion/btn_cel.png"></a></div>
-					<div class="boton whats"><a href="https://wa.me/525525115770" target="_blank"><img src="../img/implementacion/btn_whats.png"></a></div>
-					<div class="boton correo"><a href="mailto:contacto@silent4business.com"><img src="../img/implementacion/btn_correo.png"></a></div>
-				</div>
+				<p class="tiulo">¿CÓMO PODEMOS AYUDARTE? &nbsp;&nbsp; <font>CONTÁCTANOS</font></p>
+                <div class="row col-12" style="margin:auto;">
+                    <div class="col-6 text-center " style="display:flex; justify-content:center;">
+						<div class="card_equipos">
+							<p class="info"><strong>Equipo de consultores</strong><br><br>
+								Si requieres asesoría sobre el llenado de un módulo, contacta a nuestro equipo de consultores.</p><br>
+								<div  id="btn_consultores" class="btn btn-success" style="margin:auto;">Consultores
+								</div>
+						</div>
+                    </div>
+                    <div class="col-6 text-center" style="display:flex; justify-content:center;">
+						<div class="card_equipos">
+							<p class="info"><strong>Equipo de soporte técnico</strong><br><br> Si deseas reportar alguna falla del sistema, contacta a nuestro equipo de soporte técnico.</p><br>
+								<div id="btn_soporte" class="btn btn-success">Soporte técnico</div>
+						</div>
+                    </div>
+                </div>
 			</div>
-
 			<div class="tabla_consultores">
+				<div class="py-3 col-md-12 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+					<h3 class="mb-2 text-center text-white"><strong>Consultores</strong></h3>
+				</div>
+				<div class="caja_btn text-center">
+					<a class="btn btn-success" href="tel:525572480010"><i class="fas fa-phone-square"></i>Teléfono</a>
+					<a class="btn btn-success" href="https://wa.me/525572480010" target="_blank"><i class="fab fa-whatsapp-square"></i>Whatsapp</a>
+					<a class="btn btn-success" href="mailto:miguel.gaspar@silent4business.com"><i class="fas fa-envelope-square"></i>Correo</a>
+				</div>
 				<table>
 					<thead>
 						<tr>
@@ -234,6 +236,54 @@
 						</tr>
 					</tbody>
 				</table>
+				<div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 40px;margin-right:10px;">Cancelar</div>
+			</div>
+			<div class="tabla_soporte">
+				<div class="py-3 col-md-12 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+					<h3 class="mb-2 text-center text-white"><strong>Soporte Técnico</strong></h3>
+				</div>
+				<div class="caja_btn text-center">
+					<a class="btn btn-success" href="tel:525525115770"><i class="fas fa-phone-square"></i>Teléfono</a>
+					<a class="btn btn-success" href="https://wa.me/525525115770" target="_blank"><i class="fab fa-whatsapp-square"></i>Whatsapp</a>
+					<a class="btn btn-success" href="mailto:contacto@silent4business.com"><i class="fas fa-envelope-square"></i>Correo</a>
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Puesto</th>
+							<th>Teléfono</th>
+							<th>Correo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Miguel Ángel Gaspar Galicia</td>
+							<td>Líder de Innovación y Desarrollo.</td>
+							<td>5578233000 <br> Ext. 151 5572480010</td>
+							<td>miguel.gaspar@silent4business.com</td>
+						</tr>
+						<tr>
+							<td>Luis Fernando Jonathan Vargas Osornio</td>
+							<td>Coordinador de Desarrollo Innovación y Desarrollo.</td>
+							<td>55 7823 3000</td>
+							<td>luis.vargas@silent4business.com</td>
+						</tr>
+						<tr>
+							<td>Uriel Santiago Reyes</td>
+							<td>Desarrollador Jr.</td>
+							<td>55 7823 3000</td>
+							<td>uriel.santiago@silent4business.com</td>
+						</tr>
+						{{-- <tr style="border: none;">
+							<td>Marco Luna Robles</td>
+							<td>Líder de Consultoría Estratégica</td>
+							<td>5578232000 Ext. 158</td>
+							<td>marco.luna@silent4business.com</td>
+						</tr> --}}
+					</tbody>
+				</table>
+				<div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 15px;margin-right:10px;">Cancelar</div>
 			</div>
 		</div>
 	</div>
@@ -245,18 +295,27 @@
 @section('scripts')
 
 	<script type="text/javascript">
-		$(".btn_consultores").click(function(){
-			$(".genreal").fadeOut(180);
-			$(".tabla_consultores").delay(180).fadeIn(180);
-			$(".btn_consultores").fadeOut(180);
-			$(".btn_cerrar").delay(180).fadeIn(180);
+		
+		$("#btn_consultores").click(function(){
+			$('.caja_general_soporte').addClass('secundario_revelado');
+			
 		});
+	
 		$(".btn_cerrar").click(function(){
-			$(".genreal").delay(180).fadeIn(180);
-			$(".tabla_consultores").fadeOut(180);
-			$(".btn_consultores").delay(180).fadeIn(180);
-			$(".btn_cerrar").fadeOut(180);
+			$('.caja_general_soporte').removeClass('secundario_revelado');
+			
 		});
+
+		$("#btn_soporte").click(function(){
+			$('.caja_general_soporte').addClass('tercero_revelado');
+			
+		});
+	
+		$(".btn_cerrar").click(function(){
+			$('.caja_general_soporte').removeClass('tercero_revelado');
+			
+		});
+
 	</script>
 
 @endsection
