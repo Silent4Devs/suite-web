@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Empleado;
 use App\Models\IdiomaEmpleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -44,7 +43,7 @@ class IdiomasEmpleadosController extends Controller
             'nombre' => 'required|string',
             'nivel' => 'required|string',
             'porcentaje' => 'nullable|numeric|min:1|max:100',
-            'certificado' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf'
+            'certificado' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf',
         ]);
         $idioma = IdiomaEmpleado::create($request->all());
 
@@ -66,7 +65,6 @@ class IdiomasEmpleadosController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Idioma agregado con éxito']);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -93,7 +91,7 @@ class IdiomasEmpleadosController extends Controller
 
         if (array_key_exists('porcentaje', $request->all())) {
             $request->validate([
-                'porcentaje' => "nullable|numeric|min:1|max:100",
+                'porcentaje' => 'nullable|numeric|min:1|max:100',
             ]);
 
             $idiomaEmpleado->update($request->all());
@@ -101,7 +99,7 @@ class IdiomasEmpleadosController extends Controller
 
         if (array_key_exists('certificado', $request->all())) {
             $request->validate([
-                'certificado' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf'
+                'certificado' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf',
             ]);
 
             if ($request->hasFile('certificado')) {
@@ -132,11 +130,11 @@ class IdiomasEmpleadosController extends Controller
      */
     public function destroy($id)
     {
-        $idiomaEmpleado =  IdiomaEmpleado::find($id);
+        $idiomaEmpleado = IdiomaEmpleado::find($id);
         $idiomaEmpleado->delete();
+
         return response()->json(['status' => 'success', 'message' => 'Idioma Eliminado', 'idioma' => $idiomaEmpleado]);
     }
-
 
     public function deleteCertificado(IdiomaEmpleado $idiomaEmpleado)
     {

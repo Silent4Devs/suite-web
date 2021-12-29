@@ -58,14 +58,16 @@ class CursosDiplomasEmpleados extends Model
     public function getFechaInicioSpanishAttribute()
     {
         Date::setLocale('es');
+
         return new Date($this->año);
     }
+
     public function getFechaFinSpanishAttribute()
     {
         Date::setLocale('es');
+
         return new Date($this->fecha_fin);
     }
-
 
     public function getRutaDocumentoAttribute()
     {

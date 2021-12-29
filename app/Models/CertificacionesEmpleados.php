@@ -6,9 +6,8 @@ use App\Traits\DateTranslator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
-use Illuminate\Support\Str;
 use Jenssegers\Date\Date;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class CertificacionesEmpleados extends Model
 {
@@ -47,6 +46,7 @@ class CertificacionesEmpleados extends Model
     public function getVigenciaStringFormatedAttribute($date)
     {
         Date::setLocale('es');
+
         return new Date($date);
     }
 
