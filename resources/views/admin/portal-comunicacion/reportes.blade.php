@@ -86,7 +86,7 @@
     <div class=" card-body">
         <div class="row">
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="px-1 py-2 rounded" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6; margin: auto;">
                     <div class="row w-100">
                         <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -96,10 +96,10 @@
                         </div>
                         <div class="col-11">
                             <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                            <p class="m-0" style="font-size: 14px; color:#1E3A8A; text-align: justify; ">Esta sección es un canal de comunicación para que los colaboradores de la Organización puedan
-                            reportarnos un incidente de Seguridad, un riesgo identificado o compartirnos sus sugerencias, quejas o denuncias,
-                            cuando se tengan ideas de mejora, se identifiquen casos que estén fuera de lo indicado en el manual de conducta y
-                            código de ética, o bien, fuera de los valores de la Organización.
+                            <p class="m-0" style="font-size: 14px; color:#1E3A8A; text-align: justify; ">Esta sección es un canal de comunicación para que los colaboradores de la organización puedan
+                            reportarnos un incidente de seguridad, un riesgo identificado o compartirnos sus sugerencias, quejas o denuncias.
+                            {{-- cuando se tengan ideas de mejora, se identifiquen casos que estén fuera de lo indicado en el manual de conducta y
+                            código de ética, o bien, fuera de los valores de la Organización. --}}
                             </p>
 
                         </div>
@@ -107,7 +107,7 @@
                 </div>
             </div>
 
-             <div class="col-md-3 caja_titulo">
+             {{-- <div class="col-md-3 caja_titulo">
                 @php
                     use App\Models\Organizacion;
                     $organizacion = Organizacion::first();
@@ -115,7 +115,7 @@
                 @endphp
                 <img src="{{ asset($logotipo) }}" class="logo_organizacion_politica">
 
-            </div>
+            </div> --}}
             <div style="margin: auto; text-align: center; margin-top: -40px !important;" class="col-12 row mt-4 justify-content-center">
 
 
@@ -131,20 +131,16 @@
                         Una sugerencia es un planteamiento,
                         idea o recomendación que se presenta
                         con el objetivo de proponer una o
-                        más acciones para la Organización.
+                        más acciones.
 
                     </p>
                     <p>
-                        Las sugerencias serán recibidas por el
-                        área correspondiente, quien
-                        llevará un control y seguimiento de
-                        las propuestas recibidas y las
-                        canalizará a las diferentes áreas.
+                        Las sugerencias se canalizarán a las áreas correspondientes.
                     </p>
                     <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
                 </a>
                 <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
-                    <i class="fas fa-rocket"></i> 
+                    <i class="fas fa-rocket"></i>
                     <h4>Mejora</h4>
                     <p>
                         Puedes proponer mejoras en los
@@ -170,14 +166,14 @@
                     <i class="fas fa-frown"></i>
                     <h4>Queja</h4>
                     <p>
-                        Podras levantar una queja cuando exista cualquier tipo de
+                        Podrás levantar una queja cuando exista cualquier tipo de
                         reclamación generada por
                         descontentos o disgustos por alguna
                         situación vivida dentro de la organización
                         y que se considere injusta.
                         Normalmente se incumple con algún
                         punto del Código de Conducta y Ética
-                        de la organización y/o al manual de
+                        de la organización y/o del Manual de
                         Políticas.
                     </p>
                     <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
@@ -186,11 +182,11 @@
                     <i class="fas fa-hand-paper"></i>
                     <h4>Denuncia</h4>
                     <p>
-                        Podras levantar una denuncia cuando desees hacer una acusación
+                        Podrás levantar una denuncia cuando desees hacer una acusación
                         en contra de un colaborador de
                         la organización. Se dará seguimiento
                         específico y se tomarán las acciones pertinentes según sea el caso
-                        pudiendo llegar hasta la rescición del
+                        pudiendo llegar hasta la terminación del
                         contrato y cuando se considere
                         necesario se elevara a las autoridades
                         competentes.
