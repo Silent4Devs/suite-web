@@ -181,7 +181,7 @@
                 <div class="col-4 justify-content-center text-center">
                     <h3 class="mb-2 text-center text-white d-inline-block">
                         <strong>
-                            ISO 27001
+                            ISO - 27001 - Seguridad de la Información
                         </strong>
                     </h3>
                 </div>
