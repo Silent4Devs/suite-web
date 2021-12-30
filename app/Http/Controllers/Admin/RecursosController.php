@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyRecursoRequest;
-use App\Http\Requests\StoreRecursoRequest;
-use App\Http\Requests\UpdateRecursoRequest;
 use App\Models\CategoriaCapacitacion;
 use App\Models\Recurso;
 use App\Models\Team;
@@ -16,7 +14,6 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -91,16 +88,22 @@ class RecursosController extends Controller
     public function create()
     {
         abort_if(Gate::denies('recurso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $participantes = User::all()->pluck('name', 'id');
+        // $participantes = User::all()->pluck('name', 'id');
         $categorias = CategoriaCapacitacion::get();
+        $recurso = new Recurso;
 
-        return view('admin.recursos.create', compact('participantes', 'categorias'));
+        return view('admin.recursos.create', compact('recurso', 'categorias'));
     }
 
-    public function store(StoreRecursoRequest $request)
+    public function store(Request $request)
     {
+        $this->validateForm($request);
+        $request->validate([
+            'fecha_limite' => 'date|required|before_or_equal:fecha_curso',
+        ]);
+
         $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
+
         $recurso = Recurso::create([
             'cursoscapacitaciones' => $request->cursoscapacitaciones,
             'tipo' => $request->tipo,
@@ -112,78 +115,80 @@ class RecursosController extends Controller
             'descripcion' => $request->descripcion,
             'modalidad' => $request->modalidad,
             'ubicacion' => $request->ubicacion,
+            'fecha_limite' => $request->fecha_limite,
         ]);
-        // if ($request->ajax()) {
-        //     $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
-        //     $recurso = Recurso::create([
-        //         "cursoscapacitaciones" => $request->cursoscapacitaciones,
-        //         "tipo" => $request->tipo,
-        //         "fecha_curso" => $request->fecha_curso,
-        //         "fecha_fin" => $request->fecha_fin,
-        //         "duracion" => $duracion,
-        //         "instructor" => $request->instructor,
-        //         "descripcion" => $request->descripcion,
-        //     ]);
-        //     if ($recurso) {
-        //         return response()->json(['success' => true]);
-        //     } else {
-        //         return response()->json(['error' => true]);
-        //     }
-        // }
+        if ($request->tipo_request == 'ajax') {
+            return response()->json(['status' => 'success', 'message' => 'Recurso creado']);
+        }
+
         return redirect()->route('admin.recursos.index')->with('success', 'Guardado con éxito');
+    }
+
+    public function validateForm(Request $request)
+    {
+        if ($request->tipo_validacion == 'general') {
+            $this->validateRequest($request);
+
+            return response()->json(['isValid' => true]);
+        } else {
+            $this->validateRequest($request);
+        }
+    }
+
+    public function validateRequest($request)
+    {
+        $request->validate([
+            'tipo' => 'required',
+            'fecha_curso' => 'date|required',
+            'fecha_fin' => 'date|required|after:fecha_curso',
+            'instructor' => 'string|required',
+            'cursoscapacitaciones'  => 'string|required',
+            'modalidad'  => 'string|required',
+            'ubicacion' => 'string|required',
+            'categoria_capacitacion_id'  => 'string|required',
+            'modalidad' => 'string|required',
+        ]);
     }
 
     public function edit(Recurso $recurso)
     {
         abort_if(Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $participantes = User::all()->pluck('name', 'id');
-
-        $recurso->load('participantes', 'team');
         $categorias = CategoriaCapacitacion::get();
 
-        return view('admin.recursos.edit', compact('participantes', 'recurso', 'categorias'));
+        return view('admin.recursos.edit', compact('recurso', 'categorias'));
     }
 
-    public function update(UpdateRecursoRequest $request, Recurso $recurso)
+    public function update(Request $request, Recurso $recurso)
     {
-        if ($request->ajax()) {
-            $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
+        $this->validateForm($request);
+        $request->validate([
+            'fecha_limite' => 'date|required|before_or_equal:fecha_curso',
+        ]);
+        $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
 
-            if ($recurso->cursoscapacitaciones != $request->cursoscapacitaciones) {
-                if (Storage::exists('public/capacitaciones/certificados/' . $recurso->cursoscapacitaciones)) {
-                    Storage::move('public/capacitaciones/certificados/' . $recurso->cursoscapacitaciones, 'public/capacitaciones/certificados/' . $request->cursoscapacitaciones); //rename folder
-                }
-            }
-            $recurso_actualizado = $recurso->update([
-                'cursoscapacitaciones' => $request->cursoscapacitaciones,
-                'tipo' => $request->tipo,
-                'categoria_capacitacion_id' => $request->categoria_capacitacion_id,
-                'fecha_curso' => $request->fecha_curso,
-                'fecha_fin' => $request->fecha_fin,
-                'duracion' => $duracion,
-                'instructor' => $request->instructor,
-                'descripcion' => $request->descripcion,
-                'modalidad' => $request->modalidad,
-                'ubicacion' => $request->ubicacion,
-            ]);
-
-            // $recurso_actualizado->participantes()->sync($request->input('participantes', []));
-            // foreach ($request->input('certificado', []) as $file) {
-            //     $recurso_actualizado->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificado');
-            // }
-
-            // if ($media = $request->input('ck-media', false)) {
-            //     Media::whereIn('id', $media)->update(['model_id' => $recurso_actualizado->id]);
-            // }
-            if ($recurso_actualizado) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['error' => true]);
-            }
-
-            // return redirect()->route('admin.recursos.index');
+        $recurso->update([
+            'cursoscapacitaciones' => $request->cursoscapacitaciones,
+            'tipo' => $request->tipo,
+            'categoria_capacitacion_id' => $request->categoria_capacitacion_id,
+            'fecha_curso' => $request->fecha_curso,
+            'fecha_fin' => $request->fecha_fin,
+            'duracion' => $duracion,
+            'instructor' => $request->instructor,
+            'descripcion' => $request->descripcion,
+            'modalidad' => $request->modalidad,
+            'ubicacion' => $request->ubicacion,
+            'fecha_limite' => $request->fecha_limite,
+        ]);
+        if ($request->tipo_request == 'ajax') {
+            return response()->json(['status' => 'success', 'message' => 'Recurso creado']);
         }
+
+        return redirect()->route('admin.recursos.index')->with('success', 'Actualizado con éxito');
+        // if ($recurso->cursoscapacitaciones != $request->cursoscapacitaciones) {
+        //     if (Storage::exists('public/capacitaciones/certificados/' . $recurso->cursoscapacitaciones)) {
+        //         Storage::move('public/capacitaciones/certificados/' . $recurso->cursoscapacitaciones, 'public/capacitaciones/certificados/' . $request->cursoscapacitaciones); //rename folder
+        //     }
+        // }
     }
 
     public function show(Recurso $recurso)

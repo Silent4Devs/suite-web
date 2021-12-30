@@ -15,9 +15,7 @@
             </div>
             <div class="col-11">
                 <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección encontrara las capacitaciónes que se le han asignado como parte de su plan de carrera para el cumplimiento de sus objetivos
-
-
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección encontrará las capacitaciones que le han sido asignadas por la organización para el cumplimiento de sus objetivos y/o como parte de su plan de carrera.
                 </p>
 
             </div>
@@ -26,7 +24,7 @@
     <table id="tabla_usuario_capacitaciones" class="table">
         <thead>
             <tr>
-                <th style="min-width:200px;">Título</th>
+                <th style="min-width:200px;">Nombre</th>
                 <th style="min-width:150px;">Categoría</th>
                 <th style="min-width:150px;">Tipo</th>
                 <th style="min-width:150px;">Modalidad</th>

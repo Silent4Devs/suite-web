@@ -425,6 +425,7 @@ export default class OrgChart {
       } else {
         photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
       }
+    }
       else {
         photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
       }
@@ -464,9 +465,6 @@ export default class OrgChart {
           content_more += `
                 <div class="supervisor justify-content-center" >
                 <h4 class="supervisor-title">Responsable del área:</h4>
-                <img class="justify-content-center" src="{{ asset('storage/empleados/imagenes') }}/${dataSourceJSON.supervisor.avatar}"
-                class="img_empleado" title=${dataSourceJSON.supervisor.name} style="text-center" >
-                <p style="font-size:1vw;font-weight: bold text-center">${dataSourceJSON.supervisor.name}</p>
                 <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.area}</span></p>
                 <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
               </div>
@@ -1858,6 +1856,7 @@ export default class OrgChart {
       chartContainer.innerHTML = '';
       chartContainer.style.width = "0px";
     }
+}
     _clickExportButton() {
       let opts = this.options,
         chartContainer = this.chartContainer,

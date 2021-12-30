@@ -149,23 +149,6 @@
 
     </style>
 
-    @can('glosario_create')
-
-
-
-
-        <!--
-                                                                                        <div style="margin-bottom: 10px;" class="row">
-                                                                                            <div class="col-lg-12">
-                                                                                                <a class="btn btn-success" href="{{ route('admin.glosarios.create') }}">
-                                                                                                    {{ trans('global.add') }} {{ trans('cruds.glosario.title_singular') }}
-                                                                                                </a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    -->
-
-    @endcan
-
     <div id="desk" class="mt-5 card" style="">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Directorio de Empleados </strong></h3>
@@ -205,19 +188,26 @@
                             </td>
 
                             <td>
-                                <div>
-                                    <strong style="color:#0CA193;">{{ $empleado->name }}</strong>
-                                  @if ($empleado->mostrar_telefono)
-
-                                        @if (is_null($empleado->telefono_movil))
+                                {{-- <div>
+                                    <strong class="nombre-empleado" style="color:#0CA193;">{{ $empleado->name }}</strong>
+                                    @if (is_null($empleado->telefono_movil))
                                         <p>Sin teléfono</p>
-                                        @else
-                                            <p><i class="mr-2 fas fa-phone"></i>{{ $empleado->telefono_movil }} </p>
-                                        @endif
-                                        @else
-                                        <p><i class="mr-2 fas fa-phone"></i>Sin telefono  </p>
-                                  @endif
-                                </div>
+                                    @else
+                                        <p><i class="mr-2 fas fa-phone"></i>{{ $empleado->telefono_movil }} </p>
+                                    @endif
+                                </div> --}}
+                                {{ $empleado->name }}
+                                @if ($empleado->mostrar_telefono)
+                                @if (is_null($empleado->telefono_movil))
+                                <p>Sin teléfono</p>
+                                @else
+                                <p><i class="mr-2 fas fa-phone"></i>{{ $empleado->telefono_movil }} </p>
+                                @endif
+                                @else
+                                <p>Sin teléfono</p>
+                                @endif
+
+
 
                             </td>
 
@@ -297,7 +287,11 @@
 
         $(document).ready(function() {
             var table = $('#dom').DataTable();
+            var selector = $(".nombre-empleado");
+            var columnData = table.column(1).data();
+            console.log(columnData);
 
+            var bins = bin(columnData);
             var alphabet = $('<div class="alphabet"/>').append('');
 
             $('<span class="clear active"/>')
@@ -310,6 +304,8 @@
 
                 $('<span/>')
                     .data('letter', letter)
+                    .data('match-count', bins[letter] || 0)
+                    .addClass(!bins[letter] ? 'empty' : '')
                     .html(letter)
                     .appendTo(alphabet);
             }

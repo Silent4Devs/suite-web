@@ -153,34 +153,20 @@
 
         </div>
     <div class="card-body" style="height: 600px;">
-
-
-
-
-       {{--  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' /> --}}
-
-        {{-- <div id='calendar'></div> --}}
-
-
-
-
-
-
-
-        <div class="caja">
-            <div id="lnb">
-
-                <div id="lnb-calendars" class="lnb-calendars">
-                    <div>
-                        <div class="lnb-calendars-item">
-                            <label>
+            <div class="card-body" style="height: 700px;">
+                <div class="caja">
+                    <div id="lnb">
+                        <div id="lnb-calendars" class="lnb-calendars">
+                            <div>
+                                <div class="lnb-calendars-item">
+                                <label>
                                 <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
                                 <span style="">
                                     <span style="margin-left: 20px; width: 100px !important; position: absolute;">Ver Todos</span>
                                 </span>
-                            </label>
-                        </div>
-                    </div>
+                                 </label>
+                                 </div>
+                            </div>
                     <div id="calendarList" class="lnb-calendars-d1">
                     </div>
                 </div>

@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\DateTranslator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Jenssegers\Date\Date;
 use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class CertificacionesEmpleados extends Model
 {
     use SoftDeletes;
     use QueryCacheable;
+    use DateTranslator;
 
     public $cacheFor = 3600;
     protected static $flushCacheOnUpdate = true;
@@ -38,7 +41,19 @@ class CertificacionesEmpleados extends Model
 
     ];
 
-    protected $appends = ['vigencia_ymd'];
+    protected $appends = ['vigencia_ymd', 'ruta_documento', 'vigencia_string_formated'];
+
+    public function getVigenciaStringFormatedAttribute($date)
+    {
+        Date::setLocale('es');
+
+        return new Date($date);
+    }
+
+    public function getRutaDocumentoAttribute()
+    {
+        return asset('storage/certificados_empleados/') . '/' . $this->documento;
+    }
 
     public function getVigenciaYmdAttribute()
     {

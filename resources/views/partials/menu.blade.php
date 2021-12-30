@@ -211,10 +211,10 @@
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca">Módulos Tabantaj</font>
         </li>
-        <li class="c-sidebar-nav-dropdown">
-            <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                <i class="fas fa-users iconos_menu letra_blanca">
-                </i>
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.capital-humano.index') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*') ? 'active' : '' }}">
+                <i class="fa-fw fas fa-users iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> Capital Humano </font>
             </a>
             <ul class="c-sidebar-nav-dropdown-items">
@@ -336,7 +336,14 @@
                 </li>
             </ul>
         </li>
-        <li
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.analisis-riesgos.menu') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/matriz-riesgos') || request()->is('admin/matriz-riesgos*') ? 'active' : '' }}">
+                <i class="fa-fw fas fa-exclamation-triangle iconos_menu letra_blanca"></i>
+                <font class="letra_blanca"> Análisis de Riesgos </font>
+            </a>
+        </li>
+        {{-- <li
             class="c-sidebar-nav-dropdown {{ request()->is('admin/matriz-riesgos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-unos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-dos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-tres*') ? 'c-show' : '' }}">
             <a class="c-sidebar-nav-dropdown-toggle" href="#">
                 <i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>
@@ -362,13 +369,11 @@
                     </a>
                 </li>
 
-                @can('configuracion_procesos_access') {{-- este acceso no correspnde --}}
+                @can('configuracion_procesos_access')
                     <li class="c-sidebar-nav-item">
                         <a href="{{ route('admin.analisis-riesgos.index') }}"
                             class="c-sidebar-nav-link {{ request()->is('admin/admin.analisis-riesgos') || request()->is('admin/admin.analisis-riesgos') ? 'active' : '' }}">
-                            {{-- <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
-
-                        </i> --}}
+                            
                             <i class="fas fa-table iconos_menu letra_blanca">
 
                             </i>
@@ -378,8 +383,7 @@
                 @endcan
 
             </ul>
-        </li>
-
+        </li> --}}
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') || request()->is('admin/analisisdebrechas') || request()->is('admin/planTrabajoBase') || request()->is('admin/partes-interesadas')
             || request()->is('admin/matriz-requisito-legales') || request()->is('admin/entendimiento-organizacions') || request()->is('admin/alcance-sgsis') || request()->is('admin/comiteseguridads')
