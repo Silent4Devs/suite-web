@@ -32,7 +32,9 @@
     <li>
         <a href="#">
             <div>
-                <i class="fas fa-question"></i>
+                <span class="material-icons material-modulos">
+                    perm_contact_calendar
+                </span>
                 TimeSheet
             </div>
         </a>

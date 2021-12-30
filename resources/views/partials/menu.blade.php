@@ -33,7 +33,7 @@
         @can('mi_perfil_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.inicio-Usuario.index') }}#datos"
-                    class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') ? 'active' : '' }}">
+                    class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') ||request()->is('admin/competencias/*/cv') ? 'active' : '' }}">
                     <i class="fas fa-user iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Mi perfil</font>
                 </a>
@@ -158,7 +158,7 @@
         @endcan
         @can('glosario_access')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route('admin.glosarios.index') }}"
+                <a href="{{ route('admin.glosarios.render') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/glosarios') || request()->is('admin/glosarios/*') ? 'active' : '' }}">
                     <i class="fa-fw fas fa-book iconos_menu letra_blanca">
 
@@ -217,6 +217,124 @@
                 <i class="fa-fw fas fa-users iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> Capital Humano </font>
             </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+                {{-- @can('configuracion_empleados_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.empleados.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/empleados') || request()->is('admin/empleados/*') ? 'active' : '' }}">
+                            <i class="fa-fw fas fa-user iconos_menu letra_blanca">
+
+                            </i>
+                            <font class="letra_blanca" style="margin-left:10px;"> Empleados </font>
+                        </a>
+                    </li>
+                @endcan --}}
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route('admin.capital-humano.index') }}"
+                        class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*') || request()->is('admin/expedientes-profesionales/*')? 'active' : '' }}">
+                        <i class="fa-fw fas fa-file iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca" style="margin-left:10px;"> Capital Humano Menú </font>
+                    </a>
+                </li>
+                @can('configuracion_empleados_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.tipos-contratos-empleados.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/tipos-contratos-empleados') || request()->is('admin/tipos-contratos-empleados/*') ? 'active' : '' }}">
+                            <i class="fa-fw fas fa-file iconos_menu letra_blanca">
+
+                            </i>
+                            <font class="letra_blanca" style="margin-left:10px;"> Tipos de contratos </font>
+                        </a>
+                    </li>
+                @endcan
+                @can('configuracion_empleados_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.entidades-crediticias.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/entidades-crediticias') || request()->is('admin/entidades-crediticias/*') ? 'active' : '' }}">
+                            <i class="fa-fw fas fa-file iconos_menu letra_blanca"></i>
+                            <font class="letra_blanca" style="margin-left:10px;"> Entidades crediticias </font>
+                        </a>
+                    </li>
+                @endcan
+                @can('organigrama_organizacion_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.organigrama.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/organigrama') || request()->is('admin/organigrama/*') ? 'c-active' : '' }}">
+                            <i class="fas fa-sitemap iconos_menu letra_blanca"></i>
+                            <font class="letra_blanca" style="margin-left:10px;"> Organigrama </font>
+                        </a>
+                    </li>
+                @endcan
+                <li class="c-sidebar-nav-dropdown">
+                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                        <i class="fas fa-chalkboard-teacher iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca " style="margin-left:10px;"> Capacitaciones </font>
+                    </a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+                        @can('configuracion_macroproceso_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ asset('admin/categoria-capacitacion') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
+                                    <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                    <font class="letra_blanca" style="margin-left:10px;"> Crear categorías</font>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('configuracion_procesos_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ asset('admin/recursos') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
+                                    <i class="ml-2 fas fa-graduation-cap iconos_menu letra_blanca"
+                                        style="font-size:12pt;"></i>
+                                    <font class="letra_blanca" style="margin-left:10px;"> Crear capacitaciones</font>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->is('admin/recursos-humanos/evaluacion-360/*') ? 'active' : '' }}"
+                        href="{{ route('admin.rh-evaluacion360.index') }}">
+                        <img src="{{ asset('img/360-degrees1.png') }}" alt="icono360"
+                            style="width: 26px;margin-right: 14px;margin-left: 3px;">
+                        <font class="letra_blanca" style="margin-left:10px;"> Evaluación 360° </font>
+                    </a>
+                </li>
+                {{-- <li class="c-sidebar-nav-item">
+                    <a href="{{ route('admin.tabla-calendario.index') }}"
+                        class="c-sidebar-nav-link {{ request()->is('tabla-calendario') || request()->is('tabla-calendario/*') ? 'active' : '' }}">
+                        <i class="fas fa-calendar-check iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca">Calendario</font>
+                    </a>
+                </li> --}}
+                <li class="c-sidebar-nav-dropdown">
+                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                        <i class="fas fa-calendar-alt iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca " style="margin-left:10px;"> Calendario </font>
+                    </a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.calendario-oficial.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('calendario-oficial') || request()->is('calendario-oficial/*') ? 'active' : '' }}">
+                                <i class="ml-2 fas fa-drum iconos_menu letra_blanca"style="font-size:12pt;"></i>
+                                <font class="letra_blanca" style="margin-left:10px;">Dias Festivos</font>
+                            </a>
+                        </li>
+
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.tabla-calendario.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('tabla-calendario') || request()->is('tabla-calendario/*') ? 'active' : '' }}">
+                                <i class="ml-2 fas fa-gifts iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                <font class="letra_blanca" style="margin-left:10px;">Eventos</font>
+                            </a>
+                        </li>
+
+
+
+                    </ul>
+                </li>
+            </ul>
         </li>
         <li class="c-sidebar-nav-item">
             <a href="{{ route('admin.analisis-riesgos.menu') }}"
@@ -267,7 +385,13 @@
             </ul>
         </li> --}}
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') ? 'active' : '' }}"
+            <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') || request()->is('admin/analisisdebrechas') || request()->is('admin/planTrabajoBase') || request()->is('admin/partes-interesadas')
+            || request()->is('admin/matriz-requisito-legales') || request()->is('admin/entendimiento-organizacions') || request()->is('admin/alcance-sgsis') || request()->is('admin/comiteseguridads')
+            || request()->is('admin/minutasaltadireccions') || request()->is('admin/evidencias-sgsis') || request()->is('admin/politica-sgsis') || request()->is('admin/paneldeclaracion')
+            || request()->is('admin/objetivosseguridads')  || request()->is('admin/concientizacion-sgis') || request()->is('admin/material-sgsis') || request()->is('admin/comunicacion-sgis')
+            || request()->is('admin/control-accesos') || request()->is('admin/declaracion-aplicabilidad') || request()->is('admin/planificacion-controls') || request()->is('admin/tratamiento-riesgos')
+            || request()->is('admin/indicadores-sgsis') || request()->is('admin/auditoria-anuals') || request()->is('admin/plan-auditoria')
+            || request()->is('admin/revision-direccions')  || request()->is('admin/auditoria-internas') || request()->is('admin/accion-correctivas') || request()->is('admin/inicioUsuario/reportes/mejoras')? 'active' : '' }}"
                 href="{{ route('admin.iso27001.index') }}#contexto">
                 <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> ISO 27001 </font>
@@ -447,6 +571,17 @@
                                 @endcan
                             </ul>
                         </li>
+                        @can('organizacion_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route('admin.glosarios.index') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
+                                    <i class="fas fa-bullseye iconos_menu letra_blanca">
+
+                                    </i>
+                                    <font class="letra_blanca" style="margin-left:10px;">Glosario</font>
+                                </a>
+                            </li>
+                        @endcan
                     @endcan
                     @can('configuracion_empleados_access')
                         {{-- <li class="c-sidebar-nav-item">
