@@ -776,7 +776,9 @@ class EV360EvaluacionesController extends Controller
                 return intval($evaluador->tipo) == EvaluadoEvaluador::MISMA_AREA;
             });
             $promedio_competencias = 0;
-            $cantidad_competencias_evaluadas = $evaluado->puestoRelacionado->competencias->count() > 0 ? $evaluado->puestoRelacionado->competencias->count() : 1;
+            $promedio_competencias_collect = collect();
+            // $cantidad_competencias_evaluadas = $evaluado->puestoRelacionado->competencias->count() > 0 ? $evaluado->puestoRelacionado->competencias->count() : 1;
+            $cantidad_competencias_evaluadas = count($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id)) ? count($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id)) : 1;
             $lista_autoevaluacion->push([
                 'tipo' => 'Autoevaluación',
                 'peso_general' => $evaluacion->peso_autoevaluacion,
@@ -943,11 +945,17 @@ class EV360EvaluacionesController extends Controller
                 }),
             ]);
 
-            $promedio_objetivos += (($calificacion_objetivos * 100) / 2) / 100;
-            $promedio_general_objetivos += $promedio_objetivos * $evaluacion->peso_general_objetivos;
-            $promedio_objetivos = number_format($promedio_objetivos, 2);
-            $promedio_general_objetivos = number_format($promedio_general_objetivos, 2);
-            $calificacion_final += $promedio_general_objetivos;
+            if ($this->empleadoTieneObjetivosAsignados($evaluado->id, $evaluacion->id)) {
+                $promedio_objetivos += (($calificacion_objetivos * 100) / 2) / 100;
+                $promedio_general_objetivos += $promedio_objetivos * $evaluacion->peso_general_objetivos;
+                $promedio_objetivos = number_format($promedio_objetivos, 2);
+                $promedio_general_objetivos = number_format($promedio_general_objetivos, 2);
+                $calificacion_final += $promedio_general_objetivos;
+            } else {
+                $promedio_objetivos = 1;
+                $promedio_general_objetivos = 100 * ($evaluacion->peso_general_objetivos / 100);
+                $calificacion_final += $evaluacion->peso_general_objetivos;
+            }
         }
 
         return [
@@ -1040,6 +1048,14 @@ class EV360EvaluacionesController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('lista_evaluados', 'calificaciones', 'evaluacion'));
     }
 
+    public function resumenJefe($evaluacion)
+    {
+        $evaluacion = Evaluacion::with('evaluados')->find(intval($evaluacion));
+        $evaluados = $evaluacion->evaluados;
+
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('calificaciones', 'evaluacion'));
+    }
+
     public function evaluacionesDelEmpleado($empleado)
     {
         $empleado = Empleado::find($empleado);
@@ -1119,5 +1135,52 @@ class EV360EvaluacionesController extends Controller
     public function enviarCorreoInvitacionAlEvaluado($email, $evaluacion, $evaluador, $evaluado, $enlace)
     {
         Mail::to($email)->send(new CitaEvaluadorEvaluado($evaluacion, $evaluador, $evaluado, $enlace));
+    }
+
+    public function obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion)
+    {
+        $competencias = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)->pluck('competencia_id')->unique()->toArray();
+
+        return $competencias;
+    }
+
+    public function empleadoTieneCompetenciasAsignadas($empleado, $evaluacion)
+    {
+        $existsObjetivos = EvaluacionRepuesta::where('evaluado_id', $empleado)->where('evaluacion_id', $evaluacion)->exists();
+        if ($existsObjetivos) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function empleadoTieneObjetivosAsignados($empleado, $evaluacion)
+    {
+        $existsObjetivos = ObjetivoRespuesta::where('evaluado_id', $empleado)->where('evaluacion_id', $evaluacion)->exists();
+        if ($existsObjetivos) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function misEvaluaciones($evaluacion, $evaluado)
+    {
+        $evaluacion = Evaluacion::select('id', 'nombre')->find(intval($evaluacion));
+        $evaluado = Empleado::select('id', 'name')->find(intval($evaluado));
+        $equipo = false;
+        // dd($informacion_obtenida);
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.mis-evaluaciones', compact('evaluacion', 'evaluado', 'equipo'));
+    }
+
+    public function evaluacionesDeMiEquipo($evaluacion, $evaluador)
+    {
+        $evaluacion = Evaluacion::select('id', 'nombre')->find(intval($evaluacion));
+        $evaluador = Empleado::select('id', 'name')->with('children')->find(intval($evaluador));
+        $evaluado = $this->obtenerEquipoACargo($evaluador->children);
+        $evaluado = $evaluador->children->first();
+        $equipo = true;
+        // dd($informacion_obtenida);
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.mis-evaluaciones', compact('evaluacion', 'evaluador', 'equipo', 'evaluado'));
     }
 }

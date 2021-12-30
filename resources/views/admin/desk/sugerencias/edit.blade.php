@@ -6,8 +6,15 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
+    <style>
+        ol.breadcrumb {
+            margin-bottom: 0px;
+        }
+
+    </style>
 @endsection
 
+{{ Breadcrumbs::render('sugerencias-edit', $sugerencias) }}
 @include('partials.flashMessages')
 <div class="card">
     <div class="text-center card-header" style="background-color: #00abb2;">
@@ -72,7 +79,7 @@
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
                                 <select name="estatus" class="form-control" id="opciones"
-                                onchange='cambioOpciones();'>
+                                    onchange='cambioOpciones();'>
                                     <option {{ old('estatus', $sugerencias->estatus) == 'nuevo' ? 'selected' : '' }}
                                         value="nuevo">Nuevo</option>
                                     <option
@@ -101,7 +108,8 @@
                                     hora
                                     de cierre del ticket</label>
 
-                                    <input class="form-control"  name="fecha_cierre" readonly type="datetime" value="{{ $sugerencias->fecha_cierre }}" id="solucion">
+                                <input class="form-control" name="fecha_cierre" readonly type="datetime"
+                                    value="{{ $sugerencias->fecha_cierre }}" id="solucion">
 
                             </div>
 
@@ -213,9 +221,9 @@
                                 </div>
                             </div>
 
-                                <div class="mb-3 col-sm-12 col-lg-12 col-md-12 text-primary ">
-                                    <strong style="font-size:13pt;">Folio: {{ $sugerencias->folio }}</strong>
-                                </div>
+                            <div class="mb-3 col-sm-12 col-lg-12 col-md-12 text-primary ">
+                                <strong style="font-size:13pt;">Folio: {{ $sugerencias->folio }}</strong>
+                            </div>
 
                             <div class="col-md-4">
                                 Seleccione el metódo de análisis

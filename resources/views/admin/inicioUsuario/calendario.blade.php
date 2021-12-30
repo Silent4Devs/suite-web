@@ -1,3 +1,5 @@
+@inject('Empleado', 'App\Models\Empleado')
+
 <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
 <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
 
@@ -8,7 +10,7 @@
     .caja{
         width: 100%;
         height:600px;
-        padding: 0; 
+        padding: 0;
         position: relative;
     }
     #lnb{
@@ -63,9 +65,9 @@
         position: relative;
     }
     .calendar-icon.ic-arrow-line-right::before{
-        content: ">";
+        content: "»";
         position: absolute;
-        transform: scale(1.3);
+        transform: scale(1.8);
         font-size: 10pt;
         width: 100%;
         height: 100%;
@@ -74,11 +76,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        font-weight: bolder;
+        font-family: arial rounded mt;
+        font-style: normal !important;
     }
     .calendar-icon.ic-arrow-line-left::before{
-        content: "<";
+        content: "»";
         position: absolute;
-        transform: scale(1.3);
+        transform: scale(1.8) rotate(180deg);
         font-size: 10pt;
         width: 100%;
         height: 100%;
@@ -87,6 +92,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        font-weight: bolder;
+        font-family: arial rounded mt;
+        font-style: normal !important;
     }
     a:hover{
         text-decoration: none !important;
@@ -102,7 +110,6 @@
 
 
     .tui-full-calendar-weekday-grid-more-schedules{
-        margin-top: -35px !important;
         position: relative !important;
    }
    .tui-full-calendar-weekday-grid-more-schedules:after{
@@ -113,12 +120,38 @@
         padding: 0 5px  !important;
         left: 15px;
    }
+
+   .tui-full-calendar-weekday-schedule-title{
+        position: relative;
+   }
+    .tui-full-calendar-weekday-schedule-title strong{
+        font-size: 9pt !important;
+        position: absolute;
+        right: 10px;
+   }
+    .tui-full-calendar-weekday-schedule-title strong:before{
+        content: "Inicio:  ";
+   }
+   .dropdown-menu.show{
+        width: 250px !important;
+   }
+
+
+
+   .i_calendar{
+        font-size: 11pt;
+        width: 20px;
+        text-align: center;
+   }
+   .i_calendar_cuadro{
+        margin: 0px 8px;
+   }
 </style>
 
 
 <div class="caja">
     <div id="lnb">
-        
+
         <div id="lnb-calendars" class="lnb-calendars">
             <div>
                 <div class="lnb-calendars-item">
@@ -132,7 +165,7 @@
             </div>
             <div id="calendarList" class="lnb-calendars-d1">
             </div>
-        </div>  
+        </div>
     </div>
     <div id="right">
         <div id="menu">
@@ -146,17 +179,17 @@
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
                     <li role="presentation">
                         <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
-                            <i class="calendar-icon ic_view_day"></i>Atrasados
+                            <i class="calendar-icon ic_view_day"></i>Diario
                         </a>
                     </li>
                     <li role="presentation">
                         <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
-                            <i class="calendar-icon ic_view_week"></i>Semanales
+                            <i class="calendar-icon ic_view_week"></i>Semanal
                         </a>
                     </li>
                     <li role="presentation">
                         <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
-                            <i class="calendar-icon ic_view_month"></i>Mensuales
+                            <i class="calendar-icon ic_view_month"></i>Mensual
                         </a>
                     </li>
                     <li role="presentation">
@@ -206,11 +239,6 @@
 </div>
 
 
-
-
-
-
-
 @section('scripts')
     @parent
     <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
@@ -226,111 +254,17 @@
 
     <script type="text/javascript">
 
-        // let recursos = @json($recursos);
-        // let recursos_array = recursos.map(recurso=>{
-        //     return { 
-        //         id: `recursos${recurso.id}`,
-        //         calendarId: '3',
-        //         title: `${recurso.cursoscapacitaciones}`,
-        //         category: 'allday',
-        //         dueDateClass: '',
-        //         start: `${recurso.fecha_curso}`,
-        //         end: `${recurso.fecha_fin}`,
-        //         isReadOnly : true,
-        //     }
-        // });
-
-        // let actividades = @json($actividades);
-        // actividades.forEach(task => {
-        //     console.log(task);
-        // });
-        // let actividades_array = actividades.map(task=>{
-        //    let foto = 'man.png';
-        //          let images = "";
-        //          let assigs = task.assigs.map(asignado => {
-        //              return response.resources.find(r => Number(r.id) === Number(asignado.resourceId));
-        //          });
-        //          let filteredAssigs = assigs.filter(function(a) {
-        //              return a != null;
-        //          });
-        //          let bgColor = "#00b1e1";
-        //          let estatus = "Sin iniciar";
-        //          if (filteredAssigs.length > 0) {
-        //              filteredAssigs.forEach(assig => {
-        //                  if (assig.foto == null) {
-        //                      if (assig.genero == 'M') {
-        //                          foto = 'woman.png';
-        //                      } else {
-        //                          foto = 'usuario_no_cargado.png';
-        //                      }
-        //                  } else {
-        //                      foto = assig.foto;
-        //                  }
-
-        //                  images +=
-        //                      `<img class="rounded-circle" src="{{ asset('storage/empleados/imagenes') }}/${foto}" title="${assig.name}"/>`;
-        //              });
-        //          }
-        //          switch (task.status) {
-        //              case "STATUS_ACTIVE":
-        //                  bgColor = "#ecde00";
-        //                  estatus = "En progreso"
-        //                  break;
-        //              case "STATUS_DONE":
-        //                  bgColor = "#17d300";
-        //                  estatus = "Completado"
-        //                  break;
-        //              case "STATUS_FAILED":
-        //                  bgColor = "#e10000";
-        //                  estatus = "Con retraso"
-        //                  break;
-        //              case "STATUS_SUSPENDED":
-        //                  bgColor = "#e7e7e7";
-        //                  estatus = "Suspendida"
-        //                  break;
-        //              case "STATUS_UNDEFINED":
-        //                  bgColor = "#00b1e1";
-        //                  estatus = "Sin iniciar"
-        //                  break;
-        //              default:
-        //                  bgColor = "#00b1e1";
-        //                  estatus = "Sin iniciar"
-        //                  break;
-        //          }
-        //          return {
-        //              id: `r_${task.id}`,
-        //              calendarId: `${task.level == 0 ? '1': '2'}`,
-        //             //  bgColor: bgColor,
-        //              title: `${task.level == 0 ? 'Fase: ': 'Actividad: '}${task.name}`,
-        //              category: 'allday',
-        //              body: `${filteredAssigs.length > 0 ? "<h5>Responsables</h5>":""} ${images} <p>Estatus: <span class="badge ${task.status}">${estatus}</span></p>`,
-        //              dueDateClass: '',
-        //              start: `${moment.unix((task.start)/1000).format("YYYY-MM-DD")} 04:59:59`,
-        //              end: `${moment.unix((task.end)/1000).format("YYYY-MM-DD")} 05:00:00`,
-        //              isReadOnly: true,
-        //              disableClick: true,
-        //              useCreationPopup: true
-        //          }
-        // });
-        // console.log(actividades);
-
          ScheduleList = [
-            
-
-           
-
 
             @foreach($recursos as $it_recursos)
-
                 {
-
                     id: 'recursos{{$it_recursos->id}}',
                     calendarId: '2',
-                    title: '{{$it_recursos->cursoscapacitaciones}}',
-                    category: 'allday',
+                    title: '<i class="fas fa-graduation-cap i_calendar_cuadro"></i> Curso: {{$it_recursos->cursoscapacitaciones}}',
+                    category: 'time',
                     dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::parse($it_recursos->fecha_curso)->format('Y-m-d') }}',
-                    end: '{{  \Carbon\Carbon::parse($it_recursos->fecha_fin)->format('Y-m-d') }}',
+                    start: '{{  \Carbon\Carbon::parse($it_recursos->fecha_curso)->toDateTimeString() }}',
+                    end: '{{  \Carbon\Carbon::parse($it_recursos->fecha_fin)->toDateTimeString() }}',
                     body: `
                         <font style="font-weight: bold;">Categoria:</font> ${@json($it_recursos->tipo)}<br>
                         <font style="font-weight: bold;">Inicio:</font> ${@json($it_recursos->fecha_curso)} horas<br>
@@ -341,19 +275,70 @@
                     `,
                     isReadOnly : true,
                 },
-
+            @endforeach
+            @foreach ($eventos as $evento)
+                {
+                id: 'evento{{ $evento->id }}',
+                calendarId: '4',
+                title: '<i class="fas fa-cocktail i_calendar_cuadro"></i> Evento: {{ $evento->nombre }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[0])->format("Y-m-d") }}',
+                end: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[1])->format("Y-m-d") }}',
+                isReadOnly : true,
+                },
             @endforeach
 
-             @foreach($auditoria_internas as $it_auditoria_internas)
+            @foreach($cumples_aniversarios as $cumple)
+                {
+                    id: 'cumple{{$cumple->id}}',
+                    calendarId: '5',
+                    title: '<i class="fas fa-birthday-cake i_calendar_cuadro"></i> Cumpleaños de {{$cumple->name}}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ $cumple->actual_birdthday }}',
+                    end: '{{ $cumple->actual_birdthday }}',
+                    isReadOnly : true,
+                },
+            @endforeach
+
+
+            @foreach($cumples_aniversarios as $aniversario)
+                {
+                    id: 'aniversario{{$aniversario->id}}',
+                    calendarId: '6',
+                    title: '<i class="fas fa-award i_calendar_cuadro"></i> Aniversario de {{$aniversario->name}}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ $aniversario->actual_aniversary }}',
+                    end: '{{ $aniversario->actual_aniversary }}',
+                    isReadOnly : true,
+                },
+            @endforeach
+
+             @foreach ($oficiales as $oficial)
+                {
+                id: 'oficial{{ $oficial->id }}',
+                calendarId: '7',
+                title: '<i class="fas fa-drum i_calendar_cuadro"></i>Festivo: {{ $oficial->nombre }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{  \Carbon\Carbon::parse(explode("-",$oficial->fecha)[0])->format("Y-m-d") }}',
+                end: '{{  \Carbon\Carbon::parse(explode("-",$oficial->fecha)[1])->format("Y-m-d") }}',
+                isReadOnly : true,
+                },
+            @endforeach
+
+            @foreach($auditoria_internas as $it_auditoria_internas)
                 {
                     id: 'auditoria{{$it_auditoria_internas->id}}',
                     calendarId: '3',
-                    title: 'Alcance: {{$it_auditoria_internas->alcance}}',
-                    category: 'allday',
+                    title: '<i class="fas fa-clipboard-list i_calendar_cuadro"></i> Alcance: {{$it_auditoria_internas->alcance}}',
+                    category: 'time',
                     dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->format("Y-m-d") }}',
-                    end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->format("Y-m-d") }}',
-                    isReadOnly : true, 
+                    start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() }}',
+                    end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() }}',
+                    isReadOnly : true,
                 },
             @endforeach
 
@@ -361,7 +346,7 @@
                  {
                     id: 'recurasdsos{{$task->id}}',
                     calendarId: '1',
-                    title: 'Actividad: {{$task->name}}',
+                    title: '<i class="fas fa-thumbtack i_calendar_cuadro"></i> Actividad: {{$task->name}}',
                     category: 'allday',
                     dueDateClass: '',
                     start: '{{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTimeString()
@@ -369,10 +354,38 @@
                     end: '{{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTimeString()
                      }}',
                     isReadOnly : true,
+                    body:  ` Origen: {{$task->parent}} <br/>
 
+                        Asigandos:
+                        @foreach ($task->assigs as $assig)
+                            @php
+                                $empleado = $Empleado->where('id', intval($assig->resourceId))->first();
+                            @endphp
+                            @if ($empleado)
+                                <img src="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
+                                    style="height: 37px; clip-path: circle(18px at 50% 50%);"
+                                    class="rounded-circle {{ $empleado->id == auth()->user()->empleado->id ? 'd-none' : '' }}"
+                                    alt="{{ $empleado->name }}" title="{{ $empleado->name }}">
+                                {{ $empleado->id == auth()->user()->empleado->id ? '' : '' }}
+                            @endif
+                        @endforeach
+
+                    `,
                 },
             @endforeach
+
+
         ]
+
+
+
     </script>
+
     <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function(){
+            $(".tui-full-calendar-weekday-schedule-title").attr("title", "");
+        });
+    </script>
 @endsection

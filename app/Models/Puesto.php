@@ -7,11 +7,15 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class Puesto extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use QueryCacheable;
 
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     public $table = 'puestos';
 
     protected $dates = [
@@ -27,6 +31,20 @@ class Puesto extends Model
         'updated_at',
         'deleted_at',
         'team_id',
+        'id_area',
+        'id_reporta',
+        'estudios',
+        'experiencia',
+        'conocimientos',
+        'conocimientos_esp',
+        'certificaciones',
+        'sueldo',
+        'lugar_trabajo',
+        'horario',
+        'edad',
+        'genero',
+        'estado_civil',
+
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -42,5 +60,27 @@ class Puesto extends Model
     public function competencias()
     {
         return $this->hasMany('App\Models\RH\CompetenciaPuesto', 'puesto_id', 'id');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'id_area');
+    }
+
+    public function empleados()
+    {
+        return $this->belongsTo(Empleado::class, 'id_reporta');
+    }
+
+    public function language()
+    {
+        return $this->belongsToMany('\App\Language', 'puesto_idioma_porcentaje_pivot')
+            ->withPivot('id_idioma');
+    }
+
+    public function porcentaje()
+    {
+        return $this->belongsToMany('\App\Porcentaje', 'puesto_idioma_porcentaje_pivot')
+            ->withPivot('id_porcentaje');
     }
 }

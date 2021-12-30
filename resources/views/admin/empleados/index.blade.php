@@ -1,5 +1,29 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+          .dataTables_length label{
+            color:white;
+
+        }
+
+        .dataTables_length:before{
+            content:"Mostrar" !important;
+            color:#111 !important;
+            margin-right:-30px !important;
+            position:relative;
+            z-index:2;
+
+        }
+
+        .dataTables_length:after{
+            content:"empleados" !important;
+            color:#111 !important;
+            margin-left:-35px !important;
+            position:relative;
+            z-index:2;
+
+        }
+    </style>
     <div class="mt-5 card">
         @can('configuracion_empleados_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -16,7 +40,8 @@
                     </div>
                     <div class="col-11">
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
-                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Cree el listado de los empleados, comenzando
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Cree el listado de los empleados,
+                            comenzando
                             por el de más alta jerarquía</p>
                     </div>
                 </div>
@@ -80,7 +105,8 @@
         $(function() {
             let numero = document.querySelector('#numero');
             numero.innerHTML = 'N°';
-            let dtButtons = [{
+            let dtButtons = [
+                {
                     extend: 'csvHtml5',
                     title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
@@ -161,6 +187,20 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
+
+                let btnConf = {
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Configurar mis datos',
+                titleAttr: 'conf',
+                url: "{{ url('admin/panel-inicio') }}",
+                className: "btn-xs btn-primary rounded ml-2 pr-3",
+                action: function(e, dt, node, config) {
+                let {
+                url
+                } = config;
+                window.location.href = url;
+                }
+                };
+                dtButtons.push(btnConf);
             @endcan
 
             @can('configuracion_empleados_delete')

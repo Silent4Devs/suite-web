@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Area.
@@ -39,6 +40,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Area extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     protected $table = 'areas';
 
     protected $dates = [
@@ -58,10 +63,11 @@ class Area extends Model
         'id_grupo',
         'id_reporta',
         'descripcion',
+        'foto_area',
         'team_id',
     ];
 
-    protected $appends = ['grupo_name'];
+    protected $appends = ['grupo_name', 'foto_ruta'];
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -126,5 +132,25 @@ class Area extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function puesto()
+    {
+        return $this->hasMany(Puesto::class, 'id_area');
+    }
+
+    public function matriz_riesgos()
+    {
+        return $this->hasMany(MatrizRiesgo::class, 'id_responsable');
+    }
+
+    public function getFotoRutaAttribute()
+    {
+        $foto_url = asset('img/areas.jpg');
+        if ($this->foto_area) {
+            $foto_url = asset("storage/areas/{$this->foto_area}");
+        }
+
+        return $foto_url;
     }
 }

@@ -13,7 +13,7 @@ body {
 
 .btn:hover {
   border: solid 1px #bbb;
-  background-color: #fff;
+  /*background-color: #fff;*/
 }
 
 .btn:active {

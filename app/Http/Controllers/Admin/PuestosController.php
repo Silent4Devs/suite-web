@@ -7,6 +7,9 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyPuestoRequest;
 use App\Http\Requests\StorePuestoRequest;
 use App\Http\Requests\UpdatePuestoRequest;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\Language;
 use App\Models\Puesto;
 use App\Models\Team;
 use Gate;
@@ -51,7 +54,7 @@ class PuestosController extends Controller
                 return $row->puesto ? $row->puesto : '';
             });
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
+                return $row->descripcion ? html_entity_decode(strip_tags($row->descripcion), ENT_QUOTES, 'UTF-8') : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -68,7 +71,89 @@ class PuestosController extends Controller
     {
         abort_if(Gate::denies('puesto_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.puestos.create');
+        $json = '[{
+                    "abr":"zh",
+                    "idioma":"Chinese"
+                },
+                {
+                    "abr":"en",
+                    "idioma":"English"
+                },
+                {
+                    "abr":"fr",
+                    "idioma":"French"
+                },
+                {
+                    "abr":"id",
+                    "idioma":"Indonesian"
+                },
+                {
+                    "abr":"it",
+                    "idioma":"Italian"
+                },
+                {
+                    "abr":"ja",
+                    "idioma":"Japanese"
+                },
+                {
+                    "abr":"pt",
+                    "idioma":"Portuguese"
+                },
+                {
+                    "abr":"es",
+                    "idioma":"Spanish; Castilian"
+                }]
+        ';
+
+        $lenguajes = (json_decode($json));
+
+        // dd($lenguajes);
+
+        /*
+        $lenguajes = [
+            1=>{
+                "abr" => "zh",
+                "idioma"=>"Chinese",
+            },
+            2=>[
+                "abr" => "en",
+                "idioma"=>"English",
+            ],
+            3=>[
+                "abr" => "fr",
+                "idioma"=>"French",
+
+            ],
+            4=>[
+                "abr" => "id",
+                "idioma"=>"Indonesian",
+            ],
+            5=>[
+                "abr" => "it",
+                "idioma"=>"Italian",
+            ],
+            6=>[
+                "abr" => "ja",
+                "idioma"=>"Japanese",
+            ],
+            7=>[
+                "abr" => "pt",
+                "idioma"=>"Portuguese",
+            ],
+
+            8=>[
+                "abr" => "es",
+                "idioma"=>"Spanish; Castilian",
+            ],
+        ];
+        */
+        // dd($lenguajes);
+        $areas = Area::get();
+        $reportas = Empleado::get();
+        $idis = Language::all();
+        // dd($idis);
+
+        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis'));
     }
 
     public function store(StorePuestoRequest $request)
@@ -81,10 +166,46 @@ class PuestosController extends Controller
     public function edit(Puesto $puesto)
     {
         abort_if(Gate::denies('puesto_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $json = '[{
+                    "abr":"zh",
+                    "idioma":"Chinese"
+                },
+                {
+                    "abr":"en",
+                    "idioma":"English"
+                },
+                {
+                    "abr":"fr",
+                    "idioma":"French"
+                },
+                {
+                    "abr":"id",
+                    "idioma":"Indonesian"
+                },
+                {
+                    "abr":"it",
+                    "idioma":"Italian"
+                },
+                {
+                    "abr":"ja",
+                    "idioma":"Japanese"
+                },
+                {
+                    "abr":"pt",
+                    "idioma":"Portuguese"
+                },
+                {
+                    "abr":"es",
+                    "idioma":"Spanish; Castilian"
+                }]
+        ';
 
+        $lenguajes = (json_decode($json));
+        $areas = Area::get();
+        $reportas = Empleado::get();
         $puesto->load('team');
 
-        return view('admin.puestos.edit', compact('puesto'));
+        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)

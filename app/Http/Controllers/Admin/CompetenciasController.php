@@ -8,11 +8,18 @@ use App\Http\Requests\MassDestroyCompetenciumRequest;
 use App\Http\Requests\StoreCompetenciumRequest;
 use App\Http\Requests\UpdateCompetenciumRequest;
 use App\Models\Area;
+use App\Models\CertificacionesEmpleados;
 use App\Models\Competencium;
+use App\Models\CursosDiplomasEmpleados;
+use App\Models\Empleado;
+use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\Team;
 use App\Models\User;
+use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -179,10 +186,145 @@ class CompetenciasController extends Controller
 
     public function buscarcv(Request $request)
     {
-        // dd($request->all());
-
         $areas = Area::get();
 
         return view('admin.competencia.buscarCV', compact('areas'));
+    }
+
+    public function expedientesProfesionales(Request $request)
+    {
+        $areas = Area::get();
+
+        return view('admin.competencia.expedientes', compact('areas'));
+    }
+
+    public function miCurriculum(Request $request, Empleado $empleado)
+    {
+        return view('admin.competencia.mi-cv', compact('empleado'));
+    }
+
+    public function editarCompetencias(Empleado $empleado)
+    {
+        $isEditAdmin = false;
+
+        return view('admin.empleados.edit', compact('isEditAdmin', 'empleado'));
+    }
+
+    public function cargarDocumentos(Request $request, Empleado $empleado)
+    {
+        $request->merge([
+            'empleado_id' => $empleado->id,
+        ]);
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            // 'numero' => 'required|string|max:255',
+            'documentos' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
+            'empleado_id' => 'required|exists:empleados,id',
+        ]);
+
+        // dd($empleado);
+        $evidencia = EvidenciasDocumentosEmpleados::create($request->all());
+
+        if ($request->hasFile('documentos')) {
+            $file = $request->file('documentos');
+            if (Storage::putFileAs('public/expedientes/' . Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
+                $evidencia->update([
+                    'documentos' => $file->getClientOriginalName(),
+                ]);
+            }
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Documentos cargados con éxito']);
+    }
+
+    public function cargarCapacitaciones(Request $request, $empleado)
+    {
+        $request->merge([
+            'empleado_id' => $empleado,
+        ]);
+        $request->merge(['duracion' => Carbon::parse($request->año)->diffInDays($request->fecha_fin) + 1]);
+        $request->validate([
+            'curso_diploma' => 'required|string|max:255',
+            'tipo' => 'required',
+            'año' => 'required|date|before_or_equal:fecha_fin',
+            'fecha_fin' => 'required|date|after_or_equal:año',
+            'duracion' => 'required',
+            'empleado_id' => 'required|exists:empleados,id',
+        ], [
+            'curso_diploma.required' => 'El campo nombre es requerido',
+            'año.required' => 'El campo fecha inicio es requerido',
+        ]);
+
+        $empleado = Empleado::find(intval($empleado));
+        $curso = CursosDiplomasEmpleados::create([
+            'empleado_id' => $empleado->id,
+            'curso_diploma' => $request->curso_diploma,
+            'tipo' =>  $request->tipo,
+            'año' =>  $request->año,
+            'fecha_fin' =>  $request->fecha_fin,
+            'duracion' =>  $request->duracion,
+        ]);
+
+        if ($request->hasFile('file')) {
+            $filenameWithExt = $request->file('file')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('file')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $path = $request->file('file')->storeAs('public/cursos_empleados', $fileNameToStore);
+
+            $curso->update([
+                'file' => $fileNameToStore,
+            ]);
+        }
+        if ($curso) {
+            return response()->json(['status' => 'success', 'message' => 'Capacitación cargada con éxito']);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Ocurrió un error']);
+        }
+    }
+
+    public function cargarCertificacion(Request $request, Empleado $empleado)
+    {
+        if ($request->esVigente == 'true') {
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+                'documento' => 'required|mimes:pdf|max:10000',
+                'vigencia' => 'required|date|max:255',
+                'estatus' => 'required|string|max:255',
+            ]);
+        } else {
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+                'documento' => 'required|mimes:pdf|max:10000',
+            ]);
+        }
+
+        $certificado = CertificacionesEmpleados::create([
+            'empleado_id' => $empleado->id,
+            'nombre' => $request->nombre,
+            'estatus' =>  $request->estatus,
+            'vigencia' =>  $request->vigencia,
+        ]);
+        if ($request->hasFile('documento')) {
+            $filenameWithExt = $request->file('documento')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('documento')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $path = $request->file('documento')->storeAs('public/certificados_empleados', $fileNameToStore);
+
+            $certificado->update([
+                'documento' => $fileNameToStore,
+            ]);
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Certificación guardada']);
     }
 }

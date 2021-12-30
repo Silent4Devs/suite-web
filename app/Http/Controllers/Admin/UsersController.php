@@ -214,4 +214,34 @@ class UsersController extends Controller
             return response()->json(['success' => true]);
         }
     }
+
+    public function cambiarVerificacion(User $user)
+    {
+        if ($user->two_factor) {
+            $message = "Verificación por dos factores deshabilitada para el usuario {$user->name}";
+        } else {
+            $message = "Verificación por dos factores habilitada para el usuario {$user->name}";
+        }
+
+        $user->two_factor = !$user->two_factor;
+
+        $user->save();
+
+        return redirect()->route('admin.users.index')->with('success', $message);
+    }
+
+    public function toogleBloqueo(User $user)
+    {
+        if ($user->is_active) {
+            $message = "El usuario {$user->name} ha sido bloqueado";
+        } else {
+            $message = "El usuario {$user->name} ha sido desbloqueado";
+        }
+
+        $user->is_active = !$user->is_active;
+
+        $user->save();
+
+        return redirect()->route('admin.users.index')->with('success', $message);
+    }
 }

@@ -10,6 +10,7 @@ use App\Models\HistorialVersionesDocumento;
 use App\Models\IndicadoresSgsi;
 use App\Models\Macroproceso;
 use App\Models\MatrizRiesgo;
+use App\Models\Organizacion;
 use App\Models\Proceso;
 use App\Models\RevisionDocumento;
 use Carbon\Carbon;
@@ -178,9 +179,10 @@ class ProcesoController extends Controller
 
         $macros_mapa = Macroproceso::get();
         $procesos_mapa = Proceso::get();
+        $organizacion = Organizacion::first();
         $exist_no_publicado = Proceso::select('estatus')->where('estatus', Proceso::NO_ACTIVO)->exists();
 
-        return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado'));
+        return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado', 'organizacion'));
     }
 
     public function obtenerDocumentoProcesos($documento)
@@ -192,7 +194,7 @@ class ProcesoController extends Controller
         $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento->id)->get();
         // dd($revisiones);
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
-        $indicadores = IndicadoresSgsi::where('id_proceso',$proceso->id)->get();
+        $indicadores = IndicadoresSgsi::where('id_proceso', $proceso->id)->get();
         // dd($indicadores);
         $riesgos = MatrizRiesgo::with(['analisis_de_riesgo'=>function ($q) {
             $q->select('id', 'nombre');
@@ -222,12 +224,10 @@ class ProcesoController extends Controller
 
         $barras = '<canvas id="resultadobarra" width="900" height="750"></canvas>';
 
-
         $evaluaciones = EvaluacionIndicador::select('fecha', 'resultado')->where('id_indicador', $input['id'])->get();
         foreach ($evaluaciones as $evaluacion) {
             $evaluacion->fecha = Carbon::parse($evaluacion->fecha)->format('d-m-Y');
         }
-
 
         $porcentaje = number_format(($input['resultado'] * 100) / $input['meta'], 2);
 

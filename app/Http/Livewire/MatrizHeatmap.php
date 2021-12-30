@@ -7,10 +7,13 @@ use App\Models\Area;
 use App\Models\MatrizRiesgo;
 use App\Models\Proceso;
 use App\Models\Sede;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class MatrizHeatmap extends Component
 {
+    use LivewireAlert;
+    
     public $id_analisis;
     public $control;
     public $matriz;

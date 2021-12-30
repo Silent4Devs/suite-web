@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class DeclaracionAplicabilidad extends Model
 {
     use HasFactory;
+    use QueryCacheable;
 
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     public $table = 'declaracion_aplicabilidad';
 
     protected $dates = [
@@ -22,12 +26,15 @@ class DeclaracionAplicabilidad extends Model
         'anexo_indice',
         'control',
         'descripcion_control',
-        'aplica',
         'justificacion',
+        'aplica',
+        'aprobadores_id',
+        'responsables_id',
+        'estatus',
+        'fecha_aprobacion',
         'created_at',
         'updated_at',
     ];
-
 
     public function responsables()
     {
@@ -36,6 +43,16 @@ class DeclaracionAplicabilidad extends Model
 
     public function aprobadores()
     {
-        return $this->belongsToMany('App\Models\Empleado', 'declaracion_aplicabilidad_aprobadores', 'declaracion_id','aprobadores_id');
+        return $this->belongsToMany('App\Models\Empleado', 'declaracion_aplicabilidad_aprobadores', 'declaracion_id', 'aprobadores_id');
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'aprobadores_id', 'id');
+    }
+
+    public function notificacion()
+    {
+        return $this->hasMany(NotificacionAprobadores::class, 'declaracion_id', 'id');
     }
 }

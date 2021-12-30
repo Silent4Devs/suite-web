@@ -77,9 +77,9 @@
 	       			<td>{{ $denuncia->folio }}</td>
 	       			<td>{{ $denuncia->anonimo }}</td>
                     <td>{{ $denuncia->estatus }}</td>
-                    <td>{{ $denuncia->fecha }}</td>
-                    <td>{{ $denuncia->created_at }}</td>
-                    <td>{{ $denuncia->fecha_cierre }}</td>
+                    <td>{{ $denuncia->fecha_creacion }}</td>
+                    <td>{{ $denuncia->fecha_reporte }}</td>
+                    <td>{{ $denuncia->fecha_de_cierre }}</td>
                     @if($denuncia->anonimo == 'no')
                         <td>
                             <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $denuncia->denuncio->avatar }}" title="{{ $denuncia->denuncio->name }}">

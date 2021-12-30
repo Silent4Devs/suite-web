@@ -4,11 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\RH\Competencia;
 use App\Models\RH\TipoCompetencia;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Ev360TablaCompetencias extends Component
 {
+    use LivewireAlert;
     use WithPagination;
     public $showTable = false;
     public $search = '';

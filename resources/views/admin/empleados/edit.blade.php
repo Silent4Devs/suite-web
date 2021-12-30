@@ -1,6 +1,25 @@
 @extends('layouts.admin')
 @section('content')
+    @if ($isEditAdmin)
+        {{ Breadcrumbs::render('empleados-edit', $empleado) }}
+    @else
+        <style>
+            .breadcrumb {
+                margin-bottom: 0 !important;
+            }
+
+        </style>
+        {{ Breadcrumbs::render('Editar-Curriculum', $empleado) }}
+    @endif
     <style>
+        .select2-container {
+            margin-top: 0px !important;
+        }
+
+        .nav-tabs .nav-link.active {
+            border-top: solid 2px #3490dc;
+        }
+
         .screenshot-image {
             width: 150px;
             height: 90px;
@@ -162,971 +181,344 @@
             display: none;
         }
 
+        .collapse:not(.show) {
+            display: inline;
+        }
+
     </style>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong>Empleado </h3>
-        </div>
-
-
-        <div class="card-body">
-
-            <div class="caja_botones_menu">
-                <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-file" style="font-size:30px;"
-                        style="text-decoration:none;"></i>Información General</a>
-                <a href="#" data-tabs="contenido2"><i class="mr-2 fas fa-flag-checkered" style="font-size:30px;"></i>
-                    Competencias</a>
+        @if ($isEditAdmin)
+            <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+                <h3 class="mb-1 text-center text-white"><strong> Editar: </strong>Empleado </h3>
             </div>
-
-
-
-            <div class="row">
-                <div class="col-md-12">
-
-                    <div class="caja_caja_secciones">
-                        <div class="caja_secciones">
-
-
-                            <section id="contenido1" class="mt-4 caja_tab_reveldada">
-                                <div>
-                                    <form method="POST" action="{{ route('admin.empleados.update', [$empleado->id]) }}"
-                                        enctype="multipart/form-data" id="formEmpleados">
-                                        @method('PUT')
-                                        @csrf
-                                        <div class="mb-3 text-center row justify-content-center">
-                                            <div class="text-center col-sm-2 w-50 text-light card-title"
-                                                style="background-color:#1BB0B0">
-                                                Imágen Actual
-                                            </div>
-                                            <div class="col-sm-12"><img class="ml-3"
-                                                    src="{{ asset('storage/empleados/imagenes/' . $empleado->foto) }}"
-                                                    style="width:80px ">
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="name"><i
-                                                        class="fas fa-user iconos-crear"></i>{{ trans('cruds.user.fields.name') }}</label>
-                                                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                                    type="text" name="name" id="name"
-                                                    value="{{ old('name', $empleado->name) }}" required>
-                                                @if ($errors->has('name'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('name') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="n_empleado"><i
-                                                        class="fas fa-street-view iconos-crear"></i>N°
-                                                    de
-                                                    empleado</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}"
-                                                    type="text" name="n_empleado" id="n_empleado"
-                                                    value="{{ old('n_empleado', $empleado->n_empleado) }}">
-                                                @if ($errors->has('n_empleado'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('n_empleado') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="area"><i
-                                                        class="fas fa-street-view iconos-crear"></i>Área</label>
-                                                <div class="mb-3 input-group">
-                                                    <select class="custom-select areas" id="inputGroupSelect01"
-                                                        name="area_id">
-                                                        <option selected disabled value="null">-- Seleccion un área --
-                                                        </option>
-                                                        @forelse ($areas as $area_n)
-                                                            <option value="{{ $area_n->id }}"
-                                                                {{ old('area_id', $area_n->id) == $area->id ? 'selected active' : '' }}>
-                                                                {{ $area_n->area }}</option>
-                                                        @empty
-                                                            <option value="" disabled>Sin Datos</option>
-                                                        @endforelse
-                                                    </select>
-                                                </div>
-                                                @if ($errors->has('area_id'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('area_id') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="jefe"><i
-                                                        class="fas fa-user iconos-crear"></i>Jefe
-                                                    Inmediato</label>
-                                                <div class="mb-3 input-group">
-                                                    <select class="custom-select supervisor" id="inputGroupSelect01"
-                                                        name="supervisor_id">
-                                                        <option selected disabled value="null">-- Selecciona supervisor --
-                                                        </option>
-                                                        @if (!$ceo_exists)
-                                                            <option value="">CEO</option>
-                                                        @endif
-                                                        @forelse ($empleados as $empleado_r)
-                                                            @if ($empleado_r->id != $empleado->id)
-                                                                <option value="{{ $empleado_r->id }}"
-                                                                    {{ old('supervisor_id', $empleado_r->id) == $empleado->supervisor_id ? 'selected' : '' }}>
-                                                                    {{ $empleado_r->name }}</option>
-                                                            @endif
-                                                        @empty
-                                                            <option value="" disabled>Sin Datos</option>
-                                                        @endforelse
-                                                    </select>
-                                                </div>
-                                                @if ($errors->has('supervisor_id'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('supervisor_id') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-3">
-                                                <label class="required" for="puesto_id"><i
-                                                        class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                                                <select
-                                                    class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
-                                                    name="puesto_id" id="puesto_id" value="{{ old('puesto_id', '') }}"
-                                                    required>
-                                                    <option value="" selected disabled>
-                                                        -- Selecciona un puesto --
-                                                    </option>
-                                                    @foreach ($puestos as $puesto)
-                                                        <option
-                                                            {{ old('puesto_id', $empleado->puesto_id) == $puesto->id ? 'selected' : '' }}
-                                                            value="{{ $puesto->id }}">{{ $puesto->puesto }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                {{-- <input
-                                                    class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
-                                                    type="text" name="puesto_id" id="puesto_id"
-                                                    value="{{ old('puesto_id', '') }}" required> --}}
-                                                @if ($errors->has('puesto_id'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('puesto_id') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-3">
-                                                <label class="required" for="perfil_empleado_id"><i
-                                                        class="fas fa-briefcase iconos-crear"></i>Perfil</label>
-                                                <select
-                                                    class="form-control {{ $errors->has('perfil_empleado_id') ? 'is-invalid' : '' }}"
-                                                    name="perfil_empleado_id" id="perfil_empleado_id" required>
-                                                    <option value="" selected disabled>
-                                                        -- Selecciona un perfil --
-                                                    </option>
-                                                    @foreach ($perfiles as $perfil)
-                                                        <option
-                                                            {{ old('perfil_empleado_id', $empleado->perfil_empleado_id) == $perfil->id ? 'selected' : '' }}
-                                                            value="{{ $perfil->id }}">{{ $perfil->nombre }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has('perfil_empleado_id'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('perfil_empleado_id') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="antiguedad"><i
-                                                        class="fas fa-calendar-alt iconos-crear"></i>Fecha
-                                                    de
-                                                    ingreso</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('antiguedad') ? 'is-invalid' : '' }}"
-                                                    type="date" name="antiguedad" id="antiguedad"
-                                                    value="{{ old('antiguedad', \Carbon\Carbon::parse($empleado->antiguedad)->format('Y-m-d')) }}"
-                                                    required>
-                                                @if ($errors->has('antiguedad'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('antiguedad') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="genero"><i
-                                                        class="fas fa-user iconos-crear"></i>Género</label>
-                                                <div class="mb-3 input-group">
-                                                    <select class="custom-select genero" id="genero" name="genero">
-                                                        <option selected value="" disabled>-- Selecciona Género --</option>
-                                                        <option value="H"
-                                                            {{ old('genero', $empleado->genero) == 'H' ? 'selected' : '' }}>
-                                                            Hombre
-                                                        </option>
-                                                        <option value="M"
-                                                            {{ old('genero', $empleado->genero) == 'M' ? 'selected' : '' }}>
-                                                            Mujer
-                                                        </option>
-                                                        <option value="X"
-                                                            {{ old('genero', $empleado->genero) == 'X' ? 'selected' : '' }}>
-                                                            Otro
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                @if ($errors->has('genero'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('genero') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="estatus"><i
-                                                        class="fas fa-business-time iconos-crear"></i>Estatus</label>
-                                                <select class="form-control" class="validate" required=""
-                                                    name="estatus">
-                                                    <option value="" disabled selected>Escoga una opción</option>
-                                                    <option
-                                                        {{ old('estatus', $empleado->estatus) == 'alta' ? 'selected' : '' }}
-                                                        value="alta">
-                                                        Alta
-                                                    </option>
-                                                    <option
-                                                        {{ old('estatus', $empleado->estatus) == 'baja' ? 'selected' : '' }}
-                                                        value="baja">
-                                                        Baja
-                                                    </option>
-                                                </select>
-                                                @if ($errors->has('estatus'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('estatus') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="email"><i
-                                                        class="far fa-envelope iconos-crear"></i>Correo
-                                                    Electrónico</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                                    type="text" name="email" id="email"
-                                                    value="{{ old('email', $empleado->email) }}" required>
-                                                @if ($errors->has('email'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('email') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label for="telefono_movil"><i
-                                                        class="fas fa-phone iconos-crear"></i>Teléfono
-                                                    móvil</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                                    type="number" name="telefono_movil" id="telefono_movil"
-                                                    value="{{ old('telefono_movil', $empleado->telefono_movil) }}">
-                                                @if ($errors->has('telefono_movil'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('telefono_movil') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-4">
-                                                <label for="telefono"><i class="fas fa-phone iconos-crear"></i>Teléfono
-                                                    oficina</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}"
-                                                    type="number" name="telefono" id="telefono"
-                                                    value="{{ old('telefono', $empleado->telefono) }}">
-                                                @if ($errors->has('telefono'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('telefono') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-2">
-                                                <label for="extension"><i
-                                                        class="fas fa-phone-volume iconos-crear"></i>Ext.</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('extension') ? 'is-invalid' : '' }}"
-                                                    type="text" name="extension" id="extension"
-                                                    value="{{ old('extension', $empleado->extension) }}">
-                                                @if ($errors->has('extension'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('extension') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-
-                                            <div class="form-group col-sm-6">
-                                                <label for="sede_id"><i
-                                                        class="fas fa-building iconos-crear"></i>Sede</label>
-                                                        @if ($sedes)
-                                                <select
-                                                    class="form-control select2 {{ $errors->has('sedes') ? 'is-invalid' : '' }}"
-                                                    name="sede_id" id="sede_id">
-                                                    @foreach ($sedes as $sede_actual)
-                                                    @if ($sede)
-                                                    <option value="{{ $sede_actual->id }}"
-                                                        {{ old('sede_id', $sede_actual->id) == $sede->id ? 'selected' : '' }}>
-                                                        {{ $sede_actual->sede }}</option>
-                                                    @else
-                                                    <option value="{{ $sede_actual->id }}">
-                                                        {{ $sede_actual->sede }}</option>
-                                                    @endif
-
-                                                    @endforeach
-                                                </select>
-                                                      @endif
-                                                @if ($errors->has('sede_id'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('sede_id') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-
-
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-12 col-md-6 ">
-                                                <label for="direccion"><i
-                                                        class="fas fa-map iconos-crear"></i>Direccion</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}"
-                                                    type="text" name="direccion" id="direccion"
-                                                    value="{{ old('direccion', $empleado->direccion) }}">
-                                                @if ($errors->has('direccion'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('direccion') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-12 col-md-6">
-                                                <label for="cumpleaños"><i
-                                                        class="fas fa-birthday-cake iconos-crear"></i>Cumpleaños</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('cumpleaños') ? 'is-invalid' : '' }}"
-                                                    type="date" name="cumpleaños" id="cumpleaños"
-                                                    value="{{ old('cumpleaños', $empleado->cumpleaños) }}">
-                                                @if ($errors->has('cumpleaños'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('cumpleaños') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="input-group is-invalid">
-                                                    <div class="form-group"
-                                                        style="width: 100%;border: dashed 1px #cecece;">
-                                                        <div class="row" style="padding: 20px 0;">
-                                                            <div
-                                                                class="col-md-5 col-sm-5 col-12 d-flex justify-content-center">
-                                                                <label style="cursor: pointer" for="foto">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <h5>
-                                                                            <i class="fas fa-image iconos-crear"
-                                                                                style="font-size: 20pt;position: relative;top: 4px;"></i>
-                                                                            <span id="texto-imagen" class="pl-2">
-                                                                                Subir imágen
-                                                                                <small class="text-danger"
-                                                                                    style="font-size: 10px">
-                                                                                    (Opcional)</small>
-                                                                            </span>
-                                                                        </h5>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                            <div
-                                                                class="col-sm-2 col-md-2 col-12 d-flex justify-content-center">
-                                                                Ó
-                                                            </div>
-                                                            <div class="col-md-5 col-sm-5 col-12 d-flex justify-content-center"
-                                                                id="avatar_choose">
-                                                                <label style="cursor: pointer">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <h5>
-                                                                            <i class="fas fa-camera iconos-crear"
-                                                                                style="font-size: 20pt;position: relative;top: 4px;"></i>
-                                                                            <span id="texto-imagen-avatar"
-                                                                                class="pl-2">
-                                                                                Tomar Foto
-                                                                                <small class="text-danger"
-                                                                                    style="font-size: 10px">
-                                                                                    (Opcional)</small>
-                                                                            </span>
-                                                                        </h5>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <input name="foto" type="file" accept="image/png, image/jpeg"
-                                                            class="form-control-file" id="foto" hidden="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" id="canvasFoto" style="display: none">
-                                            <div class="mt-0 display-cover">
-                                                <span class="badge badge-dark" id="cerrarCanvasFoto">&times;</span>
-                                                <video autoplay></video>
-                                                <canvas class="d-none"></canvas>
-
-                                                <div class="video-options">
-                                                    <select name="" id="" class="custom-select devices">
-                                                        <option value="">Selecciona una cámara</option>
-                                                    </select>
-                                                </div>
-
-                                                <img class="screenshot-image d-none" alt="">
-
-                                                <div class="controls">
-                                                    <button class="btn btn-danger play" title="Iniciar"><i
-                                                            class="fas fa-play-circle"></i></button>
-                                                    <button class="btn btn-info pause d-none" title="Pausar"><i
-                                                            class="fas fa-pause-circle"></i></button>
-                                                    <button class="btn btn-danger stop d-none" title="Detener"><i
-                                                            class="fas fa-stop"></i></button>
-                                                    <button class="btn btn-outline-success screenshot d-none"
-                                                        title="Capturar"><i class="fas fa-image"></i></button>
-                                                </div>
-                                            </div>
-                                            <input type="hidden" id="snapshoot" readonly autocomplete="off"
-                                                name="snap_foto">
-                                        </div>
-                                    </form>
-                                </div>
-                            </section>
-
-
-
-
-
-                            <section id="contenido2" class="mt-4 ml-2">
-                                <div>
-
-
-
-                                    <form method="POST"
-                                        action="{{ route('admin.empleados.storeResumen', [$empleado->id]) }}"
-                                        id="formResumen">
-                                        <div class="row">
-                                            <div class="form-group col-sm-12 col-lg-12 col-md-12">
-                                                <label for="resumen"><i
-                                                        class="fas fa-file-alt iconos-crear"></i>Resumen</label>
-                                                <textarea
-                                                    class="form-control {{ $errors->has('resumen') ? 'is-invalid' : '' }}"
-                                                    type="text" name="resumen"
-                                                    id="resumen">{{ old('resumen', $empleado->resumen) }}</textarea>
-                                                @if ($errors->has('resumen'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('resumen') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <button id="btnGuardarResumen" class="mr-3 btn btn-sm btn-outline-success"
-                                            style="float: right; position: relative;"> <i
-                                                class="mr-2 fas fa-plus-circle"></i>Guardar</button>
-                                    </form>
-
-
-                                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
-                                        <span style="font-size: 17px; font-weight: bold;">
-                                            Certificaciones</span>
-                                    </div>
-
-                                    <form method="POST"
-                                        action="{{ route('admin.empleados.storeCertificaciones', [$empleado->id]) }}"
-                                        id="formCertificaciones" enctype="multipart/form-data">
-
-                                        <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" />
-                                        <div class="row">
-                                            <div class="form-group col-sm-12 col-lg-12 col-md-12">
-                                                <label for="nombre"><i
-                                                        class="fas fa-file-signature iconos-crear"></i>Nombre</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                                    type="text" name="nombre" id="nombre_certificado"
-                                                    value="{{ old('nombre', '') }}">
-                                                <span class="errors nombre_error text-danger"></span>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label for="vigencia"><i
-                                                        class="far fa-calendar-alt iconos-crear"></i>Vigencia</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('vigencia') ? 'is-invalid' : '' }}"
-                                                    type="date" name="vigencia" id="vigencia"
-                                                    value="{{ old('vigencia', '') }}">
-                                                <span class="errors vigencia_error text-danger"></span>
-                                            </div>
-
-
-                                            <div class="form-group col-sm-6">
-                                                <label for="estatus"><i
-                                                        class="fas fa-street-view iconos-crear"></i>Estatus</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}"
-                                                    type="text" name="estatus" id="vencio_alta"
-                                                    value="{{ old('estatus', '') }}" readonly>
-                                                <span class="errors estatus_error text-danger"></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="mt-3 col-sm-12 form-group">
-                                                <label for="evidencia"><i
-                                                        class="fas fa-folder-open iconos-crear"></i>Adjuntar
-                                                    Certificado</label>
-                                                <div class="custom-file">
-                                                    <input type="file" name="documento" class="form-control"
-                                                        id="evidencia">
-                                                    <span class="errors documento_error text-danger"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-5 col-12">
-                                            <button id="btn-suscribir-certificado" type="submit"
-                                                class="mr-3 btn btn-sm btn-outline-success"
-                                                style="float: right; position: relative;">
-                                                <i class="mr-1 fas fa-plus-circle"></i>
-                                                Agregar Certificación
-                                                {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
-                                            </button>
-                                        </div>
-
-                                    </form>
-                                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix">
-                                        <table class="table w-100" id="tbl-certificados" style="width:100% !important">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th>Nombre</th>
-                                                    <th>Vigencia</th>
-                                                    <th>Estatus</th>
-                                                    <th>Documento</th>
-                                                    <th>Eliminar</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <input type="hidden" name="certificado" value="" id="certificado">
-
-
-                                    <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
-                                        <span style="font-size: 17px; font-weight: bold;">
-                                            Cursos / Diplomados</span>
-                                    </div>
-
-
-                                    <form method="POST"
-                                        action="{{ route('admin.empleados.storeCursos', [$empleado->id]) }}"
-                                        id="formCursos">
-
-                                        <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" />
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-12">
-                                                <label for="curso_diplomado"><i
-                                                        class="fas fa-street-view iconos-crear"></i>Nombre
-                                                    del curso /
-                                                    diplomado</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('curso_diplomado') ? 'is-invalid' : '' }}"
-                                                    type="text" name="curso_diploma" id="curso_diplomado"
-                                                    value="{{ old('curso_diplomado', '') }}">
-                                                <span class="errors curso_diploma_error text-danger"></span>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label for="tipo"><i
-                                                        class="fas fa-street-view iconos-crear"></i>Tipo</label>
-                                                <select
-                                                    class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
-                                                    name="tipo" id="tipo">
-                                                    <option value disabled
-                                                        {{ old('tipo', null) === null ? 'selected' : '' }}>
-                                                        Selecciona una opción</option>
-                                                    @foreach (App\Models\CursosDiplomasEmpleados::TipoSelect as $key => $label)
-                                                        <option value="{{ $key }}"
-                                                            {{ old('tipo', '') === (string) $key ? 'selected' : '' }}>
-                                                            {{ $label }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="errors tipo_error text-danger"></span>
-                                            </div>
-
-
-
-                                            <div class="form-group col-sm-3">
-                                                <label for="año"><i
-                                                        class="far fa-calendar-alt iconos-crear"></i>Año</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('año') ? 'is-invalid' : '' }}"
-                                                    type="date" name="año" id="año" value="{{ old('año', '') }}">
-                                                <span class="errors año_error text-danger"></span>
-                                            </div>
-
-
-                                            <div class="form-group col-sm-3">
-                                                <label for="duracion"><i
-                                                        class="fas fa-street-view iconos-crear"></i>Duración
-                                                    (Hrs)</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('duracion') ? 'is-invalid' : '' }}"
-                                                    type="number" name="duracion" id="duracion"
-                                                    value="{{ old('duracion', '') }}">
-                                                <span class="errors duracion_error text-danger"></span>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="mb-5 col-12">
-                                            <button id="btn-suscribir-curso" type="submit"
-                                                class="mr-3 btn btn-sm btn-outline-success"
-                                                style="float: right; position: relative;">
-                                                <i class="mr-1 fas fa-plus-circle"></i>
-                                                Agregar Curso / Diplomado
-                                                {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
-                                            </button>
-                                        </div>
-                                    </form>
-
-                                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix">
-                                        <table class="table w-100" id="tbl-cursos">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th>Nombre</th>
-                                                    <th>Tipo</th>
-                                                    <th>Año</th>
-                                                    <th>Duración</th>
-                                                    <th>Eliminar</th>
-                                                </tr>
-
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-
-                                    <input type="hidden" name="curso" value="" id="curso">
-
-
-
-                                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
-                                        <span style="font-size: 17px; font-weight: bold;">
-                                            Experiencia Profesional</span>
-                                    </div>
-
-                                    <form method="POST"
-                                        action="{{ route('admin.empleados.storeExperiencia', [$empleado->id]) }}"
-                                        id="formExperiencia" enctype="multipart/form-data">
-
-                                        <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" />
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label for="empresa"><i
-                                                        class="fas fa-building iconos-crear"></i>Empresa</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}"
-                                                    type="text" name="empresa" id="empresa"
-                                                    value="{{ old('empresa', '') }}">
-                                                <span class="errors empresa_error text-danger"></span>
-                                            </div>
-
-                                            <div class="form-group col-sm-6">
-                                                <label for="puesto"><i
-                                                        class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}"
-                                                    type="text" name="puesto" id="puesto_trabajo"
-                                                    value="{{ old('puesto', '') }}">
-                                                <span class="errors puesto_error text-danger"></span>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="mt-1 form-group col-12">
-                                            <b>Periodo laboral:</b>
-                                        </div>
-
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label for="inicio_mes"><i
-                                                        class="far fa-calendar-alt iconos-crear"></i>De</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('inicio_mes') ? 'is-invalid' : '' }}"
-                                                    type="date" name="inicio_mes" id="inicio_mes"
-                                                    value="{{ old('inicio_mes', '') }}">
-                                                <span class="errors inicio_mes_error text-danger"></span>
-                                            </div>
-
-
-
-                                            <div class="form-group col-sm-6">
-                                                <label for="fin_mes"><i
-                                                        class="far fa-calendar-alt iconos-crear"></i>A</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('fin_mes') ? 'is-invalid' : '' }}"
-                                                    type="date" name="fin_mes" id="fin_mes"
-                                                    value="{{ old('fin_mes', '') }}">
-                                                <span class="errors fin_mes_error text-danger"></span>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-12">
-                                                <label for="descripcion"><i
-                                                        class="fas fa-clipboard-list iconos-crear"></i>Descripción</label>
-                                                <textarea
-                                                    class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                                                    type="text" name="descripcion"
-                                                    id="descripcion"> {{ old('descripcion', '') }}</textarea>
-                                                <span class="errors descripcion_error text-danger"></span>
-                                            </div>
-
-                                        </div>
-
-
-
-                                        <div class="mb-5 col-12">
-                                            <button id="btn-agregar-experiencia" type="submit"
-                                                class="mr-3 btn btn-sm btn-outline-success"
-                                                style="float: right; position: relative;">
-                                                <i class="mr-1 fas fa-plus-circle"></i>
-                                                Agregar Experiencia
-                                                {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
-                                            </button>
-                                        </div>
-                                    </form>
-
-                                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix">
-                                        <table class="table w-100" id="tbl-experiencia">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th>Empresa</th>
-                                                    <th>Puesto</th>
-                                                    <th>Descripción</th>
-                                                    <th>Inicio</th>
-                                                    <th>Fin</th>
-                                                    <th>Eliminar</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <input type="hidden" name="experiencia" value="" id="experiencia">
-
-
-                                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
-                                        <span style="font-size: 17px; font-weight: bold;">
-                                            Educación</span>
-                                    </div>
-
-
-                                    <form method="POST"
-                                        action="{{ route('admin.empleados.storeEducacion', [$empleado->id]) }}"
-                                        id="formEducacion" enctype="multipart/form-data">
-
-                                        <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" />
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label for="institucion"><i
-                                                        class="fas fa-school iconos-crear"></i>Institución</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('institucion') ? 'is-invalid' : '' }}"
-                                                    type="text" name="institucion" id="institucion"
-                                                    value="{{ old('institucion', '') }}">
-                                                <span class="errors institucion_error text-danger"></span>
-                                            </div>
-
-
-                                            <div class="form-group col-sm-6">
-                                                <label for="nivel"><i class="fas fa-street-view iconos-crear"></i>Nivel de
-                                                    estudios</label>
-                                                <select
-                                                    class="form-control {{ $errors->has('nivel') ? 'is-invalid' : '' }}"
-                                                    name="nivel" id="nivel">
-                                                    <option value disabled
-                                                        {{ old('nivel', null) === null ? 'selected' : '' }}>
-                                                        Selecciona una opción</option>
-                                                    @foreach (App\Models\EducacionEmpleados::NivelSelect as $key => $label)
-                                                        <option value="{{ $key }}"
-                                                            {{ old('nivel', '') === (string) $key ? 'selected' : '' }}>
-                                                            {{ $label }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="errors nivel_error text-danger"></span>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label for="año_inicio"><i
-                                                        class="far fa-calendar-alt iconos-crear"></i>De</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('año_inicio') ? 'is-invalid' : '' }}"
-                                                    type="date" name="año_inicio" id="año_inicio"
-                                                    value="{{ old('año_inicio', '') }}">
-                                                <span class="errors año_inicio_error text-danger"></span>
-                                            </div>
-
-
-
-                                            <div class="form-group col-sm-6">
-                                                <label for="año_fin"><i
-                                                        class="far fa-calendar-alt iconos-crear"></i>A</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('año_fin') ? 'is-invalid' : '' }}"
-                                                    type="date" name="año_fin" id="año_fin"
-                                                    value="{{ old('año_fin', '') }}">
-                                                <span class="errors año_fin_error text-danger"></span>
-                                            </div>
-
-                                        </div>
-
-
-                                        <div class="mb-5 col-12">
-                                            <button id="btn-agregar-educacion" type="submit"
-                                                class="mr-3 btn btn-sm btn-outline-success"
-                                                style="float: right; position: relative;">
-                                                <i class="mr-1 fas fa-plus-circle"></i>
-                                                Agregar Educacion
-                                                {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
-                                            </button>
-                                        </div>
-                                    </form>
-
-                                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix">
-                                        <table class="table w-100" id="tbl-educacion">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th>Institución</th>
-                                                    <th>Nivel</th>
-                                                    <th>Inicio</th>
-                                                    {{-- <th scope="col">Área</th> --}}
-                                                    <th>Fin</th>
-                                                    <th>Eliminar</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-
-                                    <input type="hidden" name="educacion" value="" id="educacion">
-
-
-
-                                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
-                                        <span style="font-size: 17px; font-weight: bold;">
-                                            Documentos</span>
-                                    </div>
-
-                                    <div class="mt-3 col-sm-12 form-group">
-                                        <label for="documentos"><i
-                                                class="fas fa-folder-open iconos-crear"></i>Documentos</label><i
-                                            class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>
-                                        <div class="custom-file">
-                                            <input type="file" name="files[]" multiple class="form-control"
-                                                id="documentos">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs" id="tabsEmpleado" role="tablist">
+                        <a class="nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab"
+                            aria-controls="nav-general" aria-selected="true">
+                            <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
+                            Datos Laborales
+                        </a>
+                        <a class="nav-link" id="nav-personal-tab" data-toggle="tab" href="#nav-personal" role="tab"
+                            aria-controls="nav-personal" aria-selected="false">
+                            <i class="mr-2 fas fa-house-user" style="font-size:20px;" style="text-decoration:none;"></i>
+                            Datos Personales
+                        </a>
+                        <a class="nav-link" id="nav-financiera-tab" data-toggle="tab" href="#nav-financiera" role="tab"
+                            aria-controls="nav-financiera" aria-selected="false">
+                            <i class="mr-2 fas fa-wallet" style="font-size:20px;" style="text-decoration:none;"></i>
+                            Datos Financieros
+                        </a>
+                        <a class="nav-link" id="nav-competencias-tab" data-toggle="tab" href="#nav-competencias"
+                            role="tab" aria-controls="nav-competencias" aria-selected="false">
+                            <i class="mr-2 fas fa-award" style="font-size:20px;"></i>Competencias
+                        </a>
+                        <a class="nav-link" id="nav-documentos-tab" data-toggle="tab" href="#nav-documentos"
+                            role="tab" aria-controls="nav-documentos" aria-selected="false">
+                            <i class="mr-2 fas fa-folder-open" style="font-size:20px;"></i>Documentos
+                        </a>
+                    </div>
+                </nav>
+                <form method="POST" action="{{ route('admin.empleados.update', [$empleado->id]) }}"
+                    enctype="multipart/form-data" id="formEmpleados">
+                    @method('PUT')
+                    @csrf
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-general" role="tabpanel"
+                            aria-labelledby="nav-general-tab">
+                            @include('admin.empleados.form_components.general')
                         </div>
+                        <div class="tab-pane fade" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
+                            @include('admin.empleados.form_components.personal')
+
+                        </div>
+                        <div class="tab-pane fade" id="nav-financiera" role="tabpanel"
+                            aria-labelledby="nav-financiera-tab">
+                            @include('admin.empleados.form_components.financiera')
+
+                        </div>
+                        <div class="tab-pane fade" id="nav-competencias" role="tabpanel"
+                            aria-labelledby="nav-competencias-tab">
+                            @include('admin.empleados.components._competencias_form')
+                        </div>
+                        <div class="tab-pane fade" id="nav-documentos" role="tabpanel"
+                            aria-labelledby="nav-documentos-tab">
+                            @include('admin.empleados.form_components.documentos')
+                        </div>
+
                     </div>
-
-
-                    <div class="text-right form-group col-12">
-                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                        <button class="btn btn-danger" type="submit" id="btnGuardar">
-                            {{ trans('global.save') }}
-                        </button>
-                    </div>
-
+                </form>
+                <div class="text-right form-group col-12">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <button class="btn btn-danger" type="submit" id="btnGuardar">
+                        {{ trans('global.save') }}
+                    </button>
                 </div>
             </div>
-
-
-
-
-
-
-        </div>
+        @else
+            <div class="p-4">
+                <div class="mt-4 text-center form-group"
+                    style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                    CURRICULUM
+                </div>
+                <label id="urlFormEmpleados"
+                    data-url="{{ route('admin.empleados.updateFromCurriculum', $empleado) }}"></label>
+                @include('admin.empleados.components._competencias_form')
+                <div class="text-right form-group col-12">
+                    <a href="{{ route('admin.miCurriculum', $empleado) }}" class="btn_cancelar">Cancelar</a>
+                    <button class="btn btn-danger" type="submit" id="btnGuardar">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        @endif
     </div>
-
-
 @endsection
-
-
 @section('scripts')
     @parent
+    <script type="module">
+        import {
+            formatNumber,
+            formatCurrency
+        } from "{{ asset('js/money-format/moneyInput.js') }}";
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initInpusToMoneyFormat();
+            inputsToMoneyFormat();
+            const setDirectionOnInput = (direction) => {
+                if (document.getElementById('direccion')) {
+                    document.getElementById('direccion').value = direction;
+                }
+            }
+            let direccion_empleado_actual = @json($empleado->sede ? $empleado->sede->direccion : null);
+            setDirectionOnInput(direccion_empleado_actual);
+            const toogleProyectoAsignado = (ocultar) => {
+                const elProyectoAsignado = document.getElementById('proyecto_asignado');
+                const containerProyectoAsignado = document.getElementById('c_proyecto_asignado');
+                const containerEsquemaContratacion = document.getElementById('c_esquema_contratacion');
+                if (ocultar) {
+                    containerProyectoAsignado.classList.remove('col-sm-6');
+                    containerProyectoAsignado.classList.add('d-none');
+                    containerEsquemaContratacion.classList.remove('col-sm-6');
+                    containerEsquemaContratacion.classList.add('col-sm-12');
+                    elProyectoAsignado.setAttribute('disabled', 'disabled');
+                    elProyectoAsignado.removeAttribute('type');
+                    elProyectoAsignado.setAttribute('type', 'hidden');
+                    elProyectoAsignado.value = "";
+                } else {
+                    containerProyectoAsignado.classList.add('col-sm-6');
+                    containerProyectoAsignado.classList.remove('d-none');
+                    containerEsquemaContratacion.classList.remove('col-sm-12');
+                    containerEsquemaContratacion.classList.add('col-sm-6');
+                    elProyectoAsignado.removeAttribute('disabled');
+                    elProyectoAsignado.removeAttribute('type');
+                    elProyectoAsignado.setAttribute('type', 'text');
+                }
+            }
+
+            $('#sede_id').on('select2:select', function(e) {
+                const direction = e.target.options[e.target.selectedIndex].getAttribute('data-direction');
+                setDirectionOnInput(direction);
+            });
+            $('#tipo_contrato_empleados_id').on('select2:select', function(e) {
+                const slug = e.target.options[e.target.selectedIndex].getAttribute('data-slug');
+                console.log(e.target);
+                if (slug === "por-proyecto") {
+                    toogleProyectoAsignado(false);
+                } else {
+                    toogleProyectoAsignado(true);
+                }
+            });
+
+            if (document.getElementById('sede_id')) {
+
+                document.getElementById('sede_id').addEventListener('change', function(e) {
+                    const direction = e.target.options[e.target.selectedIndex].getAttribute(
+                        'data-direction');
+                    setDirectionOnInput(direction);
+                })
+            }
+
+        })
+
+        function initInpusToMoneyFormat() {
+            document.querySelectorAll("input[data-type='currency']").forEach(element => {
+                formatCurrency($(element));
+            })
+        }
+
+        function inputsToMoneyFormat() {
+            $("input[data-type='currency']").on({
+                init: function() {
+                    console.log(this);
+                },
+                keyup: function() {
+                    formatCurrency($(this));
+                },
+                blur: function() {
+                    formatCurrency($(this), "blur");
+                }
+            });
+        }
+    </script>
     <script>
-        // document.querySelector('.custom-file-input').addEventListener('change', function(e) {
-        //     var fileName = document.getElementById("foto").files[0].name;
-        //     var nextSibling = e.target.nextElementSibling
-        //     nextSibling.innerText = fileName
-        // })
+        document.addEventListener('DOMContentLoaded', function() {
+            CKEDITOR.replace('resumen', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
+                ]
+            });
+            $('#tabsEmpleado a').on('click', function(event) {
+                event.preventDefault()
+                // $(this).tab('show')
+                setTimeout(() => {
+                    $.fn.dataTable.tables({
+                        visible: true,
+                        api: true
+                    }).columns.adjust();
+                }, 1000);
+            })
+        })
+    </script>
+    {{-- <script>
+        class Documentos {
+            constructor() {
+                this.url = "{{ route('admin.empleado.documentos', $empleado) }}";
+                this.pdfFile = "{{ asset('img/pdf-file.png') }}";
+                this.assetDocumentosUrl = "{{ asset('storage/documentos_empleados/') }}";
+            }
+            async render() {
+                const response = await fetch(this.url);
+                const data = await response.json();
+                let html = `<div class="row">`
+                data.documentos.forEach(element => {
+                    html += `
+                    <div class="col-md-2 col-2" style="position: relative;" id="contendorDocumento">
+                        <a href="${this.assetDocumentosUrl}/${element.documentos}" target="_blank" title="Visualizar">
+                        <img class="img-fluid" src="${this.pdfFile}">
+                        <p class="text-muted" style="font-size: 9pt;text-align: center;">${element.documentos}</p>
+                        </a>
+                        <i data-documento-id="${element.id}" class="fas fa-times-circle" style="cursor:pointer;position: absolute;top: 13px;font-size: 12pt;right: 26px;color: #4a4a4a;"></i>
+                    </div>
+                    `
+                });
+                html += `</div>`;
+                document.getElementById('documentosGrid').innerHTML = html;
+                console.log(data);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const documentos = new Documentos();
+            documentos.render();
+
+            const documentosGrid = document.getElementById('documentosGrid');
+            documentosGrid.addEventListener('click', function(e) {
+                if (e.target.tagName == 'I') {
+                    console.log(e.target.getAttribute('data-documento-id'));
+                }
+            })
+        })
+    </script> --}}
+    <script>
         $(document).ready(function() {
             $('.areas').select2({
                 theme: 'bootstrap4',
             });
-
+            $('.select-search').select2({
+                theme: 'bootstrap4',
+            });
             $('.supervisor').select2({
                 theme: 'bootstrap4',
             });
+            $('#puesto_id').select2({
+                theme: 'bootstrap4',
+            });
+            $('#perfil_empleado_id').select2({
+                theme: 'bootstrap4',
+            });
+            $('#nacionalidad').select2({
+                theme: 'bootstrap4',
+                templateResult: customizeNationalitySelect,
+                templateSelection: customizeNationalitySelect
+            });
+
+            function customizeNationalitySelect(opt) {
+                if (!opt.id) {
+                    return opt.text;
+                }
+
+                let optImage = $(opt.element).attr('data-flag');
+                let $opt = $(
+                    `<span>
+                        <img src="${optImage}" class="img-fluid rounded-circle" width="30" height="30"/>
+                        ${opt.text}
+                    </span>`
+                    // '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' +
+                    // optimage +
+                    // '" class="img-fluid rounded-circle" width="30" height="30"/>' +
+                    // opt.text + '</span>'
+                );
+                return $opt;
+            };
         });
     </script>
     <script>
         const habilitarFotoBtn = document.getElementById('avatar_choose');
         const contendorCanvas = document.getElementById('canvasFoto');
         const closeContenedorCanvas = document.getElementById('cerrarCanvasFoto');
-        habilitarFotoBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            contendorCanvas.style.display = 'grid';
-            document.getElementById("foto").value = "";
-            $("#texto-imagen").text("Subir Imágen");
-        });
+        if (habilitarFotoBtn) {
+            habilitarFotoBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                contendorCanvas.style.display = 'grid';
+                document.getElementById("foto").value = "";
+                $("#texto-imagen").text("Subir Imágen");
+            });
+        }
         // feather.replace();
 
         const controls = document.querySelector('.controls');
@@ -1135,6 +527,9 @@
         const canvas = document.querySelector('canvas');
         const screenshotImage = document.querySelector('.screenshot-image');
         const inputShotURL = document.getElementById('snapshoot');
+        if (controls) {
+
+        }
         const buttons = [...controls.querySelectorAll('button')];
         let streamStarted = false;
 
@@ -1263,7 +658,6 @@
             contendorCanvas.style.display = 'none';
         });
     </script>
-
     <script>
         $(document).ready(function() {
             $.ajaxSetup({
@@ -1273,12 +667,15 @@
             });
             document.getElementById("btnGuardarResumen").addEventListener("click", function(e) {
                 e.preventDefault();
+                let dataResumen = CKEDITOR.instances.resumen.getData();
                 let url = $("#formResumen").attr("action");
                 console.log(url)
                 $.ajax({
                     type: "post",
                     url: url,
-                    data: $("#formResumen").serialize(),
+                    data: {
+                        resumen: dataResumen
+                    },
                     beforeSend: function() {
                         toastr.info("Guardando el resumen");
                     },
@@ -1300,31 +697,73 @@
                 });
             })
             window.tblExperiencia = $('#tbl-experiencia').DataTable({
+                "autoWidth": false,
                 buttons: [],
                 processing: true,
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
+                dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 ajax: "{{ route('admin.empleados.getExperiencia', $empleado->id) }}",
                 columns: [{
                         data: 'empresa',
-                        name: 'empresa'
+                        name: 'empresa',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <input class="form-control" type="text" value="${data}" data-name-input="empresa" data-experiencia-id="${row.id}" />
+                            <span class="errors empresa_error text-danger"></span>
+                            `;
+                        }
                     },
                     {
                         data: 'puesto',
-                        name: 'puesto'
+                        name: 'puesto',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <input class="form-control" type="text" value="${data}" data-name-input="puesto" data-experiencia-id="${row.id}" />
+                            <span class="errors puesto_error text-danger"></span>
+                            `;
+                        }
                     },
                     {
                         data: 'descripcion',
-                        name: 'descripcion'
+                        name: 'descripcion',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <input class="form-control" type="text" value="${data}" data-name-input="descripcion" data-experiencia-id="${row.id}" />
+                            <span class="errors descripcion_error text-danger"></span>
+                            `;
+                        }
                     },
                     {
-                        data: 'inicio_mes',
-                        name: 'inicio_mes'
+                        data: 'inicio_mes_ymd',
+                        name: 'inicio_mes_ymd',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return `<input class="form-control" type="date" value="${data}" data-name-input="inicio_mes" data-experiencia-id="${row.id}" />
+                                <span class="errors inicio_mes_error text-danger"></span>`;
+
+                            } else {
+                                return `<input class="form-control" type="date" value="" data-name-input="inicio_mes" data-experiencia-id="${row.id}" />
+                                <span class="errors inicio_mes_error text-danger"></span>`;
+                            }
+                        }
                     },
                     {
-                        data: 'fin_mes',
-                        name: 'fin_mes'
+                        data: 'fin_mes_ymd',
+                        name: 'fin_mes_ymd',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return `<input class="form-control" type="date" value="${data}" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
+                                <span class="errors fin_mes_error text-danger"></span>`;
+
+                            } else {
+                                return `<input class="form-control" type="date" value="" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
+                                <span class="errors fin_mes_error text-danger"></span>`;
+                            }
+                        }
                     },
                     {
                         data: 'id',
@@ -1343,7 +782,59 @@
                 order: [
                     [1, 'desc']
                 ],
-            })
+            });
+
+            //Eventos para editar registros
+            document.getElementById('tbl-experiencia').addEventListener('change', async function(e) {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') {
+                    if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
+                        'number') {
+                        const experienciaId = e.target.getAttribute('data-experiencia-id');
+                        const typeInput = e.target.getAttribute('data-name-input');
+                        const value = e.target.value;
+                        console.log(experienciaId);
+                        const formData = new FormData();
+                        formData.append(typeInput, value);
+                        const url =
+                            `/admin/empleados/update/${experienciaId}/competencias-experiencia`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data);
+                    }
+                }
+            });
+
+            document.getElementById('tbl-experiencia').addEventListener('keyup', async function(e) {
+                if (e.target.tagName == 'INPUT') {
+                    if (e.target.type == 'text' || e.target.type == 'number') {
+                        const experienciaId = e.target.getAttribute('data-experiencia-id');
+                        const typeInput = e.target.getAttribute('data-name-input');
+                        const value = e.target.value;
+                        console.log(value, typeInput, experienciaId);
+                        const formData = new FormData();
+                        formData.append(typeInput, value);
+                        const url =
+                            `/admin/empleados/update/${experienciaId}/competencias-experiencia`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data);
+                    }
+                }
+            });
 
             window.EliminarExperiencia = function(url, experienciaId) {
                 Swal.fire({
@@ -1394,22 +885,87 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
+                dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 ajax: "{{ route('admin.empleados.getEducacion', $empleado->id) }}",
                 columns: [{
                         data: 'institucion',
-                        name: 'institucion'
+                        name: 'institucion',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <input class="form-control" type="text" value="${data}" data-name-input="institucion" data-educacion-id="${row.id}" />
+                            <span class="errors institucion_error text-danger"></span>
+                            `;
+                        }
+                    },
+                    {
+                        data: 'titulo_obtenido',
+                        name: 'titulo_obtenido',
+                        render: function(data, type, row, meta) {
+                            if (!data) {
+                                return `
+                                <input class="form-control" type="text" value="" placeholder="Dato no registrado" data-name-input="titulo_obtenido" data-educacion-id="${row.id}" />
+                                <span class="errors titulo_obtenido_error text-danger"></span>
+                                `;
+                            }
+                            return `
+                            <input class="form-control" type="text" value="${data}" data-name-input="titulo_obtenido" data-educacion-id="${row.id}" />
+                            <span class="errors titulo_obtenido_error text-danger"></span>
+                            `;
+                        }
                     },
                     {
                         data: 'nivel',
-                        name: 'nivel'
+                        name: 'nivel',
+                        render: function(data, type, row, meta) {
+                            let select = `
+                            <select class="form-control" data-educacion-id="${row.id}" data-name-input="nivel">
+                                <option value="" disabled selected>
+                                    Selecciona una opción
+                                </option>`;
+                            let opciones = @json(App\Models\EducacionEmpleados::NivelSelect);
+                            for (const key in opciones) {
+                                select += `
+                                    <option value="${key}" ${data == key ? ' selected':''}>
+                                        ${key}
+                                    </option>
+                                `;
+                            }
+                            select += `
+                            <span class="errors nivel_error text-danger"></span>
+                            </select>
+                            `;
+                            return select;
+                        }
                     },
                     {
-                        data: 'año_inicio',
-                        name: 'año_inicio'
+                        data: 'year_inicio_ymd',
+                        name: 'year_inicio_ymd',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return `<input class="form-control" type="date" value="${data}" data-name-input="año_inicio" data-educacion-id="${row.id}" />
+                                <span class="errors año_inicio_error text-danger"></span>`;
+
+                            } else {
+                                return `<input class="form-control" type="date" value="" data-name-input="año_inicio" data-educacion-id="${row.id}" />
+                                <span class="errors año_inicio_error text-danger"></span>`;
+                            }
+                        }
                     },
                     {
-                        data: 'año_fin',
-                        name: 'año_fin'
+                        data: 'year_fin_ymd',
+                        name: 'year_fin_ymd',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return `<input class="form-control" type="date" value="${data}" data-name-input="año_fin" data-educacion-id="${row.id}" />
+                                <span class="errors año_fin_error text-danger"></span>`;
+
+                            } else {
+                                return `<input class="form-control" type="date" value="" data-name-input="año_fin" data-educacion-id="${row.id}" />
+                                <span class="errors año_fin_error text-danger"></span>`;
+                            }
+                        }
                     },
                     {
                         data: 'id',
@@ -1429,6 +985,57 @@
                     [1, 'desc']
                 ],
             })
+
+            document.getElementById('tbl-educacion').addEventListener('change', async function(e) {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') {
+                    if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
+                        'number') {
+                        const educacionId = e.target.getAttribute('data-educacion-id');
+                        const typeInput = e.target.getAttribute('data-name-input');
+                        const value = e.target.value;
+                        console.log(educacionId);
+                        const formData = new FormData();
+                        formData.append(typeInput, value);
+                        const url =
+                            `/admin/empleados/update/${educacionId}/competencias-educacion`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data);
+                    }
+                }
+            });
+
+            document.getElementById('tbl-educacion').addEventListener('keyup', async function(e) {
+                if (e.target.tagName == 'INPUT') {
+                    if (e.target.type == 'text' || e.target.type == 'number') {
+                        const educacionId = e.target.getAttribute('data-educacion-id');
+                        const typeInput = e.target.getAttribute('data-name-input');
+                        const value = e.target.value;
+                        console.log(value, typeInput, educacionId);
+                        const formData = new FormData();
+                        formData.append(typeInput, value);
+                        const url =
+                            `/admin/empleados/update/${educacionId}/competencias-educacion`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data);
+                    }
+                }
+            });
 
             window.EliminarEducacion = function(url, educacionId) {
                 Swal.fire({
@@ -1480,22 +1087,121 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
+                dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 ajax: "{{ route('admin.empleados.getCursos', $empleado->id) }}",
                 columns: [{
                         data: 'curso_diploma',
-                        name: 'nombre'
+                        name: 'curso_diploma',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <input class="form-control" type="text" value="${data}" data-name-input="curso_diploma" data-curso-id="${row.id}" />
+                            <span class="errors curso_diploma_error text-danger"></span>
+                            `;
+                        }
                     },
                     {
                         data: 'tipo',
-                        name: 'tipo'
+                        name: 'tipo',
+                        render: function(data, type, row, meta) {
+                            let select = `
+                            <select class="form-control" data-curso-id="${row.id}" data-name-input="tipo">
+                                <option value="" disabled selected>
+                                    Selecciona una opción
+                                </option>`;
+                            let opciones = @json(App\Models\CursosDiplomasEmpleados::TipoSelect);
+                            for (const key in opciones) {
+                                select += `
+                                    <option value="${key}" ${data == key ? ' selected':''}>
+                                        ${key}
+                                    </option>
+                                `;
+                            }
+                            select += `
+                            <span class="errors tipo_error text-danger"></span>
+                            </select>
+                            `;
+                            return select;
+                        }
                     },
                     {
-                        data: 'año',
-                        name: 'año'
+                        data: 'year_ymd',
+                        name: 'year_ymd',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return `<input class="form-control" type="date" value="${data}" data-name-input="año" data-curso-id="${row.id}" />
+                                <span class="errors año_error text-danger"></span>`;
+
+                            } else {
+                                return `<input class="form-control" type="date" value="" data-name-input="año" data-curso-id="${row.id}" />
+                                <span class="errors año_error text-danger"></span>`;
+                            }
+                        }
+                    },
+                    {
+                        data: 'fecha_fin_ymd',
+                        name: 'fecha_fin_ymd',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return `<input class="form-control" type="date" value="${data}" data-name-input="fecha_fin" data-curso-id="${row.id}" />
+                                <span class="errors fecha_fin_error text-danger"></span>`;
+
+                            } else {
+                                return `<input class="form-control" type="date" value="" data-name-input="fecha_fin" data-curso-id="${row.id}" />
+                                <span class="errors fecha_fin_error text-danger"></span>`;
+                            }
+                        }
                     },
                     {
                         data: 'duracion',
-                        name: 'duracion'
+                        name: 'duracion',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <div class="form-control" 
+                                type="number" 
+                                data-name-input="duracion" 
+                                data-name-input-id="duracion${row.id}" 
+                                data-curso-id="${row.id}" 
+                            />
+                            <small>${data} Día(s)</small>
+                            </div>
+                            `;
+                        }
+                    },
+                    {
+                        data: 'file',
+                        name: 'file',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                const pdfFile = "{{ asset('img/pdf-file.png') }}";
+                                const assetDocumentosUrl =
+                                    "{{ asset('storage/cursos_empleados/') }}";
+                                return `
+                            <div class="text-center" style="position:relative;">
+                                <a target="_blank" class="text-center" href="${assetDocumentosUrl}/${data}" title="${data}">
+                                    <img style="width:35px" src="${pdfFile}" class="img-fluid" alt="${data}" />
+                                    <p class="m-0 text-muted" style="font-size:10px">${data.substring(0,35)}...</p>
+                                </a>
+                                <i data-curso-id="${row.id}" class="fas fa-times-circle removeFileCurso" style="position:absolute; top:0;right: 58px;"></i>
+                            </div>
+                            `;
+                            } else {
+                                return `
+                                <div class="text-center">
+                                    <label for="documento_curso${row.id}" class="text-center">
+                                        <img src="{{ asset('img/upload-pdf.png') }}" style="width:40px" />
+                                        <p class="m-0 text-muted" style="font-size:10px">Subir Documento</p>
+                                    </label>
+                                </div>
+                                <input type="file" class="form-control d-none" id="documento_curso${row.id}" data-curso-id="${row.id}"/>
+                                <p class="m-0">
+                                    <span class="errors file_error text-danger"></span>
+                                </p>
+                                `;
+                            }
+
+                        }
                     },
                     {
                         data: 'id',
@@ -1516,7 +1222,117 @@
                 ],
 
             })
+            //Eventos para editar registros
+            document.getElementById('tbl-cursos').addEventListener('change', async function(e) {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') {
+                    if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
+                        'number') {
+                        const cursoId = e.target.getAttribute('data-curso-id');
+                        const typeInput = e.target.getAttribute('data-name-input');
+                        const value = e.target.value;
+                        console.log(cursoId);
+                        const formData = new FormData();
+                        formData.append(typeInput, value);
+                        const url =
+                            `/admin/empleados/update/${cursoId}/competencias-curso`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data);
+                        if (e.target.type == 'date') {
+                            let elemento_duracion = document.querySelector(
+                                `div[data-name-input-id="duracion${cursoId}"]`)
+                            elemento_duracion.innerHTML =
+                                `<small>${data.curso.duracion} Día(s)</small>`;
+                        }
+                    } else if (e.target.type == 'file') {
+                        const cursoId = e.target.getAttribute('data-curso-id');
+                        console.log(cursoId);
+                        const formData = new FormData();
+                        e.target.files.forEach(element => {
+                            formData.append('file', element);
+                        });
+                        const url =
+                            `/admin/empleados/update/${cursoId}/competencias-curso`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'),
+                            },
+                        })
+                        tblCurso.ajax.reload();
+                    }
+                }
+            });
+            document.getElementById('tbl-cursos').addEventListener('keyup', async function(e) {
+                if (e.target.tagName == 'INPUT') {
+                    if (e.target.type == 'text' || e.target.type == 'number') {
+                        const cursoId = e.target.getAttribute('data-curso-id');
+                        const typeInput = e.target.getAttribute('data-name-input');
+                        const value = e.target.value;
+                        console.log(value, typeInput, cursoId);
+                        const formData = new FormData();
+                        formData.append(typeInput, value);
+                        const url =
+                            `/admin/empleados/update/${cursoId}/competencias-curso`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data);
+                    }
+                }
+            });
+            document.getElementById('tbl-cursos').addEventListener('click', function(e) {
+                console.log('si');
+                if (e.target.tagName == 'I') {
+                    if (e.target.classList.contains('removeFileCurso')) {
+                        const cursoId = e.target.getAttribute('data-curso-id');
+                        Swal.fire({
+                            title: 'Estás seguro de eliminar el archivo?',
+                            text: "Esto no se puede revertir!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si',
+                            cancelButtonText: "No",
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                const url =
+                                    `/admin/empleados/${cursoId}/delete-file-curso`;
+                                const response = await fetch(url, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                console.log(data);
+                                tblCurso.ajax.reload();
+                            }
+                        })
 
+                    }
+                }
+            });
             window.EliminarCurso = function(url, cursoId) {
                 Swal.fire({
                     title: 'Estás seguro de eliminar?',
@@ -1559,32 +1375,84 @@
                     }
                 })
             }
+
             window.tblCertificado = $('#tbl-certificados').DataTable({
                 buttons: [],
                 processing: true,
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
+                dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 ajax: "{{ route('admin.empleados.getCertificaciones', $empleado->id) }}",
                 columns: [{
                         data: 'nombre',
-                        name: 'nombre'
+                        name: 'nombre',
+                        render: function(data, type, row, meta) {
+                            return `<input class="form-control" type="text" value="${data}" data-certificacion-id="${row.id}" />
+                            <span class="errors nombre_error text-danger"></span>`;
+                        }
                     },
                     {
-                        data: 'vigencia',
-                        name: 'vigencia'
+                        data: 'vigencia_ymd',
+                        name: 'vigencia_ymd',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return `<input class="form-control" type="date" value="${data}" data-certificacion-id="${row.id}" />
+                                <span class="errors vigencia_error text-danger"></span>`;
+
+                            } else {
+                                return `<input class="form-control" type="date" value="" data-certificacion-id="${row.id}" />
+                                <span class="errors vigencia_error text-danger"></span>`;
+                            }
+                        }
                     },
                     {
                         data: 'estatus',
-                        name: 'estatus'
+                        name: 'estatus',
+                        render: function(data, type, row, meta) {
+                            return `<div class="form-control" data-vigencia-id="${row.id}">${data?data:'Permanente'}</div>
+                            <span class="errors estatus_error text-danger"></span>`;
+                        }
                     },
                     {
                         data: 'documento',
-                        name: 'documento'
+                        name: 'documento',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                const pdfFile = "{{ asset('img/pdf-file.png') }}";
+                                const assetDocumentosUrl =
+                                    "{{ asset('storage/certificados_empleados/') }}";
+                                return `
+                            <div class="text-center" style="position:relative;">
+                                <a target="_blank" class="text-center" href="${assetDocumentosUrl}/${data}" title="${data}">
+                                    <img style="width:35px" src="${pdfFile}" class="img-fluid" alt="${data}" />
+                                    <p class="m-0 text-muted" style="font-size:10px">${data.substring(0,35)}...</p>
+                                </a>
+                                <i data-certificacion-id="${row.id}" class="fas fa-times-circle removeFile" style="position:absolute; top:0;right: 58px;"></i>
+                            </div>
+                            `;
+                            } else {
+                                return `
+                                <div class="text-center">
+                                    <label for="documento${row.id}" class="text-center">
+                                        <img src="{{ asset('img/upload-pdf.png') }}" style="width:40px" />
+                                        <p class="m-0 text-muted" style="font-size:10px">Subir Documento</p>
+                                    </label>
+                                </div>
+                                <input type="file" class="form-control d-none" id="documento${row.id}" data-certificacion-id="${row.id}"/>
+                                <p class="m-0">
+                                    <span class="errors documento_error text-danger"></span>
+                                </p>
+                                `;
+                            }
+
+                        }
                     },
                     {
                         data: 'id',
-                        render: function(data, type, route, meta) {
+                        render: function(data, type, row, meta) {
                             let urlEliminar =
                                 `/admin/empleados/delete/${data}/competencias-certificaciones`;
                             let html = `
@@ -1600,7 +1468,120 @@
                     [1, 'desc']
                 ],
             })
+            //Eventos para editar registros
+            document.getElementById('tbl-certificados').addEventListener('change', async function(e) {
+                if (e.target.tagName == 'INPUT') {
+                    if (e.target.type == 'date') {
+                        const certificadoId = e.target.getAttribute('data-certificacion-id');
+                        const vigencia = e.target.value;
+                        console.log(e.target.value);
+                        let estatus = document.querySelector(`[data-vigencia-id="${certificadoId}"]`);
+                        let estatusName = "";
+                        if (Date.parse(vigencia) >= Date.now()) {
+                            estatus.innerHTML = "Vigente"
+                            estatusName = "Vigente"
+                            estatus.style.border = "2px solid #57e262";
+                        } else {
+                            estatus.innerHTML = 'Vencida'
+                            estatusName = 'Vencida'
+                            estatus.style.border = "2px solid #FF9C08";
+                        }
+                        const formData = new FormData();
+                        formData.append('vigencia', vigencia);
+                        formData.append('estatus', estatusName);
+                        const url =
+                            `/admin/empleados/update/${certificadoId}/competencias-certificaciones`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data);
+                    } else if (e.target.type == 'file') {
+                        const certificadoId = e.target.getAttribute('data-certificacion-id');
+                        const formData = new FormData();
+                        e.target.files.forEach(element => {
+                            formData.append('documento', element);
+                        });
+                        const url =
+                            `/admin/empleados/update/${certificadoId}/competencias-certificaciones`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'),
+                            },
+                        })
+                        tblCertificado.ajax.reload();
+                    }
+                }
+            });
+            document.getElementById('tbl-certificados').addEventListener('keyup', async function(e) {
+                if (e.target.tagName == 'INPUT') {
+                    if (e.target.type == 'text') {
+                        const certificadoId = e.target.getAttribute('data-certificacion-id');
+                        const certificadoName = e.target.value;
+                        const formData = new FormData();
+                        formData.append('nombre', certificadoName);
+                        const url =
+                            `/admin/empleados/update/${certificadoId}/competencias-certificaciones`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data);
+                    }
+                }
+            });
+            document.getElementById('tbl-certificados').addEventListener('click', function(e) {
+                console.log('si');
+                if (e.target.tagName == 'I') {
+                    if (e.target.classList.contains('removeFile')) {
+                        const certificadoId = e.target.getAttribute('data-certificacion-id');
+                        Swal.fire({
+                            title: 'Estás seguro de eliminar el certificado?',
+                            text: "Esto no se puede revertir!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si',
+                            cancelButtonText: "No",
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                const url =
+                                    `/admin/empleados/${certificadoId}/delete-file-certificacion`;
+                                const response = await fetch(url, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                console.log(data);
+                                tblCertificado.ajax.reload();
+                            }
+                        })
 
+                    }
+                }
+            });
             window.Eliminar = function(url, certificacionId) {
                 Swal.fire({
                     title: 'Estás seguro de eliminar?',
@@ -1644,28 +1625,541 @@
                 })
             }
             let vigencia_certificado = document.getElementById('vigencia');
-            vigencia_certificado.addEventListener('change', function() {
-                // console.log(this);
-                let vigencia = this.value;
-                let estatus = document.getElementById('vencio_alta');
-                if (Date.parse(vigencia) >= Date.now()) {
-                    estatus.value = "Vigente"
-                    estatus.style.border = "2px solid #57e262";
-                } else {
-                    estatus.value = 'Vencida'
-                    estatus.style.border = "2px solid #FF9C08";
-                }
+            vigencia_certificado.addEventListener(
+                'change',
+                function() {
+                    // console.log(this);
+                    let vigencia = this.value;
+                    let estatus = document.getElementById('vencio_alta');
+                    if (Date.parse(vigencia) >= Date.now()) {
+                        estatus.value = "Vigente"
+                        estatus.style.border = "2px solid #57e262";
+                    } else {
+                        estatus.value = 'Vencida'
+                        estatus.style.border = "2px solid #FF9C08";
+                    }
+                });
+
+            // IDIOMAS
+            window.tblIdiomas = $('#tbl-idiomas').DataTable({
+                buttons: [],
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
+                ajax: "{{ route('admin.idiomas-empleados.index', $empleado->id) }}",
+                columns: [{
+                        data: 'nombre',
+                        name: 'nombre',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <input class="form-control" type="text" value="${data}" data-name-input="nombre" data-idioma-id="${row.id}" />
+                            <span class="errors nombre_error text-danger"></span>
+                            `;
+                        }
+                    },
+                    {
+                        data: 'nivel',
+                        name: 'nivel',
+                        render: function(data, type, row, meta) {
+                            let select = `
+                            <select class="form-control" data-idioma-id="${row.id}" data-name-input="nivel">
+                                <option value="" disabled selected>
+                                    Selecciona una opción
+                                </option>`;
+                            let opciones = @json(App\Models\IdiomaEmpleado::NIVELES);
+                            for (const key in opciones) {
+                                select += `
+                                    <option value="${key}" ${data == key ? ' selected':''}>
+                                        ${key}
+                                    </option>
+                                `;
+                            }
+                            select += `
+                            <span class="errors nivel_error text-danger"></span>
+                            </select>
+                            `;
+                            return select;
+                        }
+                    },
+                    {
+                        data: 'porcentaje',
+                        name: 'porcentaje',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <input class="form-control" type="number" value="${data}" data-name-input="porcentaje" data-idioma-id="${row.id}" />
+                            <span class="errors porcentaje_error text-danger"></span>
+                            `;
+                        }
+                    },
+                    {
+                        data: 'certificado',
+                        name: 'certificado',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                const pdfFile = "{{ asset('img/pdf-file.png') }}";
+                                const assetDocumentosUrl =
+                                    "{{ asset('storage/idiomas_empleados/') }}";
+                                return `
+                            <div class="text-center" style="position:relative;">
+                                <a target="_blank" class="text-center" href="${assetDocumentosUrl}/${data}" title="${data}">
+                                    <img style="width:35px" src="${pdfFile}" class="img-fluid" alt="${data}" />
+                                    <p class="m-0 text-muted" style="font-size:10px">${data.substring(0,35)}...</p>
+                                </a>
+                                <i data-idioma-id="${row.id}" class="fas fa-times-circle removeFileIdioma" style="position:absolute; top:0;right: 58px;"></i>
+                            </div>
+                            `;
+                            } else {
+                                return `
+                                <div class="text-center">
+                                    <label for="documento_curso${row.id}" class="text-center">
+                                        <img src="{{ asset('img/upload-pdf.png') }}" style="width:40px" />
+                                        <p class="m-0 text-muted" style="font-size:10px">Subir Documento</p>
+                                    </label>
+                                </div>
+                                <input type="file" class="form-control d-none" id="documento_curso${row.id}" data-idioma-id="${row.id}"/>
+                                <p class="m-0">
+                                    <span class="errors file_error text-danger"></span>
+                                </p>
+                                `;
+                            }
+
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, route, meta) {
+                            let urlEliminar =
+                                `/admin/competencia/idiomas-empleados/${data}`;
+                            let html = `
+                            <button onclick="event.preventDefault(); EliminarIdioma('${urlEliminar}','${data}')" class="btn btn-sm text-primary"><i class="fas fa-trash-alt" style="color:#fd0000"></i></button>
+                            `;
+                            return html;
+                        }
+                    },
+
+                ],
+                orderCellsTop: true,
+                order: [
+                    [1, 'desc']
+                ],
+
             })
+            //Eventos para editar registros
+            document.getElementById('tbl-idiomas').addEventListener('change', async function(e) {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') {
+                    if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
+                        'number') {
+                        const idiomaID = e.target.getAttribute('data-idioma-id');
+                        const typeInput = e.target.getAttribute('data-name-input');
+                        const value = e.target.value;
+                        console.log(idiomaID);
+                        const formData = new FormData();
+                        formData.append(typeInput, value);
+                        const url =
+                            `/admin/competencia/${idiomaID}/idiomas`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data);
+                    } else if (e.target.type == 'file') {
+                        const idiomaID = e.target.getAttribute('data-idioma-id');
+                        console.log(idiomaID);
+                        const formData = new FormData();
+                        e.target.files.forEach(element => {
+                            formData.append('certificado', element);
+                        });
+                        const url =
+                            `/admin/competencia/${idiomaID}/idiomas`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'),
+                            },
+                        })
+                        tblIdiomas.ajax.reload();
+                    }
+                }
+            });
+            document.getElementById('tbl-idiomas').addEventListener('keyup', async function(e) {
+                if (e.target.tagName == 'INPUT') {
+                    if (e.target.type == 'text' || e.target.type == 'number') {
+                        const idiomaID = e.target.getAttribute('data-idioma-id');
+                        const typeInput = e.target.getAttribute('data-name-input');
+                        const value = e.target.value;
+                        const formData = new FormData();
+                        formData.append(typeInput, value);
+                        const url =
+                            `/admin/competencia/${idiomaID}/idiomas`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data);
+                    }
+                }
+            });
+            document.getElementById('tbl-idiomas').addEventListener('click', function(e) {
+                if (e.target.tagName == 'I') {
+                    if (e.target.classList.contains('removeFileIdioma')) {
+                        const idiomaID = e.target.getAttribute('data-idioma-id');
+                        Swal.fire({
+                            title: 'Estás seguro de eliminar el archivo?',
+                            text: "Esto no se puede revertir!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si',
+                            cancelButtonText: "No",
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                const url =
+                                    `/admin/competencia/${idiomaID}/idiomas-delete-certificado`;
+                                const response = await fetch(url, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                console.log(data);
+                                tblIdiomas.ajax.reload();
+                            }
+                        })
 
+                    }
+                }
+            });
+            window.EliminarIdioma = function(url, cursoId) {
+                Swal.fire({
+                    title: 'Estás seguro de eliminar?',
+                    text: "Esto no se puede revertir!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si',
+                    cancelButtonText: "No",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "delete",
+                            url: url,
+                            data: {
+                                cursoId
+                            },
+                            beforeSend: function() {
+                                toastr.info("Eliminando idioma");
+                            },
+                            success: function(response) {
+                                if (response.status == "success") {
+                                    toastr.success("Idioma eliminado");
+                                    tblIdiomas.ajax.reload();
+                                }
+                            },
+                            error: function(request, status, error) {
+                                console.log(error)
+                                $.each(request.responseJSON.errors, function(indexInArray,
 
+                                    valueOfElement) {
+                                    console.log(valueOfElement, indexInArray);
+                                    $(`span.${indexInArray}_error`).text(
+                                        valueOfElement[0]);
+
+                                });
+                            }
+                        });
+                    }
+                })
+            }
+            // FIN IDIOMAS
+            if (document.getElementById("btnGuardarDocumento")) {
+                document.getElementById("btnGuardarDocumento").addEventListener("click", async function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    let url = $("#formDocumentos").attr("action");
+                    const formulario = document.getElementById('formDocumentos');
+                    const formData = new FormData();
+                    formData.append('nombre', document.getElementById('nombre_doc').value)
+                    formData.append('numero', document.getElementById('numero_doc').value)
+                    let documentosDoc = document.getElementById('documentos_doc').files;
+                    documentosDoc.forEach(element => {
+                        formData.append('file', element)
+                    });
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'),
+                            },
+                        });
+                        const data = await response.json();
+                        if (data.errors) {
+                            $.each(data.errors, function(indexInArray, valueOfElement) {
+                                $(`#${indexInArray.replaceAll('.','_')}_error`).text(
+                                    valueOfElement[0]);
+                            });
+                            toastr.error(
+                                'Por favor revise que la información ingresa sea correcta'
+                            );
+                        }
+                        if (data.status) {
+                            tblDocumentos.ajax.reload();
+                            limpiarCamposDocumentos();
+                        }
+                    } catch (error) {
+                        console.log(error);
+                    }
+                })
+            }
+
+            window.tblDocumentos = $('#tbl-documentos').DataTable({
+                buttons: [],
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
+                ajax: "{{ route('admin.empleado.documentos', $empleado->id) }}",
+                columns: [{
+                        data: 'nombre',
+                        name: 'nombre',
+                        render: function(data, type, row, meta) {
+                            return `<input class="form-control" type="text" value="${data}" data-name-input="nombre" data-documento-id="${row.id}" />
+                            <span class="errors nombre_error text-danger"></span>`;
+                        }
+                    },
+                    {
+                        data: 'numero',
+                        name: 'numero',
+                        render: function(data, type, row, meta) {
+                            return `<input class="form-control" type="text" value="${data}" data-name-input="numero" data-documento-id="${row.id}" />
+                            <span class="errors numero_error text-danger"></span>`;
+                        }
+                    },
+                    {
+                        data: 'documentos',
+                        name: 'documentos',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                const pdfFile = "{{ asset('img/pdf-file.png') }}";
+                                return `
+                            <div class="text-center" style="position:relative;">
+                                <a target="_blank" class="text-center" href="${row.ruta_documento}" title="${data}">
+                                    <img style="width:35px" src="${pdfFile}" class="img-fluid" alt="${data}" />
+                                    <p class="m-0 text-muted" style="font-size:10px">${data.substring(0,35)}...</p>
+                                </a>
+                                <i data-documento-id="${row.id}" class="fas fa-times-circle removeFile" style="position:absolute; top:0;right: 58px;"></i>
+                            </div>
+                            `;
+                            } else {
+                                return `
+                                <div class="text-center">
+                                    <label for="documento${row.id}" class="text-center">
+                                        <img src="{{ asset('img/upload-pdf.png') }}" style="width:40px" />
+                                        <p class="m-0 text-muted" style="font-size:10px">Subir Documento</p>
+                                    </label>
+                                </div>
+                                <input type="file" class="form-control d-none" id="documento${row.id}" data-name-input="file" data-documento-id="${row.id}"/>
+                                <p class="m-0">
+                                    <span class="errors documento_error text-danger"></span>
+                                </p>
+                                `;
+                            }
+
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let urlEliminar =
+                                `/admin/empleado/${data}/documentos`;
+                            let html = `
+                            <button onclick="event.preventDefault(); EliminarDocumento('${urlEliminar}','${data}')" class="btn btn-sm text-primary"><i class="fas fa-trash-alt" style="color:#fd0000"></i></button>
+                            `;
+                            return html;
+                        }
+                    },
+
+                ],
+                orderCellsTop: true,
+                order: [
+                    [1, 'desc']
+                ],
+            })
+            //Eventos para editar registros
+            if (document.getElementById('tbl-documentos')) {
+                document.getElementById('tbl-documentos').addEventListener('change', async function(e) {
+                    if (e.target.tagName == 'INPUT') {
+                        if (e.target.type == 'file') {
+                            const documentoId = e.target.getAttribute('data-documento-id');
+                            const typeInput = e.target.getAttribute('data-name-input');
+                            const files = e.target.files;
+                            const formData = new FormData();
+                            files.forEach(element => {
+                                formData.append(typeInput, element);
+                            });
+                            const url =
+                                `/admin/empleados/update/${documentoId}/documentos`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                tblDocumentos.ajax.reload();
+                                console.log(data);
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        }
+                    }
+                });
+                document.getElementById('tbl-documentos').addEventListener('keyup', async function(e) {
+                    if (e.target.tagName == 'INPUT') {
+                        if (e.target.type == 'text') {
+                            const documentoId = e.target.getAttribute('data-documento-id');
+                            const typeInput = e.target.getAttribute('data-name-input');
+                            const value = e.target.value;
+                            const formData = new FormData();
+                            formData.append(typeInput, value);
+                            const url =
+                                `/admin/empleados/update/${documentoId}/documentos`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                console.log(data);
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        }
+                    }
+                });
+                document.getElementById('tbl-documentos').addEventListener('click', function(e) {
+                    if (e.target.tagName == 'I') {
+                        if (e.target.classList.contains('removeFile')) {
+                            const documentoId = e.target.getAttribute('data-documento-id');
+                            Swal.fire({
+                                title: 'Estás seguro de eliminar el documento?',
+                                text: "Esto no se puede revertir!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Si',
+                                cancelButtonText: "No",
+                            }).then(async (result) => {
+                                if (result.isConfirmed) {
+                                    const url =
+                                        `/admin/empleados/${documentoId}/delete-file-documento`;
+                                    try {
+                                        const response = await fetch(url, {
+                                            method: 'DELETE',
+                                            headers: {
+                                                Accept: "application/json",
+                                                'X-CSRF-TOKEN': $(
+                                                        'meta[name="csrf-token"]')
+                                                    .attr(
+                                                        'content'),
+                                            },
+                                        })
+                                        const data = await response.json();
+                                        tblDocumentos.ajax.reload();
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                }
+                            })
+
+                        }
+                    }
+                });
+            }
+            window.EliminarDocumento = function(url, documentoId) {
+                Swal.fire({
+                    title: 'Estás seguro de eliminar?',
+                    text: "Esto no se puede revertir!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si',
+                    cancelButtonText: "No",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "delete",
+                            url: url,
+                            data: {
+                                documentoId
+                            },
+                            beforeSend: function() {
+                                toastr.info("Eliminando documento");
+                            },
+                            success: function(response) {
+                                if (response.status == 'success') {
+                                    toastr.success("Documento eliminado");
+                                    tblDocumentos.ajax.reload();
+                                }
+                            },
+                            error: function(request, status, error) {
+                                console.log(error)
+                                $.each(request.responseJSON.errors, function(indexInArray,
+                                    valueOfElement) {
+                                    console.log(valueOfElement, indexInArray);
+                                    $(`span.${indexInArray}_error`).text(
+                                        valueOfElement[0]);
+                                });
+                            }
+                        });
+                    }
+                })
+            }
+
+            // let url = "{{ route('admin.empleados.get') }}";
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // let url = "{{ route('admin.empleados.get') }}";
-
-
 
             document.getElementById('btn-agregar-experiencia').addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1691,28 +2185,94 @@
                 suscribirCertificado()
             })
 
+            document.getElementById('btn-agregar-idioma').addEventListener('click', function(e) {
+                e.preventDefault();
+                limpiarErrores();
+                suscribirIdioma()
+            })
+
 
             document.getElementById('btnGuardar').addEventListener('click', function(e) {
                 // e.preventDefault();
-                document.querySelector('#formEmpleados').submit();
+                // document.querySelector('#formEmpleados').submit();
+                e.preventDefault();
+                let formData = new FormData();
+                if (document.getElementById('formEmpleados')) {
+                    formData = new FormData(document.getElementById('formEmpleados'));
+                }
+                if (document.getElementById('documentos')) {
+                    let documentos = document.getElementById('documentos').files;
+                    if (documentos.length) {
+                        documentos.forEach(element => {
+                            formData.append('files[]', element);
+                        });
+                    }
+                }
+                let url = "";
+                let method = "POST";
+                if (document.getElementById('urlFormEmpleados')) {
+                    url = document.getElementById('urlFormEmpleados').getAttribute('data-url');
+                } else {
+                    url = document.getElementById('formEmpleados').getAttribute('action');
+                }
+                fetch(url, {
+                        method: method,
+                        body: formData,
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.errors) {
+                            $.each(data.errors, function(indexInArray, valueOfElement) {
+                                $(`#error_${indexInArray.replaceAll('.','_')}`).text(
+                                    valueOfElement[0]);
+                            });
+                        }
 
+                        if (data.status) {
+                            Swal.fire(
+                                data.message,
+                                '',
+                                'success',
+                            )
+                            if (data.from == 'curriculum') {
+                                setTimeout(() => {
+                                    window.location.href =
+                                        "{{ route('admin.miCurriculum', $empleado) }}";
+                                }, 1500);
+                            } else if (data.from == 'rh') {
+                                setTimeout(() => {
+                                    window.location.href =
+                                        "{{ route('admin.empleados.index') }}";
+                                }, 1500);
+
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
             })
-
         });
-
-
-
-
 
         function suscribirExperiencia() {
             //form-participantes
 
             let url = $("#formExperiencia").attr("action");
-
+            let formData = new FormData();
+            formData.append('empresa', document.getElementById('empresa').value)
+            formData.append('puesto', document.getElementById('puesto_trabajo').value)
+            formData.append('empleado_id', document.getElementById('empleado_id_experiencia').value)
+            formData.append('inicio_mes', document.getElementById('inicio_mes').value)
+            formData.append('fin_mes', document.getElementById('fin_mes').value)
+            formData.append('descripcion', document.getElementById('descripcion_exp').value)
             $.ajax({
                 type: "post",
                 url: url,
-                data: new FormData(document.getElementById("formExperiencia")),
+                data: formData,
                 processData: false,
                 contentType: false,
                 beforeSend: function() {
@@ -1736,62 +2296,6 @@
                     });
                 }
             });
-            //     let experiencias = tblExperiencia.rows().data().toArray();
-            //     let arrExperiencia = [];
-            //     experiencias.forEach(experiencia => {
-            //         arrExperiencia.push(experiencia[0])
-
-            //     });
-
-            //     //no se puedan agregar datos que ya estan
-            //     let nombre = $("#empresa").val();
-            //     let puesto = $("#puesto_trabajo").val();
-            //     let descripcion = $("#descripcion").val();
-            //     let inicio_mes = $("#inicio_mes").val();
-            //     let fin_mes = $("#fin_mes").val();
-            //     if (nombre.trim() == '') {
-            //         document.querySelector('.empresa_error').innerHTML = "El campo empresa es requerido"
-            //         // limpiarCamposExperienciaPorId('empresa');
-            //     }
-            //     if (puesto.trim() == '') {
-            //         document.querySelector('.puesto_trabajo_error').innerHTML = "El campo puesto es requerido"
-            //         // limpiarCamposExperienciaPorId('puesto_trabajo');
-            //     }
-            //     if (inicio_mes.trim() == '') {
-            //         document.querySelector('.inicio_mes_error').innerHTML = "El campo de inicio de puesto laboral es requerido"
-            //         // limpiarCamposExperienciaPorId('puesto_trabajo');
-            //     }
-            //     if (fin_mes.trim() == '') {
-            //         document.querySelector('.fin_mes_error').innerHTML = "El campo fin de puesto laboral es requerido"
-            //         // limpiarCamposExperienciaPorId('fin_mes');
-            //     }
-            //     if (descripcion.trim() == '') {
-            //         document.querySelector('.descripcion_error').innerHTML = "El campo de descripción laboral es requerido"
-            //         // limpiarCamposExperienciaPorId('descripcion_error');
-            //     }
-            //     if (nombre.trim() != '' && puesto.trim() != '' && inicio_mes.trim() != '' && fin_mes.trim() != '' && descripcion
-            //         .trim() != '') {
-            //         limpiarCamposExperiencia();
-
-
-            //         if (!arrExperiencia.includes(nombre)) {
-
-
-            //             tblExperiencia.row.add([
-            //                 nombre,
-            //                 puesto,
-            //                 descripcion,
-            //                 inicio_mes,
-            //                 fin_mes
-            //             ]).draw();
-
-            //         } else {
-            //             Swal.fire('Este participante ya ha sido agregado', '', 'error')
-            //             limpiarCamposExperiencia();
-            //         }
-            //     }
-            //     //limpia campos
-
         }
 
         function limpiarCamposExperiencia() {
@@ -1800,6 +2304,12 @@
             $("#descripcion").val('');
             $("#inicio_mes").val('');
             $("#fin_mes").val('');
+        }
+
+        function limpiarCamposDocumentos() {
+            $("#nombre_doc").val('');
+            $("#numero_doc").val('');
+            $("#documentos_doc").val('');
         }
 
         function limpiarErrores() {
@@ -1821,14 +2331,18 @@
 
         function suscribirEducacion() {
             //form-participantes
-
-
             let url = $("#formEducacion").attr("action");
-
+            let formData = new FormData();
+            formData.append('institucion', document.getElementById('institucion_inst').value)
+            formData.append('titulo_obtenido', document.getElementById('titulo_obtenido_inst').value)
+            formData.append('nivel', document.getElementById('nivel_inst').value)
+            formData.append('año_inicio', document.getElementById('año_inicio_inst').value)
+            formData.append('año_fin', document.getElementById('año_fin_inst').value)
+            formData.append('empleado_id', document.getElementById('empleado_id_inst').value)
             $.ajax({
                 type: "post",
                 url: url,
-                data: new FormData(document.getElementById("formEducacion")),
+                data: formData,
                 processData: false,
                 contentType: false,
                 beforeSend: function() {
@@ -1852,62 +2366,13 @@
                     });
                 }
             });
-
-            // let educacions = tblEducacion.rows().data().toArray();
-            // let arrEducacion = [];
-            // educacions.forEach(educacion => {
-            //     arrEducacion.push(educacion[0])
-
-            // });
-
-
-            // //no se puedan agregar datos que ya estan
-            // let institucion = $("#institucion").val();
-            // let año_inicio = $("#año_inicio").val();
-            // let año_fin = $("#año_fin").val();
-            // let nivel = $("#nivel").val();
-
-            // if (institucion.trim() == '') {
-            //     document.querySelector('.institucion_error').innerHTML = "El campo institucion es requerido"
-            //     // limpiarCamposExperienciaPorId('empresa');
-            // }
-            // if (año_inicio.trim() == '') {
-            //     document.querySelector('.año_inicio_error').innerHTML = "El campo inicio de año es requerido"
-            //     // limpiarCamposExperienciaPorId('empresa');
-            // }
-            // if (año_fin.trim() == '') {
-            //     document.querySelector('.año_fin_error').innerHTML = "El campo inicio de fin es requerido"
-            //     // limpiarCamposExperienciaPorId('empresa');
-            // }
-            // if (document.getElementById('nivel').value == "") {
-            //     document.querySelector('.nivel_error').innerHTML = "El campo nivel es requerido"
-            //     // limpiarCamposExperienciaPorId('empresa');
-            // }
-            // if (institucion.trim() != '' && año_inicio.trim() != '' && año_fin.trim() != '' && document.getElementById(
-            //         'nivel').value != "") {
-            //     limpiarCamposEducacion();
-
-
-            //     if (!arrEducacion.includes(institucion)) {
-            //         tblEducacion.row.add([
-            //             institucion,
-            //             año_inicio,
-            //             año_fin,
-            //             nivel,
-            //         ]).draw();
-
-            //     } else {
-            //         Swal.fire('Este registro ya ha sido agregado', '', 'error')
-            //     }
-            // }
-            //limpia campos
-
         }
 
         function limpiarCamposEducacion() {
             $("#institucion").val('');
             $("#año_inicio").val('');
             $("#año_fin").val('');
+            $("#titulo_obtenido").val('');
             $("#nivel").val('');
         }
 
@@ -1926,11 +2391,21 @@
         function suscribirCurso() {
 
             let url = $("#formCursos").attr("action");
-
+            let formData = new FormData();
+            formData.append('curso_diploma', document.getElementById('curso_diplomado').value)
+            formData.append('tipo', document.getElementById('tipo').value)
+            formData.append('año', document.getElementById('año').value)
+            // formData.append('duracion', document.getElementById('duracion').value)
+            let archivos = document.getElementById('file_curso').files;
+            archivos.forEach(element => {
+                formData.append('file', element);
+            });
+            formData.append('fecha_fin', document.getElementById('fecha_fin').value)
+            formData.append('empleado_id', document.getElementById('empleado_id_curso').value)
             $.ajax({
                 type: "post",
                 url: url,
-                data: new FormData(document.getElementById("formCursos")),
+                data: formData,
                 processData: false,
                 contentType: false,
                 beforeSend: function() {
@@ -1954,61 +2429,6 @@
                     });
                 }
             });
-            //     //form-participantes
-
-            //     let cursos = tblCurso.rows().data().toArray();
-            //     let arrCurso = [];
-            //     cursos.forEach(curso => {
-            //         arrCurso.push(curso[0])
-
-            //     });
-            //     //no se puedan agregar datos que ya estan
-
-
-            //     let curso_diplomado = $("#curso_diplomado").val();
-            //     let tipo = $("#tipo").val();
-            //     let año = $("#año").val();
-            //     let duracion = $("#duracion").val();
-
-            //     if (curso_diplomado.trim() == '') {
-            //         document.querySelector('.curso_diplomado_error').innerHTML = "El campo curso/diplomado es requerido"
-            //         // limpiarCamposExperienciaPorId('empresa');
-            //     }
-
-            //     if (document.getElementById('tipo').value == "") {
-            //         document.querySelector('.tipo_error').innerHTML = "El campo tipo es requerido"
-            //         // limpiarCamposExperienciaPorId('empresa');
-            //     }
-
-            //     if (año.trim() == '') {
-            //         document.querySelector('.año_error').innerHTML = "El campo año es requerido"
-            //         // limpiarCamposExperienciaPorId('empresa');
-            //     }
-
-            //     if (duracion.trim() == '') {
-            //         document.querySelector('.duracion_error').innerHTML = "El campo duración es requerido"
-            //         // limpiarCamposExperienciaPorId('empresa');
-            //     }
-
-            //     if (curso_diplomado.trim() != '' && año.trim() != '' && duracion.trim() != '' && document.getElementById('tipo')
-            //         .value != "") {
-            //         limpiarCamposCursos();
-
-
-
-            //         if (!arrCurso.includes(curso_diplomado)) {
-
-            //             tblCurso.row.add([
-            //                 curso_diplomado,
-            //                 tipo,
-            //                 año,
-            //                 duracion,
-            //             ]).draw();
-
-            //         } else {
-            //             Swal.fire('Este registro ya ha sido agregado', '', 'error')
-            //         }
-            //     }
         }
 
         function limpiarCamposCursos() {
@@ -2016,6 +2436,8 @@
             $("#tipo").val('');
             $("#año").val('');
             $("#duracion").val('');
+            $("#fecha_fin").val('');
+            $("#file_curso").val('');
         }
 
         function enviarCurso() {
@@ -2029,14 +2451,77 @@
             console.log(arrCurso);
         }
 
-        function suscribirCertificado() {
+        function suscribirIdioma() {
 
-            let url = $("#formCertificaciones").attr("action");
-
+            let url = $("#formIdiomas").attr("action");
+            let formData = new FormData();
+            formData.append('nombre', document.getElementById('nombre_idioma').value)
+            formData.append('nivel', document.getElementById('nivel_idioma').value)
+            formData.append('porcentaje', document.getElementById('porcentaje_idioma').value)
+            // formData.append('duracion', document.getElementById('duracion').value)
+            let archivos = document.getElementById('certificado_idioma').files;
+            archivos.forEach(element => {
+                formData.append('certificado', element);
+            });
+            formData.append('empleado_id', document.getElementById('empleado_id_idioma').value)
             $.ajax({
                 type: "post",
                 url: url,
-                data: new FormData(document.getElementById("formCertificaciones")),
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    toastr.info("Guardando Idioma");
+                },
+                success: function(response) {
+                    if (response.status == 'success') {
+                        toastr.success("Idioma guardado");
+                        limpiarCamposIdioma();
+                        tblIdiomas.ajax.reload();
+                    }
+                },
+                error: function(request, status, error) {
+                    console.log(error)
+                    $.each(request.responseJSON.errors, function(indexInArray,
+
+                        valueOfElement) {
+                        console.log(valueOfElement, indexInArray);
+                        $(`span.${indexInArray}_error`).text(valueOfElement[0]);
+
+                    });
+                }
+            });
+        }
+
+        function limpiarCamposIdioma() {
+            $("#nombre").val('');
+            $("#nivel").val('');
+            $("#porcentaje").val('');
+            $("#certificado").val('');
+        }
+
+        function suscribirCertificado() {
+            let url = $("#formCertificaciones").attr("action");
+            const formData = new FormData();
+            const nombre_certificado = document.getElementById("nombre_certificado");
+            const vigencia = document.getElementById("vigencia");
+            const vencio_alta = document.getElementById('vencio_alta');
+            const aplicaVigencia = document.getElementById('aplicaVigencia');
+            const evidencia = document.getElementById('evidencia');
+            formData.append('nombre', nombre_certificado.value);
+            formData.append('esVigente', aplicaVigencia.checked)
+            formData.append('vigencia', vigencia.value);
+            formData.append('estatus', vencio_alta.value);
+            evidencia.files.forEach(element => {
+                formData.append('documento', element);
+            });
+            $.ajax({
+                type: "post",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                data: formData,
                 processData: false,
                 contentType: false,
                 beforeSend: function() {
@@ -2060,50 +2545,6 @@
                     });
                 }
             });
-
-            //form-participantes
-
-            // let certificados = tblCertificado.rows().data().toArray();
-            // let arrCertificado = [];
-            // certificados.forEach(certificado => {
-            //     arrCertificado.push(certificado[0])
-
-            // });
-            // //no se puedan agregar datos que ya estan
-            // let nombre_certificado = $("#nombre_certificado").val();
-            // let vigencia = $("#vigencia").val();
-            // let estatus = $("#vencio_alta").val();
-
-
-            // if (nombre_certificado.trim() == '') {
-            //     document.querySelector('.nombre_certificado_error').innerHTML =
-            //         "El campo nombre del certificado es requerido"
-            //     // limpiarCamposExperienciaPorId('empresa');
-            // }
-            // if (vigencia.trim() == '') {
-            //     document.querySelector('.vigencia_error').innerHTML = "El campo vigencia es requerido"
-            //     // limpiarCamposExperienciaPorId('empresa');
-            // }
-            // if (estatus.trim() == '') {
-            //     document.querySelector('.estatus_error').innerHTML = "El campo estatus es requerido"
-            //     // limpiarCamposExperienciaPorId('empresa');
-            // }
-
-            // if (nombre_certificado.trim() != '' && vigencia.trim() != '' && estatus.trim() != '') {
-            //     limpiarCamposCertificados();
-
-            //     if (!arrCertificado.includes(nombre_certificado)) {
-
-            //         tblCertificado.row.add([
-            //             nombre_certificado,
-            //             vigencia,
-            //             estatus,
-            //         ]).draw();
-
-            //     } else {
-            //         Swal.fire('Este registro ya ha sido agregado', '', 'error')
-            //     }
-            // }
         }
 
         function limpiarCamposCertificados() {
@@ -2125,6 +2566,39 @@
             console.log(arrCertificado);
         }
     </script>
+    <script type="text/javascript">
+        Livewire.on('PerfilStore', () => {
+            $('#PerfilModal').modal('hide');
+            $('.modal-backdrop').hide();
+            toastr.success('Perfil de empleado creado con éxito');
+        });
+
+        Livewire.on('PuestoStore', () => {
+            $('#PuestoModal').modal('hide');
+            $('.modal-backdrop').hide();
+            toastr.success('Puesto de empleado creado con éxito');
+        });
+
+        window.initSelect2 = () => {
+            $('.select2').select2({
+                'theme': 'bootstrap4'
+            });
+        }
+
+        initSelect2();
+
+        Livewire.on('select2', () => {
+            initSelect2();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var headers = {
+                'Content-Type': 'multipart/form-data',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': 'https://api.flaticon.com/v2'
+            };
 
 
+        })
+    </script>
 @endsection

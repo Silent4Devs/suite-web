@@ -11,6 +11,7 @@ use App\Models\RH\ObjetivoRespuesta;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -87,12 +88,14 @@ class Ev360ResumenTabla extends Component
 
         $this->competencias_evaluadas = Competencia::find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
         $this->objetivos_evaluados = $this->obtenerCantidadMaximaDeObjetivos($evaluacion->id);
+
         return view('livewire.ev360-resumen-tabla', ['lista_evaluados', 'calificaciones', 'evaluacion', 'competencias_evaluadas', 'lista' => $paginator]);
     }
 
     public function obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion)
     {
         $competencias = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)->pluck('competencia_id')->unique()->toArray();
+
         return $competencias;
     }
 
@@ -101,6 +104,7 @@ class Ev360ResumenTabla extends Component
         $competencias = DB::table('ev360_objetivos_calificaciones')->where('evaluacion_id', $evaluacion);
         $agrupar_competencias = $competencias->select(DB::raw('count(id) AS total'))->groupBy('evaluado_id')
             ->get();
+
         return $agrupar_competencias->max('total');
     }
 
@@ -308,7 +312,6 @@ class Ev360ResumenTabla extends Component
                 }),
             ]);
 
-
             if ($this->empleadoTieneObjetivosAsignados($evaluado->id, $evaluacion->id)) {
                 $promedio_objetivos += (($calificacion_objetivos * 100) / 2) / 100;
                 $promedio_general_objetivos += $promedio_objetivos * $evaluacion->peso_general_objetivos;
@@ -318,7 +321,7 @@ class Ev360ResumenTabla extends Component
             } else {
                 $promedio_objetivos = 1;
                 $promedio_general_objetivos = 100 * ($evaluacion->peso_general_objetivos / 100);
-                $calificacion_final +=  $evaluacion->peso_general_objetivos;
+                $calificacion_final += $evaluacion->peso_general_objetivos;
             }
         }
 
@@ -378,14 +381,17 @@ class Ev360ResumenTabla extends Component
         if ($existsObjetivos) {
             return true;
         }
+
         return false;
     }
+
     public function empleadoTieneObjetivosAsignados($empleado, $evaluacion)
     {
         $existsObjetivos = ObjetivoRespuesta::where('evaluado_id', $empleado)->where('evaluacion_id', $evaluacion)->exists();
         if ($existsObjetivos) {
             return true;
         }
+
         return false;
     }
 }

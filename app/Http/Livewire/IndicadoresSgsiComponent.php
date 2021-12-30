@@ -6,10 +6,13 @@ use App\Models\Empleado;
 use App\Models\EvaluacionIndicador;
 use App\Models\Proceso;
 use App\Models\VariablesIndicador;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class IndicadoresSgsiComponent extends Component
 {
+    use LivewireAlert;
+    
     public $nombre;
     public $description;
     public $formula;

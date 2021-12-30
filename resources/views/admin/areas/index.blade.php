@@ -44,6 +44,9 @@
                             Nombre de Área
                         </th>
                         <th>
+                            Foto
+                        </th>
+                        <th>
                             Grupo
                         </th>
                         <th>
@@ -199,6 +202,12 @@
                     {
                         data: 'area',
                         name: 'area'
+                    },
+                    {
+                        data: 'foto_ruta',
+                        render: function(data, type, row, meta) {
+                            return `<img src="${data}" style="width:${data!=""?"50px":"80px"}">`;
+                        }
                     },
                     {
                         data: 'grupo',

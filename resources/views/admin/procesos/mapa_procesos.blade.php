@@ -351,14 +351,35 @@
 
     </style>
 
+{{ Breadcrumbs::render('admin.mapa-procesos') }}
+
+
     @if ($exist_no_publicado)
         <div class="pendiente">
             <i class="fas fa-circle" style="color:yellow"></i> Pendiente de aprobación
         </div>
     @endif
 
-    <div id="caja_mapa_procesos" style="margin-top:30px;">
+    <div class="card-body">
+        {{-- <div class="py-2 text-center form-group col-12 text-uppercase" style="background-color:#1BB0B0; border-radius:100px; color: white;"><h4>MAPA DE PROCESOS DE {{ $organizacion->empresa}}</h4></div> --}}
+        <div class="justify-content-center row m-0">
+            <div class="col-sm-10 col-md-10 col-lg-10 ">
+                <h3 class="mb-2 text-center text-white"
+                    style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Mapa de Procesos de
+                        {{ $organizacion->empresa }} </strong>
+                </h3>
+            </div>
+        </div>
+    </div>
 
+
+    <div class="col-12 text-right">
+        <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-file-csv"
+                style="font-size:18pt;"></i></a>
+        <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-camera"
+                style="font-size:18pt;"></i></a>
+    </div>
+    <div id="caja_mapa_procesos" style="margin-top:30px;">
         <div class="caja2">
             <p>Necesidades del cliente</p>
         </div>

@@ -19,10 +19,8 @@ use Carbon\Carbon;
 
 class HomeController
 {
-
     public function index()
     {
-
         $settings1 = [
             'chart_title'        => 'Actividades por colaborador',
             'chart_type'         => 'bar',

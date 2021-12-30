@@ -3,7 +3,7 @@
     {{-- @can('planes_accion_access') --}}
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Planes de Acción </strong></h3>
+            <h3 class="mb-2 text-center text-white"><strong>Planes de Acciónesss</strong></h3>
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">

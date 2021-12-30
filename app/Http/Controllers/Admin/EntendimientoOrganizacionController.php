@@ -63,7 +63,7 @@ class EntendimientoOrganizacionController extends Controller
                 return $row->analisis ? $row->analisis : '';
             });
             $table->editColumn('fecha', function ($row) {
-                return $row->fecha ? $row->fecha : '';
+                return $row->fecha ? \Carbon\Carbon::parse($row->fecha)->format('d-m-Y') : '';
             });
             $table->editColumn('elabora', function ($row) {
                 return $row->empleado ? $row->empleado->name : '';

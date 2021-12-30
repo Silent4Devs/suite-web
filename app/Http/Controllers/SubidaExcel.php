@@ -13,6 +13,7 @@ use App\Imports\CompetenciaImport;
 use App\Imports\ControlImport;
 use App\Imports\DatosAreaImport;
 use App\Imports\EjecutarenlaceImport;
+use App\Imports\EmpleadoImport;
 use App\Imports\EntendimientoOrganizacionImport;
 use App\Imports\EstadoIncidenteImport;
 use App\Imports\EvaluacionImport;

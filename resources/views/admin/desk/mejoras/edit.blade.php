@@ -6,8 +6,14 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
-@endsection
+    <style>
+        ol.breadcrumb {
+            margin-bottom: 0px;
+        }
 
+    </style>
+@endsection
+{{ Breadcrumbs::render('mejoras-edit', $mejoras) }}
 
 <div class="card">
     <div class="text-center card-header" style="background-color: #00abb2;">
@@ -69,7 +75,8 @@
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
+                                <select name="estatus" class="form-control" id="opciones"
+                                    onchange='cambioOpciones();'>
                                     <option {{ old('estatus', $mejoras->estatus) == 'nuevo' ? 'selected' : '' }}
                                         value="nuevo">Nuevo</option>
                                     <option {{ old('estatus', $mejoras->estatus) == 'en curso' ? 'selected' : '' }}
@@ -95,7 +102,8 @@
                                     hora
                                     de cierre del ticket</label>
 
-                                    <input class="form-control" readonly  name="fecha_cierre" type="datetime" value="{{ $mejoras->fecha_cierre }}" id="solucion">
+                                <input class="form-control" readonly name="fecha_cierre" type="datetime"
+                                    value="{{ $mejoras->fecha_cierre }}" id="solucion">
 
                             </div>
 
@@ -235,9 +243,9 @@
                                     </div>
                                 </div>
                             </div>
-                                <div class="mb-3 col-sm-12 col-lg-12 col-md-12 text-primary ">
-                                    <strong style="font-size:13pt;">Folio: {{ $mejoras->folio }}</strong>
-                                </div>
+                            <div class="mb-3 col-sm-12 col-lg-12 col-md-12 text-primary ">
+                                <strong style="font-size:13pt;">Folio: {{ $mejoras->folio }}</strong>
+                            </div>
                             <div class="col-md-4">
                                 Seleccione el metódo de análisis
                             </div>

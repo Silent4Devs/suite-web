@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('content')
     {{-- @can('planes_accion_access') --}}
-    <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Planes de Acción </strong></h3>
+    <div class="mt-3 card">
+        <div class="" style="display:flex; justify-content:center">
+                <h3 class="text-center text-white mt-4" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px; width:90%;"><strong>Planes de acción </strong></h3>
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -94,7 +94,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         doc.styles.tableHeader.fontSize = 8.5;
-                        doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10 
+                        doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -154,34 +154,37 @@
                         }
                         return elaborador;
                     }
-                },{
-                    data:'id',
-                    render:function(data, type, row, meta){
-                        if(row.tasks){
-                            let tasks =row.tasks;
-                            let zero_task = tasks.find(t=>Number(t.level) == 0);
-                            if(zero_task != undefined){
+                }, {
+                    data: 'id',
+                    render: function(data, type, row, meta) {
+                        if (row.tasks) {
+                            let tasks = row.tasks;
+                            let zero_task = tasks.find(t => Number(t.level) == 0);
+                            if (zero_task != undefined) {
                                 let progress = Math.ceil(zero_task.progress);
                                 let html = "";
-                                if(progress >= 90){
-                                    html = `<span class="badge badge-success">${progress} %</span>`;
-                                }else if(progress < 90 && progress >=60){
-                                    html = `<span class="badge badge-warning">${progress} %</span>`;
-                                }else{
-                                    html = `<span class="badge badge-danger">${progress} %</span>`;
+                                if (progress >= 90) {
+                                    html =
+                                        `<span class="badge badge-success">${progress} %</span>`;
+                                } else if (progress < 90 && progress >= 60) {
+                                    html =
+                                        `<span class="badge badge-warning">${progress} %</span>`;
+                                } else {
+                                    html =
+                                        `<span class="badge badge-danger">${progress} %</span>`;
                                 }
                                 return html;
-                            }                    
+                            }
                         }
                         return "<span class='badge badge-primary'>Sin progreso calculable</span>"
                     }
-                },{
-                    data:'id',
-                    render:function(data, type, row, meta){
-                        if(row.tasks){
-                            let tasks =row.tasks;
-                            let zero_task = tasks.find(t=>Number(t.level) == 0);
-                            if(zero_task != undefined){
+                }, {
+                    data: 'id',
+                    render: function(data, type, row, meta) {
+                        if (row.tasks) {
+                            let tasks = row.tasks;
+                            let zero_task = tasks.find(t => Number(t.level) == 0);
+                            if (zero_task != undefined) {
                                 return `
                                     <p>${moment.unix((zero_task.start)/1000).format("DD-MM-YYYY")}</p>
                                 `;
@@ -189,13 +192,13 @@
                         }
                         return "<span class='badge badge-primary'>No encontrado</span>";
                     }
-                },{
-                    data:'id',
-                    render:function(data, type, row, meta){
-                        if(row.tasks){
-                            let tasks =row.tasks;
-                            let zero_task = tasks.find(t=>Number(t.level) == 0);
-                            if(zero_task != undefined){
+                }, {
+                    data: 'id',
+                    render: function(data, type, row, meta) {
+                        if (row.tasks) {
+                            let tasks = row.tasks;
+                            let zero_task = tasks.find(t => Number(t.level) == 0);
+                            if (zero_task != undefined) {
                                 return `
                                     <p>${moment.unix((zero_task.end)/1000).format("DD-MM-YYYY")}</p>
                                 `;
@@ -203,21 +206,49 @@
                         }
                         return "<span class='badge badge-primary'>No encontrado</span>";
                     }
-                },{
-                    data:'id',
-                    render:function(data, type, row, meta){
-                        if(row.tasks){
-                            let tasks =row.tasks;
-                            let zero_task = tasks.find(t=>Number(t.level) == 0);
-                            if(zero_task != undefined){
-                                return `
+                }, {
+                    data: 'id',
+                    render: function(data, type, row, meta) {
+                        if (row.tasks) {
+                            let tasks = row.tasks;
+                            let zero_task = tasks.find(t => Number(t.level) == 0);
+                            if (zero_task != undefined) {
+                                if (zero_task.status == 'STATUS_UNDEFINED') {
+                                    return `
+                                        <span class="badge badge-primary">Sin iniciar</span>
+                                    `;
+                                } else if (zero_task.status == 'STATUS_ACTIVE') {
+                                    return `
+                                        <span class="badge badge-warning">En proceso</span>
+                                    `;
+
+                                } else if (zero_task.status == 'STATUS_DONE') {
+                                    return `
+                                        <span class="badge badge-success">Completado</span>
+                                    `;
+
+                                } else if (zero_task.status == 'STATUS_FAILED') {
+                                    return `
+                                        <span class="badge badge-danger">Retraso</span>
+                                    `;
+
+                                } else if (zero_task.status == 'STATUS_SUSPENDED') {
+                                    return `
+                                        <span class="badge badge-secondary">Suspendido</span>
+                                    `;
+
+                                } else {
+                                    return `
                                     <p>${zero_task.status}</p>
                                 `;
+                                }
+
                             }
                         }
                         return "<span class='badge badge-primary'>No encontrado</span>";
                     }
-                },{
+
+                }, {
                     data: 'id',
                     render: function(data, type, row, meta) {
                         let urlVerPlanAccion = "";
@@ -228,7 +259,7 @@
                         } else {
                             urlVerPlanAccion = `/admin/planes-de-accion/${data}`;
                         }
-                        let botones = `   
+                        let botones = `
                             <div class="btn-group">
                                 <a class="btn" href="${urlEditarPlanAccion}" title="Editar Plan de Acción"><i class="fas fa-edit"></i></a>
                                 <a class="btn" href="${urlVerPlanAccion}" title="Visualizar Plan de Acción"><i class="fas fa-stream"></i></a>

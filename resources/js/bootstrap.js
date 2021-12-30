@@ -4,7 +4,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.html2canvas = require('html2canvas')
 // window.OrgChart = require('orgchart');
 
-
 /**
  * Librerias COREUI
  */

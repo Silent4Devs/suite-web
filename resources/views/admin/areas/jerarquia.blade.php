@@ -141,8 +141,11 @@
         }
 
         .sidenav .side.img-nav {
-            width: 5rem;
+            width: 250px;
             margin: auto;
+            margin-top: -10px;
+            z-index: 0;
+            position: relative;
         }
 
         .side.nav-shadow {
@@ -263,6 +266,10 @@
             right: 70px;
         }
 
+        /* #shot_screen{
+            width:100% !important;
+        } */
+
     </style>
     <style>
         .range-slider {
@@ -275,7 +282,7 @@
 
         .range-slider__range {
             -webkit-appearance: none;
-            width: calc(100% - (73px));
+            width:100%;
             height: 10px;
             border-radius: 5px;
             background: #d7dcdf;
@@ -447,7 +454,7 @@
             background-color: rgba(255, 255, 255, 10);
             border-radius: 20px;
             /* redondear bordes (esquinas)*/
-            box-shadow: 3px 3px 3px #707070;
+            /* box-shadow: 3px 3px 3px #707070; */
             /*sombra del elemento-desplazamiento x-desplazamiento y-desenfoque-color*/
 
         }
@@ -485,15 +492,69 @@
             margin-bottom: -2px;
             margin-right: 10px;
         }
+        #chart-container{
+            /* background-color:red; */
+            /* z-index:1 !important; */
+            position:relative !important;
+        }
+        .charContainerAll{
+            /* background-color:yellow; */
+            z-index:0 !important;
+            position: relative !important;
+        }
+        .caja_grupos{
+            left:20px;
+            transition:0.5s !important;
+            margin-left:-200px;
+            position:absolute;
+            top:30px;
+            background: white;
+            z-index:1;
+        }
+        .grupos_funciones .caja_grupos{
+            margin-left:0px;
+            /* transition:0.5s !important; */
+
+        }
+        .btn_grupos{
+            transform:rotate(0deg);
+            transition:0.5s;
+        }
+        .grupos_funciones .btn_grupos{
+            transform:rotate(180deg);
+        }
+        .modal-backdrop{
+            display:none;
+        }
+        .caja_grupos ul{
+            transition:0.5s !important;
+        }
+        .btn_iconos_areas{
+            margin-top:15px;
+            transform: scale(1.25);
+        }
+        @media(min-width:2000px){
+            .contenido_blanco{
+                padding-bottom: 300px !important;
+            }
+        }
 
     </style>
 @endsection
 @section('content')
-    <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-        <h3 class="mb-2 text-center text-white"><strong>Áreas</strong></h3>
-    </div>
+{{ Breadcrumbs::render('areas-render') }}
+
+
+
     <!-- component -->
-    <div class="w-full px-8 py-4 mb-16 bg-white rounded-lg shadow-lg">
+    <div class="w-full px-6 py-4 mb-16 bg-white rounded-lg shadow-lg contenido_blanco">
+        <div class="card-body">
+            @if ($organizacion)
+                <h3 class="mb-2 text-center text-white" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de {{ $organizacion->empresa}}</strong></h3>
+            @else
+                 <h3 class="mb-2 text-center text-white" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de la organización</strong></h3>
+            @endif
+        </div>
         @if (!$areasTree)
             <div class="px-4 py-3 text-blue-900 bg-blue-100 border-t-4 border-blue-500 rounded-b shadow-md" role="alert">
                 <div class="row w-100">
@@ -513,7 +574,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <img src="{{ asset('img/areas.jpg') }}" class="mt-3" style="height: 400px;">
+                <img src="{{ asset('img/areas_fondo.jpg') }}" class="mt-3" style="height: 400px;">
             </div>
         @else
             <div class="caja_botones_menu">
@@ -529,19 +590,22 @@
                     <section id="contenido1" class="caja_tab_reveldada">
 
                         <div class="row">
-                            <div class="col-lg-11 col-md-12 col-sm-12">
+                            <div class="col-8">
                                 <div class="m-0 range-slider h-100">
                                     <span class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
                                         <i class="mr-1 fas fa-search-plus"></i>
                                         Control de zoom
                                     </span>
-                                    <div class="d-flex justify-content-center align-items-center" style="height: 75%">
+                                    <div class="d-flex justify-content-center align-items-center" style="height: 75%; width:100% !important;">
                                         <input id="zoomer" class="range-slider__range" type="range" value="70" min="10"
                                             max="200">
                                         <span id="output" class="range-slider__value">70</span>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="btn_iconos_areas" id="export_csv"></div>
+                            <div class="btn_iconos_areas" id="shot_screen"></div>
                             <div class="col-lg-1 col-sm-12" style="position: relative;">
                                 <div class="pl-0 col-3" style="position: absolute;top: 20px;left: 0;">
                                     <button class="btn btn-lg" id="reloadOrg" title="Recargar organigrama"
@@ -550,13 +614,14 @@
                             </div>
                         </div>
 
+
+
+
                         {{-- <div id="exportData"></div> --}}
                         <div class="contenedor-areas">
-                            <div id="chart-container" class="m-0" style="position: relative">
-                                {{-- <div id="chart-side" class="sidenav" style="width: 0px"></div> --}}
-                            </div>
-                            <div class="row justify-content-end" style="position: absolute;top: 20px;right: 35px;">
-                                <ul style="background: white;">
+                            <i class="fas fa-caret-right btn_grupos" title="Ver grupos" style= "position:absolute; top:0; font-size:25pt; cursor:pointer;"></i>
+                            <div class="row caja_grupos">
+                                <ul style="max-width: 200px !important; overflow:hidden !important;">
                                     @foreach ($grupos as $grupo)
                                         <li class="mb-2 d-flex align-items-center" data-toggle="modal"
                                             data-target="#Grupo{{ $grupo->id }}" style="cursor: pointer;">
@@ -618,11 +683,21 @@
                                     @endforeach
                                 </ul>
                             </div>
+                            <div id="chart-container" class="m-0" style="position: relative">
+                                {{-- <div id="chart-side" class="sidenav" style="width: 0px"></div> --}}
+                            </div>
                         </div>
 
                     </section>
+
                     <section id="contenido2" class="mt-4">
+                        <div class="col-12 text-right">
+                        <a href="{{route("admin.areas.exportar")}}" class="mr-5"><i class="fas fa-file-csv" style="font-size:18pt;"></i></a>
+                        <a href="{{route("admin.areas.exportar")}}" class="mr-5"><i class="fas fa-camera" style="font-size:18pt;"></i></a>
+                        </div>
                         <div class="row">
+
+
                             <div class="col-sm-12 col-12 col-lg-{{ count($areas_sin_grupo) ? '9' : '12' }}">
                                 @if ($numero_grupos > 0)
                                     <div class="justify-content-center">
@@ -643,7 +718,7 @@
                                                                 <div class="mb-3 ml-2 mr-2 bg-white rounded col-3 sesioninicio"
                                                                     style="height:40px; border:1px solid #ccc !important"
                                                                     onclick="renderModal(this,'{{ $area->area }}', '{{ $area->descripcion }}', '{{ $grupo->color }}')">
-                                                                    <p class="text-center" style="cursor:pointer">
+                                                                    <p class="text-center" style="cursor:pointer border:1px solid #ccc !important">
                                                                         {{ $area->area }}
                                                                     </p>
                                                                 </div>
@@ -651,8 +726,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="menulogin d-none"
-                                                    style="border-top:solid 3px rgb(163, 163, 163);">
+                                                <div class="menulogin d-none" style="border:solid 3px rgb(163, 163, 163);">
                                                 </div>
                                             </div>
                                         @endforeach
@@ -682,6 +756,15 @@
     </div>
 @endsection
 @section('scripts')
+
+    <script>
+
+    $(".btn_grupos").click(function(){
+        $(".contenedor-areas").toggleClass("grupos_funciones");
+    });
+
+    </script>
+
     <script type="module">
         import OrgChart from "{{ asset('orgchart/orgchart.js') }}"; // Se importan funcionalidades de OrgChart
 
@@ -714,6 +797,8 @@
 
                 let url_organigrama = "{{ route('admin.areas.obtenerJerarquia') }}";
 
+                document.querySelector('#export_csv').innerHTML = "";
+                document.querySelector('#shot_screen').innerHTML = "";
                 $.ajax({
                     type: "GET",
                     url: url_organigrama,
@@ -722,7 +807,7 @@
                         let img = document.createElement('img');
                         img.classList.add('imagen-search');
                         img.src = "{{ asset('img/searching.svg') }}";
-                        img.width = 500;
+                        img.width = 0;
                         img.style.margin = 'auto';
                         let texto = document.createElement('h3');
                         texto.classList.add('texto-search');
@@ -754,9 +839,9 @@
                             'nodeID': 'id',
                             'pan': true,
                             'exportButton': true,
-                            'exportFilename': `Organigrama de ${organizacion}`,
+                            'exportFilename': `Jerarquia de Areas`,
                             'direction': orientacion,
-                            'urlExportCSV': "{{ route('admin.organigrama.exportar') }}"
+                            'urlExportCSV': "{{ route('admin.areas.exportar') }}"
                         });
                     }
                 });
@@ -767,7 +852,7 @@
 
     <script>
         function renderModal(element, nombre, descripcion, color) {
-            element.style.border = `2px solid ${color!=null?color:"black"}`;
+            //element.style.border = `2px solid ${color!=null?color:"black"}`;
 
             let contenedor = document.querySelector(".menulogin");
             contenedor.classList.remove("d-none")
@@ -777,7 +862,7 @@
 
                 <div class="btnCerrar" style="color:${color}">X</div>
                                 <div class="row justify-content-center">
-                                    <div class="ml-5 bg-white rounded shadow-sm col-12 justify-content-center" style="margin-top:50px; background-color:${color}!important">
+                                    <div class="ml-5 mt-5 bg-white rounded shadow-sm col-12 justify-content-center" style=" background-color:${color}!important">
                                         <p class="text-center text-white"> ${nombre} </p>
                                     </div>
 
@@ -788,7 +873,7 @@
             let btnCerrar = document.querySelector(".btnCerrar");
             btnCerrar.addEventListener("click", function(e) {
                 e.preventDefault();
-                element.style.border = "none";
+                // element.style.border = "none";
                 contenedor.classList.remove("d-block")
                 contenedor.classList.add("d-none")
             });

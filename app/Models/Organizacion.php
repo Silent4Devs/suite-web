@@ -1,15 +1,14 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
+
+// use App\Models\Schedule;
 
 /**
  * Class Organizacion.
@@ -38,6 +37,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Organizacion extends Model
 {
     use SoftDeletes;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     protected $table = 'organizacions';
 
     protected $casts = [
@@ -59,7 +62,28 @@ class Organizacion extends Model
         'team_id',
         'antecedentes',
         'logotipo',
+        'razon_social',
+        'rfc',
+        'representante_legal',
+        'fecha_constitucion',
+        'num_empleados',
+        'tamano',
+        'linkedln',
+        'youtube',
+        'facebook',
+        'twitter',
+
     ];
+
+    public function getLogotipoAttribute($value)
+    {
+        $logotipo = asset('img/logo_policromatico_2.png');
+        if ($value) {
+            $logotipo = asset('storage/images/' . $value);
+        }
+
+        return $logotipo;
+    }
 
     public function team()
     {
@@ -69,5 +93,15 @@ class Organizacion extends Model
     public function sedes()
     {
         return $this->hasMany(Sede::class);
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany('App\Models\Schedule', 'organizacions_id')->orderBy('id');
+    }
+
+    public function panel()
+    {
+        return $this->hasMany(PanelOrganizacion::class);
     }
 }
