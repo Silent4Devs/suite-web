@@ -333,6 +333,14 @@
         font-size: 8px;
     }
 
+    .seleccionado {
+        background-color: red !important;
+    }
+
+    .seleccionado td {
+        background-color: rgba(0, 0, 0, 0) !important;
+    }
+
 </style>
 
 <div class="card" style="box-shadow: none; !important">
@@ -349,12 +357,12 @@
     <script type="text/javascript">
         $(document).ready(function() {
             initTable();
-
-            let textobuscar = @json($texto).replace(/\s+/g, '');
-            console.log("textobuscar:" + textobuscar);
-            var getValue = $('#' + textobuscar).attr('class');
-            console.log(getValue);
         });
+
+        function pintarId() {
+            let textobuscar = @json($texto).replace(/\s+/g, '').toLowerCase();
+            document.getElementById(textobuscar).classList.add('seleccionado');
+        }
 
         function initTable() {
             // let url = '{{ asset('storage/gantt/') }}/{{ $name_file_gantt }}';
@@ -455,11 +463,12 @@
 					`;
 
                 } else if (Number(task.level) > 1) {
-                    let idname = task.name.replace(/\s+/g, '');
+                    let idname = task.name.replace(/\s+/g, '').toLowerCase();
+
                     html += `
 
-						<tr id="${task.id}" data-texto="${idname}" data-level=${task.level} numero-registro="${contador_registros}">
-							<td>${contador_registros}</td>
+						<tr id="${task.id}" data-level=${task.level} numero-registro="${contador_registros}">
+							<td class="" id="${idname}">${contador_registros}</td>
 							<td style="padding-left: ${task.level * 15}px;">
 								<div class="d-flex" style="width: calc(400px - ${task.level * 15}px);">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-up" viewBox="0 0 16 16">
@@ -1028,6 +1037,11 @@
                 $(".tabla_gantt_fase:hover thead").toggleClass('th_activo');
             });
 
+            console.log(document.getElementById('evaluartableroypresentarresultadosadirección'));
+
+            if (@json($texto)) {
+                pintarId();
+            }
         }
 
         function recalculateProgress(task, tasks) {

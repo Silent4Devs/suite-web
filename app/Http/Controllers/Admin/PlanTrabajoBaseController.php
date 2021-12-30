@@ -36,8 +36,9 @@ class PlanTrabajoBaseController extends Controller
         $file_gant = json_decode(file_get_contents($gant_readed), true);
         $empleados = Empleado::select('name')->get();
         $name_file_gantt = 'gantt_inicial.json';
+        $texto = false;
 
-        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt'));
+        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto'));
     }
 
     public function showTarea($texto)
@@ -63,8 +64,9 @@ class PlanTrabajoBaseController extends Controller
         $file_gant = json_decode(file_get_contents($gant_readed), true);
         $empleados = Empleado::select('name')->get();
         $name_file_gantt = 'gantt_inicial.json';
+        $sinTexto = true;
 
-        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto'));
+        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto', 'sinTexto'));
     }
 
     public function saveImplementationProyect(Request $request)
