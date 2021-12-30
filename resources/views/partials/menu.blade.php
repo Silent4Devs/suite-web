@@ -255,7 +255,7 @@
                     <li class="c-sidebar-nav-item">
                         <a href="{{ route('admin.analisis-riesgos.index') }}"
                             class="c-sidebar-nav-link {{ request()->is('admin/admin.analisis-riesgos') || request()->is('admin/admin.analisis-riesgos') ? 'active' : '' }}">
-                            
+
                             <i class="fas fa-table iconos_menu letra_blanca">
 
                             </i>
@@ -271,6 +271,14 @@
                 href="{{ route('admin.iso27001.index') }}#contexto">
                 <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> ISO 27001 </font>
+            </a>
+        </li>
+
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link {{ request()->is('admin/iso9001') ? 'active' : '' }}"
+                href="{{ route('admin.iso9001.index') }}#contexto">
+                <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
+                <font class="letra_blanca"> ISO 9001 </font>
             </a>
         </li>
 

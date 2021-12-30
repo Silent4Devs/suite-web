@@ -344,13 +344,16 @@
 </div>
 
 
-
-
 @section('scripts')
     @parent
     <script type="text/javascript">
         $(document).ready(function() {
             initTable();
+
+            let textobuscar = @json($texto).replace(/\s+/g, '');
+            console.log("textobuscar:" + textobuscar);
+            var getValue = $('#' + textobuscar).attr('class');
+            console.log(getValue);
         });
 
         function initTable() {
@@ -387,7 +390,7 @@
                 success: function(response) {
                     $('#workSpace').trigger('refreshTasks.gantt');
                     console.log(response)
-                    document.getElementById('ultima_modificacion').innerHTML=response.ultima_modificacion;
+                    document.getElementById('ultima_modificacion').innerHTML = response.ultima_modificacion;
                     // toastr.success('Tarea actualizada con éxito');
                 }
             });
@@ -452,9 +455,10 @@
 					`;
 
                 } else if (Number(task.level) > 1) {
+                    let idname = task.name.replace(/\s+/g, '');
                     html += `
 
-						<tr id="${task.id}" data-level=${task.level} numero-registro="${contador_registros}">
+						<tr id="${task.id}" data-texto="${idname}" data-level=${task.level} numero-registro="${contador_registros}">
 							<td>${contador_registros}</td>
 							<td style="padding-left: ${task.level * 15}px;">
 								<div class="d-flex" style="width: calc(400px - ${task.level * 15}px);">
