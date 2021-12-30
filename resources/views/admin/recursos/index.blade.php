@@ -7,9 +7,9 @@
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Transferencia de Conocimiento</strong></h3>
+                <h3 class="mb-2 text-center text-white"><strong>Capacitaciones</strong></h3>
             </div>
-    @endcan
+        @endcan
 
 
         @include('partials.flashMessages')
@@ -37,33 +37,6 @@
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
@@ -164,13 +137,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -210,13 +183,14 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-                        console.log(row)
-                        let participantes = row.empleados;
-                        let html="";
-                        participantes.forEach(element => {
-                           html += `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${element?.avatar}" title="${element?.name}"></img>`;
+                            console.log(row)
+                            let participantes = row.empleados;
+                            let html = "";
+                            participantes.forEach(element => {
+                                html +=
+                                    `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${element?.avatar}" title="${element?.name}"></img>`;
 
-                        });
+                            });
 
                             return html
                         }
@@ -264,6 +238,5 @@
             //     });
             // })
         });
-
     </script>
 @endsection

@@ -153,13 +153,6 @@
 
         </div>
     <div class="card-body" style="height: 600px;">
-
-            <div class="card" style="box-shadow: none; background-color: transparent;">
-                <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
-                    style="margin-top:0px !important; ">
-                    <h3 class="mt-2 text-center text-white" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Calendario de {{ $nombre_organizacion }} </strong></h3>
-                </div>
-            </div>
             <div class="card-body" style="height: 700px;">
                 <div class="caja">
                     <div id="lnb">

@@ -7,7 +7,9 @@
         </a></li>
     <li><a href="{{ route('admin.perfiles.index') }}">
             <div>
-                <i class="fas fa-sitemap"></i>
+                <span class="material-icons material-modulos">
+                    stairs
+                </span>
                 Niveles Jerárquicos
             </div>
         </a></li>
@@ -19,7 +21,9 @@
         </a></li>
     <li><a href="{{ route('admin.capital.expedientes-profesionales') }}">
             <div>
-                <i class="fas fa-file"></i>
+                <span class="material-icons material-modulos">
+                    folder_shared
+                </span>
                 Expedientes Profesionales
             </div>
         </a></li>
@@ -56,14 +60,18 @@
     </div>
     <li><a href="{{ route('admin.tipos-contratos-empleados.index') }}">
             <div>
-                <i class="fas fa-sitemap"></i>
+                <span class="material-icons material-modulos">
+                    description
+                </span>
                 Tipos de contratos
             </div>
         </a>
     </li>
     <li><a href="{{ route('admin.entidades-crediticias.index') }}">
             <div>
-                <i class="fas fa-sitemap"></i>
+                <span class="material-icons material-modulos">
+                    account_balance
+                </span>
                 Entidades Crediticias
             </div>
         </a>
@@ -71,7 +79,9 @@
     <li>
         <a href="#">
             <div>
-                <i class="fas fa-question"></i>
+                <span class="material-icons material-modulos">
+                    beach_access
+                </span>
                 Solicitudes e Incidencias
             </div>
         </a>
@@ -79,7 +89,9 @@
     <li>
         <a href="#">
             <div>
-                <i class="fas fa-question"></i>
+                <span class="material-icons material-modulos">
+                    loyalty
+                </span>
                 Beneficios
             </div>
         </a>

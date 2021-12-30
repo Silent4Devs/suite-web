@@ -481,6 +481,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
 
     // Recursos
+    Route::post('recursos/validate', 'RecursosController@validateForm')->name('recursos.validateForm');
+    Route::post('recursos/{recurso}/update', 'RecursosController@update')->name('recursos.update');
     Route::delete('recursos/destroy', 'RecursosController@massDestroy')->name('recursos.massDestroy');
     Route::post('recursos/media', 'RecursosController@storeMedia')->name('recursos.storeMedia');
     Route::post('recursos/ckmedia', 'RecursosController@storeCKEditorImages')->name('recursos.storeCKEditorImages');
@@ -489,7 +491,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('recursos/calificar/', 'RecursosController@calificarParticipante')->name('recursos.calificar');
     Route::get('recursos/{recurso}/participantes/', 'RecursosController@participantes')->name('recursos.participantes');
     Route::get('recursos/{recurso}/participantes/get', 'RecursosController@getParticipantes')->name('recursos.getParticipantes');
-    Route::resource('recursos', 'RecursosController');
+    Route::resource('recursos', 'RecursosController')->except(['update']);
 
     // Competencia
     Route::get('competencia/{empleado}/idiomas', 'IdiomasEmpleadosController@index')->name('idiomas-empleados.index');
