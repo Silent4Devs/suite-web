@@ -170,7 +170,7 @@ Breadcrumbs::for('admin.objetivosseguridads.create', function ($trail) {
 Breadcrumbs::for('admin.recursos.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Soporte', route('admin.iso27001.index') . '#soporte');
-    $trail->push('Transferencia de Conocimiento', route('admin.recursos.index'));
+    $trail->push('Capacitaciones', route('admin.recursos.index'));
 });
 Breadcrumbs::for('admin.recursos.create', function ($trail) {
     $trail->parent('admin.recursos.index');
@@ -660,4 +660,3 @@ Breadcrumbs::for('admin.visualizarorganizacion', function ($trail) {
     $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Organización');
 });
-
