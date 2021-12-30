@@ -20,8 +20,9 @@ class CategoriaCapacitacionSelect extends Component
     public function render()
     {
         $this->categorias = CategoriaCapacitacion::get();
+
         return view('livewire.categoria-capacitacion-select', [
-            'categorias' => $this->categorias
+            'categorias' => $this->categorias,
         ]);
     }
 

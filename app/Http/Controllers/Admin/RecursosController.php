@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyRecursoRequest;
-use App\Http\Requests\StoreRecursoRequest;
-use App\Http\Requests\UpdateRecursoRequest;
 use App\Models\CategoriaCapacitacion;
 use App\Models\Recurso;
 use App\Models\Team;
@@ -16,7 +14,6 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -94,6 +91,7 @@ class RecursosController extends Controller
         // $participantes = User::all()->pluck('name', 'id');
         $categorias = CategoriaCapacitacion::get();
         $recurso = new Recurso;
+
         return view('admin.recursos.create', compact('recurso', 'categorias'));
     }
 
@@ -122,6 +120,7 @@ class RecursosController extends Controller
         if ($request->tipo_request == 'ajax') {
             return response()->json(['status' => 'success', 'message' => 'Recurso creado']);
         }
+
         return redirect()->route('admin.recursos.index')->with('success', 'Guardado con éxito');
     }
 
@@ -129,11 +128,13 @@ class RecursosController extends Controller
     {
         if ($request->tipo_validacion == 'general') {
             $this->validateRequest($request);
+
             return response()->json(['isValid' => true]);
         } else {
             $this->validateRequest($request);
         }
     }
+
     public function validateRequest($request)
     {
         $request->validate([
@@ -153,12 +154,12 @@ class RecursosController extends Controller
     {
         abort_if(Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $categorias = CategoriaCapacitacion::get();
+
         return view('admin.recursos.edit', compact('recurso', 'categorias'));
     }
 
     public function update(Request $request, Recurso $recurso)
     {
-
         $this->validateForm($request);
         $request->validate([
             'fecha_limite' => 'date|required|before_or_equal:fecha_curso',

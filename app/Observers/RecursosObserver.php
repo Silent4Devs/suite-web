@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Events\RecursosEvent;
-use App\Http\Requests\StoreRecursoRequest;
 use App\Mail\InvitacionCapacitacionMail;
 use App\Models\Empleado;
 use App\Models\Recurso;
