@@ -3,6 +3,13 @@
 Breadcrumbs::for('admin.iso27001.index', function ($trail) {
     $trail->push('ISO 27001', route('admin.iso27001.index'));
 });
+
+Breadcrumbs::for('admin.analisisdebrechas.index', function ($trail) {
+    $trail->push('ISO 27001', route('admin.iso27001.index'));
+    $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
+    $trail->push('Análisis de Brechas', route('admin.analisis-brechas.index'));
+});
+
 Breadcrumbs::for('dashboard-iso27001', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Dashboard', route('admin.home'));
@@ -155,6 +162,11 @@ Breadcrumbs::for('admin.riesgosoportunidades.index', function ($trail) {
 Breadcrumbs::for('admin.riesgosoportunidades.create', function ($trail) {
     $trail->parent('admin.riesgosoportunidades.index');
     $trail->push('Formulario', route('admin.riesgosoportunidades.create'));
+});
+Breadcrumbs::for('admin.paneldeclaracion.index', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
+    $trail->push('Asignación Controles', route('admin.paneldeclaracion.index'));
 });
 
 Breadcrumbs::for('admin.objetivosseguridads.index', function ($trail) {

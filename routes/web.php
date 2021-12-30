@@ -399,8 +399,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('planes-de-accion', 'PlanesAccionController')->except(['create']);
 
     // Glosarios
-    Route::delete('glosarios/destroy', 'GlosarioController@massDestroy')->name('glosarios.massDestroy');
-    Route::resource('glosarios', 'GlosarioController');
+    Route::get('glosario/acervo', 'GlosarioController@render')->name('glosarios.render');
+    // Route::get('glosario/{glosarios}/glosario-edit', 'GlosarioController@edit')->name('glosario.edit');
+    Route::get('glosarios/edit/{glosarios}', 'GlosarioController@edit')->name('glosarios.edit');
+    // Route::delete('glosarios/destroy', 'GlosarioController@destroy')->name('glosarios.destroy');
+    Route::resource('glosarios', 'GlosarioController' , ['except' => ['edit']]);
 
     // Plan Base Actividades
     Route::delete('plan-base-actividades/destroy', 'PlanBaseActividadesController@massDestroy')->name('plan-base-actividades.massDestroy');
@@ -846,9 +849,6 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 
 
 
-    // Glosarios
-    Route::delete('glosarios/destroy', 'GlosarioController@massDestroy')->name('glosarios.massDestroy');
-    Route::resource('glosarios', 'GlosarioController');
 
     // Plan Base Actividades
     Route::delete('plan-base-actividades/destroy', 'PlanBaseActividadesController@massDestroy')->name('plan-base-actividades.massDestroy');
