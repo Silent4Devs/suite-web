@@ -1,4 +1,4 @@
-<div class="modal fade" id="csvImportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="xlsxImportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -62,7 +62,7 @@
             const formData = new FormData();
             const archivos = document.getElementById('csv_file').files;
             archivos.forEach(element => {
-                formData.append('archivo', element);
+                formData.append('categoriacapacitacion', element);
             });
             formData.append('eliminar', document.getElementById('eliminar').checked)
             formData.append('tipo', 'tabla')
@@ -81,7 +81,7 @@
                         const response  = await importar(formData)
                         if (response.status=='success') {
                             toastr.success(response.message)
-                            $('#csvImportModal').modal('hide')
+                            $('#xlsxImportModal').modal('hide')
                         }
                     }
                 })
@@ -89,7 +89,7 @@
                 const response = await importar(formData)
                 if (response.status=='success') {
                     toastr.success(response.message)
-                    $('#csvImportModal').modal('hide')
+                    $('#xlsxImportModal').modal('hide')
                 }
             }
 
@@ -99,7 +99,7 @@
     })
 
     async function importar(formData) {
-        const url = "{{ route('carga-amenaza') }}";
+        const url = "{{ route('carga-categoriacapacitacion') }}";
             const response = await fetch(url, {
                 method: 'POST',
                 body: formData,

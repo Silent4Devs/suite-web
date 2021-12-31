@@ -62,7 +62,7 @@
             const formData = new FormData();
             const archivos = document.getElementById('csv_file').files;
             archivos.forEach(element => {
-                formData.append('archivo', element);
+                formData.append('matriz_requisitos_legales', element);
             });
             formData.append('eliminar', document.getElementById('eliminar').checked)
             formData.append('tipo', 'tabla')
@@ -99,7 +99,7 @@
     })
 
     async function importar(formData) {
-        const url = "{{ route('carga-amenaza') }}";
+        const url = "{{ route('carga-matriz_requisitos_legales') }}";
             const response = await fetch(url, {
                 method: 'POST',
                 body: formData,
