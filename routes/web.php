@@ -1125,6 +1125,7 @@ Route::post('CargaControl', 'SubidaExcel@Control')->name('carga-control');
 Route::post('CargaEjecutarenlace', 'SubidaExcel@Ejecutarenlace')->name('carga-ejecutarenlace');
 Route::post('CargaTeam', 'SubidaExcel@Team')->name('carga-team');
 Route::post('CargaEstadoIncidente', 'SubidaExcel@EstadoIncidente')->name('carga-estadoincidente');
+Route::post('CargaRole', 'SubidaExcel@Roles')->name('carga-roles');
 Route::post('CargaCompetencia', 'SubidaExcel@Competencia')->name('carga-competencia');
 Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion');
 Route::post('CargaCategoriaCapacitacion', 'SubidaExcel@CategoriaCapacitacion')->name('carga-categoriacapacitacion');
@@ -1160,6 +1161,7 @@ Route::get('ExportRevisionDireccion', 'ExportExcel@RevisionDireccion')->name('de
 Route::get('ExportCategoria', 'ExportExcel@CategoriaActivo')->name('descarga-categoria');
 Route::get('ExportPuesto', 'ExportExcel@Puesto')->name('descarga-puesto');
 Route::get('ExportEstadoIncidente', 'ExportExcel@EstadoIncidente')->name('descarga-estadoincidente');
+Route::post('ExportRole', 'ExportExcel@Roles')->name('descarga-roles');
 Route::get('ExportPoliticaSgsi', 'ExportExcel@PoliticaSgsi')->name('descarga-politica_sgi');
 Route::get('ExportGrupoArea', 'ExportExcel@GrupoArea')->name('descarga-grupo_area');
 Route::get('ExportEmpleado', 'ExportExcel@Empleado')->name('descarga-empleado');
