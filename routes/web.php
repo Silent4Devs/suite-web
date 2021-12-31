@@ -1117,7 +1117,7 @@ Route::view('post_register', 'auth.post_register');
 
 //Ruta ImportExcel
 Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
-Route::post('CargaAmenza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
+Route::post('CargaAmenaza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
 Route::post('CargaVulnerabilidad', 'SubidaExcel@Vulnerabilidad')->name('carga-vulnerabilidad');
 Route::post('CargaUsuario', 'SubidaExcel@Usuario')->name('carga-usuario');
 Route::post('CargaPuesto', 'SubidaExcel@Puesto')->name('carga-puesto');
@@ -1145,7 +1145,6 @@ Route::post('CargaGrupoArea', 'SubidaExcel@GrupoArea')->name('carga-grupo_area')
 Route::post('CargaDatosArea', 'SubidaExcel@DatosArea')->name('carga-datos_area');
 Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo_inventario');
 Route::post('CargaEmpleado', 'SubidaExcel@Empleado')->name('carga-empleado');
-Route::post('CargaAmenza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
 //Ruta ExportExcel
 Route::get('ExportAmenaza', 'ExportExcel@Amenaza')->name('descarga-amenaza');
 Route::get('ExportVulnerabilidad', 'ExportExcel@Vulnerabilidad')->name('descarga-vulnerabilidad');
