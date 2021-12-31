@@ -22,6 +22,17 @@ class Recurso extends Model implements HasMedia
     protected static $flushCacheOnUpdate = true;
     public $table = 'recursos';
 
+    const TIPOS = [
+        'Curso' => 'Curso',
+        'Diplomado' => 'Diplomado',
+        'Taller' => 'Taller',
+        'Seminario' => 'Seminario',
+        'Coloquio' => 'Coloquio',
+        'Congreso' => 'Congreso',
+        'Foro' => 'Foro',
+        'Simposio' => 'Simposio',
+    ];
+
     protected $appends = [
         'certificado',
     ];
@@ -33,6 +44,7 @@ class Recurso extends Model implements HasMedia
     protected $dates = [
         'fecha_curso',
         'fecha_fin',
+        'fecha_limite',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -54,6 +66,7 @@ class Recurso extends Model implements HasMedia
         'deleted_at',
         'team_id',
         'archivar',
+        'fecha_limite',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

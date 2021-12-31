@@ -83,8 +83,7 @@ class AreasController extends Controller
         $grupoarea = Grupo::get();
         $numero_areas = Area::count();
 
-
-        return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas',));
+        return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas', ));
     }
 
     public function create()

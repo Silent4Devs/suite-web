@@ -399,8 +399,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('planes-de-accion', 'PlanesAccionController')->except(['create']);
 
     // Glosarios
-    Route::delete('glosarios/destroy', 'GlosarioController@massDestroy')->name('glosarios.massDestroy');
-    Route::resource('glosarios', 'GlosarioController');
+    Route::get('glosario/acervo', 'GlosarioController@render')->name('glosarios.render');
+    // Route::get('glosario/{glosarios}/glosario-edit', 'GlosarioController@edit')->name('glosario.edit');
+    Route::get('glosarios/edit/{glosarios}', 'GlosarioController@edit')->name('glosarios.edit');
+    // Route::delete('glosarios/destroy', 'GlosarioController@destroy')->name('glosarios.destroy');
+    Route::resource('glosarios', 'GlosarioController' , ['except' => ['edit']]);
 
     // Plan Base Actividades
     Route::delete('plan-base-actividades/destroy', 'PlanBaseActividadesController@massDestroy')->name('plan-base-actividades.massDestroy');
@@ -481,6 +484,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
 
     // Recursos
+    Route::post('recursos/validate', 'RecursosController@validateForm')->name('recursos.validateForm');
+    Route::post('recursos/{recurso}/update', 'RecursosController@update')->name('recursos.update');
     Route::delete('recursos/destroy', 'RecursosController@massDestroy')->name('recursos.massDestroy');
     Route::post('recursos/media', 'RecursosController@storeMedia')->name('recursos.storeMedia');
     Route::post('recursos/ckmedia', 'RecursosController@storeCKEditorImages')->name('recursos.storeCKEditorImages');
@@ -489,7 +494,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('recursos/calificar/', 'RecursosController@calificarParticipante')->name('recursos.calificar');
     Route::get('recursos/{recurso}/participantes/', 'RecursosController@participantes')->name('recursos.participantes');
     Route::get('recursos/{recurso}/participantes/get', 'RecursosController@getParticipantes')->name('recursos.getParticipantes');
-    Route::resource('recursos', 'RecursosController');
+    Route::resource('recursos', 'RecursosController')->except(['update']);
 
     // Competencia
     Route::get('competencia/{empleado}/idiomas', 'IdiomasEmpleadosController@index')->name('idiomas-empleados.index');
@@ -756,6 +761,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // analisis Riesgos
     Route::delete('analisis-riesgos/destroy', 'AnalisisdeRiesgosController@massDestroy')->name('analisis-riesgos.massDestroy');
+    Route::get('analisis-riesgos-menu', 'AnalisisdeRiesgosController@menu')->name('analisis-riesgos.menu');
     Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
     Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
 
@@ -851,9 +857,6 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 
 
 
-    // Glosarios
-    Route::delete('glosarios/destroy', 'GlosarioController@massDestroy')->name('glosarios.massDestroy');
-    Route::resource('glosarios', 'GlosarioController');
 
     // Plan Base Actividades
     Route::delete('plan-base-actividades/destroy', 'PlanBaseActividadesController@massDestroy')->name('plan-base-actividades.massDestroy');

@@ -27,6 +27,7 @@
         }
 
     </style>
+     {{ Breadcrumbs::render('admin.paneldeclaracion.index') }}
 
     @include('partials.flashMessages')
 
