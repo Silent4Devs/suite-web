@@ -53,8 +53,7 @@
             @foreach ($actividades as $task)
                 @if (!($task->archivo == 'archivado'))
                     <tr id="{{ $task->id }}" data-parent-plan="{{ $task->slug }}">
-                        <td class="td_nombre"><a href="plantTrabajoBase/{{$task->name}}"
-                                target="_blank">{{ $task->name }}</a></td>
+                        <td class="td_nombre">{{ $task->name }}</td>
                         <td><span class="badge badge-primary">{{ $task->parent }}</span></td>
                         {{-- <td>Categoria</td> --}}
                         {{-- <td>Urgencia</td> --}}
@@ -111,6 +110,7 @@
                                 }
                             @endphp
                             <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"></i></a>
+                            <a href="plantTrabajoBase/{{ $task->name }}" target="_blank"><i class="fas fa-eye"></i></a>
                             @if ($task->status == 'STATUS_DONE' or $task->status == 'STATUS_FAILED')
                                 <button class="btn_archivar" title="Archivar" data-toggle="modal"
                                     data-target="#alert_activ{{ $task->id }}">
