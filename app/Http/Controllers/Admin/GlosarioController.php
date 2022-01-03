@@ -3,22 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyGlosarioRequest;
 use App\Http\Requests\StoreGlosarioRequest;
-use App\Http\Requests\UpdateGlosarioRequest;
 use App\Models\Glosario;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class GlosarioController extends Controller
 {
     public function index()
     {
-
-            $glosarios =Glosario::get();
-
+        $glosarios = Glosario::get();
 
         return view('admin.glosarios.index', compact('glosarios'));
     }
@@ -39,8 +34,8 @@ class GlosarioController extends Controller
 
     public function edit($glosario)
     {
-
         $glosario = Glosario::find($glosario);
+
         return view('admin.glosarios.edit', compact('glosario'));
     }
 
@@ -60,17 +55,18 @@ class GlosarioController extends Controller
 
     public function destroy($id)
     {
-
         $glosario = Glosario::find($id);
 
         $glosario->delete();
-        $glosarios =Glosario::get();
+        $glosarios = Glosario::get();
+
         return view('admin.glosarios.index', compact('glosarios'));
     }
 
     public function render(Request $request)
     {
-        $glosarios=Glosario::get();
+        $glosarios = Glosario::get();
+
         return view('admin.glosarios.render', compact('glosarios'));
     }
 }
