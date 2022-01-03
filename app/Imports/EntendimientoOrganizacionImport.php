@@ -40,8 +40,10 @@ class EntendimientoOrganizacionImport implements ToModel
 
     public function obtenerEmpleadoPorNombre($nombre)
     {
+        // dd($nombre);
         $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
-
+        dd($empleado_bd);
         return $empleado_bd->id;
+
     }
 }

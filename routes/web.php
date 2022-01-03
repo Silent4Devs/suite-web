@@ -1119,7 +1119,7 @@ Route::view('post_register', 'auth.post_register');
 
 //Ruta ImportExcel
 Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
-Route::post('CargaAmenza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
+Route::post('CargaAmenaza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
 Route::post('CargaVulnerabilidad', 'SubidaExcel@Vulnerabilidad')->name('carga-vulnerabilidad');
 Route::post('CargaUsuario', 'SubidaExcel@Usuario')->name('carga-usuario');
 Route::post('CargaPuesto', 'SubidaExcel@Puesto')->name('carga-puesto');
@@ -1127,6 +1127,7 @@ Route::post('CargaControl', 'SubidaExcel@Control')->name('carga-control');
 Route::post('CargaEjecutarenlace', 'SubidaExcel@Ejecutarenlace')->name('carga-ejecutarenlace');
 Route::post('CargaTeam', 'SubidaExcel@Team')->name('carga-team');
 Route::post('CargaEstadoIncidente', 'SubidaExcel@EstadoIncidente')->name('carga-estadoincidente');
+Route::post('CargaRole', 'SubidaExcel@Roles')->name('carga-roles');
 Route::post('CargaCompetencia', 'SubidaExcel@Competencia')->name('carga-competencia');
 Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion');
 Route::post('CargaCategoriaCapacitacion', 'SubidaExcel@CategoriaCapacitacion')->name('carga-categoriacapacitacion');
@@ -1147,7 +1148,6 @@ Route::post('CargaGrupoArea', 'SubidaExcel@GrupoArea')->name('carga-grupo_area')
 Route::post('CargaDatosArea', 'SubidaExcel@DatosArea')->name('carga-datos_area');
 Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo_inventario');
 Route::post('CargaEmpleado', 'SubidaExcel@Empleado')->name('carga-empleado');
-Route::post('CargaAmenza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
 //Ruta ExportExcel
 Route::get('ExportAmenaza', 'ExportExcel@Amenaza')->name('descarga-amenaza');
 Route::get('ExportVulnerabilidad', 'ExportExcel@Vulnerabilidad')->name('descarga-vulnerabilidad');
@@ -1163,6 +1163,7 @@ Route::get('ExportRevisionDireccion', 'ExportExcel@RevisionDireccion')->name('de
 Route::get('ExportCategoria', 'ExportExcel@CategoriaActivo')->name('descarga-categoria');
 Route::get('ExportPuesto', 'ExportExcel@Puesto')->name('descarga-puesto');
 Route::get('ExportEstadoIncidente', 'ExportExcel@EstadoIncidente')->name('descarga-estadoincidente');
+Route::post('ExportRole', 'ExportExcel@Roles')->name('descarga-roles');
 Route::get('ExportPoliticaSgsi', 'ExportExcel@PoliticaSgsi')->name('descarga-politica_sgi');
 Route::get('ExportGrupoArea', 'ExportExcel@GrupoArea')->name('descarga-grupo_area');
 Route::get('ExportEmpleado', 'ExportExcel@Empleado')->name('descarga-empleado');

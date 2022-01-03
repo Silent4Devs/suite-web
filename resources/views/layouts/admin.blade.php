@@ -1048,7 +1048,7 @@
                                             href="{{ route('profile.password.edit') }}">
                                             <i class="mr-1 fas fa-user-cog">
                                             </i>
-                                            Conf. Perfil
+                                            Configurar Perfil
                                         </a>
 
                                     @endcan

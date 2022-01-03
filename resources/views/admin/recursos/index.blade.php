@@ -1,6 +1,40 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+
+    .btn_cargar{
+        border-radius: 100px !important;
+        border: 1px solid #00abb2;
+        color: #00abb2;
+        text-align: center;
+        padding: 0;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 !important;
+        margin-right: 10px !important;
+    }
+    .btn_cargar:hover{
+        color: #fff;
+        background:#00abb2 ;
+    }
+    .btn_cargar i{
+        font-size: 15pt;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .agregar{
+        margin-right:15px;
+    }
+
+</style>
+
     {{ Breadcrumbs::render('admin.recursos.index') }}
 
     @can('recurso_create')
@@ -8,6 +42,11 @@
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Capacitaciones</strong></h3>
+            </div>
+            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+                <div class="col-lg-12">
+                    @include('csvImport.modalcapacitaciones', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
+                </div>
             </div>
         @endcan
 
@@ -119,13 +158,32 @@
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar curso y capacitación',
                 url: "{{ route('admin.recursos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config){
                 let {url} = config;
                 window.location.href = url;
                 }
                 };
-                dtButtons.push(btnAgregar);
+                let btnExport = {
+                text: '<i  class="fas fa-download"></i>',
+                titleAttr: 'Descargar plantilla',
+                className: "btn btn_cargar" ,
+                action: function(e, dt, node, config) {
+                    $('#').modal('show');
+                }
+            };
+            let btnImport = {
+                text: '<i  class="fas fa-file-upload"></i>',
+                titleAttr: 'Importar datos',
+                className: "btn btn_cargar",
+                action: function(e, dt, node, config) {
+                    $('#xlsxImportModal').modal('show');
+                }
+            };
+
+            dtButtons.push(btnAgregar);
+            dtButtons.push(btnExport);
+            dtButtons.push(btnImport);
             @endcan
             @can('recurso_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
@@ -137,13 +195,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
