@@ -381,11 +381,11 @@
                 <div class="form-group col-sm-6">
                      <i class="fa-fw fas fa-briefcase iconos-crear"></i>{!! Form::label('roles', 'Roles') !!}
                     <div class="caja_btn_input">
-                        {!! Form::open(['route' => 'carga-estadoincidente', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-sm" type="file" name="roles" required>
+                        {!! Form::open(['route' => 'carga-roles', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-sm" type="file" name="role" required>
                         {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn btn_cargar', 'title' => 'Cargar documento']) !!}
                         {!! Form::close() !!}
-                        {!! Form::open(['route' => 'descarga-estadoincidente', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::open(['route' => 'descarga-roles', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
                         {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
                         {!! Form::close() !!}
                     </div>
