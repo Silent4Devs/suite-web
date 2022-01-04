@@ -16,9 +16,9 @@ class Cors
      */
     public function handle(Request $request, Closure $next)
     {
-        header('Access-Control-Allow-Origin:  *');
-        //header('Access-Control-Allow-Origin:  http://localhost:4200');
-        $IlluminateResponse = 'Illuminate\Http\Response';
+        //header('Access-Control-Allow-Origin:  *');
+        //header('Access-Control-Allow-Origin:  http://localhost:8080');
+        /*$IlluminateResponse = 'Illuminate\Http\Response';
         $SymfonyResopnse = 'Symfony\Component\HttpFoundation\Response';
         $headers = [
             'Access-Control-Allow-Headers' =>  'Content-Type, X-Auth-Token, Authorization, Origin',
@@ -47,6 +47,7 @@ class Cors
         }
 
         //return $next($request);
-        return $response;
+        return $response;*/
+        return $next($request);
     }
 }
