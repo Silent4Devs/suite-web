@@ -16,175 +16,175 @@ class PuestoSeeder extends Seeder
     {
         $puestos = [
             [
-                'puesto' => 'Analista de Diseño'
+                'puesto' => 'Analista de Diseño',
             ],
             [
-                'puesto' => 'Analista de Contenido'
+                'puesto' => 'Analista de Contenido',
             ],
             [
-                'puesto' => 'Arquitecto De Soluciones'
+                'puesto' => 'Arquitecto De Soluciones',
             ],
             [
-                'puesto' => 'Analista Sr. Alianzas Estratégicas'
+                'puesto' => 'Analista Sr. Alianzas Estratégicas',
             ],
             [
-                'puesto' => 'Asistente'
+                'puesto' => 'Asistente',
             ],
             [
-                'puesto' => 'Líder de Innovación y Desarrollo'
+                'puesto' => 'Líder de Innovación y Desarrollo',
             ],
             [
-                'puesto' => 'Analista Gestión de Talento'
+                'puesto' => 'Analista Gestión de Talento',
             ],
             [
-                'puesto' => 'Pentest Jr.'
+                'puesto' => 'Pentest Jr.',
             ],
             [
-                'puesto' => 'Inteligencia del Negocio'
+                'puesto' => 'Inteligencia del Negocio',
             ],
             [
-                'puesto' => 'Trainee De Operaciones'
+                'puesto' => 'Trainee De Operaciones',
             ],
             [
-                'puesto' => 'Ingeniero en Monitoreo'
+                'puesto' => 'Ingeniero en Monitoreo',
             ],
             [
-                'puesto' => 'Consultor Junior'
+                'puesto' => 'Consultor Junior',
             ],
             [
-                'puesto' => 'Desarrollo'
+                'puesto' => 'Desarrollo',
             ],
             [
-                'puesto' => 'ITMS'
+                'puesto' => 'ITMS',
             ],
             [
-                'puesto' => 'ITSM'
+                'puesto' => 'ITSM',
             ],
             [
-                'puesto' => 'ITSM'
+                'puesto' => 'ITSM',
             ],
             [
-                'puesto' => 'Trainee de Ciberinteligencia'
+                'puesto' => 'Trainee de Ciberinteligencia',
             ],
             [
-                'puesto' => 'Gerente Comercial IP'
+                'puesto' => 'Gerente Comercial IP',
             ],
             [
-                'puesto' => 'Gerente De Arquitectura'
+                'puesto' => 'Gerente De Arquitectura',
             ],
             [
-                'puesto' => 'Líder Comercial de Gobierno'
+                'puesto' => 'Líder Comercial de Gobierno',
             ],
             [
-                'puesto' => 'Gerente Comercial IP / Gobierno'
+                'puesto' => 'Gerente Comercial IP / Gobierno',
             ],
             [
-                'puesto' => 'Soporte Nivel 1'
+                'puesto' => 'Soporte Nivel 1',
             ],
             [
-                'puesto' => 'Líder SOC'
+                'puesto' => 'Líder SOC',
             ],
             [
-                'puesto' => 'Supervisor Operativo'
+                'puesto' => 'Supervisor Operativo',
             ],
             [
-                'puesto' => 'Soporte Técnico Interno'
+                'puesto' => 'Soporte Técnico Interno',
             ],
             [
-                'puesto' => 'Analista de Contabilidad'
+                'puesto' => 'Analista de Contabilidad',
             ],
             [
-                'puesto' => 'Analista de Contabilidad'
+                'puesto' => 'Analista de Contabilidad',
             ],
             [
-                'puesto' => 'Analista de Monitoreo'
+                'puesto' => 'Analista de Monitoreo',
             ],
             [
-                'puesto' => 'Soporte y BI'
+                'puesto' => 'Soporte y BI',
             ],
             [
-                'puesto' => 'ITSM Y Cognitive Services'
+                'puesto' => 'ITSM Y Cognitive Services',
             ],
             [
-                'puesto' => 'Monitoreo'
+                'puesto' => 'Monitoreo',
             ],
             [
-                'puesto' => 'Trainee'
+                'puesto' => 'Trainee',
             ],
             [
-                'puesto' => 'Director Sr. Innovación y Nuevos Productos'
+                'puesto' => 'Director Sr. Innovación y Nuevos Productos',
             ],
             [
-                'puesto' => 'Asistente de Dirección'
+                'puesto' => 'Asistente de Dirección',
             ],
             [
-                'puesto' => 'Operativo'
+                'puesto' => 'Operativo',
             ],
             [
-                'puesto' => 'Director Jr. Comercial'
+                'puesto' => 'Director Jr. Comercial',
             ],
             [
-                'puesto' => 'Gerente De Operaciones'
+                'puesto' => 'Gerente De Operaciones',
             ],
             [
-                'puesto' => 'Director Jr. de Finanzas y Administración'
+                'puesto' => 'Director Jr. de Finanzas y Administración',
             ],
             [
-                'puesto' => 'Líder de Consultoría Estratégica'
+                'puesto' => 'Líder de Consultoría Estratégica',
             ],
             [
-                'puesto' => 'Líder de Servicios de Ciberinteligencia'
+                'puesto' => 'Líder de Servicios de Ciberinteligencia',
             ],
             [
-                'puesto' => 'Coordinador de Gestión de Talento'
+                'puesto' => 'Coordinador de Gestión de Talento',
             ],
             [
-                'puesto' => 'Control Documental'
+                'puesto' => 'Control Documental',
             ],
             [
-                'puesto' => 'Líder de Entrega de Servicios'
+                'puesto' => 'Líder de Entrega de Servicios',
             ],
             [
-                'puesto' => 'Líder de Contraloría'
+                'puesto' => 'Líder de Contraloría',
             ],
             [
-                'puesto' => 'Trainee Desarrollador Web'
+                'puesto' => 'Trainee Desarrollador Web',
             ],
             [
-                'puesto' => 'Analista De Calidad'
+                'puesto' => 'Analista De Calidad',
             ],
             [
-                'puesto' => 'Project Manager Servicios'
+                'puesto' => 'Project Manager Servicios',
             ],
             [
-                'puesto' => 'Especialista'
+                'puesto' => 'Especialista',
             ],
             [
-                'puesto' => 'Consultor Senior'
+                'puesto' => 'Consultor Senior',
             ],
             [
-                'puesto' => 'Especialista de Consultoría Estratégica'
+                'puesto' => 'Especialista de Consultoría Estratégica',
             ],
             [
-                'puesto' => 'Automatización'
+                'puesto' => 'Automatización',
             ],
             [
-                'puesto' => 'Analista De Innovación Y Desarrollo'
+                'puesto' => 'Analista De Innovación Y Desarrollo',
             ],
             [
-                'puesto' => 'Pentest Sr.'
+                'puesto' => 'Pentest Sr.',
             ],
             [
-                'puesto' => 'Analista de Ciberinteligencia'
+                'puesto' => 'Analista de Ciberinteligencia',
             ],
             [
-                'puesto' => 'Especialista Ciberinteligencia'
+                'puesto' => 'Especialista Ciberinteligencia',
             ],
             [
-                'puesto' => 'Director Sr. Nuevos Productos'
+                'puesto' => 'Director Sr. Nuevos Productos',
             ],
             [
-                'puesto' => 'Director(a) General'
+                'puesto' => 'Director(a) General',
             ],
 
         ];
