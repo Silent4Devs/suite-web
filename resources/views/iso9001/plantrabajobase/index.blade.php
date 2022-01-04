@@ -69,9 +69,9 @@
 
 
         /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  fill: #fff !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  height: 15px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              fill: #fff !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              height: 15px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             }*/
 
 
         #workSpace {
@@ -218,12 +218,12 @@
 
     </style>
 
-    {{ Breadcrumbs::render('admin.planTrabajoBase.index') }}
+    {{-- {{ Breadcrumbs::render('admin.planTrabajoBase.index') }} --}}
 
 
     <div class="mt-5 mb-5">
         <div class="py-3 col-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Plan de Implementación ISO 27001</strong></h3>
+            <h3 class="mb-2 text-center text-white"><strong>Plan de Implementación ISO 9001</strong></h3>
         </div>
         <div id="bloqueado"></div>
 
@@ -323,7 +323,7 @@
         function obtenerBloqueo() {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.lockedPlan.getLockedToPlanTrabajo') }}",
+                url: "{{ route('lockedPlan.getLockedToPlanTrabajo') }}",
                 data: {
                     _token: "{{ csrf_token() }}",
                     "user_id": "{{ auth()->user()->id }}",
@@ -364,7 +364,7 @@
         function ponerBloqueo() {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.lockedPlan.setLockedToPlanTrabajo') }}",
+                url: "{{ route('lockedPlan.setLockedToPlanTrabajo') }}",
                 data: {
                     _token: "{{ csrf_token() }}"
                 },
@@ -377,7 +377,7 @@
         function estaBloqueado(event) {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.lockedPlan.isLockedToPlanTrabajo') }}",
+                url: "{{ route('lockedPlan.isLockedToPlanTrabajo') }}",
                 data: {
                     _token: "{{ csrf_token() }}"
                 },
@@ -405,7 +405,7 @@
         function removerBloqueo() {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.lockedPlan.removeLockedToPlanTrabajo') }}",
+                url: "{{ route('lockedPlan.removeLockedToPlanTrabajo') }}",
                 data: {
                     _token: "{{ csrf_token() }}"
                 },

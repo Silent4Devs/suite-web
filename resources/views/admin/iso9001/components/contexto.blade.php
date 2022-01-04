@@ -6,7 +6,7 @@
                     Análisis de brechas
                 </div>
             </a></li>
-        <li><a href="{{ route('admin.planTrabajoBase.index') }}">
+        <li><a href="{{ url('iso9001/planTrabajobase') }}">
                 <div>
                     <i class="fas fa-stream"></i>
                     Plan de implementación
