@@ -366,7 +366,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('organizacions/{schedule}/delete-schedule', 'OrganizacionController@deleteSchedule')->name('organizacions.delete-schedule');
     Route::resource('organizacions', 'OrganizacionController');
 
-
     Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
     Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
 
@@ -391,7 +390,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Route::get('glosario/{glosarios}/glosario-edit', 'GlosarioController@edit')->name('glosario.edit');
     Route::get('glosarios/edit/{glosarios}', 'GlosarioController@edit')->name('glosarios.edit');
     // Route::delete('glosarios/destroy', 'GlosarioController@destroy')->name('glosarios.destroy');
-    Route::resource('glosarios', 'GlosarioController' , ['except' => ['edit']]);
+    Route::resource('glosarios', 'GlosarioController', ['except' => ['edit']]);
 
     // Plan Base Actividades
     Route::delete('plan-base-actividades/destroy', 'PlanBaseActividadesController@massDestroy')->name('plan-base-actividades.massDestroy');
