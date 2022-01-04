@@ -36,8 +36,10 @@ use App\Models\Amenaza;
 use App\Models\AnalisisDeRiesgo;
 use App\Models\CategoriaCapacitacion;
 use App\Models\Comiteseguridad;
+use App\Models\Empleado;
 use App\Models\EntendimientoOrganizacion;
 use App\Models\EstadoIncidente;
+use App\Models\Grupo;
 use App\Models\MatrizRequisitoLegale;
 use App\Models\Minutasaltadireccion;
 use App\Models\PartesInteresada;
@@ -312,10 +314,15 @@ class SubidaExcel extends Controller
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
-    public function GrupoArea()
+    public function GrupoArea(Request $request)
     {
+        if($request->eliminar == "true"){
+            Grupo::truncate();
+        }
         Excel::import(new GrupoImport, request()->file('grupo_area'));
-
+        if ($request->tipo=='tabla') {
+            return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
+        }
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
@@ -338,10 +345,15 @@ class SubidaExcel extends Controller
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
-    public function Empleado()
+    public function Empleado(Request $request)
     {
+        if($request->eliminar == "true"){
+            Empleado::truncate();
+        }
         Excel::import(new EmpleadoImport, request()->file('empleado'));
-
+        if ($request->tipo=='tabla') {
+            return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
+        }
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 }

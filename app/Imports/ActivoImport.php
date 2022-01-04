@@ -37,12 +37,12 @@ class ActivoImport implements ToModel
             'fecha_fin' => $row[14],
             'fecha_baja' => $row[15],
             'observaciones' => $row[16],
-
         ]);
     }
 
     public function obtenerCategoriaPorId($categoria)
     {
+        // dd($categoria);
         $categoria_bd = Tipoactivo::select('id', 'tipo')->where('id', $categoria)->first();
         // dd($categoria_bd);
         return $categoria_bd->id;
