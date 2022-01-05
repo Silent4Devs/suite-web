@@ -2,15 +2,13 @@
 
 namespace App\Models;
 
-use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class Glosario extends Model
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes;
     use QueryCacheable;
 
     public $cacheFor = 3600;
@@ -21,23 +19,46 @@ class Glosario extends Model
         'concepto',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 
-    protected $fillable = [
+    protected $dates = ['deleted_at'];
+
+    public $fillable = [
+        'numero',
+        'norma',
         'concepto',
         'definicion',
         'explicacion',
-        'created_at',
-        'updated_at',
-        'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'numero' => 'string',
+        'norma' => 'string',
+        'concepto' => 'string',
+        'definicion' => 'string',
+        'explicacion' => 'string',
+    ];
+
+    /**
+     * Validation rules.
+     *
+     * @var array
+     */
+    public static $rules = [
+        'numero' => 'nullable|string|max:255',
+        'norma' => 'nullable|string|max:255',
+        'concepto' => 'nullable|string|max:255',
+        'defincion' => 'nullable|string|max:255',
+        'explicacion' => 'nullable|string|max:255',
+        'created_at' => 'nullable',
+        'updated_at' => 'nullable',
+        'deleted_at' => 'nullable',
+    ];
 }

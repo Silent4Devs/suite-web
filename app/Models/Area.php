@@ -65,6 +65,7 @@ class Area extends Model
         'descripcion',
         'foto_area',
         'team_id',
+        'id_lider',
     ];
 
     protected $appends = ['grupo_name', 'foto_ruta'];
@@ -152,5 +153,10 @@ class Area extends Model
         }
 
         return $foto_url;
+    }
+
+    public function lider()
+    {
+        return $this->hasMany(Empleado::class, 'id_lider');
     }
 }

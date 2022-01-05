@@ -1,51 +1,35 @@
 @extends('layouts.admin')
 @section('content')
 
-<style>
-
-#tbl-participantes_paginate{
-    margin-left: 50px;
-    margin-top: 8px;
-    display: flex !important;
-    justify-content: space-between;
-}
-
-#tbl-participantes_paginate .paginate_button{
-    margin: 0 7px;
-}
-
-</style>
-
     {{ Breadcrumbs::render('admin.recursos.create') }}
+    <style>
+        .select2 {
+            margin-top: 0 !important;
+        }
 
-    <div class="card">
+    </style>
+    <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong>Transferencia de Conocimiento</h3>
+            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Capacitación </h3>
         </div>
-        <div id="errores_alert"></div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    {{-- <ul class="nav nav-pills nav-fill nav-tabs" id="tab-recursos" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab"
-                                aria-controls="general" aria-selected="true">
-                                <font class="letra_blanca">
-                                    <i class="mr-1 fas fa-file"></i>
-                                    Información General
-                                </font>
+                    <nav>
+                        <div class="nav nav-tabs" id="tabsCapacitaciones" role="tablist">
+                            <a class="nav-link active" data-type="general" id="nav-general-tab" data-toggle="tab"
+                                href="#nav-general" role="tab" aria-controls="nav-general" aria-selected="true">
+                                <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
+                                Información General
+                            </a>
+                            <a class="nav-link" data-type="participantes" id="nav-participantes-tab"
+                                href="#nav-participantes">
+                                <i class="mr-2 fas fa-users" style="font-size:20px;" style="text-decoration:none;"></i>
+                                Participantes
+                                <span class="badge badge-primary" id="contador-participantes-tab">0</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="participantes-tab" data-toggle="tab" href="#participantes" role="tab"
-                                aria-controls="participantes" aria-selected="false" onclick="participantesDataTable()">
-                                <font class="letra_blanca">
-                                    <i class="mr-1 fas fa-users"></i>
-                                    Participantes
-                                </font>
-                            </a>
-                        </li>
-                    </ul> --}}
+                    </ul> 
 
                     <div class="caja_botones_menu">
                         <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-file"
@@ -327,461 +311,222 @@
                                     </div>
                                 </div>
                             </section>
+
                         </div>
-                    </div>
-                    <div class="mt-3 text-right form-group col-12">
-
-                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                        {{-- <button class="btnPrevious btn btn-primary" style="border-radius:100px;">
-                            <i class="ml-1 fas fa-arrow-left"></i>
-                            Anterior
-                        </button> --}}
-                        <button id="btn-general" class="btn btn-success btn-general" style="position: relative">
-                            Actualizar
-                            <i class="ml-1 fas fa-check-circle"></i>
-                            <i id="guardando_capacitacion" class="fas fa-cog fa-spin text-muted"
-                                style="position: absolute; top: 7px;right: 12px;"></i>
-                        </button>
-                    </div>
-
+                    </nav>
+                    {{-- <div class="w-100" style="border-bottom: solid 2px #0CA193;">
+                        <span style="font-size: 17px; font-weight: bold;">
+                            Información general de la capacitación</span>
+                    </div> --}}
+                    <form id="form-informacion-general" method="POST"
+                        action="{{ route('admin.recursos.update', $recurso) }}" enctype="multipart/form-data"
+                        class="mt-3 row">
+                        @csrf
+                        <div class="tab-content col-12" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-general" role="tabpanel"
+                                aria-labelledby="nav-general-tab">
+                                @include('admin.recursos.components.configuracion-inicial')
+                            </div>
+                            <div class="tab-pane fade" id="nav-participantes">
+                                @include('admin.recursos.components.participantes')
+                            </div>
+                        </div>
+                        <div class="text-right form-group col-12">
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                            <button class="btn btn-danger" type="submit" id="btnGuardarRecurso">
+                                {{ trans('global.save') }}
+                            </button>
+                        </div>
+                    </form>
 
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
 @endsection
 
 @section('scripts')
-    <script>
-        participantesDataTable();
-        function participantesDataTable() {
-            let id_recurso = "{{ $recurso->id }}";
-            if (!$.fn.dataTable.isDataTable('#tbl-participantes')) {
-                tbl_participantes = $('#tbl-participantes').DataTable({
-                    // "pageLength": 5,
-                    buttons: [],
-                    ajax: {
-                        url: `/admin/recursos/${id_recurso}/participantes/`,
-                        type: "GET"
-                    },
-                    columns: [{
-                            data: "id",
-                            visible: false
-                        },
-                        {
-                            data: "n_empleado",
-                        },
-                        {
-                            data: "name",
-                            render: function(data, type, row, meta) {
-                                let foto = row.avatar;
-                                let html = `<div class="row align-items-center">
-                                <div class="col-4">
-                                    <img src="{{ asset('storage/empleados/imagenes') }}/${foto}" width="35px" class="mr-2 rounded-circle" />
-                                </div>
-                                <div class="col-8">
-                                    <p class="p-0 m-0"><strong>${data}</strong></p>
-                                    <p class="p-0 m-0"><span class="badge badge-primary"></span></p>
-                                </div>
-                            </div>`;
-                                return html;
-                            }
-                        },
-                        {
-                            data: "email"
-                        },
-                        {
-                            data: "pivot.calificacion"
-                        },
-                        {
-                            data: "pivot.certificado",
-                            render: function(data, type, row, meta) {
-                                let nombre_capacitacion = "{{ $recurso->cursoscapacitaciones }}";
-                                if (data != null) {
-                                    return `<a target="_blank" href="{{ asset('storage/capacitaciones/certificados/') }}/${nombre_capacitacion}/${data}">
-                                                <img src="{{ asset('storage/capacitaciones/certificados/') }}/${nombre_capacitacion}/${data}" width="45px" />
-                                            </a>`;
-                                } else {
-                                    return "";
-                                }
-
-                            }
-                        },
-                        {
-                            data: "id",
-                            render: function(data, type, row, meta) {
-                                let certificado = row.pivot.certificado;
-                                let calificacion = row.pivot.calificacion;
-                                let boton_html =
-                                    `<div class="btn-group" role="group" aria-label="Basic example">
-                                <button onclick='calificarParticipante(${data},"${certificado}","${calificacion}","${row.name}")' type="button" class="btn btn-sm btn-outline-success">
-                                    <i class="fas fa-check-circle"></i>
-                                </button>
-                                <button onclick='eliminarParticipante(${data})' type="button" class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
-                            `;
-                                return boton_html;
-                            }
-                        }
-                    ]
-                });
-            }
-        }
-
-        function calificarParticipante(id_empleado, certificado, calificacion, nombre) {
-            let id_recurso = "{{ $recurso->id }}";
-            $("#id_empleado_calificacion").val(id_empleado);
-            $("#id_recurso_calificacion").val(id_recurso);
-            let calificacion_r = calificacion;
-            let certificado_r = certificado;
-            if (calificacion == 'null') {
-                calificacion = null;
-            }
-            if (certificado == 'null') {
-                certificado = null;
-            }
-            let seleccionado_p = document.querySelector("#participante_seleccionado");
-            seleccionado_p.innerHTML = `( ${nombre} )`;
-            $("#calificacion").val(calificacion);
-            let img_certificado = document.querySelector("#img_certificado");
-            let nombre_capacitacion = "{{ $recurso->cursoscapacitaciones }}";
-            img_certificado.src =
-                `{{ asset('storage/capacitaciones/certificados/') }}/${nombre_capacitacion}/${certificado}`;
-        }
-
-        function eliminarParticipante(id_empleado) {
-            Swal.fire({
-                title: 'Estás seguro de realizar esta acción?',
-                text: "",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar!',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    let url = "{{ route('admin.recursos.cancelar') }}";
-                    let id_recurso = "{{ $recurso->id }}";
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: {
-                            id_recurso,
-                            id_empleado
-                        },
-                        dataType: "JSON",
-                        success: function(response) {
-                            if (response.success) {
-                                tbl_participantes.ajax.reload();
-                                Swal.fire(
-                                    'Participante dado de baja!',
-                                    '',
-                                    'success'
-                                )
-                            }
-
-                            if (response.error) {
-                                console.log('Ocurrió un error al eliminar');
-                            }
-                        }
-                    });
-                }
-            })
-        }
-
-        function suscribirParticipante() {
-            //form-participantes
-            let id_recurso = "{{ $recurso->id }}";
-            let id_empleado = $("#id_empleado").val();
-            let url = $("#form-participantes").attr("action");
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: {
-                    id_recurso,
-                    id_empleado,
-                },
-                beforeSend: function() {
-                    $("#suscribiendo").show();
-                    $("#btn-suscribir-participante").attr('disabled', true);
-                },
-                success: function(response) {
-                    if (response.success) {
-                        $("#btn-suscribir-participante").attr('disabled', false);
-                        $("#suscribiendo").hide();
-                        tbl_participantes.ajax.reload();
-                        $("#participantes_search").val('');
-                        $("#id_empleado").val('');
-                        $("#email").val('');
-                        Swal.fire(
-                            'Participante dado de alta!',
-                            '',
-                            'success'
-                        )
-                    }
-                    if (response.exists) {
-                        $("#btn-suscribir-participante").attr('disabled', false);
-                        $("#suscribiendo").hide();
-                        console.log("Ya está suscrito");
-                        $("#participantes_search").val('');
-                        $("#id_empleado").val('');
-                        $("#email").val('');
-                        Swal.fire(
-                            'Este participante ya está dado de alta en la capacitación!',
-                            '',
-                            'error'
-                        )
-                    }
-                    if (response.error) {
-                        console.log("Aún no has seleccionado un empleado");
-                        $("#btn-suscribir-participante").attr('disabled', false);
-                        $("#suscribiendo").hide();
-                        $("#participantes_search").val('');
-                        $("#id_empleado").val('');
-                        $("#email").val('');
-                        Swal.fire(
-                            'Aún no has seleccionado un empleado para dar de alta!',
-                            '',
-                            'error'
-                        )
-                    }
-                }
-            });
-        }
-
-        function saveCalificacionParticipante(form) {
-            $.ajax({
-                type: "POST",
-                url: $(form).attr('action'),
-                data: new FormData(form),
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    $("#id_empleado_calificacion").val(null);
-                    $("#id_recurso_calificacion").val(null);
-                    $("#calificacion").val(null);
-                    $("#certificado").val(null);
-                    if (response.success) {
-                        Swal.fire(
-                            'Datos registrados con éxito',
-                            '',
-                            'success'
-                        )
-                        tbl_participantes.ajax.reload();
-                    }
-                    if (response.no_selected) {
-                        Swal.fire(
-                            'No has seleccionado un participante!',
-                            '',
-                            'error'
-                        )
-                    }
-                }
-            });
-        }
-
-        $(document).ready(function() {
-            // $("#participantes-tab").trigger('click');
-            let tbl_participantes;
-
-            $("#form_calificar_participantes").submit(function(e) {
-                e.preventDefault();
-                saveCalificacionParticipante(this);
-            });
-
-            $("#suscribiendo").hide();
-            $("#btn-suscribir-participante").click(function(e) {
-                e.preventDefault();
-                suscribirParticipante();
-            });
-
-            $('.btnNext').click(function(e) {
-                e.preventDefault();
-                $('.nav-tabs > .nav-item > .active').parent().next('li').find('a').trigger('click');
-            });
-
-            $('.btnPrevious').click(function(e) {
-                e.preventDefault();
-                $('.nav-tabs > .nav-item > .active').parent().prev('li').find('a').trigger('click');
-            });
-
-            let index_page = "{{ route('admin.recursos.index') }}";
-            $("#guardando_capacitacion").hide();
-            $("#guardando_capacitacion_1").hide();
-            $(".btn-general").click(function(e) {
-                e.preventDefault();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                let url = $("#form-informacion-general").attr("action");
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: $('#form-informacion-general').serialize(),
-                    beforeSend: function() {
-                        $("#guardando_capacitacion").show();
-                        $("#guardando_capacitacion_1").show();
-                        $(".btn-general").attr('disabled', true);
-                        $(document).find('span.error-text').text('');
-                        $(document).find('div#errores_alert').removeClass(
-                            'p-3 text-white bg-danger');
-                        $(document).find('div#errores_alert').text('');
-                        $("#form-informacion-general")[0].reset();
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $(".btn-general").attr('disabled', false);
-                            $("#guardando_capacitacion").hide();
-                            $("#guardando_capacitacion_1").hide();
-                            window.location.href = index_page;
-                        } else {
-                            console.log("Ocurrió un error");
-                        }
-                    },
-                    error: function(error) {
-                        $(".btn-general").attr('disabled', false);
-                        $("#guardando_capacitacion").hide();
-                        $("#guardando_capacitacion_1").hide();
-                        $(document).find('div#errores_alert').addClass(
-                            'p-3 text-white bg-danger');
-                        $("#errores_alert").text(
-                            'Existen errores de validación, por favor revisa ambas pestañas.'
-                        );
-                        $.each(error.responseJSON.errors, function(indexInArray,
-                            valueOfElement) {
-                            $(`span.${indexInArray}_error`).text(valueOfElement[0]);
-                            console.log(indexInArray, valueOfElement);
-                        });
-
-                    }
-                });
-            });
-
-            $("#cargando_participantes").hide();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            // let url = "{{ route('admin.empleados.get') }}";
-            // $("#participantes_search").keyup(function() {
-            //     $.ajax({
-            //         type: "POST",
-            //         url: url,
-            //         data: 'nombre=' + $(this).val(),
-            //         beforeSend: function() {
-            //             $("#cargando_participantes").show();
-            //         },
-            //         success: function(data) {
-            //             $("#cargando_participantes").hide();
-            //             $("#participantes_sugeridos").show();
-            //             let sugeridos = document.querySelector(
-            //                 "#participantes_sugeridos");
-            //             sugeridos.innerHTML = data;
-
-            //             $("#participantes_search").css("background", "#FFF");
-            //         }
-            //     });
-            // });
-
-            // CKEDITOR.replace('descripcion', {
-            //     toolbar: [{
-            //         name: 'paragraph',
-            //         groups: ['list', 'indent', 'blocks', 'align'],
-            //         items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-            //             'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-            //             'Bold', 'Italic'
-            //         ]
-            //     }, {
-            //         name: 'clipboard',
-            //         items: ['Link', 'Unlink']
-            //     }, ]
-            // });
-            $("#cargando_participantes").hide();
-            let url_empleados = "{{ route('admin.empleados.lista') }}";
-            let timeout = null;
-            let inputSearchEmpleados = document.getElementById('participantes_search');
-            $('#participantes_search').on('search', function() {
-                $("#participantes_sugeridos").hide();
-            });
-            $("#participantes_search").keyup(function() {
-                // Clear the timeout if it has already been set.
-                // This will prevent the previous task from executing
-                // if it has been less than <MILLISECONDS>
-                clearTimeout(timeout);
-                // Make a new timeout set to go off in 1000ms (1 second)
-                // let textEscrito = $(this).val();
-                if (inputSearchEmpleados.value.trim() != '') {
-                    timeout = setTimeout(function() {
-                        $.ajax({
-                            type: "POST",
-                            url: url_empleados,
-                            data: 'nombre=' + inputSearchEmpleados.value,
-                            beforeSend: function() {
-                                $("#cargando_participantes").show();
-                            },
-                            success: function(data) {
-                                $("#cargando_participantes").hide();
-                                $("#participantes_sugeridos").show();
-                                let sugeridos = document.querySelector(
-                                    "#participantes_sugeridos");
-                                let lista =
-                                    `<ul class='list-group' id='empleados-lista'>`;
-                                data ? JSON.parse(data).forEach(usuario => {
-                                        lista += `<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action'
-                                    onClick='seleccionarUsuario("${usuario.id}","${usuario.name}","${usuario.email}");'>
-                                    <i class='mr-2 fas fa-user-circle'></i>
-                                    ${usuario.name}</button>
-                                `;
-                                    }) : lista +=
-                                    '<li class="list-group-item list-group-item-action">Sin coincidencias encontradas</li>';
-                                lista += `</ul>`;
-                                console.log(lista);
-                                sugeridos.innerHTML = lista;
-                                $("#participantes_search").css("background", "#FFF");
-                            }
-                        });
-                        // if (inputSearchEmpleados.value == '') {
-                        //     orientacion = localStorage.getItem('orientationOrgChart');
-                        //     renderOrganigrama(OrgChart, orientacion, null);
-                        // }
-                    }, 500);
-                } else {
-                    $("#participantes_sugeridos").hide();
-                }
-            });
-
-            window.seleccionarUsuario = function(id, name, email) {
-
-                $("#participantes_search").val(name);
-                $("#id_empleado").val(id);
-                $("#email").val(email);
-                $("#participantes_sugeridos").hide();
-            }
-
-        });
-        //To select country name
-        function seleccionarUsuario(user) {
-            console.log(user);
-            $("#participantes_search").val(user.name);
-            $("#id_empleado").val(user.id);
-            $("#email").val(user.email);
-            $("#participantes_sugeridos").hide();
-        }
-    </script>
-
 
     <script type="text/javascript">
         $(document).ready(function() {
+            initializeTab();
+            initializeLimitDate();
+            guardarCapacitacion();
+
+            function limpiarErrores() {
+                if (document.querySelectorAll('.errores').length > 0) {
+                    document.querySelectorAll('.errores').forEach(element => {
+                        element.innerHTML = "";
+                    });
+                }
+            }
+
+            function initializeTab() {
+                // const menuActive = localStorage.getItem('menu-capacitaciones-active');
+                // $(`#tabsCapacitaciones [data-type="participantes"]`).tab('show');
+
+                $('#tabsCapacitaciones a').on('click', async function(event) {
+                    event.preventDefault()
+                    const keyTab = this.getAttribute('data-type');
+                    if (keyTab == 'participantes') {
+                        limpiarErrores();
+                        const url = "{{ route('admin.recursos.validateForm') }}";
+                        const formData = new FormData(document.getElementById(
+                            'form-informacion-general'));
+                        formData.append('tipo_validacion', 'general')
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+                        const data = await response.json();
+                        console.log(data.errors);
+                        if (data.errors) {
+                            $.each(data.errors, function(indexInArray,
+                                valueOfElement) {
+                                document.querySelector(`span.${indexInArray}_error`)
+                                    .innerHTML =
+                                    `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
+                            });
+                        }
+                        if (data.isValid) {
+                            $(this).tab('show');
+                            localStorage.setItem('menu-capacitaciones-active', 'participantes');
+                        }
+                    } else {
+                        localStorage.setItem('menu-capacitaciones-active', keyTab);
+                    }
+                });
+            }
+
+            function initializeLimitDate() {
+                const elFechaInicio = document.getElementById('fecha_curso');
+                const elFechaLimite = document.getElementById('fechaLimite');
+                // elFechaInicio.addEventListener('change', function(e) {
+                //     const fecha = e.target.value;
+                //     elFechaLimite.value = fecha;
+                // });
+
+                elFechaLimite.addEventListener('change', function(e) {
+                    console.log(new Date(elFechaLimite.value));
+                    console.log(new Date(elFechaInicio.value));
+                    if (new Date(elFechaLimite.value) > new Date(elFechaInicio.value)) {
+                        alert('La fecha limite no puede ser mayor a la fecha de inicio');
+                        elFechaLimite.value = elFechaInicio.value;
+                    }
+                })
+            }
+
+            function guardarCapacitacion() {
+                const btnGuardarRecurso = document.getElementById('btnGuardarRecurso');
+                btnGuardarRecurso.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    if (!hayParticipantes()) {
+                        Swal.fire({
+                            title: '¡No has agregado participantes!',
+                            text: "¿Quieres agregarlos depués?",
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Agregar Después',
+                            cancelButtonText: 'Permanecer'
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                const response = await guardarEnElServidor();
+                                console.log(response);
+                                if (response.status == "success") {
+                                    Swal.fire(
+                                        '¡Excelente!',
+                                        'Capacitación Creada',
+                                        'success'
+                                    )
+
+                                    setTimeout(() => {
+                                        window.location.href =
+                                            "{{ route('admin.recursos.index') }}";
+                                    }, 1500);
+                                } else {
+                                    toastr.error('Ocurrió un error');
+                                }
+                            }
+                        })
+                    } else {
+                        const response = await guardarEnElServidor();
+                        console.log(response);
+                        if (response.status == "success") {
+                            Swal.fire(
+                                '¡Excelente!',
+                                'Capacitación Creada',
+                                'success'
+                            )
+                            setTimeout(() => {
+                                window.location.href =
+                                    "{{ route('admin.recursos.index') }}";
+                            }, 1500);
+                        } else {
+                            toastr.error('Ocurrió un error');
+                        }
+                    }
+
+                })
+            }
+
+            async function guardarEnElServidor() {
+                try {
+                    const url = document.getElementById(
+                        'form-informacion-general').getAttribute('action');
+                    const formData = new FormData(document.getElementById(
+                        'form-informacion-general'));
+                    formData.append('tipo_request', 'ajax')
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        },
+                    })
+                    const data = await response.json();
+                    if (data.errors) {
+                        $.each(data.errors, function(indexInArray,
+                            valueOfElement) {
+                            document.querySelector(`span.${indexInArray}_error`)
+                                .innerHTML =
+                                `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
+                        });
+                    }
+                    return data;
+                } catch (error) {
+                    return error;
+                }
+            }
+
+            function hayParticipantes() {
+                return document.querySelectorAll('.contador-participantes').length > 0;
+            }
+
+            window.initSelect2 = () => {
+                $('.select2').select2({
+                    'theme': 'bootstrap4'
+                });
+            }
+            initSelect2();
+            Livewire.on('select2', () => {
+                initSelect2();
+            });
+
+            Livewire.on('categoriaCapacitacionStore', () => {
+                $('#tipoCategoriaCapacitacionModal').modal('hide');
+                $('.modal-backdrop').hide();
+                document.getElementById('nombre_cat_cap').value = "";
+                toastr.success('Categoría creada con éxito');
+            });
+
             let select_activos = document.querySelector('#select_modalidad');
             select_activos.addEventListener('change', function(e) {
                 e.preventDefault();
@@ -796,4 +541,5 @@
             });
         });
     </script>
+
 @endsection

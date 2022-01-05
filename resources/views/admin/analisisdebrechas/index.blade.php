@@ -31,6 +31,7 @@
         }
 
     </style>
+     {{ Breadcrumbs::render('admin.analisisdebrechas.index') }}
 
 
     @include('partials.flashMessages')
