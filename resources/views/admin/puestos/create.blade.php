@@ -68,6 +68,9 @@
                         </span>
                     @endif
                 </div>
+
+
+
                 <div class="row col-12">
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                         <label for="estudios"><i class="fas fa-file-signature iconos-crear"></i>Estudios<span
@@ -183,6 +186,9 @@
                         @endif
                     </div> --}}
                 </div>
+
+
+
                 <div class="row col-12">
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
                         <table class="table" id="user_table">
@@ -198,6 +204,9 @@
                         </table>
                     </div>
                 </div>
+
+
+
                 <div class="row col-12">
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
@@ -304,6 +313,28 @@
 
 
                 </div>
+
+                <div class="mb-4 ml-4 w-100" >
+                    <span class="ml-1" style="font-size: 15px; font-weight: bold;">
+                        Competencias</span>
+                </div>
+
+                <div class="form-group col-sm-12">
+                    <label for="clausulas"> <i class="fas fa-star iconos-crear"></i> Competencia(s)</label>
+                    <select class="form-control {{ $errors->has('clausulas') ? 'is-invalid' : '' }}" name="clausulas[]"
+                        id="clausulas" multiple>
+                        <option value disabled >Selecciona una opción</option>
+                        {{-- @foreach ($clausulas as $clausula)
+                            <option value="{{ $clausula->id }}">
+                                {{ $clausula->nombre }}
+                            </option>
+                        @endforeach --}}
+                    </select>
+                    <span class="errors tipo_error"></span>
+                </div>
+
+
+
                 <div class="form-group col-12 text-right" style="margin-left:15px;">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
