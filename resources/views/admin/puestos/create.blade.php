@@ -199,20 +199,9 @@
                     </div>
                 </div>
                 <div class="row col-12">
-                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="sueldo"><i
-                                class="fas fa-briefcase iconos-crear"></i>Sueldo</label>
-                        <input class="form-control {{ $errors->has('sueldo') ? 'is-invalid' : '' }}" type="text" name="sueldo"
-                            id="sueldo" value="{{ old('sueldo', '') }}" data-type='currency' required>
-                        @if ($errors->has('sueldo'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('sueldo') }}
-                            </div>
-                        @endif
-                    </div>
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label for="lugar_trabajo"><i class="fas fa-user-tie iconos-crear"></i>Lugar de trabajo</label>
+                        <label for="lugar_trabajo"><i class="far fa-building iconos-crear"></i>Lugar de trabajo</label>
                         {{-- <select class="form-control {{ $errors->has('lugar_trabajo') ? 'is-invalid' : '' }}" name="lugar_trabajo" id="lugar_trabajo"> --}}
                         <select class="form-control {{ $errors->has('lugar_trabajo') ? 'is-invalid' : '' }}" name="lugar_trabajo" id="lugar_trabajo">
                             <option value="" selected>Selecciona</option>
@@ -227,52 +216,92 @@
                         </div>
                         @endif
                     </div>
+
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="horario"><i
-                                class="fas fa-briefcase iconos-crear"></i>Horario</label>
-                        <input class="form-control {{ $errors->has('horario') ? 'is-invalid' : '' }}" type="text" name="horario"
-                            id="horario" value="{{ old('horario', '') }}" required>
-                        @if ($errors->has('horario'))
+                        <label class="required" for="sueldo"><i class="fas fa-dollar-sign iconos-crear"></i>Sueldo</label>
+                        <input class="form-control {{ $errors->has('sueldo') ? 'is-invalid' : '' }}" type="text" name="sueldo"
+                            id="sueldo" value="{{ old('sueldo', '') }}" data-type='currency' required>
+                        @if ($errors->has('sueldo'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('horario') }}
+                                {{ $errors->first('sueldo') }}
                             </div>
                         @endif
-                        {{-- <span class="help-block">{{ trans('cruds.puesto.fields.puesto_helper') }}</span> --}}
                     </div>
+
+
+                    <div class="form-group col-sm-2 col-md-2 col-lg-2">
+                        <label class="required" for="horario_inicio"><i class="fas fa-clock iconos-crear"></i>Horario</label>
+                               <input  class="form-control {{ $errors->has('horario_inicio') ? 'is-invalid' : '' }}" type="time" name="horario"
+                                    id="horario_inicio" value="{{ old('horario_inicio', '') }}" required>
+                                @if ($errors->has('horario_inicio'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('horario_inicio') }}
+                                    </div>
+                                @endif
+                            {{-- <span class="help-block">{{ trans('cruds.puesto.fields.puesto_helper') }}</span> --}}
+
+                    </div>
+
+                    <div class="form-group col-sm-2 col-md-2 col-lg-2 ">
+                        <label class="mt-3" for="horario_termino"></label>
+                               <input  class="form-control {{ $errors->has('horario_termino') ? 'is-invalid' : '' }}" type="time" name="horario_termino"
+                                    id="horario_termino" value="{{ old('horario_termino', '') }}" required>
+                                @if ($errors->has('horario_termino'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('horario_termino') }}
+                                    </div>
+                                @endif
+                            {{-- <span class="help-block">{{ trans('cruds.puesto.fields.puesto_helper') }}</span> --}}
+
+                    </div>
+
                 </div>
                 <div class="row col-12">
+
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="edad"><i
-                                class="fas fa-briefcase iconos-crear"></i>Edad</label>
-                        <input class="form-control {{ $errors->has('edad') ? 'is-invalid' : '' }}" type="number" name="edad"
-                            id="edad" value="{{ old('edad', '') }}" required>
-                        @if ($errors->has('edad'))
+                        <label class="required" for="genero"><i class="fas fa-restroom iconos-crear"></i>Género</label>
+                        <select class="form-control {{ $errors->has('genero') ? 'is-invalid' : '' }}" name="genero" id="genero">
+                            <option value="" selected>Selecciona</option>
+                            <option value="Hombre">Hombre</option>
+                            <option value="Mujer">Mujer</option>
+                            <option value="Indistinto">Indistinto</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                        <label class="required" for="estado_civil"><i class=" fas fa-heart iconos-crear"></i>Estado Civil</label>
+                        <select class="form-control {{ $errors->has('estado_civil') ? 'is-invalid' : '' }}" name="estado_civil" id="estado_civil">
+                            <option value="" selected>Selecciona</option>
+                            <option value="Soltero">Soltero(a)</option>
+                            <option value="Casado">Casado(a)</option>
+                            <option value="Indistinto">Indistinto</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-sm-2 col-md-2 col-lg-2">
+                        <label class="required" for="edad_de"><i class="fas fa-user-tie iconos-crear"></i>Edad</label>
+                        <input class="form-control {{ $errors->has('edad_de') ? 'is-invalid' : '' }}" type="number" name="edad_de"
+                            id="edad_de" value="{{ old('edad_de', '') }}" required>
+                        @if ($errors->has('edad_de'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('edad') }}
+                                {{ $errors->first('edad_de') }}
                             </div>
                         @endif
                         {{-- <span class="help-block">{{ trans('cruds.puesto.fields.puesto_helper') }}</span> --}}
                     </div>
-                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="genero"><i
-                                class="fas fa-briefcase iconos-crear"></i>Género</label>
-                        <select class="form-control {{ $errors->has('genero') ? 'is-invalid' : '' }}" name="genero" id="genero">
-                            <option value="" selected>Selecciona</option>
-                            <option value="Office">Hombre</option>
-                            <option value="Oficina">Mujer</option>
-                            <option value="Cliente">Indistinto</option>
-                        </select>
+
+                    <div class="form-group mt-2 col-sm-2 col-md-2 col-lg-2">
+                        <label  for="edad_a"></label>
+                        <input class="form-control {{ $errors->has('edad_a') ? 'is-invalid' : '' }}" type="number" name="edad_a"
+                            id="edad_a" value="{{ old('edad_a', '') }}" required>
+                        @if ($errors->has('edad_a'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('edad_a') }}
+                            </div>
+                        @endif
+                        {{-- <span class="help-block">{{ trans('cruds.puesto.fields.puesto_helper') }}</span> --}}
                     </div>
-                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="estado_civil"><i
-                                class="fas fa-briefcase iconos-crear"></i>Estado Civil</label>
-                        <select class="form-control {{ $errors->has('estado_civil') ? 'is-invalid' : '' }}" name="estado_civil" id="estado_civil">
-                            <option value="" selected>Selecciona</option>
-                            <option value="Office">Soltero(a)</option>
-                            <option value="Oficina">Casado(a)</option>
-                            <option value="Cliente">Indistinto</option>
-                        </select>
-                    </div>
+
 
                 </div>
                 <div class="form-group col-12 text-right" style="margin-left:15px;">
