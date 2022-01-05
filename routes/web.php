@@ -611,12 +611,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('puestos/parse-csv-import', 'PuestosController@parseCsvImport')->name('puestos.parseCsvImport');
     Route::post('puestos/process-csv-import', 'PuestosController@processCsvImport')->name('puestos.processCsvImport');
     Route::resource('puestos', 'PuestosController');
+    Route::get('consulta-puestos', 'PuestosController@consultaPuestos')->name('consulta-puestos');
+
 
     // Perfiles
     Route::delete('perfiles/destroy', 'PerfilController@massDestroy')->name('perfiles.massDestroy');
     Route::post('perfiles/parse-csv-import', 'PerfilController@parseCsvImport')->name('perfiles.parseCsvImport');
     Route::post('perfiles/process-csv-import', 'PerfilController@processCsvImport')->name('perfiles.processCsvImport');
     Route::resource('perfiles', 'PerfilController');
+
+    // Route::resource('consulta-puesto', 'ConsultaPuestoController');
 
     // Sedes
     Route::delete('sedes/destroy', 'SedeController@massDestroy')->name('sedes.massDestroy');

@@ -412,6 +412,11 @@ Breadcrumbs::for('perfil-puesto', function ($trail) {
     $trail->push('Empleados');
     $trail->push('Perfiles de Puestos', route('admin.puestos.index'));
 });
+Breadcrumbs::for('consulta-puestos', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
+    $trail->push('Consulta Perfiles de Puesto', route('admin.consulta-puestos'));
+});
 Breadcrumbs::for('areas-render', function ($trail) {
     $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Áreas', route('admin.areas.renderJerarquia'));
