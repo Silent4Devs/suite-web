@@ -11,25 +11,25 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="numero">{{ trans('cruds.glosario.fields.numero') }}</label>
+                <label class="required" for="numero">Numero</label>
                 <input class="form-control {{ $errors->has('numero') ? 'is-invalid' : '' }}" type="text" name="numero" id="numero" value="{{ old('numero', $glosario->numero) }}" required>
                 @if($errors->has('numero'))
                     <div class="invalid-feedback">
                         {{ $errors->first('numero') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.glosario.fields.numero_helper') }}</span>
+                {{-- <span class="help-block">{{ trans('cruds.glosario.fields.numero_helper') }}</span> --}}
             </div>
 
             <div class="form-group">
-                <label class="required" for="norma">{{ trans('cruds.glosario.fields.norma') }}</label>
+                <label class="required" for="norma">Norma</label>
                 <input class="form-control {{ $errors->has('norma') ? 'is-invalid' : '' }}" type="text" name="norma" id="norma" value="{{ old('norma', $glosario->norma) }}" required>
                 @if($errors->has('norma'))
                     <div class="invalid-feedback">
                         {{ $errors->first('norma') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.glosario.fields.norma_helper') }}</span>
+                {{-- <span class="help-block">{{ trans('cruds.glosario.fields.norma_helper') }}</span> --}}
             </div>
 
             <div class="form-group">

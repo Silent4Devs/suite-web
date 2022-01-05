@@ -95,4 +95,6 @@ class PerfilController extends Controller
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
+
+
 }

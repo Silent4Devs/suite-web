@@ -859,7 +859,7 @@
                             'exportButton': true,
                             'exportFilename': `Jerarquia de Areas`,
                             'direction': orientacion,
-                            'urlExportCSV': "{{ route('admin.areas.exportar') }}"
+                            // 'urlExportCSV': "{{ route('admin.areas.exportar') }}"
                         });
                     }
                 });

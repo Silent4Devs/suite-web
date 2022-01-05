@@ -183,20 +183,31 @@
                     <div class="text-center" wire:loading>
                         <i class="fas fa-circle-notch fa-spin mr-2"></i> Buscando Coincidencias
                     </div>
-                    <div class="row col-12 align-items-center" x-show="open">
+                    <div class="row col-12 align-items-center mx-md-m5" x-show="open">
                         @foreach ($empleadosCV as $item)
-                            <div style="cursor: pointer;" class="border p-2 text-center col-sm-3 col-md-3 col-3"
-                                x-on:click="open = false" wire:click="mostrarCurriculum({{ $item->id }})">
-                                <img src="{{ asset("storage/empleados/imagenes/{$item->avatar}") }}"
-                                    style="max-width:40px;clip-path:circle(50% at 50% 50%)">
-                                <p class="m-0"><span
-                                        class="badge badge-light">{{ $item->area->area }}</span></p>
-                                <p class="text-muted mt-1 badge badge-light mb-0" style="font-size:12px"
-                                    title="{{ $item->name }}">
-                                    {{ Str::limit($item->name, 20, '...') }}
-                                </p>
+                          <div class="col-md-4 col-sm-4 col-lg-4">
+                                <div style="cursor: pointer; border:1px solid #ccc!important;  border-radius: 5px; height: 80px;" class="p-2 shadow-sm mb-3"
+                                    x-on:click="open = false" wire:click="mostrarCurriculum({{ $item->id }})">
+                                    <div class="row" >
+                                        <div class="col-sm-3 col-md-3 col-lg-3 mt-2">
+                                            <img src="{{ asset("storage/empleados/imagenes/{$item->avatar}") }}"
+                                            style="max-width:40px;clip-path:circle(50% at 50% 50%)">
+                                        </div>
+                                        <div class="col-sm-8 col-md-8 col-lg-8 mt-2">
+                                            <p class="m-0" style="font-size:10px; font-weight:bold; "><span
+                                                    >{{ $item->area->area }}</span></p>
+                                            <p class="m-0 text-muted" style="font-size:10px"
+                                                title="{{ $item->name }}">
+                                                {{ Str::limit($item->name, 20, '...') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         @endforeach
+                        <div class=" col-12 d-flex justify-content-end">
+                            {{ $empleadosCV->links() }}
+                        </div>
                     </div>
                 @endif
             @else

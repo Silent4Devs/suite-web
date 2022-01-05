@@ -20,7 +20,6 @@ class GlosarioController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('glosario_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.glosarios.create');
     }
@@ -28,7 +27,6 @@ class GlosarioController extends Controller
     public function store(StoreGlosarioRequest $request)
     {
         $glosario = Glosario::create($request->all());
-
         return redirect()->route('admin.glosarios.index');
     }
 
@@ -42,13 +40,11 @@ class GlosarioController extends Controller
     public function update(Request $request, Glosario $glosario)
     {
         $glosario->update($request->all());
-
         return redirect()->route('admin.glosarios.index');
     }
 
     public function show(Glosario $glosario)
     {
-        abort_if(Gate::denies('glosario_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.glosarios.show', compact('glosario'));
     }
@@ -56,7 +52,6 @@ class GlosarioController extends Controller
     public function destroy($id)
     {
         $glosario = Glosario::find($id);
-
         $glosario->delete();
         $glosarios = Glosario::get();
 

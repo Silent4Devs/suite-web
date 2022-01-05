@@ -1,5 +1,41 @@
 @extends('layouts.admin')
 @section('content')
+
+    <style>
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #00abb2;
+            color: #00abb2;
+            text-align: center;
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
+
+        .btn_cargar:hover {
+            color: #fff;
+            background: #00abb2;
+        }
+
+        .btn_cargar i {
+            font-size: 15pt;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .agregar {
+            margin-right: 15px;
+        }
+
+    </style>
     <div class="mt-5 card">
         @can('configuracion_grupoarea_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -8,7 +44,7 @@
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
 
-                    @include('csvImport.modal', ['model' => 'Grupo', 'route' => 'admin.grupoarea.parseCsvImport'])
+                    @include('csvImport.modelgrupodearea', ['model' => 'Grupo', 'route' => 'admin.grupoarea.parseCsvImport'])
                 </div>
             </div>
         @endcan
@@ -21,7 +57,8 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Paso 1</p>
-                    <span class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue los grupos de las áreas, al finalizar
+                    <span class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue los grupos de las áreas, al
+                        finalizar
                         dé
                         clic en siguiente </span>
                     <a href="{{ route('admin.areas.index') }}" class="item-right col-2 btn text-light"
@@ -134,21 +171,31 @@
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar Grupo Area',
                 url: "{{ route('admin.grupoarea.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config){
                 let {url} = config;
                 window.location.href = url;
                 }
                 };
-                let btnImport = {
-                text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
-                titleAttr: 'Importar datos por CSV',
-                className: "btn-xs btn-outline-primary rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                $('#csvImportModal').modal('show');
+                let btnExport = {
+                text: '<i class="fas fa-download"></i>',
+                titleAttr: 'Descargar plantilla',
+                className: "btn btn_cargar" ,
+                action: function(e, dt, node, config) {
+                $('#').modal('show');
                 }
                 };
+                let btnImport = {
+                text: '<i class="fas fa-file-upload"></i>',
+                titleAttr: 'Importar datos',
+                className: "btn btn_cargar",
+                action: function(e, dt, node, config) {
+                $('#xlsxImportModal').modal('show');
+                }
+                };
+
                 dtButtons.push(btnAgregar);
+                dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan
             @can('configuracion_grupoarea_delete')
@@ -260,11 +307,11 @@
                     title: '¿Desea eliminar este grupo?',
                     html: `<div>
                             ${areasRelacionadas.length > 0 ? `<p>El grupo que desea eliminar está vinculado con las siguientes áreas</p>
-                                                                                    <ul class="list-group list-group-horizontal justify-content-center">
-                                                                                        ${areasRelacionadas.map(area=>{
-                                                                                            return `<li class="list-group-item">${area.area}</li>`;
-                                                                                        })}
-                                                                                    </ul>`:`<p>No hay relación con ningún área</p>`}
+                                                                                        <ul class="list-group list-group-horizontal justify-content-center">
+                                                                                            ${areasRelacionadas.map(area=>{
+                                                                                                return `<li class="list-group-item">${area.area}</li>`;
+                                                                                            })}
+                                                                                        </ul>`:`<p>No hay relación con ningún área</p>`}
                         </div>`,
                     icon: 'warning',
                     showCancelButton: true,

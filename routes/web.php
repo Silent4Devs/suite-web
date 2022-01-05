@@ -154,15 +154,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'index' => 'ev360-objetivos.index',
     ])->except(['create', 'show']);
 
-    // Route::resource('recursos-humanos/evaluacion-360/periodo', 'RH\EV360EvaluacionPeriodosController')->names([
-    //     'index' => 'ev360-periodo.index',
-    //     'create' => 'ev360-periodo.create',
-    //     'store' => 'ev360-periodo.store',
-    //     'show' => 'ev360-periodo.show',
-    //     'edit' => 'ev360-periodo.edit',
-    //     'update' => 'ev360-periodo.update',
-    // ]);
-
     Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
     Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');
 
@@ -327,7 +318,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('users/bloqueo/{user}/change', 'UsersController@toogleBloqueo')->name('users.toogle-bloqueo');
     Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
-    //Route::post('users/get', 'UsersController@getUsers')->name('users.get');
     Route::resource('users', 'UsersController');
 
     // Empleados
@@ -376,8 +366,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('organizacions/{schedule}/delete-schedule', 'OrganizacionController@deleteSchedule')->name('organizacions.delete-schedule');
     Route::resource('organizacions', 'OrganizacionController');
 
-    // Route::get('sedes/organizacion', 'SedeController@obtenerListaSedes')->name('sedes.obtenerListaSedes');
-
     Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
     Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
 
@@ -395,7 +383,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Planes de Acción
     Route::post('planes-de-accion/{plan}/save', 'PlanesAccionController@saveProject')->name('planes-de-accion.saveProject');
     Route::post('planes-de-accion/{plan}/load', 'PlanesAccionController@loadProject')->name('planes-de-accion.loadProject');
-    // Route::get('planes-de-accion/create/', 'PlanesAccionController@create')->name('planes-de-accion.create');
     Route::resource('planes-de-accion', 'PlanesAccionController')->except(['create']);
 
     // Glosarios
@@ -624,12 +611,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('puestos/parse-csv-import', 'PuestosController@parseCsvImport')->name('puestos.parseCsvImport');
     Route::post('puestos/process-csv-import', 'PuestosController@processCsvImport')->name('puestos.processCsvImport');
     Route::resource('puestos', 'PuestosController');
+    Route::get('consulta-puestos', 'PuestosController@consultaPuestos')->name('consulta-puestos');
+
 
     // Perfiles
     Route::delete('perfiles/destroy', 'PerfilController@massDestroy')->name('perfiles.massDestroy');
     Route::post('perfiles/parse-csv-import', 'PerfilController@parseCsvImport')->name('perfiles.parseCsvImport');
     Route::post('perfiles/process-csv-import', 'PerfilController@processCsvImport')->name('perfiles.processCsvImport');
     Route::resource('perfiles', 'PerfilController');
+
+    // Route::resource('consulta-puesto', 'ConsultaPuestoController');
 
     // Sedes
     Route::delete('sedes/destroy', 'SedeController@massDestroy')->name('sedes.massDestroy');
