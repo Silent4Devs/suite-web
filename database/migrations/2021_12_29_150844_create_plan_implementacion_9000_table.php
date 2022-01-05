@@ -13,9 +13,20 @@ class CreatePlanImplementacion9000Table extends Migration
      */
     public function up()
     {
-        Schema::create('plan_implementacion_9000', function (Blueprint $table) {
+        Schema::create('plan_implementacion_9001', function (Blueprint $table) {
             $table->id();
+            $table->json('tasks');
+            // $table->array('deletedTaskIds');
+            $table->string('canAdd')->nullable();
+            $table->string('canWrite')->nullable();
+            $table->string('canWriteOnParent')->nullable();
+            $table->string('changesReasonWhy')->nullable();
+            $table->string('selectedRow')->nullable();
+            $table->string('zoom')->nullable();
+            $table->string('parent');
+            $table->string('slug')->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -26,6 +37,6 @@ class CreatePlanImplementacion9000Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plan_implementacion_9000');
+        Schema::dropIfExists('plan_implementacion_9001');
     }
 }

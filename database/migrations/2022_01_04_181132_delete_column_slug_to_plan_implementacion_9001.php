@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlanImplementacionNueveUnosTable extends Migration
+class DeleteColumnSlugToPlanImplementacion9001 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreatePlanImplementacionNueveUnosTable extends Migration
      */
     public function up()
     {
-        Schema::create('plan_implementacion_nueve_unos', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('plan_implementacion_9001', function (Blueprint $table) {
+            $table->dropColumn('slug')->unique();
         });
     }
 
@@ -26,6 +25,8 @@ class CreatePlanImplementacionNueveUnosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plan_implementacion_nueve_unos');
+        Schema::table('plan_implementacion_9001', function (Blueprint $table) {
+            $table->string('slug')->unique();
+        });
     }
 }
