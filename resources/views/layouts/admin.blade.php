@@ -45,8 +45,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style type="text/css">
+        
+        .material-modulos{
+            font-size: 50px;
+            margin-bottom: 3px;
+            display: block;
+        }
         .select2-selection--multiple {
             overflow: hidden !important;
             height: auto !important;
@@ -293,7 +299,7 @@
         }
 
         .img_empleado {
-            clip-path: circle(20px at 50% 40%);
+            clip-path: circle(20px at 50% 50%);
             height: 40px;
         }
 
@@ -990,12 +996,13 @@
 
                 <ul class="ml-auto c-header-nav">
 
-                    <li class="c-header-nav-item dropdown show"><a class="c-header-nav-link" data-toggle="dropdown"
+                    <li class="c-header-nav-item dropdown show">
+                        <a class="c-header-nav-link" data-toggle="dropdown"
                             href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="">
+                            <div style="width:100%; display: flex; align-items: center;">
                                 @if (auth()->user()->empleado)
-                                    <img class="rounded-circle"
-                                        style="max-width: 40px;clip-path: circle(50% at 50% 50%);"
+                                    <img class="img_empleado"
+                                        style=""
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
                                         alt="{{ auth()->user()->empleado->name }}">
                                     <span class="ml-2">{!! auth()->user()->empleado->saludo !!}</span>
@@ -1041,7 +1048,7 @@
                                             href="{{ route('profile.password.edit') }}">
                                             <i class="mr-1 fas fa-user-cog">
                                             </i>
-                                            Conf. Perfil
+                                            Configurar Perfil
                                         </a>
 
                                     @endcan
@@ -1102,6 +1109,7 @@
 
 
 
+
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -1144,6 +1152,11 @@
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/4.0.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
 
     <script>
         window.Laravel.user = {!! json_encode([

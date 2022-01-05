@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\DateTranslator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Jenssegers\Date\Date;
 use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class CursosDiplomasEmpleados extends Model
 {
     use SoftDeletes;
     use QueryCacheable;
+    use DateTranslator;
 
     protected $table = 'cursos_diplomados_empleados';
     public $cacheFor = 3600;
@@ -24,6 +27,12 @@ class CursosDiplomasEmpleados extends Model
     const TipoSelect = [
         'Curso' => 'Curso',
         'Diplomado' => 'Diplomado',
+        'Taller' => 'Taller',
+        'Seminario' => 'Seminario',
+        'Coloquio' => 'Coloquio',
+        'Congreso' => 'Congreso',
+        'Foro' => 'Foro',
+        'Simposio' => 'Simposio',
     ];
 
     protected $casts = [
@@ -40,15 +49,44 @@ class CursosDiplomasEmpleados extends Model
         'tipo',
         'año',
         'duracion',
-
+        'fecha_fin',
+        'file',
     ];
 
-    protected $appends = ['year_ymd'];
+    protected $appends = ['year_ymd', 'fecha_fin_ymd', 'ruta_documento', 'fecha_inicio_spanish', 'fecha_fin_spanish'];
+
+    public function getFechaInicioSpanishAttribute()
+    {
+        Date::setLocale('es');
+
+        return new Date($this->año);
+    }
+
+    public function getFechaFinSpanishAttribute()
+    {
+        Date::setLocale('es');
+
+        return new Date($this->fecha_fin);
+    }
+
+    public function getRutaDocumentoAttribute()
+    {
+        return asset('storage/cursos_empleados/') . '/' . $this->file;
+    }
 
     public function getYearYmdAttribute()
     {
         if ($this->año) {
             return Carbon::parse($this->año)->format('Y-m-d');
+        } else {
+            return null;
+        }
+    }
+
+    public function getFechaFinYmdAttribute()
+    {
+        if ($this->fecha_fin) {
+            return Carbon::parse($this->fecha_fin)->format('Y-m-d');
         } else {
             return null;
         }

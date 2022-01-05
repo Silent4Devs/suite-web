@@ -42,7 +42,7 @@
             console.log('clickMore', e);
         },
         'clickSchedule': function(e) {
-            console.log('clickSchedule', e);
+            // console.log('clickSchedule', e);
 
             let encabezado_card = document.querySelector('.tui-full-calendar-schedule-title');
             let encabezado_card_contenido = encabezado_card.textContent;
@@ -51,6 +51,12 @@
             let contenido_card = document.querySelector('span.tui-full-calendar-content');
             let contenido_card_contenido = contenido_card.textContent;
             contenido_card.innerHTML = contenido_card_contenido;
+
+            let contenido_card_date = document.querySelector('.tui-full-calendar-popup-detail-date.tui-full-calendar-content');
+            let text_card_date = contenido_card_date.textContent;
+            let fecha_array = text_card_date.split('.');
+            let fecha_dmy = `${fecha_array[2]}/${fecha_array[1]}/${fecha_array[0]}`;
+            contenido_card_date.innerHTML = fecha_dmy;
         },
         'clickDayname': function(date) {
             console.log('clickDayname', date);
@@ -468,3 +474,21 @@
     });
     calendarList.innerHTML = html.join('\n');
 })();
+
+$('.lnb-calendars-item').click(function(){
+    $('.lnb-calendars-item').click(function(){
+        $('.lnb-calendars-item:hover i').toggleClass('desactivo_lnb');
+        console.log('click');
+     });
+});
+
+
+// $('.lnb-calendars-item:first').click(function(){
+// $('.lnb-calendars-item:first').click(function(){
+//     if (document.querySelector('span[style="border-color: rgb(255, 85, 131); background-color: rgb(255, 85, 131);"]')) {
+//         $('.lnb-calendars-item i').addClass('desactivo_lnb');
+//     }else{
+//         $('.lnb-calendars-item i').removeClass('desactivo_lnb');
+//     }
+// });
+// });

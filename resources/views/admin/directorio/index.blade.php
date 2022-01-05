@@ -80,24 +80,74 @@
             }
         }
 
+        #dom_length label{
+            color:white;
+
+        }
+
+        #dom_length:before{
+            content:"Mostrar" !important;
+            color:#111 !important;
+            margin-right:-30px !important;
+            position:relative;
+            z-index:2;
+
+        }
+
+        #dom_length:after{
+            content:"empleados" !important;
+            color:#111 !important;
+            margin-left:-35px !important;
+            position:relative;
+            z-index:2;
+
+        }
+
+        .responsive-table{
+
+            margin-top:200px !important;
+        }
+
+        #dom_filter label:before{
+            content:"Buscar" !important;
+            color:#111 !important;
+            margin-right:-30px !important;
+            position:relative;
+            z-index:2;
+
+
+        }
+
+        #dom_filter label{
+            color:white;
+        }
+
+        dataTables_filter{
+            padding-bottom: 30px !important;
+        }
+
+        .thead-dark{
+
+            display:none;
+        }
+
+        #dom_length{
+            margin-top:50px!important;
+        }
+
+        #dom_filter{
+            margin-top:-43px!important;
+
+        }
+
+        #dom_wrapper{
+
+            border-bottom: solid 2px #0CA193 !important;
+            width: 100% !important;
+        }
+
+
     </style>
-
-    @can('glosario_create')
-
-
-
-
-        <!--
-                                                                                        <div style="margin-bottom: 10px;" class="row">
-                                                                                            <div class="col-lg-12">
-                                                                                                <a class="btn btn-success" href="{{ route('admin.glosarios.create') }}">
-                                                                                                    {{ trans('global.add') }} {{ trans('cruds.glosario.title_singular') }}
-                                                                                                </a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    -->
-
-    @endcan
 
     <div id="desk" class="mt-5 card" style="">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -105,10 +155,16 @@
         </div>
 
 
-        <div class="card-body datatable-fix">
-            <table id="dom" class="responsive-table" style="width: 100%">
+        <div class="card-body datatable-fix ">
+
+            <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193 !important;">
+            </div>
+
+            <table id="dom" class="responsive-table" style="width: 100%; margin-top:50px !important">
                 <thead class="thead-dark">
+
                     <tr>
+
                         <th></th>
                         <th></th>
                         <th></th>
@@ -116,12 +172,15 @@
 
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="mt-4 mb-3 w-100">
+                    <div class="mt-4 mb-3 w-100">
+                    </div>
                     {{-- @foreach ($sugerencias as $sugerencia) --}}
                     @foreach ($empleados as $empleado)
+
                         <tr>
 
-                            <td>
+                            <td >
 
                                 <img src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}"
                                     class="img_empleado" title="{{ $empleado->name }}">
@@ -129,26 +188,38 @@
                             </td>
 
                             <td>
-                                <div>
-                                    <strong style="color:#0CA193;">{{ $empleado->name }}</strong>
+                                {{-- <div>
+                                    <strong class="nombre-empleado" style="color:#0CA193;">{{ $empleado->name }}</strong>
                                     @if (is_null($empleado->telefono_movil))
                                         <p>Sin teléfono</p>
                                     @else
                                         <p><i class="mr-2 fas fa-phone"></i>{{ $empleado->telefono_movil }} </p>
                                     @endif
-                                </div>
+                                </div> --}}
+                                {{ $empleado->name }}
+                                @if ($empleado->mostrar_telefono)
+                                @if (is_null($empleado->telefono_movil))
+                                <p>Sin teléfono</p>
+                                @else
+                                <p><i class="mr-2 fas fa-phone"></i>{{ $empleado->telefono_movil }} </p>
+                                @endif
+                                @else
+                                <p>Sin teléfono</p>
+                                @endif
+
+
 
                             </td>
 
                             <td>
                                 <div>
                                     @if (is_null($empleado->area))
-                                        <p>No hay información registrada</p>
+                                        <label>No hay información registrada</label>
                                     @else
                                         <strong>Área: {{ $empleado->area->area }}</strong>
                                     @endif
                                     @if (is_null($empleado->supervisor))
-                                        <p>No hay información registrada</p>
+                                        <label>No hay información registrada</label>
                                     @else
                                         <p>{{ $empleado->supervisor ? $empleado->supervisor->name : 'sin supervisor' }}
                                         </p>
@@ -161,15 +232,15 @@
                             <td>
                                 <div>
                                     @if (is_null($empleado->puestoRelacionado))
-                                        <p>No hay información registrada</p>
+                                        <label>No hay información registrada</label>
                                     @else
-                                        <label><strong
-                                                class="mr-2">Puesto:</strong>{{ $empleado->puestoRelacionado->puesto }}</label>
+                                      <div><strong
+                                                class="mr-2">Puesto:</strong>{{ $empleado->puestoRelacionado->puesto }}</div>
                                     @endif
-                                    @if (is_null($empleado->fecha_ingreso))
-                                        <p>No hay información registrada</p>
+                                    @if (is_null($empleado->email))
+                                        <label>No hay información registrada</label>
                                     @else
-                                        <p>Ingreso: {{ $empleado->fecha_ingreso }}</p>
+                                        <p class="text-muted">{{ $empleado->email }}</p>
                                     @endif
 
                                 </div>
@@ -197,166 +268,7 @@
 
 
     <script type="text/javascript">
-        // (function() {
 
-        //     // Search function
-        //     $.fn.dataTable.Api.register('alphabetSearch()', function(searchTerm) {
-        //         this.iterator('table', function(context) {
-        //             context.alphabetSearch = searchTerm;
-        //         });
-
-        //         return this;
-        //     });
-
-        //     // Recalculate the alphabet display for updated data
-        //     $.fn.dataTable.Api.register('alphabetSearch.recalc()', function(searchTerm) {
-        //         this.iterator('table', function(context) {
-        //             draw(
-        //                 new $.fn.dataTable.Api(context),
-        //                 $('div.alphabet', this.table().container())
-        //             );
-        //         });
-
-        //         return this;
-        //     });
-
-
-        //     // Search plug-in
-        //     $.fn.dataTable.ext.search.push(function(context, searchData) {
-        //         // Ensure that there is a search applied to this table before running it
-        //         if (!context.alphabetSearch) {
-        //             return true;
-        //         }
-
-        //         if (searchData[1].charAt(0) === context.alphabetSearch) {
-        //             return true;
-        //         }
-
-
-        //         return false;
-        //     });
-
-
-        //     // Private support methods
-        //     function bin(data) {
-        //         var letter, bins = {};
-
-        //         for (var i = 0, ien = data.length; i < ien; i++) {
-        //             letter = data[i].charAt(0).toUpperCase();
-
-        //             if (bins[letter]) {
-        //                 bins[letter]++;
-        //             } else {
-        //                 bins[letter] = 1;
-        //             }
-        //         }
-
-        //         return bins;
-        //     }
-
-        //     function draw(table, alphabet) {
-        //         alphabet.empty();
-
-        //         var columnData = table.column(1).data();
-        //         var bins = bin(columnData);
-
-        //         $('<span class="clear active"/>')
-        //             .data('letter', '')
-        //             .data('match-count', columnData.length)
-        //             .html('Todos')
-        //             .appendTo(alphabet);
-
-        //         for (var i = 0; i < 26; i++) {
-        //             var letter = String.fromCharCode(65 + i);
-
-        //             $('<span/>')
-        //                 .data('letter', letter)
-        //                 .data('match-count', bins[letter] || 0)
-        //                 .addClass(!bins[letter] ? 'empty' : '')
-        //                 .html(letter)
-        //                 .appendTo(alphabet);
-        //         }
-
-        //         $('<div class="alphabetInfo"></div>')
-        //             .appendTo(alphabet);
-        //     }
-
-
-        //     $.fn.dataTable.AlphabetSearch = function(context) {
-        //         var table = new $.fn.dataTable.Api(context);
-        //         var alphabet = $('<div class="alphabet"/>');
-
-        //         draw(table, alphabet);
-
-        //         // Trigger a search
-        //         alphabet.on('click', 'span', function() {
-        //             alphabet.find('.active').removeClass('active');
-        //             $(this).addClass('active');
-
-        //             table
-        //                 .alphabetSearch($(this).data('letter'))
-        //                 .draw();
-        //         });
-
-        //         // Mouse events to show helper information
-        //         alphabet
-        //             .on('mouseenter', 'span', function() {
-        //                 alphabet
-        //                     .find('div.alphabetInfo')
-        //                     .css({
-        //                         opacity: 1,
-        //                         left: $(this).position().left,
-        //                         width: $(this).width()
-        //                     })
-        //                     .html($(this).data('match-count'))
-        //             })
-        //             .on('mouseleave', 'span', function() {
-        //                 alphabet
-        //                     .find('div.alphabetInfo')
-        //                     .css('opacity', 0);
-        //             });
-
-        //         // API method to get the alphabet container node
-        //         this.node = function() {
-        //             return alphabet;
-        //         };
-        //     };
-
-        //     $.fn.DataTable.AlphabetSearch = $.fn.dataTable.AlphabetSearch;
-
-
-            // Register a search plug-in
-        //     $.fn.dataTable.ext.search.push({
-        //         fnInit: function(settings) {
-        //             // console.log(settings);
-        //             // var search = new $.fn.dataTable.AlphabetSearch(settings);
-        //             // return search.node();
-        //             if (!_alphabetSearch) {
-
-        //                 return true;
-        //             }
-
-        //             if (searchData[1].charAt(0) === _alphabetSearch) {
-
-        //                 return true;
-        //             }
-
-        //             return false;
-        //         },
-        //         cFeature: 'A'
-        //     });
-
-        // }());
-
-
-
-        // $(document).ready(function() {
-        //     var table = $('#dom').DataTable({
-        //         dom: 'Alfrtip',
-
-
-        //     });
-        // });
 
         var _alphabetSearch = '';
 
@@ -364,8 +276,8 @@
             if (!_alphabetSearch) {
                 return true;
             }
-
-            if (searchData[1].charAt(1) === _alphabetSearch) {
+            console.log(searchData[1].trim().charAt(0).toUpperCase(), _alphabetSearch);
+            if (searchData[1].trim().charAt(0).toUpperCase()==_alphabetSearch) {
                 return true;
             }
 
@@ -375,12 +287,16 @@
 
         $(document).ready(function() {
             var table = $('#dom').DataTable();
+            var selector = $(".nombre-empleado");
+            var columnData = table.column(1).data();
+            console.log(columnData);
 
-            var alphabet = $('<div class="alphabet"/>').append('Search: ');
+            var bins = bin(columnData);
+            var alphabet = $('<div class="alphabet"/>').append('');
 
             $('<span class="clear active"/>')
                 .data('letter', '')
-                .html('None')
+                .html('Todos')
                 .appendTo(alphabet);
 
             for (var i = 0; i < 26; i++) {
@@ -388,6 +304,8 @@
 
                 $('<span/>')
                     .data('letter', letter)
+                    .data('match-count', bins[letter] || 0)
+                    .addClass(!bins[letter] ? 'empty' : '')
                     .html(letter)
                     .appendTo(alphabet);
             }
@@ -397,11 +315,22 @@
             alphabet.on('click', 'span', function() {
                 alphabet.find('.active').removeClass('active');
                 $(this).addClass('active');
-
+                console.log($(this).data('letter'));
                 _alphabetSearch = $(this).data('letter');
                 table.draw();
             });
         });
+
+
+    </script>
+
+    <script>
+    //   $(document).ready(function(){
+    //     console.log('hola');
+    //     document.querySelector('#dom_length label').replace(Show, "mostrar");
+    //   });
+
+
     </script>
 
 

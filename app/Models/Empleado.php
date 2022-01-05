@@ -63,6 +63,8 @@ class Empleado extends Model
         'supervisor_id' => 'int',
         'area_id' => 'int',
         'sede_id' => 'int',
+        'mostrar_telefono' => 'boolean',
+
     ];
 
     public static $searchable = [
@@ -128,6 +130,7 @@ class Empleado extends Model
         'salario_base_mensual',
         'pagadora_actual',
         'periodicidad_nomina',
+        'mostrar_telefono',
     ];
 
     public function getActualBirdthdayAttribute()
@@ -151,7 +154,7 @@ class Empleado extends Model
 
     public function getResumenAttribute($value)
     {
-        return strip_tags($value);
+        return html_entity_decode(utf8_decode(strip_tags($value)));
     }
 
     public function getResourceIdAttribute()
@@ -328,6 +331,11 @@ class Empleado extends Model
         return $this->hasMany(CertificacionesEmpleados::class);
     }
 
+    public function idiomas()
+    {
+        return $this->hasMany(IdiomaEmpleado::class, 'empleado_id', 'id');
+    }
+
     public function empleado_cursos()
     {
         return $this->hasMany(CursosDiplomasEmpleados::class);
@@ -415,5 +423,10 @@ class Empleado extends Model
     public function beneficiarios()
     {
         return $this->hasMany(BeneficiariosEmpleado::class, 'empleado_id', 'id')->orderBy('id');
+    }
+
+    public function puesto()
+    {
+        return $this->hasMany(Puesto::class, 'id_reporta');
     }
 }

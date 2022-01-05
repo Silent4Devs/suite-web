@@ -32,8 +32,9 @@
     #calendar{
         width: 100%;
         overflow: hidden;
-        overflow-y: scroll;
+        /* overflow-y: scroll; */
         border: none !important;
+        height: auto !important;
     }
     #calendarList span{
         margin-left: 0px;
@@ -140,39 +141,32 @@
 
 
 <div class="card" style="margin-top:50px;">
-  <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-      <h3 class="mb-2  text-center text-white"><strong>Calendario de {{ $nombre_organizacion }}</strong></h3>
+  <div class="col-md-9 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-10px; ">
+      {{-- <h3 class="mb-2  text-center text-white"><strong>Calendario de {{ $nombre_organizacion }}</strong></h3> --}}
+      <h3 class="mb-2 text-center text-white"
+                style="background: #00abb2;color: white !important;padding: 3px;border-radius: 8px;"><strong>Calendario de {{ $nombre_organizacion }}</strong>
+      </h3>
   </div>
 
+        <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
+            style="margin-top:0px !important; ">
+
+        </div>
     <div class="card-body" style="height: 600px;">
-
-
-
-
-       {{--  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' /> --}}
-
-        {{-- <div id='calendar'></div> --}}
-
-
-
-
-
-
-
-        <div class="caja">
-            <div id="lnb">
-
-                <div id="lnb-calendars" class="lnb-calendars">
-                    <div>
-                        <div class="lnb-calendars-item">
-                            <label>
+            <div class="card-body" style="height: 700px;">
+                <div class="caja">
+                    <div id="lnb">
+                        <div id="lnb-calendars" class="lnb-calendars">
+                            <div>
+                                <div class="lnb-calendars-item">
+                                <label>
                                 <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
                                 <span style="">
                                     <span style="margin-left: 20px; width: 100px !important; position: absolute;">Ver Todos</span>
                                 </span>
-                            </label>
-                        </div>
-                    </div>
+                                 </label>
+                                 </div>
+                            </div>
                     <div id="calendarList" class="lnb-calendars-d1">
                     </div>
                 </div>
@@ -298,7 +292,7 @@
                     dueDateClass: '',
                     start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() }}',
                     end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() }}',
-                    isReadOnly : true, 
+                    isReadOnly : true,
 
                 },
             @endforeach
@@ -373,6 +367,19 @@
                     isReadOnly : true,
                 },
             @endforeach
+             @foreach ($oficiales as $oficial)
+
+                {
+                id: 'oficial{{ $oficial->id }}',
+                calendarId: '7',
+                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Festivo: {{ $oficial->nombre }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{  \Carbon\Carbon::parse(explode("-",$oficial->fecha)[0])->format("Y-m-d") }}',
+                end: '{{  \Carbon\Carbon::parse(explode("-",$oficial->fecha)[1])->format("Y-m-d") }}',
+                isReadOnly : true,
+                },
+            @endforeach
         ];
     </script>
 
@@ -381,12 +388,12 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
-        
-                 
+
+
 
                 }, 5000);
         })
-        
+
     </script>
 
 

@@ -4,14 +4,14 @@
     <style type="text/css">
         #errores_generales_admin_quitar_recursos{
             display: none !important;
-        }    
+        }
     </style>
 
 	<div class="mt-5 card">
 	    <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
 	        <h3 class="mb-2 text-center text-white"><strong>Archivo de Capacitaciones</strong></h3>
 	    </div>
-		
+
 		<div class="card-body">
 			<div class="row px-3">
 
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-					
+
 				<div class="datatable-fix" style="width: 100%;">
 				    <div class="mb-3 text-right">
 				        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario#capacitaciones')}}">Regresar</a>
@@ -39,12 +39,15 @@
 				   <table class="table tabla_archi">
 				   		<thead>
 				            <tr style="border: none !important">
-				                <th>Nombre</th>
-				                <th>Categoría</th>
-				                <th>Instructor</th>
-				                <th style="min-width:200px;">Fecha Inicio</th>
-				                <th style="min-width:200px;">Fecha Fin</th>
-				                <th>Calificación</th>
+				                <th style="min-width:200px;">Nombre</th>
+                                <th style="min-width:150px;">Categoría</th>
+                                <th style="min-width:150px;">Tipo</th>
+                                <th style="min-width:150px;">Modalidad</th>
+                                <th style="min-width:150px;">Ubicación</th>
+                                <th style="min-width:200px;">Instructor</th>
+                                <th style="min-width:100px;">Fecha Inicio</th>
+                                <th style="min-width:100px;">Fecha Fin</th>
+                                <th style="min-width:50px;">Calificación</th>
 				                <th>Opciones</th>
 				            </tr>
 				   		</thead>
@@ -52,11 +55,14 @@
 				   			@foreach($recursos as $recurso)
 				   				@if($recurso->archivar == 'archivado')
 						   			<tr>
-						       			<td>{{$recurso->cursoscapacitaciones}}</td>
-						                <td>{{$recurso->categoria_capacitacion->nombre}}</td>
-						                <td>{{$recurso->instructor}}</td>
-						                <td>{{$recurso->fecha_curso}}</td>
-						                <td>{{$recurso->fecha_fin}}</td>
+                                        <td>{{$recurso->cursoscapacitaciones}}</td>
+                                        <td>{{$recurso->categoria_capacitacion->nombre}}</td>
+                                        <td>{{$recurso->tipo}}</td>
+                                        <td>{{$recurso->modalidad}}</td>
+                                        <td>{{$recurso->ubicacion}}</td>
+                                        <td>{{$recurso->instructor}}</td>
+                                        <td>{{$recurso->fecha_curso}}</td>
+                                        <td>{{$recurso->fecha_fin}}</td>
 						                <td>
 						                    @foreach ($recurso->empleados as $empleado)
 						                        @if($empleado->id == auth()->user()->empleado->id)
@@ -81,7 +87,7 @@
 
 			</div>
 		</div>
-		
+
 	</div>
 @endsection
 

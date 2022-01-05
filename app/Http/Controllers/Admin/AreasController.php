@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyAreaRequest;
 use App\Http\Requests\StoreAreaRequest;
-use App\Http\Requests\UpdateAreaRequest;
 use App\Models\Area;
 use App\Models\Grupo;
 use App\Models\Organizacion;
@@ -16,6 +15,8 @@ use Gate;
 use Illuminate\Auth\Access\Gate as AccessGate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -56,6 +57,10 @@ class AreasController extends Controller
             $table->editColumn('area', function ($row) {
                 return $row->area ? $row->area : '';
             });
+            $table->editColumn('foto_ruta', function ($row) {
+                return $row->foto_ruta ? $row->foto_ruta : '';
+            });
+
             $table->editColumn('grupo', function ($row) {
                 return $row->grupo ? $row->grupo->nombre : '';
             });
@@ -78,7 +83,7 @@ class AreasController extends Controller
         $grupoarea = Grupo::get();
         $numero_areas = Area::count();
 
-        return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas'));
+        return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas', ));
     }
 
     public function create()
@@ -100,6 +105,26 @@ class AreasController extends Controller
             $validateReporta = 'required|exists:areas,id';
         }
 
+        $area = Area::create($request->all());
+
+        $image = null;
+        if ($request->file('foto_area') != null or !empty($request->file('foto_area'))) {
+            $extension = pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_EXTENSION);
+            $name_image = basename(pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+            $new_name_image = 'UID_' . $area->id . '_' . $name_image . '.' . $extension;
+            $route = storage_path() . '/app/public/areas/' . $new_name_image;
+            $image = $new_name_image;
+            //Usamos image_intervention para disminuir el peso de la imagen
+            $img_intervention = Image::make($request->file('foto_area'));
+            $img_intervention->resize(256, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($route);
+        }
+
+        $area->update([
+            'foto_area' => $image,
+        ]);
+
         $request->validate([
             'area' => 'required|string',
             'id_grupo' => 'required|exists:grupos,id',
@@ -107,8 +132,6 @@ class AreasController extends Controller
             'descripcion' => 'required|string',
 
         ]);
-
-        $area = Area::create($request->all());
 
         return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
     }
@@ -124,11 +147,12 @@ class AreasController extends Controller
         return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area'));
     }
 
-    public function update(UpdateAreaRequest $request, Area $area)
+    public function update(Request $request, $id)
     {
         $primer_nodo = Area::select('id', 'id_reporta')->whereNull('id_reporta')->first();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $validateReporta = 'nullable|exists:areas,id';
+        $area = Area::find($id);
 
         if ($direccion_exists) {
             if ($primer_nodo->id == intval($area->id)) {
@@ -138,12 +162,34 @@ class AreasController extends Controller
             }
         }
 
+        $image = $area->foto_area;
+        if ($request->file('foto_area') != null or !empty($request->file('foto_area'))) {
+
+            //Si existe la imagen entonces se elimina al editarla
+
+            $isExists = Storage::disk('public')->exists('/app/public/areas/' . $area->foto_area);
+            if ($isExists) {
+                if ($area->foto_area != null) {
+                    unlink(storage_path('/app/public/areas/' . $area->foto_area));
+                }
+            }
+            $extension = pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_EXTENSION);
+            $name_image = basename(pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+            $new_name_image = 'UID_' . $area->id . '_' . $name_image . '.' . $extension;
+            $route = storage_path() . '/app/public/areas/' . $new_name_image;
+            $image = $new_name_image;
+            //Usamos image_intervention para disminuir el peso de la imagen
+            $img_intervention = Image::make($request->file('foto_area'));
+            $img_intervention->resize(256, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($route);
+        }
+
         $request->validate([
             'area' => 'required|string',
             'id_grupo' => 'required|exists:grupos,id',
             'id_reporta' => $validateReporta,
             'descripcion' => 'required|string',
-
         ]);
 
         $area->update([
@@ -151,6 +197,7 @@ class AreasController extends Controller
             'id_grupo' =>  $request->id_grupo,
             'id_reporta' =>  $request->id_reporta,
             'descripcion' =>  $request->descripcion,
+            'foto_area' => $image,
 
         ]);
 
@@ -204,8 +251,9 @@ class AreasController extends Controller
         $organizacion = !is_null($organizacionDB) ? Organizacion::select('empresa')->first()->empresa : 'la organización';
         $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
         $areas_sin_grupo = Area::whereDoesntHave('grupo')->get();
+        $organizacion = Organizacion::first();
 
-        return view('admin.areas.jerarquia', compact('areasTree', 'rutaImagenes', 'organizacion', 'org_foto', 'grupos', 'numero_grupos', 'areas_sin_grupo'));
+        return view('admin.areas.jerarquia', compact('areasTree', 'rutaImagenes', 'organizacion', 'org_foto', 'grupos', 'numero_grupos', 'areas_sin_grupo', 'organizacion'));
     }
 
     public function obtenerJerarquia(Request $request)
@@ -222,6 +270,6 @@ class AreasController extends Controller
     {
         // abort_if(AccessGate::denies('configuracion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return Excel::download(new AreasExport, 'areas.xlsx');
+        return Excel::download(new AreasExport, 'areas.csv');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeDeclaracionAplicabilidadAprobadoresTable extends Migration
+class CreatePorcentajesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class ChangeDeclaracionAplicabilidadAprobadoresTable extends Migration
      */
     public function up()
     {
-        Schema::table('declaracion_aplicabilidad_responsables', function (Blueprint $table) {
-            $table->increments('id')->primary()->change();
+        Schema::create('porcentajes', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('porcentaje')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,6 +27,6 @@ class ChangeDeclaracionAplicabilidadAprobadoresTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('porcentajes');
     }
 }

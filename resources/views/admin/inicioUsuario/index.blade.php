@@ -5,7 +5,9 @@
         body {
             background-color: #fff;
         }
-
+        html{
+            overflow-y: scroll !important;
+        }
         .info-personal .caja_img_perfil {
             border-radius: 100px;
             height: 100px;
@@ -55,27 +57,27 @@
         }
 
         /*.caja_botones_secciones a {
-            position: relative;
-        }
+                position: relative;
+            }
 
-        .caja_botones_secciones a span {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            background-color: #FF5252;
-            color: #fff;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: -5px;
-            margin-right: -5px;
-            z-index: 1;
-        }*/
+            .caja_botones_secciones a span {
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 20px;
+                height: 20px;
+                background-color: #FF5252;
+                color: #fff;
+                border-radius: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: -5px;
+                margin-right: -5px;
+                z-index: 1;
+            }*/
 
-        .caja_botones_menu a{
+        .caja_botones_menu a {
             outline: none;
         }
 
@@ -97,12 +99,14 @@
             opacity: 0.7;
             font-size: 70pt;
         }
-        .eliminar{
+
+        .eliminar {
             background-color: #FF5500;
             opacity: 0.7;
             border: none;
         }
-        .eliminar:hover{
+
+        .eliminar:hover {
             background-color: #FF5500;
             opacity: 1;
         }
@@ -116,15 +120,16 @@
             color: #ccc;
         }
 
-        .btn_archivar{
+        .btn_archivar {
             all: unset !important;
         }
 
 
-        .caja_botones_secciones a{
+        .caja_botones_secciones a {
             position: relative;
         }
-        .indicador_numero{
+
+        .indicador_numero {
             position: absolute;
             background-color: #FF4141;
             color: #fff !important;
@@ -140,6 +145,7 @@
             right: 0;
             margin-top: -10px;
         }
+
     </style>
 
     @include('partials.flashMessages')
@@ -184,17 +190,21 @@
         <div class="col-lg-12 row caja_botones_secciones">
             @if ($usuario->empleado)
                 <div class="col-12 caja_botones_menu">
-                    <a href="#" id="b_misDatos" onclick="almacenarMenuEnLocalStorage('misDatos')" data-tabs="s_misDatos" class=""><i class="fas fa-user-circle"></i>
+                    <a href="#" id="b_misDatos" onclick="almacenarMenuEnLocalStorage('misDatos')" data-tabs="s_misDatos"
+                        class=""><i class="fas fa-user-circle"></i>
                         Mis Datos</a>
-                    <a href="#" id="b_calendario" onclick="almacenarMenuEnLocalStorage('calendario')" data-tabs="s_calendario"><i class="fas fa-calendar-alt"></i>
+                    <a href="#" id="b_calendario" onclick="almacenarMenuEnLocalStorage('calendario')"
+                        data-tabs="s_calendario"><i class="fas fa-calendar-alt"></i>
                         Calendario</a>
-                    <a href="#" id="b_actividades" onclick="almacenarMenuEnLocalStorage('actividades')" data-tabs="s_actividades">
+                    <a href="#" id="b_actividades" onclick="almacenarMenuEnLocalStorage('actividades')"
+                        data-tabs="s_actividades">
                         @if ($contador_actividades)
                             <span class="indicador_numero">{{ $contador_actividades }}</span>
                         @endif
                         <i class="fas fa-stopwatch"></i>Actividades
                     </a>
-                    <a href="#" id="b_aprobaciones" onclick="almacenarMenuEnLocalStorage('aprobaciones')" data-tabs="s_aprobaciones">
+                    <a href="#" id="b_aprobaciones" onclick="almacenarMenuEnLocalStorage('aprobaciones')"
+                        data-tabs="s_aprobaciones">
                         @if ($contador_revisiones)
                             <span class="indicador_numero">{{ $contador_revisiones }}</span>
                         @endif
@@ -206,13 +216,15 @@
                         @endif
                         <i class="fas fa-check"></i>Evaluaciones
                     </a> --}}
-                    <a href="#" id="b_capacitaciones" onclick="almacenarMenuEnLocalStorage('capacitaciones')" data-tabs="s_capacitaciones">
+                    <a href="#" id="b_capacitaciones" onclick="almacenarMenuEnLocalStorage('capacitaciones')"
+                        data-tabs="s_capacitaciones">
                         @if ($contador_recursos)
                             <span class="indicador_numero">{{ $contador_recursos }}</span>
                         @endif
                         <i class="fas fa-chalkboard-teacher"></i>Capacitaciones
                     </a>
-                    <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')" data-tabs="s_reportes"><i class="fas fa-clipboard-list"></i>Reportes</a>
+                    <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')" data-tabs="s_reportes"><i
+                            class="fas fa-clipboard-list"></i>Reportes</a>
                 </div>
             @endif
             <div class="caja_caja_secciones">
@@ -253,7 +265,7 @@
 @section('scripts')
 
     <script>
-        document.addEventListener('DOMContentLoaded', function(){
+        document.addEventListener('DOMContentLoaded', function() {
             seleccionarMenuAlIniciar();
 
         })
@@ -261,8 +273,8 @@
         function seleccionarMenuAlIniciar() {
             let tabSeleccionada = localStorage.getItem('mi-perfil-menu');
             if (tabSeleccionada) {
-               document.querySelector(`section#s_${tabSeleccionada}`).classList.add('caja_tab_reveldada')
-               document.querySelector(`a#b_${tabSeleccionada}`).classList.add('btn_activo')
+                document.querySelector(`section#s_${tabSeleccionada}`).classList.add('caja_tab_reveldada')
+                document.querySelector(`a#b_${tabSeleccionada}`).classList.add('btn_activo')
             } else {
                 document.querySelector(`section#s_misDatos`).classList.add('caja_tab_reveldada')
                 document.querySelector(`a#b_misDatos`).classList.add('btn_activo')
@@ -273,7 +285,6 @@
         function almacenarMenuEnLocalStorage(menuSeleccionado) {
             localStorage.setItem('mi-perfil-menu', menuSeleccionado);
         }
-
     </script>
 
 @endsection

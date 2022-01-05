@@ -3,6 +3,13 @@
 Breadcrumbs::for('admin.iso27001.index', function ($trail) {
     $trail->push('ISO 27001', route('admin.iso27001.index'));
 });
+
+Breadcrumbs::for('admin.analisisdebrechas.index', function ($trail) {
+    $trail->push('ISO 27001', route('admin.iso27001.index'));
+    $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
+    $trail->push('Análisis de Brechas', route('admin.analisis-brechas.index'));
+});
+
 Breadcrumbs::for('dashboard-iso27001', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Dashboard', route('admin.home'));
@@ -65,7 +72,7 @@ Breadcrumbs::for('admin.alcance-sgsis.create', function ($trail) {
     $trail->push('Formulario', route('admin.alcance-sgsis.create'));
 });
 
-// Breadcrumbs::for('admin..index', function ($trail) {
+// Breadcrumbs::for('admin..index', function ($trail) {perfil-puesto
 // $trail->parent('admin.iso27001.index');                   generar reporte-------------
 // $trail->push('', route('admin..index'));
 // });
@@ -156,6 +163,11 @@ Breadcrumbs::for('admin.riesgosoportunidades.create', function ($trail) {
     $trail->parent('admin.riesgosoportunidades.index');
     $trail->push('Formulario', route('admin.riesgosoportunidades.create'));
 });
+Breadcrumbs::for('admin.paneldeclaracion.index', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
+    $trail->push('Asignación Controles', route('admin.paneldeclaracion.index'));
+});
 
 Breadcrumbs::for('admin.objetivosseguridads.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
@@ -170,7 +182,7 @@ Breadcrumbs::for('admin.objetivosseguridads.create', function ($trail) {
 Breadcrumbs::for('admin.recursos.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Soporte', route('admin.iso27001.index') . '#soporte');
-    $trail->push('Transferencia de Conocimiento', route('admin.recursos.index'));
+    $trail->push('Capacitaciones', route('admin.recursos.index'));
 });
 Breadcrumbs::for('admin.recursos.create', function ($trail) {
     $trail->parent('admin.recursos.index');
@@ -390,15 +402,84 @@ Breadcrumbs::for('admin.system-calendar', function ($trail) {
 // $trail->push('', route('admin..index'));
 // });
 
-//##############################################################
-//#################### RECURSOS HUMANOS #######################
-//############################################################
+// MODULO CAPITAL HUMANO
+Breadcrumbs::for('capital-humano', function ($trail) {
+    $trail->push('Capital Humano', route('admin.capital-humano.index'));
+});
+
+Breadcrumbs::for('perfil-puesto', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
+    $trail->push('Perfiles de Puestos', route('admin.puestos.index'));
+});
+Breadcrumbs::for('consulta-puestos', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
+    $trail->push('Consulta Perfiles de Puesto', route('admin.consulta-puestos'));
+});
+Breadcrumbs::for('areas-render', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Áreas', route('admin.areas.renderJerarquia'));
+});
+Breadcrumbs::for('perfil-puesto-create', function ($trail) {
+    $trail->parent('perfil-puesto');
+    $trail->push('Crear', route('admin.puestos.create'));
+});
+Breadcrumbs::for('perfil-puesto-edit', function ($trail, $puesto) {
+    $trail->parent('perfil-puesto');
+    $trail->push('Editar', route('admin.puestos.edit', $puesto));
+});
+Breadcrumbs::for('perfil-puesto-show', function ($trail, $puesto) {
+    $trail->parent('perfil-puesto');
+    $trail->push('Visualizar', route('admin.puestos.show', $puesto));
+});
+Breadcrumbs::for('niveles-jerarquicos', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
+    $trail->push('Niveles Jerárquicos', route('admin.perfiles.index'));
+});
+Breadcrumbs::for('niveles-jerarquicos-create', function ($trail) {
+    $trail->parent('niveles-jerarquicos');
+    $trail->push('Crear', route('admin.perfiles.create'));
+});
+Breadcrumbs::for('niveles-jerarquicos-edit', function ($trail, $perfil) {
+    $trail->parent('niveles-jerarquicos');
+    $trail->push('Editar', route('admin.perfiles.edit', $perfil));
+});
+Breadcrumbs::for('niveles-jerarquicos-show', function ($trail, $perfil) {
+    $trail->parent('niveles-jerarquicos');
+    $trail->push('Visualizar', route('admin.perfiles.show', $perfil));
+});
+Breadcrumbs::for('empleados', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados', route('admin.empleados.index'));
+});
+Breadcrumbs::for('empleados-create', function ($trail) {
+    $trail->parent('empleados');
+    $trail->push('Crear', route('admin.empleados.create'));
+});
+Breadcrumbs::for('empleados-edit', function ($trail, $empleado) {
+    $trail->parent('empleados');
+    $trail->push('Editar', route('admin.empleados.edit', $empleado));
+});
+Breadcrumbs::for('empleados-show', function ($trail, $empleado) {
+    $trail->parent('empleados');
+    $trail->push('Visualizar', route('admin.empleados.show', $empleado));
+});
+
+Breadcrumbs::for('expedientes-profesionales', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
+    $trail->push('Expedientes Profesionales', route('admin.capital.expedientes-profesionales'));
+});
+
 Breadcrumbs::for('Evaluacion360', function ($trail) {
     $trail->push('RH - Evaluación 360 Grados', route('admin.rh-evaluacion360.index'));
 });
 
 Breadcrumbs::for('EV360-Evaluaciones', function ($trail) {
-    $trail->parent('Evaluacion360');
+    $trail->parent('capital-humano');
+    $trail->push('Evaluación 360');
     $trail->push('Evaluaciones', route('admin.ev360-evaluaciones.index'));
 });
 
@@ -413,7 +494,8 @@ Breadcrumbs::for('EV360-Evaluaciones-Evaluacion', function ($trail, $evaluacion)
 });
 
 Breadcrumbs::for('EV360-Competencias', function ($trail) {
-    $trail->parent('Evaluacion360');
+    $trail->parent('capital-humano');
+    $trail->push('Evaluación 360');
     $trail->push('Competencias', route('admin.ev360-competencias.index'));
 });
 Breadcrumbs::for('EV360-Competencias-Create', function ($trail) {
@@ -426,7 +508,8 @@ Breadcrumbs::for('EV360-Competencias-Edit', function ($trail) {
 });
 
 Breadcrumbs::for('EV360-Competencias-Por-Puesto', function ($trail) {
-    $trail->parent('Evaluacion360');
+    $trail->parent('capital-humano');
+    $trail->push('Evaluación 360');
     $trail->push('Competencias por puesto', route('admin.ev360-competencias-por-puesto.index'));
 });
 Breadcrumbs::for('EV360-Competencias-Por-Puesto-Create', function ($trail) {
@@ -435,7 +518,8 @@ Breadcrumbs::for('EV360-Competencias-Por-Puesto-Create', function ($trail) {
 });
 
 Breadcrumbs::for('EV360-Objetivos', function ($trail) {
-    $trail->parent('Evaluacion360');
+    $trail->parent('capital-humano');
+    $trail->push('Evaluación 360');
     $trail->push('Objetivos', route('admin.ev360-objetivos.index'));
 });
 Breadcrumbs::for('EV360-Objetivos-Create', function ($trail, $empleado) {
@@ -463,6 +547,109 @@ Breadcrumbs::for('EV360-Evaluacion-Cuestionario', function ($trail, $evaluacion)
     $trail->parent('EV360-Evaluaciones-Evaluacion', $evaluacion['evaluacion']);
     $trail->push('Cuestionario', route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion['evaluacion']->id, 'evaluado' => $evaluacion['evaluado']->id, 'evaluador' => $evaluacion['evaluador']->id]));
 });
+
+Breadcrumbs::for('centro-atencion', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Calendario y Comunicación');
+    $trail->push('Centro de atención', route('admin.desk.index'));
+});
+
+Breadcrumbs::for('mapa-procesos', function ($trail) {
+    $trail->parent('Portal de Comunicación');
+    $trail->push('Mapa de procesos', route('admin.procesos.vistas.mapa_procesos'));
+});
+
+Breadcrumbs::for('seguridad-create', function ($trail) {
+    $trail->parent('centro-atencion');
+    $trail->push('Incidentes de Seguridad');
+    $trail->push('Crear', route('admin.reportes-seguridad'));
+});
+Breadcrumbs::for('seguridad-edit', function ($trail, $incidentesSeguridad) {
+    $trail->parent('centro-atencion');
+    $trail->push('Incidentes de Seguridad');
+    $trail->push('Editar', route('admin.desk.seguridad-edit', $incidentesSeguridad));
+});
+Breadcrumbs::for('seguridad-archivo', function ($trail) {
+    $trail->parent('centro-atencion');
+    $trail->push('Incidentes de Seguridad');
+    $trail->push('Archivo', route('admin.desk.seguridad-archivo'));
+});
+
+Breadcrumbs::for('riesgos-create', function ($trail) {
+    $trail->parent('centro-atencion');
+    $trail->push('Riesgos Identificados');
+    $trail->push('Crear', route('admin.reportes-riesgos'));
+});
+Breadcrumbs::for('riesgos-edit', function ($trail, $riesgo) {
+    $trail->parent('centro-atencion');
+    $trail->push('Riesgos Identificados');
+    $trail->push('Editar', route('admin.desk.riesgos-edit', $riesgo));
+});
+Breadcrumbs::for('riesgos-archivo', function ($trail) {
+    $trail->parent('centro-atencion');
+    $trail->push('Riesgos Identificados');
+    $trail->push('Archivo', route('admin.desk.riesgos-archivo'));
+});
+Breadcrumbs::for('quejas-create', function ($trail) {
+    $trail->parent('centro-atencion');
+    $trail->push('Quejas');
+    $trail->push('Crear', route('admin.reportes-quejas'));
+});
+Breadcrumbs::for('quejas-edit', function ($trail, $queja) {
+    $trail->parent('centro-atencion');
+    $trail->push('Quejas');
+    $trail->push('Editar', route('admin.desk.quejas-edit', $queja));
+});
+Breadcrumbs::for('quejas-archivo', function ($trail) {
+    $trail->parent('centro-atencion');
+    $trail->push('Quejas');
+    $trail->push('Archivo', route('admin.desk.quejas-archivo'));
+});
+Breadcrumbs::for('denuncias-create', function ($trail) {
+    $trail->parent('centro-atencion');
+    $trail->push('Denuncias');
+    $trail->push('Crear', route('admin.reportes-denuncias'));
+});
+Breadcrumbs::for('denuncias-edit', function ($trail, $denuncia) {
+    $trail->parent('centro-atencion');
+    $trail->push('Denuncias');
+    $trail->push('Editar', route('admin.desk.denuncias-edit', $denuncia));
+});
+Breadcrumbs::for('denuncias-archivo', function ($trail) {
+    $trail->parent('centro-atencion');
+    $trail->push('Denuncias');
+    $trail->push('Archivo', route('admin.desk.denuncias-archivo'));
+});
+Breadcrumbs::for('mejoras-create', function ($trail) {
+    $trail->parent('centro-atencion');
+    $trail->push('Mejoras');
+    $trail->push('Crear', route('admin.reportes-mejoras'));
+});
+Breadcrumbs::for('mejoras-edit', function ($trail, $mejora) {
+    $trail->parent('centro-atencion');
+    $trail->push('Mejoras');
+    $trail->push('Editar', route('admin.desk.mejoras-edit', $mejora));
+});
+Breadcrumbs::for('mejoras-archivo', function ($trail) {
+    $trail->parent('centro-atencion');
+    $trail->push('Mejoras');
+    $trail->push('Archivo', route('admin.desk.mejoras-archivo'));
+});
+Breadcrumbs::for('sugerencias-create', function ($trail) {
+    $trail->parent('centro-atencion');
+    $trail->push('Sugerencias');
+    $trail->push('Crear', route('admin.reportes-sugerencias'));
+});
+Breadcrumbs::for('sugerencias-edit', function ($trail, $sugerencia) {
+    $trail->parent('centro-atencion');
+    $trail->push('Sugerencias');
+    $trail->push('Editar', route('admin.desk.sugerencias-edit', $sugerencia));
+});
+Breadcrumbs::for('sugerencias-archivo', function ($trail) {
+    $trail->parent('centro-atencion');
+    $trail->push('Sugerencias');
+    $trail->push('Archivo', route('admin.desk.sugerencias-archivo'));
+});
 // Breadcrumbs::for('EV360-Objetivos-Edit', function ($trail) {
 //     $trail->parent('EV360-Objetivos');
 //     $trail->push('Editar Objetivo', route('admin.ev360-objetivos.edit'));
@@ -479,4 +666,14 @@ Breadcrumbs::for('Mi-CV', function ($trail, $empleado = null) {
 Breadcrumbs::for('Editar-Curriculum', function ($trail, $empleado = null) {
     $trail->parent('Mi-CV', $empleado);
     $trail->push('Editar', route('admin.editarCompetencias', ['empleado' => $empleado]));
+});
+
+Breadcrumbs::for('admin.mapa-procesos', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Mapa de Procesos');
+});
+
+Breadcrumbs::for('admin.visualizarorganizacion', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Organización');
 });

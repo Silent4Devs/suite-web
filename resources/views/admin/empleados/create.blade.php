@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+    {{ Breadcrumbs::render('empleados-create') }}
     <style>
         .select2-container {
             margin-top: 0px !important;

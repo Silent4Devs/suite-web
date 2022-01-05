@@ -2,57 +2,90 @@
 @section('content')
 
 
-<style>
+    <style>
+        /* .img-size {
+            height: 450px;
+            width: 700px;
+            background-size: cover;
+            overflow: hidden;
+        }
 
-.img-size{
-/* 	padding: 0;
-	margin: 0; */
-	height: 450px;
-	width: 700px;
-	background-size: cover;
-	overflow: hidden;
-}
-.modal-content {
-   width: 700px;
-  border:none;
-}
-.modal-body {
-   padding: 0;
-}
+        .modal-content {
+            width: 700px;
+            border: none;
+        }
 
-.carousel-control-prev-icon {
-	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-	width: 30px;
-	height: 48px;
-}
-.carousel-control-next-icon {
-	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-	width: 30px;
-	height: 48px;
-}
+        .modal-body {
+            padding: 0;
+        }
 
-.carousel-control-next {
-    top: 100px;
-    height: 10px;
-}
+        .carousel-control-prev-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+            width: 30px;
+            height: 48px;
+        }
 
-.carousel-control-prev {
-    height: 40px;
-    top: 80px;
-}
+        .carousel-control-next-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+            width: 30px;
+            height: 48px;
+        }
 
+        .carousel-control-next {
+            top: 100px;
+            height: 10px;
+        }
 
+        .carousel-control-prev {
+            height: 40px;
+            top: 80px;
+        } */
 
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #00abb2;
+            color: #00abb2;
+            text-align: center;
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
 
+        .btn_cargar:hover {
+            color: #fff;
+            background: #00abb2;
+        }
 
+        .btn_cargar i {
+            font-size: 15pt;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-</style>
+        .agregar {
+            margin-right: 15px;
+        }
+
+    </style>
 
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
     <div class="mt-5 card">
         @can('matriz_requisito_legale_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Matriz de Requisitos Legales</strong></h3>
+            </div>
+            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+                <div class="col-lg-12">
+                    @include('csvImport.modal', ['model' => 'Amenaza', 'route' => 'admin.amenazas.parseCsvImport'])
+                </div>
             </div>
         @endcan
         @include('partials.flashMessages')
@@ -109,14 +142,14 @@
                             Revisó&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor
                         </th>
                         <th>
-                           Puesto&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor
+                            Puesto&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor
                         </th>
                         <th>
-                           Área&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor
+                            Área&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor
                         </th>
                         <th>
                             Comentarios&nbsp;@for ($i = 0; $i < 70; $i++)&nbsp;@endfor
-                         </th>
+                        </th>
                         <th>
                             Opciones
                         </th>
@@ -207,13 +240,31 @@
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva matríz de requisitos legales',
                 url: "{{ route('admin.matriz-requisito-legales.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config){
                 let {url} = config;
                 window.location.href = url;
                 }
                 };
+                let btnExport = {
+                text: '<i class="fas fa-download"></i>',
+                titleAttr: 'Descargar plantilla',
+                className: "btn btn_cargar" ,
+                action: function(e, dt, node, config) {
+                $('#').modal('show');
+                }
+                };
+                let btnImport = {
+                text: '<i class="fas fa-file-upload"></i>',
+                titleAttr: 'Importar datos',
+                className: "btn btn_cargar",
+                action: function(e, dt, node, config) {
+                $('#csvImportModal').modal('show');
+                }
+                };
                 dtButtons.push(btnAgregar);
+                dtButtons.push(btnExport);
+                dtButtons.push(btnImport);
             @endcan
 
             let dtOverrideGlobals = {
@@ -223,7 +274,10 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.matriz-requisito-legales.index') }}",
-                columnDefs:[{targets:[5,12,11,17],visible:false}],
+                columnDefs: [{
+                    targets: [5, 12, 11, 17],
+                    visible: false
+                }],
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -279,11 +333,11 @@
                     {
                         data: 'evidencia',
                         name: 'evidencia',
-                        render:function(data,type,row,meta){
-                             let archivo="";
-                             let archivos=row.evidencias_matriz;
-                             console.log(archivos)
-                               archivo=` <div class="container">
+                        render: function(data, type, row, meta) {
+                            let archivo = "";
+                            let archivos = row.evidencias_matriz;
+                            console.log(archivos)
+                            archivo = ` <div class="container">
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
@@ -296,8 +350,8 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                         <div class="modal-body">`;
-                                            if(archivos.length>0){
-                                                archivo+=`
+                            if (archivos.length > 0) {
+                                archivo += `
                                                 <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
@@ -307,59 +361,58 @@
                                             <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                    <li
-                                                    data-target='#carouselExampleIndicators${row.id}'
-                                                    data-slide-to='${idx}'
-                                                    ></li>`
+                                                        <li
+                                                        data-target='#carouselExampleIndicators${row.id}'
+                                                        data-slide-to='${idx}'
+                                                        ></li>`
                                                     })}
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                    <div class='carousel-item ${idx==0?"active":""}'>
-                                                        <iframe seamless class='img-size' src='{{asset("storage/matriz_evidencias")}}/${archivo.evidencia}'></iframe>
-                                                    </div>`
+                                                        <div class='carousel-item ${idx==0?"active":""}'>
+                                                            <iframe seamless class='img-size' src='{{ asset('storage/matriz_evidencias') }}/${archivo.evidencia}'></iframe>
+                                                        </div>`
                                                     })}
 
                                             </div>
 
                                             </div>`;
-                                            }
-                                            else{
-                                                archivo+=`
+                            } else {
+                                archivo += `
                                                 <div class="text-center">
                                                     <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
-                                                    <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:500px !important">
+                                                    <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:500px !important">
                                                     </div>
                                                 `
-                                            }
-                                            archivo+=`</div>
+                            }
+                            archivo += `</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                            ${archivos.length==0?`
-                                            <a
-                                                class='carousel-control-prev'
-                                                href='#carouselExampleIndicators${row.id}'
-                                                role='button'
-                                                data-slide='prev'
-                                                >
-                                                <span class='carousel-control-prev-icon'
-                                                    aria-hidden='true'
-                                                    ></span>
-                                                <span class='sr-only'>Previous</span>
-                                            </a>
-                                            <a
-                                                class='carousel-control-next'
-                                                href='#carouselExampleIndicators${row.id}'
-                                                role='button'
-                                                data-slide='next'
-                                                >
-                                                <span
-                                                    class='carousel-control-next-icon'
-                                                    aria-hidden='true'
-                                                    ></span>
-                                                <span class='sr-only'>Next</span>
-                                            </a>`:""}
+                                                <a
+                                                    class='carousel-control-prev'
+                                                    href='#carouselExampleIndicators${row.id}'
+                                                    role='button'
+                                                    data-slide='prev'
+                                                    >
+                                                    <span class='carousel-control-prev-icon'
+                                                        aria-hidden='true'
+                                                        ></span>
+                                                    <span class='sr-only'>Previous</span>
+                                                </a>
+                                                <a
+                                                    class='carousel-control-next'
+                                                    href='#carouselExampleIndicators${row.id}'
+                                                    role='button'
+                                                    data-slide='next'
+                                                    >
+                                                    <span
+                                                        class='carousel-control-next-icon'
+                                                        aria-hidden='true'
+                                                        ></span>
+                                                    <span class='sr-only'>Next</span>
+                                                </a>`:""}
                                         </div>
                                         </div>
                                     </div>
@@ -371,7 +424,8 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             console.log(row)
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.empleado?.avatar}" title="${row.empleado?.name}"></img>`;
+                            let html =
+                                `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.empleado?.avatar}" title="${row.empleado?.name}"></img>`;
 
                             return `${row.empleado ? html: ''}`;
                         }
@@ -395,7 +449,7 @@
                         name: 'comentarios'
                     },
                     {
-                       data: 'id',
+                        data: 'id',
                         render: function(data, type, row, meta) {
                             let urlVerMatrizRequisitoLegal =
                                 `/admin/matriz-requisito-legales/${data}`;
@@ -412,23 +466,23 @@
                                 <a class="btn btn-sm" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm" href="${urlVerMatrizRequisitoLegal}" title="Visualizar Matríz de Requisito Legal"><i class="fas fa-eye"></i></a>
                                 ${row.planes ? `
-                                    <div class="dropdown">
-                                        <a class="btn btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-stream"></i>
-                                        </a>
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-stream"></i>
+                                            </a>
 
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="${urlCrearPlanAccion}" title="Crear Plan de Acción para: ${row.nombrerequisito}"><i class="mr-1 fas fa-stream"></i>Crear y vincular plan de acción</a>
-                                                <div class="dropdown-divider"></div>
-                                            <span class="ml-4 badge badge-dark">Planes de acción asociados</span>
-                                           ${row.planes.map(plan => {
-                                               return `
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" href="${urlCrearPlanAccion}" title="Crear Plan de Acción para: ${row.nombrerequisito}"><i class="mr-1 fas fa-stream"></i>Crear y vincular plan de acción</a>
+                                                    <div class="dropdown-divider"></div>
+                                                <span class="ml-4 badge badge-dark">Planes de acción asociados</span>
+                                               ${row.planes.map(plan => {
+                                                   return `
                                                 <a class="dropdown-item" href="/admin/planes-de-accion/${plan.id}"><i class="mr-1 fas fa-search"></i>${plan.parent} ${plan.tasks?.find(t=>Number(t.level) == 0) != undefined ? `<span class="badge badge-primary">${plan.tasks?.find(t=>Number(t.level) == 0).progress} %</span>` : `<span class="badge badge-primary">0 %</span>`}<a>
                                                `;
-                                           })}
+                                               })}
+                                            </div>
                                         </div>
-                                    </div>
-                                    `:''}
+                                        `:''}
                                  <button class="btn btn-sm" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i></button>
                             </div>
                              `;

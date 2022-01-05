@@ -266,6 +266,10 @@
             right: 70px;
         }
 
+        /* #shot_screen{
+            width:100% !important;
+        } */
+
     </style>
     <style>
         .range-slider {
@@ -529,16 +533,28 @@
             margin-top:15px;
             transform: scale(1.25);
         }
+        @media(min-width:2000px){
+            .contenido_blanco{
+                padding-bottom: 300px !important;
+            }
+        }
 
     </style>
 @endsection
 @section('content')
+{{ Breadcrumbs::render('areas-render') }}
 
-    <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-        <h3 class="mb-2 text-center text-white"><strong>Áreas</strong></h3>
-    </div>
+
+
     <!-- component -->
-    <div class="w-full px-8 py-4 mb-16 bg-white rounded-lg shadow-lg">
+    <div class="w-full px-6 py-4 mb-16 bg-white rounded-lg shadow-lg contenido_blanco">
+        <div class="card-body">
+            @if ($organizacion)
+                <h3 class="mb-2 text-center text-white" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de {{ $organizacion->empresa}}</strong></h3>
+            @else
+                 <h3 class="mb-2 text-center text-white" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de la organización</strong></h3>
+            @endif
+        </div>
         @if (!$areasTree)
             <div class="px-4 py-3 text-blue-900 bg-blue-100 border-t-4 border-blue-500 rounded-b shadow-md" role="alert">
                 <div class="row w-100">
@@ -825,7 +841,7 @@
                             'exportButton': true,
                             'exportFilename': `Jerarquia de Areas`,
                             'direction': orientacion,
-                            'urlExportCSV': "{{ route('admin.areas.exportar') }}"
+                            // 'urlExportCSV': "{{ route('admin.areas.exportar') }}"
                         });
                     }
                 });
@@ -846,7 +862,7 @@
 
                 <div class="btnCerrar" style="color:${color}">X</div>
                                 <div class="row justify-content-center">
-                                    <div class="ml-5 bg-white rounded shadow-sm col-12 justify-content-center" style=" background-color:${color}!important">
+                                    <div class="ml-5 mt-5 bg-white rounded shadow-sm col-12 justify-content-center" style=" background-color:${color}!important">
                                         <p class="text-center text-white"> ${nombre} </p>
                                     </div>
 

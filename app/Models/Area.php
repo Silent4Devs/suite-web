@@ -63,10 +63,12 @@ class Area extends Model
         'id_grupo',
         'id_reporta',
         'descripcion',
+        'foto_area',
         'team_id',
+        'id_lider',
     ];
 
-    protected $appends = ['grupo_name'];
+    protected $appends = ['grupo_name', 'foto_ruta'];
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -131,5 +133,30 @@ class Area extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function puesto()
+    {
+        return $this->hasMany(Puesto::class, 'id_area');
+    }
+
+    public function matriz_riesgos()
+    {
+        return $this->hasMany(MatrizRiesgo::class, 'id_responsable');
+    }
+
+    public function getFotoRutaAttribute()
+    {
+        $foto_url = asset('img/areas.jpg');
+        if ($this->foto_area) {
+            $foto_url = asset("storage/areas/{$this->foto_area}");
+        }
+
+        return $foto_url;
+    }
+
+    public function lider()
+    {
+        return $this->hasMany(Empleado::class, 'id_lider');
     }
 }

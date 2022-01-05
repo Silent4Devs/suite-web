@@ -25,6 +25,22 @@
                     </tr>
                     <tr>
                         <th>
+                            Numero
+                        </th>
+                        <td>
+                            {{ $glosario->numero }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Modulo
+                        </th>
+                        <td>
+                            {{ $glosario->norma }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.glosario.fields.concepto') }}
                         </th>
                         <td>

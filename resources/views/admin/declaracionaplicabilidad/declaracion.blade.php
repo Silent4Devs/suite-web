@@ -65,6 +65,8 @@
                         </div>
 
                         @php
+                            $permisoResponsable = false;
+                            $permisoAprobador = false;
                             foreach ($responsables as $responsable) {
                                 if (auth()->user()->empleado->id == $responsable->empleado_id) {
                                     $permisoResponsable = true;
@@ -130,11 +132,14 @@
                                             </td>
                                             <td>
                                                 @foreach ($responsables as $responsable)
+                                                    @if (is_null($responsable))
                                                     @if ($responsable->declaracion_id == $g5s->id)
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $responsable->empleado->name }}">
                                                     @endif
+                                                    @endif
+
                                                 @endforeach
                                             </td>
                                             <td>
@@ -272,6 +277,7 @@
 
 
                                             @php
+                                                $comentariox = null;
                                                 foreach ($aprobadores as $aprobador) {
                                                     if ($aprobador->declaracion_id == $g5s->id) {
                                                         $comentariox = $aprobador->comentarios;
@@ -1862,11 +1868,13 @@
                                             </td>
                                             <td>
                                                 @foreach ($responsables as $responsable)
+                                                @if(is_null($responsable))
                                                     @if ($responsable->declaracion_id == $g82s->id)
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $responsable->empleado->name }}">
                                                     @endif
+                                                @endif
                                                 @endforeach
                                             </td>
                                             <td>

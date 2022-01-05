@@ -10,8 +10,26 @@
         <form method="POST" action="{{ route("admin.glosarios.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <label class="required" for="numero">Inciso</label>
+                <input class="form-control {{ $errors->has('numero') ? 'is-invalid' : '' }}" type="text" name="numero" id="numero" required>
+                @if($errors->has('numero'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('numero') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label class="required" for="norma">Norma</label>
+                <input class="form-control {{ $errors->has('norma') ? 'is-invalid' : '' }}" type="text" name="norma" id="norma" value="{{ old('norma', '') }}" required>
+                @if($errors->has('norma'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('norma') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
                 <label class="required" for="concepto">{{ trans('cruds.glosario.fields.concepto') }}</label>
-                <input class="form-control {{ $errors->has('concepto') ? 'is-invalid' : '' }}" type="text" name="concepto" id="concepto" value="{{ old('concepto', '') }}" required>
+                <input class="form-control {{ $errors->has('concepto') ? 'is-invalid' : '' }}" type="text" name="concepto" id="concepto" required>
                 @if($errors->has('concepto'))
                     <div class="invalid-feedback">
                         {{ $errors->first('concepto') }}

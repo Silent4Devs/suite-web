@@ -3,67 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyGlosarioRequest;
 use App\Http\Requests\StoreGlosarioRequest;
-use App\Http\Requests\UpdateGlosarioRequest;
 use App\Models\Glosario;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class GlosarioController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        abort_if(Gate::denies('glosario_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $glosarios = Glosario::get();
 
-        if ($request->ajax()) {
-            $query = Glosario::query()->select(sprintf('%s.*', (new Glosario)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'glosario_show';
-                $editGate = 'glosario_edit';
-                $deleteGate = 'glosario_delete';
-                $crudRoutePart = 'glosarios';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('concepto', function ($row) {
-                return $row->concepto ? $row->concepto : '';
-            });
-            $table->editColumn('definicion', function ($row) {
-                return $row->definicion ? $row->definicion : '';
-            });
-            $table->editColumn('explicacion', function ($row) {
-                return $row->explicacion ? $row->explicacion : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.glosarios.index');
+        return view('admin.glosarios.index', compact('glosarios'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('glosario_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.glosarios.create');
     }
@@ -71,44 +27,41 @@ class GlosarioController extends Controller
     public function store(StoreGlosarioRequest $request)
     {
         $glosario = Glosario::create($request->all());
-
         return redirect()->route('admin.glosarios.index');
     }
 
-    public function edit(Glosario $glosario)
+    public function edit($glosario)
     {
-        abort_if(Gate::denies('glosario_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $glosario = Glosario::find($glosario);
 
         return view('admin.glosarios.edit', compact('glosario'));
     }
 
-    public function update(UpdateGlosarioRequest $request, Glosario $glosario)
+    public function update(Request $request, Glosario $glosario)
     {
         $glosario->update($request->all());
-
         return redirect()->route('admin.glosarios.index');
     }
 
     public function show(Glosario $glosario)
     {
-        abort_if(Gate::denies('glosario_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.glosarios.show', compact('glosario'));
     }
 
-    public function destroy(Glosario $glosario)
+    public function destroy($id)
     {
-        abort_if(Gate::denies('glosario_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $glosario = Glosario::find($id);
         $glosario->delete();
+        $glosarios = Glosario::get();
 
-        return back();
+        return view('admin.glosarios.index', compact('glosarios'));
     }
 
-    public function massDestroy(MassDestroyGlosarioRequest $request)
+    public function render(Request $request)
     {
-        Glosario::whereIn('id', request('ids'))->delete();
+        $glosarios = Glosario::get();
 
-        return response(null, Response::HTTP_NO_CONTENT);
+        return view('admin.glosarios.render', compact('glosarios'));
     }
 }

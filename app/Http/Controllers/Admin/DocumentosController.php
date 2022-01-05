@@ -119,9 +119,10 @@ class DocumentosController extends Controller
                 $path_documentos_aprobacion .= '/procesos';
                 break;
         }
-        $extension = pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION);
-        $nombre_original = $request->codigo . '-' . $request->nombre . '-v0';
-        $nombre_compuesto = basename($nombre_original) . '.' . $extension;
+        // $extension = pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION);
+        // $nombre_original = $request->codigo . '-' . $request->nombre . '-v0';
+        // $nombre_compuesto = basename($nombre_original) . '.' . $extension;
+        $nombre_compuesto = $request->file('archivo')->getClientOriginalName();
         $request->file('archivo')->storeAs($path_documentos_aprobacion, $nombre_compuesto); // Almacenar Archivo
 
         $macroproceso = null;
@@ -232,9 +233,10 @@ class DocumentosController extends Controller
             $version = $documento->version;
         }
         if ($request->file('archivo')) {
-            $extension = pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_original = $documento->codigo . '-' . $request->nombre . '-v' . $version;
-            $nombre_compuesto = basename($nombre_original) . '.' . $extension;
+            // $extension = pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION);
+            // $nombre_original = $documento->codigo . '-' . $request->nombre . '-v' . $version;
+            // $nombre_compuesto = basename($nombre_original) . '.' . $extension;
+            $nombre_compuesto = $request->file('archivo')->getClientOriginalName();
             //Se elimina el archivo anterior
             if (Storage::exists($this->pathDocumentsWhenUpdate($documento->tipo) . '/' . $documento->archivo)) {
                 Storage::delete([$this->pathDocumentsWhenUpdate($documento->tipo) . '/' . $documento->archivo]);
