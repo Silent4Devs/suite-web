@@ -157,8 +157,6 @@ class Area extends Model
 
     public function lider()
     {
-
         return $this->hasMany(Empleado::class, 'id_lider');
-
     }
 }

@@ -53,25 +53,27 @@ class SubidaExcel extends Controller
      */
     public function Amenaza(Request $request)
     {
-        if($request->eliminar == "true"){
+        if ($request->eliminar == 'true') {
             Amenaza::truncate();
         }
         Excel::import(new AmenazaImport, request()->file('archivo'));
-        if ($request->tipo=='tabla') {
+        if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
     public function Vulnerabilidad(Request $request)
     {
-        if($request->eliminar == "true"){
+        if ($request->eliminar == 'true') {
             Vulnerabilidad::truncate();
         }
         Excel::import(new VulnerabilidadImport, request()->file('vulnerabilidad'));
-        if ($request->tipo=='tabla') {
+        if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
@@ -133,25 +135,27 @@ class SubidaExcel extends Controller
 
     public function CategoriaCapacitacion(Request $request)
     {
-        if($request->eliminar == "true"){
+        if ($request->eliminar == 'true') {
             CategoriaCapacitacion::truncate();
         }
         Excel::import(new CategoriaCapacitacionImport, request()->file('categoriacapacitacion'));
-        if ($request->tipo=='tabla') {
+        if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
     public function RevisionDireccion(Request $request)
     {
-        if($request->eliminar == "true"){
+        if ($request->eliminar == 'true') {
             RevisionDireccion::truncate();
         }
         Excel::import(new RevisionDIreccionImport, request()->file('revisiondireccion'));
-        if ($request->tipo=='tabla') {
+        if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
@@ -178,85 +182,92 @@ class SubidaExcel extends Controller
 
     public function AnalisisRiesgo(Request $request)
     {
-        if($request->eliminar == "true"){
+        if ($request->eliminar == 'true') {
             AnalisisDeRiesgo::truncate();
         }
         Excel::import(new AnalisisDeRiesgoImport, request()->file('analisis_riego'));
-        if ($request->tipo=='tabla') {
+        if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
     public function PartesInteresadas(Request $request)
     {
-        if($request->eliminar == "true"){
+        if ($request->eliminar == 'true') {
             PartesInteresada::truncate();
         }
         Excel::import(new PartesInteresadaImport, request()->file('partes_interesadas'));
-        if ($request->tipo=='tabla') {
+        if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
     public function MatrizRequisitosLegales(Request $request)
     {
-        if($request->eliminar == "true"){
+        if ($request->eliminar == 'true') {
             MatrizRequisitoLegale::truncate();
         }
         Excel::import(new MatrizRequisitoLegaleImport, request()->file('matriz_requisitos_legales'));
-        if ($request->tipo=='tabla') {
+        if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
     public function Foda(Request $request)
     {
-        if($request->eliminar == "true"){
+        if ($request->eliminar == 'true') {
             EntendimientoOrganizacion::truncate();
         }
         Excel::import(new EntendimientoOrganizacionImport, request()->file('foda'));
-        if ($request->tipo=='tabla') {
+        if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
     public function DeterminacionAlcance(Request $request)
     {
-        if($request->eliminar == "true"){
+        if ($request->eliminar == 'true') {
             AlcanceSgsi::truncate();
         }
         Excel::import(new AlcanceSgsiImport, request()->file('determinacion_alcance'));
-        if ($request->tipo=='tabla') {
+        if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
     public function ComiteSeguridad(Request $request)
     {
-        if($request->eliminar == "true"){
+        if ($request->eliminar == 'true') {
             Comiteseguridad::truncate();
         }
         Excel::import(new ComiteseguridadImport, request()->file('comite_seguridad'));
-        if ($request->tipo=='tabla') {
+        if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
     public function AltaDireccion(Request $request)
     {
-        if($request->eliminar == "true"){
+        if ($request->eliminar == 'true') {
             Minutasaltadireccion::truncate();
         }
         Excel::import(new MinutasaltadireccionImport, request()->file('alta_direccion'));
-        if ($request->tipo=='tabla') {
+        if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
@@ -269,13 +280,14 @@ class SubidaExcel extends Controller
 
     public function PoliticaSgsi(Request $request)
     {
-        if($request->eliminar == "true"){
+        if ($request->eliminar == 'true') {
             PoliticaSgsi::truncate();
         }
         Excel::import(new PoliticaSgsiImport, request()->file('politica_sgi'));
-        if ($request->tipo=='tabla') {
+        if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
