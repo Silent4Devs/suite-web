@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             UsersTableSeeder::class,
-            RoleUserTableSeeder::class,
             GapunoTableSeeder::class,
             GaptresTableSeeder::class,
             GapdosTableSeeder::class,
@@ -43,6 +42,8 @@ class DatabaseSeeder extends Seeder
             PanelOrganizacionSeeder::class,
             PermissionRoleTableSeeder::class,
             LanguageSeeder::class,
+            GlosarioSeeder::class,
+            RoleUserTableSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }

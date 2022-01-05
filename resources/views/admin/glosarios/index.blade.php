@@ -100,20 +100,17 @@
                         <td>{{$glosario->definicion}}</td>
                         <td>{{$glosario->explicacion}}</td>
                         <td>
-
                             <form action="{{ route('admin.glosarios.destroy', $glosario->id) }}" method="POST">
                                 <a href="{{ route('admin.glosarios.edit',$glosario->id )}}"><i class="fas fa-edit"></i></a>
-                            <a href="{{ route('admin.glosarios.show',$glosario->id )}}"><i class="fas fa-eye"></i></a>
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" title="delete" style="border: none; background-color:transparent;">
+                                <a href="{{ route('admin.glosarios.show',$glosario->id )}}"><i class="fas fa-eye"></i></a>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" title="delete" style="border: none; background-color:transparent;">
                                     <i class="fas fa-trash text-danger"></i>
-                                </button>
+                                    </button>
                             </form>
-
                         </td>
                     </tr>
-
                     @endforeach
                 </tbody>
             </table>
