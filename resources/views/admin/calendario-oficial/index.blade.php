@@ -13,7 +13,7 @@
             <h3 class="mb-1 text-center text-white"><strong> Calendario Festivo </strong></h3>
         </div>
             <div class="card-body">
-                <div class="py-1 text-center form-group col-12" style="background-color:#1BB0B0; border-radius:100px; color: white;">Control de Eventos</div>
+                <div class="py-1 text-center form-group col-12" style="background-color:#345183; border-radius:100px; color: white;">Control de Eventos</div>
 
                 @include('partials.flashMessages')
                 <div class="card-body datatable-fix">

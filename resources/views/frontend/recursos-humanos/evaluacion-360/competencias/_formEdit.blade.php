@@ -4,7 +4,7 @@
     </div>
     <div class="d-flex justify-content-center">
         <div style="width: 300px">
-            <h4 class="text-center text-muted" style="border-bottom: 2px solid #008186;">Niveles</h4>
+            <h4 class="text-center text-muted" style="border-bottom: 2px solid #345183;">Niveles</h4>
         </div>
     </div>
     <div class="container">
@@ -26,7 +26,7 @@
             </table>
             <div class="d-flex justify-content-center">
                 <div style="width: 300px">
-                    <h4 class="text-center text-muted" style="border-bottom: 2px solid #008186;">Asignación</h4>
+                    <h4 class="text-center text-muted" style="border-bottom: 2px solid #345183;">Asignación</h4>
                 </div>
             </div>
             <div>

@@ -64,38 +64,6 @@
         height: 30px;
         position: relative;
     }
-    .calendar-icon.ic-arrow-line-right::before{
-        content: "»";
-        position: absolute;
-        transform: scale(1.8);
-        font-size: 10pt;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bolder;
-        font-family: arial rounded mt;
-        font-style: normal !important;
-    }
-    .calendar-icon.ic-arrow-line-left::before{
-        content: "»";
-        position: absolute;
-        transform: scale(1.8) rotate(180deg);
-        font-size: 10pt;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bolder;
-        font-family: arial rounded mt;
-        font-style: normal !important;
-    }
     a:hover{
         text-decoration: none !important;
     }
@@ -129,92 +97,94 @@
 </style>
 
 
-<div class="caja">
-    <div id="lnb">
+<div class="card card-body" style="margin-top:50px;">
+    <div class="caja" style="margin-top:-60px;">
+        <div id="lnb">
 
-        <div id="lnb-calendars" class="lnb-calendars">
-            <div>
-                <div class="lnb-calendars-item">
-                    <label>
-                        <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
-                        <span style="">
-                            <span style="margin-left: 20px; width: 100px !important; position: absolute;">Ver Todos</span>
-                        </span>
-                    </label>
+            <div id="lnb-calendars" class="lnb-calendars">
+                <div>
+                    <div class="lnb-calendars-item">
+                        <label>
+                            <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
+                            <span style="">
+                                <span style="margin-left: 20px; width: 100px !important; position: absolute;">Ver Todos</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div id="calendarList" class="lnb-calendars-d1">
                 </div>
             </div>
-            <div id="calendarList" class="lnb-calendars-d1">
+        </div>
+        <div id="right">
+            <div id="menu">
+                <span class="dropdown">
+                    <button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="true">
+                        <i id="calendarTypeIcon" class="calendar-icon ic_view_month" style="margin-right: 4px;"></i>
+                        <span id="calendarTypeName"></span>&nbsp;
+                        <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
+                        <li role="presentation">
+                            <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
+                                <i class="calendar-icon ic_view_day"></i>Diario
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
+                                <i class="calendar-icon ic_view_week"></i>Semanal
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
+                                <i class="calendar-icon ic_view_month"></i>Mensual
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
+                                <i class="calendar-icon ic_view_week"></i>2 Semanas
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks3">
+                                <i class="calendar-icon ic_view_week"></i>3 Semanas
+                            </a>
+                        </li>
+                        <li role="presentation" class="dropdown-divider"></li>
+                        <li role="presentation">
+                            <a role="menuitem" data-action="toggle-workweek">
+                                <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked>
+                                <span class="checkbox-title"></span>Fines de semana
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" data-action="toggle-start-day-1">
+                                <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
+                                <span class="checkbox-title"></span>Inicio de semana en lunes
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" data-action="toggle-narrow-weekend">
+                                <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
+                                <span class="checkbox-title"></span>Reducir dias no laborales
+                            </a>
+                        </li>
+                    </ul>
+                </span>
+                <span id="menu-navi">
+                    <button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">Hoy</button>
+                    <button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
+                        <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
+                        <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
+                    </button>
+                </span>
+                <span id="renderRange" class="render-range"></span>
             </div>
+            <div id="calendar"></div>
         </div>
-    </div>
-    <div id="right">
-        <div id="menu">
-            <span class="dropdown">
-                <button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="true">
-                    <i id="calendarTypeIcon" class="calendar-icon ic_view_month" style="margin-right: 4px;"></i>
-                    <span id="calendarTypeName"></span>&nbsp;
-                    <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
-                    <li role="presentation">
-                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
-                            <i class="calendar-icon ic_view_day"></i>Diario
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
-                            <i class="calendar-icon ic_view_week"></i>Semanal
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
-                            <i class="calendar-icon ic_view_month"></i>Mensual
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
-                            <i class="calendar-icon ic_view_week"></i>2 Semanas
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks3">
-                            <i class="calendar-icon ic_view_week"></i>3 Semanas
-                        </a>
-                    </li>
-                    <li role="presentation" class="dropdown-divider"></li>
-                    <li role="presentation">
-                        <a role="menuitem" data-action="toggle-workweek">
-                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked>
-                            <span class="checkbox-title"></span>Fines de semana
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a role="menuitem" data-action="toggle-start-day-1">
-                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
-                            <span class="checkbox-title"></span>Inicio de semana en lunes
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a role="menuitem" data-action="toggle-narrow-weekend">
-                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
-                            <span class="checkbox-title"></span>Reducir dias no laborales
-                        </a>
-                    </li>
-                </ul>
-            </span>
-            <span id="menu-navi">
-                <button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">Hoy</button>
-                <button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
-                    <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
-                </button>
-                <button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
-                    <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
-                </button>
-            </span>
-            <span id="renderRange" class="render-range"></span>
-        </div>
-        <div id="calendar"></div>
     </div>
 </div>
 
@@ -266,6 +236,14 @@
                 start: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[0])->format("Y-m-d") }}',
                 end: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[1])->format("Y-m-d") }}',
                 isReadOnly : true,
+                body: `
+                        <font style="font-weight: bold;">Categoria:</font> ${@json($it_recursos->tipo)}<br>
+                        <font style="font-weight: bold;">Inicio:</font> ${@json($it_recursos->fecha_curso)} horas<br>
+                        <font style="font-weight: bold;">Fin:</font> ${@json($it_recursos->fecha_fin)} horas<br>
+                        <font style="font-weight: bold;">Duración:</font> ${@json($it_recursos->duracion)} horas<br>
+                        <font style="font-weight: bold;">Instructor:</font> ${@json($it_recursos->instructor)}<br>
+                        <font style="font-weight: bold;">${@json($it_recursos->modalidad)=='presencial' ? 'Ubicación' : 'Link'}: </font>${@json($it_recursos->modalidad)=='presencial' ? @json($it_recursos->ubicacion) : '<a href="'+@json($it_recursos->ubicacion)+'">'+@json($it_recursos->ubicacion)+'</a> '} <br>
+                    `,
                 },
             @endforeach
 
@@ -279,6 +257,12 @@
                     start: '{{ $cumple->actual_birdthday }}',
                     end: '{{ $cumple->actual_birdthday }}',
                     isReadOnly : true,
+                    body: `
+                        <font style="font-weight: bold;">Cumpleaños:</font> ${@json(\Carbon\Carbon::parse($cumple->cumpleaños)->format('d-m'))}<br>
+                        <font style="font-weight: bold;">Area:</font> ${@json($cumple->area->area)}<br>
+                        <font style="font-weight: bold;">Puesto:</font> ${@json($cumple->puesto)}<br>
+                        
+                    `,
                 },
             @endforeach
 
@@ -293,6 +277,12 @@
                     start: '{{ $aniversario->actual_aniversary }}',
                     end: '{{ $aniversario->actual_aniversary }}',
                     isReadOnly : true,
+                    body: `
+                        <font style="font-weight: bold;">Aniversario:</font> ${@json(\Carbon\Carbon::parse($aniversario->antiguedad)->format('d-m'))}<br>
+                        <font style="font-weight: bold;">Area:</font> ${@json($aniversario->area->area)}<br>
+                        <font style="font-weight: bold;">Puesto:</font> ${@json($aniversario->puesto)}<br>
+                        
+                    `,
                 },
             @endforeach
 
@@ -319,6 +309,10 @@
                     start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() }}',
                     end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() }}',
                     isReadOnly : true,
+                    body: `
+                       <font style="font-weight: bold;">Inicio:</font> ${@json($it_auditoria_internas->fecha_inicio->format("d-m-Y"))}<br>
+                       <font style="font-weight: bold;">Fin:</font> ${@json($it_auditoria_internas->fecha_fin->format("d-m-Y"))}<br>
+                    `,
                 },
             @endforeach
 

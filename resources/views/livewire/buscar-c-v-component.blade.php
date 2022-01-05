@@ -66,7 +66,7 @@
             width: 98%;
             left: 0;
             line-height: 134px;
-            background: #1bb0b0;
+            background: #345183;
             color: white;
             font-weight: 500;
         }
@@ -85,7 +85,7 @@
     @endphp
 
     @if (!$isPersonal)
-        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             CURRICULUM VITAE
         </div>
     @else
@@ -146,7 +146,7 @@
                         <p class="text-muted"><i class="fas fa-filter mr-2"></i>BÚSQUEDA ESPECÍFICA</p>
                     </div>
                     <div class="col-12">
-                        <p class="text-muted" style="border-bottom: 2px solid #1BB0B0">CERTIFICACIONES</p>
+                        <p class="text-muted" style="border-bottom: 2px solid #345183">CERTIFICACIONES</p>
                     </div>
                     <div class="col-12">
                         <label class="text-muted" for=""><i class="fas fa-award mr-2"></i>Certificación</label>
@@ -154,14 +154,14 @@
                             placeholder="Certificación" wire:model.debounce.800ms="certificacion">
                     </div>
                     <div class="col-12 mt-3">
-                        <p class="text-muted" style="border-bottom: 2px solid #1BB0B0">CURSOS / DIPLOMADOS</p>
+                        <p class="text-muted" style="border-bottom: 2px solid #345183">CURSOS / DIPLOMADOS</p>
                     </div>
                     <div class="col-12">
                         <label class="text-muted" for=""><i class="fas fa-chalkboard-teacher mr-2"></i>Curso</label>
                         <input type="text" class="form-control" placeholder="Curso" wire:model.debounce.800ms="curso">
                     </div>
                     {{-- <div class="col-12 mt-3">
-                        <p class="text-muted" style="border-bottom: 2px solid #1BB0B0">EXPERIENCIA</p>
+                        <p class="text-muted" style="border-bottom: 2px solid #345183">EXPERIENCIA</p>
                     </div>
                     <div class="col-12 mt-2">
                         <label class="text-muted" for=""><i class="fas fa-briefcase mr-2"></i>Puesto</label>
@@ -288,14 +288,14 @@
                                     <h5 class="py-2 pl-2"
                                         style="color:#fff; font-weight:bold; background-color:#7F7F7F; width:100%">
                                         {{ $empleadoModel->name }}</h5>
-                                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Resumen</span>
                                     </div>
                                     <p style="text-align:justify">
                                         {{ $empleadoModel->resumen }}
                                     </p>
-                                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Experiencia Profesional</span>
                                     </div>
@@ -320,7 +320,7 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Certificaciones</span>
                                     </div>
@@ -340,7 +340,7 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Capacitaciones</span>
                                     </div>
@@ -361,7 +361,7 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Educación Académica</span>
                                     </div>
@@ -381,7 +381,7 @@
                                             </span>
                                         </div>
                                     @endforeach
-                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Idiomas</span>
                                     </div>
@@ -443,7 +443,7 @@
                     <div class="col-sm-12 col-md-4 col-sm-4 pt-3" x-data="{open:false}">
                         <div class="row justify-content-center">
                             <div class="col-11 border rounded shadow-sm p-4">
-                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
                                     <div class="row align-items-center justify-content-center">
                                         <div class="col-10" style="white-space: nowrap;">
                                             <span style="font-size: 17px; font-weight: bold;"><i
@@ -562,7 +562,7 @@
                     <div class="col-sm-12 col-md-4 col-sm-4 pt-3" x-data="{open:false}">
                         <div class="row justify-content-center">
                             <div class="col-11 shadow-sm rounded border p-4">
-                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
                                     <div class="row align-items-center justify-content-center">
                                         <div class="col-10" style="white-space: nowrap;">
                                             <span style="font-size: 17px; font-weight: bold;"><i
@@ -736,7 +736,7 @@
                     <div class="col-sm-12 col-md-4 col-sm-4 pt-3" x-data="{open:false}">
                         <div class="row justify-content-center">
                             <div class="col-11 shadow-sm rounded border p-4">
-                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
                                     <div class="row align-items-center justify-content-center">
                                         <div class="col-10" style="white-space: nowrap;">
                                             <span style="font-size: 17px; font-weight: bold;"><i

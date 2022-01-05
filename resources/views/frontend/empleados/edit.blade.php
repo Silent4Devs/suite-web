@@ -195,7 +195,7 @@
                                         @csrf
                                         <div class="mb-3 text-center row justify-content-center">
                                             <div class="text-center col-sm-2 w-50 text-light card-title"
-                                                style="background-color:#1BB0B0">
+                                                style="background-color:#345183">
                                                 Imágen Actual
                                             </div>
                                             <div class="col-sm-12"><img class="ml-3"
@@ -633,7 +633,7 @@
                                     </form>
 
 
-                                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Certificaciones</span>
                                     </div>
@@ -724,7 +724,7 @@
                                     <input type="hidden" name="certificado" value="" id="certificado">
 
 
-                                    <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Cursos / Diplomados</span>
                                     </div>
@@ -831,7 +831,7 @@
 
 
 
-                                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Experiencia Profesional</span>
                                     </div>
@@ -943,7 +943,7 @@
                                     <input type="hidden" name="experiencia" value="" id="experiencia">
 
 
-                                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Educación</span>
                                     </div>
@@ -1048,7 +1048,7 @@
 
 
 
-                                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Documentos</span>
                                     </div>

@@ -33,7 +33,7 @@
                     <div class="tab-content card" id="myTabContentJust">
                         <div class="px-4 mt-4 tab-pane fade show active" id="general" role="tabpanel"
                             aria-labelledby="general-tab">
-                            <div class="w-100" style="border-bottom: solid 2px #0CA193;">
+                            <div class="w-100" style="border-bottom: solid 2px #345183;">
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Información general de la capacitación</span>
                             </div>
@@ -176,7 +176,7 @@
                         </div>
                         <!--<div class="px-4 mt-4 mb-3 tab-pane fade" id="participantes" role="tabpanel"
                                                                                                     aria-labelledby="participantes-tab">
-                                                                                                    <div class="w-100" style="border-bottom: solid 2px #0CA193;">
+                                                                                                    <div class="w-100" style="border-bottom: solid 2px #345183;">
                                                                                                         <span style="font-size: 17px; font-weight: bold;">
                                                                                                             Alta de participantes</span>
                                                                                                     </div>

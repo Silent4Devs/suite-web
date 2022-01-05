@@ -13,7 +13,7 @@
 {{ Breadcrumbs::render('riesgos-edit', $riesgos) }}
 @include('partials.flashMessages')
 <div class="card">
-    <div class="text-center card-header" style="background-color: #00abb2;">
+    <div class="text-center card-header" style="background-color: #345183;">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-shield-virus"></i>Riesgos</strong>
     </div>
     <div class="caja_botones_menu">
@@ -476,7 +476,7 @@
                             <form class="card" id="form_plan_accion" method="POST"
                                 action="{{ route('admin.desk-riesgos-actividades.store') }}">
                                 <input type="hidden" name="riesgo_id" value="{{ $riesgos->id }}">
-                                <div class="text-center card-header" style="background-color: #00abb2;">
+                                <div class="text-center card-header" style="background-color: #345183;">
                                     <strong style="font-size: 16pt; color: #fff;"><i
                                             class="mr-4 fas fa-tasks"></i>Crear: Plan de Acción</strong>
                                 </div>

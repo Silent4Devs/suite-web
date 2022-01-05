@@ -346,7 +346,7 @@
                      id: `r_${task.id}`,
                      calendarId: `${task.level == 1 ? '1': '2'}`,
                      //  bgColor: bgColor,
-                     title: `<i class="fas fa-thumbtack i_calendar_cuadro" style="color:#00ABB2;"></i> ${task.level == 1 ? 'Fase: ': 'Actividad: '}${task.name}`,
+                     title: `<i class="fas fa-thumbtack i_calendar_cuadro" style="color:#345183;"></i> ${task.level == 1 ? 'Fase: ': 'Actividad: '}${task.name}`,
                      category: 'allday',
                      body: `${filteredAssigs.length > 0 ? "<h5>Responsables</h5>":""} ${images} <p>Estatus: <span class="badge ${task.status}">${estatus}</span></p>`,
                      dueDateClass: '',

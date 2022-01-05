@@ -35,7 +35,7 @@
                 Capacitaciones
             </div>
         </a></li>
-    <div class="ventana_menu" id="capacitaciones" style="color:#008186 !important">
+    <div class="ventana_menu" id="capacitaciones" style="color:#345183 !important">
         <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="capacitaciones"
             style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
         <h3 class="text-center"><strong>Capacitaciones</strong></h3>

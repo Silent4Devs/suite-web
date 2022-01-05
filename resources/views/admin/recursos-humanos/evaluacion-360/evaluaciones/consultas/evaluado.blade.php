@@ -64,7 +64,7 @@
                     <h6 class="m-0 text-white">Informe de resultados</h6>
                 </div> --}}
                     <div class="text-center form-group col-12"
-                        style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                        style="background-color:#345183; border-radius: 100px; color: white;">
                         DATOS DEL EVALUADO
                     </div>
                     <div class="col-12">
@@ -91,7 +91,7 @@
                     <h6 class="m-0 text-white">Metodología utilizada</h6>
                 </div> --}}
                     <div class="mt-2 text-center form-group col-12"
-                        style="background-color:#1BB0B0; border-radius: 100px; color: white; text-transform: uppercase;">
+                        style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
                         Metodología utilizada
                     </div>
                     <p class="p-0 col-12" style="font-size:11px; text-align: justify;">
@@ -126,7 +126,7 @@
                     </p>
 
                     <div class="mt-2 text-center form-group col-12"
-                        style="background-color:#1BB0B0; border-radius: 100px; color: white; text-transform: uppercase;">
+                        style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
                         Resultado de la evaluación por competencias
                     </div>
                 </div>
@@ -211,7 +211,7 @@
                 </div>
             </div>
             <div class="mt-2 text-center form-group col-12"
-                style="background-color:#1BB0B0; border-radius: 100px; color: white; text-transform: uppercase;">
+                style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
                 Gráficas
             </div>
             <div id="graficasCompetencias">
@@ -233,7 +233,7 @@
             <div class="col-12">
                 <div class="mt-4 row">
                     <div class="mt-2 text-center form-group col-12"
-                        style="background-color:#1BB0B0; border-radius: 100px; color: white; text-transform: uppercase;">
+                        style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
                         Resultado de la evaluación por objetivos
                     </div>
                 </div>
@@ -334,7 +334,7 @@
                 </div>
                 <div class="mt-1 row justify-content-between">
                     <div class="mt-2 text-center form-group col-12"
-                        style="background-color:#1BB0B0; border-radius: 100px; color: white; text-transform: uppercase;">
+                        style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
                         Resultados Generales obtenidos
                     </div>
                     <div class="col-4" style="font-size:12px">

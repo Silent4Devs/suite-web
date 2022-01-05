@@ -20,7 +20,7 @@
             position: absolute;
             width: 300px;
             font-weight: bold;
-            color: #00abb2;
+            color: #345183;
             bottom: 0;
         }
 
@@ -45,8 +45,8 @@
         }
 
         .cards_reportes:hover {
-            color: #00abb2;
-            border: 1px solid #00abb2;
+            color: #345183;
+            border: 1px solid #345183;
         }
 
     </style>
