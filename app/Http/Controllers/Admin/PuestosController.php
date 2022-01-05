@@ -239,4 +239,11 @@ class PuestosController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function consultaPuestos(Request $request)
+    {
+        // $areas = Area::get();
+
+        return view('admin.puestos.consultapuestos');
+    }
 }
