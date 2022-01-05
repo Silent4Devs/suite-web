@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\LockedPlanTrabajo;
+use App\Models\Iso9001\PlanImplementacion;
+use App\Models\Iso9001\LockedPlanTrabajo;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

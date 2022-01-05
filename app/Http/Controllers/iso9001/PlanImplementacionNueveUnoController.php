@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\iso9001;
 
 use App\Models\Empleado;
-use App\Models\Iso9001\PlanImplementacionNueveUno;
+use App\Models\Iso9001\PlanImplementacion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
