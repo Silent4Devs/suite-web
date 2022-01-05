@@ -613,7 +613,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('puestos', 'PuestosController');
     Route::get('consulta-puestos', 'PuestosController@consultaPuestos')->name('consulta-puestos');
 
-
     // Perfiles
     Route::delete('perfiles/destroy', 'PerfilController@massDestroy')->name('perfiles.massDestroy');
     Route::post('perfiles/parse-csv-import', 'PerfilController@parseCsvImport')->name('perfiles.parseCsvImport');
