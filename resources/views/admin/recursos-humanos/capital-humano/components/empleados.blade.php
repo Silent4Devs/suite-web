@@ -1,13 +1,36 @@
 <ul class="mt-4">
-    <li><a href="{{ route('admin.puestos.index') }}">
+    {{-- <li><a href="{{ route('admin.puestos.index') }}"> --}}
+    <li><a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
             <div>
                 <i class="fas fa-briefcase"></i>
                 Perfiles de Puestos
             </div>
         </a></li>
+
+        <div class="ventana_menu" id="capacitaciones" style="color:#008186 !important">
+            <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="capacitaciones"
+                style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
+            <h3 class="text-center"><strong>Perfil de Puesto</strong></h3>
+            <ul>
+                <li><a href="{{ route('admin.puestos.index') }}">
+                        <div>
+                            <i class="fas fa-briefcase"></i>
+                            Crear Perfil de Puesto
+                        </div>
+                    </a></li>
+                <li><a href="{{ route('admin.consulta-puestos') }}">
+                        <div>
+                            <i class="fab fa-black-tie"></i>
+                            Consulta de perfiles de puesto
+                        </div>
+                    </a></li>
+            </ul>
+        </div>
     <li><a href="{{ route('admin.perfiles.index') }}">
             <div>
-                <i class="fas fa-sitemap"></i>
+                <span class="material-icons material-modulos">
+                    stairs
+                </span>
                 Niveles Jerárquicos
             </div>
         </a></li>
@@ -19,8 +42,16 @@
         </a></li>
     <li><a href="{{ route('admin.capital.expedientes-profesionales') }}">
             <div>
-                <i class="fas fa-file"></i>
+                <span class="material-icons material-modulos">
+                    folder_shared
+                </span>
                 Expedientes Profesionales
+            </div>
+        </a></li>
+    <li><a href="{{ route('admin.organigrama.index') }}">
+            <div>
+                <i class="fas fa-sitemap"></i>
+                Organigrama
             </div>
         </a></li>
     <li><a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
@@ -48,10 +79,30 @@
                 </a></li>
         </ul>
     </div>
+    <li><a href="{{ route('admin.tipos-contratos-empleados.index') }}">
+            <div>
+                <span class="material-icons material-modulos">
+                    description
+                </span>
+                Tipos de contratos
+            </div>
+        </a>
+    </li>
+    <li><a href="{{ route('admin.entidades-crediticias.index') }}">
+            <div>
+                <span class="material-icons material-modulos">
+                    account_balance
+                </span>
+                Entidades Crediticias
+            </div>
+        </a>
+    </li>
     <li>
         <a href="#">
             <div>
-                <i class="fas fa-question"></i>
+                <span class="material-icons material-modulos">
+                    beach_access
+                </span>
                 Solicitudes e Incidencias
             </div>
         </a>
@@ -59,9 +110,12 @@
     <li>
         <a href="#">
             <div>
-                <i class="fas fa-question"></i>
+                <span class="material-icons material-modulos">
+                    loyalty
+                </span>
                 Beneficios
             </div>
         </a>
     </li>
+
 </ul>

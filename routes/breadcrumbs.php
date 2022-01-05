@@ -3,6 +3,13 @@
 Breadcrumbs::for('admin.iso27001.index', function ($trail) {
     $trail->push('ISO 27001', route('admin.iso27001.index'));
 });
+
+Breadcrumbs::for('admin.analisisdebrechas.index', function ($trail) {
+    $trail->push('ISO 27001', route('admin.iso27001.index'));
+    $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
+    $trail->push('Análisis de Brechas', route('admin.analisis-brechas.index'));
+});
+
 Breadcrumbs::for('dashboard-iso27001', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Dashboard', route('admin.home'));
@@ -65,7 +72,7 @@ Breadcrumbs::for('admin.alcance-sgsis.create', function ($trail) {
     $trail->push('Formulario', route('admin.alcance-sgsis.create'));
 });
 
-// Breadcrumbs::for('admin..index', function ($trail) {
+// Breadcrumbs::for('admin..index', function ($trail) {perfil-puesto
 // $trail->parent('admin.iso27001.index');                   generar reporte-------------
 // $trail->push('', route('admin..index'));
 // });
@@ -156,6 +163,11 @@ Breadcrumbs::for('admin.riesgosoportunidades.create', function ($trail) {
     $trail->parent('admin.riesgosoportunidades.index');
     $trail->push('Formulario', route('admin.riesgosoportunidades.create'));
 });
+Breadcrumbs::for('admin.paneldeclaracion.index', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
+    $trail->push('Asignación Controles', route('admin.paneldeclaracion.index'));
+});
 
 Breadcrumbs::for('admin.objetivosseguridads.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
@@ -170,7 +182,7 @@ Breadcrumbs::for('admin.objetivosseguridads.create', function ($trail) {
 Breadcrumbs::for('admin.recursos.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Soporte', route('admin.iso27001.index') . '#soporte');
-    $trail->push('Transferencia de Conocimiento', route('admin.recursos.index'));
+    $trail->push('Capacitaciones', route('admin.recursos.index'));
 });
 Breadcrumbs::for('admin.recursos.create', function ($trail) {
     $trail->parent('admin.recursos.index');
@@ -399,6 +411,15 @@ Breadcrumbs::for('perfil-puesto', function ($trail) {
     $trail->parent('capital-humano');
     $trail->push('Empleados');
     $trail->push('Perfiles de Puestos', route('admin.puestos.index'));
+});
+Breadcrumbs::for('consulta-puestos', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
+    $trail->push('Consulta Perfiles de Puesto', route('admin.consulta-puestos'));
+});
+Breadcrumbs::for('areas-render', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Áreas', route('admin.areas.renderJerarquia'));
 });
 Breadcrumbs::for('perfil-puesto-create', function ($trail) {
     $trail->parent('perfil-puesto');
@@ -650,4 +671,9 @@ Breadcrumbs::for('Editar-Curriculum', function ($trail, $empleado = null) {
 Breadcrumbs::for('admin.mapa-procesos', function ($trail) {
     $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Mapa de Procesos');
+});
+
+Breadcrumbs::for('admin.visualizarorganizacion', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Organización');
 });

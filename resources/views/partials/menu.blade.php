@@ -33,7 +33,7 @@
         @can('mi_perfil_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.inicio-Usuario.index') }}#datos"
-                    class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') ? 'active' : '' }}">
+                    class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') ||request()->is('admin/competencias/*/cv') ? 'active' : '' }}">
                     <i class="fas fa-user iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Mi perfil</font>
                 </a>
@@ -158,7 +158,7 @@
         @endcan
         @can('glosario_access')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route('admin.glosarios.index') }}"
+                <a href="{{ route('admin.glosarios.render') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/glosarios') || request()->is('admin/glosarios/*') ? 'active' : '' }}">
                     <i class="fa-fw fas fa-book iconos_menu letra_blanca">
 
@@ -211,10 +211,10 @@
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca">Módulos Tabantaj</font>
         </li>
-        <li class="c-sidebar-nav-dropdown">
-            <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                <i class="fas fa-users iconos_menu letra_blanca">
-                </i>
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.capital-humano.index') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*') ? 'active' : '' }}">
+                <i class="fa-fw fas fa-users iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> Capital Humano </font>
             </a>
             <ul class="c-sidebar-nav-dropdown-items">
@@ -231,7 +231,7 @@
                 @endcan --}}
                 <li class="c-sidebar-nav-item">
                     <a href="{{ route('admin.capital-humano.index') }}"
-                        class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*') ? 'active' : '' }}">
+                        class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*') || request()->is('admin/expedientes-profesionales/*')? 'active' : '' }}">
                         <i class="fa-fw fas fa-file iconos_menu letra_blanca"></i>
                         <font class="letra_blanca" style="margin-left:10px;"> Capital Humano Menú </font>
                     </a>
@@ -336,7 +336,14 @@
                 </li>
             </ul>
         </li>
-        <li
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.analisis-riesgos.menu') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/matriz-riesgos') || request()->is('admin/matriz-riesgos*') ? 'active' : '' }}">
+                <i class="fa-fw fas fa-exclamation-triangle iconos_menu letra_blanca"></i>
+                <font class="letra_blanca"> Análisis de Riesgos </font>
+            </a>
+        </li>
+        {{-- <li
             class="c-sidebar-nav-dropdown {{ request()->is('admin/matriz-riesgos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-unos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-dos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-tres*') ? 'c-show' : '' }}">
             <a class="c-sidebar-nav-dropdown-toggle" href="#">
                 <i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>
@@ -362,13 +369,11 @@
                     </a>
                 </li>
 
-                @can('configuracion_procesos_access') {{-- este acceso no correspnde --}}
+                @can('configuracion_procesos_access')
                     <li class="c-sidebar-nav-item">
                         <a href="{{ route('admin.analisis-riesgos.index') }}"
                             class="c-sidebar-nav-link {{ request()->is('admin/admin.analisis-riesgos') || request()->is('admin/admin.analisis-riesgos') ? 'active' : '' }}">
-                            {{-- <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
-
-                        </i> --}}
+                            
                             <i class="fas fa-table iconos_menu letra_blanca">
 
                             </i>
@@ -378,10 +383,15 @@
                 @endcan
 
             </ul>
-        </li>
-
+        </li> --}}
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') ? 'active' : '' }}"
+            <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') || request()->is('admin/analisisdebrechas') || request()->is('admin/planTrabajoBase') || request()->is('admin/partes-interesadas')
+            || request()->is('admin/matriz-requisito-legales') || request()->is('admin/entendimiento-organizacions') || request()->is('admin/alcance-sgsis') || request()->is('admin/comiteseguridads')
+            || request()->is('admin/minutasaltadireccions') || request()->is('admin/evidencias-sgsis') || request()->is('admin/politica-sgsis') || request()->is('admin/paneldeclaracion')
+            || request()->is('admin/objetivosseguridads')  || request()->is('admin/concientizacion-sgis') || request()->is('admin/material-sgsis') || request()->is('admin/comunicacion-sgis')
+            || request()->is('admin/control-accesos') || request()->is('admin/declaracion-aplicabilidad') || request()->is('admin/planificacion-controls') || request()->is('admin/tratamiento-riesgos')
+            || request()->is('admin/indicadores-sgsis') || request()->is('admin/auditoria-anuals') || request()->is('admin/plan-auditoria')
+            || request()->is('admin/revision-direccions')  || request()->is('admin/auditoria-internas') || request()->is('admin/accion-correctivas') || request()->is('admin/inicioUsuario/reportes/mejoras')? 'active' : '' }}"
                 href="{{ route('admin.iso27001.index') }}#contexto">
                 <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> ISO 27001 </font>
@@ -553,6 +563,17 @@
                                 @endcan
                             </ul>
                         </li>
+                        @can('organizacion_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route('admin.glosarios.index') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
+                                    <i class="fas fa-bullseye iconos_menu letra_blanca">
+
+                                    </i>
+                                    <font class="letra_blanca" style="margin-left:10px;">Glosario</font>
+                                </a>
+                            </li>
+                        @endcan
                     @endcan
                     @can('configuracion_empleados_access')
                         {{-- <li class="c-sidebar-nav-item">

@@ -45,14 +45,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
-
-
-
-
-
-
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style type="text/css">
+        
+        .material-modulos{
+            font-size: 50px;
+            margin-bottom: 3px;
+            display: block;
+        }
         .select2-selection--multiple {
             overflow: hidden !important;
             height: auto !important;
@@ -1048,7 +1048,7 @@
                                             href="{{ route('profile.password.edit') }}">
                                             <i class="mr-1 fas fa-user-cog">
                                             </i>
-                                            Conf. Perfil
+                                            Configurar Perfil
                                         </a>
 
                                     @endcan

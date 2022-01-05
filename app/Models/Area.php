@@ -65,6 +65,7 @@ class Area extends Model
         'descripcion',
         'foto_area',
         'team_id',
+        'id_lider',
     ];
 
     protected $appends = ['grupo_name', 'foto_ruta'];
@@ -144,7 +145,7 @@ class Area extends Model
         return $this->hasMany(MatrizRiesgo::class, 'id_responsable');
     }
 
-    public function getAreaFotoAttribute()
+    public function getFotoRutaAttribute()
     {
         $foto_url = asset('img/areas.jpg');
         if ($this->foto_area) {
@@ -152,5 +153,10 @@ class Area extends Model
         }
 
         return $foto_url;
+    }
+
+    public function lider()
+    {
+        return $this->hasMany(Empleado::class, 'id_lider');
     }
 }

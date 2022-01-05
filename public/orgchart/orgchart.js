@@ -425,6 +425,7 @@ export default class OrgChart {
       } else {
         photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
       }
+    }
       else {
         photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
       }
@@ -464,9 +465,6 @@ export default class OrgChart {
           content_more += `
                 <div class="supervisor justify-content-center" >
                 <h4 class="supervisor-title">Responsable del área:</h4>
-                <img class="justify-content-center" src="{{ asset('storage/empleados/imagenes') }}/${dataSourceJSON.supervisor.avatar}"
-                class="img_empleado" title=${dataSourceJSON.supervisor.name} style="text-center" >
-                <p style="font-size:1vw;font-weight: bold text-center">${dataSourceJSON.supervisor.name}</p>
                 <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.area}</span></p>
                 <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
               </div>
@@ -1858,6 +1856,7 @@ export default class OrgChart {
       chartContainer.innerHTML = '';
       chartContainer.style.width = "0px";
     }
+}
     _clickExportButton() {
       let opts = this.options,
         chartContainer = this.chartContainer,
@@ -1876,7 +1875,7 @@ export default class OrgChart {
       }
       chartContainer.classList.add('canvasContainer');
       let zoomActual = document.querySelector("#zoomer").value;
-     if(opts.typeOrgChart !='area'){
+     if(opts.typeOrgChart =='employees'){
       if (flag) {
         let contenedorL2R = document.querySelector('.orgchart').classList.contains('l2r');
         let contenedorR2L = document.querySelector('.orgchart').classList.contains('r2l');
@@ -1906,62 +1905,73 @@ export default class OrgChart {
       }
     }
     else if (opts.typeOrgChart == 'area'){
-        // document.querySelector('.orgchart').classList.remove('l2r');
-        // document.querySelector('.orgchart').style = "";
-        document.querySelector("#zoomer").value = 70;
-        document.querySelector("#output").innerHTML = 70;
-        document.querySelector('.orgchart').classList.add('l2r');
+        document.querySelector('.orgchart').classList.remove('l2r');
+
+        document.querySelector('.orgchart').classList.add('t2b');
     }
-      window.html2canvas(sourceChart, {
-        // 'width': 1000,
-        'height': tableAll.clientHeight + 100,
-        'onclone': function (cloneDoc) {
+    setTimeout(() => {
+        window.html2canvas(sourceChart, {
+            // 'width': 1000,
+            height: tableAll.clientHeight + 100,
+            onclone: function (cloneDoc) {
 
-          // let canvasContainer = cloneDoc.querySelector('.canvasContainer');
-          // canvasContainer.style.overflow = 'visible';
-          // canvasContainer.querySelector('.orgchart:not(.hidden)').transform = '';
+              // let canvasContainer = cloneDoc.querySelector('.canvasContainer');
+              // canvasContainer.style.overflow = 'visible';
+              // canvasContainer.querySelector('.orgchart:not(.hidden)').transform = '';
 
-        // if (flag) {
-        //   let contenedorL2R = cloneDoc.querySelector('.orgchart').classList.contains('l2r');
-        //   let contenedorR2L = cloneDoc.querySelector('.orgchart').classList.contains('r2l');
-        //   if (contenedorL2R) {
-        //     cloneDoc.querySelector('.orgchart').classList.remove('l2r')
-        //   }
-        //   if (contenedorR2L) {
-        //     cloneDoc.querySelector('.orgchart').classList.remove('r2l')
-        //   }
-        // }
-        let title = cloneDoc.querySelectorAll('.title');
-        title.forEach(element => {
-          element.innerText = element.textContent.replaceAll(" ", '\u202F'); //Replace space with Unicode No Break Word
-        });
-        let content = cloneDoc.querySelectorAll('.content');
-        content.forEach(element => {
-          element.innerText = element.textContent.replaceAll(" ", '\u202F'); //Replace space with Unicode No Break Word
-        });
-      }
-    })
-      .then((canvas) => {
-        let downloadBtn = chartContainer.querySelector('.oc-download-btn');
+            // if (flag) {
+            //   let contenedorL2R = cloneDoc.querySelector('.orgchart').classList.contains('l2r');
+            //   let contenedorR2L = cloneDoc.querySelector('.orgchart').classList.contains('r2l');
+            //   if (contenedorL2R) {
+            //     cloneDoc.querySelector('.orgchart').classList.remove('l2r')
+            //   }
+            //   if (contenedorR2L) {
+            //     cloneDoc.querySelector('.orgchart').classList.remove('r2l')
+            //   }
+            // }
+            // let orgChart = cloneDoc.querySelector('.charContainerAll');
+            // console.log(orgChart);
+            // orgChart.style.transform="scale(0.5) rotate(-90deg) rotateY(180deg)";
+            // orgChart.style.background="red";
 
-        chartContainer.querySelector('.mask').classList.add('hidden');
-        downloadBtn.setAttribute('href', canvas.toDataURL());
-        downloadBtn.click();
-      })
-      .catch((err) => {
-        console.error('Failed to export the curent orgchart!', err);
-      })
-      .finally(() => {
-        if (opts.typeOrgChart == 'employees') {
-          document.querySelector('.orgchart').classList.remove('t2b');
-          document.querySelector('.orgchart').classList.add(localStorage.getItem('orientationOrgChart'));
-          document.querySelector("#zoomer").value = zoomActual;
-          document.querySelector("#output").innerHTML = zoomActual;
-          let newScale = zoomActual / 100;
-          this._setNewChartScale(this.chart, newScale);
-          chartContainer.classList.remove('canvasContainer');
-        }
-      });
+            let title = cloneDoc.querySelectorAll('.title');
+            title.forEach(element => {
+              element.innerText = element.textContent.replaceAll(" ", '\u202F'); //Replace space with Unicode No Break Word
+            });
+            let content = cloneDoc.querySelectorAll('.content');
+            content.forEach(element => {
+              element.innerText = element.textContent.replaceAll(" ", '\u202F'); //Replace space with Unicode No Break Word
+            });
+          }
+        })
+          .then((canvas) => {
+            let downloadBtn = chartContainer.querySelector('.oc-download-btn');
+            chartContainer.querySelector('.mask').classList.add('hidden');
+            downloadBtn.setAttribute('href', canvas.toDataURL());
+            // Hola
+            downloadBtn.click();
+          })
+
+          .catch((err) => {
+            console.error('Failed to export the curent orgchart!', err);
+          })
+          .finally(() => {
+            if (opts.typeOrgChart == 'employees') {
+              document.querySelector('.orgchart').classList.remove('t2b');
+              document.querySelector('.orgchart').classList.add(localStorage.getItem('orientationOrgChart'));
+              document.querySelector("#zoomer").value = zoomActual;
+              document.querySelector("#output").innerHTML = zoomActual;
+              let newScale = zoomActual / 100;
+              this._setNewChartScale(this.chart, newScale);
+              chartContainer.classList.remove('canvasContainer');
+            }else if (opts.typeOrgChart == 'area') {
+                document.querySelector('.orgchart').classList.add('l2r');
+                document.querySelector('.orgchart').classList.remove('t2b');
+
+            }
+          });
+    }, 1000);
+
   }
   _loopChart(chart) {
     let subObj = { 'id': chart.querySelector('.node').id };

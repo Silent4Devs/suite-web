@@ -65,6 +65,8 @@
                         </div>
 
                         @php
+                            $permisoResponsable = false;
+                            $permisoAprobador = false;
                             foreach ($responsables as $responsable) {
                                 if (auth()->user()->empleado->id == $responsable->empleado_id) {
                                     $permisoResponsable = true;
@@ -275,6 +277,7 @@
 
 
                                             @php
+                                                $comentariox = null;
                                                 foreach ($aprobadores as $aprobador) {
                                                     if ($aprobador->declaracion_id == $g5s->id) {
                                                         $comentariox = $aprobador->comentarios;
