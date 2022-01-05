@@ -1,5 +1,40 @@
 @extends('layouts.admin')
 @section('content')
+
+<style>
+
+    .btn_cargar{
+        border-radius: 100px !important;
+        border: 1px solid #00abb2;
+        color: #00abb2;
+        text-align: center;
+        padding: 0;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 !important;
+        margin-right: 10px !important;
+    }
+    .btn_cargar:hover{
+        color: #fff;
+        background:#00abb2 ;
+    }
+    .btn_cargar i{
+        font-size: 15pt;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .agregar{
+        margin-right:15px;
+    }
+
+</style>
+
     {{ Breadcrumbs::render('perfil-puesto') }}
     @can('puesto_create')
 
@@ -9,15 +44,20 @@
             </div>
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
+                    @include('csvImport.modalperfilpuesto', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
+                </div>
+            </div>
+            {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+                <div class="col-lg-12"> --}}
                     {{-- <a class="btn btn-success" href="{{ route('admin.puestos.create') }}">
                   Agregar <strong>+</strong>
             </a>
             <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
                 {{ trans('global.app_csvImport') }}
             </button> --}}
-                    @include('csvImport.modal', ['model' => 'Puesto', 'route' => 'admin.puestos.parseCsvImport'])
+                    {{-- @include('csvImport.modal', ['model' => 'Puesto', 'route' => 'admin.puestos.parseCsvImport'])
                 </div>
-            </div>
+            </div> --}}
         @endcan
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-Puesto">
@@ -133,22 +173,32 @@
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar area',
                 url: "{{ route('admin.puestos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config){
                 let {url} = config;
                 window.location.href = url;
                 }
                 };
-                let btnImport = {
-                text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
-                titleAttr: 'Importar datos por CSV',
-                className: "btn-xs btn-outline-primary rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                $('#csvImportModal').modal('show');
+                let btnExport = {
+                text: '<i  class="fas fa-download"></i>',
+                titleAttr: 'Descargar plantilla',
+                className: "btn btn_cargar" ,
+                action: function(e, dt, node, config) {
+                    $('#').modal('show');
                 }
-                };
-                dtButtons.push(btnAgregar);
-                dtButtons.push(btnImport);
+            };
+            let btnImport = {
+                text: '<i  class="fas fa-file-upload"></i>',
+                titleAttr: 'Importar datos',
+                className: "btn btn_cargar",
+                action: function(e, dt, node, config) {
+                    $('#xlsxImportModal').modal('show');
+                }
+            };
+
+            dtButtons.push(btnAgregar);
+            dtButtons.push(btnExport);
+            dtButtons.push(btnImport);
             @endcan
             @can('puesto_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
