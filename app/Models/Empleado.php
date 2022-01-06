@@ -6,6 +6,7 @@ use App\Models\RH\BeneficiariosEmpleado;
 use App\Models\RH\ContactosEmergenciaEmpleado;
 use App\Models\RH\DependientesEconomicosEmpleados;
 use Carbon\Carbon;
+use DateTime;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -79,7 +80,7 @@ class Empleado extends Model
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
         'avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo',
-        'actual_birdthday', 'actual_aniversary',
+        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad',
     ];
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
@@ -183,13 +184,15 @@ class Empleado extends Model
         $hora = date('H');
         $saludo = '';
         $nombre = explode(' ', $this->name)[0];
-        if ($hora >= '12' && $hora <= '18') {
-            $saludo = "Buenas Tardes, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
-        } elseif ($hora >= '19' && $hora <= '23') {
-            $saludo = "Buenas Noches, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
-        } else {
-            $saludo = "Buenos Días, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
-        }
+        // if ($hora >= '12' && $hora <= '18') {
+        //     $saludo = "Buenas Tardes, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        // } elseif ($hora >= '19' && $hora <= '23') {
+        //     $saludo = "Buenas Noches, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        // } else {
+        //     $saludo = "Buenos Días, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        // }
+
+        $saludo = $nombre;
 
         return $saludo;
     }
@@ -429,4 +432,26 @@ class Empleado extends Model
     {
         return $this->hasMany(Puesto::class, 'id_reporta');
     }
+    public function getObtenerAntiguedadAttribute(){
+        $antiguedad = $this->calcularAntiguedad($this->antiguedad);
+        $mensaje = '';
+        // dd($antiguedad->format('%d'));
+        if ($antiguedad->format('%Y') != '00') {
+           $mensaje.="{$antiguedad->format('%Y')} años  ";
+        }
+        if ($antiguedad->format('%m') != '0') {
+            $mensaje.="{$antiguedad->format('%m')} meses  ";
+        }
+        if ($antiguedad->format('%d') != '0') {
+            $mensaje.="{$antiguedad->format('%d')} días";
+        }
+        return $mensaje;
+        // return "Tiene {$antiguedad->format('%Y')} años, {$antiguedad->format('%m')} meses y {$antiguedad->format('%d')} días";
+    }
+    private function calcularAntiguedad($fecha){
+        $fecha_nac = new DateTime(date('Y/m/d',strtotime($fecha))); // Creo un objeto DateTime de la fecha ingresada
+        $fecha_hoy =  new DateTime(date('Y/m/d',time())); // Creo un objeto DateTime de la fecha de hoy
+        $edad = date_diff($fecha_hoy,$fecha_nac); // La funcion ayuda a calcular la diferencia, esto seria un objeto
+        return $edad;
+        }
 }

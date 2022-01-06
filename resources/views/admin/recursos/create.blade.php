@@ -28,6 +28,7 @@
                                 Participantes
                                 <span class="badge badge-primary" id="contador-participantes-tab">0</span>
                             </a>
+
                         </div>
                     </nav>
                     {{-- <div class="w-100" style="border-bottom: solid 2px #0CA193;">
@@ -46,6 +47,7 @@
                                 @include('admin.recursos.components.participantes')
                             </div>
                         </div>
+
                         <div class="text-right form-group col-12">
                             <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                             <button class="btn btn-danger" type="submit" id="btnGuardarRecurso">

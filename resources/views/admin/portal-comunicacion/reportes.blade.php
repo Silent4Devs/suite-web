@@ -14,7 +14,7 @@
             position: absolute;
             width: 300px;
             font-weight: bold;
-            color: #00abb2;
+            color: #345183;
             bottom: 0;
         }
 
@@ -48,7 +48,7 @@
             height: 100px;
             margin: auto;
             margin-top: -50px;
-            background-color: #00abb2;
+            background-color: #345183;
             display: flex;
             align-items: center;
             justify-content: center;

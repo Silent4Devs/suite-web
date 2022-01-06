@@ -3,11 +3,11 @@
     {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
-            color: #008186;
+            color: #345183;
         }
 
         .nav-tabs .nav-link.active {
-            border-top: 2px solid #008186;
+            border-top: 2px solid #345183;
         }
 
         div.tab-pane ul {
@@ -42,7 +42,7 @@
             align-items: center;
             justify-content: center;
             background-color: #eee;
-            color: #008186;
+            color: #345183;
             border-radius: 6px;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
             transition: 0.1s;
@@ -51,8 +51,8 @@
 
         div.tab-pane a:hover {
             text-decoration: none !important;
-            color: #008186;
-            border: 1px solid #00abb2;
+            color: #345183;
+            border: 1px solid #345183;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
             background-color: #fff;
         }
@@ -77,29 +77,15 @@
 
     </style>
 
-    {{ Breadcrumbs::render('capital-humano') }}
-
-    <div class="mt-5 card">
-        <div class="py-3 col-md-12 col-sm-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <div class="row">
-                <div class="col-4"></div>
-                <div class="col-4 justify-content-center text-center">
-                    <h3 class="mb-2 text-center text-white d-inline-block">
-                        <strong>
-                            Capital Humano
-                        </strong>
-                    </h3>
-                </div>
-                <div class="col-4 justify-content-end pr-0" style="text-align:end">
-                    <span style="font-size:15px">
-                        <a href="{{ route('admin.home') }}" class="btn btn-success">
-                            <i class="fas fa-chart-pie mr-2"></i>
-                            Dashboard
-                        </a>
-                    </span>
-                </div>
-            </div>
-        </div>
+    {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
+    <div style="display:flex; justify-content:space-between;">
+        <h5 class="titulo_general_funcion">Capital Humano </h5>
+        <a href="{{ route('admin.home') }}" class="btn btn-success">
+            <i class="fas fa-chart-pie mr-2"></i>
+            Dashboard
+        </a>
+    </div>
+    <div class="card">
         <div class="card-body">
             <nav>
                 <div class="nav nav-tabs" id="tabsCapitalHumano" role="tablist">

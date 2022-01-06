@@ -40,7 +40,7 @@
             font-size: 17pt;
             cursor: pointer;
             margin: 3px;
-            color: #00abb2;
+            color: #345183;
         }
 
         table td i:hover {
@@ -151,9 +151,11 @@
     @include('partials.flashMessages')
 
     <div id="inicio_usuario" class="mb-5 row" style="">
+
+        <h5 class="col-12 titulo_general_funcion">Mi Perfil</h5>
         {{-- <div class="col-lg-3 info-personal">
             <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
-                <div style="width: 100%; height: 85px; background-color: #00abb2;"></div>
+                <div style="width: 100%; height: 85px; background-color: #345183;"></div>
                 <div class="caja_img_perfil">
                     <img
                         src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->foto : 'user.png' }}">
@@ -189,26 +191,26 @@
         </div> --}}
         <div class="col-lg-12 row caja_botones_secciones">
             @if ($usuario->empleado)
-                <div class="col-12 caja_botones_menu">
+                <div class="col-12 caja_botones_menu" style="justify-content: center !important;">
                     <a href="#" id="b_misDatos" onclick="almacenarMenuEnLocalStorage('misDatos')" data-tabs="s_misDatos"
-                        class=""><i class="fas fa-user-circle"></i>
+                        class=""><i class="bi bi-file-person"></i>
                         Mis Datos</a>
                     <a href="#" id="b_calendario" onclick="almacenarMenuEnLocalStorage('calendario')"
-                        data-tabs="s_calendario"><i class="fas fa-calendar-alt"></i>
+                        data-tabs="s_calendario"><i class="bi bi-calendar3"></i>
                         Calendario</a>
                     <a href="#" id="b_actividades" onclick="almacenarMenuEnLocalStorage('actividades')"
                         data-tabs="s_actividades">
                         @if ($contador_actividades)
                             <span class="indicador_numero">{{ $contador_actividades }}</span>
                         @endif
-                        <i class="fas fa-stopwatch"></i>Actividades
+                        <i class="bi bi-stopwatch"></i>Actividades
                     </a>
                     <a href="#" id="b_aprobaciones" onclick="almacenarMenuEnLocalStorage('aprobaciones')"
                         data-tabs="s_aprobaciones">
                         @if ($contador_revisiones)
                             <span class="indicador_numero">{{ $contador_revisiones }}</span>
                         @endif
-                        <i class="fas fa-check"></i>Aprobaciones
+                        <i class="bi bi-check2"></i>Aprobaciones
                     </a>
                     {{-- <a href="#" data-tabs="evaluaciones">
                         @if ($contador_revisiones)
@@ -221,10 +223,11 @@
                         @if ($contador_recursos)
                             <span class="indicador_numero">{{ $contador_recursos }}</span>
                         @endif
-                        <i class="fas fa-chalkboard-teacher"></i>Capacitaciones
+                        <i class="bi bi-mortarboard"></i>Capacitaciones
                     </a>
-                    <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')" data-tabs="s_reportes"><i
-                            class="fas fa-clipboard-list"></i>Reportes</a>
+                    <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')" data-tabs="s_reportes">
+                    <i class="bi bi-clipboard-check"></i>
+                        Reportes</a>
                 </div>
             @endif
             <div class="caja_caja_secciones">

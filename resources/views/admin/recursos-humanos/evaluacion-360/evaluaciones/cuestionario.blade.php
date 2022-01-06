@@ -49,7 +49,7 @@
         <div class="pt-0 card-body">
 
             <div>
-                <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     RESUMEN GENERAL
                 </div>
                 <div class="row">
@@ -145,7 +145,7 @@
                             <div class="row align-items-center justify-content-center">
                                 <div class="col-12">
                                     <div class="text-center form-group"
-                                        style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                                        style="background-color:#345183; border-radius: 100px; color: white;">
                                         SECCIÓN DE COMPETENCIAS
                                     </div>
                                     <section id="sectionCompetencias" class="mt-2" x-data="{show:true}">
@@ -270,7 +270,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="text-center form-group"
-                                            style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                                            style="background-color:#345183; border-radius: 100px; color: white;">
                                             SECCIÓN DE OBJETIVOS
                                         </div>
                                         <section class="mt-1" x-data="{show:true}">
@@ -413,7 +413,7 @@
                         <!-- Sección Firmas -->
                         <div class="mt-4">
                             <div class="text-center form-group"
-                                style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                                style="background-color:#345183; border-radius: 100px; color: white;">
                                 SECCIÓN DE FIRMAS
                             </div>
                             <h5 class="mt-3 head"><i class="mr-1 fas fa-signature"></i> Firmas</h5>

@@ -93,7 +93,7 @@
 
         .icons_propios_gantt.guardar {
             transform: scale(1.5);
-            color: #00abb2 !important;
+            color: #345183 !important;
         }
 
 
@@ -108,24 +108,24 @@
             display: inline-block;
             padding: 5px 10px;
             background-color: #fff;
-            color: #00abb2;
+            color: #345183;
             font-size: 9pt;
             cursor: pointer;
-            border: 1px solid #00abb2;
+            border: 1px solid #345183;
             border-radius: 5px;
             text-align: center;
             vertical-align: middle;
         }
 
         .botones_vistas_gantt a:hover {
-            border: 1px solid #00abb2;
-            background-color: #00abb2;
+            border: 1px solid #345183;
+            background-color: #345183;
             color: #fff;
         }
 
         .boton_activo {
-            border: 1px solid #00abb2 !important;
-            background-color: #00abb2 !important;
+            border: 1px solid #345183 !important;
+            background-color: #345183 !important;
             color: #fff !important;
         }
 
@@ -220,11 +220,8 @@
 
     {{ Breadcrumbs::render('admin.planTrabajoBase.index') }}
 
-
+    <h5 class="col-12 titulo_general_funcion">Plan de Implementación ISO 27001 </h5>
     <div class="mt-5 mb-5">
-        <div class="py-3 col-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Plan de Implementación ISO 27001</strong></h3>
-        </div>
         <div id="bloqueado"></div>
 
         <div class="botones_vistas_gantt">

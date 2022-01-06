@@ -14,7 +14,7 @@
         color: #fff;
         padding: 5px;
         border: 1px solid #ccc !important;
-        background-color: #008186;
+        background-color: #345183;
         margin: 5px;
         padding-top: 25px;
         border-radius: 6px;
@@ -22,8 +22,8 @@
         box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
     }
     .btn_reporte:hover{
-        border: 1px solid #008186 !important;
-        color: #008186;
+        border: 1px solid #345183 !important;
+        color: #345183;
         background-color: rgba(0, 0, 0, 0);
     }
     .btn_reporte i{
@@ -57,8 +57,8 @@
     <div class="row">
         <div class="col-sm-5 col-lg-5">
             <div class="mb-3 ml-2 mr-2 bg-white rounded " style="border:1px solid #ccc !important;">
-                <div class="mt-4 mb-3 ml-4 col-9" style="border-bottom: solid 2px #0CA193;">
-                    <h6 class="mt-3 mr-1" style="color: #008186; font-weight: bold;">Deseo reportar un:</h6>
+                <div class="mt-4 mb-3 ml-4 col-9" style="border-bottom: solid 2px #345183;">
+                    <h6 class="mt-3 mr-1" style="color: #345183; font-weight: bold;">Deseo reportar un:</h6>
                 </div>
                 {{-- <div class="col-4 justify-content-end pr-0" style="text-align:end"> --}}
 
@@ -76,8 +76,8 @@
         <div class="col-sm-7 col-lg-7">
 
             <div class="mb-3 ml-2 mr-2 bg-white rounded" style="border:1px solid #ccc !important;">
-                <div class="mt-4 mb-3 ml-4 col-10" style="border-bottom: solid 2px #0CA193;">
-                    <h6 class="mt-3" style="color: #008186; font-weight: bold;">Deseo realizar una:</h6>
+                <div class="mt-4 mb-3 ml-4 col-10" style="border-bottom: solid 2px #345183;">
+                    <h6 class="mt-3" style="color: #345183; font-weight: bold;">Deseo realizar una:</h6>
                 </div>
                 {{-- --}}
                 <div class="caja_btn_reporte">

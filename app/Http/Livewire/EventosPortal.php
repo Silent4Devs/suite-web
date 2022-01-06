@@ -66,6 +66,7 @@ class EventosPortal extends Component
             'felicitador_id' => auth()->user()->empleado->id,
             'comentarios' => $this->comentarios,
         ]);
+        $this->emit('comentario-almacenado');
     }
 
     public function felicitarCumplesComentariosUpdate($comentario_id)
@@ -74,5 +75,6 @@ class EventosPortal extends Component
         $comentario->update([
             'comentarios' => $this->comentarios_update,
         ]);
+        $this->emit('comentario-almacenado');
     }
 }

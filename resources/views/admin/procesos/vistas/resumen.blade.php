@@ -85,7 +85,7 @@
                             <div class="pt-2 pl-4 col-sm-8">
                                 {{\Carbon\Carbon::parse($documento->fecha)->format("d-m-Y")}}
                             </div>
-                            <div class="ml-1 col-sm-3" style="width:30px; height:35px; background:#00abb2" >
+                            <div class="ml-1 col-sm-3" style="width:30px; height:35px; background:#345183" >
                                 <i class="pt-2 pl-2 fas fa-calendar-alt" style="font-size:18px; color:#fff;"></i>
                             </div>
 
@@ -123,11 +123,11 @@
 
         <div class="col-lg-3 info-personal">
             <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
-                <div style="width: 100%; height: 85px; background-color: #00abb2;"></div>
+                <div style="width: 100%; height: 85px; background-color: #345183;"></div>
                 <div class="caja_img_perfil">
                     <img src="{{  asset('storage/empleados/imagenes') }}/{{ $documento->elaborador ? $documento->elaborador->avatar : 'user.png'}}">
                 </div>
-                <h6><strong style="color:#00abb2; font-size:12pt;">{{$documento->elaborador->name}}</strong></h6>
+                <h6><strong style="color:#345183; font-size:12pt;">{{$documento->elaborador->name}}</strong></h6>
                 <p >{{$documento->elaborador->puesto}}</p>
 
             </div>
@@ -137,11 +137,11 @@
 
         <div class="col-lg-3 info-personal">
             <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
-                <div style="width: 100%; height: 85px; background-color: #00abb2;"></div>
+                <div style="width: 100%; height: 85px; background-color: #345183;"></div>
                 <div class="caja_img_perfil">
                     <img src="{{  asset('storage/empleados/imagenes') }}/{{ $documento->revisor ? $documento->revisor->avatar : 'user.png'}}">
                 </div>
-                <h6><strong style="color:#00abb2; font-size:12pt;">{{$documento->revisor->name}}</strong></h6>
+                <h6><strong style="color:#345183; font-size:12pt;">{{$documento->revisor->name}}</strong></h6>
                 <p>{{$documento->revisor->puesto}}</p>
 
             </div>
@@ -151,11 +151,11 @@
 
         <div class="col-lg-3 info-personal">
             <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
-                <div style="width: 100%; height: 85px; background-color: #00abb2;"></div>
+                <div style="width: 100%; height: 85px; background-color: #345183;"></div>
                 <div class="caja_img_perfil">
                     <img src="{{  asset('storage/empleados/imagenes') }}/{{ $documento->aprobador ? $documento->aprobador->avatar : 'user.png'}}">
                 </div>
-                <h6><strong style="color:#00abb2;font-size:12pt;"  >{{$documento->aprobador->name}}</strong></h6>
+                <h6><strong style="color:#345183;font-size:12pt;"  >{{$documento->aprobador->name}}</strong></h6>
                 <p>{{$documento->aprobador->puesto}}</p>
 
             </div>
@@ -165,11 +165,11 @@
 
         <div class="col-lg-3 info-personal">
             <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
-                <div style="width: 100%; height: 85px; background-color: #00abb2;"></div>
+                <div style="width: 100%; height: 85px; background-color: #345183;"></div>
                 <div class="caja_img_perfil">
                     <img src="{{  asset('storage/empleados/imagenes') }}/{{ $documento->responsable ? $documento->responsable->avatar : 'user.png'}}">
                 </div>
-                <h6><strong style="color:#00abb2; font-size:12pt;"  >{{$documento->responsable->name}}</strong></h6>
+                <h6><strong style="color:#345183; font-size:12pt;"  >{{$documento->responsable->name}}</strong></h6>
                 <p>{{$documento->responsable->puesto}}</p>
 
             </div>

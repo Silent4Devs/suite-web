@@ -13,8 +13,8 @@
         }
         .btn_cargar{
             border-radius: 100px;
-            border: 1px solid #00abb2;
-            color: #00abb2;
+            border: 1px solid #345183;
+            color: #345183;
             text-align: center;
             padding: 0;
             width: 45px;
@@ -26,7 +26,7 @@
         }
         .btn_cargar:hover{
             color: #fff;
-            background:#00abb2 ;
+            background:#345183 ;
         }
         .btn_cargar i{
             font-size: 15pt;
@@ -55,7 +55,7 @@
         </div>
         <div class="card-body">
 
-            <div class="py-1 form-group col-12" style="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold;">Análisis de Riesgos</div>
+            <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold;">Análisis de Riesgos</div>
 
 
             <div class="row">
@@ -139,7 +139,7 @@
 
 
 
-                <div class="py-1 form-group col-12" style="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">ISO 27001 | Contexto</div>
+                <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">ISO 27001 | Contexto</div>
 
 
                 <!-- Categoria Field -->
@@ -198,7 +198,7 @@
 
 
 
-                <div class="py-1 form-group col-12" style="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">ISO 27001 | Liderazgo</div>
+                <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">ISO 27001 | Liderazgo</div>
 
 
                 <!-- Categoria Field -->
@@ -253,7 +253,7 @@
 
 
 
-                <div class="py-1 form-group col-12" style="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">Soporte</div>
+                <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">Soporte</div>
 
 
                 <!-- Categoria Field -->
@@ -294,7 +294,7 @@
 
 
 
-                {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">Activos</div> --}}
+                {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">Activos</div> --}}
 
 
                 <!-- Categoria Field -->
@@ -313,7 +313,7 @@
 
 
 
-                <div class="py-1 form-group col-12" style="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">Ajustes de Usuario</div>
+                <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">Ajustes de Usuario</div>
 
 
                 {{-- <!-- Categoria Field -->
@@ -395,7 +395,7 @@
 
 
 
-                {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">Preguntas Frecuentes</div> --}}
+                {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">Preguntas Frecuentes</div> --}}
 
 
                 <!-- Categoria Field -->
@@ -423,7 +423,7 @@
                 </div> --}}
 
 
-                <div class="py-1 form-group col-12" style="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">Configuración de datos</div>
+                <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">Configuración de datos</div>
 
 
                 <!-- Categoria Field -->

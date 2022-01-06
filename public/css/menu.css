@@ -138,11 +138,11 @@ body.c-dark-theme .needsclick {
 #sidebar .active:before,
 #sidebar .c-active:before {
     content: "";
-    background: #00abb2;
+    background: #345183;
     z-index: -1;
-    width: 10px;
-    height: 100%;
-    top: 0;
+    width: 5px;
+    height: 50%;
+    top: 25%;
     left: 0;
     position: absolute;
     border-bottom-right-radius: 5px;
@@ -152,17 +152,15 @@ body.c-dark-theme .needsclick {
 #sidebar a.active font,
 #sidebar a.c-active font,
 #sidebar a.c-active .letra_blanca {
-    color: #008186;
+    color: #345183;
 }
 
 #sidebar li a:hover .letra_blanca {
-    color: #008186;
+    color: #345183;
 }
 
 .caja_img_logo {
-    width: 50% !important;
     padding: 0 !important;
-    margin: 4px !important;
 }
 
 @media(max-width: 991px) {
