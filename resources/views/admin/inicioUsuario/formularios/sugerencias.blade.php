@@ -7,6 +7,7 @@
 
     </style>
     {{ Breadcrumbs::render('sugerencias-create') }}
+    {{-- <h5 class="col-12 titulo_general_funcion">Sugerencias</h5> --}}
     <div class="card">
         <div class="text-center card-header" style="background-color: #345183;">
             <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-lightbulb"></i>Sugerencias</strong>

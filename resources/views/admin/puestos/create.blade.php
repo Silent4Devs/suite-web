@@ -1,14 +1,10 @@
 @extends('layouts.admin')
 @section('content')
 
-
     {{ Breadcrumbs::render('perfil-puesto-create') }}
+    <h5 class="col-12 titulo_general_funcion">Registrar: Puesto</h5>
     <div class="card mt-4">
-        <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Puesto</h3>
-        </div>
-
-        <div class="card-body">
+         <div class="card-body">
             <form method="POST" action="{{ route('admin.puestos.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row col-12">
