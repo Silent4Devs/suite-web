@@ -4,7 +4,7 @@
 
     {{ Breadcrumbs::render('admin.partes-interesadas.create') }}
 
-   
+
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -65,10 +65,10 @@
                     <label for="clausulas"><i class="far fa-file iconos-crear"></i> Cláusula(s)</label>
                     <select class="form-control {{ $errors->has('clausulas') ? 'is-invalid' : '' }}" name="clausulas[]"
                         id="clausulas" multiple>
-                        <option value disabled >Selecciona una opción</option>
+                        <option value disabled>Selecciona una opción</option>
                         @foreach ($clausulas as $clausula)
                             <option value="{{ $clausula->id }}">
-                                {{ $clausula->nombre }} 
+                                {{ $clausula->nombre }}
                             </option>
                         @endforeach
                     </select>
@@ -95,17 +95,74 @@
 @section('scripts')
 
 
-<script type="text/javascript">
-    
-    
-    $(document).ready(function() {
-        $("#clausulas").select2({
-            theme: "bootstrap4",
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#clausulas").select2({
+                theme: "bootstrap4",
+            });
+
         });
-    });
+
+        $(document).ready(function() {
+            CKEDITOR.replace('requisitos', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
 
 
-</script>
+                    // {
+                    //     name: 'others',
+                    //     items: ['-']
+                    // }
+                ]
+            });
+
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -115,6 +172,6 @@
         });
     </script>
 
-<script src="{{ asset('js/dark_mode.js') }}"></script>
+    <script src="{{ asset('js/dark_mode.js') }}"></script>
 
 @endsection
