@@ -38,7 +38,7 @@
                             <form class="card" id="form_plan_accion" method="POST"
                                 action="{{ route('accion-correctiva-actividades.store') }}">
                                 <input type="hidden" name="accion_correctiva_id" value="{{ $accionCorrectiva->id }}">
-                                <div class="text-center card-header" style="background-color: #00abb2;">
+                                <div class="text-center card-header" style="background-color: #345183;">
                                     <strong style="font-size: 16pt; color: #fff;"><i
                                             class="mr-4 fas fa-tasks"></i>Crear: Plan de Acción</strong>
                                 </div>

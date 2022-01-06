@@ -122,8 +122,8 @@ Breadcrumbs::for('admin.politica-sgsis.create', function ($trail) {
 });
 
 Breadcrumbs::for('admin.politicaSgsis.visualizacion', function ($trail) {
-    $trail->push('Portal de comunicación', route('portal-comunicacion.index'));
-    $trail->push('Politica SGSI');
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Politicas');
 });
 
 Breadcrumbs::for('admin.roles-responsabilidades.index', function ($trail) {
@@ -411,6 +411,11 @@ Breadcrumbs::for('perfil-puesto', function ($trail) {
     $trail->parent('capital-humano');
     $trail->push('Empleados');
     $trail->push('Perfiles de Puestos', route('admin.puestos.index'));
+});
+Breadcrumbs::for('consulta-puestos', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
+    $trail->push('Consulta Perfiles de Puesto', route('admin.consulta-puestos'));
 });
 Breadcrumbs::for('areas-render', function ($trail) {
     $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));

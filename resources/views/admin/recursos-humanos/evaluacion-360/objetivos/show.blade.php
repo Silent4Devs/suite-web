@@ -16,7 +16,7 @@
         hr.hr-custom-title {
             width: 100%;
             margin: 8px 0;
-            border: 1px solid #008186
+            border: 1px solid #345183
         }
 
     </style>

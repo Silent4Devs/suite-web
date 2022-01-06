@@ -127,7 +127,7 @@
         }
 
         .verde_silent {
-            background-color: #0CA193;
+            background-color: #345183;
         }
 
         .azul_silent {
@@ -135,7 +135,7 @@
         }
 
         .iconos_cabecera {
-            color: #00abb2;
+            color: #345183;
             font-size: 1.2rem;
         }
 
@@ -204,14 +204,14 @@
 
         .card-body.align-self-center h3,
         .card-body.align-self-center h3 i {
-            color: #008186 !important;
+            color: #345183 !important;
         }
 
         .btn.btn-success,
         .btn.btn-danger {
             width: 150px;
             height: 35px;
-            background-color: #00abb2 !important;
+            background-color: #345183 !important;
             color: #fff !important;
             border-radius: 100px;
             border: none !important;
@@ -219,13 +219,13 @@
 
         .btn.btn-success:hover,
         .btn.btn-danger:hover {
-            color: #00abb2 !important;
+            color: #345183 !important;
             background-color: rgba(0, 0, 0, 0) !important;
-            box-shadow: 0 0 0 1px #00abb2;
+            box-shadow: 0 0 0 1px #345183;
         }
 
         .btn.btn-success:hover font {
-            color: #00abb2 !important;
+            color: #345183 !important;
             background-color: rgba(0, 0, 0, 0) !important;
         }
 
@@ -293,7 +293,7 @@
         }
 
         .fm-breadcrumb .breadcrumb.active-manager {
-            background-color: ##00abb229;
+            background-color: ##34518329;
             margin: -5px 0 0 0;
         }
 
@@ -311,7 +311,7 @@
         .caja_botones_menu a {
             text-decoration: none;
             display: inline-block;
-            color: #008186;
+            color: #345183;
             padding: 5px 20px;
             border-top: 1px solid #ccc !important;
             border-right: 1px solid #ccc;

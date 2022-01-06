@@ -22,9 +22,9 @@
             </div>
         </div>
     </div>
-    <div class="container mt-4">
-        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
-            CONDUCTAS ESPERADAS
+    <div class="d-flex justify-content-center">
+        <div style="width: 300px">
+            <h4 class="text-center text-muted" style="border-bottom: 2px solid #345183;">Niveles</h4>
         </div>
         <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
             <div class="row w-100">
@@ -60,6 +60,24 @@
                     </tr>
                 </thead>
             </table>
+            <div class="d-flex justify-content-center">
+                <div style="width: 300px">
+                    <h4 class="text-center text-muted" style="border-bottom: 2px solid #345183;">Asignación</h4>
+                </div>
+            </div>
+            <div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input"
+                        {{ old('toda_la_empresa', $competencia->toda_la_empresa) ? 'checked' : '' }} name="toda_la_empresa"
+                        type="checkbox" id="toda_la_empresa">
+                    <label class="form-check-label" for="toda_la_empresa">¿Desea asignar a toda la empresa?</label>
+                </div>
+                <span id="niveles_cargando" class="d-none"><i class="fas fa-circle-notch fa-spin"></i>
+                    Cargando niveles</span>
+                <div class="mt-2" id="nivel_esperado_contenedor">
+
+                </div>
+            </div>
         </div>
     </div>
 </div>

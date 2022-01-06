@@ -41,15 +41,13 @@
 			            @endphp
 			            <img src="{{ asset($logotipo) }}" class="logo_organizacion_politica">
 
-			</div>
-		</div>
-		@if($politicaSgsis)
-			<div class="row" style="">
-				<div class="col-lg-9">
-					<p>
-						{!! $politicaSgsis->politicasgsi !!}
-					</p>
-				</div>
+        .caja_titulo h1 {
+            position: absolute;
+            width: 300px;
+            font-weight: bold;
+            color: #345183;
+            bottom: 0;
+        }
 
 				<div class="col-lg-3 mt-3">
 					<div class="form-group">

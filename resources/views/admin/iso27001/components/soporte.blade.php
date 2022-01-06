@@ -6,7 +6,7 @@
                     Transferencia de Conocimiento
                 </div>
             </a></li>
-        <div class="ventana_menu" id="capacitacion" style="color:#008186 !important">
+        <div class="ventana_menu" id="capacitacion" style="color:#345183 !important">
             <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="capacitacion"
                 style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
             <h3 class="text-center"><strong>Conocimientos</strong></h3>

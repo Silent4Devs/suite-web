@@ -38,7 +38,7 @@
             font-size: 17pt;
             cursor: pointer;
             margin: 3px;
-            color: #00abb2;
+            color: #345183;
         }
 
         table td i:hover {
@@ -82,7 +82,7 @@
     <div id="inicio_usuario" class="mb-5 row" style="">
         {{-- <div class="col-lg-3 info-personal">
             <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
-                <div style="width: 100%; height: 85px; background-color: #00abb2;"></div>
+                <div style="width: 100%; height: 85px; background-color: #345183;"></div>
                 <div class="caja_img_perfil">
                     <img
                         src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->foto : 'user.png' }}">

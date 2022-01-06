@@ -129,7 +129,7 @@
 
         .menu_a {
             width: 100%;
-            background-color: #00abb2;
+            background-color: #345183;
             height: 40px;
             position: sticky;
             top: 56px;

@@ -31,33 +31,13 @@
             margin-right: 20%;
         }
 
-			.cards_reportes{
-		        width: 250px;
-		        padding: 20px 0px;
-		        padding-left: 30px;
-		        border: 1px solid #ccc;
-		        border-radius: 5px;
-		        text-align: left;
-		        display:inline-block;
-		        margin: 10px;
-		        cursor: pointer;
-		        color: #888888;
-		    }
-		    .cards_reportes i{
-		        font-size: 16pt;
-		        margin-right: 10px;
-		    }
-		    .cards_reportes:hover{
-		        color: #00abb2;
-		        border: 1px solid #00abb2;
-		    }
-		</style>
-	@endsection
-	{{ Breadcrumbs::render('admin.portal-comunicacion.reportes') }}
-	<div class="card card-body" style="margin-top: -50PX;">
-		<div class="row" style="border-bottom: 2px solid #ccc;">
-			<div class="col-12 caja_titulo">
-				<h1>Generar Reporte</h1>
+        .caja_titulo h1 {
+            position: absolute;
+            width: 300px;
+            font-weight: bold;
+            color: #345183;
+            bottom: 0;
+        }
 
         .a_reporte{
             display: inline-block !important;
@@ -89,7 +69,7 @@
             height: 100px;
             margin: auto;
             margin-top: -50px;
-            background-color: #00abb2;
+            background-color: #345183;
             display: flex;
             align-items: center;
             justify-content: center;

@@ -117,10 +117,28 @@ class Empleado extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function getResourceIdAttribute()
-    {
-        return $this->id;
-    }
+            $table->editColumn('area', function ($row) {
+                return $row->area ? $row->area->area : '';
+            });
+            $table->editColumn('puesto', function ($row) {
+                return $row->puesto ? $row->puesto : '';
+            });
+            $table->editColumn(
+                'jefe',
+                function ($row) {
+                    return $row->supervisor ? $row->supervisor->name : '';
+                }
+            );
+            $table->editColumn('antiguedad', function ($row) {
+                return $row->obtener_antiguedad;
+                // return Carbon::parse(Carbon::parse($row->obtener_antiguedad))->diffForHumans(Carbon::now()->subDays());
+            });
+            $table->editColumn('estatus', function ($row) {
+                return $row->estatus ? $row->estatus : '';
+            });
+            $table->editColumn('email', function ($row) {
+                return $row->email ? $row->email : '';
+            });
 
     public function getPuestoAttribute()
     {

@@ -7,7 +7,7 @@
 
 @include('partials.flashMessages')
 <div class="card" id="desk">
-    <div class="text-center card-header" style="background-color: #00abb2;">
+    <div class="text-center card-header" style="background-color: #345183;">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-exclamation-triangle"></i>Incidentes de
             seguridad</strong>
     </div>
@@ -590,7 +590,7 @@
                             <form class="card" id="form_plan_accion" method="POST"
                                 action="{{ route('desk-seguridad-actividades.store') }}">
                                 <input type="hidden" name="seguridad_id" value="{{ $incidentesSeguridad->id }}">
-                                <div class="text-center card-header" style="background-color: #00abb2;">
+                                <div class="text-center card-header" style="background-color: #345183;">
                                     <strong style="font-size: 16pt; color: #fff;"><i
                                             class="mr-4 fas fa-tasks"></i>Crear: Plan de Acción</strong>
                                 </div>

@@ -66,7 +66,7 @@
             width: 98%;
             left: 0;
             line-height: 134px;
-            background: #1bb0b0;
+            background: #345183;
             color: white;
             font-weight: 500;
         }
@@ -90,7 +90,7 @@
     @endphp
 
     @if (!$isPersonal)
-        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             CURRICULUM VITAE
         </div>
     @else
@@ -151,7 +151,7 @@
                         <p class="text-muted"><i class="fas fa-filter mr-2"></i>BÚSQUEDA ESPECÍFICA</p>
                     </div>
                     <div class="col-12">
-                        <p class="text-muted" style="border-bottom: 2px solid #1BB0B0">CERTIFICACIONES</p>
+                        <p class="text-muted" style="border-bottom: 2px solid #345183">CERTIFICACIONES</p>
                     </div>
                     <div class="col-12">
                         <label class="text-muted" for=""><i class="fas fa-award mr-2"></i>Certificación</label>
@@ -159,14 +159,14 @@
                             placeholder="Certificación" wire:model.debounce.800ms="certificacion">
                     </div>
                     <div class="col-12 mt-3">
-                        <p class="text-muted" style="border-bottom: 2px solid #1BB0B0">CURSOS / DIPLOMADOS</p>
+                        <p class="text-muted" style="border-bottom: 2px solid #345183">CURSOS / DIPLOMADOS</p>
                     </div>
                     <div class="col-12">
                         <label class="text-muted" for=""><i class="fas fa-chalkboard-teacher mr-2"></i>Curso</label>
                         <input type="text" class="form-control" placeholder="Curso" wire:model.debounce.800ms="curso">
                     </div>
                     {{-- <div class="col-12 mt-3">
-                        <p class="text-muted" style="border-bottom: 2px solid #1BB0B0">EXPERIENCIA</p>
+                        <p class="text-muted" style="border-bottom: 2px solid #345183">EXPERIENCIA</p>
                     </div>
                     <div class="col-12 mt-2">
                         <label class="text-muted" for=""><i class="fas fa-briefcase mr-2"></i>Puesto</label>
@@ -188,20 +188,31 @@
                     <div class="text-center" wire:loading>
                         <i class="fas fa-circle-notch fa-spin mr-2"></i> Buscando Coincidencias
                     </div>
-                    <div class="row col-12 align-items-center" x-show="open">
+                    <div class="row col-12 align-items-center mx-md-m5" x-show="open">
                         @foreach ($empleadosCV as $item)
-                            <div style="cursor: pointer;" class="border p-2 text-center col-sm-3 col-md-3 col-3"
-                                x-on:click="open = false" wire:click="mostrarCurriculum({{ $item->id }})">
-                                <img src="{{ asset("storage/empleados/imagenes/{$item->avatar}") }}"
-                                    style="max-width:40px;clip-path:circle(50% at 50% 50%)">
-                                <p class="m-0"><span
-                                        class="badge badge-light">{{ $item->area->area }}</span></p>
-                                <p class="text-muted mt-1 badge badge-light mb-0" style="font-size:12px"
-                                    title="{{ $item->name }}">
-                                    {{ Str::limit($item->name, 20, '...') }}
-                                </p>
+                          <div class="col-md-4 col-sm-4 col-lg-4">
+                                <div style="cursor: pointer; border:1px solid #ccc!important;  border-radius: 5px; height: 80px;" class="p-2 shadow-sm mb-3"
+                                    x-on:click="open = false" wire:click="mostrarCurriculum({{ $item->id }})">
+                                    <div class="row" >
+                                        <div class="col-sm-3 col-md-3 col-lg-3 mt-2">
+                                            <img src="{{ asset("storage/empleados/imagenes/{$item->avatar}") }}"
+                                            style="max-width:40px;clip-path:circle(50% at 50% 50%)">
+                                        </div>
+                                        <div class="col-sm-8 col-md-8 col-lg-8 mt-2">
+                                            <p class="m-0" style="font-size:10px; font-weight:bold; "><span
+                                                    >{{ $item->area->area }}</span></p>
+                                            <p class="m-0 text-muted" style="font-size:10px"
+                                                title="{{ $item->name }}">
+                                                {{ Str::limit($item->name, 20, '...') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         @endforeach
+                        <div class=" col-12 d-flex justify-content-end">
+                            {{ $empleadosCV->links() }}
+                        </div>
                     </div>
                 @endif
             @else
@@ -293,14 +304,14 @@
                                     <h5 class="py-2 pl-2"
                                         style="color:#fff; font-weight:bold; background-color:#7F7F7F; width:100%">
                                         {{ $empleadoModel->name }}</h5>
-                                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Resumen</span>
                                     </div>
                                     <p style="text-align:justify">
                                         {{ $empleadoModel->resumen }}
                                     </p>
-                                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Experiencia Profesional</span>
                                     </div>
@@ -325,7 +336,7 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Certificaciones</span>
                                     </div>
@@ -345,7 +356,7 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Capacitaciones</span>
                                     </div>
@@ -366,7 +377,7 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Educación Académica</span>
                                     </div>
@@ -386,7 +397,7 @@
                                             </span>
                                         </div>
                                     @endforeach
-                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Idiomas</span>
                                     </div>
@@ -448,7 +459,7 @@
                     <div class="col-sm-12 col-md-4 col-sm-4 pt-3" x-data="{open:false}">
                         <div class="row justify-content-center">
                             <div class="col-11 border rounded shadow-sm p-4">
-                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
                                     <div class="row align-items-center justify-content-center">
                                         <div class="col-10" style="white-space: nowrap;">
                                             <span style="font-size: 17px; font-weight: bold;"><i
@@ -567,7 +578,7 @@
                     <div class="col-sm-12 col-md-4 col-sm-4 pt-3" x-data="{open:false}">
                         <div class="row justify-content-center">
                             <div class="col-11 shadow-sm rounded border p-4">
-                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
                                     <div class="row align-items-center justify-content-center">
                                         <div class="col-10" style="white-space: nowrap;">
                                             <span style="font-size: 17px; font-weight: bold;"><i
@@ -741,7 +752,7 @@
                     <div class="col-sm-12 col-md-4 col-sm-4 pt-3" x-data="{open:false}">
                         <div class="row justify-content-center">
                             <div class="col-11 shadow-sm rounded border p-4">
-                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
                                     <div class="row align-items-center justify-content-center">
                                         <div class="col-10" style="white-space: nowrap;">
                                             <span style="font-size: 17px; font-weight: bold;"><i

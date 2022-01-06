@@ -148,6 +148,6 @@ class PoliticaSgsiController extends Controller
 
         $organizacions = Organizacion::first();
 
-        return view('admin.politicaSgsis.visualizacion', compact('politicaSgsis'));
+        return view('admin.politicaSgsis.visualizacion', compact('politicaSgsis', 'organizacions'));
     }
 }

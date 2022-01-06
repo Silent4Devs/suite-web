@@ -1,116 +1,149 @@
 @extends('layouts.admin')
 @section('content')
 
-<style>
-.table tr td:nth-child(2){
+    <style>
+        .table tr td:nth-child(2) {
 
-text-align: justify !important;
+            text-align: justify !important;
 
-}
+        }
 
-.table tr th:nth-child(3){
+        .table tr th:nth-child(3) {
 
-    text-align: center !important;
+            text-align: center !important;
 
-}
+        }
 
-.table tr td:nth-child(4){
+        .table tr td:nth-child(4) {
 
-text-align: center !important;
+            text-align: center !important;
 
-}
+        }
 
-.table tr th:nth-child(4){
-width:120px !important;
-max-width:120px !important;
-min-width:120px !important;
-text-align: center !important;
-text-align: center !important;
+        .table tr th:nth-child(4) {
+            width: 120px !important;
+            max-width: 120px !important;
+            min-width: 120px !important;
+            text-align: center !important;
+            text-align: center !important;
 
-}
+        }
 
-.table tr th:nth-child(2){
-width:700px !important;
-max-width:700px !important;
-min-width:700px !important;
-text-align: center !important;
+        .table tr th:nth-child(2) {
+            width: 700px !important;
+            max-width: 700px !important;
+            min-width: 700px !important;
+            text-align: center !important;
 
 
-}
+        }
 
-.table tr td:nth-child(5){
+        .table tr td:nth-child(5) {
 
-max-width:200px !important;
-min-width:200px !important;
-width:200px !important;
-text-align: center !important;
+            max-width: 200px !important;
+            min-width: 200px !important;
+            width: 200px !important;
+            text-align: center !important;
 
-}
+        }
 
-.table tr th:nth-child(5){
+        .table tr th:nth-child(5) {
 
-width:200px !important;
-max-width:200px !important;
-min-width:200px !important;
-text-align: center !important;
+            width: 200px !important;
+            max-width: 200px !important;
+            min-width: 200px !important;
+            text-align: center !important;
 
-}
+        }
 
-.table tr td:nth-child(6){
+        .table tr td:nth-child(6) {
 
-max-width:200px !important;
-min-width:200px !important;
-width:200px !important;
-text-align: center !important;
+            max-width: 200px !important;
+            min-width: 200px !important;
+            width: 200px !important;
+            text-align: center !important;
 
-}
+        }
 
-.table tr th:nth-child(6){
+        .table tr th:nth-child(6) {
 
-width:200px !important;
-max-width:200px !important;
-min-width:200px !important;
-text-align: center !important;
+            width: 200px !important;
+            max-width: 200px !important;
+            min-width: 200px !important;
+            text-align: center !important;
 
-}
+        }
 
-.table tr td:nth-child(7){
+        .table tr td:nth-child(7) {
 
-max-width:200px !important;
-min-width:200px !important;
-width:200px !important;
-text-align: center !important;
+            max-width: 200px !important;
+            min-width: 200px !important;
+            width: 200px !important;
+            text-align: center !important;
 
-}
+        }
 
-.table tr th:nth-child(7){
+        .table tr th:nth-child(7) {
 
-width:200px !important;
-max-width:200px !important;
-min-width:200px !important;
-text-align: center !important;
+            width: 200px !important;
+            max-width: 200px !important;
+            min-width: 200px !important;
+            text-align: center !important;
 
-}
+        }
 
-.table tr td:nth-child(8){
+        .table tr td:nth-child(8) {
 
-max-width:80px !important;
-min-width:80px !important;
-width:80px !important;
-text-align: center !important;
+            max-width: 80px !important;
+            min-width: 80px !important;
+            width: 80px !important;
+            text-align: center !important;
 
-}
+        }
 
-.table tr th:nth-child(8){
+        .table tr th:nth-child(8) {
 
-width:80px !important;
-max-width:80px !important;
-min-width:80px !important;
-text-align: center !important;
+            width: 80px !important;
+            max-width: 80px !important;
+            min-width: 80px !important;
+            text-align: center !important;
 
-}
+        }
 
-</style>
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #00abb2;
+            color: #00abb2;
+            text-align: center;
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
+
+        .btn_cargar:hover {
+            color: #fff;
+            background: #00abb2;
+        }
+
+        .btn_cargar i {
+            font-size: 15pt;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .agregar {
+            margin-right: 15px;
+        }
+
+    </style>
 
     {{ Breadcrumbs::render('admin.alcance-sgsis.index') }}
     @can('alcance_sgsi_create')
@@ -119,7 +152,12 @@ text-align: center !important;
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Determinación de Alcance</strong></h3>
             </div>
-
+            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+                <div class="col-lg-12">
+                    @include('csvImport.modalvulnerabilidad', ['model' => 'Vulnerabilidad', 'route' =>
+                    'admin.vulnerabilidads.parseCsvImport'])
+                </div>
+            </div>
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.alcance-sgsis.create') }}">
@@ -151,13 +189,13 @@ text-align: center !important;
                         </th>
                         <th>
                             Puesto
-                         </th>
-                         <th>
+                        </th>
+                        <th>
                             Área
-                         </th>
-                         <th>
+                        </th>
+                        <th>
                             Fecha&nbsp;de revisión
-                         </th>
+                        </th>
                         <th>
                             Opciones
                         </th>
@@ -289,13 +327,32 @@ text-align: center !important;
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar alcance SGSIS',
                 url: "{{ route('admin.alcance-sgsis.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config){
                 let {url} = config;
                 window.location.href = url;
                 }
                 };
+                let btnExport = {
+                text: '<i class="fas fa-download"></i>',
+                titleAttr: 'Descargar plantilla',
+                className: "btn btn_cargar" ,
+                action: function(e, dt, node, config) {
+                $('#').modal('show');
+                }
+                };
+                let btnImport = {
+                text: '<i class="fas fa-file-upload"></i>',
+                titleAttr: 'Importar datos',
+                className: "btn btn_cargar",
+                action: function(e, dt, node, config) {
+                $('#xlsxImportModal').modal('show');
+                }
+                };
+
                 dtButtons.push(btnAgregar);
+                dtButtons.push(btnExport);
+                dtButtons.push(btnImport);
             @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -360,7 +417,5 @@ text-align: center !important;
             //         .draw()
             // });
         });
-
     </script>
 @endsection
-

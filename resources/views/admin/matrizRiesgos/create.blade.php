@@ -488,7 +488,7 @@
             <form method="POST" action="{{ route('admin.matriz-riesgos.store') }}" enctype="multipart/form-data">
                 @csrf
 
-                <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
 
@@ -668,7 +668,7 @@
                     <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
                 </div>
                 <hr>
-                <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     EVALUACIÓN DE RIESGO INICIAL
                 </div>
 
@@ -908,7 +908,7 @@
 <!-- hasta aqui -->
                 </div>
                 <hr>
-                <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     EVALUACIÓN DEL RIESGO RESIDUAL
                 </div>
 

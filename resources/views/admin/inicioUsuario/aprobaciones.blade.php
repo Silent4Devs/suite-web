@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #0CA193;">Solicitados: Documentos que me deben
+    <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #345183;">Solicitados: Documentos que me deben
         aprobar</h5>
     <table id="tblMisDocumentos" class="table">
         <thead>
@@ -222,7 +222,7 @@
 </div>
 
 <div class="card-body datatable-fix">
-    <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #0CA193;">Requeridos: Documentos que debo aprobar
+    <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #345183;">Requeridos: Documentos que debo aprobar
     </h5>
     <table id="tabla_usuario_aprobaciones" class="table">
         <thead>

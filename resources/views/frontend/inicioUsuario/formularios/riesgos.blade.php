@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 	<div class="card">
-		<div class="text-center card-header" style="background-color: #00abb2;">
+		<div class="text-center card-header" style="background-color: #345183;">
 			<strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-shield-virus"></i>Riesgos identificados</strong>
 		</div>
 		<div class="card-body">

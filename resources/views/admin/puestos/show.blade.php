@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="col-sm-12 col-md-9">
-                            <h3 class="mb-1 mt-3 ml-4" style="color:#0CA193;"> {{ $puesto->puesto }} </h3>
+                            <h3 class="mb-1 mt-3 ml-4" style="color:#345183;"> {{ $puesto->puesto }} </h3>
 
                             {{-- <h5 class="py-2 pl-2 ml-3"
                             style="color:#fff; font-weight:bold; background-color:#7F7F7F; width:80%">
@@ -38,7 +38,7 @@
                                     </h5>
                                     <hr class="hr-custom-title"> --}}
 
-                                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
                                     <span style="font-size: 17px; font-weight: bold;">
                                         <i class="mr-2 far fa-sticky-note"></i>Descripción</span>
                                 </div>

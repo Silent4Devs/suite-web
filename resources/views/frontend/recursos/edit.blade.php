@@ -60,7 +60,7 @@
 
                             <section id="contenido1" class="mt-4 caja_tab_reveldada">
                                 <div>
-                                    <div class="w-100" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="w-100" style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Información general de la capacitación</span>
                                     </div>
@@ -205,7 +205,7 @@
 
                             <section id="contenido2" class="mt-4 ml-2">
                                 <div>
-                                    <div class="w-100" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="w-100" style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Participantes</span>
                                     </div>
@@ -285,7 +285,7 @@
                                             <tbody></tbody>
                                         </table>
                                     </div>
-                                    <div class="mt-4 w-100" style="border-bottom: solid 2px #0CA193;">
+                                    <div class="mt-4 w-100" style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Registrar calificación</span>
                                         <span id="participante_seleccionado"></span>
