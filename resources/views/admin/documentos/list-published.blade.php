@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     
-    <h5 class="col-12 mb-5" style="color:#788BAC;">Lista de Documentos</h5>
+    <h5 class="col-12 titulo_general_funcion">Lista de Documentos</h5>
     <div class="mt-5 card">
 
         @if (count($documentos) == 0)

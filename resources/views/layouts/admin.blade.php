@@ -916,6 +916,11 @@
             text-align: justify !important;
         }
 
+        .titulo_general_funcion{
+            color: #788BAC;
+            margin-bottom: 75px;
+        }
+
     </style>
 
     @yield('styles')

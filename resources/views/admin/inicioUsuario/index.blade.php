@@ -152,7 +152,7 @@
 
     <div id="inicio_usuario" class="mb-5 row" style="">
 
-        <h5 class="col-12 mb-5" style="color:#788BAC;">Mi Perfil</h5>
+        <h5 class="col-12 titulo_general_funcion">Mi Perfil</h5>
         {{-- <div class="col-lg-3 info-personal">
             <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
                 <div style="width: 100%; height: 85px; background-color: #345183;"></div>

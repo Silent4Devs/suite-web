@@ -413,7 +413,7 @@
 
         <div class="card-body">
             <div class="row">
-                <h5 class="col-12 mb-5" style="color:#788BAC;">Portal de Comunicación </h5>
+                <h5 class="col-12 titulo_general_funcion">l de Comunicación </h5>
 
                 <div class="col-9">
                     <div class="row">
