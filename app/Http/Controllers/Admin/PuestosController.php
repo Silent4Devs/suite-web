@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Area;
-use App\Models\Team;
-use App\Models\Puesto;
-use App\Models\Empleado;
-use App\Models\Language;
-use App\Models\Porcentaje;
-use Illuminate\Http\Request;
-use App\Models\RH\Competencia;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\StorePuestoRequest;
-use App\Http\Requests\UpdatePuestoRequest;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyPuestoRequest;
+use App\Http\Requests\StorePuestoRequest;
+use App\Http\Requests\UpdatePuestoRequest;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\Language;
+use App\Models\Puesto;
+use App\Models\RH\Competencia;
+use App\Models\Team;
+use Gate;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class PuestosController extends Controller
 {
@@ -155,11 +154,9 @@ class PuestosController extends Controller
         $idis = Language::all();
         $competencias = Competencia::all();
 
-
-
         // dd($idis);
 
-        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis','competencias'));
+        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias'));
     }
 
     public function store(StorePuestoRequest $request)
@@ -212,7 +209,7 @@ class PuestosController extends Controller
         $puesto->load('team');
         $competencias = Competencia::all();
 
-        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes','competencias'));
+        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)

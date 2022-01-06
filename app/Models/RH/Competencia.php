@@ -57,7 +57,4 @@ class Competencia extends Model
             ->orWhere('nombre', 'ILIKE', '%' . $search . '%')
             ->orWhere('descripcion', 'ILIKE', '%' . $search . '%');
     }
-
-
-
 }
