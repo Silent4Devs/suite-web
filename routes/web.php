@@ -877,6 +877,8 @@ Route::post('CargaGrupoArea', 'SubidaExcel@GrupoArea')->name('carga-grupo_area')
 Route::post('CargaDatosArea', 'SubidaExcel@DatosArea')->name('carga-datos_area');
 Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo_inventario');
 Route::post('CargaEmpleado', 'SubidaExcel@Empleado')->name('carga-empleado');
+// Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
+
 //Ruta ExportExcel
 Route::get('ExportAmenaza', 'ExportExcel@Amenaza')->name('descarga-amenaza');
 Route::get('ExportVulnerabilidad', 'ExportExcel@Vulnerabilidad')->name('descarga-vulnerabilidad');

@@ -159,7 +159,7 @@
 
     </style>
     <style type="text/css">
-        
+
 
         .titulo-seccion {
             font-weight: bolder;
@@ -395,7 +395,7 @@
             font-size: 15pt;
             cursor: pointer;
         }
-        
+
         .modal-backdrop.fade.show{
             display: none !important;
         }
@@ -407,7 +407,7 @@
 
 
     <div class="card" style="box-shadow: none; background-color: transparent;">
-        
+
 
         @include('partials.flashMessages')
 
@@ -597,11 +597,11 @@
 
                                             </p>
                                         </div>
-                                            
+
                                     </div>
 
 
-                                    
+
                                 @endforelse
                             </div>
                         </div>

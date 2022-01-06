@@ -372,11 +372,9 @@
 @endsection
 
 @section('content')
-    <div class="text-center">
-        <h1 class="mb-4 text-2xl font-black leading-tight md:text-2xl lg:text-3xl">
-            Organigrama de {{ $organizacion }}
-        </h1>
-    </div>
+
+        <h5 class="col-12 titulo_general_funcion">Organigrama de {{ $organizacion }} </h5>
+
 
 
     <!-- component -->
@@ -416,7 +414,7 @@
                                 <label for="participantes_search"> <span
                                         class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
                                         <i class="mr-1 fas fa-user-circle"></i>
-                                        Búsqueda por empleado
+                                        Empleado
                                     </span></label>
                                 <input class="form-control" type="search" id="participantes_search"
                                     placeholder="Nombre del empleado" style="position: relative" autocomplete="off" />
@@ -432,7 +430,7 @@
                             <div class="col-sm-12 col-lg-4">
                                 <label for="areas"> <span class="text-sm leading-tight md:text-sm lg:text-sm">
                                         <i class="mr-1 fas fa-building"></i>
-                                        Búsqueda por área
+                                        Área
                                     </span></label>
                                 <select name="areas" id="areas" class="form-control" >
                                     <option value="" selected disabled>-- Selecciona área --</option>
