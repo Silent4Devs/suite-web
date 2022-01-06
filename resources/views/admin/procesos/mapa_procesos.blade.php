@@ -36,7 +36,7 @@
         .caja2 {
             box-shadow: 0px 0px 0px 1px #bbb;
             height: 500px;
-            position: fixed;
+            position: absolute;
             width: 100px;
 
             display: flex;
@@ -427,7 +427,7 @@
 
 
 
-        <div class="caja2" style="right: 30px;">
+        <div class="caja2" style="right: 0px;">
             <p>Satisfaccion del cliente</p>
         </div>
 
