@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('content')
+    
+    <h5 class="col-12 titulo_general_funcion">Lista de Documentos</h5>
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Lista de documentos públicados</strong></h3>
-        </div>
+
         @if (count($documentos) == 0)
             <div class="container pb-4 text-center">
                 <img src="{{ asset('img/empleados_no_encontrados.svg') }}" alt="" class="img-fluid" style="width:500px;">

@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+        <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
             <span style="font-size: 17px; font-weight: bold;">
                 Certificaciones</span>
         </div>
@@ -99,7 +99,7 @@
         <input type="hidden" name="certificado" value="" id="certificado">
 
 
-        <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+        <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
             <span style="font-size: 17px; font-weight: bold;">
                 Cursos / Diplomados</span>
         </div>
@@ -195,7 +195,7 @@
 
 
 
-        <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+        <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
             <span style="font-size: 17px; font-weight: bold;">
                 Experiencia Profesional</span>
         </div>
@@ -297,7 +297,7 @@
         <input type="hidden" name="experiencia" value="" id="experiencia">
 
 
-        <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+        <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
             <span style="font-size: 17px; font-weight: bold;">
                 Educación</span>
         </div>
@@ -392,7 +392,7 @@
 
 
 
-        <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+        <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
             <span style="font-size: 17px; font-weight: bold;">
                 Documentos</span>
         </div>

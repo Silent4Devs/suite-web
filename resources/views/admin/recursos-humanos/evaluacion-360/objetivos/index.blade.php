@@ -100,7 +100,7 @@
         aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background: #00abb2;color: white;">
+                <div class="modal-header" style="background: #345183;color: white;">
                     <h5 class="modal-title" id="modalCopiarObjetivosLabel"><i class="mr-2 fas fa-copy"></i>Copiar
                         Objetivos</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

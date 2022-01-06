@@ -1166,3 +1166,68 @@ input[type='checkbox'].tui-full-calendar-checkbox-round + span {
 .desactivo_lnb{
   filter: grayscale(100%);
 }
+
+.tui-full-calendar-popup-detail-date.tui-full-calendar-content{
+  display: none !important;
+}
+
+
+.tui-full-calendar-weekday-schedule.tui-full-calendar-weekday-schedule-time i{
+    display: none !important;
+   }
+   .tui-full-calendar-weekday-schedule-title strong{
+        font-size: 9pt !important;
+   }
+
+
+   .calendar-icon.ic-arrow-line-right::before{
+        content: "›";
+        position: absolute;
+        transform: scale(1.8);
+        font-size: 10pt;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bolder;
+        font-family: arial rounded mt;
+        font-style: normal !important;
+    }
+    .calendar-icon.ic-arrow-line-left::before{
+        content: "‹";
+        position: absolute;
+        transform: scale(1.8);
+        font-size: 10pt;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bolder;
+        font-family: arial rounded mt;
+        font-style: normal !important;
+    }
+
+
+    .tui-full-calendar-schedule-title{
+        word-break: unset !important;
+   }
+
+   .tui-full-calendar-schedule-title i{
+        display: none !important;
+   }
+
+   #right #menu{
+      padding: 0px 16px !important;
+      text-align: right !important;
+      position: relative;
+   }
+   #renderRange{
+      position: absolute;
+      left: 0;
+   }

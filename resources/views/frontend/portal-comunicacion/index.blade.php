@@ -125,7 +125,7 @@
             width: 0%;
             height: 2px;
             bottom: 5px;
-            background-color: #00abb2;
+            background-color: #345183;
             transition: 0.3s;
             z-index: 1;
         }
@@ -151,7 +151,7 @@
             left: 50px;
         }
         .btn-silent:hover{
-            color: #00abb2 !important;
+            color: #345183 !important;
         }
 
     </style>
@@ -163,7 +163,7 @@
             font-weight: bolder;
             font-size: 15pt;
             margin-bottom: 0px;
-            color: #00abb2;
+            color: #345183;
             border-bottom: 2px solid #ccc;
             padding-bottom: 7px;
             padding-left: 20px;
@@ -223,7 +223,7 @@
         }
         .carousel-indicators li.active{
             opacity: 1 !important;
-            background-color: #00abb2 !important;
+            background-color: #345183 !important;
         }
 
 
@@ -320,7 +320,7 @@
         .nuevo{
             text-align: center;
             background-color: #f3f3f3;
-            border-left: 2px solid #00abb2;
+            border-left: 2px solid #345183;
             margin-top: 10px;
             padding: 10px;
         }
@@ -358,7 +358,7 @@
         <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
             style="margin-top:0px !important; ">
             <h3 class="mb-2 text-center text-white"
-                style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Portal de
+                style="background: #345183;color: white !important;padding: 5px;border-radius: 8px;"><strong>Portal de
                     Comunicación </strong></h3>
         </div>
 
@@ -367,8 +367,8 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-12 col-12 col-lg-3">
-                    <div class="p-2" id="clima" style="border-left: solid 2px #00abb2; background-color: #e6e6e6;"></div>
-                    <div class="p-3" style=" margin-top: 20px; border-left: solid 2px #00abb2;  background-color: #f3f3f3;">
+                    <div class="p-2" id="clima" style="border-left: solid 2px #345183; background-color: #e6e6e6;"></div>
+                    <div class="p-3" style=" margin-top: 20px; border-left: solid 2px #345183;  background-color: #f3f3f3;">
                         <div class="calendar calendar-first" id="calendar_first">
                             <div class="calendar_header">
                                 <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
