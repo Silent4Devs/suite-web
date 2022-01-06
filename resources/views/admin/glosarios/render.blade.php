@@ -97,10 +97,10 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>No</th>
-                        <th>Moduló</th>
                         <th>Concepto</th>
+                        <th>Moduló</th>
                         <th>Definición</th>
-                        <th>Explicación</th>
+                        {{-- <th>Explicación</th> --}}
 
                     </tr>
                 </thead>
@@ -108,10 +108,10 @@
                     @foreach ( $glosarios as $glosario )
                     <tr>
                         <td style="font-size: 8pt;">{{$glosario->numero}}</td>
-                        <td style="font-size: 8pt;">{{$glosario->norma}}</td>
                         <td style="font-size: 8pt;">{{$glosario->concepto}}</td>
+                        <td style="font-size: 8pt;">{{$glosario->norma}}</td>
                         <td style="font-size: 8pt;">{{$glosario->definicion}}</td>
-                        <td style="font-size: 8pt;">{{$glosario->explicacion}}</td>
+                        {{-- <td style="font-size: 8pt;">{{$glosario->explicacion}}</td> --}}
 
                     </tr>
                     @endforeach

@@ -81,8 +81,8 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width:50px;">Inciso</th>
-                        <th style="min-width:100px;">Moduló</th>
                         <th style="min-width:150px;">Concepto</th>
+                        <th style="min-width:100px;">Moduló</th>
                         <th style="min-width:150px;">Definición</th>
                         <th style="min-width:150px;">Explicación</th>
                         <th style="min-width:100px;">Opción</th>
@@ -92,8 +92,8 @@
                     @foreach ( $glosarios as $glosario )
                     <tr>
                         <td>{{$glosario->numero}}</td>
-                        <td>{{$glosario->norma}}</td>
                         <td>{{$glosario->concepto}}</td>
+                        <td>{{$glosario->norma}}</td>
                         <td>{{$glosario->definicion}}</td>
                         <td>{{$glosario->explicacion}}</td>
                         <td>
