@@ -107,11 +107,8 @@
     {{ Breadcrumbs::render('admin.material-sgsis.index') }}
 
     @can('material_sgsi_create')
-
+        <h5 class="col-12 titulo_general_funcion">Material SGSI</h5>
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Material SGSI</strong></h3>
-            </div>
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.material-sgsis.create') }}">

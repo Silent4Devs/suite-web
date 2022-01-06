@@ -372,7 +372,7 @@
                     <li class="c-sidebar-nav-item">
                         <a href="{{ route('admin.analisis-riesgos.index') }}"
                             class="c-sidebar-nav-link {{ request()->is('admin/admin.analisis-riesgos') || request()->is('admin/admin.analisis-riesgos') ? 'active' : '' }}">
-                            
+
                             <i class="fas fa-table iconos_menu letra_blanca">
 
                             </i>
