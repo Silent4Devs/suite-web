@@ -11,6 +11,7 @@ use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Language;
 use App\Models\Puesto;
+use App\Models\RH\Competencia;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
@@ -151,9 +152,11 @@ class PuestosController extends Controller
         $areas = Area::get();
         $reportas = Empleado::get();
         $idis = Language::all();
+        $competencias = Competencia::all();
+
         // dd($idis);
 
-        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis'));
+        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias'));
     }
 
     public function store(StorePuestoRequest $request)
@@ -204,8 +207,9 @@ class PuestosController extends Controller
         $areas = Area::get();
         $reportas = Empleado::get();
         $puesto->load('team');
+        $competencias = Competencia::all();
 
-        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes'));
+        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)

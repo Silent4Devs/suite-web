@@ -80,7 +80,7 @@
 
             <div class="row" id="impreso_row">
                 <div class="col-12">
-                    <h1 style="color:#00abb2;">{{ $comunicacionSgi->titulo }}</h1>
+                    <h1 style="color:#345183;">{{ $comunicacionSgi->titulo }}</h1>
                 </div>
                 <div class="mt-3 col-md-5">
                     @php

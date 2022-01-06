@@ -13,8 +13,8 @@
         }
         .btn_cargar{
             border-radius: 100px;
-            border: 1px solid #00abb2;
-            color: #00abb2;
+            border: 1px solid #345183;
+            color: #345183;
             text-align: center;
             padding: 0;
             width: 45px;
@@ -26,7 +26,7 @@
         }
         .btn_cargar:hover{
             color: #fff;
-            background:#00abb2 ;
+            background:#345183 ;
         }
         .btn_cargar i{
             font-size: 15pt;
@@ -49,13 +49,15 @@
         </li>
         <li class="breadcrumb-item active">Carga de Documentos</li>
     </ol>
+    <h5 class="col-12 titulo_general_funcion">Carga de Documentos</h5>
+
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        {{-- <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Cargar Documentos </strong></h3>
-        </div>
+        </div> --}}
         <div class="card-body">
 
-            <div class="py-1 form-group col-12" style="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold;">Análisis de Riesgos</div>
+            <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold;">Análisis de Riesgos</div>
 
 
             <div class="row">
@@ -139,7 +141,7 @@
 
 
 
-                <div class="py-1 form-group col-12" style="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">ISO 27001 | Contexto</div>
+                <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">ISO 27001 | Contexto</div>
 
 
                 <!-- Categoria Field -->
@@ -198,7 +200,7 @@
 
 
 
-                <div class="py-1 form-group col-12" style="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">ISO 27001 | Liderazgo</div>
+                <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">ISO 27001 | Liderazgo</div>
 
 
                 <!-- Categoria Field -->
@@ -253,7 +255,7 @@
 
 
 
-                <div class="py-1 form-group col-12" style="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">Soporte</div>
+                <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">Soporte</div>
 
 
                 <!-- Categoria Field -->
@@ -294,11 +296,11 @@
 
 
 
-                {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">Activos</div> --}}
+                {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">Activos</div> --}}
 
-
+{{-- pendiente da error de ruta 06/01--}}
                 <!-- Categoria Field -->
-                <div class="form-group col-sm-6">
+                {{-- <div class="form-group col-sm-6">
                     <i class="ml-2 fas fa-layer-group iconos-crear"></i>{!! Form::label('categoria', 'Categoría') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-categoria', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
@@ -309,11 +311,11 @@
                         {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
                         {!! Form::close() !!}
                     </div>
-                </div>
+                </div> --}}
 
 
 
-                <div class="py-1 form-group col-12" style="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">Ajustes de Usuario</div>
+                <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">Ajustes de Usuario</div>
 
 
                 {{-- <!-- Categoria Field -->
@@ -395,7 +397,7 @@
 
 
 
-                {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">Preguntas Frecuentes</div> --}}
+                {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">Preguntas Frecuentes</div> --}}
 
 
                 <!-- Categoria Field -->
@@ -423,7 +425,7 @@
                 </div> --}}
 
 
-                <div class="py-1 form-group col-12" style="border-bottom:2px solid #1BB0B0; color: #1BB0B0; font-weight: bold; margin-top: 25px;">Configuración de datos</div>
+                <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">Configuración de datos</div>
 
 
                 <!-- Categoria Field -->

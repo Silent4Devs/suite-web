@@ -52,7 +52,7 @@
         }
 
         .avatar {
-            border-color: #00abb2;
+            border-color: #345183;
         }
 
         .orgchart.r2l .avatar {
@@ -482,13 +482,13 @@
         .caja_btn_a a {
             padding: 15px;
             margin-top: 10px;
-            color: #008186;
+            color: #345183;
             display: inline-block;
         }
 
         .caja_btn_a a:hover,
         .btn_a_seleccionado {
-            border-bottom: 2px solid #00abb2;
+            border-bottom: 2px solid #345183;
             margin-bottom: -2px;
             margin-right: 10px;
         }
@@ -550,9 +550,9 @@
     <div class="w-full px-6 py-4 mb-16 bg-white rounded-lg shadow-lg contenido_blanco">
         <div class="card-body">
             @if ($organizacion)
-                <h3 class="mb-2 text-center text-white" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de {{ $organizacion->empresa}}</strong></h3>
+                <h3 class="mb-2 text-center text-white" style="background: #345183;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de {{ $organizacion->empresa}}</strong></h3>
             @else
-                 <h3 class="mb-2 text-center text-white" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de la organización</strong></h3>
+                 <h3 class="mb-2 text-center text-white" style="background: #345183;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de la organización</strong></h3>
             @endif
         </div>
         @if (!$areasTree)
@@ -618,7 +618,7 @@
 
 
                         {{-- <div id="exportData"></div> --}}
-                        <div class="contenedor-areas">
+                        <div class="contenedor-areas grupos_funciones">
                             <i class="fas fa-caret-right btn_grupos" title="Ver grupos" style= "position:absolute; top:0; font-size:25pt; cursor:pointer;"></i>
                             <div class="row caja_grupos">
                                 <ul style="max-width: 200px !important; overflow:hidden !important;">

@@ -52,7 +52,7 @@
         }
 
         .avatar {
-            border-color: #00abb2;
+            border-color: #345183;
         }
 
         .orgchart.r2l .avatar {
@@ -166,7 +166,7 @@
         }
 
         .side.title-nav {
-            background-color: #00abb2;
+            background-color: #345183;
             color: white;
             font-size: 13px;
             border-radius: 5px;
@@ -372,17 +372,15 @@
 @endsection
 
 @section('content')
-    <div class="text-center">
-        <h1 class="mb-4 text-2xl font-black leading-tight md:text-2xl lg:text-3xl">
-            Organigrama de {{ $organizacion }}
-        </h1>
-    </div>
+
+        <h5 class="col-12 titulo_general_funcion">Organigrama de {{ $organizacion }} </h5>
+
 
 
     <!-- component -->
     <div id="contenedorOrganigrama" style="position: relative" class="w-full px-8 py-4 mb-16 bg-white rounded-lg shadow-lg">
         {{-- <div class="flex justify-center -mt-16 md:justify-end">
-            <img class="object-cover w-20 h-20 border-2 rounded-full" style="border-color: #00abb2;"
+            <img class="object-cover w-20 h-20 border-2 rounded-full" style="border-color: #345183;"
                 src="{{ $org_foto }}">
         </div> --}}
         @if (is_null($organizacionTree))

@@ -1,6 +1,6 @@
 <div>
     <div class="container">
-        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             COMPETENCIA
         </div>
         @include('admin.recursos-humanos.evaluacion-360.competencias._form')
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="container mt-4">
-        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             CONDUCTAS ESPERADAS
         </div>
         <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
