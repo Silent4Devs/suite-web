@@ -313,8 +313,7 @@
                                                 Descripción</span>
                                         </div>
                                         <p style="text-align:justify">
-                                            {{ $puestoModel->descripcion }}
-                                        </p>
+                                            {{ html_entity_decode(strip_tags( $puestoModel->descripcion ), ENT_QUOTES, 'UTF-8')}}
                                         <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                             <span style="font-size: 17px; font-weight: bold;">
                                                 Experiencia Profesional</span>
@@ -460,7 +459,7 @@
 
                                             <strong><i class="ml-2 mr-2 text-white fas fa-user-tie"></i>Edad</strong>
                                             <br>
-                                            @if (is_null($puestoModel->edad_de ||  $puestoModel->edad_a))
+                                            @if(is_null($puestoModel->edad_de) && is_null($puestoModel->edad_a))
                                             <label class="ml-4">Sin registro</label>
                                             @else
                                             <div style="margin-left:28px;">
@@ -510,20 +509,24 @@
                                             <br>
                                             <strong><i class="ml-2 mr-2 fas fa-clock text-white"></i>Horario</strong>
                                             <br>
-                                            @if (is_null($puestoModel->horario_inicio || $puestoModel->horario_termino))
-                                            <label>Sin registro</label>
+                                            @if (is_null($puestoModel->horario_inicio) && is_null($puestoModel->horario_termino))
+                                            <label class="ml-4">Sin registro</label>
                                             @else
                                             <div style="margin-left:28px;">
                                                 <span>{{ $puestoModel->horario_inicio}}-{{ $puestoModel->horario_termino}}</span>
                                             </div>
                                              @endif
                                             <br>
-
-
                                             <div class="mt-3 mb-4 w-100" style="border-bottom: solid 2px #fff;">
                                                 <span class="text-white " style="font-size: 14px; font-weight: bold;">
                                                    Competencias</span>
                                             </div>
+                                            <div style="margin-left:28px;">
+                                               @foreach($puestoModel->competencias as $competencia)
+                                                <li>{{$competencia->competencia->nombre}}</li>
+                                                @endforeach
+                                            </div>
+
 
                                         </div>
                                     </div>
