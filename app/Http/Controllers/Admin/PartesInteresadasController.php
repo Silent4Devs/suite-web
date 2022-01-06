@@ -50,7 +50,7 @@ class PartesInteresadasController extends Controller
                 return $row->parteinteresada ? $row->parteinteresada : '';
             });
             $table->editColumn('requisitos', function ($row) {
-                return $row->requisitos ? $row->requisitos : '';
+                return $row->requisitos ? strip_tags($row->requisitos) : '';
             });
             $table->editColumn('clausala', function ($row) {
                 return $row->clausulas ? $row->clausulas : '';
@@ -88,7 +88,7 @@ class PartesInteresadasController extends Controller
     public function edit(PartesInteresada $partesInteresada)
     {
         abort_if(Gate::denies('partes_interesada_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $clausulas = Clausula::all();
+        $clausulas = Clausula::get();
         $partesInteresada->load('team');
 
         return view('admin.partesInteresadas.edit', compact('partesInteresada', 'clausulas'));
@@ -97,7 +97,7 @@ class PartesInteresadasController extends Controller
     public function update(UpdatePartesInteresadaRequest $request, PartesInteresada $partesInteresada)
     {
         $partesInteresada->update($request->all());
-        $clausulas = Clausula::all();
+        $clausulas = Clausula::get();
 
         return redirect()->route('admin.partes-interesadas.index')->with('success', 'Editado con éxito');
     }
@@ -106,7 +106,7 @@ class PartesInteresadasController extends Controller
     {
         abort_if(Gate::denies('partes_interesada_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $partesInteresada->load('team');
+        $partesInteresada->load('clausulas');
 
         return view('admin.partesInteresadas.show', compact('partesInteresada'));
     }

@@ -403,22 +403,17 @@
                     },
                     {
                         data: 'requisitos',
-                        //name: 'requisitos'
-                        render: function(data, type, row, meta) {
-                            const parser = new DOMParser();
-                            const document = parser.parseFromString(data, "text/html");
-                            console.log("document: " + document);
-                            return data;
-                        }
+                        name: 'requisitos'
                     },
                     {
                         data: 'clausala',
                         render: function(data, type, row, meta) {
+                            var regex = /(\d+)/g;
                             let clausalas = JSON.parse(data);
                             let html = '<ul>';
                             clausalas.forEach(clausula => {
                                 html += `
-                                    <li>${clausula.nombre}</li>
+                                    <li>${clausula.nombre.match(regex)}</li>
                                 `;
                             })
                             html += '</ul>';

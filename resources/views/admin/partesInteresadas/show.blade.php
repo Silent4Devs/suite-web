@@ -38,7 +38,7 @@
                             {{ trans('cruds.partesInteresada.fields.requisitos') }}
                         </th>
                         <td>
-                            {{ $partesInteresada->requisitos }}
+                            {{ strip_tags($partesInteresada->requisitos) }}
                         </td>
                     </tr>
                     <tr>
@@ -46,7 +46,11 @@
                             {{ trans('cruds.partesInteresada.fields.clausala') }}
                         </th>
                         <td>
-                            {{ $partesInteresada->clausala }}
+                            @foreach ($partesInteresada->clausulas as $clausula)
+                                <li>
+                                    {{ $clausula->nombre }}
+                                </li>
+                            @endforeach
                         </td>
                     </tr>
                 </tbody>
