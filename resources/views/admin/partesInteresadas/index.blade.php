@@ -328,13 +328,13 @@
                 var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -407,7 +407,8 @@
                         render: function(data, type, row, meta) {
                             const parser = new DOMParser();
                             const document = parser.parseFromString(data, "text/html");
-                            return document;
+                            console.log("document: " + document);
+                            return data;
                         }
                     },
                     {
