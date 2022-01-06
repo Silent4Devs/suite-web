@@ -924,9 +924,6 @@ class GlosarioSeeder extends Seeder
                             informática.',
                     ],
 
-
-
-
                     [
                         'numero' => '3.32',
                         'norma' => 'ISO 27001',
@@ -2467,9 +2464,7 @@ class GlosarioSeeder extends Seeder
                         Nota 1 a la entrada: Un observador puede ser un miembro del auditado (3.13.12), un ente regulador u otra parte
                         interesada (3.2.3) que testifica la auditoría (3.13.1).',
                         'explicacion' => 'Sin información',
-                        ]
-
-
+                        ],
 
                     ];
 
