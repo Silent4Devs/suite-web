@@ -13,33 +13,48 @@
 
     <div class="col-lg-12 caja_btn_silent">
         <div class="card card-body" style="padding:5px 20px !important;">
-            <a class="btn-silent" href="{{ asset('admin/organizacions/visualizarorganizacion') }}"><i
-                    class="mr-2 fas fa-building"></i>
-                <span>Organización</span></a>
-            <a class="btn-silent" href="{{ asset('admin/sedes/organizacion') }}"><i
-                    class="mr-2 fas fa-map-marked-alt "></i> <span>Sedes</span></a>
+            <a class="btn-silent" href="{{ asset('admin/organizacions/visualizarorganizacion') }}">
+                <i class="bi bi-building mr-2"></i>
+                <span>Organización</span>
+            </a>
+            <a class="btn-silent" href="{{ asset('admin/sedes/organizacion') }}">
+                <i class="bi bi-geo-alt mr-2"></i> 
+                <span>Sedes</span>
+            </a>
             <a href="{{ route('admin.areas.renderJerarquia') }}" class="btn-silent">
-                <i class="fab fa-adn iconos_menu mr-2"></i>
+                <i class="bi bi-geo mr-2"></i>
                 <span>Áreas</span>
             </a>
             <a href="{{ route('admin.procesos.mapa') }}" class="btn-silent">
-                <i class="fas fa-dice-d20 iconos_menu mr-2"></i>
+                <i class="bi bi-file-post mr-2"></i>
                 <span> Mapa de procesos </span>
             </a>
-            <a class="btn-silent" href="{{ asset('admin/organigrama') }}"><i class="mr-2 fas fa-sitemap"></i>
-                <span>Organigrama</span></a>
-            <a class="btn-silent" href="{{ asset('admin/directorio') }}"><i class=" mr-2 fas fa-address-book"></i>
-                <span>Directorio</span></a>
-            <a class="btn-silent" href="{{ asset('admin/documentos/publicados') }}"><i class="mr-2 fas fa-folder"></i>
-                <span>Documentos</span></a>
-            <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}"><i
-                    class="mr-2 fas fa-file"></i> <span>Políticas</span></a>
-            <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}"><i
-                    class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
+            <a class="btn-silent" href="{{ asset('admin/organigrama') }}">
+                <i class="mr-2 fas fa-sitemap"></i>
+                <span>Organigrama</span>
+            </a>
+            <a class="btn-silent" href="{{ asset('admin/directorio') }}">
+                <i class="bi bi-journal mr-2"></i>
+                <span>Directorio</span>
+            </a>
+            <a class="btn-silent" href="{{ asset('admin/documentos/publicados') }}">
+                <i class="bi bi-folder2 mr-2"></i>
+                <span>Documentos</span>
+            </a>
+            <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}">
+                <i class="bi bi-collection mr-2"></i>
+                <span>Políticas</span>
+            </a>
+            <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}">
+                <i class="bi bi-person-bounding-box mr-2"></i> 
+                <span>Comité del SGSI</span>
+            </a>
 
             @if ($empleado_asignado)
-                <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}"><i
-                        class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
+                <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}">
+                    <i class="bi bi-flag mr-2"></i>
+                    <span>Reportar</span>
+                </a>
             @endif
         </div>
 
