@@ -58,11 +58,11 @@ function hexToRGBA(hex) {
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = '<i class="fas fa-thumbtack i_calendar i_calendar" style="color:#00ABB2;"></i> Actividades';
+    calendar.name = '<i class="fas fa-thumbtack i_calendar i_calendar" style="color:#345183;"></i> Actividades';
     calendar.color = '#ffffff';
-    calendar.bgColor = '#00ABB2';
-    calendar.dragBgColor = '#00ABB2';
-    calendar.borderColor = '#00ABB2';
+    calendar.bgColor = '#345183';
+    calendar.dragBgColor = '#345183';
+    calendar.borderColor = '#345183';
     addCalendar(calendar);
 
 })();

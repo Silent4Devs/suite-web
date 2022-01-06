@@ -74,7 +74,7 @@
 						                    <form action="{{route('admin.inicio-Usuario.capacitaciones.recuperar', $recurso->id)}}" method="POST">
 						                        @csrf
 						                        <button class="btn" title="Recuperar" style="all: unset !important;">
-						                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#00abb2;"></i>
+						                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#345183;"></i>
 						                        </button>
 						                    </form>
 						                </td>

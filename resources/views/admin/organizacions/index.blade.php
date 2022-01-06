@@ -83,7 +83,7 @@
             transition: 0.1s;
             cursor: pointer;
 
-            background-color:#1BB0B0;
+            background-color:#345183;
             width: 50px;
             height: 50px;
             border-radius: 100px;

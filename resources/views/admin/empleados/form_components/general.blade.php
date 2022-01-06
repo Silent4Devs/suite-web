@@ -1,12 +1,12 @@
 <div class="row mt-3">
     <div class="col-sm-12 col-md-12 col-12">
-        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             FOTO DEL EMPLEADO
         </div>
         @include('admin.empleados._imagen_empleado')
     </div>
     <div class="col-12">
-        <div class="mt-4 text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+        <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             INFORMACIÓN GENERAL
         </div>
     </div>

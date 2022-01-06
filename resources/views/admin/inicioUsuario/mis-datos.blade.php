@@ -50,7 +50,7 @@
         top: 3px;
         padding: 5px;
         border-radius: 100%;
-        background: #fb4646;
+        background: #3086AF;
         width: 16px;
         height: 16px;
         font-size: 10px;
@@ -144,11 +144,11 @@
     hr.hr-custom-title {
         width: 100%;
         margin: 8px 0;
-        border: 1px solid #008186
+        border-top: 1px solid #1E94A8;
     }
 
     .title-info-personal {
-        color: #008186;
+        color: #3086AF;
         text-transform: capitalize;
     }
 
@@ -158,7 +158,7 @@
     }
 
     .cuadro_verde_con_before {
-        background: #00abb2;
+        background: #788BAC;
         position: absolute;
         width: 100%;
         height: 120px;
@@ -199,6 +199,55 @@
             bottom: 7px;
           }
     }
+
+    .comentarios_felicidades{
+        padding: 0;
+        list-style: none;
+        width: 100%;
+    }
+    .comentarios_felicidades li{
+        width: 90%;
+        margin: auto;
+        background: rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 7px;
+        margin-bottom: 20px;
+    }
+    .comentario_caja{
+        background: #fff;
+        padding: 10px;
+        border-radius: 7px;
+        color: #888;
+        margin-top: 10px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .card_data_mis_datos{
+        margin-bottom: 20px;
+    }
+
+    .card_margin_b_n{
+        margin-bottom: 20px !important;
+    }
+
+    .pb-personzalizado, .card_margin_b_n{
+        padding-bottom: 14px !important;
+    }
+    hr{
+        margin-bottom: 0px !important;
+    }
+
+    .img_empleado_presentacion_mis_datos{
+        clip-path: circle(70px at 50% 50%);
+        width: 140px !important;
+        height: 140px !important;
+        min-width: 140px !important;
+        max-width: 140px !important;
+
+        max-height: 140px !important;
+        min-height: 140px !important;
+    }
 </style>
 
 
@@ -207,24 +256,26 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Feliz Cumpleaños <strong>{{ $usuario->empleado->name }}</strong></h5>
+            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-birthday-cake iconos-crear"></i> Feliz Cumpleaños <strong>{{ $usuario->empleado->name }}</strong></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            likes: {{$cumpleaños_felicitados_like_contador}}
+            <div style="color: #345183; font-size:13pt;" class="text-right" title="
+                @foreach($cumpleaños_felicitados_like_usuarios as $usuarios_like){{$usuarios_like->felicitador->name}}&#013;@endforeach
+            "><i class="fas fa-thumbs-up"></i> {{$cumpleaños_felicitados_like_contador}}</div>
 
-            <ul> <h4> Comentarios </h4>
+            <ul class="comentarios_felicidades">
                 @foreach($cumpleaños_felicitados_comentarios as $coment_cumple)
-                    <li>Nombre:{{$coment_cumple->id}}
-                        <br>{{$coment_cumple->comentarios}}</li>
+                    <li>
+                        <strong><img class="img_empleado" src="{{ asset('storage/empleados/imagenes') }}/{{ $coment_cumple->felicitador ? $coment_cumple->felicitador->avatar : 'user.png' }}"> {{$coment_cumple->felicitador->name}}</strong>
+                        <div class="comentario_caja">
+                            {!! html_entity_decode($coment_cumple->comentarios) !!}
+                        </div>
+                    </li>
                 @endforeach
             </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
@@ -237,8 +288,8 @@
         <div class="container">
             <div class="main-body">
                 <div class="row gutters-sm">
-                    <div class="mb-3 col-md-4">
-                        <div class="card" style="position:relative;">
+                    <div class="col-md-4 card_data_mis_datos">
+                        <div class="card card_margin_b_n" style="position:relative; height: 450px !important;">
                             @if(($cumpleaños_usuario != null) && ($cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m')))
                                 <img src="https://images.vexels.com/media/users/3/143347/isolated/preview/c418aa571078b11dcb69704acf1077c4-icono-de-sombrero-de-cumpleanos-3d.png" class="gorro">
                             @endif
@@ -249,9 +300,9 @@
                             </div>
                             <div class="card-body">
                                 <div class="text-center d-flex flex-column align-items-center" style="position:relative;">
-                                    <img class="img-fluid img-profile" style="position: relative;" src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->avatar : 'user.png' }}">
+                                    <img class="img_empleado_presentacion_mis_datos" style="position: relative;" src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->avatar : 'user.png' }}">
                                     <div class="mt-3">
-                                        <h4>{{ $usuario->empleado->name }}</h4>
+                                        <h5 style="color: #2E2E2E; margin-top:42px;">{{ $usuario->empleado->name }}</h5>
                                         <p class="mb-1 text-secondary">{{ $usuario->empleado->puesto }}</p>
                                         <p class="text-muted font-size-sm">{{ $usuario->empleado->area->area }}</p>
                                         {{-- <button class="btn btn-primary">Follow</button>
@@ -260,10 +311,17 @@
                                     @if(($cumpleaños_usuario != null) && ($cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m')))
                                         <img src="{{asset('img/regalo.png')}}" class="regalo" data-toggle="modal" data-target="#modal_cumple" title="Tus felicitaciones">
                                     @endif
+
+                                    {{-- @if ($usuario->empleado) --}}
+                                        <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}"
+                                            style="">
+                                            Ver Perfil Profesional
+                                        </a>
+                                    {{-- @endif --}}
                                 </div>
                             </div>
                         </div>
-                        <div class="p-3 mt-3 card" x-data="{show:false}">
+                        {{-- <div class="p-34 card card_margin_b_n" x-data="{show:false}">
                             <h5 class="mb-0"><i class="fas fa-award mr-2"></i>Mi Perfil Profesional
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -272,17 +330,12 @@
                             <div class="row align-items-center" id="listaCompetenciaCV" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container text-center mt-1">
-                                    @if ($usuario->empleado)
-                                        <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}"
-                                            class="btn btn-success">
-                                            Ver Curriculum
-                                        </a>
-                                    @endif
+                                   
                                 </div>
                             </div>
-                        </div>
-                        <div class="p-3 mt-3 card" x-data="{show:false}">
-                            <h5 class="mb-0"><i class="mr-2 fas fa-users"></i>Mi Equipo
+                        </div> --}}
+                        <div class="p-34 card card_margin_b_n" x-data="{show:false}">
+                            <h5 class="mb-0"><i class="bi bi-people mr-2" style="transform:scale(1.15);"></i>Mi Equipo
                                 @if ($last_evaluacion)
                                     <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
                                         class="btn btn-xs btn-light"><i class="mr-1 fas fa-link"></i>Evaluaciones</a>
@@ -299,7 +352,7 @@
                                             <div class="card-body" style="position:relative">
                                                 <div class="text-center d-flex flex-column align-items-center">
 
-                                                    <img class="img-fluid img-profile-sm"
+                                                    <img class="img_empleado_presentacion_mis-datos"
                                                         style="position: relative;z-index: 1;"
                                                         src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}">
                                                     <div class="mt-3">
@@ -385,8 +438,8 @@
                                 @endforelse
                             </div>
                         </div>
-                        <div class="p-3 mt-3 card" x-data="{show:false}">
-                            <h5 class="mb-0"><i class="mr-2 fa-fw fas fa-laptop"></i>Mis Activos
+                        <div class="p-34 card card_margin_b_n" x-data="{show:false}">
+                            <h5 class="mb-0"><i class="bi bi-laptop mr-2"></i>Mis Activos
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
                             </h5>
@@ -423,13 +476,13 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="mb-3 card">
-                            <div class="card-body">
-                                <h5 class="mb-0 d-inline-block"><i class="mr-2 far fa-sticky-note"></i>Información
+                        <div class="card_data_mis_datos card" style="height: 450px !important;">
+                            <div class="card-body" style="padding-bottom: 14px !important;">
+                                <h5 class="mb-0 d-inline-block"><i class="bi bi-file-text mr-2"></i>Información
                                     General
                                 </h5>
                                 <hr class="hr-custom-title">
-                                <div class="row">
+                                <div class="row" style="margin-top: 40px; color: #3086AF !important; font-weight:bold; font-size:14px;">
                                     @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->n_empleado)
                                             <div class="col-3 title-info-personal">N° Empleado</div>
@@ -450,7 +503,7 @@
                                 <div class="row">
                                     @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->n_empleado)
-                                            <div class="col-3 text-muted" style="font-size:12px">
+                                            <div class="col-3 text-muted" style="font-size:12px; margin-top: 5px;">
                                                 {{ $usuario->empleado->n_empleado }}</div>
                                         @endif
                                         @if ($panel_rules->email)
@@ -469,7 +522,7 @@
                                         @endif
                                     @endif
                                 </div>
-                                <div class="row">
+                                <div class="row" style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
                                     @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->area)
                                             <div class="col-3 title-info-personal">Área</div>
@@ -509,7 +562,7 @@
                                         @endif
                                     @endif
                                 </div>
-                                <div class="row">
+                                <div class="row" style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
                                     @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->cumpleaños)
                                             <div class="col-3 title-info-personal">Cumpleaños</div>
@@ -550,7 +603,7 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="row">
+                                <div class="row" style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
                                     @if ($panel_rules->direccion)
                                         <div class="col-3 title-info-personal">Dirección</div>
                                     @endif
@@ -565,13 +618,12 @@
                             </div>
                         </div>
                         <div class="row gutters-sm">
-                            <div class="mb-3 col-sm-12">
+                            <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100">
-                                    <div class="pb-0 card-body" x-data="{show:false}">
+                                    <div class="pb-personzalizado card-body" x-data="{show:false}">
                                         <div class="row">
                                             <div class="col-4">
-                                                <h5 class="mb-0"><i
-                                                        class="mb-1 mr-2 fas fa-bullseye"></i>Mis
+                                                <h5 class="mb-0"><i class="bi bi-bullseye mr-2"></i>Mis
                                                     Objetivos
 
                                                 </h5>
@@ -660,10 +712,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3 col-sm-12">
+                            <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100">
-                                    <div class="pb-0 card-body" x-data="{show:false}">
-                                        <h5 class="mb-0 d-inline-block"><i class="mr-2 fas fa-edit"></i>Mi
+                                    <div class="pb-personzalizado card-body" x-data="{show:false}">
+                                        <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge mr-2"></i>Mi
                                             Autoevaluación
                                         </h5>
                                         @if ($last_evaluacion)
@@ -676,7 +728,7 @@
                                                 <div class="card-body" style="z-index: 1">
 
                                                     {{-- <div class="progress-bar" role="progressbar" style="width: 25%;
-                                                            background: #00abb2;
+                                                            background: #345183;
                                                             font-weight: bold;
                                                             font-size: 13px;" aria-valuenow="25" aria-valuemin="0"
                                                             aria-valuemax="100">25%</div> --}}
@@ -684,7 +736,7 @@
                                                         @if ($mis_evaluaciones)
                                                             <div class="progress" style="height: 28px;">
                                                                 <div class="progress-bar" role="progressbar"
-                                                                    style="width: {{ $mis_evaluaciones->progreso_competencias }}%;background: #00abb2;font-weight: bold;font-size: 13px;"
+                                                                    style="width: {{ $mis_evaluaciones->progreso_competencias }}%;background: #345183;font-weight: bold;font-size: 13px;"
                                                                     aria-valuenow="
                                                                 {{ $mis_evaluaciones->progreso_competencias }}"
                                                                     aria-valuemin="0" aria-valuemax="100">
@@ -715,10 +767,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3 col-sm-12">
+                            <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100">
-                                    <div class="pb-0 mb-0 card-body" x-data="{show:false}">
-                                        <h5 class="mb-0 d-inline-block"><i class="mr-2 fas fa-edit"></i>Evaluaciones a
+                                    <div class="pb-personzalizado mb-0 card-body" x-data="{show:false}">
+                                        <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge-fill mr-2"></i>Evaluaciones a
                                             Realizar
                                             <div class="circle-total-evaluaciones">
                                                 <span

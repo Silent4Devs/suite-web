@@ -19,7 +19,7 @@
                 @csrf
 
                 <div class="py-1 text-center form-group col-12"
-                    style="background-color:#1BB0B0; border-radius:100px; color: white;">DATOS GENERALES</div>
+                    style="background-color:#345183; border-radius:100px; color: white;">DATOS GENERALES</div>
 
 
                 <div class="form-group">

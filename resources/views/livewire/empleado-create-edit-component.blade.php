@@ -7,7 +7,7 @@
     </style>
 
     <div>
-        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             INFORMACIÓN GENERAL
         </div>
         <div class="informacion-general">
@@ -302,7 +302,7 @@
                 </div>
             </div>
         </div>
-        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             INFORMACIÓN PERSONAL
         </div>
         <div class="informacion-financiera">
@@ -541,7 +541,7 @@
             </div>
             <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model="snap_foto">
         </div>
-        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             INFORMACIÓN FINANCIERA
         </div>
         <div class="informacion-financiera row">

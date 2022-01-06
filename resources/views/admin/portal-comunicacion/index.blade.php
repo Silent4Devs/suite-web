@@ -107,15 +107,11 @@
             padding-top: 0 !important;
         }
 
-        .caja_btn_silent {
-            position: relative;
-        }
-
         .btn-silent {
             display: block;
             width: 100%;
             position: relative;
-            color: #444 !important;
+            color: #747474 !important;
             text-decoration: underline;
             padding: 10px 0;
             cursor: pointer;
@@ -125,15 +121,15 @@
             content: "";
             position: absolute;
             width: 0%;
-            height: 2px;
+            height: 1px;
             bottom: 5px;
-            background-color: #00abb2;
+            background-color: #345183;
             transition: 0.3s;
             z-index: 1;
         }
 
         .btn-silent:after {
-            content: "";
+            /*content: "";
             position: absolute;
             width: 100%;
             height: 2px;
@@ -141,7 +137,7 @@
             background-color: #e6e6e6;
             transition: 0.4s;
             left: 0;
-            z-index: 0;
+            z-index: 0;*/
         }
 
         .btn-silent:hover:before {
@@ -158,20 +154,18 @@
         }
 
         .btn-silent:hover {
-            color: #00abb2 !important;
+            color: #345183 !important;
         }
 
     </style>
     <style type="text/css">
-        body {
-            background-color: #fff !important;
-        }
+
 
         .titulo-seccion {
             font-weight: bolder;
             font-size: 15pt;
             margin-bottom: 0px;
-            color: #00abb2;
+            color: #345183;
             border-bottom: 2px solid #ccc;
             padding-bottom: 7px;
             padding-left: 20px;
@@ -189,7 +183,7 @@
         }
 
         .img_carrusel {
-            height: 300px !important;
+            height: 320px !important;
             opacity: 0.8;
 
             background-size: cover;
@@ -241,7 +235,7 @@
 
         .carousel-indicators li.active {
             opacity: 1 !important;
-            background-color: #00abb2 !important;
+            background-color: #345183 !important;
         }
 
 
@@ -349,9 +343,8 @@
         .nuevo {
             text-align: center;
             background-color: #f3f3f3;
-            border-left: 2px solid #00abb2;
-            margin-top: 10px;
             padding: 10px;
+            margin-bottom: 10px;
         }
 
         .nombre_nuevo {
@@ -388,13 +381,9 @@
         .btn_link_agenda {
             all: unset;
             font-size: 11pt;
-            color: #00abb2;
+            color: #345183;
             cursor: pointer;
             transition: 0.09;
-        }
-
-        .btn_link_agenda:hover {
-            transform: scale(1.1);
         }
 
         .opciones_felicitar{
@@ -402,11 +391,11 @@
             justify-content: space-between;
         }
         .opciones_felicitar i{
-            color: #00abb2;
+            color: #345183;
             font-size: 15pt;
             cursor: pointer;
         }
-        
+
         .modal-backdrop.fade.show{
             display: none !important;
         }
@@ -418,29 +407,23 @@
 
 
     <div class="card" style="box-shadow: none; background-color: transparent;">
-        <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
-            style="margin-top:0px !important; ">
-            <h3 class="mb-2 text-center text-white"
-                style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Portal de
-                    Comunicación </strong>
-            </h3>
-        </div>
+
 
         @include('partials.flashMessages')
 
         <div class="card-body">
             <div class="row">
+                <h5 class="col-12 titulo_general_funcion">Portal de Comunicación </h5>
+
                 <div class="col-9">
                     <div class="row">
                         <div class="col-sm-12 col-12 col-lg-4">
-                            <div class="p-2" id="clima"
-                                style="border-left: solid 2px #00abb2; background-color: #e6e6e6;"></div>
-                            <div class="p-3"
-                                style=" margin-top: 20px; border-left: solid 2px #00abb2;  background-color: #f3f3f3;position: relative;">
+                            <div class="card" id="clima" style="padding:5px !important; background-color: #FFF9F0 !important;"></div>
+                            <div class="card" style="position: relative; padding: 5px !important; background-color:#DFECFF !important;">
                                 <a href="{{ asset('admin/system-calendar') }}" class="btn_link_agenda"
-                                    style=" position: absolute; top:3px; right:8px;" title="Agenda organizacional"><i
+                                    style="" title="Agenda organizacional"><i
                                         class="fas fa-calendar-alt"></i></a>
-                                <div class="calendar calendar-first" id="calendar_first" style="margin-top: 10px;">
+                                <div class="calendar calendar-first" id="calendar_first" style="">
                                     <div class="calendar_header">
                                         <button class="switch-month switch-left"> <i
                                                 class="fa fa-chevron-left"></i></button>
@@ -454,7 +437,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 col-12 col-lg-8">
-                            <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+                            <div id="carouselExampleCaptions" class="carousel slide card" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     {{-- <li data-target="#carouselExampleCaptions" data-slide-to=""
                                     class="active"></li> --}}
@@ -517,125 +500,110 @@
                             </div>
                         </div>
                         <div class="mt-5 col-lg-12">
-                            <h2 class="titulo-seccion"><i class="mr-3 far fa-newspaper"></i>Comunicados</h2>
-                            @forelse($comunicacionSgis as $comunicacionSgi)
-                                <div class="comunicado" style="position:relative;">
-                                    @php
-                                        if ($comunicacionSgi->first()->count()) {
-                                            if ($carrusel->imagenes_comunicacion->first()) {
-                                                $imagen = 'storage/imagen_comunicado_SGI/' . $comunicacionSgi->imagenes_comunicacion->first()->imagen;
+                            <div class="card card-body">
+                                <h2 class="titulo-seccion"><i class="mr-3 far fa-newspaper"></i>Comunicados</h2>
+                                @forelse($comunicacionSgis as $comunicacionSgi)
+                                    <div class="comunicado" style="position:relative;">
+                                        @php
+                                            if ($comunicacionSgi->first()->count()) {
+                                                if ($carrusel->imagenes_comunicacion->first()) {
+                                                    $imagen = 'storage/imagen_comunicado_SGI/' . $comunicacionSgi->imagenes_comunicacion->first()->imagen;
+                                                }
+                                            } else {
+                                                $imagen = 'img/portal_404.png';
                                             }
-                                        } else {
-                                            $imagen = 'img/portal_404.png';
-                                        }
 
-                                    @endphp
+                                        @endphp
 
-                                    {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
+                                        {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
 
-                                    <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');">
-                                    </div>
-                                    <div class="text_comunicado">
-                                        <h4 class="w-100">{{ $comunicacionSgi->titulo }}</h4>
-
-                                        <div
-                                            style="text-align:left !important; overflow:hidden; height:100px !important; background-color:#EEE; !important; padding:10px; display:block !important; justify-content:start !important;">
-                                            {!! $comunicacionSgi->descripcion !!}
+                                        <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');">
                                         </div>
-                                        <a href="{{ asset('admin/comunicacion-sgis/' . $comunicacionSgi->id) }}">Leer
-                                            más</a>
-                                    </div>
-                                </div>
-                            @empty
-                                <div class="comunicado" style="position:relative;">
-                                    <div class="img_comunicado"
-                                        style="background-image: url('{{ asset('img/portal_404.png') }}');"></div>
-                                    <div class="text_comunicado">
-                                        <h4 class="w-100">Sin comunicados que mostar</h4>
-                                        <p class="w-100">
+                                        <div class="text_comunicado">
+                                            <h4 class="w-100">{{ $comunicacionSgi->titulo }}</h4>
 
-                                        </p>
-                                        <a href=""></a>
+                                            <div
+                                                style="text-align:left !important; overflow:hidden; height:100px !important; background-color:#EEE; !important; padding:10px; display:block !important; justify-content:start !important;">
+                                                {!! $comunicacionSgi->descripcion !!}
+                                            </div>
+                                            <a href="{{ asset('admin/comunicacion-sgis/' . $comunicacionSgi->id) }}">Leer
+                                                más</a>
+                                        </div>
                                     </div>
-                                </div>
-                            @endforelse
-                            <h2 class="mt-5 titulo-seccion"><i class="mr-3 far fa-file-alt"></i>Documentos publicados </h2>
-                            {{-- @foreach ($documentos_publicados as $documento)
-                                <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}"
-                                    class="list-group-item cards text-dark">
-                                    <i class="mr-1 fas fa-file-pdf text-danger"></i>
-                                    {{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
-                                    <div>
-                                        <span class="badge badge-dark"
-                                            style="text-transform: capitalize">{{ $documento->tipo }}</span>
-                                        @if ($documento->macroproceso_id)
-                                            <span class="badge badge-primary"
-                                                style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
-                                        @endif
-                                        @if ($documento->proceso_id)
-                                            <span class="badge badge-success"
-                                                style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
-                                        @endif
-                                    </div>
-                                </a>
-                            @endforeach --}}
+                                @empty
+                                    <div class="comunicado" style="position:relative;">
+                                        <div class="img_comunicado"
+                                            style="background-image: url('{{ asset('img/portal_404.png') }}');"></div>
+                                        <div class="text_comunicado">
+                                            <h4 class="w-100">Sin comunicados que mostar</h4>
+                                            <p class="w-100">
 
-                            @forelse($documentos_publicados as $documento)
-                                <div class="doc_publicado">
-                                    <div class="icon_doc">
-                                        <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}"
-                                            title="Ver documento">
-                                            <i class="fas fa-file-pdf"></i>
-                                        </a>
+                                            </p>
+                                            <a href=""></a>
+                                        </div>
                                     </div>
-                                    <div class="text_doc">
-                                        <h5>{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
-                                        </h5>
-                                        <p>
-                                            Se ha publicado el documento {{ $documento->codigo }}
-                                            {{ $documento->nombre }} el
-                                            10/10/21.
-                                        </p>
-                                        <p>
-                                            <span class="badge badge-dark"
-                                                style="text-transform: capitalize">{{ $documento->tipo }}</span>
-                                            @if ($documento->macroproceso_id)
-                                                <span class="badge badge-primary"
-                                                    style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
-                                            @endif
-                                            @if ($documento->proceso_id)
-                                                <span class="badge badge-success"
-                                                    style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
-                                            @endif
-                                            <span style="color:red; margin-left:20px;"><i class="fas fa-eye"></i>
-                                                <strong>{{ $documento->no_vistas }}</strong></span>
-                                        </p>
-                                    </div>
-                                    <div class="opciones_doc">
-                                        <h6><strong>Responsable:</strong></h6>
-                                        <img src="{{ asset('storage/empleados/imagenes/' . $documento->responsable->foto) }}"
-                                            class="img_empleado" title="{{ $documento->responsable->name }}"><br />
-                                        <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver
-                                            documento</a>
-                                    </div>
-                                </div>
-                            @empty
-                                <div class="comunicado" style="position:relative;">
-                                    <div class="img_comunicado"
-                                        style="background-image: url('{{ asset('img/no_docs.svg') }}'); transform: scale(0.8);">
-                                    </div>
-                                    <div class="text_comunicado">
-                                        <h4 class="w-100">Sin documentos que mostar</h4>
-                                        <p class="w-100">
+                                @endforelse
+                            </div>
 
-                                        </p>
+                                <div class="card card-body">
+                                <h2 class="titulo-seccion"><i class="mr-3 far fa-file-alt"></i>Documentos publicados </h2>
+                                @forelse($documentos_publicados as $documento)
+                                    <div class="doc_publicado">
+                                        <div class="icon_doc">
+                                            <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}"
+                                                title="Ver documento">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </a>
+                                        </div>
+                                        <div class="text_doc">
+                                            <h5>{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
+                                            </h5>
+                                            <p>
+                                                Se ha publicado el documento {{ $documento->codigo }}
+                                                {{ $documento->nombre }} el
+                                                10/10/21.
+                                            </p>
+                                            <p>
+                                                <span class="badge badge-dark"
+                                                    style="text-transform: capitalize">{{ $documento->tipo }}</span>
+                                                @if ($documento->macroproceso_id)
+                                                    <span class="badge badge-primary"
+                                                        style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
+                                                @endif
+                                                @if ($documento->proceso_id)
+                                                    <span class="badge badge-success"
+                                                        style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
+                                                @endif
+                                                <span style="color:red; margin-left:20px;"><i class="fas fa-eye"></i>
+                                                    <strong>{{ $documento->no_vistas }}</strong></span>
+                                            </p>
+                                        </div>
+                                        <div class="opciones_doc">
+                                            <h6><strong>Responsable:</strong></h6>
+                                            <img src="{{ asset('storage/empleados/imagenes/' . $documento->responsable->foto) }}"
+                                                class="img_empleado" title="{{ $documento->responsable->name }}"><br />
+                                            <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver
+                                                documento</a>
+                                        </div>
                                     </div>
-                                        
-                                </div>
+                                @empty
+                                    <div class="comunicado" style="position:relative;">
+                                        <div class="img_comunicado"
+                                            style="background-image: url('{{ asset('img/no_docs.svg') }}'); transform: scale(0.8);">
+                                        </div>
+                                        <div class="text_comunicado">
+                                            <h4 class="w-100">Sin documentos que mostar</h4>
+                                            <p class="w-100">
+
+                                            </p>
+                                        </div>
+
+                                    </div>
 
 
-                                
-                            @endforelse
+
+                                @endforelse
+                            </div>
                         </div>
                     </div>
                 </div>

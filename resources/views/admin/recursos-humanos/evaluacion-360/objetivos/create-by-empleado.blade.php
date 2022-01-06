@@ -89,7 +89,7 @@
         aria-labelledby="objetivoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header" style="background: #00abb2;color: white;">
+                <div class="modal-header" style="background: #345183;color: white;">
                     <h4 class="modal-title" id="objetivoModalLabel"><i class="mr-1 fas fa-chalkboard-teacher"></i>
                         Conductas
                         Esperadas
