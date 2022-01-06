@@ -6,6 +6,17 @@
         .modal-content{
             box-shadow: 0px 0px 0px 5000px rgba(0, 0, 0, 0.2) !important;
         }
+
+        .titulo_acordeon_eventos{
+            all: unset; 
+            padding: 10px; 
+            font-weight: bold; 
+            font-size: 18px; 
+            color:#747474;
+        }
+        .acordeon_separado{
+            margin-top: 15px;
+        }
     </style>
     
     <script src="https://cdn.ckeditor.com/4.17.1/standard-all/ckeditor.js"></script>
@@ -61,125 +72,250 @@
     </div>
     <div class="col-lg-12">
         <div class="card card-body cuadro_empleados scroll_estilo" style="padding:0px !important;">
-            <p style="all: unset; padding: 10px; font-weight: bold;"><i class="mr-3 far fa-user"></i>Nuevos ingresos</p>
-            <div class="caja_nuevo">
-                @forelse($nuevos as $nuevo)
-                    <div class="nuevo">
-                        <div class="img_nuevo">
-                            <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
-                                class="img_empleado">
-                        </div>
-                        <h5 class="nombre_nuevo">{{ $nuevo->name }}</h5>
-                        <div class="datos_nuevo">
-                            <p>{{ $nuevo->puesto }}<br>
-                                @if (is_null($nuevo->area->area))
-                                    No hay Area
-                                @else
-                                    {{ $nuevo->area->area }}
-                                @endif
-                            </p>
-                            <h6 class="mt-3">Fecha de ingreso</h6>
-                            <span>{{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}</span>
+
+
+
+
+
+            <div x-data="{ active: 1 }" class="acordeon_separado">
+                <div x-data="{
+                        id: 1,
+                        get expanded() {
+                            return this.active === this.id
+                        },
+                        set expanded(value) {
+                            this.active = value ? this.id : null
+                        },
+                    }" role="region">
+
+                    <div
+                        x-on:click="expanded = !expanded"
+                        :aria-expanded="expanded" style=" cursor: pointer;">
+                        <p class="titulo_acordeon_eventos"><i class="mr-3 far fa-user"></i>Nuevos ingresos</p>
+                        <span x-show="expanded" aria-hidden="true">&minus;</span>
+                        <span x-show="!expanded" aria-hidden="true">&plus;</span>
+                    </div>
+             
+                    <div x-show="expanded" x-collapse>
+                        <div class="caja_nuevo">
+                            @forelse($nuevos as $nuevo)
+                                <div class="nuevo">
+                                    <div class="img_nuevo">
+                                        <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
+                                            class="img_empleado">
+                                    </div>
+                                    <h5 class="nombre_nuevo">{{ $nuevo->name }}</h5>
+                                    <div class="datos_nuevo">
+                                        <p>{{ $nuevo->puesto }}<br>
+                                            @if (is_null($nuevo->area->area))
+                                                No hay Area
+                                            @else
+                                                {{ $nuevo->area->area }}
+                                            @endif
+                                        </p>
+                                        <h6 class="mt-3">Fecha de ingreso</h6>
+                                        <span>{{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}</span>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="nuevo">No hay nuevos ingresos registrados en este mes.</div>
+                            @endforelse
+
                         </div>
                     </div>
-                @empty
-                    <div class="nuevo">No hay nuevos ingresos registrados en este mes.</div>
-                @endforelse
-
+                </div>
             </div>
 
-            <p style="all: unset; padding: 10px; font-weight: bold;"><i class="mr-3 fas fa-birthday-cake"></i>Cumpleaños</p>
-            <div class="caja_nuevo" id="contenedor_cumples">
-                @forelse($cumpleaños as $cumple)
-                    <div class="nuevo">
-                        <div class="img_nuevo">
-                                <img src="{{ asset('storage/empleados/imagenes/' . $cumple->avatar) }}"
-                                    class="img_empleado">
-                            
-                        </div>
-                        <h5 class="nombre_nuevo">{{ $cumple->name }}</h5>
-                        <div class="datos_nuevo">
-                            <p>{{ $cumple->puesto }}<br>
-                                @if (is_null($cumple->area->area))
-                                    No hay Area
-                                @else
-                                    {{ $cumple->area->area }}
-                                @endif
-                            </p>
-                            <h6 class="mt-3">Fecha de cumpleaños</h6>
-                            @php
-                                $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                                $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
-                                $mes = $meses[$fecha->format('n') - 1];
-                                $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
-                            @endphp
 
-                            <span>{{ $inputs['Fecha'] }}</span>
 
-                            @php
-                                $cumples_felicitados_like_contador_usuarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
-                                    ->whereYear('created_at', $hoy->format('Y'))
-                                    ->where('like', true)
-                                    ->count();
 
-                                $cumples_felicitados_like_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
-                                    ->where('felicitador_id', auth()->user()->empleado->id)
-                                    ->whereYear('created_at', $hoy->format('Y'))
-                                    ->where('like', true)
-                                    ->count();
 
-                                $cumples_felicitados_like = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
-                                    ->where('felicitador_id', auth()->user()->empleado->id)
-                                    ->whereYear('created_at', $hoy->format('Y'))
-                                    ->where('like', true)
-                                    ->first();
 
-                                $cumples_felicitados_comentarios_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
-                                    ->where('felicitador_id', auth()->user()->empleado->id)
-                                    ->whereYear('created_at', $hoy->format('Y'))
-                                    ->where('like', false)
-                                    ->where('comentarios', '!=', null)
-                                    ->count();
 
-                                $cumples_felicitados_comentarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
-                                    ->where('felicitador_id', auth()->user()->empleado->id)
-                                    ->whereYear('created_at', $hoy->format('Y'))
-                                    ->where('like', false)
-                                    ->where('comentarios', '!=', null)
-                                    ->first();
-                            @endphp
-                            <div class="opciones_felicitar">
-                                <button style="all:unset;" 
-                                    {{ $cumples_felicitados_like_contador == 0 ? 'wire:click=felicitarCumpleaños(' . $cumple->id . ')' : 'wire:click=felicitarCumpleañosDislike(' . $cumples_felicitados_like->id . ')'}}>
-                                    
+            <div x-data="{ active: 1 }" class="acordeon_separado">
+                <div x-data="{
+                        id: 1,
+                        get expanded() {
+                            return this.active === this.id
+                        },
+                        set expanded(value) {
+                            this.active = value ? this.id : null
+                        },
+                    }" role="region">
 
-                                    @if($cumples_felicitados_like_contador_usuarios == 0)
-                                        <i class="far fa-thumbs-up" style="color:#888;"></i>
-                                        <font style="color:#888">
-                                            {{ $cumples_felicitados_like_contador_usuarios }}
-                                        </font>
-                                     @else
-                                        <i class="fas fa-thumbs-up" style="color:#345183;"></i>
-                                         <font style="color:#345183">
-                                            {{ $cumples_felicitados_like_contador_usuarios }}
-                                        </font>
-                                    @endif
-                                </button>
-                                <i class="fas fa-comment-dots btn_modal modal_comentarios" 
-                                    {{-- data-toggle="modal"
-                                    data-target="#cumpleaños_comentarios_Modal"  --}}
-                                    data-comentarios-contador="{{$cumples_felicitados_comentarios_contador}}"
-                                    data-cumple-id="{{$cumple->id}}"
-                                    data-comentarios-id="{{$cumples_felicitados_comentarios ? $cumples_felicitados_comentarios->id :  null}}"
-                                    data-comentarios-comentarios="{{ $cumples_felicitados_comentarios ? $cumples_felicitados_comentarios->comentarios : null}}"
-                                    data-cumple-nombre="{{$cumple->name}}"></i>
-                            </div>
+                    <div
+                        x-on:click="expanded = !expanded"
+                        :aria-expanded="expanded" style=" cursor: pointer;">
+                        <p class="titulo_acordeon_eventos"><i class="mr-3 fas fa-birthday-cake"></i>Cumpleaños</p>
+                        <span x-show="expanded" aria-hidden="true">&minus;</span>
+                        <span x-show="!expanded" aria-hidden="true">&plus;</span>
+                    </div>
+             
+                    <div x-show="expanded" x-collapse>
+                        <div class="caja_nuevo" id="contenedor_cumples">
+                            @forelse($cumpleaños as $cumple)
+                                <div class="nuevo">
+                                    <div class="img_nuevo">
+                                            <img src="{{ asset('storage/empleados/imagenes/' . $cumple->avatar) }}"
+                                                class="img_empleado">
+                                        
+                                    </div>
+                                    <h5 class="nombre_nuevo">{{ $cumple->name }}</h5>
+                                    <div class="datos_nuevo">
+                                        <p>{{ $cumple->puesto }}<br>
+                                            @if (is_null($cumple->area->area))
+                                                No hay Area
+                                            @else
+                                                {{ $cumple->area->area }}
+                                            @endif
+                                        </p>
+                                        <h6 class="mt-3">Fecha de cumpleaños</h6>
+                                        @php
+                                            $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+                                            $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
+                                            $mes = $meses[$fecha->format('n') - 1];
+                                            $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
+                                        @endphp
+
+                                        <span>{{ $inputs['Fecha'] }}</span>
+
+                                        @php
+                                            $cumples_felicitados_like_contador_usuarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                ->whereYear('created_at', $hoy->format('Y'))
+                                                ->where('like', true)
+                                                ->count();
+
+                                            $cumples_felicitados_like_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                ->where('felicitador_id', auth()->user()->empleado->id)
+                                                ->whereYear('created_at', $hoy->format('Y'))
+                                                ->where('like', true)
+                                                ->count();
+
+                                            $cumples_felicitados_like = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                ->where('felicitador_id', auth()->user()->empleado->id)
+                                                ->whereYear('created_at', $hoy->format('Y'))
+                                                ->where('like', true)
+                                                ->first();
+
+                                            $cumples_felicitados_comentarios_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                ->where('felicitador_id', auth()->user()->empleado->id)
+                                                ->whereYear('created_at', $hoy->format('Y'))
+                                                ->where('like', false)
+                                                ->where('comentarios', '!=', null)
+                                                ->count();
+
+                                            $cumples_felicitados_comentarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                ->where('felicitador_id', auth()->user()->empleado->id)
+                                                ->whereYear('created_at', $hoy->format('Y'))
+                                                ->where('like', false)
+                                                ->where('comentarios', '!=', null)
+                                                ->first();
+                                        @endphp
+                                        <div class="opciones_felicitar">
+                                            <button style="all:unset;" 
+                                                {{ $cumples_felicitados_like_contador == 0 ? 'wire:click=felicitarCumpleaños(' . $cumple->id . ')' : 'wire:click=felicitarCumpleañosDislike(' . $cumples_felicitados_like->id . ')'}}>
+                                                
+
+                                                @if($cumples_felicitados_like_contador_usuarios == 0)
+                                                    <i class="far fa-thumbs-up" style="color:#888;"></i>
+                                                    <font style="color:#888">
+                                                        {{ $cumples_felicitados_like_contador_usuarios }}
+                                                    </font>
+                                                 @else
+                                                    <i class="fas fa-thumbs-up" style="color:#345183;"></i>
+                                                     <font style="color:#345183">
+                                                        {{ $cumples_felicitados_like_contador_usuarios }}
+                                                    </font>
+                                                @endif
+                                            </button>
+                                            <i class="fas fa-comment-dots btn_modal modal_comentarios" 
+                                                {{-- data-toggle="modal"
+                                                data-target="#cumpleaños_comentarios_Modal"  --}}
+                                                data-comentarios-contador="{{$cumples_felicitados_comentarios_contador}}"
+                                                data-cumple-id="{{$cumple->id}}"
+                                                data-comentarios-id="{{$cumples_felicitados_comentarios ? $cumples_felicitados_comentarios->id :  null}}"
+                                                data-comentarios-comentarios="{{ $cumples_felicitados_comentarios ? $cumples_felicitados_comentarios->comentarios : null}}"
+                                                data-cumple-nombre="{{$cumple->name}}"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                             @empty
+                                <div class="nuevo">No hay cumpleaños registrados en este mes.</div>
+                            @endforelse
                         </div>
                     </div>
-                 @empty
-                    <div class="nuevo">No hay cumpleaños registrados en este mes.</div>
-                @endforelse
+                </div>
             </div>
+
+
+            
+
+
+
+
+
+
+            <div x-data="{ active: 1 }" class="acordeon_separado">
+                <div x-data="{
+                        id: 1,
+                        get expanded() {
+                            return this.active === this.id
+                        },
+                        set expanded(value) {
+                            this.active = value ? this.id : null
+                        },
+                    }" role="region">
+
+                    <div
+                        x-on:click="expanded = !expanded"
+                        :aria-expanded="expanded" style=" cursor: pointer;">
+                        <p class="titulo_acordeon_eventos"><i class="mr-3 fas fa-medal"></i>Aniversarios</p>
+                        <span x-show="expanded" aria-hidden="true">&minus;</span>
+                        <span x-show="!expanded" aria-hidden="true">&plus;</span>
+                    </div>
+             
+                    <div x-show="expanded" x-collapse>
+                        <div class="caja_nuevo">
+                            @forelse($aniversarios as $aniversario)
+
+                                @if (\Carbon\Carbon::parse($aniversario->antiguedad)->format('Y') < $hoy->format('Y'))
+                                    <div class="nuevo">
+                                        <div class="img_nuevo">
+                                                <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
+                                                    class="img_empleado">
+                                        </div>
+                                        <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
+                                        <div class="datos_nuevo">
+                                            <p>{{ $aniversario->puesto }}<br>
+                                                @if (is_null($aniversario->area->area))
+                                                    No hay Area
+                                                @else
+                                                    {{ $aniversario->area->area }}
+                                                @endif
+                                            </p>
+                                            <h6 class="mt-3">Antigüedad</h6>
+                                            <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }}
+                                                año(s)
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endif
+                            @empty
+                                <div class="nuevo">No hay aniversarios registrados en este mes.</div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
 
             <div class="modal fade" id="cumpleaños_comentarios_Modal" tabindex="-1"
                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
@@ -198,39 +334,7 @@
                     </div>
                 </div>
             </div>
-
-            <p style="all: unset; padding: 10px; font-weight: bold;"><i class="mr-3 fas fa-medal"></i>Aniversarios</p>
-            <div class="caja_nuevo">
-                <div class="caja_nuevo">
-                    @forelse($aniversarios as $aniversario)
-
-                        @if (\Carbon\Carbon::parse($aniversario->antiguedad)->format('Y') < $hoy->format('Y'))
-                            <div class="nuevo">
-                                <div class="img_nuevo">
-                                        <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
-                                            class="img_empleado">
-                                </div>
-                                <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
-                                <div class="datos_nuevo">
-                                    <p>{{ $aniversario->puesto }}<br>
-                                        @if (is_null($aniversario->area->area))
-                                            No hay Area
-                                        @else
-                                            {{ $aniversario->area->area }}
-                                        @endif
-                                    </p>
-                                    <h6 class="mt-3">Antigüedad</h6>
-                                    <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }}
-                                        año(s)
-                                    </span>
-                                </div>
-                            </div>
-                        @endif
-                    @empty
-                        <div class="nuevo">No hay aniversarios registrados en este mes.</div>
-                    @endforelse
-                </div>
-            </div>
+            
         </div>
 
 @section('scripts')

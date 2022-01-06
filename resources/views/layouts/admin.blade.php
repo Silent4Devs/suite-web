@@ -1025,37 +1025,21 @@
                         <div class="pt-0 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px;">
                             <div class="p-2">
                                 @if (auth()->user()->empleado)
-                                    <img class="shadow rounded-circle"
+                                    {{-- <img class="shadow rounded-circle"
                                         style="max-width: 65px;clip-path: circle(50% at 50% 50%);"
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                        alt="" srcset="">
-                                    <p class="m-0 text-muted mt-2" style="font-weight: bold; font-size:13px">
+                                        alt="" srcset=""> --}}
+                                    <p class="m-0 text-muted mt-2" style="font-size:14px">
                                         Hola, {{ auth()->user()->empleado->name }}</p>
                                 @else
                                     <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
                                 @endif
                             </div>
-                            <div>
-                                {{-- @if (auth()->user()->empleado)
-                                    <p class="m-0" style="font-weight: 600">
-                                        {{ auth()->user()->empleado->name }}
-                                    </p>
-                                    @foreach (auth()->user()->roles as $rol)
-                                        <span class="badge badge-dark"
-                                            style="font-size:13px;">{{ $rol->title }}</span>
-                                    @endforeach
-
-                                @else
-                                    {{ auth()->user()->name }}
-                                    <span>{{ auth()->user()->empleado->name }}</span>
-                                @endif --}}
-                            </div>
-                            {{-- <div class="py-2 dropdown-header bg-light"><strong>Ajustes</strong></div> --}}
                             <div class="px-3 mt-1 d-flex justify-content-center">
                                 @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                                     @can('profile_password_edit')
 
-                                        <a class="btn btn-sm shadow-xs border p-2 rounded {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                                        <a style="all: unset; color: #747474; cursor: pointer;" class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
                                             href="{{ route('profile.password.edit') }}">
                                             <i class="mr-1 fas fa-user-cog">
                                             </i>
@@ -1064,12 +1048,8 @@
 
                                     @endcan
                                 @endif
-                                {{-- <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
-                                <i class="mr-1 fas fa-fw fa-lock">
-                                </i> Bloquear
-                            </a> --}}
-                                <a class="p-2 border rounded shadow-xs btn btn-sm"
-                                    onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                 &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a style="all: unset; color: #747474; cursor: pointer;" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                     <i class="mr-1 fas fa-sign-out-alt">
                                     </i> Salir
                                 </a>

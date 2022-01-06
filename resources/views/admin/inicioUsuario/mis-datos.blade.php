@@ -451,21 +451,17 @@
                                         No cuenta con activos a su cargo
                                     @else
                                         <div class="row">
-                                            <div class="col-2 title-info-personal">ID</div>
-                                            <div class="col-10 title-info-personal">Activo</div>
+                                            <div class="col-12">
+                                                <font class="title-info-personal">ID</font>
+                                                <font class="title-info-personal">Activo</font>
+                                            </div>
                                         </div>
                                         @foreach ($activos as $activo)
                                             <div class="row">
-                                                <div class="col-2 text-muted" style="font-size:12px">
+                                                <div class="col-12 text-muted" style="font-size:12px">
                                                     <a target="_blank"
                                                         href="{{ route('admin.activos.show', [$activo->id]) }}">
-                                                        {{ $activo->id }}
-                                                    </a>
-                                                </div>
-                                                <div class="col-10 text-muted" style="font-size:12px">
-                                                    <a target="_blank"
-                                                        href="{{ route('admin.activos.show', [$activo->id]) }}">
-                                                        {{ $activo->nombreactivo }}
+                                                        {{ $activo->id }} {{ $activo->nombreactivo }}
                                                     </a>
                                                 </div>
                                             </div>
