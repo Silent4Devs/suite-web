@@ -105,7 +105,8 @@ class EmpleadoController extends Controller
                 }
             );
             $table->editColumn('antiguedad', function ($row) {
-                return Carbon::parse(Carbon::parse($row->antiguedad))->diffForHumans(Carbon::now()->subDays());
+                return $row->obtener_antiguedad;
+                // return Carbon::parse(Carbon::parse($row->obtener_antiguedad))->diffForHumans(Carbon::now()->subDays());
             });
             $table->editColumn('estatus', function ($row) {
                 return $row->estatus ? $row->estatus : '';

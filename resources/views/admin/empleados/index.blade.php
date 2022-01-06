@@ -99,15 +99,13 @@
             <table class="table table-bordered w-100 datatable-Empleado">
                 <thead class="thead-dark">
                     <tr>
-                        <th id="numero" style="vertical-align: top">
-                        </th>
                         <th style="vertical-align: top">
                             Foto
                         </th>
                         <th style="vertical-align: top">
                             N°&nbsp;de&nbsp;empleado
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width:200px;">
                             {{ trans('cruds.user.fields.name') }}
                         </th>
                         <th style="vertical-align: top">
@@ -122,7 +120,7 @@
                         <th style="vertical-align: top">
                             Puesto
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top min-width:200px;">
                             Jefe Inmediato
                         </th>
                         <th style="vertical-align: top">
@@ -149,8 +147,6 @@
 
     <script>
         $(function() {
-            let numero = document.querySelector('#numero');
-            numero.innerHTML = 'N°';
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
@@ -304,10 +300,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.empleados.index') }}",
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
-                    },
+                columns: [
                     {
                         data: 'avatar',
                         name: 'avatar',
