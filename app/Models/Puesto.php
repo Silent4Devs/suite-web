@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\RH\Competencia;
 use App\Traits\MultiTenantModelTrait;
-use App\Models\RH\Porcentaje;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -94,5 +92,4 @@ class Puesto extends Model
     {
         return $this->hasMany('App\Models\RH\Competencia', 'competencias_id', 'id');
     }
-
 }

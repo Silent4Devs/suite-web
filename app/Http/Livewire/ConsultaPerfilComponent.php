@@ -109,7 +109,7 @@ class ConsultaPerfilComponent extends Component
 
     public function render()
     {
-        $perfilesInfo = Puesto::with(['area','competencias' => function ($q) {
+        $perfilesInfo = Puesto::with(['area', 'competencias' => function ($q) {
             $q->with('competencia');
         }])->
             when($this->puesto_id, function ($q3) {
