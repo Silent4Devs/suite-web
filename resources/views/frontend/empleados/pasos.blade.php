@@ -550,7 +550,7 @@
                                         placeholder="Alternate Contact No." />
                                 </div> --}}
 
-                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
                         <span style="font-size: 17px; font-weight: bold;">
                             Certificaciones</span>
                     </div>
@@ -670,7 +670,7 @@
                                     </div>
                                 </div> --}}
 
-                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
                         <span style="font-size: 17px; font-weight: bold;">
                             Cursos / Diplomados</span>
                     </div>
@@ -769,7 +769,7 @@
                     <input type="button" name="make_payment" class="next action-button" value="Confirm" />
                 </fieldset>
                 <fieldset>
-                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
                         <span style="font-size: 17px; font-weight: bold;">
                             Experiencia Profesional</span>
                     </div>
@@ -883,7 +883,7 @@
                                         <div class="col-3"> <img src="https://img.icons8.com/color/96/000000/ok--v2.png"
                                                 class="fit-image"> </div>
                                     </div> --}}
-                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
                         <span style="font-size: 17px; font-weight: bold;">
                             Educación</span>
                     </div>
@@ -983,7 +983,7 @@
                     </div>
         </div>
         </fieldset>
-        <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+        <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
             <span style="font-size: 17px; font-weight: bold;">
                 Documentos</span>
         </div>

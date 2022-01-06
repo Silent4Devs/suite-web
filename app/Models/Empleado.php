@@ -183,13 +183,15 @@ class Empleado extends Model
         $hora = date('H');
         $saludo = '';
         $nombre = explode(' ', $this->name)[0];
-        if ($hora >= '12' && $hora <= '18') {
-            $saludo = "Buenas Tardes, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
-        } elseif ($hora >= '19' && $hora <= '23') {
-            $saludo = "Buenas Noches, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
-        } else {
-            $saludo = "Buenos Días, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
-        }
+        // if ($hora >= '12' && $hora <= '18') {
+        //     $saludo = "Buenas Tardes, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        // } elseif ($hora >= '19' && $hora <= '23') {
+        //     $saludo = "Buenas Noches, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        // } else {
+        //     $saludo = "Buenos Días, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        // }
+
+        $saludo = $nombre;
 
         return $saludo;
     }

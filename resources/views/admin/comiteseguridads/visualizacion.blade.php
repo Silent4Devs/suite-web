@@ -20,7 +20,7 @@
             position: absolute;
             width: 400px;
             font-weight: bold;
-            color: #00abb2;
+            color: #345183;
             bottom: 0;
         }
 

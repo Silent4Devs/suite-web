@@ -27,7 +27,7 @@
                 @method('PUT')
                 @csrf
 
-                <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
 
@@ -204,7 +204,7 @@
                 </div>
 
                 <hr>
-                <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     EVALUACIÓN DE RIESGO INICIAL
                 </div>
 
@@ -436,7 +436,7 @@
 
                 </div>
                 <hr>
-                <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     EVALUACIÓN DEL RIESGO RESIDUAL
                 </div>
                 <p class="font-weight-bold" style="font-size:11pt;">Riesgo Residual</p>

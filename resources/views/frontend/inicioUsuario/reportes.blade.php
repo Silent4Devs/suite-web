@@ -16,8 +16,8 @@
         margin-right: 10px;
     }
     .cards_reportes:hover{
-        color: #00abb2;
-        border: 1px solid #00abb2;
+        color: #345183;
+        border: 1px solid #345183;
     }
 </style>
 

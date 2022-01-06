@@ -2,7 +2,7 @@
     <div class="mt-3 row">
         <div class="col-12">
             <div class="mt-2 text-center form-group"
-                style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                style="background-color:#345183; border-radius: 100px; color: white;">
                 Comparar
             </div>
         </div>

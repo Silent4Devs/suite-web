@@ -9,7 +9,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background: #00abb2;color: white;">
+                <div class="modal-header" style="background: #345183;color: white;">
                     <h5 class="modal-title" id="grupoModalLabel"><i class="mr-2 fas fa-plus-circle"></i>Agregar
                         Grupo
                     </h5>

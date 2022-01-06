@@ -4,7 +4,7 @@
 
     <style>
         th {
-            background-color: #1BB0B0;
+            background-color: #345183;
             color: #ffff;
 
         }
