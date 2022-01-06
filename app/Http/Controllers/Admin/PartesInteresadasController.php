@@ -69,7 +69,7 @@ class PartesInteresadasController extends Controller
     public function create()
     {
         abort_if(Gate::denies('partes_interesada_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $clausulas = Clausula::all();
+        $clausulas = Clausula::get();
 
         return view('admin.partesInteresadas.create', compact('clausulas'));
     }
