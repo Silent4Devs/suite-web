@@ -57,11 +57,10 @@
         }
 
     </style>
+
+    <h5 class="col-12 titulo_general_funcion">Portal de Comunicación </h5>
     <div class="mt-5 card">
         @can('configuracion_empleados_create')
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Lista de Empleados</strong></h3>
-            </div>
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modalempleado', ['model' => 'Vulnerabilidad', 'route' =>

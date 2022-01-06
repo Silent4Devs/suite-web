@@ -79,27 +79,15 @@
 
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 
+    <div style="display:flex; justify-content:space-between;">
+        <h5 class="titulo_general_funcion">Análisis de Riesgos</h5>
+        <a href="{{ route('admin.home') }}" class="btn btn-success">
+            <i class="fas fa-chart-pie mr-2"></i>
+            Dashboard
+        </a>
+    </div>
+
     <div class="mt-5 card">
-        <div class="py-3 col-md-12 col-sm-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <div class="row">
-                <div class="col-4"></div>
-                <div class="col-4 justify-content-center text-center">
-                    <h3 class="mb-2 text-center text-white d-inline-block">
-                        <strong>
-                            Análisis de Riesgos
-                        </strong>
-                    </h3>
-                </div>
-                <div class="col-4 justify-content-end pr-0" style="text-align:end">
-                    <span style="font-size:15px">
-                        <a href="{{ route('admin.home') }}" class="btn btn-success">
-                            <i class="fas fa-chart-pie mr-2"></i>
-                            Dashboard
-                        </a>
-                    </span>
-                </div>
-            </div>
-        </div>
         <div class="card-body">
             <nav>
                 <div class="nav nav-tabs" id="tabsAnalisisRiesgos" role="tablist">

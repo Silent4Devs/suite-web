@@ -103,18 +103,13 @@
 
 
 
-   
+
 </style>
 
 
-
+<h5 class="col-12 titulo_general_funcion"> Calendario de {{ $nombre_organizacion }} </h5>
 <div class="card" style="margin-top:50px;">
-  <div class="col-md-9 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-10px; ">
-      {{-- <h3 class="mb-2  text-center text-white"><strong>Calendario de {{ $nombre_organizacion }}</strong></h3> --}}
-      <h3 class="mb-2 text-center text-white"
-                style="background: #345183;color: white !important;padding: 3px;border-radius: 8px;"><strong>Calendario de {{ $nombre_organizacion }}</strong>
-      </h3>
-  </div>
+
 
         <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
             style="margin-top:0px !important; ">
@@ -347,7 +342,7 @@
                         <font style="font-weight: bold;">Cumpleaños:</font> ${@json(\Carbon\Carbon::parse($cumple->cumpleaños)->format('d-m'))}<br>
                         <font style="font-weight: bold;">Area:</font> ${@json($cumple->area->area)}<br>
                         <font style="font-weight: bold;">Puesto:</font> ${@json($cumple->puesto)}<br>
-                        
+
                     `,
                 },
             @endforeach
@@ -367,7 +362,7 @@
                         <font style="font-weight: bold;">Aniversario:</font> ${@json(\Carbon\Carbon::parse($aniversario->antiguedad)->format('d-m'))}<br>
                         <font style="font-weight: bold;">Area:</font> ${@json($aniversario->area->area)}<br>
                         <font style="font-weight: bold;">Puesto:</font> ${@json($aniversario->puesto)}<br>
-                        
+
                     `,
                 },
             @endforeach
