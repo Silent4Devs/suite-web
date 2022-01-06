@@ -220,11 +220,8 @@
 
     {{ Breadcrumbs::render('admin.planTrabajoBase.index') }}
 
-
+    <h5 class="col-12 titulo_general_funcion">Plan de Implementación ISO 27001 </h5>
     <div class="mt-5 mb-5">
-        <div class="py-3 col-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Plan de Implementación ISO 27001</strong></h3>
-        </div>
         <div id="bloqueado"></div>
 
         <div class="botones_vistas_gantt">

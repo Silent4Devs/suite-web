@@ -372,11 +372,9 @@
 @endsection
 
 @section('content')
-    <div class="text-center">
-        <h1 class="mb-4 text-2xl font-black leading-tight md:text-2xl lg:text-3xl">
-            Organigrama de {{ $organizacion }}
-        </h1>
-    </div>
+
+        <h5 class="col-12 titulo_general_funcion">Organigrama de {{ $organizacion }} </h5>
+
 
 
     <!-- component -->

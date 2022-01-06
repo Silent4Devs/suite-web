@@ -1,10 +1,12 @@
 @extends('layouts.admin')
 @section('content')
     {{-- @can('planes_accion_access') --}}
+
+    <h5 class="col-12 titulo_general_funcion">Planes de acción </h5>
+
+
     <div class="mt-3 card">
-        <div class="" style="display:flex; justify-content:center">
-                <h3 class="text-center text-white mt-4" style="background: #345183;color: white !important;padding: 5px;border-radius: 8px; width:90%;"><strong>Planes de acción </strong></h3>
-        </div>
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100" id="tblPlanesAccion">
