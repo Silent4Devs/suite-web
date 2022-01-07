@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\ComunicacionSgi;
 use App\Models\Documento;
 use App\Models\Empleado;
-use App\Models\Area;
 use App\Models\FelicitarCumpleaños;
 use App\Models\Organizacione;
 use Carbon\Carbon;

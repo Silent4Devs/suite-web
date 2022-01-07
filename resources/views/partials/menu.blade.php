@@ -903,7 +903,7 @@
         </style>
         <div class="text-center botones_g_s" style="margin-top: 80px;">
             <a href="{{ route('admin.soporte.index') }}" title="Soporte" style="margin-right:14px;"><i class="bi bi-headset"></i></a>
-            <a href="{{ route('admin.glosarios.index') }}" title="Glosario"><i class="bi bi-book"></i></a>
+            <a href="{{ route('admin.glosarios.render') }}" title="Glosario"><i class="bi bi-book"></i></a>
         </div>
 
         <div class="row lemnt_row_menu" style="padding-bottom:300px;">
