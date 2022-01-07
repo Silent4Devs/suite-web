@@ -2,12 +2,8 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.politica-sgsis.create') }}
-
+<h5 class="col-12 titulo_general_funcion">Registrar: Política SGSI</h5>
 <div class="mt-4 card">
-    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Política SGSI </h3>
-    </div>
-
     <div class="card-body">
         <form method="POST" action="{{ route("admin.politica-sgsis.store") }}" enctype="multipart/form-data">
             @csrf

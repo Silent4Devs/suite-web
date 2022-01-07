@@ -111,10 +111,8 @@
         enctype="multipart/form-data">
         @method('PUT')
         @csrf
+        <h5 class="col-12 titulo_general_funcion">Editar: Indicadores SGSI</h5>
         <div class="mt-4 card">
-            <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-                <h3 class="mb-1 text-center text-white"><strong> Editar: </strong>Indicadores SGSI</h3>
-            </div>
             <div class="card-body">
                 <div class="row">
                     <div class="form-group col-sm-4">

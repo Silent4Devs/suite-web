@@ -2,12 +2,8 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
-
+    <h5 class="col-12 titulo_general_funcion">Editar: Matriz de Requisitos Legales</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px">
-            <h3 class="mb-1 text-center text-white"><strong>Editar:</strong> Matriz de Requisitos Legales </h3>
-        </div>
-
         <div class="card-body">
             <form method="POST" class="row"
                 action="{{ route('admin.matriz-requisito-legales.update', [$matrizRequisitoLegale->id]) }}"

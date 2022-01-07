@@ -36,9 +36,9 @@
     </style>
 @endsection
 {{ Breadcrumbs::render('admin.politicaSgsis.visualizacion') }}
+<h5 class="col-12 titulo_general_funcion">Politícas de la Organización: <strong> {{$organizacions->empresa}}</h5>
 <div class="card card-body" style="">
-    <h3 class="mb-5 text-center text-white" style="margin-top: -80px;background: #345183;color: white !important;padding: 5px;border-radius: 8px;">Politícas de la Organización: <strong> {{$organizacions->empresa}}</strong>
-    </h3>
+
     <div class="row" style="border-bottom: 2px solid #ccc;">
         <div class="col-12 caja_titulo">
             <h3>Policita SGSI</h3>

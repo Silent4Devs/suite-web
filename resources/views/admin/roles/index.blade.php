@@ -37,11 +37,11 @@
     @can('role_create')
 
 
-
+        <h5 class="col-12 titulo_general_funcion">Roles</h5> 
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+            {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Roles</strong></h3>
-            </div>
+            </div> --}}
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modalroles', ['model' => 'Role', 'route' => 'admin.vulnerabilidads.parseCsvImport'])

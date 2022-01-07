@@ -1,11 +1,8 @@
 @extends('layouts.admin')
 @section('content')
     {{ Breadcrumbs::render('perfil-puesto-show', $puesto) }}
+    <h5 class="col-12 titulo_general_funcion">Perfil de Puesto</h5>
     <div class="card mt-4">
-        <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1  text-center text-white"><strong>Perfil de Puesto</strong></h3>
-        </div>
-
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
