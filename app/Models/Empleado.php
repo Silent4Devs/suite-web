@@ -432,26 +432,32 @@ class Empleado extends Model
     {
         return $this->hasMany(Puesto::class, 'id_reporta');
     }
-    public function getObtenerAntiguedadAttribute(){
+
+    public function getObtenerAntiguedadAttribute()
+    {
         $antiguedad = $this->calcularAntiguedad($this->antiguedad);
         $mensaje = '';
         // dd($antiguedad->format('%d'));
         if ($antiguedad->format('%Y') != '00') {
-           $mensaje.="{$antiguedad->format('%Y')} años  ";
+            $mensaje .= "{$antiguedad->format('%Y')} años  ";
         }
         if ($antiguedad->format('%m') != '0') {
-            $mensaje.="{$antiguedad->format('%m')} meses  ";
+            $mensaje .= "{$antiguedad->format('%m')} meses  ";
         }
         if ($antiguedad->format('%d') != '0') {
-            $mensaje.="{$antiguedad->format('%d')} días";
+            $mensaje .= "{$antiguedad->format('%d')} días";
         }
+
         return $mensaje;
         // return "Tiene {$antiguedad->format('%Y')} años, {$antiguedad->format('%m')} meses y {$antiguedad->format('%d')} días";
     }
-    private function calcularAntiguedad($fecha){
-        $fecha_nac = new DateTime(date('Y/m/d',strtotime($fecha))); // Creo un objeto DateTime de la fecha ingresada
-        $fecha_hoy =  new DateTime(date('Y/m/d',time())); // Creo un objeto DateTime de la fecha de hoy
-        $edad = date_diff($fecha_hoy,$fecha_nac); // La funcion ayuda a calcular la diferencia, esto seria un objeto
+
+    private function calcularAntiguedad($fecha)
+    {
+        $fecha_nac = new DateTime(date('Y/m/d', strtotime($fecha))); // Creo un objeto DateTime de la fecha ingresada
+        $fecha_hoy = new DateTime(date('Y/m/d', time())); // Creo un objeto DateTime de la fecha de hoy
+        $edad = date_diff($fecha_hoy, $fecha_nac); // La funcion ayuda a calcular la diferencia, esto seria un objeto
+
         return $edad;
-        }
+    }
 }

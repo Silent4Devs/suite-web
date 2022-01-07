@@ -14,7 +14,6 @@ class CreateAceptoPoliticaTable extends Migration
     public function up()
     {
         Schema::create('acepto_politica', function (Blueprint $table) {
-
             $table->id();
 
             $table->unsignedInteger('id_politica');
