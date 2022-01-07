@@ -34,6 +34,7 @@ use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
+use App\Models\Organizacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -146,6 +147,7 @@ class InicioUsuarioController extends Controller
         $mis_evaluaciones = new EvaluadoEvaluador;
         $lista_evaluaciones = collect();
         $last_evaluacion = collect();
+        $esLider = false;
         $equipo_a_cargo = collect();
         $equipo_trabajo = collect();
         $supervisor = null;
@@ -198,6 +200,7 @@ class InicioUsuarioController extends Controller
             // dd($lista_evaluaciones);
             // SECCION MIS DATOS
             if ($usuario->empleado->children->count()) {
+                $esLider = true;
                 $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
                 $equipo_a_cargo = Empleado::find($equipo_a_cargo);
             } else {
@@ -223,7 +226,9 @@ class InicioUsuarioController extends Controller
 
         $cumpleaños_felicitados_comentarios = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', false)->where('comentarios', '!=', null)->get();
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios', 'cumpleaños_felicitados_like_usuarios'));
+        $organizacion = Organizacion::first();
+
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios', 'cumpleaños_felicitados_like_usuarios', 'esLider', 'organizacion'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)

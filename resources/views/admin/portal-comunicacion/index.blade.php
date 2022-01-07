@@ -162,10 +162,8 @@
 
 
         .titulo-seccion {
-            font-weight: bolder;
-            font-size: 15pt;
+            font-size: 20px;
             margin-bottom: 0px;
-            color: #345183;
             border-bottom: 2px solid #ccc;
             padding-bottom: 7px;
             padding-left: 20px;
@@ -275,7 +273,6 @@
             display: flex;
             align-items: center;
             position: relative;
-            background-color: #f0f0f0;
             padding: 0px 20px;
             padding-top: 7px;
             box-sizing: border-box;
@@ -289,30 +286,41 @@
         .icon_doc {
             display: flex;
             align-items: center;
-            width: 10%;
+            width: 20%;
         }
 
         .icon_doc i {
             font-size: 50pt;
-            color: #B30909;
+            color: #1E94A8;
             transition: 0.1s;
         }
 
         .icon_doc i:hover {
             transform: scale(1.1);
-            filter: brightness(1.5);
+            filter: brightness(1.2);
         }
 
         .text_doc {
-            width: 70%;
+            width: 60%;
         }
 
         .text_doc h5 {
-            font-weight: bold;
+            font-size: 16px;
+        }
+        .text_doc p{
+            font-size: 12px;
+        }
+        .text_doc .badge{
+            background-color: #1E94A8;
+            color: #fff;
         }
 
         .opciones_doc {
             width: 20%;
+            text-align: right;
+        }
+        .opciones_doc {
+            font-size: 12px;
         }
 
         .img_empleado {
@@ -326,7 +334,8 @@
         .cuadro_empleados {
             position: sticky;
             top: 56px;
-            height: 600px;
+            height: auto;
+            max-height: 600px;
             overflow-y: auto;
         }
 
@@ -520,13 +529,13 @@
                                         <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');">
                                         </div>
                                         <div class="text_comunicado">
-                                            <h4 class="w-100">{{ $comunicacionSgi->titulo }}</h4>
+                                            <h4 class="w-100 mb-4" style="font-size:16px;">{{ $comunicacionSgi->titulo }}</h4>
 
                                             <div
-                                                style="text-align:left !important; overflow:hidden; height:100px !important; background-color:#EEE; !important; padding:10px; display:block !important; justify-content:start !important;">
+                                                style="text-align:left !important; overflow:hidden; height:100px !important;  padding:0px; display:block !important; justify-content:start !important;">
                                                 {!! $comunicacionSgi->descripcion !!}
                                             </div>
-                                            <a href="{{ asset('admin/comunicacion-sgis/' . $comunicacionSgi->id) }}">Leer
+                                            <a href="{{ asset('admin/comunicacion-sgis/' . $comunicacionSgi->id) }}" style="font-size:12px;">Leer
                                                 más</a>
                                         </div>
                                     </div>
@@ -564,14 +573,14 @@
                                                 10/10/21.
                                             </p>
                                             <p>
-                                                <span class="badge badge-dark"
+                                                <span class="badge"
                                                     style="text-transform: capitalize">{{ $documento->tipo }}</span>
                                                 @if ($documento->macroproceso_id)
-                                                    <span class="badge badge-primary"
+                                                    <span class="badge"
                                                         style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
                                                 @endif
                                                 @if ($documento->proceso_id)
-                                                    <span class="badge badge-success"
+                                                    <span class="badge"
                                                         style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
                                                 @endif
                                                 <span style="color:red; margin-left:20px;"><i class="fas fa-eye"></i>
@@ -579,8 +588,8 @@
                                             </p>
                                         </div>
                                         <div class="opciones_doc">
-                                            <h6><strong>Responsable:</strong></h6>
-                                            <img src="{{ asset('storage/empleados/imagenes/' . $documento->responsable->foto) }}"
+                                            <p>Responsable:</p>
+                                            <img src="{{ asset('storage/empleados/imagenes/' . $documento->responsable->avatar) }}"
                                                 class="img_empleado" title="{{ $documento->responsable->name }}"><br />
                                             <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver
                                                 documento</a>
