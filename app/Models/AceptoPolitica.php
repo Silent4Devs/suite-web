@@ -20,7 +20,6 @@ class AceptoPolitica extends Model
         'deleted_at',
     ];
 
-
     public function aceptador()
     {
         return $this->belongsTo(Empleado::class, 'id_empleado');
