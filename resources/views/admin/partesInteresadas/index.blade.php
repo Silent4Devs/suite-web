@@ -130,17 +130,20 @@
                         {{-- <th width="10">
 
                         </th> --}}
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.partesInteresada.fields.id') }}
-                        </th>
-                        <th>
+                        </th> --}}
+                        <th style="word-break:keep-all;">
                             {{ trans('cruds.partesInteresada.fields.parteinteresada') }}
                         </th>
-                        <th>
+                        <th style=" word-break:keep-all;">
                             {{ trans('cruds.partesInteresada.fields.requisitos') }}
                         </th>
-                        <th>
+                        <th style="">
                             Cláusula
+                        </th>
+                        <th style="">
+                            Norma
                         </th>
                         <th>
                             Opciones
@@ -394,12 +397,8 @@
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 ajax: "{{ route('admin.partes-interesadas.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
                         data: 'parteinteresada',
-                        name: 'parteinteresada'
+                        name: 'parteinteresada',
                     },
                     {
                         data: 'requisitos',
@@ -419,6 +418,10 @@
                             html += '</ul>';
                             return html
                         }
+                    },
+                    {
+                        data: 'norma',
+                        name: 'norma'
                     },
                     {
                         data: 'actions',

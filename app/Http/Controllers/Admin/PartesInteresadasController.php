@@ -22,7 +22,7 @@ class PartesInteresadasController extends Controller
         abort_if(Gate::denies('partes_interesada_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PartesInteresada::with(['team', 'clausulas'])->select(sprintf('%s.*', (new PartesInteresada)->table))->orderByDesc('id');
+            $query = PartesInteresada::with('clausulas')->select('*')->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -43,9 +43,9 @@ class PartesInteresadasController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
+            // $table->editColumn('id', function ($row) {
+            //     return $row->id ? $row->id : '';
+            // });
             $table->editColumn('parteinteresada', function ($row) {
                 return $row->parteinteresada ? $row->parteinteresada : '';
             });
@@ -54,6 +54,10 @@ class PartesInteresadasController extends Controller
             });
             $table->editColumn('clausala', function ($row) {
                 return $row->clausulas ? $row->clausulas : '';
+            });
+
+            $table->editColumn('norma', function ($row) {
+                return $row->clausulas ? $row->clausulas[0]->modulo : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

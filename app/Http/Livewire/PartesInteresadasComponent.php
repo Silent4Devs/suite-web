@@ -2,15 +2,18 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Clausula;
+use App\Models\Norma;
 use Livewire\Component;
 
 class PartesInteresadasComponent extends Component
 {
-    public $clausulas, $norma_id, $parteinteresada;
+    public $clausulas, $norma_id, $parteinteresada, $value, $normas;
 
-    public function mount($clausulas)
+    public function mount()
     {
-        $this->clausulas = $clausulas;
+        $this->normas = Norma::get();
+        $this->value == false;
     }
 
     public function render()
@@ -20,8 +23,21 @@ class PartesInteresadasComponent extends Component
 
     public function UpdatedNormaId($norma)
     {
-        $this->norma_id = $norma;
-        $this->parteinteresada = "";
-        $this->dispatchBrowserEvent('formulario-updated');
+        switch ($norma) {
+            case '1':
+                $this->value = true;
+                $this->clausulas = Clausula::where('modulo', 'iso27001')->get();
+                $this->dispatchBrowserEvent('norma-updated');
+                break;
+            case '2':
+                $this->value = true;
+                $this->clausulas = Clausula::where('modulo', 'iso9001')->get();
+                $this->dispatchBrowserEvent('norma-updated');
+                break;
+            default:
+                $this->value = false;
+                $this->dispatchBrowserEvent('norma-updated');
+                break;
+        }
     }
 }
