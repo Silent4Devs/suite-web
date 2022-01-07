@@ -7,11 +7,8 @@
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
+    <h5 class="col-12 titulo_general_funcion">Editar: Análisis de Riesgo</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Análisis de Riesgo</h3>
-        </div>
-
         <div class="card-body">
             <form method="POST" action="{{ route('admin.analisis-riesgos.update', [$analisis->id]) }}"
                 enctype="multipart/form-data">
