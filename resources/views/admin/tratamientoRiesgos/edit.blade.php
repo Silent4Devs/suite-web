@@ -2,12 +2,8 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.tratamiento-riesgos.create') }}
-
+<h5 class="col-12 titulo_general_funcion">Editar: Tratamiento de los Riesgos</h5>
 <div class="mt-4 card">
-    <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Tratamiento de los Riesgos </h3>
-    </div>
-
     <div class="card-body">
         <form method="POST" class="row" action="{{ route("admin.tratamiento-riesgos.update", [$tratamientoRiesgo->id]) }}" enctype="multipart/form-data">
             @method('PUT')

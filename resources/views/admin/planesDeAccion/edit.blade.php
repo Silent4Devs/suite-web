@@ -1,11 +1,8 @@
 @extends('layouts.admin')
 @section('content')
     {{-- @can('planes_accion_create') --}}
+    <h5 class="col-12 titulo_general_funcion">Editar - {{ $planImplementacion->parent }}</h5>
     <div class="pb-4 mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Editar -
-                    {{ $planImplementacion->parent }}</strong></h3>
-        </div>
         <div class="container">
             <form method="POST" action="{{ route('admin.planes-de-accion.update', $planImplementacion) }}">
                 @csrf
