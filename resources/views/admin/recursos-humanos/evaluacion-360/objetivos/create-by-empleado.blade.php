@@ -67,11 +67,8 @@
 
     </style>
     {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
-
+    <h5 class="col-12 titulo_general_funcion">Asignar Objetivos Estratégicos</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Asignar </strong> Objetivos Estratégicos </h3>
-        </div>
         <div class="card-body">
             <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
                 enctype="multipart/form-data" class="mt-3 row">

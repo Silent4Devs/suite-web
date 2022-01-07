@@ -1,11 +1,8 @@
 @extends('layouts.admin')
 @section('content')
     {{ Breadcrumbs::render('perfil-puesto-edit', $puesto) }}
+    <h5 class="col-12 titulo_general_funcion"> Editar: Puesto</h5>
     <div class="card mt-4">
-        <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Puesto </h3>
-        </div>
-
         <div class="card-body">
             <form method="POST" action="{{ route('admin.puestos.update', [$puesto->id]) }}" enctype="multipart/form-data">
                 @method('PUT')

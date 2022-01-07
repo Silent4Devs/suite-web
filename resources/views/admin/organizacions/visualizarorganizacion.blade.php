@@ -73,13 +73,8 @@
     </style>
 
 {{ Breadcrumbs::render('admin.visualizarorganizacion') }}
-
+    <h5 class="col-12 titulo_general_funcion"> Organización {{ $organizacion->empresa }} </h5>
     <div class="justify-content-center row m-0">
-        <div class="col-sm-8 col-md-8 col-lg-8">
-            <div style="margin-top:-50px;" class="mb-3">
-                <h3 class="mb-2 text-center text-white" style="background: #345183;color: white !important;padding: 5px;border-radius: 8px;"><strong>Organización {{ $organizacion->empresa }}</strong></h3>
-            </div>
-        </div>
     </div>
         @if (!is_null($organizacion))
         <div class="card-body card">

@@ -186,11 +186,10 @@
         }
 
     </style>
+    <h5 class="col-12 titulo_general_funcion">Editar: Empleado</h5>
     <div class="mt-4 card">
         @if ($isEditAdmin)
-            <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-                <h3 class="mb-1 text-center text-white"><strong> Editar: </strong>Empleado </h3>
-            </div>
+
             <div class="card-body">
                 <nav>
                     <div class="nav nav-tabs" id="tabsEmpleado" role="tablist">
