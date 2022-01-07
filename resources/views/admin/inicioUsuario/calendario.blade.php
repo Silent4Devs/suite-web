@@ -237,12 +237,12 @@
                 end: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[1])->format("Y-m-d") }}',
                 isReadOnly : true,
                 body: `
-                        <font style="font-weight: bold;">Categoria:</font> ${@json($it_recursos->tipo)}<br>
-                        <font style="font-weight: bold;">Inicio:</font> ${@json($it_recursos->fecha_curso)} horas<br>
-                        <font style="font-weight: bold;">Fin:</font> ${@json($it_recursos->fecha_fin)} horas<br>
-                        <font style="font-weight: bold;">Duración:</font> ${@json($it_recursos->duracion)} horas<br>
-                        <font style="font-weight: bold;">Instructor:</font> ${@json($it_recursos->instructor)}<br>
-                        <font style="font-weight: bold;">${@json($it_recursos->modalidad)=='presencial' ? 'Ubicación' : 'Link'}: </font>${@json($it_recursos->modalidad)=='presencial' ? @json($it_recursos->ubicacion) : '<a href="'+@json($it_recursos->ubicacion)+'">'+@json($it_recursos->ubicacion)+'</a> '} <br>
+                        <font style="font-weight: bold;">Categoria:</font> ${@json($evento->tipo)}<br>
+                        <font style="font-weight: bold;">Inicio:</font> ${@json($evento->fecha_curso)} horas<br>
+                        <font style="font-weight: bold;">Fin:</font> ${@json($evento->fecha_fin)} horas<br>
+                        <font style="font-weight: bold;">Duración:</font> ${@json($evento->duracion)} horas<br>
+                        <font style="font-weight: bold;">Instructor:</font> ${@json($evento->instructor)}<br>
+                        <font style="font-weight: bold;">${@json($evento->modalidad)=='presencial' ? 'Ubicación' : 'Link'}: </font>${@json($evento->modalidad)=='presencial' ? @json($evento->ubicacion) : '<a href="'+@json($evento->ubicacion)+'">'+@json($evento->ubicacion)+'</a> '} <br>
                     `,
                 },
             @endforeach

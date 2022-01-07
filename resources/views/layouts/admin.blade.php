@@ -336,7 +336,8 @@
         }
 
         table.dataTable thead {
-            background: #F2F2F2 !important;
+            background: #345183 !important;
+            color: #fff !important;
         }
 
         table.dataTable tr th {
@@ -1022,7 +1023,7 @@
                                 @endif
                             </div>
                         </a>
-                        <div class="pt-0 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px;">
+                        <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
                             <div class="p-2">
                                 @if (auth()->user()->empleado)
                                     {{-- <img class="shadow rounded-circle"
@@ -1030,7 +1031,7 @@
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
                                         alt="" srcset=""> --}}
                                     <p class="m-0 text-muted mt-2" style="font-size:14px">
-                                        Hola, {{ auth()->user()->empleado->name }}</p>
+                                        Hola, <strong>{{ auth()->user()->empleado->name }}</strong></p>
                                 @else
                                     <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
                                 @endif
@@ -1041,8 +1042,7 @@
 
                                         <a style="all: unset; color: #747474; cursor: pointer;" class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
                                             href="{{ route('profile.password.edit') }}">
-                                            <i class="mr-1 fas fa-user-cog">
-                                            </i>
+                                            <i class="bi bi-gear"></i>
                                             Configurar Perfil
                                         </a>
 
@@ -1050,8 +1050,7 @@
                                 @endif
                                  &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>&nbsp;&nbsp;&nbsp;&nbsp;
                                 <a style="all: unset; color: #747474; cursor: pointer;" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                                    <i class="mr-1 fas fa-sign-out-alt">
-                                    </i> Salir
+                                    <i class="bi bi-box-arrow-right"></i> Salir
                                 </a>
                             </div>
                         </div>

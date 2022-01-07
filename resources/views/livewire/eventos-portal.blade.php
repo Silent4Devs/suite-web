@@ -10,12 +10,21 @@
         .titulo_acordeon_eventos{
             all: unset; 
             padding: 10px; 
-            font-weight: bold; 
-            font-size: 18px; 
+            font-size: 16px; 
             color:#747474;
         }
         .acordeon_separado{
             margin-top: 15px;
+        }
+
+        .titulos_acordeon_i_name_i{
+             cursor: pointer; 
+             display: flex; 
+             justify-content: space-between; 
+             align-items: center;
+        }
+        .titulos_acordeon_i_name_i span{
+            margin-right: 20px;
         }
     </style>
     
@@ -89,11 +98,12 @@
                     }" role="region">
 
                     <div
+                        class="titulos_acordeon_i_name_i"
                         x-on:click="expanded = !expanded"
-                        :aria-expanded="expanded" style=" cursor: pointer;">
+                        :aria-expanded="expanded">
                         <p class="titulo_acordeon_eventos"><i class="mr-3 far fa-user"></i>Nuevos ingresos</p>
-                        <span x-show="expanded" aria-hidden="true">&minus;</span>
-                        <span x-show="!expanded" aria-hidden="true">&plus;</span>
+                        <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
+                        <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
                     </div>
              
                     <div x-show="expanded" x-collapse>
@@ -144,11 +154,12 @@
                     }" role="region">
 
                     <div
+                        class="titulos_acordeon_i_name_i"
                         x-on:click="expanded = !expanded"
-                        :aria-expanded="expanded" style=" cursor: pointer;">
+                        :aria-expanded="expanded">
                         <p class="titulo_acordeon_eventos"><i class="mr-3 fas fa-birthday-cake"></i>Cumpleaños</p>
-                        <span x-show="expanded" aria-hidden="true">&minus;</span>
-                        <span x-show="!expanded" aria-hidden="true">&plus;</span>
+                        <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
+                        <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
                     </div>
              
                     <div x-show="expanded" x-collapse>
@@ -227,6 +238,9 @@
                                                         {{ $cumples_felicitados_like_contador_usuarios }}
                                                     </font>
                                                 @endif
+                                                
+                                                <i class="fas fa-spinner fa-spin" style="font-size: 15pt; background-color: rgba(255, 255, 255, 0.3); margin-left:-30px; position: absolute;" wire:loading>
+                                                </i>
                                             </button>
                                             <i class="fas fa-comment-dots btn_modal modal_comentarios" 
                                                 {{-- data-toggle="modal"
@@ -267,11 +281,12 @@
                     }" role="region">
 
                     <div
+                        class="titulos_acordeon_i_name_i"
                         x-on:click="expanded = !expanded"
-                        :aria-expanded="expanded" style=" cursor: pointer;">
+                        :aria-expanded="expanded">
                         <p class="titulo_acordeon_eventos"><i class="mr-3 fas fa-medal"></i>Aniversarios</p>
-                        <span x-show="expanded" aria-hidden="true">&minus;</span>
-                        <span x-show="!expanded" aria-hidden="true">&plus;</span>
+                        <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
+                        <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
                     </div>
              
                     <div x-show="expanded" x-collapse>
