@@ -1,29 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\iso9001;
 
-use App\Http\Controllers\Controller;
 use App\Models\Empleado;
-use App\Models\PlanImplementacion;
-use Carbon\Carbon;
+use App\Models\Iso9001\PlanImplementacion;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
 
-class PlanTrabajoBaseController extends Controller
+class PlanImplementacionNueveUnoController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gantt_path = 'storage/gantt/';
         $path = public_path($gantt_path);
-        $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
+        $json_code = json_decode(file_get_contents($path . '/gantt_inicial_9001.json'), true);
         $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
         $write_empleados = $json_code;
-        file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
+        file_put_contents($path . '/gantt_inicial_9001.json', json_encode($write_empleados));
 
-        $files = glob('storage/gantt/versiones/gantt_inicial*.json');
+        $files = glob('storage/gantt/versiones/gantt_inicial_9001*.json');
         $archivos_gantt = [];
 
         sort($files, SORT_NATURAL | SORT_FLAG_CASE);
@@ -35,23 +35,23 @@ class PlanTrabajoBaseController extends Controller
         $gant_readed = end($archivos_gantt);
         $file_gant = json_decode(file_get_contents($gant_readed), true);
         $empleados = Empleado::select('name')->get();
-        $name_file_gantt = 'gantt_inicial.json';
+        $name_file_gantt = 'gantt_inicial_9001.json';
         $texto = false;
 
-        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto'));
+        return view('iso9001.plantrabajobase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto'));
     }
 
-    public function showTarea($texto)
+    public function showTarea()
     {
-        abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $gantt_path = 'storage/gantt/';
         $path = public_path($gantt_path);
-        $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
+        $json_code = json_decode(file_get_contents($path . '/gantt_inicial_9001.json'), true);
         $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
         $write_empleados = $json_code;
-        file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
+        file_put_contents($path . '/gantt_inicial_9001.json', json_encode($write_empleados));
 
-        $files = glob('storage/gantt/versiones/gantt_inicial*.json');
+        $files = glob('storage/gantt/versiones/gantt_inicial_9001*.json');
         $archivos_gantt = [];
 
         sort($files, SORT_NATURAL | SORT_FLAG_CASE);
@@ -63,10 +63,11 @@ class PlanTrabajoBaseController extends Controller
         $gant_readed = end($archivos_gantt);
         $file_gant = json_decode(file_get_contents($gant_readed), true);
         $empleados = Empleado::select('name')->get();
-        $name_file_gantt = 'gantt_inicial.json';
+        $name_file_gantt = 'gantt_inicial_9001.json';
         $sinTexto = true;
+        $texto = true;
 
-        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto', 'sinTexto'));
+        return view('iso9001.plantrabajobase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt',  'sinTexto', 'texto'));
     }
 
     public function saveImplementationProyect(Request $request)
@@ -163,7 +164,7 @@ class PlanTrabajoBaseController extends Controller
             Storage::disk('public')->put('gantt/tmp/ganttTemporal.json', $proyecto);
             $gantt_path = 'storage/gantt/';
             $path = public_path($gantt_path);
-            $files = glob($path . 'gantt_inicial*.json');
+            $files = glob($path . 'gantt_inicial_9001*.json');
             $archivos_gantt = [];
 
             sort($files, SORT_NATURAL | SORT_FLAG_CASE);

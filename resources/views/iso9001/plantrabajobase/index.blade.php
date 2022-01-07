@@ -69,9 +69,9 @@
 
 
         /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  fill: #fff !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  height: 15px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              fill: #fff !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              height: 15px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             }*/
 
 
         #workSpace {
@@ -93,7 +93,7 @@
 
         .icons_propios_gantt.guardar {
             transform: scale(1.5);
-            color: #345183 !important;
+            color: #00abb2 !important;
         }
 
 
@@ -108,24 +108,24 @@
             display: inline-block;
             padding: 5px 10px;
             background-color: #fff;
-            color: #345183;
+            color: #00abb2;
             font-size: 9pt;
             cursor: pointer;
-            border: 1px solid #345183;
+            border: 1px solid #00abb2;
             border-radius: 5px;
             text-align: center;
             vertical-align: middle;
         }
 
         .botones_vistas_gantt a:hover {
-            border: 1px solid #345183;
-            background-color: #345183;
+            border: 1px solid #00abb2;
+            background-color: #00abb2;
             color: #fff;
         }
 
         .boton_activo {
-            border: 1px solid #345183 !important;
-            background-color: #345183 !important;
+            border: 1px solid #00abb2 !important;
+            background-color: #00abb2 !important;
             color: #fff !important;
         }
 
@@ -218,10 +218,13 @@
 
     </style>
 
-    {{ Breadcrumbs::render('admin.planTrabajoBase.index') }}
+    {{-- {{ Breadcrumbs::render('admin.planTrabajoBase.index') }} --}}
 
-    <h5 class="col-12 titulo_general_funcion">Plan de Implementación ISO 27001 </h5>
+
     <div class="mt-5 mb-5">
+        <div class="py-3 col-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+            <h3 class="mb-2 text-center text-white"><strong>Plan de Implementación ISO 9001</strong></h3>
+        </div>
         <div id="bloqueado"></div>
 
         <div class="botones_vistas_gantt">
@@ -320,7 +323,7 @@
         function obtenerBloqueo() {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.lockedPlan.getLockedToPlanTrabajo') }}",
+                url: "{{ route('lockedPlan.getLockedToPlanTrabajo') }}",
                 data: {
                     _token: "{{ csrf_token() }}",
                     "user_id": "{{ auth()->user()->id }}",
@@ -361,7 +364,7 @@
         function ponerBloqueo() {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.lockedPlan.setLockedToPlanTrabajo') }}",
+                url: "{{ route('lockedPlan.setLockedToPlanTrabajo') }}",
                 data: {
                     _token: "{{ csrf_token() }}"
                 },
@@ -374,7 +377,7 @@
         function estaBloqueado(event) {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.lockedPlan.isLockedToPlanTrabajo') }}",
+                url: "{{ route('lockedPlan.isLockedToPlanTrabajo') }}",
                 data: {
                     _token: "{{ csrf_token() }}"
                 },
@@ -402,7 +405,7 @@
         function removerBloqueo() {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.lockedPlan.removeLockedToPlanTrabajo') }}",
+                url: "{{ route('lockedPlan.removeLockedToPlanTrabajo') }}",
                 data: {
                     _token: "{{ csrf_token() }}"
                 },

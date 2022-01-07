@@ -40,7 +40,7 @@ export default class OrgChart {
     chart.dataset.options = JSON.stringify(opts);
     chart.setAttribute('class', 'orgchart' + (opts.chartClass !== '' ? ' ' + opts.chartClass : '') +
       (opts.direction !== 't2b' ? ' ' + opts.direction : ''));
-    console.log(typeof data);
+    console.log("type" + typeof data);
     if (typeof data === 'object') { // local json datasource
       this.buildHierarchy(chart, opts.ajaxURL ? data : this._attachRel(data, '00'), 0);
     } else if (typeof data === 'string' && data.startsWith('#')) { // ul datasource
