@@ -13634,7 +13634,7 @@ html:not([dir="rtl"]) .was-validated .custom-select:invalid, html:not([dir="rtl"
   flex-wrap: wrap;
   flex-shrink: 0;
   min-height: 56px;
-  background: #fff;
+  background: #345183;
   border-bottom: 1px solid #d8dbe0;
 }
 
@@ -14016,7 +14016,7 @@ html:not([dir="rtl"]) .c-header-nav .c-header-nav-link .badge, html:not([dir="rt
 
 .c-header .c-header-nav .c-header-nav-link,
 .c-header .c-header-nav .c-header-nav-btn {
-  color: rgba(0, 0, 21, 0.5);
+  color: #fff;
 }
 
 .c-header .c-header-nav .c-header-nav-link:hover, .c-header .c-header-nav .c-header-nav-link:focus,
@@ -25060,7 +25060,7 @@ body {
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.6;
-  color: #212529;
+  color: #747474;
   text-align: left;
   background-color: #f8fafc;
 }

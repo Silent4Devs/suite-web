@@ -245,7 +245,7 @@
         }
 
         .comunicado {
-            margin-top: 10px;
+            /*margin-top: 10px;*/
         }
 
         .img_comunicado {
@@ -510,7 +510,7 @@
                         </div>
                         <div class="mt-5 col-lg-12">
                             <div class="card card-body">
-                                <h2 class="titulo-seccion"><i class="mr-3 far fa-newspaper"></i>Comunicados</h2>
+                                <h2 class="titulo-seccion mb-3"><i class="mr-3 far fa-newspaper"></i>Comunicados</h2>
                                 @forelse($comunicacionSgis as $comunicacionSgi)
                                     <div class="comunicado" style="position:relative;">
                                         @php
@@ -539,6 +539,8 @@
                                                 más</a>
                                         </div>
                                     </div>
+
+                                    <hr style="margin: 18px 0;">
                                 @empty
                                     <div class="comunicado" style="position:relative;">
                                         <div class="img_comunicado"
@@ -595,6 +597,8 @@
                                                 documento</a>
                                         </div>
                                     </div>
+
+                                    <hr style="margin: 18px 0;">
                                 @empty
                                     <div class="comunicado" style="position:relative;">
                                         <div class="img_comunicado"

@@ -22,9 +22,26 @@
              display: flex; 
              justify-content: space-between; 
              align-items: center;
+             position: relative;
         }
         .titulos_acordeon_i_name_i span{
             margin-right: 20px;
+        }
+
+        .indicador_numero {
+            background-color: #3086AF;
+            color: #fff !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            margin: 0;
+            border-radius: 50px;
+            position: absolute;
+            top: 10px;
+            right: 30px;
         }
     </style>
     
@@ -101,7 +118,11 @@
                         class="titulos_acordeon_i_name_i"
                         x-on:click="expanded = !expanded"
                         :aria-expanded="expanded">
-                        <p class="titulo_acordeon_eventos"><i class="mr-3 far fa-user"></i>Nuevos ingresos</p>
+                        <p class="titulo_acordeon_eventos">
+                            <i class="mr-3 far fa-user"></i>
+                            Nuevos ingresos 
+                            <span class="indicador_numero">{{$nuevos_contador_circulo}}</span>
+                        </p>
                         <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
                         <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
                     </div>
@@ -157,7 +178,11 @@
                         class="titulos_acordeon_i_name_i"
                         x-on:click="expanded = !expanded"
                         :aria-expanded="expanded">
-                        <p class="titulo_acordeon_eventos"><i class="mr-3 fas fa-birthday-cake"></i>Cumpleaños</p>
+                        <p class="titulo_acordeon_eventos">
+                            <i class="mr-3 fas fa-birthday-cake"></i>
+                            Cumpleaños
+                            <span class="indicador_numero">{{$cumpleaños_contador_circulo}}</span>
+                        </p>
                         <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
                         <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
                     </div>
@@ -284,7 +309,11 @@
                         class="titulos_acordeon_i_name_i"
                         x-on:click="expanded = !expanded"
                         :aria-expanded="expanded">
-                        <p class="titulo_acordeon_eventos"><i class="mr-3 fas fa-medal"></i>Aniversarios</p>
+                        <p class="titulo_acordeon_eventos">
+                            <i class="mr-3 fas fa-medal"></i>
+                            Aniversarios
+                            <span class="indicador_numero">{{$aniversarios_contador_circulo}}</span>
+                        </p>
                         <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
                         <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
                     </div>
@@ -293,28 +322,27 @@
                         <div class="caja_nuevo">
                             @forelse($aniversarios as $aniversario)
 
-                                @if (\Carbon\Carbon::parse($aniversario->antiguedad)->format('Y') < $hoy->format('Y'))
-                                    <div class="nuevo">
-                                        <div class="img_nuevo">
-                                                <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
-                                                    class="img_empleado">
-                                        </div>
-                                        <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
-                                        <div class="datos_nuevo">
-                                            <p>{{ $aniversario->puesto }}<br>
-                                                @if (is_null($aniversario->area->area))
-                                                    No hay Area
-                                                @else
-                                                    {{ $aniversario->area->area }}
-                                                @endif
-                                            </p>
-                                            <h6 class="mt-3">Antigüedad</h6>
-                                            <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }}
-                                                año(s)
-                                            </span>
-                                        </div>
+                                <div class="nuevo">
+                                    <div class="img_nuevo">
+                                            <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
+                                                class="img_empleado">
                                     </div>
-                                @endif
+                                    <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
+                                    <div class="datos_nuevo">
+                                        <p>{{ $aniversario->puesto }}<br>
+                                            @if (is_null($aniversario->area->area))
+                                                No hay Area
+                                            @else
+                                                {{ $aniversario->area->area }}
+                                            @endif
+                                        </p>
+                                        <h6 class="mt-3">Antigüedad</h6>
+                                        <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }}
+                                            año(s)
+                                        </span>
+                                    </div>
+                                </div>
+                                
                             @empty
                                 <div class="nuevo">No hay aniversarios registrados en este mes.</div>
                             @endforelse
