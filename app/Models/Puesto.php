@@ -87,4 +87,9 @@ class Puesto extends Model
         return $this->belongsToMany('\App\Porcentaje', 'puesto_idioma_porcentaje_pivot')
             ->withPivot('id_porcentaje');
     }
+
+    public function competencia()
+    {
+        return $this->hasMany('App\Models\RH\Competencia', 'competencias_id', 'id');
+    }
 }

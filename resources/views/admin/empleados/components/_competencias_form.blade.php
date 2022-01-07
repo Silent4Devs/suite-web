@@ -2,7 +2,7 @@
     <div method="POST" action="{{ route('admin.empleados.storeResumen', [$empleado->id]) }}" id="formResumen">
         <div class="row">
             <div class="form-group col-sm-12 col-lg-12 col-md-12">
-                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
                     <span style="font-size: 17px; font-weight: bold;">
                         Resumen</span>
                 </div>
@@ -21,7 +21,7 @@
     </div>
 
 
-    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
         <span style="font-size: 17px; font-weight: bold;">
             Certificaciones</span>
     </div>
@@ -108,7 +108,7 @@
     <input type="hidden" name="certificado" value="" id="certificado">
 
 
-    <div class="mb-3 w-100 " style="border-bottom: solid 2px #0CA193;">
+    <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
         <span style="font-size: 17px; font-weight: bold;">
             Capacitaciones</span>
     </div>
@@ -201,7 +201,7 @@
 
 
 
-    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
         <span style="font-size: 17px; font-weight: bold;">
             Experiencia Profesional</span>
     </div>
@@ -293,7 +293,7 @@
     </div>
     <input type="hidden" name="experiencia" value="" id="experiencia">
 
-    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
         <span style="font-size: 17px; font-weight: bold;">
             Educación Académica</span>
     </div>
@@ -372,7 +372,7 @@
     <input type="hidden" name="educacion" value="" id="educacion">
 
     {{-- IDIOMAS --}}
-    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
         <span style="font-size: 17px; font-weight: bold;">
             Idiomas</span>
     </div>

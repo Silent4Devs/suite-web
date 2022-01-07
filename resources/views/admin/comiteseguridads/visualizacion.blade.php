@@ -20,7 +20,7 @@
             position: absolute;
             width: 400px;
             font-weight: bold;
-            color: #00abb2;
+            color: #345183;
             bottom: 0;
         }
 
@@ -50,10 +50,11 @@
     </style>
 @endsection
 {{ Breadcrumbs::render('admin.comiteseguridads.visualizacion') }}
+<h5 class="col-12 titulo_general_funcion">Comité de Seguridad</h5>
 <div class="card card-body" style="margin-top: -50PX;">
     <div class="row" style="border-bottom: 2px solid #ccc;">
         <div class="col-12 caja_titulo">
-            <h1>Comité de Seguridad</h1>
+            {{-- <h1>Comité de Seguridad</h1> --}}
 
             @php
                 use App\Models\Organizacion;

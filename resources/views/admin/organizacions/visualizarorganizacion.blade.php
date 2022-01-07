@@ -9,7 +9,7 @@
         select {
 
             border: none !important;
-            border-bottom: 1px solid #1BB0B0 !important;
+            border-bottom: 1px solid #345183 !important;
             border-radius: 0 !important;
             resize: none;
         }
@@ -50,7 +50,7 @@
             transition: 0.1s;
             cursor: pointer;
 
-            background-color: #1BB0B0;
+            background-color: #345183;
             width: 50px;
             height: 50px;
             border-radius: 100px;
@@ -73,13 +73,8 @@
     </style>
 
 {{ Breadcrumbs::render('admin.visualizarorganizacion') }}
-
+    <h5 class="col-12 titulo_general_funcion"> Organización {{ $organizacion->empresa }} </h5>
     <div class="justify-content-center row m-0">
-        <div class="col-sm-8 col-md-8 col-lg-8">
-            <div style="margin-top:-50px;" class="mb-3">
-                <h3 class="mb-2 text-center text-white" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Organización {{ $organizacion->empresa }}</strong></h3>
-            </div>
-        </div>
     </div>
         @if (!is_null($organizacion))
         <div class="card-body card">

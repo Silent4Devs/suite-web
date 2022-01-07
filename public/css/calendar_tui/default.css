@@ -242,3 +242,9 @@ body {
   text-align: center;
   color: #000;
 }
+
+
+.btn.btn-default.btn-sm.move-day, .btn.btn-default.btn-sm.move-today, #dropdownMenu-calendarType{
+    background-color: #345183 !important;
+    color: #fff !important;
+}

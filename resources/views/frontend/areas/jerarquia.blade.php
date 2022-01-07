@@ -55,7 +55,7 @@
         }
 
         .avatar {
-            border-color: #00abb2;
+            border-color: #345183;
         }
 
         .orgchart.r2l .avatar {
@@ -478,13 +478,13 @@
         .caja_btn_a a {
             padding: 15px;
             margin-top: 10px;
-            color: #008186;
+            color: #345183;
             display: inline-block;
         }
 
         .caja_btn_a a:hover,
         .btn_a_seleccionado {
-            border-bottom: 2px solid #00abb2;
+            border-bottom: 2px solid #345183;
             margin-bottom: -2px;
             margin-right: 10px;
         }
@@ -515,7 +515,7 @@
 
 
         {{-- <div class="flex justify-center -mt-16 md:justify-end">
-            <img class="object-cover w-20 h-20 border-2 rounded-full" style="border-color: #00abb2;"
+            <img class="object-cover w-20 h-20 border-2 rounded-full" style="border-color: #345183;"
                 src="{{ $org_foto }}">
         </div> --}}
         @if (is_null($areasTree))

@@ -61,11 +61,9 @@
     {{ Breadcrumbs::render('admin.comunicacion-sgis.show') }}
 
 
-
+    <h5 class="col-12 titulo_general_funcion">Comunicados</h5>
     <div class="mt-5 card" style="">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Comunicados</strong></h3>
-        </div>
+
         <div class=" card-body" style="">
 
             <div class="row" style="position: relative; height:35px;">
@@ -80,7 +78,7 @@
 
             <div class="row" id="impreso_row">
                 <div class="col-12">
-                    <h1 style="color:#00abb2;">{{ $comunicacionSgi->titulo }}</h1>
+                    <h1 style="color:#345183;">{{ $comunicacionSgi->titulo }}</h1>
                 </div>
                 <div class="mt-3 col-md-5">
                     @php

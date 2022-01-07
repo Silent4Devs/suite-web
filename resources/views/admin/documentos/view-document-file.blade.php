@@ -12,7 +12,7 @@
         .nuevo{
             text-align: center;
             background-color: #f3f3f3;
-            border-left: 2px solid #00abb2;
+            border-left: 2px solid #345183;
             margin-top: 10px;
             padding: 10px;
             width: 350px;
@@ -65,8 +65,9 @@
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
 
             @if($documento->archivo)
-                <h3 class="mb-2 text-center text-white"><strong>Vista del documento:
-                        {{ $documento->nombre }}</strong></h3>
+                <h5 class="col-12 titulo_general_funcion">Vista del documento: {{ $documento->nombre }}</h5>
+                {{-- <h3 class="mb-2 text-center text-white"><strong>Vista del documento:
+                        {{ $documento->nombre }}</strong></h3> --}}
                 @can('documentos_download')
                     <embed src="{{ asset($path_documento . '/' . $documento->archivo) }}" class="mt-5 w-100" style="height: 800px"
                         frameborder="0" id="pdf">
@@ -75,7 +76,8 @@
                         class="mt-5 w-100" style="height: 800px" frameborder="0" id="pdf">
                 @endcan
             @else
-                <h1>Documento no cargado</h1>
+            <h5 class="col-12 titulo_general_funcion">Documento no cargado</h5>
+                {{-- <h1>Documento no cargado</h1> --}}
             @endif
         </div>
 

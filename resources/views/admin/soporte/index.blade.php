@@ -90,7 +90,7 @@
 			color: #fff;
 		}
 		.contacto table thead tr{
-			background-color: #00abb2;
+			background-color: #345183;
 			transform: scale(1.01);
 			box-shadow: 0px 3px 5px -3px #000;
 		}
@@ -122,7 +122,7 @@
 		.icono_cerrar{
 			font-size: 40px;
 			cursor: pointer;
-			color: #00abb2;
+			color: #345183;
 			margin-top: -25px;
 		}
 		.icono_cerrar:hover{
@@ -130,7 +130,7 @@
 		}
 
 		.btn.btn-success:hover{
-			background-color:#00abb2 !important;
+			background-color:#345183 !important;
 			color:#fff !important;
 		}
 		.secundario_revelado .tabla_consultores{

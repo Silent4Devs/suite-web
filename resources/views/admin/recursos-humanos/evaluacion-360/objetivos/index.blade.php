@@ -3,10 +3,8 @@
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Objetivos') }}
     </div>
+    <h5 class="col-12 titulo_general_funcion">Asignar Objetivos Estratégicos</h5>
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Asignar Objetivos Estratégicos</strong></h3>
-        </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <div class="px-1 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
@@ -100,7 +98,7 @@
         aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background: #00abb2;color: white;">
+                <div class="modal-header" style="background: #345183;color: white;">
                     <h5 class="modal-title" id="modalCopiarObjetivosLabel"><i class="mr-2 fas fa-copy"></i>Copiar
                         Objetivos</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

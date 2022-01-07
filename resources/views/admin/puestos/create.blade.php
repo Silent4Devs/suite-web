@@ -1,14 +1,10 @@
 @extends('layouts.admin')
 @section('content')
 
-
     {{ Breadcrumbs::render('perfil-puesto-create') }}
+    <h5 class="col-12 titulo_general_funcion">Registrar: Puesto</h5>
     <div class="card mt-4">
-        <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Puesto</h3>
-        </div>
-
-        <div class="card-body">
+         <div class="card-body">
             <form method="POST" action="{{ route('admin.puestos.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row col-12">
@@ -68,6 +64,9 @@
                         </span>
                     @endif
                 </div>
+
+
+
                 <div class="row col-12">
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                         <label for="estudios"><i class="fas fa-file-signature iconos-crear"></i>Estudios<span
@@ -109,20 +108,8 @@
                             </span>
                         @endif
                     </div>
-                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="certificaciones"><i class="fas fa-file-signature iconos-crear"></i>Certificaciones<span
-                                class="text-danger">*</span></label>
-                        <textarea class="form-control date" type="text" name="certificaciones" id="certificaciones">
-                                            {{ old('certificaciones') }}
-                                        </textarea>
-                        @if ($errors->has('certificaciones'))
-                            <span class="text-danger">
-                                {{ $errors->first('certificaciones') }}
-                            </span>
-                        @endif
-                    </div>
-                </div>
-                <div class="row col-12">
+
+
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                         <label for="conocimientos_esp"><i class="fas fa-file-signature iconos-crear"></i>Conocimientos Especiales<span
                                 class="text-danger">*</span></label>
@@ -132,6 +119,20 @@
                         @if ($errors->has('conocimientos_esp'))
                             <span class="text-danger">
                                 {{ $errors->first('conocimientos_esp') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="row col-12">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        <label for="certificaciones"><i class="fas fa-file-signature iconos-crear"></i>Certificaciones<span
+                                class="text-danger">*</span></label>
+                        <textarea class="form-control date" type="text" name="certificaciones" id="certificaciones">
+                                            {{ old('certificaciones') }}
+                                        </textarea>
+                        @if ($errors->has('certificaciones'))
+                            <span class="text-danger">
+                                {{ $errors->first('certificaciones') }}
                             </span>
                         @endif
                     </div>
@@ -183,21 +184,27 @@
                         @endif
                     </div> --}}
                 </div>
+
+
+
                 <div class="row col-12">
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
                         <table class="table" id="user_table">
                             <tbody>
-                                <div class="">
+                                <div class="row col-12 p-0 m-0">
+                                    <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"><i class="fas fa-language iconos-crear"></i>
+                                        Idioma</label>
                                     <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"><i
-                                            class="fas fa-calendar-alt iconos-crear"></i>Idioma</label>
-                                    <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"><i
-                                            class="fas fa-clock iconos-crear"></i>Porcentaje</label>
+                                            class="far fa-percent iconos-crear"></i>Porcentaje</label>
                                 </div>
                             </tbody>
                             <tfoot></tfoot>
                         </table>
                     </div>
                 </div>
+
+
+
                 <div class="row col-12">
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
@@ -231,7 +238,7 @@
 
                     <div class="form-group col-sm-2 col-md-2 col-lg-2">
                         <label class="required" for="horario_inicio"><i class="fas fa-clock iconos-crear"></i>Horario</label>
-                               <input  class="form-control {{ $errors->has('horario_inicio') ? 'is-invalid' : '' }}" type="time" name="horario"
+                               <input  class="form-control {{ $errors->has('horario_inicio') ? 'is-invalid' : '' }}" type="time" name="horario_inicio"
                                     id="horario_inicio" value="{{ old('horario_inicio', '') }}" required>
                                 @if ($errors->has('horario_inicio'))
                                     <div class="invalid-feedback">
@@ -304,7 +311,29 @@
 
 
                 </div>
-                <div class="form-group col-12 text-right" style="margin-left:15px;">
+
+                {{-- <div class="mb-4 ml-4 w-100" >
+                    <span class="ml-1" style="font-size: 15px; font-weight: bold;">
+                        Competencias</span>
+                </div>
+
+                <div class="form-group col-sm-12">
+                    <label for="competencias"> <i class="fas fa-star iconos-crear"></i> Competencia(s)</label>
+                    <select class="form-control {{ $errors->has('competencias') ? 'is-invalid' : '' }}" name="competencias[]"
+                        id="competencias" multiple>
+                        <option value disabled >Selecciona una opción</option>
+                        @foreach ($competencias as $competencia)
+                            <option value="{{ $competencia->id }}">
+                                {{ $competencia->nombre }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <span class="errors tipo_error"></span>
+                </div> --}}
+
+
+
+                <div class="form-group col-12 text-right mt-4" style="margin-left:15px;">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
@@ -415,18 +444,23 @@
 
     <script>
         $(document).ready(function () {
+        const lenguajes=@json($idis);
+        console.log(lenguajes);
           var count = 1;
 
           dynamic_field(count);
 
           function dynamic_field(number) {
-            html = "<tr>";
-            html +=
-                '<td><select type="" name="first_name[]" class="form-control col-md-4" /></td>';
-            html +=
-                '<td><input type="text" name="last_name[]" class="form-control" /></td>';
-            //   html +=
-            //   '<td><input type="text" name="last_name[]" class="form-control" /></td>';
+            html = `<tr>
+                <td class="col-4">
+                <select  class="workingSelect form-control" id="working_day">`
+                lenguajes.forEach(lenguaje=>{
+                    html+=`<option value="${lenguaje.idioma}">${lenguaje.idioma}</option>`
+                })
+                html+=`</select>
+                </td>
+                <td><input type="text" name="last_name[]" class="form-control" /></td>`;
+
             if (number > 1) {
               html +=
                 '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Remove</button></td></tr>';
@@ -451,6 +485,114 @@
 
         });
       </script>
+
+      <script>
+
+        $(document).ready(function() {
+                $("#competencias").select2({
+                    theme: "bootstrap4",
+                });
+            });
+
+     </script>
+
+
+    <script>
+        CKEDITOR.replace('estudios', {
+            toolbar: [{
+            name: 'document',
+                items: [
+                    'Maximize', '-',
+                    'Styles', 'Format', 'Font', 'FontSize', '-',
+                    'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                    'Bold', 'Italic', 'Underline', 'Strike', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Undo', 'Redo', '-', 'Scayt', '-',
+                    'TextColor', 'BGColor', '-',
+                    'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                    'Outdent', 'Indent', '-',
+                    'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+                ]
+            }]
+        });
+    </script>
+    <script>
+        CKEDITOR.replace('experiencia', {
+            toolbar: [{
+            name: 'document',
+                items: [
+                    'Maximize', '-',
+                    'Styles', 'Format', 'Font', 'FontSize', '-',
+                    'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                    'Bold', 'Italic', 'Underline', 'Strike', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Undo', 'Redo', '-', 'Scayt', '-',
+                    'TextColor', 'BGColor', '-',
+                    'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                    'Outdent', 'Indent', '-',
+                    'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+                ]
+            }]
+        });
+    </script>
+    <script>
+        CKEDITOR.replace('conocimientos', {
+            toolbar: [{
+            name: 'document',
+                items: [
+                    'Maximize', '-',
+                    'Styles', 'Format', 'Font', 'FontSize', '-',
+                    'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                    'Bold', 'Italic', 'Underline', 'Strike', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Undo', 'Redo', '-', 'Scayt', '-',
+                    'TextColor', 'BGColor', '-',
+                    'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                    'Outdent', 'Indent', '-',
+                    'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+                ]
+            }]
+        });
+    </script>
+    <script>
+        CKEDITOR.replace('certificaciones', {
+            toolbar: [{
+            name: 'document',
+                items: [
+                    'Maximize', '-',
+                    'Styles', 'Format', 'Font', 'FontSize', '-',
+                    'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                    'Bold', 'Italic', 'Underline', 'Strike', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Undo', 'Redo', '-', 'Scayt', '-',
+                    'TextColor', 'BGColor', '-',
+                    'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                    'Outdent', 'Indent', '-',
+                    'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+                ]
+            }]
+        });
+    </script>
+
+    <script>
+        CKEDITOR.replace('conocimientos_esp', {
+            toolbar: [{
+            name: 'document',
+                items: [
+                    'Maximize', '-',
+                    'Styles', 'Format', 'Font', 'FontSize', '-',
+                    'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                    'Bold', 'Italic', 'Underline', 'Strike', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Undo', 'Redo', '-', 'Scayt', '-',
+                    'TextColor', 'BGColor', '-',
+                    'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                    'Outdent', 'Indent', '-',
+                    'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+                ]
+            }]
+        });
+    </script>
 
 
 @endsection

@@ -42,14 +42,12 @@
         {{ Breadcrumbs::render('EV360-Evaluacion-Cuestionario', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}
     </div>
     @include('partials.flashMessages')
+    <h5 class="col-12 titulo_general_funcion">Evaluación: {{ $evaluacion->nombre }}</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Evaluación: {{ $evaluacion->nombre }}</strong></h3>
-        </div>
         <div class="pt-0 card-body">
 
             <div>
-                <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     RESUMEN GENERAL
                 </div>
                 <div class="row">
@@ -145,7 +143,7 @@
                             <div class="row align-items-center justify-content-center">
                                 <div class="col-12">
                                     <div class="text-center form-group"
-                                        style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                                        style="background-color:#345183; border-radius: 100px; color: white;">
                                         SECCIÓN DE COMPETENCIAS
                                     </div>
                                     <section id="sectionCompetencias" class="mt-2" x-data="{show:true}">
@@ -270,7 +268,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="text-center form-group"
-                                            style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                                            style="background-color:#345183; border-radius: 100px; color: white;">
                                             SECCIÓN DE OBJETIVOS
                                         </div>
                                         <section class="mt-1" x-data="{show:true}">
@@ -413,7 +411,7 @@
                         <!-- Sección Firmas -->
                         <div class="mt-4">
                             <div class="text-center form-group"
-                                style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                                style="background-color:#345183; border-radius: 100px; color: white;">
                                 SECCIÓN DE FIRMAS
                             </div>
                             <h5 class="mt-3 head"><i class="mr-1 fas fa-signature"></i> Firmas</h5>

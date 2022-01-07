@@ -14,7 +14,7 @@
             position: absolute;
             width: 300px;
             font-weight: bold;
-            color: #00abb2;
+            color: #345183;
             bottom: 0;
         }
 
@@ -48,7 +48,7 @@
             height: 100px;
             margin: auto;
             margin-top: -50px;
-            background-color: #00abb2;
+            background-color: #345183;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -77,12 +77,8 @@
     </style>
 @endsection
 {{ Breadcrumbs::render('admin.portal-comunicacion.reportes') }}
-
+<h5 class="col-12 titulo_general_funcion">Generar Reportes</h5>
 <div class="card">
-
-    <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-        <h3 class="mb-2 text-center text-white"><strong>Generar Reportes</strong></h3>
-    </div>
     <div class=" card-body">
         <div class="row">
 

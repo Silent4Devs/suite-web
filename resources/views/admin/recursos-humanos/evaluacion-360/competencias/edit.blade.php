@@ -81,11 +81,8 @@
         }
 
     </style>
+    <h5 class="col-12 titulo_general_funcion">Editar: Competencia: ({{ $competencia->nombre }})</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Competencia: ({{ $competencia->nombre }})
-            </h3>
-        </div>
         <div class="card-body">
             <form id="formGrupo" method="POST" action="{{ route('admin.ev360-competencias.update', $competencia) }}"
                 class="mt-3 row">
@@ -108,7 +105,7 @@
         aria-labelledby="conductasModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header" style="background: #00abb2;color: white;">
+                <div class="modal-header" style="background: #345183;color: white;">
                     <h4 class="modal-title" id="conductasModalLabel"><i class="mr-1 fas fa-chalkboard-teacher"></i>
                         Conductas
                         Esperadas

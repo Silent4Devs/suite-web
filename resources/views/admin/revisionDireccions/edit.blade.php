@@ -2,12 +2,8 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.revision-direccions.create') }}
-
+<h5 class="col-12 titulo_general_funcion">Editar: Revisión por Dirección</h5>
 <div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Revisión por Dirección  </h3>
-    </div>
-
     <div class="card-body">
         <form method="POST" class="row" action="{{ route("admin.revision-direccions.update", [$revisionDireccion->id]) }}" enctype="multipart/form-data">
             @method('PUT')

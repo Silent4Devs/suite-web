@@ -60,11 +60,11 @@
     hr.hr-custom-title {
         width: 100px;
         margin: 8px 0;
-        border: 1px solid #008186
+        border: 1px solid #345183
     }
 
     .title-info-personal {
-        color: #008186;
+        color: #345183;
         text-transform: capitalize;
     }
 
