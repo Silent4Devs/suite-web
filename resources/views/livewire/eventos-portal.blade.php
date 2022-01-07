@@ -34,14 +34,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             padding: 0;
             margin: 0;
             border-radius: 50px;
             position: absolute;
-            top: 10px;
-            right: 30px;
+            top: 0px;
+            left: 25px;
+            font-size: 10px !important;
         }
     </style>
     
@@ -133,7 +134,7 @@
                                 <div class="nuevo">
                                     <div class="img_nuevo">
                                         <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
-                                            class="img_empleado">
+                                            class="">
                                     </div>
                                     <h5 class="nombre_nuevo">{{ $nuevo->name }}</h5>
                                     <div class="datos_nuevo">
@@ -193,7 +194,7 @@
                                 <div class="nuevo">
                                     <div class="img_nuevo">
                                             <img src="{{ asset('storage/empleados/imagenes/' . $cumple->avatar) }}"
-                                                class="img_empleado">
+                                                class="">
                                         
                                     </div>
                                     <h5 class="nombre_nuevo">{{ $cumple->name }}</h5>
@@ -325,7 +326,7 @@
                                 <div class="nuevo">
                                     <div class="img_nuevo">
                                             <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
-                                                class="img_empleado">
+                                                class="">
                                     </div>
                                     <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
                                     <div class="datos_nuevo">

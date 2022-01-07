@@ -81,7 +81,7 @@
         position: relative !important;
    }
    .dropdown-menu.show{
-        width: 250px !important;
+        width: 250px ;
    }
 
 
