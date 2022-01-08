@@ -22,11 +22,15 @@ class PortalComunicacionController extends Controller
     {
         $hoy = Carbon::now();
         $hoy->toDateString();
+
         $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+        $nuevos_contador_circulo = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->count();
 
         $cumpleaños = Empleado::whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+        $cumpleaños_contador_circulo = Empleado::whereMonth('cumpleaños', '=', $hoy->format('m'))->count();
 
-        $aniversarios = Empleado::whereMonth('antiguedad', '=', $hoy->format('m'))->get();
+        $aniversarios = Empleado::whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
+        $aniversarios_contador_circulo = Empleado::whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
 
         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
 
@@ -37,7 +41,7 @@ class PortalComunicacionController extends Controller
 
         $empleado_asignado = auth()->user()->n_empleado;
 
-        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'nuevos', 'cumpleaños', 'aniversarios', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado'));
+        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'nuevos', 'cumpleaños', 'aniversarios', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'nuevos_contador_circulo', 'cumpleaños_contador_circulo', 'aniversarios_contador_circulo'));
     }
 
     /**
