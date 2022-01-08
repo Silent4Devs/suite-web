@@ -85,7 +85,7 @@
             </a>
             <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}">
                 <i class="bi bi-person-bounding-box mr-2"></i> 
-                <span>Comité del SGSI</span>
+                <span>Comités</span>
             </a>
 
             @if ($empleado_asignado)

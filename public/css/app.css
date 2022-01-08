@@ -25059,7 +25059,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 body {
   margin: 0;
   font-family: "Roboto", sans-serif;
-  font-size: 0.9rem;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.6;
   color: #747474;
@@ -26964,7 +26964,7 @@ pre code {
   width: 100%;
   height: calc(1.6em + 0.75rem + 2px);
   padding: 0.375rem 0.75rem;
-  font-size: 0.9rem;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.6;
   color: #495057;
