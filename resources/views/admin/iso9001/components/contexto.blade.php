@@ -21,7 +21,7 @@
         <li><a href="{{ route('admin.matriz-requisito-legales.index') }}">
                 <div>
                     <i class="fas fa-balance-scale"></i>
-                    Matriz de requisitos legales
+                    Matriz de requisitos legales y regulatorios
                 </div>
             </a></li>
         <li><a href="{{ route('admin.entendimiento-organizacions.index') }}">

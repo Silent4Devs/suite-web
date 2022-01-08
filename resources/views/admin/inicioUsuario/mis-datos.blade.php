@@ -267,7 +267,6 @@
 <style>
     .logo {
         position: absolute;
-        height: 130px;
         width: 150px;
         top: 25px;
         left: 330px;
@@ -350,7 +349,7 @@
                 <div class="modal-content">
 
                     <div class="modal-body">
-                        <img src="{{asset($logotipo)}}" class="logo">
+                        <img src="{{ asset($logotipo) }}" class="logo">
                         <img class="img-responsive pastel" src="{{ asset('img/pastel.gif') }}" style="width: 100%;">
                     </div>
                     <div class="modal-footer">
@@ -1046,10 +1045,10 @@
         let pastel = @json($pastel);
         if (pastel) {
             $(window).on('load', function() {
-                /*if (!window.sessionStorage.getItem("mostrarModal")) {
-                    window.sessionStorage.setItem("mostrarModal", "no");*/
-                $('#Pastel').modal('show');
-                //}
+                if (!window.sessionStorage.getItem("mostrarModal")) {
+                    window.sessionStorage.setItem("mostrarModal", "no");
+                    $('#Pastel').modal('show');
+                }
             });
         }
     </script>
