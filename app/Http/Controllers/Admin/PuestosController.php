@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Area;
-use App\Models\Team;
-use App\Models\Puesto;
-use App\Models\Empleado;
-use App\Models\Language;
-use Illuminate\Http\Request;
-use App\Models\RH\Competencia;
 use App\Http\Controllers\Controller;
-use App\Models\PuestoResponsabilidade;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\StorePuestoRequest;
-use App\Http\Requests\UpdatePuestoRequest;
-use App\Models\PuestoIdiomaPorcentajePivot;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyPuestoRequest;
+use App\Http\Requests\StorePuestoRequest;
+use App\Http\Requests\UpdatePuestoRequest;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\Language;
+use App\Models\Puesto;
+use App\Models\PuestoIdiomaPorcentajePivot;
+use App\Models\PuestoResponsabilidade;
+use App\Models\RH\Competencia;
+use App\Models\Team;
+use Gate;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class PuestosController extends Controller
 {
@@ -155,7 +155,7 @@ class PuestosController extends Controller
         $reportas = Empleado::get();
         $idis = Language::all();
         $competencias = Competencia::all();
-        $responsabilidades=PuestoResponsabilidade::get();
+        $responsabilidades = PuestoResponsabilidade::get();
         // dd($idis);
 
         return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades'));
@@ -215,9 +215,9 @@ class PuestosController extends Controller
         $puesto->load('team');
         $competencias = Competencia::all();
         $idis = Language::all();
-        $responsabilidades=PuestoResponsabilidade::get();
+        $responsabilidades = PuestoResponsabilidade::get();
 
-        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias','idis','responsabilidades'));
+        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)
@@ -226,7 +226,6 @@ class PuestosController extends Controller
 
         $this->saveOrUpdateLanguage($request, $puesto);
         $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
-
 
         return redirect()->route('admin.puestos.index');
     }
@@ -265,15 +264,11 @@ class PuestosController extends Controller
 
     public function saveOrUpdateLanguage($request, $puesto)
     {
-
-            $id = $puesto->id;
+        $id = $puesto->id;
         $i = 0;
         if (isset($request->id_language)) {
-
             if (count($request->id_language)) {
                 foreach ($request->id_language as $w) {
-
-
                     if (isset($w['id'])) {
                         $model = PuestoIdiomaPorcentajePivot::where('id', $w['id']);
                         $registerAlreadyExists = $model->exists();
@@ -287,27 +282,23 @@ class PuestosController extends Controller
                                 ]);
                         }
                     } else {
-                        for($i=0; $i >=count($request->id_language); $i++){
+                        for ($i = 0; $i >= count($request->id_language); $i++) {
                             $language = PuestoIdiomaPorcentajePivot::create([
 
                                 'id_language'=> $w['language'][$i],
                                 'porcentaje'=> $w['porcentaje'][$i],
-                                'id_puesto'=>$id
+                                'id_puesto'=>$id,
                                 ]);
-                        echo($i);
+                            echo $i;
                         }
 
                         // }
                         // dd( $language);
                         // dd('Hola');
-
                     }
-
-
                 }
             }
         }
-
     }
 
     public function updateLanguage(Request $request, $language)
@@ -322,10 +313,10 @@ class PuestosController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Dato Actualizado']);
     }
 
-    public function deleteLanguage(Request $request,  $language)
+    public function deleteLanguage(Request $request, $language)
     {
-         $language = PuestoIdiomaPorcentajePivot::find( $language);
-         $language->delete();
+        $language = PuestoIdiomaPorcentajePivot::find($language);
+        $language->delete();
 
         return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
     }
@@ -340,45 +331,36 @@ class PuestosController extends Controller
         //     'puesto_id' => 'required|exists:puesto,id',
         // ]);
         // dd($request->all());
-            // dd($puesto);
-            // $puesto = Puesto::find(intval($puesto));
+        // dd($puesto);
+        // $puesto = Puesto::find(intval($puesto));
 
-            foreach($responsabilidades as $responsabilidad){
-                // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
-                if(PuestoResponsabilidade::find($responsabilidad['id']==null)){
-                    PuestoResponsabilidade::find($responsabilidad['id'])->update([
+        foreach ($responsabilidades as $responsabilidad) {
+            // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
+            if (PuestoResponsabilidade::find($responsabilidad['id'] == null)) {
+                PuestoResponsabilidade::find($responsabilidad['id'])->update([
                     'tiempo_asignado' => $responsabilidad['tiempo_asignado'],
                     'indicador' =>  $responsabilidad['indicador'],
                     'resultado' =>  $responsabilidad['resultado'],
                     'actividad' =>  $responsabilidad['actividad'],
                     ]);
-                }else{
-                    PuestoResponsabilidade::create([
+            } else {
+                PuestoResponsabilidade::create([
                         'puesto_id' => $puesto->id,
                         'tiempo_asignado' => $responsabilidad['tiempo_asignado'],
                         'indicador' =>  $responsabilidad['indicador'],
                         'resultado' =>  $responsabilidad['resultado'],
                         'actividad' =>  $responsabilidad['actividad'],
                     ]);
-                }
-
             }
-            // dd($responsabilidades);
-
-
-
-
+        }
+        // dd($responsabilidades);
     }
 
-
-
-    public function deleteResponsabilidades(Request $request,  $responsabilidades)
+    public function deleteResponsabilidades(Request $request, $responsabilidades)
     {
-         $responsabilidades = PuestoResponsabilidade::find( $responsabilidades);
-         $responsabilidades->delete();
+        $responsabilidades = PuestoResponsabilidade::find($responsabilidades);
+        $responsabilidades->delete();
 
         return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
     }
-
 }
-

@@ -93,7 +93,6 @@ class Puesto extends Model
         return $this->hasMany('App\Models\RH\Competencia', 'competencias_id', 'id');
     }
 
-
     public function responsabilidades()
     {
         return $this->hasMany('App\Models\PuestoResponsabilidade', 'puesto_id')->orderBy('id');

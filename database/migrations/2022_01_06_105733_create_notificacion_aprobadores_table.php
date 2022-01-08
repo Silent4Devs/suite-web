@@ -26,7 +26,6 @@ class CreateNotificacionAprobadoresTable extends Migration
             $table->string('correo_responsables')->nullable();
             $table->timestamps();
         });
-
     }
 
     /**

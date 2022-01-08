@@ -1,13 +1,12 @@
 <?php
 
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class PuestoIdiomaPorcentajePivot
+ * Class PuestoIdiomaPorcentajePivot.
  *
  * @property int $id
  * @property int $id_language
@@ -20,42 +19,40 @@ use Illuminate\Database\Eloquent\Model;
  * @property Puesto $puesto
  * @property Porcentaje $porcentaje
  * @property Collection|Puesto[] $puestos
- *
- * @package App\Models
  */
 class PuestoIdiomaPorcentajePivot extends Model
 {
-	protected $table = 'puesto_idioma_porcentaje_pivot';
+    protected $table = 'puesto_idioma_porcentaje_pivot';
 
-	protected $casts = [
-		'id_language' => 'int',
-		'id_puesto' => 'int',
+    protected $casts = [
+        'id_language' => 'int',
+        'id_puesto' => 'int',
 
-	];
+    ];
 
-	protected $fillable = [
-		'id_language',
-		'id_puesto',
-		'porcentaje'
-	];
+    protected $fillable = [
+        'id_language',
+        'id_puesto',
+        'porcentaje',
+    ];
 
-	public function language()
-	{
-		return $this->belongsTo(Language::class, 'id_language');
-	}
+    public function language()
+    {
+        return $this->belongsTo(Language::class, 'id_language');
+    }
 
-	public function puesto()
-	{
-		return $this->belongsTo(Puesto::class, 'id_puesto');
-	}
+    public function puesto()
+    {
+        return $this->belongsTo(Puesto::class, 'id_puesto');
+    }
 
-	public function porcentaje()
-	{
-		return $this->belongsTo(Porcentaje::class, 'id_porcentaje');
-	}
+    public function porcentaje()
+    {
+        return $this->belongsTo(Porcentaje::class, 'id_porcentaje');
+    }
 
-	public function puestos()
-	{
-		return $this->hasMany(Puesto::class, 'idioma_id');
-	}
+    public function puestos()
+    {
+        return $this->hasMany(Puesto::class, 'idioma_id');
+    }
 }
