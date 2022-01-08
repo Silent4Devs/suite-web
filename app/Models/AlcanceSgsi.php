@@ -2,17 +2,35 @@
 
 namespace App\Models;
 
-use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
-use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Rennokki\QueryCache\Traits\QueryCacheable;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+/**
+ * Class AlcanceSgsi
+ *
+ * @property int $id
+ * @property string|null $alcancesgsi
+ * @property timestamp without time zone|null $created_at
+ * @property timestamp without time zone|null $updated_at
+ * @property string|null $deleted_at
+ * @property int|null $team_id
+ * @property Carbon|null $fecha_publicacion
+ * @property Carbon|null $fecha_entrada
+ * @property Carbon|null $fecha_revision
+ * @property int|null $id_reviso_alcance
+ * @property int|null $norma_id
+ *
+ * @property Team|null $team
+ * @property Empleado|null $empleado
+ * @property Norma|null $norma
+ *
+ * @package App\Models
+ */
 class AlcanceSgsi extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use SoftDeletes, HasFactory;
     use QueryCacheable;
 
     public $cacheFor = 3600;
@@ -23,31 +41,25 @@ class AlcanceSgsi extends Model
         'alcancesgsi',
     ];
 
-    protected $dates = [
-        'fecha_publicacion',
-        'fecha_entrada',
-        'fecha_revision',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+	protected $casts = [
+		'id_reviso_alcance' => 'int',
+	];
 
-    protected $fillable = [
-        'alcancesgsi',
-        'fecha_publicacion',
-        'fecha_entrada',
-        'fecha_revision',
-        'id_reviso_alcance',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'team_id',
-    ];
+	protected $dates = [
+		'fecha_publicacion',
+		'fecha_entrada',
+		'fecha_revision'
+	];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
+	protected $fillable = [
+		'alcancesgsi',
+		'team_id',
+		'fecha_publicacion',
+		'fecha_entrada',
+		'fecha_revision',
+		'id_reviso_alcance',
+		'norma_id'
+	];
 
     public function getFechaPublicacionAttribute($value)
     {
@@ -64,13 +76,19 @@ class AlcanceSgsi extends Model
         return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
+	public function team()
+	{
+		return $this->belongsTo(Team::class);
+	}
 
-    public function empleado()
-    {
-        return $this->belongsTo(Empleado::class, 'id_reviso_alcance', 'id');
-    }
+	public function empleado()
+	{
+		return $this->belongsTo(Empleado::class, 'id_reviso_alcance');
+	}
+
+	public function norma()
+	{
+		return $this->belongsTo(Norma::class);
+	}
 }
+
