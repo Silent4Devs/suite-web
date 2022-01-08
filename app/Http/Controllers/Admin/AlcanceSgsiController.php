@@ -8,6 +8,7 @@ use App\Http\Requests\StoreAlcanceSgsiRequest;
 use App\Http\Requests\UpdateAlcanceSgsiRequest;
 use App\Models\AlcanceSgsi;
 use App\Models\Empleado;
+use App\Models\Norma;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class AlcanceSgsiController extends Controller
         abort_if(Gate::denies('alcance_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AlcanceSgsi::with(['team', 'empleado'])->select(sprintf('%s.*', (new AlcanceSgsi)->table))->orderByDesc('id');
+            $query = AlcanceSgsi::with(['norma', 'empleado'])->select(sprintf('%s.*', (new AlcanceSgsi)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -48,6 +49,13 @@ class AlcanceSgsiController extends Controller
             $table->editColumn('alcancesgsi', function ($row) {
                 return $row->alcancesgsi ? strip_tags($row->alcancesgsi) : '';
             });
+
+            $table->editColumn('norma', function ($row) {
+                $iso = substr($row->norma->norma, 0, 3);
+                $num = substr($row->norma->norma, 3);
+                return $row->norma ? strtoupper($iso . " " . $num) : '';
+            });
+
             $table->editColumn('fecha_publicacion', function ($row) {
                 return $row->fecha_publicacion ? $row->fecha_publicacion : '';
             });
@@ -83,14 +91,14 @@ class AlcanceSgsiController extends Controller
         abort_if(Gate::denies('alcance_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleados = Empleado::with('area')->get();
+        $normas = Norma::get();
 
-        return view('admin.alcanceSgsis.create', compact('empleados'));
+        return view('admin.alcanceSgsis.create', compact('empleados', 'normas'));
     }
 
-    public function store(StoreAlcanceSgsiRequest $request)
+    public function store(Request $request)
     {
         $alcanceSgsi = AlcanceSgsi::create($request->all());
-
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Guardado con éxito');
     }
 
@@ -98,11 +106,11 @@ class AlcanceSgsiController extends Controller
     {
         abort_if(Gate::denies('alcance_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $alcanceSgsi->load('team');
-
+        $alcanceSgsi->load('norma');
+        $normas = Norma::get();
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados'));
+        return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados', 'normas'));
     }
 
     public function update(UpdateAlcanceSgsiRequest $request, AlcanceSgsi $alcanceSgsi)
