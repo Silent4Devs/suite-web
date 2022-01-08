@@ -29,15 +29,15 @@ class Porcentaje extends Model
         'porcentaje',
     ];
 
-    public function language()
-    {
-        return $this->belongsToMany('\App\Language', 'puesto_idioma_porcentaje_pivot')
-            ->withPivot('id_idioma');
-    }
+    // public function language()
+    // {
+    //     return $this->belongsToMany('\App\Language', 'puesto_idioma_porcentaje_pivot')
+    //         ->withPivot('id_idioma');
+    // }
 
-    public function puesto()
-    {
-        return $this->belongsToMany('\App\Puesto', 'puesto_idioma_porcentaje_pivot')
-            ->withPivot('id_puesto');
-    }
+    // public function puesto()
+    // {
+    //     return $this->belongsToMany('\App\Puesto', 'puesto_idioma_porcentaje_pivot')
+    //         ->withPivot('id_puesto');
+    // }
 }
