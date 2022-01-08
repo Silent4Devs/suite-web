@@ -20,6 +20,10 @@ class EventosPortal extends Component
     public $comentarios;
     public $comentarios_update;
 
+    public $nuevos_contador_circulo;
+    public $cumpleaños_contador_circulo;
+    public $aniversarios_contador_circulo;
+
     public function mount()
     {
         $this->hoy = Carbon::now();
@@ -31,10 +35,13 @@ class EventosPortal extends Component
     public function render()
     {
         $this->nuevos = Empleado::whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->get();
+        $this->nuevos_contador_circulo = Empleado::whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->count();
 
         $this->cumpleaños = Empleado::whereMonth('cumpleaños', '=', $this->hoy->format('m'))->get();
+        $this->cumpleaños_contador_circulo = Empleado::whereMonth('cumpleaños', '=', $this->hoy->format('m'))->count();
 
-        $this->aniversarios = Empleado::whereMonth('antiguedad', '=', $this->hoy->format('m'))->get();
+        $this->aniversarios = Empleado::whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->get();
+        $this->aniversarios_contador_circulo = Empleado::whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->count();
 
         // dd($nuevos);
 

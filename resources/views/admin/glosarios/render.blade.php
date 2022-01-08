@@ -64,7 +64,62 @@
             body.c-dark-theme .paginate_button {
                 background: #4488a7;
             }
-
+            #dom_length label{
+                color: #ffffff;
+                margin-bottom: -1.4em;
+            }
+            .dataTables_length{
+                margin-bottom: -1.4em !important;
+            }
+            #dom_length::before {
+               content: "Mostrar";
+            }
+            #dom_length::after {
+               content: "conceptos";
+            }
+            #dom_filter label{
+                color: #ffffff;
+            }
+            #dom_filter::before {
+               content: "Buscar";
+            }
+            #dom_info{
+                color: #ffffff;
+            }
+            #dom_previous{
+                position: relative !important;
+                color: rgba(0, 0, 0, 0) !important;
+            }
+            #dom_previous::before {
+                position: absolute;
+                top: 0%;
+                left: 0%;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+               content: "Anterior";
+               color: black !important;
+            }
+            #dom_next{
+            position: relative !important;
+            color: rgba(0, 0, 0, 0) !important;
+            padding: 5px 20px !important;
+            display: inline !important;
+            }
+            #dom_next::after {
+                position: absolute;
+                top: 0%;
+                left: 0%;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+               content: "Siguiente";
+               color: black !important;
+            }
 
             @media(max-width: 1050px) {
                 table tr {
@@ -90,21 +145,17 @@
                                                                 -->
 
     @endcan
-
+    <h5 class="col-12 titulo_general_funcion">Glosario</h5>
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Glosario</strong></h3>
-        </div>
-
         <div class="card-body datatable-fix">
             <table id="dom" class="responsive-table" style="width: 100%">
                 <thead class="thead-dark">
                     <tr>
                         <th>No</th>
-                        <th>Moduló</th>
                         <th>Concepto</th>
+                        <th>Moduló</th>
                         <th>Definición</th>
-                        <th>Explicación</th>
+                        {{-- <th>Explicación</th> --}}
 
                     </tr>
                 </thead>
@@ -112,10 +163,10 @@
                     @foreach ( $glosarios as $glosario )
                     <tr>
                         <td style="font-size: 8pt;">{{$glosario->numero}}</td>
-                        <td style="font-size: 8pt;">{{$glosario->norma}}</td>
                         <td style="font-size: 8pt;">{{$glosario->concepto}}</td>
+                        <td style="font-size: 8pt;">{{$glosario->norma}}</td>
                         <td style="font-size: 8pt;">{{$glosario->definicion}}</td>
-                        <td style="font-size: 8pt;">{{$glosario->explicacion}}</td>
+                        {{-- <td style="font-size: 8pt;">{{$glosario->explicacion}}</td> --}}
 
                     </tr>
                     @endforeach
@@ -282,6 +333,10 @@
 
 
             });
+        });
+
+        $(document).ready(function() {
+          document.getElementById('dom_info').content
         });
 
     </script>

@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-
+<h5 class="col-12 titulo_general_funcion">Editar: Alerta</h5>
 <div class="card">
-    <div class="card-header">
+    {{-- <div class="card-header">
         {{ trans('global.edit') }} {{ trans('cruds.userAlert.title_singular') }}
-    </div>
+    </div> --}}
 
     <div class="card-body">
         <form method="POST" action="{{ route("admin.user-alerts.update", [$userAlert->id]) }}" enctype="multipart/form-data">

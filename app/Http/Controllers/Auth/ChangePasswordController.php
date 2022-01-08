@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProfileRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\Role;
 
 class ChangePasswordController extends Controller
 {

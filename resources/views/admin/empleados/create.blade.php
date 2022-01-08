@@ -173,11 +173,9 @@
         }
 
     </style>
+    <h5 class="col-12 titulo_general_funcion">Registrar: Empleado</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Empleado </strong></h3>
-        </div>
-        @if (!$ceo_exists)
+          @if (!$ceo_exists)
             <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
                 <div class="row w-100">
                     <div class="text-center col-1 align-items-center d-flex justify-content-center">

@@ -49,10 +49,12 @@
         </li>
         <li class="breadcrumb-item active">Carga de Documentos</li>
     </ol>
+    <h5 class="col-12 titulo_general_funcion">Carga de Documentos</h5>
+
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        {{-- <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Cargar Documentos </strong></h3>
-        </div>
+        </div> --}}
         <div class="card-body">
 
             <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold;">Análisis de Riesgos</div>
@@ -296,9 +298,9 @@
 
                 {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">Activos</div> --}}
 
-
+{{-- pendiente da error de ruta 06/01--}}
                 <!-- Categoria Field -->
-                <div class="form-group col-sm-6">
+                {{-- <div class="form-group col-sm-6">
                     <i class="ml-2 fas fa-layer-group iconos-crear"></i>{!! Form::label('categoria', 'Categoría') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-categoria', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
@@ -309,7 +311,7 @@
                         {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
                         {!! Form::close() !!}
                     </div>
-                </div>
+                </div> --}}
 
 
 

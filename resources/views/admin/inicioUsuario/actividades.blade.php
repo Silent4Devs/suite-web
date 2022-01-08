@@ -11,7 +11,7 @@
         min-width: 400px !important;
     }
 
-    .td_recursos{
+    .td_recursos {
         position: relative;
     }
 
@@ -26,7 +26,8 @@
             </div>
             <div class="col-11">
                 <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección encontrará las actividades
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección encontrará las
+                    actividades
                     que le han sido asignadas en los Planes de Acción creados dentro del sistema.
                 </p>
 
@@ -50,7 +51,7 @@
         </thead>
         <tbody>
             @foreach ($actividades as $task)
-                @if(!($task->archivo == 'archivado'))
+                @if (!($task->archivo == 'archivado'))
                     <tr id="{{ $task->id }}" data-parent-plan="{{ $task->slug }}">
                         <td class="td_nombre">{{ $task->name }}</td>
                         <td><span class="badge badge-primary">{{ $task->parent }}</span></td>
@@ -80,13 +81,15 @@
                         <td>
                             @switch($task->status)
                                 @case('STATUS_ACTIVE')
-                                    <span class="badge" style="background-color:rgb(253, 171, 61)">En proceso</span>
+                                    <span class="badge" style="background-color:rgb(253, 171, 61)">En
+                                        proceso</span>
                                 @break
                                 @case('STATUS_DONE')
                                     <span class="badge" style="background-color:rgb(0, 200, 117)">Completada</span>
                                 @break
                                 @case ('STATUS_FAILED')
-                                    <span class="badge" style="background-color:rgb(226, 68, 92)">Con retraso</span>
+                                    <span class="badge" style="background-color:rgb(226, 68, 92)">Con
+                                        retraso</span>
                                 @break
                                 @case ('STATUS_SUSPENDED')
                                     <span class="badge" style="background-color:#aaaaaa">Suspendida</span>
@@ -107,8 +110,10 @@
                                 }
                             @endphp
                             <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"></i></a>
-                            @if(($task->status == 'STATUS_DONE') or ($task->status == 'STATUS_FAILED'))
-                                <button class="btn_archivar" title="Archivar" data-toggle="modal" data-target="#alert_activ{{$task->id}}">
+                            <a href="plantTrabajoBase/{{ $task->name }}" target="_blank"><i class="fas fa-eye"></i></a>
+                            @if ($task->status == 'STATUS_DONE' or $task->status == 'STATUS_FAILED')
+                                <button class="btn_archivar" title="Archivar" data-toggle="modal"
+                                    data-target="#alert_activ{{ $task->id }}">
                                     <i class="fas fa-archive"></i>
                                 </button>
                             @endif
@@ -122,27 +127,31 @@
 
 <div>
     @foreach ($actividades as $task)
-        @if(!($task->archivo == 'archivado'))
+        @if (!($task->archivo == 'archivado'))
 
-            <div class="modal fade" id="alert_activ{{$task->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-body">
-                    <div class="delete">
-                        <i class="fas fa-archive icono_delete"></i>
-                        <h1 class="mb-4">Archivar</h1>
-                        <p class="parrafo">¿Esta seguro que desea archivar este registro?</p>
-                        <div class="mt-4">
-                            <form action="{{route('admin.inicio-Usuario.actividades.archivar', $task->id_implementacion)}}" method="POST">
-                                @csrf
-                                <div class="mr-4 cancelar btn btn-outline-secondary" data-dismiss="modal">Cancelar</div>
-                                <button class="eliminar btn btn-info" type="submit">Archivar</button>
-                            </form>
+            <div class="modal fade" id="alert_activ{{ $task->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="delete">
+                                <i class="fas fa-archive icono_delete"></i>
+                                <h1 class="mb-4">Archivar</h1>
+                                <p class="parrafo">¿Esta seguro que desea archivar este registro?</p>
+                                <div class="mt-4">
+                                    <form
+                                        action="{{ route('admin.inicio-Usuario.actividades.archivar', $task->id_implementacion) }}"
+                                        method="POST">
+                                        @csrf
+                                        <div class="mr-4 cancelar btn btn-outline-secondary" data-dismiss="modal">
+                                            Cancelar</div>
+                                        <button class="eliminar btn btn-info" type="submit">Archivar</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
         @endif
     @endforeach
@@ -224,7 +233,7 @@
             let btnArchivo = {
                 text: '<i class="pl-2 pr-3 fas fa-archive"></i> Archivo',
                 titleAttr: 'Archivo',
-                url: "{{asset('admin/inicioUsuario/actividades/archivo')}}",
+                url: "{{ asset('admin/inicioUsuario/actividades/archivo') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
                     let {

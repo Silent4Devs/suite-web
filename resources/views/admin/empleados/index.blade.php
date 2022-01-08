@@ -58,7 +58,7 @@
 
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Portal de Comunicación </h5>
+    <h5 class="col-12 titulo_general_funcion">Empleados</h5>
     <div class="mt-5 card">
         @can('configuracion_empleados_create')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">

@@ -50,20 +50,19 @@
     </style>
 @endsection
 {{ Breadcrumbs::render('admin.comiteseguridads.visualizacion') }}
-<div class="card card-body" style="margin-top: -50PX;">
-    <div class="row" style="border-bottom: 2px solid #ccc;">
-        <div class="col-12 caja_titulo">
-            <h1>Comité de Seguridad</h1>
 
-            @php
-                use App\Models\Organizacion;
-                $organizacion = Organizacion::first();
-                $logotipo = $organizacion->logotipo;
-            @endphp
-            <img src="{{ asset($logotipo) }}" class="logo_organizacion_politica">
-
-        </div>
-    </div>
+ @php
+    use App\Models\Organizacion;
+    $organizacion = Organizacion::first();
+    if (!is_null($organizacion->empresa)) {
+        $nombre_organizacion = $organizacion->empresa;
+    }
+    else{
+        $nombre_organizacion = 'La Organizacion';
+    }
+@endphp
+<h5 class="col-12 titulo_general_funcion">Comités de <strong>{{$nombre_organizacion}}</strong></h5>
+<div class="card card-body">
     <div class="row" style="">
         <div class="card-body datatable-fix">
             <table class="table table-bordered datatable-Comiteseguridad" style="width: 100%">

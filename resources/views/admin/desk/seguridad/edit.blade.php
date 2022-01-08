@@ -12,8 +12,9 @@
 @endsection
 {{ Breadcrumbs::render('seguridad-edit',$incidentesSeguridad) }}
 @include('partials.flashMessages')
+{{-- <h5 class="col-12 titulo_general_funcion">Incidentes de seguridad</h5> --}}
 <div class="card" id="desk">
-    <div class="text-center card-header" style="background-color: #345183;">
+    <div class="text-center card-header" style="margin-bottom: 20px; background-color: #345183;">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-exclamation-triangle"></i>Incidentes de
             seguridad</strong>
     </div>

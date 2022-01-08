@@ -228,22 +228,7 @@
     <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
     <script>
         ScheduleList = [
-            @foreach($plan_base as $it_plan_base)
-                {
-                    id: 'planinicio{{$it_plan_base->id}}',
-                    calendarId: '1',
-                    title: '<i class="fas fa-thumbtack i_calendar_cuadro"></i> Actividad: {{$it_plan_base->actividad}}',
-                    category: 'allday',
-                    dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_inicio)->format("Y-m-d") }}',
-                    end: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_fin)->format("Y-m-d") }}',
-                    isReadOnly : true,
-                    body: `
-                       <font style="font-weight: bold;">Inicio:</font> ${@json($it_plan_base->fecha_inicio->format("d-m-Y"))}<br>
-                       <font style="font-weight: bold;">Fin:</font> ${@json($it_plan_base->fecha_fin->format("d-m-Y"))}<br>
-                    `,
-                },
-            @endforeach
+            
 
             @foreach($auditoria_internas as $it_auditoria_internas)
                 {
@@ -263,48 +248,28 @@
             @endforeach
 
 
-            @foreach($recursos as $it_recursos)
+             @foreach($recursos as $it_recursos)
                 {
-
                     id: 'recursos{{$it_recursos->id}}',
                     calendarId: '2',
-                    title: '<i class="fas fa-graduation-cap i_calendar_cuadro"></i> Tipo: {{$it_recursos->cursoscapacitaciones}}',
+                    title: '<i class="fas fa-graduation-cap i_calendar_cuadro"></i> Curso: {{$it_recursos->cursoscapacitaciones}}',
                     category: 'time',
                     dueDateClass: '',
-                    start: '{{ \Carbon\Carbon::parse($it_recursos->fecha_curso)->toDateTimeString() }}',
-                    end: '{{ \Carbon\Carbon::parse($it_recursos->fecha_fin)->toDateTimeString() }}',
-                    isReadOnly : true,
-                     body: `
+                    start: '{{  \Carbon\Carbon::parse($it_recursos->fecha_curso)->toDateTimeString() }}',
+                    end: '{{  \Carbon\Carbon::parse($it_recursos->fecha_fin)->toDateTimeString() }}',
+                    body: `
                         <font style="font-weight: bold;">Categoria:</font> ${@json($it_recursos->tipo)}<br>
                         <font style="font-weight: bold;">Inicio:</font> ${@json($it_recursos->fecha_curso)} horas<br>
                         <font style="font-weight: bold;">Fin:</font> ${@json($it_recursos->fecha_fin)} horas<br>
                         <font style="font-weight: bold;">Duración:</font> ${@json($it_recursos->duracion)} horas<br>
                         <font style="font-weight: bold;">Instructor:</font> ${@json($it_recursos->instructor)}<br>
-                        <font style="font-weight: bold;">${@json($it_recursos->modalidad)=='presencial' ? 'Ubicación' : 'Link'}: </font>${@json($it_recursos->modalidad)=='presencial' ? @json($it_recursos->ubicacion) : '<a href="'+@json($it_recursos->ubicacion)+'">'+@json($it_recursos->ubicacion)+'</a> '} <br>
+                        <font style="font-weight: bold;">${@json($it_recursos->modalidad)=='presencial' ? 'Ubicación' : 'Link'}:</font> ${@json($it_recursos->ubicacion)}<br>
                     `,
-                },
-
-            @endforeach
-
-            @foreach ($actividades as $it_plan_base)
-                {
-                id: 'planinicio{{ $it_plan_base->id }}',
-                calendarId: '1',
-                title: '<i class="fas fa-thumbtack i_calendar_cuadro"></i> Actividad: {{ $it_plan_base->name }}',
-                category: 'allday',
-                dueDateClass: '',
-                start: '{{ \Carbon\Carbon::createFromTimestamp(($it_plan_base->start/1000))->toDateString()}}',
-
-                end: '{{ \Carbon\Carbon::createFromTimestamp(($it_plan_base->end/1000))->toDateString()}}',
-                isReadOnly : true,
-                body: `
-                       <font style="font-weight: bold;">Inicio:</font> ${@json(\Carbon\Carbon::createFromTimestamp(($it_plan_base->start/1000))->toDateString())}<br>
-                       <font style="font-weight: bold;">Fin:</font> ${@json(\Carbon\Carbon::createFromTimestamp(($it_plan_base->end/1000))->toDateString())}<br>
-                       <font style="font-weight: bold;">Duracion:</font> ${@json($it_plan_base->duration)} dias<br>
-                       <font style="font-weight: bold;">Progreso:</font> ${@json($it_plan_base->progress)}%<br>
-                    `,
+                    isReadOnly : true,
                 },
             @endforeach
+
+            
             @foreach ($eventos as $evento)
 
                 {
@@ -317,12 +282,12 @@
                 end: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[1])->format("Y-m-d") }}',
                 isReadOnly : true,
                 body: `
-                        <font style="font-weight: bold;">Categoria:</font> ${@json($it_recursos->tipo)}<br>
-                        <font style="font-weight: bold;">Inicio:</font> ${@json($it_recursos->fecha_curso)} horas<br>
-                        <font style="font-weight: bold;">Fin:</font> ${@json($it_recursos->fecha_fin)} horas<br>
-                        <font style="font-weight: bold;">Duración:</font> ${@json($it_recursos->duracion)} horas<br>
-                        <font style="font-weight: bold;">Instructor:</font> ${@json($it_recursos->instructor)}<br>
-                        <font style="font-weight: bold;">${@json($it_recursos->modalidad)=='presencial' ? 'Ubicación' : 'Link'}: </font>${@json($it_recursos->modalidad)=='presencial' ? @json($it_recursos->ubicacion) : '<a href="'+@json($it_recursos->ubicacion)+'">'+@json($it_recursos->ubicacion)+'</a> '} <br>
+                        <font style="font-weight: bold;">Categoria:</font> ${@json($evento->tipo)}<br>
+                        <font style="font-weight: bold;">Inicio:</font> ${@json($evento->fecha_curso)} horas<br>
+                        <font style="font-weight: bold;">Fin:</font> ${@json($evento->fecha_fin)} horas<br>
+                        <font style="font-weight: bold;">Duración:</font> ${@json($evento->duracion)} horas<br>
+                        <font style="font-weight: bold;">Instructor:</font> ${@json($evento->instructor)}<br>
+                        <font style="font-weight: bold;">${@json($evento->modalidad)=='presencial' ? 'Ubicación' : 'Link'}: </font>${@json($evento->modalidad)=='presencial' ? @json($evento->ubicacion) : '<a href="'+@json($evento->ubicacion)+'">'+@json($evento->ubicacion)+'</a> '} <br>
                     `,
                 },
             @endforeach
