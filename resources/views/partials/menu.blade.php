@@ -843,6 +843,42 @@
                 </ul>
             </li>
         @endcan
+        @can('configuracion_procesos_access') {{-- este acceso no corresponde --}}
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.configurar-soporte.index') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/configurar-soporte') || request()->is('admin/configurar-soporte/*') ? 'active' : '' }}">
+                    <i class="bi bi-gear iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca">Configurar Soporte</font>
+                </a>
+            </li>
+        @endcan
+
+ {{-- este acceso no corresponde --}}
+        {{-- @can('configuracion_procesos_access')
+            <li class="c-sidebar-nav-dropdown btn_bajar_scroll">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="bi bi-pc-display-horizontal iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca"> Configurar Soporte </font>
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.configurar-consultor.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/configurar-consultor') || request()->is('admin/configurar-consultor/*') ? 'active' : '' }}">
+                            <i class="fa-fw fas fa-user-circle iconos_menu letra_blanca"></i>
+                            <span class="letra_blanca"> Consultores </span>
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.configurar-soporte.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/configurar-soporte') || request()->is('admin/configurar-soporte/*') ? 'active' : '' }}">
+                            <i class="fa-fw fas fa-building iconos_menu letra_blanca"></i>
+                            <span class="letra_blanca"> Soporte técnico </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endcan --}}
+
         {{-- @can('faq_management_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
