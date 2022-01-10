@@ -9,7 +9,7 @@
         .dataTables_length:before {
             content: "Mostrar" !important;
             color: #111 !important;
-            margin-right: -30px !important;
+            margin-right: -40px !important;
             position: relative;
             z-index: 2;
 
@@ -18,7 +18,7 @@
         .dataTables_length:after {
             content: "empleados" !important;
             color: #111 !important;
-            margin-left: -35px !important;
+            margin-left: -50px !important;
             position: relative;
             z-index: 2;
         }

@@ -37,6 +37,8 @@ class NotificacionAprobadore extends Model
         'aprobadores_id',
         'responsables_id',
         'indicador_aprobador',
+        'correo_aprobadores',
+        'correo_responsables',
     ];
 
     public function declaracion_aplicabilidad()
