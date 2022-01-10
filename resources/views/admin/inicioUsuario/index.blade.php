@@ -131,7 +131,7 @@
 
         .indicador_numero {
             position: absolute;
-            background-color: #FF4141;
+            background-color: #3086AF;
             color: #fff !important;
             display: flex;
             align-items: center;

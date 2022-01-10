@@ -69,9 +69,9 @@
 
 
         /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          fill: #fff !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          height: 15px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  fill: #fff !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  height: 15px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }*/
 
 
         #workSpace {
@@ -230,9 +230,10 @@
                     <h2 id="titlo-tab" class="text-capitalize">Diagrama Gantt</h2>
                 </div>
                 <div class="text-right col-8 caja_botones_menu">
-                    <a href="#" data-tabs="original_gantt" onclick="loadGanttFromServer();cambiarTitulo('Gantt');"
-                        class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
-                    <a href="#" data-tabs="tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');"
+                    <a href="#" id="tabla_remove" data-tabs="original_gantt"
+                        onclick="loadGanttFromServer();cambiarTitulo('Gantt');" class="btn_gantt_vista boton_activo"><i
+                            class="fas fa-stream"></i>Gantt</a>
+                    <a href="#" id="tabla_gantt_click" data-tabs="tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');"
                         class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
                     <a href="#" data-tabs="calendario_gantt" onclick="initCalendar();cambiarTitulo('Calendario');"
                         class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
@@ -283,6 +284,13 @@
         }
         let idleTime = 0;
         document.addEventListener('DOMContentLoaded', function() {
+            if (@json($texto)) {
+                console.log("asdasdasd");
+                /*document.getElementById("tabla_remove").classList.remove("boton_activo");
+                document.getElementById("tabla_gantt_click").classList.add("btn_activo", "boton_activo");*/
+                console.log("vvvvv");
+                initTable();
+            }
             // let isBlocked = JSON.parse(Cookies.get('bloqueo'));
             // if (!isBlocked.bloqueado) {
             //     Cookies.set('bloqueo', '{"user":"Uriel", "bloqueado":true}');

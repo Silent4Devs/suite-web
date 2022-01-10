@@ -44,6 +44,8 @@ class DatabaseSeeder extends Seeder
             LanguageSeeder::class,
             GlosarioSeeder::class,
             RoleUserTableSeeder::class,
+            Clausula9001Seeder::class,
+            NormasSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }

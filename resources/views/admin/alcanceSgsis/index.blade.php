@@ -30,7 +30,7 @@
         }
 
         .table tr th:nth-child(2) {
-            width: 700px !important;
+            width: 400px !important;
             max-width: 700px !important;
             min-width: 700px !important;
             text-align: center !important;
@@ -176,7 +176,10 @@
                             {{ trans('cruds.alcanceSgsi.fields.id') }}
                         </th>
                         <th style="text-align: center !important">
-                            Alcance&nbsp;SGSI
+                            Alcance
+                        </th>
+                        <th>
+                            Norma&nbsp;
                         </th>
                         <th>
                             Fecha de publicación
@@ -368,6 +371,10 @@
                     {
                         data: 'alcancesgsi',
                         name: 'alcancesgsi'
+                    },
+                    {
+                        data: 'norma',
+                        name: 'norma'
                     },
                     {
                         data: 'fecha_publicacion',

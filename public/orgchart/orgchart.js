@@ -40,7 +40,7 @@ export default class OrgChart {
     chart.dataset.options = JSON.stringify(opts);
     chart.setAttribute('class', 'orgchart' + (opts.chartClass !== '' ? ' ' + opts.chartClass : '') +
       (opts.direction !== 't2b' ? ' ' + opts.direction : ''));
-    console.log(typeof data);
+    console.log("type" + typeof data);
     if (typeof data === 'object') { // local json datasource
       this.buildHierarchy(chart, opts.ajaxURL ? data : this._attachRel(data, '00'), 0);
     } else if (typeof data === 'string' && data.startsWith('#')) { // ul datasource
@@ -465,7 +465,7 @@ export default class OrgChart {
           content_more += `
                 <div class="supervisor justify-content-center" >
                 <h4 class="supervisor-title">Responsable del área:</h4>
-                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.area}</span></p>
+                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider.name}</span></p>
                 <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
               </div>
             `;
@@ -590,8 +590,9 @@ export default class OrgChart {
       content_more += `
                 <div class="supervisor">
                 <h4 class="supervisor-title">Supervisado Por:</h4>
-                <img src="${photo_s}" alt="Admin" class="rounded-circle mb-2" style="height: 140px;width: 80px;clip-path:circle(40px at 50% 50%);margin: auto;">
-                <p class="supervisor-name"><i class="fas fa-user"></i><span>${dataSourceJSON.supervisor.name}</span></p>
+                <img src="${photo_s}" alt="Admin" class="rounded-circle mb-2" style="height: 140px;width: 80px;clip-path:circle(40px at 50% 50%);margin: auto;">`
+                responsables.forEach(responsable => {
+                <p class="supervisor-name"><i class="fas fa-user"></i><span>${dataSourceJSON.lider.name}</span></p>
                 <p class="supervisor-puesto"><i class="fas fa-info-circle"></i><span>${dataSourceJSON.supervisor.puesto}</span></p>
               </div>
             `;

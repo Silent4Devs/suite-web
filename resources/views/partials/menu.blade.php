@@ -397,6 +397,14 @@
             </a>
         </li>
 
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link {{ request()->is('admin/iso9001') ? 'active' : '' }}"
+                href="{{ route('admin.iso9001.index') }}#contexto">
+                <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
+                <font class="letra_blanca"> ISO 9001 </font>
+            </a>
+        </li>
+
         @can('administracion_access')
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca" style="color: #345183;">Administración</font>
@@ -938,8 +946,8 @@
             }
         </style>
         <div class="text-center botones_g_s" style="margin-top: 80px;">
-            <a href="{{ route('admin.soporte') }}" title="Soporte" style="margin-right:14px;"><i class="bi bi-headset"></i></a>
-            <a href="{{ route('admin.glosarios.index') }}" title="Glosario"><i class="bi bi-book"></i></a>
+            <a href="{{ route('admin.soporte.index') }}" title="Soporte" style="margin-right:14px;"><i class="bi bi-headset"></i></a>
+            <a href="{{ route('admin.glosarios.render') }}" title="Glosario"><i class="bi bi-book"></i></a>
         </div>
 
         <div class="row lemnt_row_menu" style="padding-bottom:300px;">
