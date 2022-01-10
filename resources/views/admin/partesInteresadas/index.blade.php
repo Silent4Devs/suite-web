@@ -10,7 +10,7 @@
 max-width:900px !important;
 width:900px !important;
 
-}
+} 
 
 .table tr th:nth-child(2){
 

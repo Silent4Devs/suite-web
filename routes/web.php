@@ -4,6 +4,7 @@
 
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
+use App\Http\Controllers\Admin\ConfigurarSoporteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -158,7 +159,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
 
-    Route::view('soporte', 'admin.soporte.index')->name('soporte.index');
+
 
     Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
     Route::post('portal-comunicacion/cumpleaños/{id}', 'PortalComunicacionController@felicitarCumpleaños')->name('portal-comunicacion.cumples');
@@ -411,6 +412,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Partes Interesadas
     Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
     Route::resource('partes-interesadas', 'PartesInteresadasController');
+
+    //Configuración Soporte
+    Route::delete('configurar-soporte/destroy', 'ConfigurarSoporteController@massDestroy')->name('configurar-soporte.massDestroy');
+    Route::resource('configurar-soporte', 'ConfigurarSoporteController');
+    Route::get('getgetEmployeeData', 'ConfigurarSoporteController@getgetEmployeeData')->name('getgetEmployeeData');
+    Route::get('soporte', 'ConfigurarSoporteController@visualizarSoporte')->name('soporte');
+
+
+    //Configuración Consultores
+    // Route::delete('configurar-consultor/destroy', 'ConfigurarConsultorController@massDestroy')->name('configurar-consultor.massDestroy');
+    // Route::resource('configurar-consultor', 'ConfigurarConsultorController');
 
     // Matriz Requisito Legales
     Route::get('matriz-requisito-legales/planes-de-accion/create/{id}', 'MatrizRequisitoLegalesController@createPlanAccion')->name('matriz-requisito-legales.createPlanAccion');

@@ -454,4 +454,9 @@ class Empleado extends Model
         $edad = date_diff($fecha_hoy,$fecha_nac); // La funcion ayuda a calcular la diferencia, esto seria un objeto
         return $edad;
         }
+    public function configuracion_soporte()
+    {
+        return $this->hasMany(ConfigurarSoporteModel::class, 'id_elaboro');
+    }        
+
 }
