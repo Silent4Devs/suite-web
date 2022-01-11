@@ -12,7 +12,6 @@ use App\Models\Area;
 use App\Models\CategoriaCapacitacion;
 use App\Models\Empleado;
 use App\Models\FileCapacitacion;
-use App\Models\Grupo;
 use App\Models\Recurso;
 use App\Models\RH\GruposEvaluado;
 use App\Models\Team;
@@ -23,7 +22,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -104,17 +102,17 @@ class RecursosController extends Controller
         $areas = Area::with('empleados')->get();
         $grupos = GruposEvaluado::with('empleados')->get();
         $empleados = Empleado::get();
+
         return view('admin.recursos.create', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }
 
     public function store(Request $request)
     {
-
         $request->merge([
             'tipo_seleccion_participantes' => [
                 'tipo' => $request->tipo_de_grupo,
                 'tipo_id' => $request->id_tipo_participacion,
-            ]
+            ],
         ]);
         $this->validateForm($request);
         $request->validate([
@@ -124,16 +122,15 @@ class RecursosController extends Controller
             $limit_date = Carbon::parse($request->fecha_limite)->addDays(5);
             $limit_date->toDateString();
             $request->validate([
-                'fecha_envio_invitacion' => 'required|date|before:' . $limit_date
+                'fecha_envio_invitacion' => 'required|date|before:' . $limit_date,
             ]);
         }
         $request->merge(
             [
-                'configuracion_invitacion_envio' =>
-                [
+                'configuracion_invitacion_envio' => [
                     'enviar_ahora' => $request->enviarInvitacionAhora == 'ahora' ? true : false,
-                    'programar_envio' => $request->enviarInvitacionAhora == 'programar' ? true : false, 'fecha_envio_invitacion' => $request->enviarInvitacionAhora == 'programar' ? $request->fecha_envio_invitacion : Carbon::parse(Carbon::now())->format('Y-m-d\TH:i')
-                ]
+                    'programar_envio' => $request->enviarInvitacionAhora == 'programar' ? true : false, 'fecha_envio_invitacion' => $request->enviarInvitacionAhora == 'programar' ? $request->fecha_envio_invitacion : Carbon::parse(Carbon::now())->format('Y-m-d\TH:i'),
+                ],
             ]
         );
         $estatus = $request->tipo_guardado;
@@ -166,7 +163,7 @@ class RecursosController extends Controller
             Storage::disk('capacitaciones')->put("recursos/{$folder}/{$filenameWithExt}", $request->file('recurso_capacitacion'));
             FileCapacitacion::create([
                 'archivo' => $filenameWithExt,
-                'recurso_id' => $recurso->id
+                'recurso_id' => $recurso->id,
             ]);
         }
 
@@ -181,14 +178,17 @@ class RecursosController extends Controller
     {
         if ($request->tipo_validacion == 'general') {
             $this->validateRequestGeneral($request);
+
             return response()->json(['isValid' => true]);
-        } else if ($request->tipo_validacion == 'participantes') {
+        } elseif ($request->tipo_validacion == 'participantes') {
             $this->validateRequestGeneral($request);
             $this->validateRequestParticipantes($request);
+
             return response()->json(['isValid' => true]);
         } else {
             $this->validateRequestGeneral($request);
             $this->validateRequestParticipantes($request);
+
             return response()->json(['isValid' => true]);
         }
     }
@@ -205,14 +205,15 @@ class RecursosController extends Controller
             'ubicacion' => 'string|required',
             'categoria_capacitacion_id'  => 'string|required',
             'modalidad' => 'string|required',
-            'recurso_capacitacion' => 'nullable|mimes:pdf|max:10000'
+            'recurso_capacitacion' => 'nullable|mimes:pdf|max:10000',
         ]);
     }
+
     public function validateRequestParticipantes($request)
     {
         $request->validate([
             'tipo_de_grupo' => 'required',
-            'participantes' => 'required'
+            'participantes' => 'required',
         ]);
     }
 
@@ -223,6 +224,7 @@ class RecursosController extends Controller
         $areas = Area::with('empleados')->get();
         $grupos = GruposEvaluado::with('empleados')->get();
         $empleados = Empleado::get();
+
         return view('admin.recursos.edit', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }
 
@@ -232,7 +234,7 @@ class RecursosController extends Controller
             'tipo_seleccion_participantes' => [
                 'tipo' => $request->tipo_de_grupo,
                 'tipo_id' => $request->id_tipo_participacion,
-            ]
+            ],
         ]);
         $this->validateForm($request);
         $request->validate([
@@ -242,16 +244,15 @@ class RecursosController extends Controller
             $limit_date = Carbon::parse($request->fecha_limite)->addDays(5);
             $limit_date->toDateString();
             $request->validate([
-                'fecha_envio_invitacion' => 'required|date|before:' . $limit_date
+                'fecha_envio_invitacion' => 'required|date|before:' . $limit_date,
             ]);
         }
         $request->merge(
             [
-                'configuracion_invitacion_envio' =>
-                [
+                'configuracion_invitacion_envio' => [
                     'enviar_ahora' => $request->enviarInvitacionAhora == 'ahora' ? true : false,
-                    'programar_envio' => $request->enviarInvitacionAhora == 'programar' ? true : false, 'fecha_envio_invitacion' => $request->enviarInvitacionAhora == 'programar' ? $request->fecha_envio_invitacion : Carbon::parse(Carbon::now())->format('Y-m-d\TH:i')
-                ]
+                    'programar_envio' => $request->enviarInvitacionAhora == 'programar' ? true : false, 'fecha_envio_invitacion' => $request->enviarInvitacionAhora == 'programar' ? $request->fecha_envio_invitacion : Carbon::parse(Carbon::now())->format('Y-m-d\TH:i'),
+                ],
             ]
         );
         $estatus = $request->tipo_guardado;
@@ -291,6 +292,7 @@ class RecursosController extends Controller
         abort_if(Gate::denies('recurso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $recurso->load('participantes', 'empleados');
+
         return view('admin.recursos.show', compact('recurso'));
     }
 
@@ -327,7 +329,6 @@ class RecursosController extends Controller
 
     public function guardarEvaluacionCapacitacion(Request $request)
     {
-
         $empleado = auth()->user()->empleado->id;
         $recurso = Recurso::find($request->recurso);
         $request->validate([
@@ -371,11 +372,13 @@ class RecursosController extends Controller
 
         if (Carbon::now()->isAfter(Carbon::parse($recurso->fecha_fin))) {
             $recurso->empleados()->syncWithoutDetaching([$empleado => ['evaluacion' => $evaluacion]]);
+
             return response()->json(['estatus' => 200, 'mensaje' => 'Evaluación almacenada']);
         } else {
             return response()->json(['estatus' => 500, 'mensaje' => 'Esta capacitación no acepta evaluaciones aún']);
         }
     }
+
     public function respuestaCapacitacion(Request $request)
     {
         $empleado = auth()->user()->empleado->id;
@@ -388,6 +391,7 @@ class RecursosController extends Controller
             } else {
                 $mensaje = 'Capacitación Rechazada';
             }
+
             return response()->json(['estatus' => 200, 'mensaje' => $mensaje]);
         } else {
             return response()->json(['estatus' => 500, 'mensaje' => 'Esta capacitación no acepta más respuestas']);
@@ -406,6 +410,7 @@ class RecursosController extends Controller
             } else {
                 $mensaje = 'Capacitación Removida del Archivo';
             }
+
             return response()->json(['estatus' => 200, 'mensaje' => $mensaje]);
         } else {
             return response()->json(['estatus' => 500, 'mensaje' => 'Esta capacitación no se puede archivar, aún está en curso']);
@@ -414,7 +419,6 @@ class RecursosController extends Controller
 
     public function obtenerCapacitacionesPrincipales(Request $request)
     {
-
         $empleado = auth()->user()->empleado->id;
         //Capacitaciones Cards
         // $capacitacionesEnCurso = $this->obtenerCapacitacionesEnCursoDelParticipante($empleado);
@@ -426,12 +430,15 @@ class RecursosController extends Controller
         //     'terminadas' => $capacitacionesTerminadas
         // ]);
         $capacitacionesCard = $this->obtenerCapacitacionesMezcladas($empleado, $request->filtro);
+
         return response()->json(['capacitaciones' => $capacitacionesCard]);
     }
+
     public function obtenerCapacitacionesArchivadas()
     {
         $empleado = auth()->user()->empleado->id;
         $capacitacionesCard = $this->obtenerCapacitacionesMezcladas($empleado, 'todo', true);
+
         return response()->json(['capacitaciones' => $capacitacionesCard]);
     }
 
@@ -443,6 +450,7 @@ class RecursosController extends Controller
             $query->where('empleado_id', $empleado)->where('archivado', $archivado);
         })->get();
     }
+
     public function obtenerCapacitacionesProximasDelParticipante($empleado, $archivado = false)
     {
         return Recurso::capacitacionesProximas()->with(['archivos', 'categoria_capacitacion', 'empleados' => function ($q) use ($empleado) {
@@ -451,6 +459,7 @@ class RecursosController extends Controller
             $query->where('empleado_id', $empleado)->where('archivado', $archivado);
         })->get();
     }
+
     public function obtenerCapacitacionesTerminadasDelParticipante($empleado, $archivado = false)
     {
         return Recurso::capacitacionesTerminadas()->with(['archivos', 'categoria_capacitacion', 'empleados' => function ($q) use ($empleado) {
@@ -459,6 +468,7 @@ class RecursosController extends Controller
             $query->where('empleado_id', $empleado)->where('archivado', $archivado);
         })->get();
     }
+
     private function obtenerCapacitacionesMezcladas($empleado, $filtro = 'todo', $archivado = false)
     {
         return Recurso::with(['archivos', 'categoria_capacitacion', 'empleados' => function ($q) use ($empleado) {
@@ -466,11 +476,11 @@ class RecursosController extends Controller
         }])->whereHas('empleados', function ($query) use ($empleado, $archivado, $filtro) {
             if ($filtro == 'todo') {
                 return $query->where('empleado_id', $empleado)->where('archivado', $archivado);
-            } else if ($filtro == 'aceptadas') {
+            } elseif ($filtro == 'aceptadas') {
                 return $query->where('empleado_id', $empleado)->where('archivado', $archivado)->where('es_aceptada', true);
-            } else if ($filtro == 'rechazadas') {
+            } elseif ($filtro == 'rechazadas') {
                 return $query->where('empleado_id', $empleado)->where('archivado', $archivado)->where('es_aceptada', false);
-            } else if ($filtro == 'sin_respuesta') {
+            } elseif ($filtro == 'sin_respuesta') {
                 return $query->where('empleado_id', $empleado)->where('archivado', $archivado)->where('es_aceptada', null);
             }
         })->where('estatus', 'Enviado')->get();
@@ -541,8 +551,8 @@ class RecursosController extends Controller
             $request->file('certificado')->storeAs($route, $certificadoImg);
         }
 
-
         $recurso->empleados()->syncWithoutDetaching([$empleado->id => ['calificacion' => $request->calificacion, 'certificado' => $certificadoImg]]);
+
         return response()->json(['estatus' => 200, 'mensaje' => 'Información Actualizada']);
     }
 
@@ -551,7 +561,7 @@ class RecursosController extends Controller
         $request->validate([
             'fecha_curso' => 'required|date',
             'fecha_fin' => 'required|date|after:fecha_curso',
-            'fecha_limite' => 'required|date|before:fecha_curso'
+            'fecha_limite' => 'required|date|before:fecha_curso',
         ]);
 
         if (Carbon::now()->isBefore(Carbon::parse($recurso->fecha_inicio)) || $recurso->estatus == 'Cancelado') {
@@ -559,7 +569,7 @@ class RecursosController extends Controller
                 $new_fecha_limite = Carbon::parse($request->fecha_limite)->subDays(3);
                 $new_fecha_limite->toDateString();
                 $request->validate([
-                    'fecha_envio_invitacion' => 'required|date|before:' . $new_fecha_limite
+                    'fecha_envio_invitacion' => 'required|date|before:' . $new_fecha_limite,
                 ]);
             }
 
@@ -568,36 +578,41 @@ class RecursosController extends Controller
                 'fecha_fin' => $request->fecha_fin,
                 'fecha_limite' => $request->fecha_limite,
             ]);
-            #Enviar correo avisando reprogramacion
+            //Enviar correo avisando reprogramacion
             foreach ($recurso->empleados as $empleado) {
                 Mail::to($empleado->email)->send(new CapacitacionReprogramadaMail($recurso, $empleado));
             }
+
             return response()->json(['estatus' => 200, 'mensaje' => 'Capacitación Reprogramada']);
         } else {
             return response()->json(['estatus' => 500, 'mensaje' => 'Esta capacitación no se ha podido reprogramar ya que está en curso, puedes cancelar la capacitación y reprogramarla']);
         }
     }
+
     public function cancelarCapacitacion(Recurso $recurso)
     {
         if (Carbon::now()->lessThanOrEqualTo(Carbon::parse($recurso->fecha_fin))) {
             $recurso->update([
                 'estatus' => 'Cancelado',
             ]);
-            #Enviar correo avisando reprogramacion
+            //Enviar correo avisando reprogramacion
             foreach ($recurso->empleados as $empleado) {
                 Mail::to($empleado->email)->send(new CapacitacionCanceladaMail($recurso, $empleado));
             }
+
             return response()->json(['estatus' => 200, 'mensaje' => 'Capacitación Cancelada']);
         } else {
             return response()->json(['estatus' => 500, 'mensaje' => 'No se ha podido cancelar la capacitación, la capacitación ha finalizado el día' . $recurso->fecha_fin_name]);
         }
     }
+
     public function enviarInvitacionPorCorreoAhora(Recurso $recurso)
     {
         if (Carbon::now()->isBefore(Carbon::parse($recurso->fecha_limite))) {
             foreach ($recurso->empleados as $empleado) {
                 Mail::to($empleado->email)->send(new InvitacionCapacitaciones($empleado, $recurso));
             }
+
             return response()->json(['estatus' => 200, 'mensaje' => 'Invitaciones enviadas']);
         } else {
             return response()->json(['estatus' => 500, 'mensaje' => 'No se han podido enviar las invitaciones ya que la fecha límite de confirmación para la capacitación fue:' . $recurso->fecha_limite_name]);

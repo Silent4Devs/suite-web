@@ -30,8 +30,8 @@ class RecursosObserver
         $recurso->empleados()->sync($this->request->input('participantes', []));
         $empleados = Empleado::find($this->request->input('participantes', []));
         if ($this->request->estatus == 'Draft') {
-            # Code..
-        } else if ($recurso->estatus == 'Enviado') {
+            // Code..
+        } elseif ($recurso->estatus == 'Enviado') {
             if ($recurso->configuracion_invitacion_envio->enviar_ahora) {
                 foreach ($empleados as $empleado) {
                     Mail::to($empleado->email)->send(new InvitacionCapacitacionMail($empleado->name));
@@ -57,8 +57,8 @@ class RecursosObserver
             $recurso->empleados()->sync($this->request->input('participantes', []));
         }
         if ($this->request->estatus == 'Draft') {
-            # Code..
-        } else if ($recurso->estatus == 'Enviado') {
+            // Code..
+        } elseif ($recurso->estatus == 'Enviado') {
             if ($recurso->configuracion_invitacion_envio->enviar_ahora) {
                 foreach ($empleados as $empleado) {
                     Mail::to($empleado->email)->send(new InvitacionCapacitacionMail($empleado->name));

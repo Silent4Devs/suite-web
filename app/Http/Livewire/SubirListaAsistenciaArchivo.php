@@ -19,19 +19,18 @@ class SubirListaAsistenciaArchivo extends Component
         $this->recurso = $recurso;
     }
 
-
     public function save()
     {
         $this->validate([
             'lista' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000', // 1MB Max
         ], [
-            'lista.required' => 'Tienes que seleccionar un archivo'
+            'lista.required' => 'Tienes que seleccionar un archivo',
         ]);
         $archivo = 'Lista_Asistencia.' . $this->lista->extension();
         $this->lista->storeAs("public/capacitaciones/listas/{$this->recurso->id}_capacitacion/", $archivo);
 
         $this->recurso->update([
-            'lista_asistencia' => $archivo
+            'lista_asistencia' => $archivo,
         ]);
         $this->emit('listaGuardada');
     }
@@ -41,7 +40,7 @@ class SubirListaAsistenciaArchivo extends Component
         $eliminado = Storage::disk('capacitaciones')->delete("listas/{$this->recurso->id}_capacitacion/" . $this->recurso->lista_asistencia);
         if ($eliminado) {
             $this->recurso->update([
-                'lista_asistencia' => null
+                'lista_asistencia' => null,
             ]);
             $this->emit('listaEliminada', ['estatus' => 200, 'mensaje' => 'La lista de asistencia ha sido eliminada']);
         } else {
@@ -56,7 +55,7 @@ class SubirListaAsistenciaArchivo extends Component
         }
 
         return view('livewire.subir-lista-asistencia-archivo', [
-            'mostrarLista' => $this->mostrarLista
+            'mostrarLista' => $this->mostrarLista,
         ]);
     }
 }

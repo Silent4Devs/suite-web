@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Rennokki\QueryCache\Traits\QueryCacheable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 /**
- * Class AlcanceSgsi
+ * Class AlcanceSgsi.
  *
  * @property int $id
  * @property string|null $alcancesgsi
@@ -25,8 +26,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Team|null $team
  * @property Empleado|null $empleado
  * @property Norma|null $norma
- *
- * @package App\Models
  */
 class AlcanceSgsi extends Model
 {
@@ -41,25 +40,25 @@ class AlcanceSgsi extends Model
         'alcancesgsi',
     ];
 
-	protected $casts = [
-		'id_reviso_alcance' => 'int',
-	];
+    protected $casts = [
+        'id_reviso_alcance' => 'int',
+    ];
 
-	protected $dates = [
-		'fecha_publicacion',
-		'fecha_entrada',
-		'fecha_revision'
-	];
+    protected $dates = [
+        'fecha_publicacion',
+        'fecha_entrada',
+        'fecha_revision',
+    ];
 
-	protected $fillable = [
-		'alcancesgsi',
-		'team_id',
-		'fecha_publicacion',
-		'fecha_entrada',
-		'fecha_revision',
-		'id_reviso_alcance',
-		'norma_id'
-	];
+    protected $fillable = [
+        'alcancesgsi',
+        'team_id',
+        'fecha_publicacion',
+        'fecha_entrada',
+        'fecha_revision',
+        'id_reviso_alcance',
+        'norma_id',
+    ];
 
     public function getFechaPublicacionAttribute($value)
     {
@@ -76,19 +75,18 @@ class AlcanceSgsi extends Model
         return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
-	public function team()
-	{
-		return $this->belongsTo(Team::class);
-	}
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class, 'id_reviso_alcance');
-	}
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_reviso_alcance');
+    }
 
-	public function norma()
-	{
-		return $this->belongsTo(Norma::class);
-	}
+    public function norma()
+    {
+        return $this->belongsTo(Norma::class);
+    }
 }
-

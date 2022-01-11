@@ -19,6 +19,7 @@ class FileCapacitacion extends Model
     {
         $folder = "{$this->recurso->id}_recurso";
         $ruta = asset("storage/capacitaciones/recursos/{$folder}/$this->archivo");
+
         return $ruta;
     }
 
