@@ -39,14 +39,14 @@ class Recurso extends Model implements HasMedia
         'Enviado', //Enviado (cuando se envia en este momento las invitaciones)
         'Programado', //Programado (cuando se programa el envio de invitaciones)
         // 'Re-Programado', //Re Programado (cuando se re programa)
-        'Cancelado' // Cuando se cancela
+        'Cancelado', // Cuando se cancela
     ];
     const PROXIMAMENTE = 0;
     const EN_CURSO = 1;
     const TERMINADO = 2;
 
     protected $appends = [
-        'certificado', 'estatus_aceptacion', 'fecha_inicio_name', 'fecha_fin_name', 'fecha_limite_name', 'fecha_inicio_format_diagonal', 'fecha_fin_format_diagonal', 'only_fecha_inicio', 'only_fecha_fin', 'only_fecha_inicio_hora', 'only_fecha_fin_hora', 'fecha_inicio_ymd', 'fecha_limite_ymd', 'ya_finalizo', 'ya_inicio', 'ruta_lista_asistencia'
+        'certificado', 'estatus_aceptacion', 'fecha_inicio_name', 'fecha_fin_name', 'fecha_limite_name', 'fecha_inicio_format_diagonal', 'fecha_fin_format_diagonal', 'only_fecha_inicio', 'only_fecha_fin', 'only_fecha_inicio_hora', 'only_fecha_fin_hora', 'fecha_inicio_ymd', 'fecha_limite_ymd', 'ya_finalizo', 'ya_inicio', 'ruta_lista_asistencia',
     ];
 
     public static $searchable = [
@@ -63,7 +63,7 @@ class Recurso extends Model implements HasMedia
 
     protected $casts = [
         'tipo_seleccion_participantes' => 'object',
-        'configuracion_invitacion_envio' => 'object'
+        'configuracion_invitacion_envio' => 'object',
     ];
 
     protected $fillable = [
@@ -86,30 +86,33 @@ class Recurso extends Model implements HasMedia
         'tipo_seleccion_participantes',
         'estatus',
         'configuracion_invitacion_envio',
-        'lista_asistencia'
+        'lista_asistencia',
     ];
 
-    # SCOPES
+    // SCOPES
     public function scopeCapacitacionesProximas($query)
     {
         return $query->whereDate('fecha_curso', '>', Carbon::now()->format('Y-m-d h:i:s'));
     }
+
     public function scopeCapacitacionesEnCurso($query)
     {
         // dd(Carbon::now()->format('Y-m-d h:i:s'));
         return $query->whereDate('fecha_curso', '<=', Carbon::now()->format('Y-m-d h:i:s'))->whereDate('fecha_fin', '>=', Carbon::now()->format('Y-m-d h:i:s'));
     }
+
     public function scopeCapacitacionesTerminadas($query)
     {
         return $query->whereDate('fecha_fin', '<', Carbon::now()->format('Y-m-d h:i:s'));
     }
-    # FIN SCOPES
+    // FIN SCOPES
 
     public function getRutaListaAsistenciaAttribute()
     {
         if ($this->lista_asistencia != null) {
             return asset("storage/capacitaciones/listas/{$this->id}_capacitacion/{$this->lista_asistencia}");
         }
+
         return null;
     }
 
@@ -120,9 +123,9 @@ class Recurso extends Model implements HasMedia
         $hoy = Carbon::now()->format('Y-m-d h:i:s');
         if ($fechaInicio > $hoy) {
             return ['nombre' => 'Proximamente', 'code' => 'proximamente', 'color' => 'blue'];
-        } else if ($fechaInicio <= $hoy && $fechaFin >= $hoy) {
+        } elseif ($fechaInicio <= $hoy && $fechaFin >= $hoy) {
             return ['nombre' => 'Curso', 'code' => 'curso', 'color' => 'green'];
-        } else if ($fechaFin < $hoy) {
+        } elseif ($fechaFin < $hoy) {
             return ['nombre' => 'Terminado', 'code' => 'terminado', 'color' => 'red'];
         }
     }
@@ -131,6 +134,7 @@ class Recurso extends Model implements HasMedia
     {
         return Carbon::parse($this->fecha_limite)->format('Y-m-d h:i:s');
     }
+
     public function getFechaInicioYMDAttribute()
     {
         return Carbon::parse($this->fecha_curso)->format('Y-m-d h:i:s');
@@ -140,32 +144,40 @@ class Recurso extends Model implements HasMedia
     {
         return Carbon::parse($this->fecha_curso)->format('d/m/Y');
     }
+
     public function getOnlyFechaInicioHoraAttribute()
     {
         return Carbon::parse($this->fecha_curso)->format('g:i A');
     }
+
     public function getOnlyFechaFinAttribute()
     {
         return Carbon::parse($this->fecha_fin)->format('d/m/Y');
     }
+
     public function getOnlyFechaFinHoraAttribute()
     {
         return Carbon::parse($this->fecha_fin)->format('g:i A');
     }
+
     public function getFechaInicioNameAttribute()
     {
         $date = new Date($this->fecha_curso);
+
         return $date->format('d F Y g:i A');
     }
 
     public function getFechaFinNameAttribute()
     {
         $date = new Date($this->fecha_fin);
+
         return $date->format('d F Y g:i A');
     }
+
     public function getFechaLimiteNameAttribute()
     {
         $date = new Date($this->fecha_limite);
+
         return $date->format('d F Y g:i A');
     }
 
@@ -173,6 +185,7 @@ class Recurso extends Model implements HasMedia
     {
         return Carbon::now()->isAfter(Carbon::parse($this->fecha_fin));
     }
+
     public function getYaInicioAttribute()
     {
         return Carbon::now()->greaterThanOrEqualTo(Carbon::parse($this->fecha_curso));
@@ -182,6 +195,7 @@ class Recurso extends Model implements HasMedia
     {
         return Carbon::parse($this->fecha_curso)->format('d/m/Y g:i A');
     }
+
     public function getFechaFinFormatDiagonalAttribute()
     {
         return Carbon::parse($this->fecha_fin)->format('d/m/Y g:i A');
@@ -212,7 +226,6 @@ class Recurso extends Model implements HasMedia
     {
         $this->attributes['fecha_curso'] = $value ? Carbon::createFromFormat('Y-m-d\TH:i', $value)->toDateTimeString() : null;
     }
-
 
     public function getCertificadoAttribute()
     {

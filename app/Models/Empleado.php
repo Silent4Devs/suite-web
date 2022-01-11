@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 // use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
@@ -80,7 +81,7 @@ class Empleado extends Model
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
         'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo', 'saludo_completo',
-        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad'
+        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad',
     ];
 
     //, 'jefe_inmediato', 'empleados_misma_area'
@@ -183,8 +184,10 @@ class Empleado extends Model
     public function getSaludoAttribute()
     {
         $nombre = explode(' ', $this->name)[0];
+
         return $nombre;
     }
+
     public function getSaludoCompletoAttribute()
     {
         $hora = date('H');
@@ -197,6 +200,7 @@ class Empleado extends Model
         } else {
             $saludo = "Buenos Días, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
         }
+
         return $saludo;
     }
 
@@ -214,6 +218,7 @@ class Empleado extends Model
 
         return $this->foto;
     }
+
     public function getAvatarRutaAttribute()
     {
         if ($this->foto == null || $this->foto == '0') {

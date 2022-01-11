@@ -63,7 +63,7 @@ class NotificarUsuarioCapacitacion extends Command
                             }
 
                             $capacitacion->update([
-                                'estatus' => 'Enviado'
+                                'estatus' => 'Enviado',
                             ]);
                         }
                     }

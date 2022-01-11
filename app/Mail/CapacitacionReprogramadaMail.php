@@ -5,7 +5,6 @@ namespace App\Mail;
 use App\Models\Empleado;
 use App\Models\Recurso;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -15,6 +14,7 @@ class CapacitacionReprogramadaMail extends Mailable
 
     public $recurso;
     public $empleado;
+
     public function __construct(Recurso $recurso, Empleado $empleado)
     {
         $this->recurso = $recurso;
