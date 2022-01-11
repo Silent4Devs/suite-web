@@ -14,8 +14,8 @@ class AddColumnsHorarioToPuestosTable extends Migration
     public function up()
     {
         Schema::table('puestos', function (Blueprint $table) {
-        $table->string('horario')->nullable();
-        $table->string('edad')->nullable();
+            $table->string('horario')->nullable();
+            $table->string('edad')->nullable();
         });
     }
 

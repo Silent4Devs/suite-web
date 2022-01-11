@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Area;
-use App\Models\Team;
-use App\Models\Grupo;
-use App\Models\Empleado;
 use App\Exports\AreasExport;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Requests\MassDestroyAreaRequest;
+use App\Http\Requests\StoreAreaRequest;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\Grupo;
 use App\Models\Organizacion;
+use App\Models\Team;
+use Gate;
+use Illuminate\Auth\Access\Gate as AccessGate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
-use Intervention\Image\Facades\Image;
-use App\Http\Requests\StoreAreaRequest;
 use Illuminate\Support\Facades\Storage;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\MassDestroyAreaRequest;
-use Illuminate\Auth\Access\Gate as AccessGate;
+use Intervention\Image\Facades\Image;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Controllers\Traits\CsvImportTrait;
+use Yajra\DataTables\Facades\DataTables;
 
 class AreasController extends Controller
 {
@@ -94,8 +94,9 @@ class AreasController extends Controller
         $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
-        $reportas=Empleado::get();
-        return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas','reportas'));
+        $reportas = Empleado::get();
+
+        return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas', 'reportas'));
     }
 
     public function store(StoreAreaRequest $request)
@@ -144,9 +145,9 @@ class AreasController extends Controller
         $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
-        $reportas=Empleado::get();
+        $reportas = Empleado::get();
 
-        return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area','reportas'));
+        return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area', 'reportas'));
     }
 
     public function update(Request $request, $id)
@@ -262,7 +263,7 @@ class AreasController extends Controller
     {
         abort_if(Gate::denies('organizacion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $areasTree = Area::with(['lider','supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+        $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
 
         return json_encode($areasTree);
         // dd($areasTree);
