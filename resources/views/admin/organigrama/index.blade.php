@@ -367,13 +367,12 @@
             height: 80px !important;
         }
 
-
     </style>
 @endsection
 
 @section('content')
 
-        <h5 class="col-12 titulo_general_funcion">Organigrama de {{ $organizacion }} </h5>
+    <h5 class="col-12 titulo_general_funcion">Organigrama de {{ $organizacion }} </h5>
 
 
 
@@ -432,7 +431,7 @@
                                         <i class="mr-1 fas fa-building"></i>
                                         Área
                                     </span></label>
-                                <select name="areas" id="areas" class="form-control" >
+                                <select name="areas" id="areas" class="form-control">
                                     <option value="" selected disabled>-- Selecciona área --</option>
                                     @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">
@@ -708,7 +707,7 @@
 
             let areas = document.querySelector("#areas");
             areas.addEventListener('change', function(event) {
-                if($("#areas option:selected").attr("id") != "ver_todos_option"){
+                if ($("#areas option:selected").attr("id") != "ver_todos_option") {
                     let area_id = event.target.value;
                     orientacion = localStorage.getItem('orientationOrgChart');
                     renderOrganigrama(OrgChart, orientacion, null, true, area_id);
@@ -730,21 +729,21 @@
 
 
             document.querySelector('#areas').addEventListener('change', function(e) {
-                    e.preventDefault();
-                    if($("#areas option:selected").attr("id") == "ver_todos_option"){
-                        document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
-                        $('.areas').val(null).trigger('change');
-                        document.querySelector("#participantes_search").value = "";
-                        document.querySelector("#zoomer").value = 70;
-                        document.querySelector("#output").innerHTML = 70;
-                        contador = 0;
-                        orientacion = orientaciones[contador];
-                        localStorage.setItem('orientationOrgChart', orientaciones[contador]);
-                        img.src =
-                            `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
-                        renderOrganigrama(OrgChart, orientacion);
-                        console.log("funcion");
-                    }
+                e.preventDefault();
+                if ($("#areas option:selected").attr("id") == "ver_todos_option") {
+                    document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
+                    $('.areas').val(null).trigger('change');
+                    document.querySelector("#participantes_search").value = "";
+                    document.querySelector("#zoomer").value = 70;
+                    document.querySelector("#output").innerHTML = 70;
+                    contador = 0;
+                    orientacion = orientaciones[contador];
+                    localStorage.setItem('orientationOrgChart', orientaciones[contador]);
+                    img.src =
+                        `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
+                    renderOrganigrama(OrgChart, orientacion);
+                    console.log("funcion");
+                }
 
             });
 
