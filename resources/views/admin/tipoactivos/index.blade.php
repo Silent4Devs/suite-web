@@ -26,9 +26,6 @@
                             Categoría
                         </th>
                         <th>
-                            Subcategoría
-                        </th>
-                        <th>
                             Opciones
                         </th>
                     </tr>
@@ -159,13 +156,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -193,10 +190,6 @@
                     {
                         data: 'tipo',
                         name: 'tipo'
-                    },
-                    {
-                        data: 'subtipo',
-                        name: 'subtipo'
                     },
                     {
                         data: 'actions',

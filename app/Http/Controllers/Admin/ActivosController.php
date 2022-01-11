@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivoRequest;
 use App\Http\Requests\StoreActivoRequest;
@@ -15,6 +16,7 @@ use App\Models\Sede;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\User;
+use App\Models\SubcategoriaActivo;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -133,6 +135,8 @@ class ActivosController extends Controller
     {
         abort_if(Gate::denies('configuracion_activo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $subcategorias = SubcategoriaActivo::all();
+
         $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $subtipos = Tipoactivo::all()->pluck('subtipo', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -149,7 +153,7 @@ class ActivosController extends Controller
 
         $modelos = Modelo::get();
 
-        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos'));
+        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos','subcategorias'));
     }
 
     public function store(StoreActivoRequest $request)

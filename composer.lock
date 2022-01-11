@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b8fd609cacc0089464c2a68845e55e1",
+    "content-hash": "0b5a130e1a62e4f3fb19533c0de53841",
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
@@ -518,6 +518,68 @@
                 "source": "https://github.com/bugsnag/bugsnag-psr-logger/tree/v1.4.5"
             },
             "time": "2021-12-13T09:52:57+00:00"
+        },
+        {
+            "name": "chelout/laravel-relationship-events",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chelout/laravel-relationship-events.git",
+                "reference": "2d454338bbcf28a07151098fac621fe672855902"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/2d454338bbcf28a07151098fac621fe672855902",
+                "reference": "2d454338bbcf28a07151098fac621fe672855902",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/container": "^6.0|^7.0|^8.0",
+                "illuminate/database": "^6.0|^7.0|^8.0",
+                "illuminate/events": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^8.3|^9.0|^9.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chelout\\RelationshipEvents\\RelationshipEventsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chelout\\RelationshipEvents\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "chelout",
+                    "email": "chelout@gmail.com"
+                }
+            ],
+            "description": "Missing relationship events for Laravel",
+            "homepage": "https://github.com/chelout/laravel-relationship-events",
+            "keywords": [
+                "events",
+                "laravel",
+                "relations",
+                "relationship"
+            ],
+            "support": {
+                "issues": "https://github.com/chelout/laravel-relationship-events/issues",
+                "source": "https://github.com/chelout/laravel-relationship-events/tree/1.4.0"
+            },
+            "time": "2020-12-09T13:28:52+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -5285,6 +5347,82 @@
             "time": "2021-11-30T19:35:32+00:00"
         },
         {
+            "name": "nunomaduro/termwind",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nunomaduro/termwind.git",
+                "reference": "a03cc7067ea9ee95ce69aa10359025ef631b9c07"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nunomaduro/termwind/zipball/a03cc7067ea9ee95ce69aa10359025ef631b9c07",
+                "reference": "a03cc7067ea9ee95ce69aa10359025ef631b9c07",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^8.0",
+                "symfony/console": "^5.3.0|^6.0.0"
+            },
+            "require-dev": {
+                "ergebnis/phpstan-rules": "^0.15.3",
+                "pestphp/pest": "^2.0.0",
+                "phpstan/phpstan": "^0.12.99",
+                "phpstan/phpstan-strict-rules": "^0.12.11",
+                "styleci/cli": "^1.2.0",
+                "symfony/var-dumper": "^5.2.7|^6.0.0",
+                "thecodingmachine/phpstan-strict-rules": "^0.12.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Termwind\\": "src/"
+                },
+                "files": [
+                    "src/Functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nuno Maduro",
+                    "email": "enunomaduro@gmail.com"
+                }
+            ],
+            "description": "Its like Tailwind CSS, but for the console.",
+            "keywords": [
+                "cli",
+                "console",
+                "css",
+                "package",
+                "php",
+                "style"
+            ],
+            "support": {
+                "issues": "https://github.com/nunomaduro/termwind/issues",
+                "source": "https://github.com/nunomaduro/termwind/tree/v1.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/paypalme/enunomaduro",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/nunomaduro",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/xiCO2k",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-12-16T00:58:11+00:00"
+        },
+        {
             "name": "nuovo/spreadsheet-reader",
             "version": "0.5.11",
             "source": {
@@ -5478,69 +5616,6 @@
                 "source": "https://github.com/opis/closure/tree/3.6.2"
             },
             "time": "2021-04-09T13:42:10+00:00"
-        },
-        {
-            "name": "orangehill/iseed",
-            "version": "v3.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/orangehill/iseed.git",
-                "reference": "874f77a20d49aa4c6c5fec2daf0daa070514e013"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/orangehill/iseed/zipball/874f77a20d49aa4c6c5fec2daf0daa070514e013",
-                "reference": "874f77a20d49aa4c6c5fec2daf0daa070514e013",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
-                "php": "^7.2|^8.0"
-            },
-            "require-dev": {
-                "illuminate/filesystem": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
-                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
-                "mockery/mockery": "^1.0.0",
-                "phpunit/phpunit": "^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Orangehill\\Iseed\\IseedServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Orangehill\\Iseed": "src/"
-                },
-                "classmap": [
-                    "src/Orangehill/Iseed/Exceptions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Tihomir Opacic",
-                    "email": "tihomir.opacic@orangehilldev.com"
-                }
-            ],
-            "description": "Generate a new Laravel database seed file based on data from the existing database table.",
-            "keywords": [
-                "artisan",
-                "generators",
-                "laravel",
-                "seed"
-            ],
-            "support": {
-                "issues": "https://github.com/orangehill/iseed/issues",
-                "source": "https://github.com/orangehill/iseed/tree/v3.0.1"
-            },
-            "time": "2021-01-14T15:34:12+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -7403,6 +7478,82 @@
             "time": "2021-04-22T15:16:31+00:00"
         },
         {
+            "name": "spatie/enum",
+            "version": "3.11.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/enum.git",
+                "reference": "4afe5f06bb4c3cf46d8b02328bcc34c0de652ad4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/enum/zipball/4afe5f06bb4c3cf46d8b02328bcc34c0de652ad4",
+                "reference": "4afe5f06bb4c3cf46d8b02328bcc34c0de652ad4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "fakerphp/faker": "^1.9.1",
+                "larapack/dd": "^1.1",
+                "phpunit/phpunit": "^9.0",
+                "vimeo/psalm": "^4.3"
+            },
+            "suggest": {
+                "fakerphp/faker": "To use the enum faker provider",
+                "phpunit/phpunit": "To use the enum assertions"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Enum\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brent Roose",
+                    "email": "brent@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Tom Witkowski",
+                    "email": "dev@gummibeer.de",
+                    "homepage": "https://gummibeer.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Enums",
+            "homepage": "https://github.com/spatie/enum",
+            "keywords": [
+                "enum",
+                "enumerable",
+                "spatie"
+            ],
+            "support": {
+                "docs": "https://docs.spatie.be/enum",
+                "issues": "https://github.com/spatie/enum/issues",
+                "source": "https://github.com/spatie/enum"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-11-25T11:30:17+00:00"
+        },
+        {
             "name": "spatie/geocoder",
             "version": "3.11.0",
             "source": {
@@ -7596,6 +7747,99 @@
             "time": "2021-12-21T10:08:05+00:00"
         },
         {
+            "name": "spatie/laravel-health",
+            "version": "1.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-health.git",
+                "reference": "125244ede71a11de906dd6fa61e042b43fa5d2ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-health/zipball/125244ede71a11de906dd6fa61e042b43fa5d2ce",
+                "reference": "125244ede71a11de906dd6fa61e042b43fa5d2ce",
+                "shasum": ""
+            },
+            "require": {
+                "dragonmantank/cron-expression": "^3.1",
+                "guzzlehttp/guzzle": "^6.5|^7.4",
+                "illuminate/console": "^8.75",
+                "illuminate/contracts": "^8.75",
+                "illuminate/database": "^8.75",
+                "illuminate/notifications": "^8.75",
+                "illuminate/support": "^8.75",
+                "nunomaduro/termwind": "^1.1",
+                "php": "^8.0",
+                "spatie/enum": "^3.11",
+                "spatie/laravel-package-tools": "^1.9.2",
+                "spatie/regex": "^3.1",
+                "symfony/process": "^5.4|^6.0"
+            },
+            "require-dev": {
+                "laravel/horizon": "^5.7",
+                "laravel/slack-notification-channel": "^2.3",
+                "nunomaduro/collision": "^5.10",
+                "nunomaduro/larastan": "^1.0",
+                "orchestra/testbench": "^6.23",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.4",
+                "spatie/laravel-ray": "^1.26",
+                "spatie/pest-plugin-snapshots": "^1.1",
+                "spatie/pest-plugin-test-time": "^1.0",
+                "spatie/test-time": "^1.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Health\\HealthServiceProvider"
+                    ],
+                    "aliases": {
+                        "Skeleton": "Spatie\\Health\\Facades\\Health"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Health\\": "src",
+                    "Spatie\\Health\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Monitor the health of a Laravel application",
+            "homepage": "https://github.com/spatie/laravel-health",
+            "keywords": [
+                "laravel",
+                "laravel-health",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-health/issues",
+                "source": "https://github.com/spatie/laravel-health/tree/1.7.5"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-12-25T22:40:40+00:00"
+        },
+        {
             "name": "spatie/laravel-medialibrary",
             "version": "8.10.2",
             "source": {
@@ -7700,6 +7944,66 @@
             "time": "2021-05-22T09:23:57+00:00"
         },
         {
+            "name": "spatie/laravel-package-tools",
+            "version": "1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-package-tools.git",
+                "reference": "97c24d0bc58e04d55e4a6a7b6d6102cb45b75789"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/97c24d0bc58e04d55e4a6a7b6d6102cb45b75789",
+                "reference": "97c24d0bc58e04d55e4a6a7b6d6102cb45b75789",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^7.0|^8.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^5.0|^6.23",
+                "phpunit/phpunit": "^9.4",
+                "spatie/test-time": "^1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\LaravelPackageTools\\": "src",
+                    "Spatie\\LaravelPackageTools\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tools for creating Laravel packages",
+            "homepage": "https://github.com/spatie/laravel-package-tools",
+            "keywords": [
+                "laravel-package-tools",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-package-tools/issues",
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.10.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-12-18T20:33:51+00:00"
+        },
+        {
             "name": "spatie/macroable",
             "version": "1.0.1",
             "source": {
@@ -7748,6 +8052,69 @@
                 "source": "https://github.com/spatie/macroable/tree/1.0.1"
             },
             "time": "2020-11-03T10:15:05+00:00"
+        },
+        {
+            "name": "spatie/regex",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/regex.git",
+                "reference": "d543de2019a0068e7b80da0ba24f1c51c7469303"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/regex/zipball/d543de2019a0068e7b80da0ba24f1c51c7469303",
+                "reference": "d543de2019a0068e7b80da0ba24f1c51c7469303",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0|^8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Regex\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A sane interface for php's built in preg_* functions",
+            "homepage": "https://github.com/spatie/regex",
+            "keywords": [
+                "expression",
+                "expressions",
+                "regex",
+                "regular",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/regex/issues",
+                "source": "https://github.com/spatie/regex/tree/3.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-11-30T21:13:59+00:00"
         },
         {
             "name": "spatie/temporary-directory",
@@ -11094,16 +11461,16 @@
     "packages-dev": [
         {
             "name": "composer/composer",
-            "version": "2.2.3",
+            "version": "2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "3c92ba5cdc7d48b7db2dcd197e6fa0e8fa6d9f4a"
+                "reference": "8a5ad75194f901e3b39ece4bbd22cbdabc79ae8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/3c92ba5cdc7d48b7db2dcd197e6fa0e8fa6d9f4a",
-                "reference": "3c92ba5cdc7d48b7db2dcd197e6fa0e8fa6d9f4a",
+                "url": "https://api.github.com/repos/composer/composer/zipball/8a5ad75194f901e3b39ece4bbd22cbdabc79ae8f",
+                "reference": "8a5ad75194f901e3b39ece4bbd22cbdabc79ae8f",
                 "shasum": ""
             },
             "require": {
@@ -11173,7 +11540,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.2.3"
+                "source": "https://github.com/composer/composer/tree/2.2.4"
             },
             "funding": [
                 {
@@ -11189,7 +11556,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-31T11:18:53+00:00"
+            "time": "2022-01-08T11:30:42+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -12191,16 +12558,16 @@
         },
         {
             "name": "nunomaduro/collision",
-            "version": "v5.10.0",
+            "version": "v5.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/collision.git",
-                "reference": "3004cfa49c022183395eabc6d0e5207dfe498d00"
+                "reference": "8b610eef8582ccdc05d8f2ab23305e2d37049461"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/3004cfa49c022183395eabc6d0e5207dfe498d00",
-                "reference": "3004cfa49c022183395eabc6d0e5207dfe498d00",
+                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/8b610eef8582ccdc05d8f2ab23305e2d37049461",
+                "reference": "8b610eef8582ccdc05d8f2ab23305e2d37049461",
                 "shasum": ""
             },
             "require": {
@@ -12262,7 +12629,7 @@
             },
             "funding": [
                 {
-                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=66BYDWAT92N6L",
+                    "url": "https://www.paypal.com/paypalme/enunomaduro",
                     "type": "custom"
                 },
                 {
@@ -12274,7 +12641,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-09-20T15:06:32+00:00"
+            "time": "2022-01-10T16:22:52+00:00"
         },
         {
             "name": "nunomaduro/phpinsights",
@@ -15088,5 +15455,5 @@
         "php": "^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

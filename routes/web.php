@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
+use App\Http\Controllers\Admin\ConfigurarSoporteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -157,7 +158,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
     Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');
 
-    Route::view('soporte', 'admin.soporte.index')->name('soporte.index');
+
 
     Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
     Route::post('portal-comunicacion/cumpleaños/{id}', 'PortalComunicacionController@felicitarCumpleaños')->name('portal-comunicacion.cumples');
@@ -412,6 +413,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
     Route::resource('partes-interesadas', 'PartesInteresadasController');
 
+    //Configuración Soporte
+    Route::delete('configurar-soporte/destroy', 'ConfigurarSoporteController@massDestroy')->name('configurar-soporte.massDestroy');
+    Route::resource('configurar-soporte', 'ConfigurarSoporteController');
+    Route::get('getgetEmployeeData', 'ConfigurarSoporteController@getgetEmployeeData')->name('getgetEmployeeData');
+    Route::get('soporte', 'ConfigurarSoporteController@visualizarSoporte')->name('soporte');
+
+
+    //Configuración Consultores
+    // Route::delete('configurar-consultor/destroy', 'ConfigurarConsultorController@massDestroy')->name('configurar-consultor.massDestroy');
+    // Route::resource('configurar-consultor', 'ConfigurarConsultorController');
+
     // Matriz Requisito Legales
     Route::get('matriz-requisito-legales/planes-de-accion/create/{id}', 'MatrizRequisitoLegalesController@createPlanAccion')->name('matriz-requisito-legales.createPlanAccion');
     Route::post('matriz-requisito-legales/planes-de-accion/store/{id}', 'MatrizRequisitoLegalesController@storePlanAccion')->name('matriz-requisito-legales.storePlanAccion');
@@ -471,6 +483,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
 
     // Recursos
+    Route::post('recursos/capacitacion-evaluacion', 'RecursosController@guardarEvaluacionCapacitacion')->name('recursos.guardarEvaluacionCapacitacion');
+    // Route::post('recursos/reprogramar-capacitacion', 'RecursosController@reprogramarCapacitacion')->name('recursos.reprogramarCapacitacion');
+    Route::post('recursos/{recurso}/reprogramar-capacitacion', 'RecursosController@reprogramarCapacitacion')->name('recursos.reprogramarCapacitacion');
+    Route::post('recursos/{recurso}/cancelar-capacitacion', 'RecursosController@cancelarCapacitacion')->name('recursos.cancelarCapacitacion');
+    Route::post('recursos/{recurso}/enviar-invitaciones-capacitacion', 'RecursosController@enviarInvitacionPorCorreoAhora')->name('recursos.enviarInvitacionPorCorreoAhora');
+    Route::post('recursos/capacitaciones-principales', 'RecursosController@obtenerCapacitacionesPrincipales')->name('recursos.obtenerCapacitacionesPrincipales');
+    Route::post('recursos/capacitaciones-archivadas', 'RecursosController@obtenerCapacitacionesArchivadas')->name('recursos.obtenerCapacitacionesArchivadas');
+    Route::post('recursos/capacitacion/respuesta', 'RecursosController@respuestaCapacitacion')->name('recursos.respuestaCapacitacion');
+    Route::post('recursos/capacitacion/archivar', 'RecursosController@archivarCapacitacion')->name('recursos.archivarCapacitacion');
     Route::post('recursos/validate', 'RecursosController@validateForm')->name('recursos.validateForm');
     Route::post('recursos/{recurso}/update', 'RecursosController@update')->name('recursos.update');
     Route::delete('recursos/destroy', 'RecursosController@massDestroy')->name('recursos.massDestroy');
@@ -605,6 +626,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('tipoactivos/parse-csv-import', 'TipoactivoController@parseCsvImport')->name('tipoactivos.parseCsvImport');
     Route::post('tipoactivos/process-csv-import', 'TipoactivoController@processCsvImport')->name('tipoactivos.processCsvImport');
     Route::resource('tipoactivos', 'TipoactivoController');
+    // Subtipo Activos
+
+    Route::delete('subtipoactivos/destroy', 'SubcategoriaActivoContoller@massDestroy')->name('subtipoactivos.massDestroy');
+    Route::post('subtipoactivos/parse-csv-import', 'SubcategoriaActivoContoller@parseCsvImport')->name('subtipoactivos.parseCsvImport');
+    Route::post('subtipoactivos/process-csv-import', 'SubcategoriaActivoContoller@processCsvImport')->name('subtipoactivos.processCsvImport');
+    Route::resource('subtipoactivos', 'SubcategoriaActivoContoller') ->names([
+        'index' => 'subtipoactivos.index',
+        'create' => 'subtipoactivos.create',
+        'store' => 'subtipoactivos.store',
+        'show' => 'subtipoactivos.show',
+        'edit' => 'subtipoactivos.edit',
+        'update' => 'subtipoactivos.update',
+    ]);;
+
 
     // Puestos
     Route::delete('puestos/destroy', 'PuestosController@massDestroy')->name('puestos.massDestroy');

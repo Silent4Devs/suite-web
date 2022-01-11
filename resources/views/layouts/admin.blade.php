@@ -48,8 +48,9 @@
 
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
     <style type="text/css">
-        
+
         .material-modulos{
             font-size: 50px;
             margin-bottom: 3px;
