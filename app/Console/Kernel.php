@@ -33,6 +33,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('user:recursos')->dailyAt('14:25')->timezone('America/Mexico_City');
         $schedule->command('notify:ev360')->daily()->timezone('America/Mexico_City');
         $schedule->command('email:felicitaciones')->dailyAt('14:25')->timezone('America/Mexico_City');
+        $schedule->command(\Spatie\Health\Commands\RunHealthChecksCommand::class)->everySixHours();
     }
 
     /**
