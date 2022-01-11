@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\CsvImportTrait;
-use App\Http\Requests\MassDestroyPuestoRequest;
-use App\Http\Requests\StorePuestoRequest;
-use App\Http\Requests\UpdatePuestoRequest;
+use Gate;
 use App\Models\Area;
+use App\Models\Team;
+use App\Models\Puesto;
 use App\Models\Empleado;
 use App\Models\Language;
-use App\Models\Puesto;
-use App\Models\PuestoIdiomaPorcentajePivot;
-use App\Models\PuestoResponsabilidade;
-use App\Models\RH\Competencia;
-use App\Models\Team;
-use Gate;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Models\RH\Competencia;
+use App\Models\PuestosCertificado;
+use App\Http\Controllers\Controller;
+use App\Models\PuestoResponsabilidade;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\StorePuestoRequest;
+use App\Http\Requests\UpdatePuestoRequest;
+use App\Models\PuestoIdiomaPorcentajePivot;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Requests\MassDestroyPuestoRequest;
 
 class PuestosController extends Controller
 {
@@ -156,9 +157,11 @@ class PuestosController extends Controller
         $idis = Language::all();
         $competencias = Competencia::all();
         $responsabilidades = PuestoResponsabilidade::get();
+        $certificados = PuestosCertificado::get();
+
         // dd($idis);
 
-        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades'));
+        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades','certificados'));
     }
 
     public function store(StorePuestoRequest $request)
@@ -166,8 +169,10 @@ class PuestosController extends Controller
         // dd($request->all());
         $puesto = Puesto::create($request->all());
 
+        // $this->saveOrUpdateLanguage($request->idiomas, $puesto);
         $this->saveOrUpdateLanguage($request, $puesto);
         $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
+        $this->saveUpdateCertificados($request->certificados, $puesto);
 
         return redirect()->route('admin.puestos.index');
     }
@@ -216,16 +221,20 @@ class PuestosController extends Controller
         $competencias = Competencia::all();
         $idis = Language::all();
         $responsabilidades = PuestoResponsabilidade::get();
+        $certificados = PuestosCertificado::get();
 
-        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades'));
+
+        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades','certificados'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)
     {
         $puesto->update($request->all());
 
+        // $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
         $this->saveOrUpdateLanguage($request, $puesto);
         $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
+        $this->saveUpdateCertificados($request->certificados, $puesto);
 
         return redirect()->route('admin.puestos.index');
     }
@@ -262,7 +271,7 @@ class PuestosController extends Controller
         return view('admin.puestos.consultapuestos');
     }
 
-    public function saveOrUpdateLanguage($request, $puesto)
+    public function saveOrUpdateLanguage($idiomas, $puesto)
     {
         $id = $puesto->id;
         $i = 0;
@@ -279,6 +288,7 @@ class PuestosController extends Controller
                             $dataModel->update([
                                 'id_language'  => $w['language'][$i],
                                 'porcentaje' =>  $w['porcentaje'][$i],
+                                'nivel' =>  $w['nivel'][$i],
                                 ]);
                         }
                     } else {
@@ -287,18 +297,43 @@ class PuestosController extends Controller
 
                                 'id_language'=> $w['language'][$i],
                                 'porcentaje'=> $w['porcentaje'][$i],
+                                'nivel'=> $w['nivel'][$i],
                                 'id_puesto'=>$id,
                                 ]);
                             echo $i;
                         }
 
                         // }
-                        // dd( $language);
+                        // dd($w['language'][$i]);
                         // dd('Hola');
                     }
                 }
             }
+
+
         }
+
+
+
+        // foreach ($idiomas as $idioma) {
+        //     // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
+        //     if (PuestoIdiomaPorcentajePivot::find($idioma['id'] == null)) {
+        //         PuestoIdiomaPorcentajePivot::find($idioma['id'])->update([
+        //             'id_language' => $idioma['language'],
+        //             'porcentaje' =>  $idioma['porcentaje'],
+        //             'nivel' =>  $idioma['nivel'],
+        //             ]);
+        //     } else {
+        //         PuestoIdiomaPorcentajePivot::create([
+        //                 'puesto_id' => $puesto->id,
+        //                 'id_language' => $idioma['language'],
+        //                 'porcentaje' =>  $idioma['porcentaje'],
+        //                 'nivel' =>  $idioma['nivel'],
+        //             ]);
+        //     }
+        // }
+
+        // dd($request->all());
     }
 
     public function updateLanguage(Request $request, $language)
@@ -323,16 +358,7 @@ class PuestosController extends Controller
 
     public function saveUpdateResponsabilidades($responsabilidades, $puesto)
     {
-        // $request->validate([
-        //     'actividad' => 'required|string|max:255',
-        //     'resultado' => 'required',
-        //     'indicador' => 'required',
-        //     'tiempo_asignado' => 'required',
-        //     'puesto_id' => 'required|exists:puesto,id',
-        // ]);
-        // dd($request->all());
-        // dd($puesto);
-        // $puesto = Puesto::find(intval($puesto));
+
 
         foreach ($responsabilidades as $responsabilidad) {
             // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
@@ -360,6 +386,36 @@ class PuestosController extends Controller
     {
         $responsabilidades = PuestoResponsabilidade::find($responsabilidades);
         $responsabilidades->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
+    }
+
+    public function saveUpdateCertificados($certificados, $puesto)
+    {
+
+
+        foreach ($certificados as $certificado) {
+            // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
+            if (PuestosCertificado::find($certificado['id'] == null)) {
+                PuestosCertificado::find($certificado['id'])->update([
+                    'nombre' => $certificado['nombre'],
+                    'requisito' =>  $certificado['requisito'],
+                    ]);
+            } else {
+                PuestosCertificado::create([
+                        'puesto_id' => $puesto->id,
+                        'nombre' => $certificado['nombre'],
+                        'requisito' =>  $certificado['requisito'],
+                    ]);
+            }
+        }
+        // dd($responsabilidades);
+    }
+
+    public function deleteCertificados(Request $request, $certificados)
+    {
+        $certificados = PuestosCertificado::find($certificados);
+        $certificados->delete();
 
         return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
     }

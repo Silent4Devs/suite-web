@@ -34,6 +34,7 @@ class PuestoIdiomaPorcentajePivot extends Model
         'id_language',
         'id_puesto',
         'porcentaje',
+        'nivel'
     ];
 
     public function language()

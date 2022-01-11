@@ -462,11 +462,14 @@ export default class OrgChart {
           else {
             photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;
           }
+          console.log(dataSourceJSON);
           content_more += `
-                <div class="supervisor justify-content-center" >
-                <h4 class="supervisor-title">Responsable del área:</h4>
-                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider.name}</span></p>
-                <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
+                <div class="supervisor justify-content-center" style="text-align:center !important" >
+                <h4 class="supervisor-title">Responsables del área:</h4>
+                <img src="${dataSourceJSON.lider?.avatar_ruta}"
+                class="text-center img_empleado" title="${dataSourceJSON.lider?.name}" >
+                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider?dataSourceJSON.lider.name:'sin definir'}</span></p>
+                <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider?.puesto}</span></p>
               </div>
             `;
     }
@@ -588,14 +591,12 @@ export default class OrgChart {
         photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;
       }
       content_more += `
-                <div class="supervisor">
-                <h4 class="supervisor-title">Supervisado Por:</h4>
-                <img src="${photo_s}" alt="Admin" class="rounded-circle mb-2" style="height: 140px;width: 80px;clip-path:circle(40px at 50% 50%);margin: auto;">`
-                responsables.forEach(responsable => {
-                <p class="supervisor-name"><i class="fas fa-user"></i><span>${dataSourceJSON.lider.name}</span></p>
-                <p class="supervisor-puesto"><i class="fas fa-info-circle"></i><span>${dataSourceJSON.supervisor.puesto}</span></p>
-              </div>
-            `;
+      <div class="supervisor justify-content-center" >
+        <h4 class="supervisor-title">Responsable del área:</h4>
+        <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
+        <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
+    </div>`;
+
     }
     c_more.innerHTML = content_more;
     chartContainer.appendChild(a_close);

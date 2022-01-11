@@ -7,8 +7,8 @@
                 @method('PUT')
                 @csrf
 
-                <div class="row">
-                    <div class="form-group col-sm-6">
+                <div class="row col-12">
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
                         <label for="area"><i
                                 class="fab fa-adn iconos-crear"></i>{{ trans('cruds.area.fields.area') }}</label>
                         <input class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" type="text" name="area"
@@ -21,7 +21,25 @@
                         <span class="help-block">{{ trans('cruds.area.fields.area_helper') }}</span>
                     </div>
 
-                    <div class="form-group col-sm-6">
+
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                        <label for="empleados_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del área</label>
+                        <select class="form-control {{ $errors->has('empleados_id') ? 'is-invalid' : '' }}" name="empleados_id" id="empleados_id">
+                            @foreach ($reportas as $reporta)
+                            <option data-puesto="{{ $reporta->puesto }}" value="{{ $reporta->id }}" data-area="{{ $reporta->area->area }}"
+                                {{ $area->empleados_id == $reporta->id  ? 'selected' : '' }}>
+                                {{ $reporta->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('reporta'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('empleados_id') }}
+                        </div>
+                        @endif
+                    </div>
+
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
                         <label for="id_grupo"><i class="fas fa-users iconos-crear"></i>Grupo </label>
                         <select class="form-control select2 {{ $errors->has('id_grupo') ? 'is-invalid' : '' }}"
                             name="id_grupo" id="id_grupo" required>
@@ -50,7 +68,7 @@
 
                 </div>
 
-                <div class="row">
+                <div class="row col-12">
 
                     <div class="form-group col-sm-6">
                         <label class="required" for="id_reporta"><i class="fas fa-user iconos-crear"></i>Reporta
@@ -94,7 +112,7 @@
 
                 </div>
 
-                <div class="row">
+                <div class="row col-12">
                     <div class="form-group col-sm-12">
                         <label for="descripcion"><i class="fas fa-pencil-alt iconos-crear"></i>Descripción</label>
                         <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"
