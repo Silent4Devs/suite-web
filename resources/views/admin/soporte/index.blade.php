@@ -212,7 +212,35 @@
 					<a class="btn btn-success" href="https://wa.me/525572480010" target="_blank"><i class="fab fa-whatsapp-square"></i>Whatsapp</a>
 					<a class="btn btn-success" href="mailto:miguel.gaspar@silent4business.com"><i class="fas fa-envelope-square"></i>Correo</a>
 				</div>
+
 				<table>
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Puesto</th>
+							<th>Teléfono</th>  
+							<th>Correo</th>  
+		
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($ConfigurarSoporteModel as $key)
+						<tr>
+							<td>{{ $key->id_elaboro}}</td>
+							<td>{{ $key->puesto }}</td>
+							<td>{{ $key->telefono }}</td>
+							<td>{{ $key->correo }}</td>
+							{{-- <td>
+								<a class="btn btn-primary btn-xs" href="{{ route('movie.edit',['id' => $movie->id] )}}" >Edit</a> 
+								<a class="btn btn-danger btn-xs" href="{{ route('movie/destroy',['id' => $movie->id] )}}" >Delete</a>
+							</td> --}}
+		
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+
+				{{-- <table>
 					<thead>
 						<tr>
 							<th>Nombre</th>
@@ -241,7 +269,7 @@
 							<td>marco.luna@silent4business.com</td>
 						</tr>
 					</tbody>
-				</table>
+				</table> --}}
 				<div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 40px;margin-right:10px;">Cancelar</div>
 			</div>
 			<div class="tabla_soporte">
@@ -253,6 +281,30 @@
 					<a class="btn btn-success" href="https://wa.me/525525115770" target="_blank"><i class="fab fa-whatsapp-square"></i>Whatsapp</a>
 					<a class="btn btn-success" href="mailto:contacto@silent4business.com"><i class="fas fa-envelope-square"></i>Correo</a>
 				</div>
+			{{--	<table class="table table-condensed table-striped table-bordered">
+					<thead>
+						<tr>
+						  <th>Nombre</th>
+						  <th>Puesto</th>
+						  <th>Teléfono</th>  
+						  <th>Correo</th>  
+		
+						</tr>
+					</thead>
+					 <tbody>
+						@foreach($movies as $movie)
+						<tr>
+							<td>{{ $movie->name }}</td>
+							<td>{{ $movie->description }}</td>
+							<td>
+								<a class="btn btn-primary btn-xs" href="{{ route('movie.edit',['id' => $movie->id] )}}" >Edit</a> 
+								<a class="btn btn-danger btn-xs" href="{{ route('movie/destroy',['id' => $movie->id] )}}" >Delete</a>
+							</td>
+		
+						</tr>
+						@endforeach
+					</tbody>
+				</table> --}}
 				<table>
 					<thead>
 						<tr>
