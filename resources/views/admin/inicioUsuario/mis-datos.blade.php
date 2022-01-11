@@ -279,6 +279,14 @@
 
 </style>
 
+
+@php
+    if (!is_null($organizacion)) {
+        $logotipo = $organizacion->logotipo;
+    } else {
+        $logotipo = 'logotipo-tabantaj.png';
+    }
+@endphp
 @if ($cumpleaños_usuario != null && $cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m'))
     @php
         $pastel = true;
@@ -302,13 +310,7 @@
                     <ul class="comentarios_felicidades">
                         <li>
                             <strong>
-                                @php
-                                    if (!is_null($organizacion)) {
-                                        $logotipo = $organizacion->logotipo;
-                                    } else {
-                                        $logotipo = 'logotipo-tabantaj.png';
-                                    }
-                                @endphp
+                                
 
                                 <img class="img_empleado" src="{{ asset($logotipo) }}">
                                 {{ $organizacion->empresa }}
