@@ -20,18 +20,19 @@
 
         .a_reporte{
             display: inline-block !important;
-            background-color: #001B44;
-            color: #fff;
+            /*background-color: #001B44;*/
+            color: unset;
             margin-top:120px;
             text-align: center;
             transition: 0.1s;
             position: relative;
             padding-bottom: 60px;
+            height: 450px;
         }
         .a_reporte:hover{
-            color: #fff;
+            color: unset;
             text-decoration: none;
-            opacity: 0.9;
+            /*opacity: 0.9;*/
         }
         .a_reporte:before{
             content: "";
@@ -47,25 +48,27 @@
             width: 100px;
             height: 100px;
             margin: auto;
-            margin-top: -50px;
-            background-color: #345183;
+            margin-top: -70px;
+            background-color: #788BAC;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 100px;
             font-size: 30pt;
             transition: 0.1s;
+            color: #fff;
         }
         .a_reporte:hover i{
             font-size: 40pt;
         }
         .a_reporte h4{
-            margin-top: 15px;
-            font-weight: bold;
+            margin-top: 16px;
+            /*font-weight: bold;*/
+            color: #3086AF;
         }
         .a_reporte p{
             text-align: justify;
-            font-size: 9pt;
+            font-size: 10px;
         }
         .btn_g_r{
             position: absolute;
@@ -78,8 +81,8 @@
 @endsection
 {{ Breadcrumbs::render('admin.portal-comunicacion.reportes') }}
 <h5 class="col-12 titulo_general_funcion">Generar Reportes</h5>
-<div class="card">
-    <div class=" card-body">
+<div class="">
+    <div class="">
         <div class="row">
 
             <div class="col-md-12">
@@ -112,127 +115,139 @@
                 <img src="{{ asset($logotipo) }}" class="logo_organizacion_politica">
 
             </div> --}}
-            <div style="margin: auto; text-align: center; margin-top: -40px !important;" class="col-12 row mt-4 justify-content-center">
+            <div style="margin: auto; text-align: center; margin-top: -40px !important;" class="container row mt-4 justify-content-center">
 
 
-                <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
-                    <i class="fas fa-lightbulb"></i>
-                    <h4>Sugerencia</h4>
-                    <p>
-                        Si quieres aportar alguna idea o
-                        propuesta para la Organización o área en
-                        particular, ¡Te escuchamos!
-                    </p>
-                    <p>
-                        Una sugerencia es un planteamiento,
-                        idea o recomendación que se presenta
-                        con el objetivo de proponer una o
-                        más acciones.
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                    <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="a_reporte card card-body">
+                        <i class="bi bi-lightbulb"></i>
+                        <h4>Sugerencia</h4>
+                        <p>
+                            Si quieres aportar alguna idea o
+                            propuesta para la Organización o área en
+                            particular, ¡Te escuchamos!
+                        </p>
+                        <p>
+                            Una sugerencia es un planteamiento,
+                            idea o recomendación que se presenta
+                            con el objetivo de proponer una o
+                            más acciones.
 
-                    </p>
-                    <p>
-                        Las sugerencias se canalizarán a las áreas correspondientes.
-                    </p>
-                    <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
-                </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
-                    <i class="fas fa-rocket"></i>
-                    <h4>Mejora</h4>
-                    <p>
-                        Puedes proponer mejoras en los
-                        procesos y servicios actuales de la organización, para lo
-                        cual se establecen las siguientes
-                        categorías de mejora:
-                    </p>
-                    <p>
-                        Mejoras Estratégicas: Son aquellas
-                        mejoras que impactan directamente a
-                        las estrategias y objetivos del negocio.
-                        Mejoras de Procesos: Son aquellas
-                        mejoras donde su impacto se ve
-                        reflejado en los procesos de la
-                        organización.
-                        Mejoras Operativas: Son aquellas
-                        mejoras donde su impacto se ve
-                        reflejado en la operación del día a día.
-                    </p>
-                    <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
-                </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
-                    <i class="fas fa-frown"></i>
-                    <h4>Queja</h4>
-                    <p>
-                        Podrás levantar una queja cuando exista cualquier tipo de
-                        reclamación generada por
-                        descontentos o disgustos por alguna
-                        situación vivida dentro de la organización
-                        y que se considere injusta.
-                        Normalmente se incumple con algún
-                        punto del Código de Conducta y Ética
-                        de la organización y/o del Manual de
-                        Políticas.
-                    </p>
-                    <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
-                </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
-                    <i class="fas fa-hand-paper"></i>
-                    <h4>Denuncia</h4>
-                    <p>
-                        Podrás levantar una denuncia cuando desees hacer una acusación
-                        en contra de un colaborador de
-                        la organización. Se dará seguimiento
-                        específico y se tomarán las acciones pertinentes según sea el caso
-                        pudiendo llegar hasta la terminación del
-                        contrato y cuando se considere
-                        necesario se elevara a las autoridades
-                        competentes.
-                    </p>
-                    <p>
-                        Podrás externar temas sensibles los
-                        cuales serán tratados con extricta
-                        confidencialidad. Son casos graves
-                        que no se podrán dejar pasar por
-                        ninguna circunstancia.
+                        </p>
+                        <p>
+                            Las sugerencias se canalizarán a las áreas correspondientes.
+                        </p>
+                        <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
+                    </a>
+                </div>
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                    <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="a_reporte card card-body">
+                        <i class="bi bi-award"></i>>
+                        <h4>Mejora</h4>
+                        <p>
+                            Puedes proponer mejoras en los
+                            procesos y servicios actuales de la organización, para lo
+                            cual se establecen las siguientes
+                            categorías de mejora:
+                        </p>
+                        <p>
+                            Mejoras Estratégicas: Son aquellas
+                            mejoras que impactan directamente a
+                            las estrategias y objetivos del negocio.
+                            Mejoras de Procesos: Son aquellas
+                            mejoras donde su impacto se ve
+                            reflejado en los procesos de la
+                            organización.
+                            Mejoras Operativas: Son aquellas
+                            mejoras donde su impacto se ve
+                            reflejado en la operación del día a día.
+                        </p>
+                        <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
+                    </a>
+                </div>
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                    <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="a_reporte card card-body">
+                        <i class="bi bi-emoji-frown"></i>
+                        <h4>Queja</h4>
+                        <p>
+                            Podrás levantar una queja cuando exista cualquier tipo de
+                            reclamación generada por
+                            descontentos o disgustos por alguna
+                            situación vivida dentro de la organización
+                            y que se considere injusta.
+                            Normalmente se incumple con algún
+                            punto del Código de Conducta y Ética
+                            de la organización y/o del Manual de
+                            Políticas.
+                        </p>
+                        <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
+                    </a>
+                </div>
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                    <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="a_reporte card card-body">
+                        <i class="bi bi-flag"></i>
+                        <h4>Denuncia</h4>
+                        <p>
+                            Podrás levantar una denuncia cuando desees hacer una acusación
+                            en contra de un colaborador de
+                            la organización. Se dará seguimiento
+                            específico y se tomarán las acciones pertinentes según sea el caso
+                            pudiendo llegar hasta la terminación del
+                            contrato y cuando se considere
+                            necesario se elevara a las autoridades
+                            competentes.
+                        </p>
+                        <p>
+                            Podrás externar temas sensibles los
+                            cuales serán tratados con extricta
+                            confidencialidad. Son casos graves
+                            que no se podrán dejar pasar por
+                            ninguna circunstancia.
 
-                    </p>
-                    <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
-                </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h4>Incidente de Seguridad</h4>
-                    <p>
-                        Aquí podrás reportar un incidente de
-                        seguridad de la información el cual
-                        podría ser un intento de acceso, uso,
-                        divulgación, modificación o
-                        destrucción no autorizada de
-                        información; un impedimento en la
-                        operación normal de las redes,
-                        sistemas o recursos informáticos; o
-                        una violación a una Política de
-                        Seguridad de la Información de la
-                        Organización. La notificación de los
-                        incidentes permite responder de
-                        forma sistemática, minimizar su
-                        ocurrencia e impacto y facilitar una
-                        recuperación rápida y eficiente de
-                        las actividades minimizando la pérdida
-                        de información y la interrupción de los
-                        Servicios.
-                    </p>
-                    <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
-                </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
-                   <i class="fas fa-shield-virus"></i>
-                    <h4>Riesgo</h4>
-                    <p>
-                        Aquí podrás reportar un riesgo en caso de presentarse un evento que
-                        pueda afectar los objetivos de la
-                        organización o que ponga en peligro la
-                        integridad física de los colaboradores.
-                    </p>
-                    <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
-                </a>
+                        </p>
+                        <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
+                    </a>
+                </div>
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                    <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}" class="a_reporte card card-body">
+                        <i class="bi bi-exclamation-octagon"></i>
+                        <h4>Incidente de Seguridad</h4>
+                        <p>
+                            Aquí podrás reportar un incidente de
+                            seguridad de la información el cual
+                            podría ser un intento de acceso, uso,
+                            divulgación, modificación o
+                            destrucción no autorizada de
+                            información; un impedimento en la
+                            operación normal de las redes,
+                            sistemas o recursos informáticos; o
+                            una violación a una Política de
+                            Seguridad de la Información de la
+                            Organización. La notificación de los
+                            incidentes permite responder de
+                            forma sistemática, minimizar su
+                            ocurrencia e impacto y facilitar una
+                            recuperación rápida y eficiente de
+                            las actividades minimizando la pérdida
+                            de información y la interrupción de los
+                            Servicios.
+                        </p>
+                        <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
+                    </a>
+                </div>
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                    <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}" class="a_reporte card card-body">
+                       <i class="bi bi-shield-exclamation"></i>
+                        <h4>Riesgo</h4>
+                        <p>
+                            Aquí podrás reportar un riesgo en caso de presentarse un evento que
+                            pueda afectar los objetivos de la
+                            organización o que ponga en peligro la
+                            integridad física de los colaboradores.
+                        </p>
+                        <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

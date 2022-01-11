@@ -26,6 +26,5 @@ class NormasSeeder extends Seeder
         ];
 
         Norma::insert($normas);
-
     }
 }
