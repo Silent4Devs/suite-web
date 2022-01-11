@@ -3,19 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyConfiguracionSoporteRequest;
 use Illuminate\Http\Request;
 use App\Models\ConfigurarSoporteModel;
 use App\Models\Empleado;
 use App\Models\Puesto;
+use Composer\Util\Http\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class ConfigurarSoporteController extends Controller
 {
     public function index(Request $request)
     {
-        
+        // $query = ConfigurarSoporteModel::with(['empleado'])->select('*')->orderByDesc('id')->get();
+        // dd($query);
         if ($request->ajax()) {
-            $query = ConfigurarSoporteModel::orderByDesc('id')->get();
+            $query = ConfigurarSoporteModel::with(['empleado'])->select('*')->orderByDesc('id')->get();
             // dd($query);
             $table = Datatables::of($query);
             // dd($table);
@@ -42,8 +45,12 @@ class ConfigurarSoporteController extends Controller
             $table->editColumn('rol', function ($row) {
                 return $row->rol ? $row->rol : '';
             });
+            $table->editColumn('id_elaboro', function ($row) {
+                return $row->Empleado->name ? $row->Empleado->name : '';
+            });
+
             $table->editColumn('puesto', function ($row) {
-                return $row->puesto ? $row->puesto : '';
+                return $row->Empleado->getPuestoAttribute() ? $row->Empleado->getPuestoAttribute() : '';
             });
             $table->editColumn('telefono', function ($row) {
                 return $row->telefono ? $row->telefono : '';
@@ -62,8 +69,16 @@ class ConfigurarSoporteController extends Controller
             return $table->make(true);
         }
 
-        $ConfigurarSoporteModel = ConfigurarSoporteModel::get();
-    
+        // $ConfigurarSoporteModel = ConfigurarSoporteModel::get();
+        // dd($ConfigurarSoporteModel);
+
+        $ConfigurarSoporteModel = ConfigurarSoporteModel::join('empleados', 'empleados.id', '=', 'configuracion_soporte.id_elaboro')
+        ->join('puestos', 'puestos.id', '=', 'empleados.puesto_id')
+        ->get();
+
+        // dd($ConfigurarSoporteModel);
+        // $ConfigurarSoporteModel = ConfigurarSoporteModel::join('empleados', 'empleados.id', '=', 'configuracion_soporte.puesto')->get();
+
 
         return view('admin.confSoporte.index', compact('ConfigurarSoporteModel'));
 
@@ -90,13 +105,13 @@ class ConfigurarSoporteController extends Controller
             'id_elaboro' =>  $request->id_elaboro,
         ]);
         // $ConfigurarSoporteModel= new ConfigurarSoporteModel;
-        // $ConfigurarSoporteModel->puesto = $request->puesto;      
+        // $ConfigurarSoporteModel->puesto = $request->puesto;
         // $ConfigurarSoporteModel->save();
-    
+
          return redirect()->route('admin.configurar-soporte.index')->with('success', 'Guardado con éxito');
     }
     public function edit($ConfigurarSoporteModel)
-    {  
+    {
         // dd($ConfigurarSoporteModel);
         $ConfigurarSoporteModel = ConfigurarSoporteModel::find($ConfigurarSoporteModel);
         // dd($ConfigurarSoporteModel);
@@ -124,7 +139,7 @@ class ConfigurarSoporteController extends Controller
     }
     public function destroy($ConfigurarSoporteModel)
     {
-      
+
         // abort_if(Gate::denies('partes_interesada_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $ConfigurarSoporteModel = ConfigurarSoporteModel::find($ConfigurarSoporteModel);
@@ -134,44 +149,20 @@ class ConfigurarSoporteController extends Controller
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
-    public function massDestroy(MassDestroyPartesInteresadaRequest $request)
+
+    public function massDestroy(MassDestroyConfiguracionSoporteRequest $request)
     {
         ConfigurarSoporteModel::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function visualizarSoporte( ConfigurarSoporteModel $ConfigurarSoporteModel){
-        // dd($request);
-        $ConfigurarSoporteModel = ConfigurarSoporteModel::all();
-        // $empleado = Empleado::
-	
-        // $users = Empleado::join('empleados', 'empleados.id', '=', 'configuracion_soporte.empleados_id')
-        // ->get(['empleados.*', 'id_elaboro.name']);
-        // dd($users);
-
-       
-        // $users = User::join('posts', 'users.id', '=', 'posts.user_id')
-        //                ->get(['users.*', 'posts.descrption']);
-        // $join = ConfigurarSoporteModel::join('id_elaboro',)
-
-        // $puesto = Puesto::with('configuracion_soporte')->get();
-        // dd($puesto);
-        // $empleado = Empleado::with('configuracion_soporte')->get();
-        // dd($empleado);
-
-        // $ConfigurarSoporteModel = ConfigurarSoporteModel::with('empleado')->get();
-        // dd($ConfigurarSoporteModel);
+    public function visualizarSoporte(Request $request){
+        $ConfigurarSoporteModel = ConfigurarSoporteModel::join('empleados', 'empleados.id', '=', 'configuracion_soporte.id_elaboro')
+        ->join('puestos', 'puestos.id', '=', 'empleados.puesto_id')
+        ->get();
 
 
-
-        // $users = Empleado::join('configuracion_soporte', 'empleados.id', '=', 'posts.user_id')
-        // ->get(['users.*', 'posts.descrption']); 
-
-        // $house = Empleado::with(["id_elaboro","id_laboro.name"])->find($empleado);
-        // $empleado = Empleado::with(["id","name"])->find($empleado);
-        // dd($ConfigurarSoporteModel);
-        
         return view('admin.soporte.index', compact('ConfigurarSoporteModel'));
     }
 
@@ -180,7 +171,7 @@ class ConfigurarSoporteController extends Controller
         // return response()->json(['test' => 'test']);
         $empleados = Empleado::find($request->id);
         // dd($empleados);
-        // return response()->json([$empleados->extension]);    
+        // return response()->json([$empleados->extension]);
         return response()->json(['id_puesto' => $empleados->id, 'puesto' => $empleados->puesto, 'telefono' => $empleados->telefono, 'extension' => $empleados->extension, 'telefono_movil' => $empleados->telefono_movil, 'email' => $empleados->email]);
     }
 

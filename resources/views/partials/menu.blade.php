@@ -843,7 +843,7 @@
                 </ul>
             </li>
         @endcan
-        @can('configuracion_procesos_access') {{-- este acceso no corresponde --}}
+        {{-- @can('') este acceso no corresponde --}}
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.configurar-soporte.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/configurar-soporte') || request()->is('admin/configurar-soporte/*') ? 'active' : '' }}">
@@ -851,7 +851,7 @@
                     <font class="letra_blanca">Configurar Soporte</font>
                 </a>
             </li>
-        @endcan
+        {{-- @endcan --}}
 
  {{-- este acceso no corresponde --}}
         {{-- @can('configuracion_procesos_access')
@@ -946,7 +946,7 @@
             }
         </style>
         <div class="text-center botones_g_s" style="margin-top: 80px;">
-            <a href="{{ route('admin.soporte.index') }}" title="Soporte" style="margin-right:14px;"><i class="bi bi-headset"></i></a>
+            <a href="{{ route('admin.soporte') }}" title="Soporte" style="margin-right:14px;"><i class="bi bi-headset"></i></a>
             <a href="{{ route('admin.glosarios.render') }}" title="Glosario"><i class="bi bi-book"></i></a>
         </div>
 
