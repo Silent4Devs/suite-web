@@ -44,7 +44,10 @@
                     <th>
                         Rol
                     </th>
-                    <th>
+                    <th style="min-width:200px;">
+                        Nombre
+                    </th>
+                    <th style="min-width:200px;">
                         Puesto
                     </th>
                     <th>
@@ -301,6 +304,10 @@
                 {
                     data: 'rol',
                     name: 'rol'
+                },
+                {
+                    data: 'id_elaboro',
+                    name: 'id_elaboro'
                 },
                 {
                     data: 'puesto',

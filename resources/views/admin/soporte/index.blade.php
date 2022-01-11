@@ -70,7 +70,7 @@
 			box-shadow: 0px 0px 5px -1px;
 			cursor: pointer;
 			margin:auto;
-			
+
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -218,28 +218,26 @@
 						<tr>
 							<th>Nombre</th>
 							<th>Puesto</th>
-							<th>Teléfono</th>  
-							<th>Correo</th>  
-		
+							<th>Teléfono</th>
+							<th>Extensión</th>
+							<th>Correo</th>
+
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($ConfigurarSoporteModel as $key)
+                        @if ($key->rol == 'Consultor')
 						<tr>
-							<td>{{ $key->id_elaboro}}</td>
+							<td>{{ $key->name}}</td>
 							<td>{{ $key->puesto }}</td>
-							<td>{{ $key->telefono }}</td>
+							<td>{{ $key->telefono}}</td>
+							<td>{{ $key->extension}}</td>
 							<td>{{ $key->correo }}</td>
-							{{-- <td>
-								<a class="btn btn-primary btn-xs" href="{{ route('movie.edit',['id' => $movie->id] )}}" >Edit</a> 
-								<a class="btn btn-danger btn-xs" href="{{ route('movie/destroy',['id' => $movie->id] )}}" >Delete</a>
-							</td> --}}
-		
 						</tr>
+                        @endif
 						@endforeach
 					</tbody>
 				</table>
-
 				{{-- <table>
 					<thead>
 						<tr>
@@ -270,7 +268,7 @@
 						</tr>
 					</tbody>
 				</table> --}}
-				<div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 40px;margin-right:10px;">Cancelar</div>
+				<div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 40px;margin-right:10px;">Regresar</div>
 			</div>
 			<div class="tabla_soporte">
 				<div class="py-3 col-md-12 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -281,67 +279,31 @@
 					<a class="btn btn-success" href="https://wa.me/525525115770" target="_blank"><i class="fab fa-whatsapp-square"></i>Whatsapp</a>
 					<a class="btn btn-success" href="mailto:contacto@silent4business.com"><i class="fas fa-envelope-square"></i>Correo</a>
 				</div>
-			{{--	<table class="table table-condensed table-striped table-bordered">
-					<thead>
-						<tr>
-						  <th>Nombre</th>
-						  <th>Puesto</th>
-						  <th>Teléfono</th>  
-						  <th>Correo</th>  
-		
-						</tr>
-					</thead>
-					 <tbody>
-						@foreach($movies as $movie)
-						<tr>
-							<td>{{ $movie->name }}</td>
-							<td>{{ $movie->description }}</td>
-							<td>
-								<a class="btn btn-primary btn-xs" href="{{ route('movie.edit',['id' => $movie->id] )}}" >Edit</a> 
-								<a class="btn btn-danger btn-xs" href="{{ route('movie/destroy',['id' => $movie->id] )}}" >Delete</a>
-							</td>
-		
-						</tr>
-						@endforeach
-					</tbody>
-				</table> --}}
 				<table>
 					<thead>
 						<tr>
 							<th>Nombre</th>
 							<th>Puesto</th>
 							<th>Teléfono</th>
+                            <th>Extensión</th>
 							<th>Correo</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>Miguel Ángel Gaspar Galicia</td>
-							<td>Líder de Innovación y Desarrollo.</td>
-							<td>5578233000 <br> Ext. 151 5572480010</td>
-							<td>miguel.gaspar@silent4business.com</td>
-						</tr>
-						<tr>
-							<td>Luis Fernando Jonathan Vargas Osornio</td>
-							<td>Coordinador de Desarrollo Innovación y Desarrollo.</td>
-							<td>55 7823 3000</td>
-							<td>luis.vargas@silent4business.com</td>
-						</tr>
-						<tr>
-							<td>Uriel Santiago Reyes</td>
-							<td>Desarrollador Jr.</td>
-							<td>55 7823 3000</td>
-							<td>uriel.santiago@silent4business.com</td>
-						</tr>
-						{{-- <tr style="border: none;">
-							<td>Marco Luna Robles</td>
-							<td>Líder de Consultoría Estratégica</td>
-							<td>5578232000 Ext. 158</td>
-							<td>marco.luna@silent4business.com</td>
-						</tr> --}}
+                        @foreach($ConfigurarSoporteModel as $key)
+                        @if ($key->rol == 'Soporte técnico')
+                        <tr>
+                            <td>{{ $key->name}}</td>
+                            <td>{{ $key->puesto }}</td>
+                            <td>{{ $key->telefono }}</td>
+							<td>{{ $key->extension}}</td>
+                            <td>{{ $key->correo }}</td>
+                        </tr>
+                        @endif
+                        @endforeach
 					</tbody>
 				</table>
-				<div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 15px;margin-right:10px;">Cancelar</div>
+				<div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 15px;margin-right:10px;">Regresar</div>
 			</div>
 		</div>
 	</div>
@@ -353,25 +315,25 @@
 @section('scripts')
 
 	<script type="text/javascript">
-		
+
 		$("#btn_consultores").click(function(){
 			$('.caja_general_soporte').addClass('secundario_revelado');
-			
+
 		});
-	
+
 		$(".btn_cerrar").click(function(){
 			$('.caja_general_soporte').removeClass('secundario_revelado');
-			
+
 		});
 
 		$("#btn_soporte").click(function(){
 			$('.caja_general_soporte').addClass('tercero_revelado');
-			
+
 		});
-	
+
 		$(".btn_cerrar").click(function(){
 			$('.caja_general_soporte').removeClass('tercero_revelado');
-			
+
 		});
 
 	</script>

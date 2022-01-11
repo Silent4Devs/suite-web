@@ -119,7 +119,7 @@
                         <th style="vertical-align: top">
                             Puesto
                         </th>
-                        <th style="vertical-align: top min-width:200px;">
+                        <th style="vertical-align: top; min-width:200px;">
                             Jefe Inmediato
                         </th>
                         <th style="vertical-align: top">

@@ -272,7 +272,7 @@
                              let archivo="";
                             //  console.log(row);
                              let archivos=row.documentos_control_a;
-                             console.log(archivos)
+
                                archivo=` <div class="container">
 
                                     <div class="mb-4 row">

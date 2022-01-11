@@ -843,7 +843,7 @@
                 </ul>
             </li>
         @endcan
-        @can('configuracion_procesos_access') {{-- este acceso no corresponde --}}
+        {{-- @can('') este acceso no corresponde --}}
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.configurar-soporte.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/configurar-soporte') || request()->is('admin/configurar-soporte/*') ? 'active' : '' }}">
@@ -851,7 +851,7 @@
                     <font class="letra_blanca">Configurar Soporte</font>
                 </a>
             </li>
-        @endcan
+        {{-- @endcan --}}
 
  {{-- este acceso no corresponde --}}
         {{-- @can('configuracion_procesos_access')
