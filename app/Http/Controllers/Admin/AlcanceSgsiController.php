@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAlcanceSgsiRequest;
-use App\Http\Requests\StoreAlcanceSgsiRequest;
 use App\Http\Requests\UpdateAlcanceSgsiRequest;
 use App\Models\AlcanceSgsi;
 use App\Models\Empleado;
@@ -53,7 +52,8 @@ class AlcanceSgsiController extends Controller
             $table->editColumn('norma', function ($row) {
                 $iso = substr($row->norma->norma, 0, 3);
                 $num = substr($row->norma->norma, 3);
-                return $row->norma ? strtoupper($iso . " " . $num) : '';
+
+                return $row->norma ? strtoupper($iso . ' ' . $num) : '';
             });
 
             $table->editColumn('fecha_publicacion', function ($row) {
@@ -99,6 +99,7 @@ class AlcanceSgsiController extends Controller
     public function store(Request $request)
     {
         $alcanceSgsi = AlcanceSgsi::create($request->all());
+
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Guardado con éxito');
     }
 

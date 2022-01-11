@@ -59,7 +59,8 @@ class PartesInteresadasController extends Controller
             $table->editColumn('norma', function ($row) {
                 $iso = substr($row->clausulas[0]->modulo, 0, 3);
                 $num = substr($row->clausulas[0]->modulo, 3);
-                return $row->clausulas ? strtoupper($iso . " " . $num) : '';
+
+                return $row->clausulas ? strtoupper($iso . ' ' . $num) : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -119,6 +120,7 @@ class PartesInteresadasController extends Controller
 
     public function destroy(PartesInteresada $partesInteresada)
     {
+        dd($partesInteresada);
         abort_if(Gate::denies('partes_interesada_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $partesInteresada->delete();
