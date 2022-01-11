@@ -7,9 +7,9 @@
             <form method="POST" action="{{ route('admin.puestos.update', [$puesto->id]) }}" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-                <div class="row">
+                <div class="row col-12">
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="puesto">{{ trans('cruds.puesto.fields.puesto') }}</label>
+                        <label class="required" for="puesto">Nombre del puesto</label>
                         <input class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}" type="text" name="puesto"
                             id="puesto" value="{{ old('puesto', $puesto->puesto) }}" required>
                         @if ($errors->has('puesto'))
@@ -19,23 +19,9 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.puesto.fields.puesto_helper') }}</span>
                     </div>
+
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label for="id_reporta"><i class="fas fa-user-tie iconos-crear"></i>Reporta a</label>
-                        <select class="form-control {{ $errors->has('id_reporta') ? 'is-invalid' : '' }}" name="id_reporta" id="id_reporta" value="{{ $puesto->id_reporta }}">
-                            @foreach ($reportas as $reporta)
-                            <option  value="{{ $reporta->id }}" {{ $puesto->id_reporta == $reporta->id ? 'selected' : '' }}>
-                                {{$reporta->name}}
-                            </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('reporta'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('id_reporta') }}
-                        </div>
-                        @endif
-                    </div>
-                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label for="id_area"><i class="fas fa-user-tie iconos-crear"></i>Área</label>
+                        <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                         <select class="form-control {{ $errors->has('id_area') ? 'is-invalid' : '' }}" name="id_area" id="id_area" value="{{ $puesto->id_area}}">
                             @foreach ($areas as $area)
                             <option  value="{{ $area->id }}" {{ $puesto->id_area == $area->id ? 'selected' : '' }}>
@@ -49,8 +35,56 @@
                         </div>
                         @endif
                     </div>
+
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                        <label class="required" for="fecha_puesto"><i
+                                class="fas fa-calendar-alt iconos-crear"></i>Fecha de creación</label>
+                        <input class="form-control {{ $errors->has('fecha_puesto') ? 'is-invalid' : '' }}" type="date" name="fecha_puesto"
+                            id="puesto" value="{{ old('fecha_puesto',  $puesto->fecha_puesto) }}" required>
+                        @if ($errors->has('fecha_puesto'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('fecha_puesto') }}
+                            </div>
+                        @endif
+                    </div>
+
+
+
                 </div>
-                <div class="form-group">
+
+                <div class="row col-12">
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                        <label for="id_reporta"><i class="fas fa-user-tie iconos-crear"></i>Reportará a</label>
+                        <select class="form-control {{ $errors->has('id_reporta') ? 'is-invalid' : '' }}" name="id_reporta" id="id_reporta" value="{{ $puesto->id_reporta }}">
+                            @foreach ($reportas as $reporta)
+                            <option  value="{{ $reporta->id }}" {{ $puesto->id_reporta == $reporta->id ? 'selected' : '' }}>
+                                {{$reporta->name}}
+                            </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('reporta'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_reporta') }}
+                        </div>
+                        @endif
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="id_puesto_reviso"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                        <div class="form-control" id="puesto_reviso"></div>
+
+                    </div>
+
+
+                    <div class="form-group col-md-4">
+                        <label for="id_area_reviso"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                        <div class="form-control" id="area_reviso"></div>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group col-sm-12 col-md-12 col-lg-12">
                     <label for="descripcion">{{ trans('cruds.puesto.fields.descripcion') }}</label>
                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
                         name="descripcion"
@@ -62,6 +96,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.puesto.fields.descripcion_helper') }}</span>
                 </div>
+
                 <div class="row">
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                         <label for="estudios"><i class="fas fa-file-signature iconos-crear"></i>Estudios<span
@@ -169,10 +204,10 @@
                         </table>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row col-12">
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label for="lugar_trabajo"><i class="fas fa-user-tie iconos-crear"></i>Lugar de trabajo</label>
+                        <label for="lugar_trabajo"><i class="far fa-building iconos-crear"></i>Lugar de trabajo</label>
                         <select class="form-control {{ $errors->has('lugar_trabajo') ? 'is-invalid' : '' }}" name="lugar_trabajo" id="lugar_trabajo" >
                             <option value="{{ $puesto->lugar_trabajo}}" selected>Selecciona</option>
                             <option value="Home Office">Home Office</option>
@@ -224,7 +259,7 @@
 
                     </div>
                 </div>
-                <div class="row">
+                <div class="row col-12">
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
                         <label class="required" for="genero"><i class="fas fa-restroom iconos-crear"></i>Género</label>
                         <select class="form-control {{ $errors->has('genero') ? 'is-invalid' : '' }}" name="genero" id="genero">
@@ -290,18 +325,23 @@
 
 <script>
     $(document).ready(function () {
+    const lenguajes=@json($idis);
+    console.log(lenguajes);
       var count = 1;
 
       dynamic_field(count);
 
       function dynamic_field(number) {
-        html = "<tr>";
-        html +=
-            '<td><select type="" name="first_name[]" class="form-control col-md-4" /></td>';
-        html +=
-            '<td><input type="text" name="last_name[]" class="form-control" /></td>';
-        //   html +=
-        //   '<td><input type="text" name="last_name[]" class="form-control" /></td>';
+        html = `<tr>
+            <td class="col-4">
+            <select  class="workingSelect form-control" name="id_language['+number+'][language][]" id="id_language" >`
+            lenguajes.forEach(lenguaje=>{
+                html+=`<option value="${lenguaje.id}">${lenguaje.idioma}</option>`
+            })
+            html+=`</select>
+            </td>
+            <td><input type="text" name="id_language['+number+'][porcentaje][]" class="form-control" /></td>`;
+
         if (number > 1) {
           html +=
             '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Remove</button></td></tr>';
@@ -390,101 +430,76 @@
         });
     </script>
 
-    <script>
+<script>
+    $(document).ready(function() {
         CKEDITOR.replace('estudios', {
             toolbar: [{
-            name: 'document',
-                items: [
-                    'Maximize', '-',
-                    'Styles', 'Format', 'Font', 'FontSize', '-',
-                    'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
-                    'Bold', 'Italic', 'Underline', 'Strike', '-',
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
                     'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Undo', 'Redo', '-', 'Scayt', '-',
-                    'TextColor', 'BGColor', '-',
-                    'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
-                    'Outdent', 'Indent', '-',
-                    'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+                    'Bold', 'Italic'
                 ]
-            }]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
         });
-    </script>
-    <script>
         CKEDITOR.replace('experiencia', {
             toolbar: [{
-            name: 'document',
-                items: [
-                    'Maximize', '-',
-                    'Styles', 'Format', 'Font', 'FontSize', '-',
-                    'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
-                    'Bold', 'Italic', 'Underline', 'Strike', '-',
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
                     'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Undo', 'Redo', '-', 'Scayt', '-',
-                    'TextColor', 'BGColor', '-',
-                    'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
-                    'Outdent', 'Indent', '-',
-                    'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+                    'Bold', 'Italic'
                 ]
-            }]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
         });
-    </script>
-    <script>
         CKEDITOR.replace('conocimientos', {
             toolbar: [{
-            name: 'document',
-                items: [
-                    'Maximize', '-',
-                    'Styles', 'Format', 'Font', 'FontSize', '-',
-                    'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
-                    'Bold', 'Italic', 'Underline', 'Strike', '-',
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
                     'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Undo', 'Redo', '-', 'Scayt', '-',
-                    'TextColor', 'BGColor', '-',
-                    'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
-                    'Outdent', 'Indent', '-',
-                    'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+                    'Bold', 'Italic'
                 ]
-            }]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
         });
-    </script>
-    <script>
         CKEDITOR.replace('certificaciones', {
             toolbar: [{
-            name: 'document',
-                items: [
-                    'Maximize', '-',
-                    'Styles', 'Format', 'Font', 'FontSize', '-',
-                    'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
-                    'Bold', 'Italic', 'Underline', 'Strike', '-',
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
                     'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Undo', 'Redo', '-', 'Scayt', '-',
-                    'TextColor', 'BGColor', '-',
-                    'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
-                    'Outdent', 'Indent', '-',
-                    'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+                    'Bold', 'Italic'
                 ]
-            }]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
         });
-    </script>
-
-    <script>
         CKEDITOR.replace('conocimientos_esp', {
             toolbar: [{
-            name: 'document',
-                items: [
-                    'Maximize', '-',
-                    'Styles', 'Format', 'Font', 'FontSize', '-',
-                    'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
-                    'Bold', 'Italic', 'Underline', 'Strike', '-',
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
                     'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Undo', 'Redo', '-', 'Scayt', '-',
-                    'TextColor', 'BGColor', '-',
-                    'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
-                    'Outdent', 'Indent', '-',
-                    'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+                    'Bold', 'Italic'
                 ]
-            }]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
         });
-    </script>
+    });
+
+</script>
+
 
 @endsection

@@ -171,10 +171,12 @@
         justify-content: center;
         align-items: center;
     }
-    .cuadro_verde_con_before img{
+
+    .cuadro_verde_con_before img {
         width: 100%;
     }
-    .gorro{
+
+    .gorro {
         position: absolute;
         width: 60px;
         z-index: 1;
@@ -182,7 +184,8 @@
         margin-top: -20px;
         transform: rotate(25deg);
     }
-    .regalo{
+
+    .regalo {
         width: 30px;
         position: absolute;
         top: 150px;
@@ -191,25 +194,28 @@
         cursor: pointer;
         fill: #345183 !important;
     }
-    .regalo:hover{
+
+    .regalo:hover {
         transform: scale(1.15);
     }
 
-    @keyframes regalo{
+    @keyframes regalo {
         0% {
             top: 150;
-          }
-          100% {
+        }
+
+        100% {
             top: 157px;
-          }
+        }
     }
 
-    .comentarios_felicidades{
+    .comentarios_felicidades {
         padding: 0;
         list-style: none;
         width: 100%;
     }
-    .comentarios_felicidades li{
+
+    .comentarios_felicidades li {
         width: 90%;
         margin: auto;
         background: rgba(0, 0, 0, 0.1);
@@ -217,7 +223,8 @@
         border-radius: 7px;
         margin-bottom: 20px;
     }
-    .comentario_caja{
+
+    .comentario_caja {
         background: #fff;
         padding: 10px;
         border-radius: 7px;
@@ -227,22 +234,24 @@
         overflow-y: auto;
     }
 
-    .card_data_mis_datos{
+    .card_data_mis_datos {
         margin-bottom: 20px;
     }
 
-    .card_margin_b_n{
+    .card_margin_b_n {
         margin-bottom: 20px !important;
     }
 
-    .pb-personzalizado, .card_margin_b_n{
+    .pb-personzalizado,
+    .card_margin_b_n {
         padding-bottom: 14px !important;
     }
-    hr{
+
+    hr {
         margin-bottom: 0px !important;
     }
 
-    .img_empleado_presentacion_mis_datos{
+    .img_empleado_presentacion_mis_datos {
         clip-path: circle(70px at 50% 50%);
         width: 140px !important;
         height: 140px !important;
@@ -252,100 +261,150 @@
         max-height: 140px !important;
         min-height: 140px !important;
     }
+
+</style>
+
+<style>
+    .logo {
+        position: absolute;
+        width: 150px;
+        top: 25px;
+        left: 330px;
+        z-index: 1;
+    }
+
+    .pastel {
+        z-index: -1;
+    }
+
 </style>
 
 
-@if(($cumpleaños_usuario != null) && ($cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m')))
-    <div class="modal fade" id="modal_cumple" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header"  style="border-bottom:1px solid #BFD6FF !important;">
-            <h6 class="modal-title" id="exampleModalLabel"><i class="fas fa-birthday-cake iconos-crear"></i> Feliz Cumpleaños <strong>{{ $usuario->empleado->name }}</strong></h6>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div style="color: #345183; font-size:13pt;" class="text-right" title="
-                @foreach($cumpleaños_felicitados_like_usuarios as $usuarios_like){{$usuarios_like->felicitador->name}}&#013;@endforeach
-            "><i class="fas fa-thumbs-up"></i> {{$cumpleaños_felicitados_like_contador}}</div>
+@php
+    if (!is_null($organizacion)) {
+        $logotipo = $organizacion->logotipo;
+    } else {
+        $logotipo = 'logotipo-tabantaj.png';
+    }
+@endphp
+@if ($cumpleaños_usuario != null && $cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m'))
+    @php
+        $pastel = true;
+    @endphp
+    <div class="modal fade" id="modal_cumple" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:1px solid #BFD6FF !important;">
+                    <h6 class="modal-title" id="exampleModalLabel"><i class="fas fa-birthday-cake iconos-crear"></i>
+                        Feliz Cumpleaños <strong>{{ $usuario->empleado->name }}</strong></h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div style="color: #345183; font-size:13pt;" class="text-right" title="
+                @foreach ($cumpleaños_felicitados_like_usuarios as $usuarios_like){{ $usuarios_like->felicitador->name }}&#013;@endforeach
+            "><i class="fas fa-thumbs-up"></i> {{ $cumpleaños_felicitados_like_contador }}</div>
 
-            <ul class="comentarios_felicidades">
-                <li>
-                    <strong>
-                        @php
-                            if (!is_null($organizacion)) {
-                                $logotipo = $organizacion->logotipo;
-                            } else {
-                                $logotipo = 'logotipo-tabantaj.png';
-                            }
-                        @endphp
+                    <ul class="comentarios_felicidades">
+                        <li>
+                            <strong>
+                                
 
-                        <img class="img_empleado" src="{{ asset($logotipo) }}"> 
-                        {{$organizacion->empresa}}
-                    </strong>
-                    <div class="comentario_caja">
-                        ¡Feliz cumpleaños <strong>{{$usuario->empleado->name}}</strong>! a nombre de <strong>{{$organizacion->empresa}}</strong> te deseamos otro año de grandes oportunidades, logros y crecimiento personal.   
-                    </div>
-                </li>
-                @foreach($cumpleaños_felicitados_comentarios as $coment_cumple)
-                    <li>
-                        <strong><img class="img_empleado" src="{{ asset('storage/empleados/imagenes') }}/{{ $coment_cumple->felicitador ? $coment_cumple->felicitador->avatar : 'user.png' }}"> {{$coment_cumple->felicitador->name}}</strong>
-                        <div class="comentario_caja">
-                            {!! html_entity_decode($coment_cumple->comentarios) !!}
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
-          </div>
+                                <img class="img_empleado" src="{{ asset($logotipo) }}">
+                                {{ $organizacion->empresa }}
+                            </strong>
+                            <div class="comentario_caja">
+                                ¡Feliz cumpleaños <strong>{{ $usuario->empleado->name }}</strong>! a nombre de
+                                <strong>{{ $organizacion->empresa }}</strong> te deseamos otro año de grandes
+                                oportunidades, logros y crecimiento personal.
+                            </div>
+                        </li>
+                        @foreach ($cumpleaños_felicitados_comentarios as $coment_cumple)
+                            <li>
+                                <strong><img class="img_empleado"
+                                        src="{{ asset('storage/empleados/imagenes') }}/{{ $coment_cumple->felicitador ? $coment_cumple->felicitador->avatar : 'user.png' }}">
+                                    {{ $coment_cumple->felicitador->name }}</strong>
+                                <div class="comentario_caja">
+                                    {!! html_entity_decode($coment_cumple->comentarios) !!}
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
+@else
+    @php
+        $pastel = false;
+    @endphp
 @endif
 
 
 <div class="card-body">
     <div class="row">
+        <div id="Pastel" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <img src="{{ asset($logotipo) }}" class="logo">
+                        <img class="img-responsive pastel" src="{{ asset('img/pastel.gif') }}" style="width: 100%;">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <div class="container">
             <div class="main-body">
                 <div class="row gutters-sm">
                     <div class="col-md-4 card_data_mis_datos">
                         <div class="card card_margin_b_n" style="position:relative; height: 450px !important;">
-                            @if(($cumpleaños_usuario != null) && ($cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m')))
-                                <img src="https://images.vexels.com/media/users/3/143347/isolated/preview/c418aa571078b11dcb69704acf1077c4-icono-de-sombrero-de-cumpleanos-3d.png" class="gorro">
+                            @if ($cumpleaños_usuario != null && $cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m'))
+                                <img src="https://images.vexels.com/media/users/3/143347/isolated/preview/c418aa571078b11dcb69704acf1077c4-icono-de-sombrero-de-cumpleanos-3d.png"
+                                    class="gorro">
                             @endif
                             <div class="cuadro_verde_con_before">
-                                @if(($cumpleaños_usuario != null) && ($cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m')))
+                                @if ($cumpleaños_usuario != null && $cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m'))
                                     <img src="https://i.makeagif.com/media/1-22-2017/6A8xEd.gif">
                                 @endif
                             </div>
                             <div class="card-body">
-                                <div class="text-center d-flex flex-column align-items-center" style="position:relative;">
-                                    <img class="img_empleado_presentacion_mis_datos" style="position: relative;" src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->avatar : 'user.png' }}">
+                                <div class="text-center d-flex flex-column align-items-center"
+                                    style="position:relative;">
+                                    <img class="img_empleado_presentacion_mis_datos" style="position: relative;"
+                                        src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->avatar : 'user.png' }}">
                                     <div class="mt-3">
-                                        <h5 style="color: #2E2E2E; margin-top:42px;">{{ $usuario->empleado->name }}</h5>
+                                        <h5 style="color: #2E2E2E; margin-top:42px;">{{ $usuario->empleado->name }}
+                                        </h5>
                                         <p class="mb-1 text-secondary">{{ $usuario->empleado->puesto }}</p>
                                         <p class="text-muted font-size-sm">{{ $usuario->empleado->area->area }}</p>
                                         {{-- <button class="btn btn-primary">Follow</button>
                                         <button class="btn btn-outline-primary">Message</button> --}}
                                     </div>
-                                    @if(($cumpleaños_usuario != null) && ($cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m')))
-                                        <img src="{{asset('img/regalo.svg')}}" class="regalo" data-toggle="modal" data-target="#modal_cumple" title="Tus felicitaciones" >
+                                    @if ($cumpleaños_usuario != null && $cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m'))
+                                        <img src="{{ asset('img/regalo.svg') }}" class="regalo"
+                                            data-toggle="modal" data-target="#modal_cumple" title="Tus felicitaciones">
 
                                     @endif
 
                                     @if ($usuario->empleado)
-                                        <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}"
-                                            style="">
+                                        <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}" style="">
                                             Ver Perfil Profesional
                                         </a>
                                     @endif
 
 
                                     @if ($last_evaluacion)
-                                        @if($esLider)
+                                        @if ($esLider)
                                             <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
-                                            class="btn btn-xs btn-light mt-3">Evaluaciones de mi equipo</a>
+                                                class="btn btn-xs btn-light mt-3">Evaluaciones de mi equipo</a>
                                         @endif
                                     @endif
                                 </div>
@@ -360,13 +419,14 @@
                             <div class="row align-items-center" id="listaCompetenciaCV" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container text-center mt-1">
-                                   
+
                                 </div>
                             </div>
                         </div> --}}
                         <div class="p-34 card card_margin_b_n" x-data="{show:false}">
-                            <h5 class="mb-0"><i class="bi bi-people mr-2" style="transform:scale(1.15);"></i>Mi Equipo
-                                
+                            <h5 class="mb-0"><i class="bi bi-people mr-2"
+                                    style="transform:scale(1.15);"></i>Mi Equipo
+
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
                             </h5>
@@ -405,13 +465,15 @@
                                                                 <p class="m-0 fas fa-envelope"></p>
                                                             </a>
                                                         </div>
-                                                        <a class="btn btn-sm btn-light" style="font-size: 10px; width:150px;"
+                                                        <a class="btn btn-sm btn-light"
+                                                            style="font-size: 10px; width:150px;"
                                                             href="{{ route('admin.ev360-objetivos-empleado.create', $empleado) }}">
                                                             <i class="mr-1 fas fa-dot-circle"></i>Objetivos</a>
                                                         <a type="button"
                                                             href="{{ route('admin.ev360-evaluaciones.evaluacionesDelEmpleado', $empleado) }}"
-                                                            class="btn btn-sm btn-light mt-2" style="font-size: 10px; width:150px"
-                                                            aria-current="true"><i class="fas fa-book"></i>
+                                                            class="btn btn-sm btn-light mt-2"
+                                                            style="font-size: 10px; width:150px" aria-current="true"><i
+                                                                class="fas fa-book"></i>
                                                             Evaluaciones
                                                         </a>
                                                     </div>
@@ -478,7 +540,7 @@
                                         No cuenta con activos a su cargo
                                     @else
                                         <div class="row">
-                                            
+
                                         </div>
                                         @foreach ($activos as $activo)
                                             <div class="row" style="margin-top: 5px;">
@@ -502,7 +564,8 @@
                                     General
                                 </h5>
                                 <hr class="hr-custom-title">
-                                <div class="row" style="margin-top: 40px; color: #3086AF !important; font-weight:bold; font-size:14px;">
+                                <div class="row"
+                                    style="margin-top: 40px; color: #3086AF !important; font-weight:bold; font-size:14px;">
                                     @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->n_empleado)
                                             <div class="col-3 title-info-personal">N° Empleado</div>
@@ -542,7 +605,8 @@
                                         @endif
                                     @endif
                                 </div>
-                                <div class="row" style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
+                                <div class="row"
+                                    style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
                                     @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->area)
                                             <div class="col-3 title-info-personal">Área</div>
@@ -582,7 +646,8 @@
                                         @endif
                                     @endif
                                 </div>
-                                <div class="row" style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
+                                <div class="row"
+                                    style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
                                     @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->cumpleaños)
                                             <div class="col-3 title-info-personal">Cumpleaños</div>
@@ -604,7 +669,7 @@
                                 <div class="row">
                                     @if ($panel_rules->cumpleaños)
                                         <div class="col-3 text-muted" style="font-size:12px">
-                                            {{ \Carbon\Carbon::parse ($usuario->empleado->cumpleaños)->format('d-m-Y') ? :  'Dato no registrado' }}
+                                            {{ \Carbon\Carbon::parse($usuario->empleado->cumpleaños)->format('d-m-Y') ?: 'Dato no registrado' }}
                                         </div>
                                     @endif
                                     @if ($panel_rules->perfil)
@@ -623,7 +688,8 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="row" style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
+                                <div class="row"
+                                    style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
                                     @if ($panel_rules->direccion)
                                         <div class="col-3 title-info-personal">Dirección</div>
                                     @endif
@@ -757,7 +823,8 @@
 
 
                                                         @if ($mis_evaluaciones)
-                                                            <div class="progress" style="height: 28px; margin-top: 20px;">
+                                                            <div class="progress"
+                                                                style="height: 28px; margin-top: 20px;">
                                                                 <div class="progress-bar" role="progressbar"
                                                                     style="width: {{ $mis_evaluaciones->progreso_competencias }}%;background: #345183;font-weight: bold;font-size: 13px;"
                                                                     aria-valuenow="
@@ -777,7 +844,7 @@
                                                                 href="{{ route('admin.ev360-evaluaciones.misEvaluaciones', ['evaluacion' => $last_evaluacion->id, 'evaluado' => auth()->user()->empleado->id]) }}">Ver
                                                                 mis Autoevaluaciones</a>
                                                         </div>
-                                                        
+
                                                     @endif
                                                 </div>
                                                 <div
@@ -792,7 +859,8 @@
                             <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100">
                                     <div class="pb-personzalizado mb-0 card-body" x-data="{show:false}">
-                                        <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge-fill mr-2"></i>Evaluaciones a
+                                        <h5 class="mb-0 d-inline-block"><i
+                                                class="bi bi-person-badge-fill mr-2"></i>Evaluaciones a
                                             Realizar
                                             <div class="circle-total-evaluaciones" style="top:-5px !important;">
                                                 <span
@@ -810,7 +878,8 @@
                                                 @foreach ($evaluaciones as $evaluacion)
                                                     <div class="col-md-6">
                                                         <div class="card" style="margin: ; margin-top:25px;">
-                                                            <div class="card-body" style="position:relative; padding: 10px !important;">
+                                                            <div class="card-body"
+                                                                style="position:relative; padding: 10px !important;">
                                                                 <div
                                                                     class="text-center d-flex flex-column align-items-center">
 
@@ -829,7 +898,8 @@
                                                                     </div>
                                                                     <div>
                                                                         <a class="btn btn-sm btn-light"
-                                                                            href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}"> Evaluar</a>
+                                                                            href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}">
+                                                                            Evaluar</a>
                                                                         {{-- @if ($evaluacion->empleado_evaluado->supervisor)
                                                                         @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->supervisor->id)
                                                                             <span
@@ -973,6 +1043,17 @@
 </div>
 @section('scripts')
     @parent
+    <script>
+        let pastel = @json($pastel);
+        if (pastel) {
+            $(window).on('load', function() {
+                if (!window.sessionStorage.getItem("mostrarModal")) {
+                    window.sessionStorage.setItem("mostrarModal", "no");
+                    $('#Pastel').modal('show');
+                }
+            });
+        }
+    </script>
     <script>
         let listaAcciones = document.getElementById('listaEquipo');
         listaAcciones.addEventListener('click', function(e) {
