@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <h5 class="col-12 titulo_general_funcion">Categorías de Activos</h5>
+    <h5 class="col-12 titulo_general_funcion">Subcategorías de Activos</h5>
     <div class="mt-5 card">
         @can('configuracion_tipoactivo_create')
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -9,7 +9,7 @@
 
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'Tipoactivo', 'route' => 'admin.tipoactivos.parseCsvImport'])
+                    {{-- @include('csvImport.modal', ['model' => 'Tipoactivo', 'route' => 'admin.subtipoactivos.parseCsvImport']) --}}
                 </div>
             </div>
         @endcan
@@ -24,6 +24,9 @@
                         </th>
                         <th>
                             Categoría
+                        </th>
+                        <th>
+                            Subategoría
                         </th>
                         <th>
                             Opciones
@@ -128,7 +131,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar categoría de activos',
-                url: "{{ route('admin.tipoactivos.create') }}",
+                url: "{{ route('admin.subtipoactivos.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -150,7 +153,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.tipoactivos.massDestroy') }}",
+                url: "{{ route('admin.subtipoactivos.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -182,7 +185,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.tipoactivos.index') }}",
+                ajax: "{{ route('admin.subtipoactivos.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -190,6 +193,10 @@
                     {
                         data: 'tipo',
                         name: 'tipo'
+                    },
+                    {
+                        data: 'subtipo',
+                        name: 'subtipo'
                     },
                     {
                         data: 'actions',

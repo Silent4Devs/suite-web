@@ -527,6 +527,14 @@
                                             <font class="letra_blanca"> Categorias</font>
                                         </a>
                                     </li>
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ route('admin.subtipoactivos.index') }}"
+                                            class="c-sidebar-nav-link {{ request()->is('admin/tipoactivos') || request()->is('admin/tipoactivos/*') ? 'active' : '' }}">
+                                            <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca"
+                                                style="font-size:13pt;"></i>
+                                            <font class="letra_blanca"> Subcategorias</font>
+                                        </a>
+                                    </li>
                                 @endcan
                                 @can('configuracion_activo_access')
                                     <li class="c-sidebar-nav-item">

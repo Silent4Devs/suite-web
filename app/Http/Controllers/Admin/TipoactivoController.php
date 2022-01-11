@@ -23,7 +23,7 @@ class TipoactivoController extends Controller
         abort_if(Gate::denies('configuracion_tipoactivo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Tipoactivo::with(['team'])->select(sprintf('%s.*', (new Tipoactivo)->table))->orderByDesc('id');
+            $query = Tipoactivo::select("*")->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -50,9 +50,6 @@ class TipoactivoController extends Controller
             $table->editColumn('tipo', function ($row) {
                 return $row->tipo ? $row->tipo : '';
             });
-            $table->editColumn('subtipo', function ($row) {
-                return $row->subtipo ? $row->subtipo : '';
-            });
 
             $table->rawColumns(['actions', 'placeholder']);
 
@@ -71,7 +68,7 @@ class TipoactivoController extends Controller
         return view('admin.tipoactivos.create');
     }
 
-    public function store(StoreTipoactivoRequest $request)
+    public function store(Request $request)
     {
         $tipoactivo = Tipoactivo::create($request->all());
 
@@ -87,7 +84,7 @@ class TipoactivoController extends Controller
         return view('admin.tipoactivos.edit', compact('tipoactivo'));
     }
 
-    public function update(UpdateTipoactivoRequest $request, Tipoactivo $tipoactivo)
+    public function update(Request $request, Tipoactivo $tipoactivo)
     {
         $tipoactivo->update($request->all());
 

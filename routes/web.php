@@ -617,6 +617,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('tipoactivos/parse-csv-import', 'TipoactivoController@parseCsvImport')->name('tipoactivos.parseCsvImport');
     Route::post('tipoactivos/process-csv-import', 'TipoactivoController@processCsvImport')->name('tipoactivos.processCsvImport');
     Route::resource('tipoactivos', 'TipoactivoController');
+    // Subtipo Activos
+
+    Route::delete('subtipoactivos/destroy', 'SubcategoriaActivoContoller@massDestroy')->name('subtipoactivos.massDestroy');
+    Route::post('subtipoactivos/parse-csv-import', 'SubcategoriaActivoContoller@parseCsvImport')->name('subtipoactivos.parseCsvImport');
+    Route::post('subtipoactivos/process-csv-import', 'SubcategoriaActivoContoller@processCsvImport')->name('subtipoactivos.processCsvImport');
+    Route::resource('subtipoactivos', 'SubcategoriaActivoContoller') ->names([
+        'index' => 'subtipoactivos.index',
+        'create' => 'subtipoactivos.create',
+        'store' => 'subtipoactivos.store',
+        'show' => 'subtipoactivos.show',
+        'edit' => 'subtipoactivos.edit',
+        'update' => 'subtipoactivos.update',
+    ]);;
+
 
     // Puestos
     Route::delete('puestos/destroy', 'PuestosController@massDestroy')->name('puestos.massDestroy');
