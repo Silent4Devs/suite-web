@@ -471,6 +471,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
 
     // Recursos
+    Route::post('recursos/capacitacion-evaluacion', 'RecursosController@guardarEvaluacionCapacitacion')->name('recursos.guardarEvaluacionCapacitacion');
+    // Route::post('recursos/reprogramar-capacitacion', 'RecursosController@reprogramarCapacitacion')->name('recursos.reprogramarCapacitacion');
+    Route::post('recursos/{recurso}/reprogramar-capacitacion', 'RecursosController@reprogramarCapacitacion')->name('recursos.reprogramarCapacitacion');
+    Route::post('recursos/{recurso}/cancelar-capacitacion', 'RecursosController@cancelarCapacitacion')->name('recursos.cancelarCapacitacion');
+    Route::post('recursos/{recurso}/enviar-invitaciones-capacitacion', 'RecursosController@enviarInvitacionPorCorreoAhora')->name('recursos.enviarInvitacionPorCorreoAhora');
+    Route::post('recursos/capacitaciones-principales', 'RecursosController@obtenerCapacitacionesPrincipales')->name('recursos.obtenerCapacitacionesPrincipales');
+    Route::post('recursos/capacitaciones-archivadas', 'RecursosController@obtenerCapacitacionesArchivadas')->name('recursos.obtenerCapacitacionesArchivadas');
+    Route::post('recursos/capacitacion/respuesta', 'RecursosController@respuestaCapacitacion')->name('recursos.respuestaCapacitacion');
+    Route::post('recursos/capacitacion/archivar', 'RecursosController@archivarCapacitacion')->name('recursos.archivarCapacitacion');
     Route::post('recursos/validate', 'RecursosController@validateForm')->name('recursos.validateForm');
     Route::post('recursos/{recurso}/update', 'RecursosController@update')->name('recursos.update');
     Route::delete('recursos/destroy', 'RecursosController@massDestroy')->name('recursos.massDestroy');

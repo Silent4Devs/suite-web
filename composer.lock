@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b8fd609cacc0089464c2a68845e55e1",
+    "content-hash": "0b5a130e1a62e4f3fb19533c0de53841",
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
@@ -518,6 +518,68 @@
                 "source": "https://github.com/bugsnag/bugsnag-psr-logger/tree/v1.4.5"
             },
             "time": "2021-12-13T09:52:57+00:00"
+        },
+        {
+            "name": "chelout/laravel-relationship-events",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chelout/laravel-relationship-events.git",
+                "reference": "2d454338bbcf28a07151098fac621fe672855902"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/2d454338bbcf28a07151098fac621fe672855902",
+                "reference": "2d454338bbcf28a07151098fac621fe672855902",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/container": "^6.0|^7.0|^8.0",
+                "illuminate/database": "^6.0|^7.0|^8.0",
+                "illuminate/events": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^8.3|^9.0|^9.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chelout\\RelationshipEvents\\RelationshipEventsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chelout\\RelationshipEvents\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "chelout",
+                    "email": "chelout@gmail.com"
+                }
+            ],
+            "description": "Missing relationship events for Laravel",
+            "homepage": "https://github.com/chelout/laravel-relationship-events",
+            "keywords": [
+                "events",
+                "laravel",
+                "relations",
+                "relationship"
+            ],
+            "support": {
+                "issues": "https://github.com/chelout/laravel-relationship-events/issues",
+                "source": "https://github.com/chelout/laravel-relationship-events/tree/1.4.0"
+            },
+            "time": "2020-12-09T13:28:52+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -15088,5 +15150,5 @@
         "php": "^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
