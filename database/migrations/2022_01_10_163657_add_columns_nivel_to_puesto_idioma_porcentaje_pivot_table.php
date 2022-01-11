@@ -15,7 +15,6 @@ class AddColumnsNivelToPuestoIdiomaPorcentajePivotTable extends Migration
     {
         Schema::table('puesto_idioma_porcentaje_pivot', function (Blueprint $table) {
             $table->string('nivel')->nullable();
-
         });
     }
 
