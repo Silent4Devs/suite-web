@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\iso9001;
 
+use App\Http\Controllers\Controller;
 use App\Models\Empleado;
 use App\Models\Iso9001\PlanImplementacion;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class PlanImplementacionNueveUnoController extends Controller
 {
@@ -43,7 +43,6 @@ class PlanImplementacionNueveUnoController extends Controller
 
     public function showTarea()
     {
-
         $gantt_path = 'storage/gantt/';
         $path = public_path($gantt_path);
         $json_code = json_decode(file_get_contents($path . '/gantt_inicial_9001.json'), true);
@@ -67,7 +66,7 @@ class PlanImplementacionNueveUnoController extends Controller
         $sinTexto = true;
         $texto = true;
 
-        return view('iso9001.plantrabajobase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt',  'sinTexto', 'texto'));
+        return view('iso9001.plantrabajobase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'sinTexto', 'texto'));
     }
 
     public function saveImplementationProyect(Request $request)

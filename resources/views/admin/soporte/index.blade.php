@@ -5,16 +5,21 @@
 
 	<style type="text/css">
 		body{
-				margin: 0;
-			}
+			margin: 0;
+		}
+
+		.c-body{
+			background-image: url({{asset('img/fondo_soporte.png')}});
+			background-size: 100%;
+			position: relative;
+		}
+		.caja_general_soporte{
+			height: 90%;
+			position: absolute;
+		}
 		.contacto{
 			width: 100%;
-			height: 471px;
-			max-width: 1000px;
-			background-image: url(../img/implementacion/fondo_consultoria.jpg);
-			background-size: cover;
-			background-color: #ccc;
-			/* font-family: calibri; */
+			height: 100%;
 		}
 		.tiulo {
 			width: 100%;
@@ -35,12 +40,11 @@
 			 */
 			margin: 0;
 
-			font-size: 12pt;
+			font-size: 12px;
 			font-weight: lighter;
 			/* float: right; */
 			/* margin-right: 10%; */
 			text-align: center;
-			color: #05192c;
 		}
 		.boton{
 			float: left;
@@ -149,18 +153,22 @@
 			display:none;
 		}
 		.card_equipos{
-			background-color:rgba(255,255,255, 0.4);
+			background-color:rgba(255,255,255, 1);
 			width:350px;
-			padding:25px;
+			padding:40px;
 			border-radius:6px;
 			box-shadow:0px 0px 5px 1px rgba(0,0,0,0.3);
-			margin-top:35px;
-
+			margin:10px;
+			font-size: 12px !important;
+			text-align: center;
 		}
 		.info strong{
-			font-size:16pt;
+			font-size:16px;
 			font-weight: bold;
-			color:#30289d;
+			color:#788BAC;
+		}
+		.info i{
+			font-size: 40px;
 		}
 		.caja_btn{
 			margin-bottom:25px;
@@ -170,32 +178,30 @@
 			margin-right:10px;
 			transform:scale(1.4);
 		}
-}
-
-
 	</style>
 
 
-	<div class="card card-body caja_general_soporte">
-		<div class="contacto">
-			<div class="genreal">
-				<p class="tiulo">¿CÓMO PODEMOS AYUDARTE? &nbsp;&nbsp; <font>CONTÁCTANOS</font></p>
-                <div class="row col-12" style="margin:auto;">
-                    <div class="col-6 text-center " style="display:flex; justify-content:center;">
+	<div class="caja_general_soporte" style="width: 100% !important;">
+		<div class="contacto" style=" width:100% !important;">
+			<div class="genreal" style=" width:100% !important;">
+				{{-- <p class="tiulo">¿CÓMO PODEMOS AYUDARTE? &nbsp;&nbsp; <font>CONTÁCTANOS</font></p> --}}
+                
+                    <div class="" style="display:flex; justify-content:center; align-items: center; width:100% !important; margin-top: 150px;">
 						<div class="card_equipos">
-							<p class="info"><strong>Equipo de consultores</strong><br><br>
+							<p class="info">
+								<i class="fas fa-headset"></i><br><br>
+								<strong>Equipo de consultores</strong><br><br>
 								Si requieres asesoría sobre el llenado de un módulo, contacta a nuestro equipo de consultores.</p><br>
-								<div  id="btn_consultores" class="btn btn-success" style="margin:auto;">Consultores
-								</div>
+								<div  id="btn_consultores" class="btn btn-success">Consultores</div>
 						</div>
-                    </div>
-                    <div class="col-6 text-center" style="display:flex; justify-content:center;">
 						<div class="card_equipos">
-							<p class="info"><strong>Equipo de soporte técnico</strong><br><br> Si deseas reportar alguna falla del sistema, contacta a nuestro equipo de soporte técnico.</p><br>
+							<p class="info">
+								<i class="fas fa-headset"></i><br><br>
+								<strong>Equipo de soporte técnico</strong><br><br> Si deseas reportar alguna falla del sistema, contacta a nuestro equipo de soporte técnico.</p><br>
 								<div id="btn_soporte" class="btn btn-success">Soporte técnico</div>
 						</div>
                     </div>
-                </div>
+                
 			</div>
 			<div class="tabla_consultores">
 				<div class="py-3 col-md-12 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">

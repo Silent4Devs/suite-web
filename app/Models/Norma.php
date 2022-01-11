@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Norma
+ * Class Norma.
  *
  * @property int $id
  * @property character varying $norma
@@ -17,31 +17,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  *
  * @property Collection|PartesInteresada[] $partes_interesadas
- *
- * @package App\Models
  */
 class Norma extends Model
 {
-	use SoftDeletes;
-	protected $table = 'normas';
+    use SoftDeletes;
+    protected $table = 'normas';
 
-	protected $casts = [
-		'norma' => 'string',
-		'descripcion' => 'string',
-	];
+    protected $casts = [
+        'norma' => 'string',
+        'descripcion' => 'string',
+    ];
 
-	protected $fillable = [
-		'norma',
-		'descripcion'
-	];
+    protected $fillable = [
+        'norma',
+        'descripcion',
+    ];
 
-	public function partes_interesadas()
-	{
-		return $this->hasMany(PartesInteresada::class);
-	}
+    public function partes_interesadas()
+    {
+        return $this->hasMany(PartesInteresada::class);
+    }
 
     public function alcance()
-	{
-		return $this->hasMany(AlcanceSgsi::class);
-	}
+    {
+        return $this->hasMany(AlcanceSgsi::class);
+    }
 }

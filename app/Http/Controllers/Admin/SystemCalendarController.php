@@ -14,14 +14,13 @@ use App\Models\PlanImplementacion;
 use App\Models\Recurso;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use Carbon\Carbon;
 
 class SystemCalendarController extends Controller
 {
     public function index()
     {
         abort_if(Gate::denies('agenda_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
+
         $empleado = auth()->user()->empleado;
         $usuario = auth()->user();
 
@@ -63,16 +62,12 @@ class SystemCalendarController extends Controller
         $auditoria_internas = AuditoriaInterna::get();
         // dd($auditoria_internas);
 
-
         $recursos = collect();
         if ($usuario->empleado) {
             $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado->id);
             })->get();
         }
-
-
-
 
         $eventos = Calendario::get();
         $oficiales = CalendarioOficial::get();
