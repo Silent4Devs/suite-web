@@ -8,7 +8,11 @@ use Livewire\Component;
 
 class PartesInteresadasComponent extends Component
 {
-    public $clausulas, $norma_id, $parteinteresada, $value, $normas;
+    public $clausulas;
+    public $norma_id;
+    public $parteinteresada;
+    public $value;
+    public $normas;
 
     public function mount()
     {

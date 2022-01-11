@@ -16,16 +16,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tipoactivo.fields.tipo_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="subtipo"><i class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
-                <input class="form-control {{ $errors->has('subtipo') ? 'is-invalid' : '' }}" type="text" name="subtipo" id="subtipo" value="{{ old('subtipo', $tipoactivo->subtipo) }}" required>
-                @if($errors->has('subtipo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('subtipo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.tipoactivo.fields.subtipo_helper') }}</span>
-            </div>
+
             <div class="form-group">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">

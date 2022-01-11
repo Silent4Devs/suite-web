@@ -1,45 +1,59 @@
 <?php
 
+
 namespace App\Models;
 
-use App\Traits\MultiTenantModelTrait;
-use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
+/**
+ * Class Tipoactivo
+ *
+ * @property int $id
+ * @property character varying $tipo
+ * @property timestamp without time zone|null $created_at
+ * @property timestamp without time zone|null $updated_at
+ * @property string|null $deleted_at
+ * @property int|null $team_id
+ *
+ * @property Team|null $team
+ * @property Collection|SubcategoriaActivo[] $subcategoria_activos
+ * @property Collection|Marca[] $marcas
+ * @property Collection|Activo[] $activos
+ *
+ * @package App\Models
+ */
 class Tipoactivo extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
+	use SoftDeletes;
+	protected $table = 'tipoactivos';
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
-    public $table = 'tipoactivos';
+	protected $casts = [
+		'tipo' => 'string',
+	];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+	protected $fillable = [
+		'tipo',
+	];
 
-    protected $fillable = [
-        'tipo',
-        'subtipo',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'team_id',
-    ];
+	public function team()
+	{
+		return $this->belongsTo(Team::class);
+	}
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
+	public function subcategoria_activos()
+	{
+		return $this->hasMany(SubcategoriaActivo::class, 'categoria_id');
+	}
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
+	public function marcas()
+	{
+		return $this->hasMany(Marca::class, 'activo_id');
+	}
+
+	public function activos()
+	{
+		return $this->hasMany(Activo::class, 'subtipo_id');
+	}
 }

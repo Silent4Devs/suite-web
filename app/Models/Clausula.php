@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Rennokki\QueryCache\Traits\QueryCacheable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class Clausula
+ * Class Clausula.
  *
  * @property int $id
  * @property character varying $nombre
@@ -20,8 +20,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @property Collection|AuditoriaInternoClausula[] $auditoria_interno_clausulas
  * @property Collection|PartesInteresada[] $partes_interesadas
- *
- * @package App\Models
  */
 class Clausula extends Model
 {
@@ -30,28 +28,28 @@ class Clausula extends Model
 
     public $cacheFor = 3600;
     protected static $flushCacheOnUpdate = true;
-	use SoftDeletes;
-	protected $table = 'clausulas';
+    use SoftDeletes;
+    protected $table = 'clausulas';
 
-	protected $casts = [
-		'nombre' => 'string',
-		'modulo' => 'string'
-	];
+    protected $casts = [
+        'nombre' => 'string',
+        'modulo' => 'string',
+    ];
 
-	protected $fillable = [
-		'nombre',
-		'modulo'
-	];
+    protected $fillable = [
+        'nombre',
+        'modulo',
+    ];
 
-	public function auditoria_interno_clausulas()
-	{
-		return $this->hasMany(AuditoriaInternoClausula::class);
-	}
+    public function auditoria_interno_clausulas()
+    {
+        return $this->hasMany(AuditoriaInternoClausula::class);
+    }
 
-	public function partes_interesadas()
-	{
-		return $this->belongsToMany(PartesInteresada::class, 'partes_interesadas_clausula', 'clausula_id', 'partesint_id')
-					->withPivot('id')
-					->withTimestamps();
-	}
+    public function partes_interesadas()
+    {
+        return $this->belongsToMany(PartesInteresada::class, 'partes_interesadas_clausula', 'clausula_id', 'partesint_id')
+                    ->withPivot('id')
+                    ->withTimestamps();
+    }
 }

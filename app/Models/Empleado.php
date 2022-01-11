@@ -12,7 +12,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+
+// use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Empleado.
@@ -53,10 +54,10 @@ class Empleado extends Model
 {
     use SoftDeletes;
     use HasFactory;
-    use QueryCacheable;
+    // use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    // public $cacheFor = 3600;
+    // protected static $flushCacheOnUpdate = true;
 
     protected $table = 'empleados';
 
@@ -79,9 +80,10 @@ class Empleado extends Model
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
-        'avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo',
+        'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo', 'saludo_completo',
         'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad',
     ];
+
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
         'name',
@@ -181,18 +183,23 @@ class Empleado extends Model
 
     public function getSaludoAttribute()
     {
+        $nombre = explode(' ', $this->name)[0];
+
+        return $nombre;
+    }
+
+    public function getSaludoCompletoAttribute()
+    {
         $hora = date('H');
         $saludo = '';
         $nombre = explode(' ', $this->name)[0];
-        // if ($hora >= '12' && $hora <= '18') {
-        //     $saludo = "Buenas Tardes, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
-        // } elseif ($hora >= '19' && $hora <= '23') {
-        //     $saludo = "Buenas Noches, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
-        // } else {
-        //     $saludo = "Buenos Días, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
-        // }
-
-        $saludo = $nombre;
+        if ($hora >= '12' && $hora <= '18') {
+            $saludo = "Buenas Tardes, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        } elseif ($hora >= '19' && $hora <= '23') {
+            $saludo = "Buenas Noches, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        } else {
+            $saludo = "Buenos Días, <strong style='font-size: 14px !important;'>{$nombre}</strong>";
+        }
 
         return $saludo;
     }
@@ -210,6 +217,21 @@ class Empleado extends Model
         }
 
         return $this->foto;
+    }
+
+    public function getAvatarRutaAttribute()
+    {
+        if ($this->foto == null || $this->foto == '0') {
+            if ($this->genero == 'H') {
+                return asset('storage/empleados/imagenes/man.png');
+            } elseif ($this->genero == 'M') {
+                return asset('storage/empleados/imagenes/woman.png');
+            } else {
+                return asset('storage/empleados/imagenes/usuario_no_cargado.png');
+            }
+        }
+
+        return asset('storage/empleados/imagenes/' . $this->foto);
     }
 
     public function area()
@@ -459,5 +481,10 @@ class Empleado extends Model
         $edad = date_diff($fecha_hoy, $fecha_nac); // La funcion ayuda a calcular la diferencia, esto seria un objeto
 
         return $edad;
-    }
+        }
+    public function configuracion_soporte()
+    {
+        return $this->hasMany(ConfigurarSoporteModel::class, 'id_elaboro');
+    }        
+
 }

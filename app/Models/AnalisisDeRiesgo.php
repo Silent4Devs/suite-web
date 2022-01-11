@@ -28,10 +28,10 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class AnalisisDeRiesgo extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
+    // use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    // public $cacheFor = 3600;
+    // protected static $flushCacheOnUpdate = true;
     protected $table = 'analisis_de_riesgo';
 
     protected $casts = [
