@@ -2,6 +2,8 @@
 
 namespace App\Models\Iso9001;
 
+use App\Models\Empleado;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
