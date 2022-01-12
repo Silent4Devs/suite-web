@@ -48,6 +48,9 @@ class Puesto extends Model
         'horario_fin',
         'genero',
         'estado_civil',
+        'fecha_puesto',
+        'edad',
+        'horario',
 
     ];
 
@@ -96,5 +99,10 @@ class Puesto extends Model
     public function responsabilidades()
     {
         return $this->hasMany('App\Models\PuestoResponsabilidade', 'puesto_id')->orderBy('id');
+    }
+
+    public function certificados()
+    {
+        return $this->hasMany('App\Models\PuestosCertificado', 'puesto_id')->orderBy('id');
     }
 }

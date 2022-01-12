@@ -1,5 +1,5 @@
 <div class="mt-3">
-    <div class="pl-3 row w-100">
+    <div class="row">
         <div class="form-group col-sm-12 col-md-12 col-lg-12">
             <label for="cursoscapacitaciones">
                 <i class="fab fa-discourse iconos-crear"></i> Título
@@ -16,7 +16,7 @@
             <span class="help-block">{{ trans('cruds.recurso.fields.cursoscapacitaciones_helper') }}</span>
         </div>
     </div>
-    <div class="pl-3 row w-100">
+    <div class="row">
         <div class="form-group col-sm-12 col-md-12 col-lg-6">
             <div class="row">
                 <div class="col-12">
@@ -64,7 +64,7 @@
             <span class="help-block">{{ trans('cruds.recurso.fields.cursoscapacitaciones_helper') }}</span>
         </div>
     </div>
-    <div class="pl-3 row w-100">
+    <div class="row">
         <div class="form-group col-sm-12 col-md-12 col-lg-6">
             <label for=""> <i class="fas fa-laptop iconos-crear"></i>Modalidad</label>
             <select name="modalidad" class="form-control" id="select_modalidad">
@@ -85,11 +85,11 @@
                 </font>
             </label>
             <input type="text" name="ubicacion" class="form-control"
-                value="{{ old('ubicacion', $recurso->ubicacion) }}">
+                value="{{ old('ubicacion', $recurso->ubicacion) }}" id="ubicacionConfInicial">
             <span class="ubicacion_error text-danger errores"></span>
         </div>
     </div>
-    <div class="pl-3 row w-100">
+    <div class="row">
         <div class="form-group col-sm-12 col-md-12 col-lg-6">
             <label for="fecha_curso"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
                 Inicio</label>
@@ -117,29 +117,118 @@
             @endif
         </div>
     </div>
-    <div class="form-group col-12">
-        <label for="instructor"><i
-                class="fas fa-user iconos-crear"></i>{{ trans('cruds.recurso.fields.instructor') }}</label>
-        <input class="form-control {{ $errors->has('instructor') ? 'is-invalid' : '' }}" type="text"
-            name="instructor" id="instructor" value="{{ old('instructor', $recurso->instructor) }}">
-        <span class="instructor_error text-danger errores"></span>
-        @if ($errors->has('instructor'))
-            <div class="invalid-feedback">
-                {{ $errors->first('instructor') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.recurso.fields.instructor_helper') }}</span>
-    </div>
-    <div class="form-group col-md-6 col-sm-6 col-12 col-lg-12">
-        <label for="descripcion"> <i class="fas fa-lightbulb iconos-crear"></i>
-            Descripción</label>
-        <textarea class="form-control descripcion {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-            name="descripcion" id="descripcion">{{ old('descripcion', $recurso->descripcion) }}</textarea>
-        <span class="descripcion_error text-danger errores"></span>
-        @if ($errors->has('descripcion'))
-            <div class="invalid-feedback">
-                {{ $errors->first('descripcion') }}
-            </div>
-        @endif
+    <div class="row">
+        <div class="form-group col-12">
+            <label for="instructor"><i
+                    class="fas fa-user iconos-crear"></i>{{ trans('cruds.recurso.fields.instructor') }}</label>
+            <input class="form-control {{ $errors->has('instructor') ? 'is-invalid' : '' }}" type="text"
+                name="instructor" id="instructor" value="{{ old('instructor', $recurso->instructor) }}">
+            <span class="instructor_error text-danger errores"></span>
+            @if ($errors->has('instructor'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('instructor') }}
+                </div>
+            @endif
+            <span class="help-block">{{ trans('cruds.recurso.fields.instructor_helper') }}</span>
+        </div>
+        <div class="form-group col-md-6 col-sm-6 col-12 col-lg-12">
+            <label for="recurso_capacitacion"><i class="fas fa-file iconos-crear"></i>Recurso de la
+                capacitación</label>
+            <input type="file" id="recurso_capacitacion" class="form-control" name="recurso_capacitacion">
+        </div>
+        <div class="form-group col-md-6 col-sm-6 col-12 col-lg-12">
+            <label for="descripcion"> <i class="fas fa-lightbulb iconos-crear"></i>
+                Descripción</label>
+            <textarea class="form-control descripcion {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
+                name="descripcion" id="descripcion">{{ old('descripcion', $recurso->descripcion) }}</textarea>
+            <span class="descripcion_error text-danger errores"></span>
+            @if ($errors->has('descripcion'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('descripcion') }}
+                </div>
+            @endif
+        </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        //Contantes de pestaña conf. inicial para añadir eventos
+        const nombreCapacitacion = document.getElementById('cursoscapacitaciones');
+        const categoria = document.getElementById('categoria_capacitacion_id');
+        const selectTipo = document.getElementById('tipo');
+        const selectModalidad = document.getElementById('select_modalidad');
+        const ubicacionConfInicial = document.getElementById('ubicacionConfInicial');
+        const fechaCurso = document.getElementById('fecha_curso');
+        const fechaFin = document.getElementById('fecha_fin');
+        const instructor = document.getElementById('instructor');
+        const descripcion = document.getElementById('descripcion');
+        // Constantes de la pestaña enviar invitación
+        const tituloInvitaciones = document.getElementById('titulo_invitaciones');
+        const categoriaInvitaciones = document.getElementById('categoria_invitaciones');
+        const tipoInvitaciones = document.getElementById('tipo_invitaciones');
+        const modalidadInvitaciones = document.getElementById('modalidad_invitaciones');
+        const ubicacionInvitaciones = document.getElementById('ubicacion_invitaciones');
+        const fechaInicioInvitaciones = document.getElementById('fecha_inicio_invitaciones');
+        const fechaFinInvitaciones = document.getElementById('fecha_fin_invitaciones');
+        const instructorInvitaciones = document.getElementById('instructor_invitaciones');
+        const descripcionInvitaciones = document.getElementById('descripcion_invitaciones');
+
+        //Inicializar fechas
+        fechaInicioInvitaciones.innerHTML = new Date(Date()).toLocaleString();
+        fechaFinInvitaciones.innerHTML = new Date(Date()).toLocaleString();
+
+        //Inicializar informacion cuando se muestra edicion
+        inicializarInformacionGeneral();
+
+        function inicializarInformacionGeneral() {
+            tituloInvitaciones.innerHTML = nombreCapacitacion.value;
+            categoriaInvitaciones.innerHTML = categoria.options[categoria.selectedIndex].getAttribute(
+                'data-nombre');
+            tipoInvitaciones.innerHTML = selectTipo.value;
+            modalidadInvitaciones.innerHTML = selectModalidad.value;
+            ubicacionInvitaciones.innerHTML = ubicacionConfInicial.value;
+            fechaInicioInvitaciones.innerHTML = new Date(fechaCurso.value).toLocaleString();
+            fechaFinInvitaciones.innerHTML = new Date(fechaFin.value).toLocaleString();
+            instructorInvitaciones.innerHTML = instructor.value;
+            descripcionInvitaciones.innerHTML = descripcion.value ? descripcion.value : 'Sin descripción';
+        }
+
+        nombreCapacitacion.addEventListener('keyup', function(e) {
+            tituloInvitaciones.innerHTML = this.value;
+        })
+
+        $('#categoria_capacitacion_id').on('select2:select', function(e) {
+            categoriaInvitaciones.innerHTML = e.target.options[e.target.options.selectedIndex]
+                .getAttribute(
+                    'data-nombre')
+        });
+
+        selectTipo.addEventListener('change', function(e) {
+            tipoInvitaciones.innerHTML = this.value;
+        });
+
+        selectModalidad.addEventListener('change', function(e) {
+            modalidadInvitaciones.innerHTML = this.value;
+        });
+
+        ubicacionConfInicial.addEventListener('keyup', function(e) {
+            ubicacionInvitaciones.innerHTML = this.value;
+        })
+
+        fechaCurso.addEventListener('change', function(e) {
+            fechaInicioInvitaciones.innerHTML = new Date(this.value).toLocaleString();
+        })
+
+        fechaFin.addEventListener('change', function(e) {
+            fechaFinInvitaciones.innerHTML = new Date(this.value).toLocaleString();
+        })
+
+        instructor.addEventListener('keyup', function(e) {
+            instructorInvitaciones.innerHTML = this.value;
+        })
+
+        descripcion.addEventListener('keyup', function(e) {
+            descripcionInvitaciones.innerHTML = this.value;
+        })
+    })
+</script>
