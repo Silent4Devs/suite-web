@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\PlanImplementacion;
+use App\Models\Iso9001\PlanImplementacion;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class PlanImplementacionSeeder extends Seeder
+class PlanImplementacion9001Seeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -1168,9 +1168,9 @@ class PlanImplementacionSeeder extends Seeder
             'selectedRow' => 0,
             'zoom' => '3d',
             'parent' => 'Plan de Implementación',
-            'norma' => 'ISO 27001',
+            'norma' => 'ISO 9001',
             'modulo_origen' => 'Implementación',
-            'objetivo' => 'Implementar un Sistema de Gestión de Seguridad de la Información basado en el ciclo Deming que cumpla con todos los requisitos pautados en la norma ISO 27001.',
+            'objetivo' => 'Implementar un Sistema de Gestión de Calidad basado en el ciclo Deming que cumpla con todos los requisitos pautados en la norma ISO 9001.',
             'elaboro_id' => null,
         ]);
     }

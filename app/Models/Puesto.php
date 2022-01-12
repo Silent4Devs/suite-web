@@ -50,7 +50,7 @@ class Puesto extends Model
         'estado_civil',
         'fecha_puesto',
         'edad',
-        'horario'
+        'horario',
 
     ];
 

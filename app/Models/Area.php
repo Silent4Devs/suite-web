@@ -65,7 +65,7 @@ class Area extends Model
         'descripcion',
         'foto_area',
             'team_id',
-        'empleados_id'
+        'empleados_id',
     ];
 
     protected $appends = ['grupo_name', 'foto_ruta'];
@@ -107,7 +107,7 @@ class Area extends Model
 
     public function children()
     {
-        return $this->hasMany(self::class, 'id_reporta', 'id')->with('children', 'supervisor', 'grupo','lider'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'id_reporta', 'id')->with('children', 'supervisor', 'grupo', 'lider'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
 
     public function concientizacion_sgis()
@@ -157,8 +157,6 @@ class Area extends Model
 
     public function lider()
     {
-        return $this->belongsTo(Empleado::class, 'empleados_id','id');
+        return $this->belongsTo(Empleado::class, 'empleados_id', 'id');
     }
-
-
 }

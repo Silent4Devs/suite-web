@@ -11,15 +11,15 @@
         overflow: hidden;
         text-decoration: none;
         display: inline-block;
-        color: #fff;
+        color: #345183;
         padding: 5px;
-        border: 1px solid #ccc !important;
-        background-color: #345183;
+        border: 1px solid #D9D9D9 !important;
+        background-color: #EEEEEE;
         margin: 5px;
-        padding-top: 25px;
+        padding-top: 12px;
         border-radius: 6px;
         transition: 0.2s;
-        box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
+        /*box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);*/
     }
     .btn_reporte:hover{
         border: 1px solid #345183 !important;
@@ -56,43 +56,43 @@
 
     <div class="row">
         <div class="col-sm-5 col-lg-5">
-            <div class="mb-3 ml-2 mr-2 bg-white rounded " style="border:1px solid #ccc !important;">
-                <div class="mt-4 mb-3 ml-4 col-9" style="border-bottom: solid 2px #345183;">
-                    <h6 class="mt-3 mr-1" style="color: #345183; font-weight: bold;">Deseo reportar un:</h6>
+            <div class="mb-3 ml-2 mr-2 card card-body">
+                <div class="mt-4 mb-3 ml-4 col-9" style="">
+                    <h6 class="" style="color: #747474; font-size: 18px;">Deseo reportar un:</h6>
                 </div>
                 {{-- <div class="col-4 justify-content-end pr-0" style="text-align:end"> --}}
 
                 {{-- </div> --}}
                 <div class="caja_btn_reporte">
                         <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}"  class="btn_reporte smargin">
-                            <i class="fas fa-exclamation-triangle"></i><br/> <span>Incidente de Seguridad</span>
+                            <i class="bi bi-exclamation-octagon"></i><br/> <span>Incidente de Seguridad</span>
                         </a>
                         <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}"  class="btn_reporte smargin">
-                            <i class="fas fa-shield-alt"></i>  <br/><span>Riesgo Identificado</span>
+                            <i class="bi bi-shield-exclamation"></i>  <br/><span>Riesgo Identificado</span>
                         </a>
                 </div>
             </div>
         </div>
         <div class="col-sm-7 col-lg-7">
 
-            <div class="mb-3 ml-2 mr-2 bg-white rounded" style="border:1px solid #ccc !important;">
-                <div class="mt-4 mb-3 ml-4 col-10" style="border-bottom: solid 2px #345183;">
-                    <h6 class="mt-3" style="color: #345183; font-weight: bold;">Deseo realizar una:</h6>
+            <div class="mb-3 ml-2 mr-2 card card-body">
+                <div class="mt-4 mb-3 ml-4 col-10" style="">
+                    <h6 class="" style="color: #747474; font-size: 18px;">Deseo realizar una:</h6>
                 </div>
                 {{-- --}}
                 <div class="caja_btn_reporte">
                     <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="btn_reporte">
-                        <i class="fas fa-frown"></i> <br/><span> Queja</span>
+                        <i class="bi bi-emoji-frown"></i> <br/><span> Queja</span>
                     </a>
 
                     <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="btn_reporte">
-                        <i class="fas fa-hand-paper"></i> <br/><span> Denuncia</span>
+                        <i class="bi bi-flag"></i> <br/><span> Denuncia</span>
                     </a>
                     <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="btn_reporte">
-                        <i class="fas fa-rocket"></i> <br/><span> Propuesta de Mejora</span>
+                        <i class="bi bi-award"></i><br/><span> Propuesta de Mejora</span>
                     </a>
                     <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="btn_reporte">
-                        <i class="fas fa-lightbulb"></i> <br/><span> Sugerencia</span>
+                        <i class="bi bi-lightbulb"></i> <br/><span> Sugerencia</span>
                     </a>
                 </div>
             </div>
