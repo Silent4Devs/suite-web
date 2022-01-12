@@ -7,11 +7,11 @@
 
 </style>
 {{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
-
+<h5 class="col-12 titulo_general_funcion">Registrar: Matriz de Requisitos Legales</h5>
 <div class="mt-4 card">
-    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px">
+    {{-- <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px">
         <h3 class="mb-1 text-center text-white"><strong>Registrar:</strong> Matriz de Requisitos Legales </h3>
-    </div>
+    </div> --}}
 
     <div class="card-body">
         <form method="POST" action="{{ route("admin.matriz-requisito-legales.store") }}" enctype="multipart/form-data" class="row">
@@ -122,7 +122,7 @@
             </div>
 
             <div class="form-group col-12">
-                <p class="text-center text-light p-1" style="background-color:#1BB0B0; border-radius: 100px;">
+                <p class="text-center text-light p-1" style="background-color:#345183; border-radius: 100px;">
                     Verificación del Requisito</p>
             </div>
 

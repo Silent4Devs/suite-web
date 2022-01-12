@@ -239,11 +239,8 @@
 
 </style>
 
-
+<h5 class="col-12 titulo_general_funcion">Empleado</h5>
 <div class="mt-4 card">
-    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1 text-center text-white"><strong> Empleado </strong></h3>
-    </div>
     <div class="row">
         <div class="mx-0 col-md-12">
             <form id="msform">
@@ -550,7 +547,7 @@
                                         placeholder="Alternate Contact No." />
                                 </div> --}}
 
-                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
                         <span style="font-size: 17px; font-weight: bold;">
                             Certificaciones</span>
                     </div>
@@ -670,7 +667,7 @@
                                     </div>
                                 </div> --}}
 
-                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
                         <span style="font-size: 17px; font-weight: bold;">
                             Cursos / Diplomados</span>
                     </div>
@@ -769,7 +766,7 @@
                     <input type="button" name="make_payment" class="next action-button" value="Confirm" />
                 </fieldset>
                 <fieldset>
-                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
                         <span style="font-size: 17px; font-weight: bold;">
                             Experiencia Profesional</span>
                     </div>
@@ -883,7 +880,7 @@
                                         <div class="col-3"> <img src="https://img.icons8.com/color/96/000000/ok--v2.png"
                                                 class="fit-image"> </div>
                                     </div> --}}
-                    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
                         <span style="font-size: 17px; font-weight: bold;">
                             Educación</span>
                     </div>
@@ -983,7 +980,7 @@
                     </div>
         </div>
         </fieldset>
-        <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+        <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
             <span style="font-size: 17px; font-weight: bold;">
                 Documentos</span>
         </div>

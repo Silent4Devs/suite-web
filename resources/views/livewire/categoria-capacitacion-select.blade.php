@@ -2,7 +2,7 @@
     <select name="categoria_capacitacion_id" id="categoria_capacitacion_id" class="form-control select2">
         <option value="" selected disabled>-- Selecciona una categoría --</option>
         @foreach ($categorias as $categoria)
-            <option value="{{ $categoria->id }}"
+            <option data-nombre="{{ $categoria->nombre }}" value="{{ $categoria->id }}"
                 {{ old('categoria_capacitacion_id', $categoria->id) == $categoria_seleccionada ? 'selected' : '' }}>
                 {{ $categoria->nombre }}
             </option>

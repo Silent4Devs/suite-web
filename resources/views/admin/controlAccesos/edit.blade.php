@@ -2,13 +2,9 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.control-accesos.create') }}
-
+<h5 class="col-12 titulo_general_funcion">Editar: Control de Acceso</h5>
 <div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Control de Acceso </h3>
-    </div>
-
-    <div class="card-body">
+     <div class="card-body">
         <form method="POST" class="row" action="{{ route("admin.control-accesos.update", [$controlAcceso->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf

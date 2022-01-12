@@ -1,20 +1,33 @@
 <div class="my-3">
-    <div class="pl-3 row w-100">
+    <div class="row">
         <div class="form-group col-sm-12 col-md-12 col-lg-12">
-            <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
-                participante</label>
-            <input type="hidden" id="id_empleado">
-            <input class="form-control" type="text" id="participantes_search" placeholder="Busca un empleado"
-                style="position: relative" autocomplete="off" />
-            <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
-                style="position: absolute; top: 43px; right: 25px;"></i>
-            <div id="participantes_sugeridos"></div>
-            @if ($errors->has('participantes'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('participantes') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
+            <label for="selectGrupoDeParticipantes"><i class="fas fa-search iconos-crear"></i>Selecciona a los
+                partipantes por: </label>
+            <select id="selectGrupoDeParticipantes" name="tipo_de_grupo" class="form-control">
+                <option value="">-- Selecciona un opción --</option>
+                <option value="all"
+                    {{ $recurso->tipo_seleccion_participantes ? ($recurso->tipo_seleccion_participantes->tipo == 'all' ? 'selected' : '') : '' }}>
+                    Toda
+                    la
+                    organización</option>
+                <option value="area"
+                    {{ $recurso->tipo_seleccion_participantes ? ($recurso->tipo_seleccion_participantes->tipo == 'area' ? 'selected' : '') : '' }}>
+                    Área
+                </option>
+                <option value="grupo"
+                    {{ $recurso->tipo_seleccion_participantes ? ($recurso->tipo_seleccion_participantes->tipo == 'grupo' ? 'selected' : '') : '' }}>
+                    Grupo
+                </option>
+                <option value="individual"
+                    {{ $recurso->tipo_seleccion_participantes ? ($recurso->tipo_seleccion_participantes->tipo == 'individual' ? 'selected' : '') : '' }}>
+                    Individualmente
+                </option>
+                @if ($recurso->id)
+                    <option value="almacenada">Selección almacenada en DB</option>
+                @endif
+            </select>
+            <span class="text-danger errores tipo_de_grupo_error"></span>
+            <div id="contenedorDesicion" class="mt-3"></div>
         </div>
         {{-- <div class="form-group col-sm-12 col-md-12 col-lg-6">
             <label for="email"><i class="fas fa-at iconos-crear"></i>Email</label>
@@ -24,28 +37,13 @@
         {{-- <div class="col-12" style="text-align: end;">
             <button id="btnAgregarParticipante" class="btn btn-success">Añadir</button>
         </div> --}}
-        <div class="col-12">
-            <label for="enviarInvitacionParticipantes"><i class="fas fa-calendar-day mr-1 iconos-crear"></i>Fecha
-                Limite</label>
-        </div>
-        <div class="col-6 form-group">
-            <input class="form-control" type="datetime-local" id="fechaLimite" name="fecha_limite"
-                value="{{ old('fechaLimite', \Carbon\Carbon::parse($recurso->fecha_limite)->format('Y-m-d\TH:i')) }}">
-            <small class="text-muted">Debe ser una fecha anterior o igual a la fecha de inicio de la
-                capacitación</small>
-            <span class="fecha_limite_error text-danger errores"></span>
-        </div>
-        <div class="col-6" style="align-self: top;">
-            <label for="enviarInvitacionParticipantes"><i class="fas fa-envelope mr-1 iconos-crear"></i>Enviar
-                Invitación
-                por Correo</label>
-            <input type="checkbox" id="enviarInvitacionParticipantes" name="enviarInvitacionParticipantes">
-        </div>
         <div class="col-12 mt-3">
             <div id="sinParticipantes" class="col-12 text-center">
+                <span class="text-danger errores participantes_error"></span>
                 <p><strong>Sin Participantes</strong></p>
                 <img src="{{ asset('img/empleados_no_encontrados.svg') }}" alt="sin participante" width="250">
             </div>
+            <div class="row" id="contenedorParticipantesCargados"></div>
             <div class="row" id="contenedorParticipantes"></div>
         </div>
     </div>
@@ -56,40 +54,159 @@
         let avatar_usuario = null;
         let puesto_usuario = null;
         let participantesSeleccionados = @json($recurso->empleados);
+        let recurso = @json($recurso);
+        const contenedorDesicion = document.getElementById('contenedorDesicion');
+        const participantes_invitaciones = document.getElementById(
+            'participantes_invitaciones'); // Contenedor de participantes para tab EnviarInvitacion
+        const areas = @json($areas);
+        const grupos = @json($grupos);
+        const empleados = @json($empleados);
         document.getElementById('contador-participantes-tab').innerHTML = participantesSeleccionados.length >
-            0 ?
-            participantesSeleccionados.length : 0;
+            0 ? participantesSeleccionados.length : 0;
+        console.log(participantesSeleccionados.length > 0);
         window.quitarElemento = (empleadoID) => {
             document.getElementById(`empleado_${empleadoID.value}ID`).remove();
         }
-        inicializarParticipantesDesdeElServidor();
+        inicializarParticipantesDesdeElServidor(participantesSeleccionados);
         agregarParticipante();
+        if (recurso.id) {
+            inicializarSeleccionGrupo();
+        }
+        seleccionarGrupo();
 
-        function inicializarParticipantesDesdeElServidor() {
+        function inicializarSeleccionGrupo() {
+            const seleccion = recurso.tipo_seleccion_participantes.tipo;
+            const tipoID = Number(recurso.tipo_seleccion_participantes.tipo_id);
+            renderizarSeleccion(seleccion, tipoID);
+        }
+
+        function seleccionarGrupo() {
+            const selectGrupoDeParticipantes = document.getElementById('selectGrupoDeParticipantes');
+            const seleccion_id = null;
+            selectGrupoDeParticipantes.addEventListener('change', function(e) {
+                const seleccion = this.value;
+                renderizarSeleccion(seleccion, seleccion_id);
+            })
+        }
+
+        function renderizarSeleccion(seleccion, seleccion_id) {
+            if (seleccion != 'individual') {
+                if (recurso.estatus == 'Borrador') {
+                    reinicializarContenedorParticipantes();
+                }
+            }
+            if (seleccion == 'all') {
+                contenedorDesicion.innerHTML = ``;
+                inicializarParticipantesDesdeElServidor(empleados, false);
+            } else if (seleccion == 'area') {
+                let html = `
+                    <label for="area_grupo_select"><i class="fas fa-search iconos-crear"></i>Selecciona un área</label>
+                    <select class="form-control" id="area_grupo_select" name="id_tipo_participacion">
+                    <option value="" disabled selected>-- Selecciona un área --</option>`;
+                areas.forEach(area => {
+                    html +=
+                        `<option value="${area.id}" ${area.id==seleccion_id?'selected':''}>${area.area}</option>`;
+                });
+                html += `</select>`;
+                contenedorDesicion.innerHTML = html;
+                document.getElementById('area_grupo_select').addEventListener('change', function(
+                    e) {
+                    const areaSeleccionada = areas.find(area => area.id == Number(this
+                        .value));
+                    inicializarParticipantesDesdeElServidor(areaSeleccionada.empleados, false);
+                })
+            } else if (seleccion == 'grupo') {
+                let html = `
+                    <label for="grupo_g_select"><i class="fas fa-search iconos-crear"></i>Selecciona un grupo</label>
+                    <select class="form-control" id="grupo_g_select" name="id_tipo_participacion">
+                    <option value="" disabled selected>--Selecciona una opción--</option>
+                        `;
+                grupos.forEach(grupo => {
+                    html +=
+                        `<option value="${grupo.id}" ${grupo.id==seleccion_id?'selected':''}>${grupo.nombre}</option>`;
+                });
+                html += `</select>`;
+                contenedorDesicion.innerHTML = html;
+                document.getElementById('grupo_g_select').addEventListener('change', function(
+                    e) {
+                    const grupoSeleccionado = grupos.find(grupo => grupo.id == Number(this
+                        .value));
+                    inicializarParticipantesDesdeElServidor(grupoSeleccionado.empleados, false);
+                })
+            } else if (seleccion == 'individual') {
+                contenedorDesicion.innerHTML = `
+                    <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
+                        participante</label>
+                    <input type="hidden" id="id_empleado">
+                    <input class="form-control" type="text" id="participantes_search" placeholder="Busca un empleado"
+                        style="position: relative" autocomplete="off" />
+                    <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
+                        style="position: absolute; top: 96px; right: 26px;"></i>
+                    <div id="participantes_sugeridos"></div>
+                    @if ($errors->has('participantes'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('participantes') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
+                    `;
+                $("#cargando_participantes").hide();
+            } else if (seleccion == 'almacenada') {
+                contenedorDesicion.innerHTML = ``;
+                inicializarParticipantesDesdeElServidor(participantesSeleccionados, false);
+            } else {
+                contenedorDesicion.innerHTML = ``;
+            }
+        }
+
+        function reinicializarContenedorParticipantes() {
+            document.getElementById('contenedorParticipantes').innerHTML = null;
+            document.getElementById('participantes_invitaciones').innerHTML = null;
+            actualizarContador();
+        }
+
+        function inicializarParticipantesDesdeElServidor(participantesSeleccionados, enCarga = true) {
             if (participantesSeleccionados.length > 0) {
                 document.getElementById('sinParticipantes').style.display = 'none';
                 let html = "";
-                participantesSeleccionados.forEach(empleado => {
-                    html += `
-                        <div class="col-3 contador-participantes" id="empleado_${empleado.id}ID">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="text-center">
-                                        <img src="${url_avatar}/${empleado.avatar}" style="width: 50px;clip-path: circle(50% at 50% 50%);">
-                                        <input type="hidden" name="participantes[]" value="${empleado.id}">
-                                    </div>
-                                    <p class="text-muted m-0 text-center mt-2">${empleado.name}</p>
-                                    <p class="text-muted m-0 text-center mt-2">
-                                        <strong>${empleado.puesto}</strong>    
-                                    </p>
-                                    <button class="remover-elemento text-center btn btn-primary btn-sm" data-empleado-id="${empleado.id}"><i class="fas fa-trash-alt"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                `;
+                let htmlInvitaciones = "<div class='row'>";
+                if (enCarga) {
+                    participantesSeleccionados.forEach(empleadoIteration => {
+                        html += cardHtml(url_avatar, empleadoIteration.id, empleadoIteration.avatar,
+                            empleadoIteration.name, empleadoIteration
+                            .puesto);
+                        htmlInvitaciones += htmlListInvitaciones(url_avatar, empleadoIteration.id,
+                            empleadoIteration.avatar,
+                            empleadoIteration.name, empleadoIteration.puesto);
+                    });
+                    setTimeout(() => {
+                        const contenedorParticipantesCargados = document.getElementById(
+                            'contenedorParticipantesCargados');
+                        contenedorParticipantesCargados.innerHTML = html;
+                        participantes_invitaciones.innerHTML = htmlInvitaciones;
+                        actualizarContador();
+                    }, 1000)
+                } else {
+                    participantesSeleccionados.forEach(empleadoIteration => {
+                        const checkIfEmpleadoExists = obj => obj.id === empleadoIteration.id;
+                        if (!recurso.empleados.some(checkIfEmpleadoExists)) {
+                            html += cardHtml(url_avatar, empleadoIteration.id, empleadoIteration.avatar,
+                                empleadoIteration.name, empleadoIteration
+                                .puesto);
+                            htmlInvitaciones += htmlListInvitaciones(url_avatar, empleadoIteration.id,
+                                empleadoIteration.avatar,
+                                empleadoIteration.name, empleadoIteration.puesto);
+                        }
+                    });
                     contenedorParticipantes.innerHTML = html;
-                });
+                    participantes_invitaciones.innerHTML = htmlInvitaciones;
+                    actualizarContador();
+                }
+                htmlInvitaciones += "</div>"
+            } else {
+                actualizarContador();
             }
+
         }
 
         function agregarParticipante() {
@@ -104,6 +221,7 @@
                 if (elemento.classList.contains('remover-elemento')) {
                     const empleadoID = elemento.getAttribute('data-empleado-id');
                     document.getElementById(`empleado_${empleadoID}ID`).remove();
+                    document.getElementById(`empleado_invitacion${empleadoID}ID`).remove();
                     if (document.querySelectorAll('.contador-participantes').length == 0) {
                         document.getElementById('sinParticipantes').style.display = 'block';
                     }
@@ -126,40 +244,68 @@
             // });
         }
 
-        function agregarPersona(nombre, empleadoID,
-            contenedorParticipantes) {
-            // if (nombre.value != null && nombre.value != "") {
+        function agregarPersona(nombre, empleadoID, contenedorParticipantes) {
             if (!document.getElementById(`empleado_${empleadoID}ID`)) {
-                const html = `
-                        <div class="col-3 contador-participantes" id="empleado_${empleadoID}ID">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="text-center">
-                                        <img src="${url_avatar}/${avatar_usuario}" style="width: 50px;clip-path: circle(50% at 50% 50%);">
-                                        <input type="hidden" name="participantes[]" value="${empleadoID}">
-                                    </div>
-                                    <p class="text-muted m-0 text-center mt-2">${nombre}</p>
-                                    <p class="text-muted m-0 text-center mt-2">
-                                        <strong>${puesto_usuario}</strong>    
-                                    </p>
-                                    <button class="remover-elemento text-center btn btn-primary btn-sm" data-empleado-id="${empleadoID}"><i class="fas fa-trash-alt"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                `;
+                const html = cardHtml(url_avatar, empleadoID, avatar_usuario, nombre, puesto_usuario);
+                const htmlInvitaciones = `<div class='row'>
+                        ${htmlListInvitaciones(url_avatar, empleadoID, avatar_usuario, nombre, puesto_usuario)}
+                    </div>`;
                 if (document.getElementById('sinParticipantes')) {
                     document.getElementById('sinParticipantes').style.display = 'none';
                 }
                 contenedorParticipantes.innerHTML += html;
+                participantes_invitaciones.innerHTML += htmlInvitaciones;
                 limpiarCamposBusqueda();
             } else {
                 alert('Este participante ya ha sido registrado');
                 limpiarCamposBusqueda();
             }
-            // } else {
-            //     alert('No se ha buscado ningún participante');
-            // }
             actualizarContador();
+        }
+
+        function cardHtml(url_avatar, empleadoID, avatar_usuario, nombre, puesto_usuario) {
+            let html = `
+                <div class="col-3 contador-participantes mb-4" id="empleado_${empleadoID}ID">
+                    <div class="card" style="height: 100% !important">
+                        <div class="card-body" style="display: grid;align-items: center;">
+                            <div class="text-center">
+                                <img src="${url_avatar}/${avatar_usuario}" style="width: 50px;clip-path: circle(50% at 50% 50%);">
+                                <input type="hidden" name="participantes[]" value="${empleadoID}">
+                            </div>
+                            <p class="text-muted m-0 text-center mt-2">${nombre}</p>
+                            <p class="text-muted m-0 text-center mt-2">
+                                <strong>${puesto_usuario}</strong>    
+                            </p>
+                            <button class="remover-elemento text-center btn btn-primary btn-sm" data-empleado-id="${empleadoID}"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return html;
+        }
+
+        function htmlListInvitaciones(url_avatar, empleadoID, avatar_usuario, nombre, puesto_usuario) {
+            let html = `
+                <div class="col-12">
+                    <ul class="list-group">
+                        <li class="list-group-item" id="empleado_invitacion${empleadoID}ID">
+                            <div class="row justify-content-center align-items-center" style="font-size: 12px;">
+                                <div class="col-2 text-center">
+                                    <img src="${url_avatar}/${avatar_usuario}" style="width: 35px;clip-path: circle(50% at 50% 50%);">    
+                                </div>
+                                <div class="col-10 pl-0">
+                                    <p class="text-muted m-0">${nombre}</p>
+                                    <p class="text-muted m-0">
+                                        <strong>${puesto_usuario}</strong>    
+                                    </p>
+                                </div>
+                            </div>
+                            
+                        </li>
+                    </ul>
+                </div>
+            `;
+            return html;
         }
 
         function actualizarContador() {
@@ -182,14 +328,13 @@
         $("#cargando_participantes").hide();
         let url_empleados = "{{ route('admin.empleados.lista') }}";
         let timeout = null;
-        let inputSearchEmpleados = document.getElementById('participantes_search');
         $('#participantes_search').on('search', function() {
             $("#participantes_sugeridos").hide();
         });
-        $("#participantes_search").keyup(function() {
+        $("#contenedorDesicion").on('keyup', '#participantes_search', function() {
             $("#emailParticipante").val("");
+            let inputSearchEmpleados = document.getElementById('participantes_search');
             clearTimeout(timeout);
-
             if (inputSearchEmpleados.value.trim() != '') {
                 timeout = setTimeout(function() {
                     $.ajax({
@@ -207,7 +352,6 @@
                             let lista =
                                 `<ul class='list-group' id='empleados-lista' style="position: absolute;z-index: 1;width: 97%;">`;
                             data ? JSON.parse(data).forEach(usuario => {
-                                    console.log(usuario);
                                     lista += `<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action'
                                     onClick='seleccionarUsuario("${usuario.id}","${usuario.name}","${usuario.email}","${usuario.avatar}","${usuario.puesto}");'>
                                     <div class="row align-items-center">
@@ -251,7 +395,6 @@
 
         //To select country name
         function seleccionarUsuario(user) {
-            console.log(user);
             $("#participantes_search").val(user.name);
             $("#id_empleado").val(user.id);
             $("#emailParticipante").val(user.email);

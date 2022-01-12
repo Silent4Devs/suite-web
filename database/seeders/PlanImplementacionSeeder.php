@@ -1167,10 +1167,10 @@ class PlanImplementacionSeeder extends Seeder
             'changesReasonWhy' => false,
             'selectedRow' => 0,
             'zoom' => '3d',
-            'parent' => 'Plan de Trabajo',
+            'parent' => 'Plan de Implementación',
             'norma' => 'ISO 27001',
             'modulo_origen' => 'Implementación',
-            'objetivo' => null,
+            'objetivo' => 'Implementar un Sistema de Gestión de Seguridad de la Información basado en el ciclo Deming que cumpla con todos los requisitos pautados en la norma ISO 27001.',
             'elaboro_id' => null,
         ]);
     }

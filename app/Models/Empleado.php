@@ -6,12 +6,14 @@ use App\Models\RH\BeneficiariosEmpleado;
 use App\Models\RH\ContactosEmergenciaEmpleado;
 use App\Models\RH\DependientesEconomicosEmpleados;
 use Carbon\Carbon;
+use DateTime;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+
+// use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Empleado.
@@ -52,10 +54,10 @@ class Empleado extends Model
 {
     use SoftDeletes;
     use HasFactory;
-    use QueryCacheable;
+    // use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    // public $cacheFor = 3600;
+    // protected static $flushCacheOnUpdate = true;
 
     protected $table = 'empleados';
 
@@ -78,9 +80,10 @@ class Empleado extends Model
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
-        'avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo',
-        'actual_birdthday', 'actual_aniversary',
+        'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo', 'saludo_completo',
+        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad',
     ];
+
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
         'name',
@@ -180,6 +183,13 @@ class Empleado extends Model
 
     public function getSaludoAttribute()
     {
+        $nombre = explode(' ', $this->name)[0];
+
+        return $nombre;
+    }
+
+    public function getSaludoCompletoAttribute()
+    {
         $hora = date('H');
         $saludo = '';
         $nombre = explode(' ', $this->name)[0];
@@ -207,6 +217,21 @@ class Empleado extends Model
         }
 
         return $this->foto;
+    }
+
+    public function getAvatarRutaAttribute()
+    {
+        if ($this->foto == null || $this->foto == '0') {
+            if ($this->genero == 'H') {
+                return asset('storage/empleados/imagenes/man.png');
+            } elseif ($this->genero == 'M') {
+                return asset('storage/empleados/imagenes/woman.png');
+            } else {
+                return asset('storage/empleados/imagenes/usuario_no_cargado.png');
+            }
+        }
+
+        return asset('storage/empleados/imagenes/' . $this->foto);
     }
 
     public function area()
@@ -429,4 +454,37 @@ class Empleado extends Model
     {
         return $this->hasMany(Puesto::class, 'id_reporta');
     }
+
+    public function getObtenerAntiguedadAttribute()
+    {
+        $antiguedad = $this->calcularAntiguedad($this->antiguedad);
+        $mensaje = '';
+        // dd($antiguedad->format('%d'));
+        if ($antiguedad->format('%Y') != '00') {
+            $mensaje .= "{$antiguedad->format('%Y')} años  ";
+        }
+        if ($antiguedad->format('%m') != '0') {
+            $mensaje .= "{$antiguedad->format('%m')} meses  ";
+        }
+        if ($antiguedad->format('%d') != '0') {
+            $mensaje .= "{$antiguedad->format('%d')} días";
+        }
+
+        return $mensaje;
+        // return "Tiene {$antiguedad->format('%Y')} años, {$antiguedad->format('%m')} meses y {$antiguedad->format('%d')} días";
+    }
+
+    private function calcularAntiguedad($fecha)
+    {
+        $fecha_nac = new DateTime(date('Y/m/d', strtotime($fecha))); // Creo un objeto DateTime de la fecha ingresada
+        $fecha_hoy = new DateTime(date('Y/m/d', time())); // Creo un objeto DateTime de la fecha de hoy
+        $edad = date_diff($fecha_hoy, $fecha_nac); // La funcion ayuda a calcular la diferencia, esto seria un objeto
+
+        return $edad;
+        }
+    public function configuracion_soporte()
+    {
+        return $this->hasMany(ConfigurarSoporteModel::class, 'id_elaboro');
+    }        
+
 }

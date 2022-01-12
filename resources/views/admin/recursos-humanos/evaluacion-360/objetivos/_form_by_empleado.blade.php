@@ -33,7 +33,7 @@
 @endif
 @if (!$editar)
     <div class="mt-3 col-12">
-        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             CREACIÓN DE OBJETIVOS ESTRATÉGICOS
         </div>
     </div>
@@ -208,7 +208,7 @@
     </div>
     <div class="card-body datatable-fix">
         <div class="mt-3">
-            <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                 OBJETIVOS ESTRATÉGICOS ASIGNADOS
             </div>
         </div>

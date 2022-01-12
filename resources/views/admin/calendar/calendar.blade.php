@@ -71,32 +71,6 @@
         height: 30px;
         position: relative;
     }
-    .calendar-icon.ic-arrow-line-right::before{
-        content: ">";
-        position: absolute;
-        transform: scale(1.3);
-        font-size: 10pt;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .calendar-icon.ic-arrow-line-left::before{
-        content: "<";
-        position: absolute;
-        transform: scale(1.3);
-        font-size: 10pt;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
     a:hover{
         text-decoration: none !important;
     }
@@ -113,14 +87,7 @@
     .tui-full-calendar-weekday-schedule-title{
         position: relative;
    }
-    .tui-full-calendar-weekday-schedule-title strong{
-        font-size: 9pt !important;
-        position: absolute;
-        right: 10px;
-   }
-    .tui-full-calendar-weekday-schedule-title strong:before{
-        content: "Inicio:  ";
-   }
+
    .dropdown-menu.show{
         width: 250px !important;
    }
@@ -133,40 +100,36 @@
    .i_calendar_cuadro{
         margin: 0px 8px;
    }
-   .tui-full-calendar-popup-container .i_calendar_cuadro{
-    opacity: 0.7;
-   }
+
+
+
+
 </style>
 
 
-
+<h5 class="col-12 titulo_general_funcion"> Calendario de {{ $nombre_organizacion }} </h5>
 <div class="card" style="margin-top:50px;">
-  <div class="col-md-9 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-10px; ">
-      {{-- <h3 class="mb-2  text-center text-white"><strong>Calendario de {{ $nombre_organizacion }}</strong></h3> --}}
-      <h3 class="mb-2 text-center text-white"
-                style="background: #00abb2;color: white !important;padding: 3px;border-radius: 8px;"><strong>Calendario de {{ $nombre_organizacion }}</strong>
-      </h3>
-  </div>
+
 
         <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
             style="margin-top:0px !important; ">
 
         </div>
     <div class="card-body" style="height: 600px;">
-            <div class="card-body" style="height: 700px;">
-                <div class="caja">
-                    <div id="lnb">
-                        <div id="lnb-calendars" class="lnb-calendars">
-                            <div>
-                                <div class="lnb-calendars-item">
-                                <label>
+        <div class="caja">
+            <div id="lnb">
+
+                <div id="lnb-calendars" class="lnb-calendars">
+                    <div>
+                        <div class="lnb-calendars-item">
+                            <label>
                                 <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
                                 <span style="">
                                     <span style="margin-left: 20px; width: 100px !important; position: absolute;">Ver Todos</span>
                                 </span>
-                                 </label>
-                                 </div>
-                            </div>
+                            </label>
+                        </div>
+                    </div>
                     <div id="calendarList" class="lnb-calendars-d1">
                     </div>
                 </div>
@@ -255,11 +218,6 @@
 
 @section('scripts')
 @parent
-
-
-
-
-
     <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
     <script src="https://uicdn.toast.com/tui.time-picker/v2.0.3/tui-time-picker.min.js"></script>
     <script src="https://uicdn.toast.com/tui.date-picker/v4.0.3/tui-date-picker.min.js"></script>
@@ -270,18 +228,7 @@
     <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
     <script>
         ScheduleList = [
-            @foreach($plan_base as $it_plan_base)
-                {
-                    id: 'planinicio{{$it_plan_base->id}}',
-                    calendarId: '1',
-                    title: '<i class="fas fa-thumbtack i_calendar_cuadro"></i> Actividad: {{$it_plan_base->actividad}}',
-                    category: 'allday',
-                    dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_inicio)->format("Y-m-d") }}',
-                    end: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_fin)->format("Y-m-d") }}',
-                    isReadOnly : true,
-                },
-            @endforeach
+            
 
             @foreach($auditoria_internas as $it_auditoria_internas)
                 {
@@ -293,39 +240,36 @@
                     start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() }}',
                     end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() }}',
                     isReadOnly : true,
-
+                    body: `
+                       <font style="font-weight: bold;">Inicio:</font> ${@json($it_auditoria_internas->fecha_inicio->format("d-m-Y"))}<br>
+                       <font style="font-weight: bold;">Fin:</font> ${@json($it_auditoria_internas->fecha_fin->format("d-m-Y"))}<br>
+                    `,
                 },
             @endforeach
 
 
-            @foreach($recursos as $it_recursos)
+             @foreach($recursos as $it_recursos)
                 {
-
                     id: 'recursos{{$it_recursos->id}}',
                     calendarId: '2',
-                    title: '<i class="fas fa-graduation-cap i_calendar_cuadro"></i> Tipo: {{$it_recursos->cursoscapacitaciones}}',
+                    title: '<i class="fas fa-graduation-cap i_calendar_cuadro"></i> Curso: {{$it_recursos->cursoscapacitaciones}}',
                     category: 'time',
                     dueDateClass: '',
-                    start: '{{ \Carbon\Carbon::parse($it_recursos->fecha_curso)->toDateTimeString() }}',
-                    end: '{{ \Carbon\Carbon::parse($it_recursos->fecha_fin)->toDateTimeString() }}',
+                    start: '{{  \Carbon\Carbon::parse($it_recursos->fecha_curso)->toDateTimeString() }}',
+                    end: '{{  \Carbon\Carbon::parse($it_recursos->fecha_fin)->toDateTimeString() }}',
+                    body: `
+                        <font style="font-weight: bold;">Categoria:</font> ${@json($it_recursos->tipo)}<br>
+                        <font style="font-weight: bold;">Inicio:</font> ${@json($it_recursos->fecha_curso)} horas<br>
+                        <font style="font-weight: bold;">Fin:</font> ${@json($it_recursos->fecha_fin)} horas<br>
+                        <font style="font-weight: bold;">Duración:</font> ${@json($it_recursos->duracion)} horas<br>
+                        <font style="font-weight: bold;">Instructor:</font> ${@json($it_recursos->instructor)}<br>
+                        <font style="font-weight: bold;">${@json($it_recursos->modalidad)=='presencial' ? 'Ubicación' : 'Link'}:</font> ${@json($it_recursos->ubicacion)}<br>
+                    `,
                     isReadOnly : true,
                 },
-
             @endforeach
 
-            @foreach ($actividades as $it_plan_base)
-                {
-                id: 'planinicio{{ $it_plan_base->id }}',
-                calendarId: '1',
-                title: '<i class="fas fa-thumbtack i_calendar_cuadro"></i> Actividad: {{ $it_plan_base->name }}',
-                category: 'allday',
-                dueDateClass: '',
-                start: '{{ \Carbon\Carbon::createFromTimestamp(($it_plan_base->start/1000))->toDateString()}}',
-
-                end: '{{ \Carbon\Carbon::createFromTimestamp(($it_plan_base->end/1000))->toDateString()}}',
-                isReadOnly : true,
-                },
-            @endforeach
+            
             @foreach ($eventos as $evento)
 
                 {
@@ -337,6 +281,14 @@
                 start: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[0])->format("Y-m-d") }}',
                 end: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[1])->format("Y-m-d") }}',
                 isReadOnly : true,
+                body: `
+                        <font style="font-weight: bold;">Categoria:</font> ${@json($evento->tipo)}<br>
+                        <font style="font-weight: bold;">Inicio:</font> ${@json($evento->fecha_curso)} horas<br>
+                        <font style="font-weight: bold;">Fin:</font> ${@json($evento->fecha_fin)} horas<br>
+                        <font style="font-weight: bold;">Duración:</font> ${@json($evento->duracion)} horas<br>
+                        <font style="font-weight: bold;">Instructor:</font> ${@json($evento->instructor)}<br>
+                        <font style="font-weight: bold;">${@json($evento->modalidad)=='presencial' ? 'Ubicación' : 'Link'}: </font>${@json($evento->modalidad)=='presencial' ? @json($evento->ubicacion) : '<a href="'+@json($evento->ubicacion)+'">'+@json($evento->ubicacion)+'</a> '} <br>
+                    `,
                 },
             @endforeach
 
@@ -345,12 +297,18 @@
                 {
                     id: 'cumple{{$cumple->id}}',
                     calendarId: '5',
-                    title: '<i class="fas fa-birthday-cake i_calendar_cuadro"></i> Cumpleaños de {{$cumple->name}}',
+                    title: '<i class="fas fa-birthday-cake i_calendar_cuadro"></i> Cumpleaños de {{ $cumple->name}} ',
                     category: 'allday',
                     dueDateClass: '',
                     start: '{{ $cumple->actual_birdthday }}',
                     end: '{{ $cumple->actual_birdthday }}',
                     isReadOnly : true,
+                    body: `
+                        <font style="font-weight: bold;">Cumpleaños:</font> ${@json(\Carbon\Carbon::parse($cumple->cumpleaños)->format('d-m'))}<br>
+                        <font style="font-weight: bold;">Area:</font> ${@json($cumple->area->area)}<br>
+                        <font style="font-weight: bold;">Puesto:</font> ${@json($cumple->puesto)}<br>
+
+                    `,
                 },
             @endforeach
 
@@ -365,6 +323,12 @@
                     start: '{{ $aniversario->actual_aniversary }}',
                     end: '{{ $aniversario->actual_aniversary }}',
                     isReadOnly : true,
+                    body: `
+                        <font style="font-weight: bold;">Aniversario:</font> ${@json(\Carbon\Carbon::parse($aniversario->antiguedad)->format('d-m'))}<br>
+                        <font style="font-weight: bold;">Area:</font> ${@json($aniversario->area->area)}<br>
+                        <font style="font-weight: bold;">Puesto:</font> ${@json($aniversario->puesto)}<br>
+
+                    `,
                 },
             @endforeach
              @foreach ($oficiales as $oficial)
@@ -391,9 +355,15 @@
 
 
 
-                }, 5000);
+            }, 5000);
         })
 
+    </script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function(){
+            $(".tui-full-calendar-weekday-schedule-title").attr("title", "");
+        });
     </script>
 
 

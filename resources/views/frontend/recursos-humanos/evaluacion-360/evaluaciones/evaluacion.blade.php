@@ -6,11 +6,11 @@
         .nav-pills .nav-link.active,
         .nav-pills .show>.nav-link {
             color: #fff;
-            background-color: #008186;
+            background-color: #345183;
         }
 
         a.nav-link {
-            color: #008186;
+            color: #345183;
         }
 
         table.no-footer,
@@ -31,7 +31,7 @@
 
         .add_evaluador:hover {
             transition: .3s;
-            color: #008186;
+            color: #345183;
         }
 
         .restantes {
@@ -51,8 +51,8 @@
 
         .restantes:hover {
             transition: .3s;
-            border: 2px solid #008186;
-            color: #008186;
+            border: 2px solid #345183;
+            color: #345183;
         }
 
         .alerta-no-preguntas {
@@ -107,7 +107,7 @@
                             aria-labelledby="tab-configuracion-tab">
                             <div class="w-100" style="border-radius: 8px 8px 5px 5px">
                                 <div class="border w-100"
-                                    style="padding:15px 10px;color:aliceblue;background: #008186;border-radius: 8px 8px 0 0;">
+                                    style="padding:15px 10px;color:aliceblue;background: #345183;border-radius: 8px 8px 0 0;">
                                     <div class="row">
                                         <div class="col-6 d-flex align-items-center">
                                             <span style="font-size:20px;"
@@ -259,7 +259,7 @@
                             aria-labelledby="tab-cuestionario-tab">
                             <div>
                                 <div class="w-100"
-                                    style="padding:15px 10px;color:white;background: #008186;border-radius: 8px 8px 0 0;">
+                                    style="padding:15px 10px;color:white;background: #345183;border-radius: 8px 8px 0 0;">
                                     <div class="row">
                                         <div class="col-12 d-flex align-items-center">
                                             <span style="font-size:18px;"><i class="mr-2 fas fa-sync-alt"></i>Vinculación de
@@ -298,7 +298,7 @@
                         <div class="tab-pane fade" id="tab-participantes" role="tabpanel"
                             aria-labelledby="tab-participantes-tab">
                             <div class="w-100"
-                                style="padding:15px 10px;color:white;background: #008186;border-radius: 8px 8px 0 0;">
+                                style="padding:15px 10px;color:white;background: #345183;border-radius: 8px 8px 0 0;">
                                 <div class="row">
                                     <div class="col-12 d-flex align-items-center">
                                         <span style="font-size:18px;">

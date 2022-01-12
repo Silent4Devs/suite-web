@@ -20,6 +20,7 @@ use App\Models\EvidenciasSeguridad;
 use App\Models\FelicitarCumpleaños;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
+use App\Models\Organizacion;
 use App\Models\PanelInicioRule;
 use App\Models\PlanImplementacion;
 use App\Models\Proceso;
@@ -47,6 +48,11 @@ class InicioUsuarioController extends Controller
         $hoy->toDateString();
         abort_if(Gate::denies('mi_perfil_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $usuario = auth()->user();
+        $usuarioVinculadoConEmpleado = false;
+        if ($usuario->empleado) {
+            $usuarioVinculadoConEmpleado = true;
+        }
+        // dd($usuarioVinculadoConEmpleado);
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
         $actividades = [];
         $implementaciones = PlanImplementacion::get();
@@ -146,6 +152,7 @@ class InicioUsuarioController extends Controller
         $mis_evaluaciones = new EvaluadoEvaluador;
         $lista_evaluaciones = collect();
         $last_evaluacion = collect();
+        $esLider = false;
         $equipo_a_cargo = collect();
         $equipo_trabajo = collect();
         $supervisor = null;
@@ -177,27 +184,12 @@ class InicioUsuarioController extends Controller
                     ->where('evaluado_id', auth()->user()->empleado->id)
                     ->first();
             }
-            // $mis_objetivos = Empleado::with(['objetivos' => function ($q) {
-            //     $q->with(['objetivo' => function ($query) {
-            //         $query->with(['calificacion']);
-            //     }])->where('completado', false);
-            // }])->find($usuario->empleado->id)->objetivos;
-            // $evaluaciones_mis_objetivos = Evaluacion::whereHas('evaluados', function ($q) use ($usuario) {
-            //     $q->where('evaluado_id', $usuario->empleado->id);
-            // })->get();
+
             $mis_objetivos = auth()->user()->empleado->objetivos;
-            // foreach ($evaluaciones_mis_objetivos as $evaluacion) {
-            //     $lista_evaluaciones->push([
-            //         'id' => $evaluacion->id,
-            //         'nombre' => $evaluacion->nombre,
-            //         'fecha_inicio' => Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y'),
-            //         'fecha_fin' => Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y'),
-            //         'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $usuario->empleado->id),
-            //     ]);
-            // }
-            // dd($lista_evaluaciones);
+
             // SECCION MIS DATOS
             if ($usuario->empleado->children->count()) {
+                $esLider = true;
                 $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
                 $equipo_a_cargo = Empleado::find($equipo_a_cargo);
             } else {
@@ -211,17 +203,27 @@ class InicioUsuarioController extends Controller
 
         if (!is_null(auth()->user()->empleado)) {
             $activos = Activo::select('*')->where('id_responsable', '=', auth()->user()->empleado->id)->get();
+
+            $cumpleaños_usuario = Carbon::parse($usuario->empleado->cumpleaños)->format('d-m');
+
+            $cumpleaños_felicitados_like_contador = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->count();
+
+            $cumpleaños_felicitados_like_usuarios = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->get();
+
+            $cumpleaños_felicitados_comentarios = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', false)->where('comentarios', '!=', null)->get();
         } else {
             $activos = false;
+            $cumpleaños_usuario = null;
+            $cumpleaños_felicitados_like_contador = collect();
+            $cumpleaños_felicitados_like_usuarios =  collect();
+            $cumpleaños_felicitados_comentarios = collect();
         }
 
-        $cumpleaños_usuario = Carbon::parse($usuario->empleado->cumpleaños)->format('d-m');
 
-        $cumpleaños_felicitados_like_contador = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->count();
 
-        $cumpleaños_felicitados_comentarios = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', false)->where('comentarios', '!=', null)->get();
+        $organizacion = Organizacion::first();
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios'));
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios', 'cumpleaños_felicitados_like_usuarios', 'esLider', 'organizacion', 'usuarioVinculadoConEmpleado'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)

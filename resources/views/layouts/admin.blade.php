@@ -11,6 +11,8 @@
     <title>{{ trans('panel.site_title') }}</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {{-- boostrap icons --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 
@@ -46,8 +48,9 @@
 
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
     <style type="text/css">
-        
+
         .material-modulos{
             font-size: 50px;
             margin-bottom: 3px;
@@ -128,12 +131,12 @@
 
         .iconos-crear {
             font-size: 15pt;
-            color: #00a57e;
+            color: #345183;
             margin-right: 10px;
         }
 
         .verde_silent {
-            background-color: #0CA193;
+            background-color: #345183;
         }
 
         .azul_silent {
@@ -141,7 +144,7 @@
         }
 
         .iconos_cabecera {
-            color: #00abb2;
+            color: #345183;
             font-size: 1.2rem;
         }
 
@@ -152,7 +155,7 @@
         }
 
         body {
-            background-color: #F2F4F6;
+            background-color: #F5F7FA !important;
         }
 
         #btnDark {
@@ -196,7 +199,7 @@
 
         .card {
             border: none !important;
-            box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.12);
+            box-shadow: 0px 3px 6px 1px #00000029;
         }
 
         .card-body.align-self-center {
@@ -210,14 +213,14 @@
 
         .card-body.align-self-center h3,
         .card-body.align-self-center h3 i {
-            color: #008186 !important;
+            color: #345183 !important;
         }
 
         .btn.btn-success,
         .btn.btn-danger {
             width: 150px;
             height: 35px;
-            background-color: #00abb2 !important;
+            background-color: #345183 !important;
             color: #fff !important;
             border-radius: 100px;
             border: none !important;
@@ -225,13 +228,13 @@
 
         .btn.btn-success:hover,
         .btn.btn-danger:hover {
-            color: #00abb2 !important;
+            color: #345183 !important;
             background-color: rgba(0, 0, 0, 0) !important;
-            box-shadow: 0 0 0 1px #00abb2;
+            box-shadow: 0 0 0 1px #345183;
         }
 
         .btn.btn-success:hover font {
-            color: #00abb2 !important;
+            color: #345183 !important;
             background-color: rgba(0, 0, 0, 0) !important;
         }
 
@@ -280,15 +283,18 @@
         }
 
         .buscador-global {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-            border-radius: 20px;
+            border: none;
+            background-color: rgba(0, 0, 0, 0);
+            border-bottom: 1px solid #fff;
+            color: #fff !important;
+        }
+        .buscador-global::placeholder{
+            color: #fff;
         }
 
-        .buscador-global:focus {
-            border: 2px solid rgb(0 171 178);
-            box-shadow: none;
+        .buscador-global:focus-visible{
+            all: unset;
+            border-bottom: 2px solid #fff;
         }
 
 
@@ -304,7 +310,7 @@
         }
 
         .fm-breadcrumb .breadcrumb.active-manager {
-            background-color: ##00abb229;
+            background-color: ##34518329;
             margin: -5px 0 0 0;
         }
 
@@ -331,7 +337,8 @@
         }
 
         table.dataTable thead {
-            background: #F2F2F2 !important;
+            background: #788BAC !important;
+            color: #fff !important;
         }
 
         table.dataTable tr th {
@@ -344,27 +351,26 @@
     <style type="text/css">
         .caja_botones_menu {
             display: flex;
+            justify-content: center;
         }
 
         .caja_botones_menu a {
             text-decoration: none;
             display: inline-block;
-            color: #008186;
+            color: #345183;
             padding: 5px 20px;
-            border-top: 1px solid #ccc !important;
-            border-right: 1px solid #ccc;
-            background-color: #f9f9f9;
+            font-weight: bold;
             margin: 0;
             text-align: center;
             align-items: center;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
         }
 
         .caja_botones_menu a:first-child {
-            border-left: 1px solid #ccc;
         }
 
         .caja_botones_menu a:not(.caja_botones_menu a.btn_activo) {
-            border-bottom: 1px solid #ccc;
         }
 
         .caja_botones_menu a i {
@@ -374,8 +380,9 @@
 
         .caja_botones_menu a.btn_activo,
         .caja_botones_menu a.btn_activo:hover {
-            background-color: #fff;
+            background-color: #345183;
             box-shadow: 0px -2px 0px 0px;
+            color: #fff;
         }
 
         .caja_botones_menu a:hover {
@@ -912,6 +919,11 @@
             text-align: justify !important;
         }
 
+        .titulo_general_funcion{
+            color: #788BAC;
+            margin-bottom: 75px;
+        }
+
     </style>
 
     @yield('styles')
@@ -937,7 +949,7 @@
             <form class="form-inline col-sm-3" style="position: relative;">
 
                 {{-- <select class="form-control mr-sm-4 searchable-field "></select> --}}
-                <input class="form-control buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
+                <input class="buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
                     autocomplete="off" />
                 <i class="fas fa-spinner fa-pulse d-none" id="buscando" style="margin-left:-45px"></i>
                 <div id="resultados_sugeridos"
@@ -1001,66 +1013,46 @@
                             href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
                                 @if (auth()->user()->empleado)
+                                    <span class="mr-2" style="font-weight: bold;">
+                                        {!! auth()->user()->empleado->saludo !!}
+                                    </span>
                                     <img class="img_empleado"
                                         style=""
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
                                         alt="{{ auth()->user()->empleado->name }}">
-                                    <span class="ml-2">{!! auth()->user()->empleado->saludo !!}</span>
                                 @else
                                     <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
                                 @endif
                             </div>
                         </a>
-                        <div class="pt-0 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px;">
+                        <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
                             <div class="p-2">
                                 @if (auth()->user()->empleado)
-                                    <img class="shadow rounded-circle"
+                                    {{-- <img class="shadow rounded-circle"
                                         style="max-width: 65px;clip-path: circle(50% at 50% 50%);"
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                        alt="" srcset="">
-                                    <p class="m-0 text-muted mt-2" style="font-weight: bold; font-size:13px">
-                                        Hola, {{ auth()->user()->empleado->name }}</p>
+                                        alt="" srcset=""> --}}
+                                    <p class="m-0 text-muted mt-2" style="font-size:14px">
+                                        Hola, <strong>{{ auth()->user()->empleado->name }}</strong></p>
                                 @else
                                     <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
                                 @endif
                             </div>
-                            <div>
-                                {{-- @if (auth()->user()->empleado)
-                                    <p class="m-0" style="font-weight: 600">
-                                        {{ auth()->user()->empleado->name }}
-                                    </p>
-                                    @foreach (auth()->user()->roles as $rol)
-                                        <span class="badge badge-dark"
-                                            style="font-size:13px;">{{ $rol->title }}</span>
-                                    @endforeach
-
-                                @else
-                                    {{ auth()->user()->name }}
-                                    <span>{{ auth()->user()->empleado->name }}</span>
-                                @endif --}}
-                            </div>
-                            {{-- <div class="py-2 dropdown-header bg-light"><strong>Ajustes</strong></div> --}}
                             <div class="px-3 mt-1 d-flex justify-content-center">
                                 @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                                     @can('profile_password_edit')
 
-                                        <a class="btn btn-sm shadow-xs border p-2 rounded {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                                        <a style="all: unset; color: #747474; cursor: pointer;" class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
                                             href="{{ route('profile.password.edit') }}">
-                                            <i class="mr-1 fas fa-user-cog">
-                                            </i>
+                                            <i class="bi bi-gear"></i>
                                             Configurar Perfil
                                         </a>
 
                                     @endcan
                                 @endif
-                                {{-- <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
-                                <i class="mr-1 fas fa-fw fa-lock">
-                                </i> Bloquear
-                            </a> --}}
-                                <a class="p-2 border rounded shadow-xs btn btn-sm"
-                                    onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                                    <i class="mr-1 fas fa-sign-out-alt">
-                                    </i> Salir
+                                 &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a style="all: unset; color: #747474; cursor: pointer;" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                    <i class="bi bi-box-arrow-right"></i> Salir
                                 </a>
                             </div>
                         </div>

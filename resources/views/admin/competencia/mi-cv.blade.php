@@ -3,6 +3,9 @@
     .breadcrumb {
         margin-bottom: 10px !important;
     }
+    .datos_der_cv{
+        color: #fff;
+    }
 
 </style>
 @section('content')
@@ -14,7 +17,7 @@
         </div> --}}
 
         <div class="card-body">
-            <div class="mt-4 text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+            <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                 CURRICULUM VITAE
             </div>
             @livewire('buscar-c-v-component',['isPersonal'=>true,'empleadoModel'=>$empleado])

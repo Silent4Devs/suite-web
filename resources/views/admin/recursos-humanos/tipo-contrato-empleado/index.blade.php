@@ -1,10 +1,8 @@
 @extends('layouts.admin')
 @section('content')
     @can('control_documento_create')
+        <h5 class="col-12 titulo_general_funcion">Tipos de contrato para empleados</h5>
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Tipos de contrato para empleados</strong></h3>
-            </div>
         @endcan
         <div class="card-body datatable-fix">
             @include('partials.flashMessages')
@@ -69,7 +67,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {

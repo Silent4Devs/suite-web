@@ -1,10 +1,12 @@
 @extends('layouts.admin')
 @section('content')
     {{-- @can('planes_accion_access') --}}
+
+    <h5 class="col-12 titulo_general_funcion">Planes de acción </h5>
+
+
     <div class="mt-3 card">
-        <div class="" style="display:flex; justify-content:center">
-                <h3 class="text-center text-white mt-4" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px; width:90%;"><strong>Planes de acción </strong></h3>
-        </div>
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100" id="tblPlanesAccion">
@@ -13,10 +15,10 @@
                         <th>
                             ID
                         </th>
-                        <th>
+                        <th style="min-width:150px;">
                             Nombre
                         </th>
-                        <th>
+                        <th style="min-width:100px;">
                             Norma
                         </th>
                         <th>
@@ -25,7 +27,7 @@
                         {{-- <th>
                             Tipo
                         </th> --}}
-                        <th>
+                        <th style="min-width:200px;">
                             Objetivo
                         </th>
                         <th>
@@ -253,6 +255,18 @@
                     render: function(data, type, row, meta) {
                         let urlVerPlanAccion = "";
                         let urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
+
+                        // console.log(row.norma);
+                        if (row.norma == 'ISO 27001') {
+                            let norma = row.norma;
+                            console.log(norma);
+                            urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
+                        }
+                        // if (row.norma == 'ISO 9001''ISO 27001') {
+                        //     urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
+                        // }
+
+
                         let urlEliminarPlanAccion = `/admin/planes-de-accion/${data}`;
                         if (data == 1) {
                             urlVerPlanAccion = "{{ route('admin.planTrabajoBase.index') }}";

@@ -9,7 +9,7 @@
         .dataTables_length:before {
             content: "Mostrar" !important;
             color: #111 !important;
-            margin-right: -30px !important;
+            margin-right: -40px !important;
             position: relative;
             z-index: 2;
 
@@ -18,7 +18,7 @@
         .dataTables_length:after {
             content: "empleados" !important;
             color: #111 !important;
-            margin-left: -35px !important;
+            margin-left: -50px !important;
             position: relative;
             z-index: 2;
         }
@@ -57,11 +57,10 @@
         }
 
     </style>
+
+    <h5 class="col-12 titulo_general_funcion">Empleados</h5>
     <div class="mt-5 card">
         @can('configuracion_empleados_create')
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Lista de Empleados</strong></h3>
-            </div>
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modalempleado', ['model' => 'Vulnerabilidad', 'route' =>
@@ -99,15 +98,13 @@
             <table class="table table-bordered w-100 datatable-Empleado">
                 <thead class="thead-dark">
                     <tr>
-                        <th id="numero" style="vertical-align: top">
-                        </th>
                         <th style="vertical-align: top">
                             Foto
                         </th>
                         <th style="vertical-align: top">
                             N°&nbsp;de&nbsp;empleado
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width:200px;">
                             {{ trans('cruds.user.fields.name') }}
                         </th>
                         <th style="vertical-align: top">
@@ -122,7 +119,7 @@
                         <th style="vertical-align: top">
                             Puesto
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width:200px;">
                             Jefe Inmediato
                         </th>
                         <th style="vertical-align: top">
@@ -149,8 +146,6 @@
 
     <script>
         $(function() {
-            let numero = document.querySelector('#numero');
-            numero.innerHTML = 'N°';
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
@@ -304,10 +299,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.empleados.index') }}",
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
-                    },
+                columns: [
                     {
                         data: 'avatar',
                         name: 'avatar',

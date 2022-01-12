@@ -1,10 +1,11 @@
 @extends('layouts.admin')
 @section('content')
+    <h5 class="col-12 titulo_general_funcion">Categorías de Activos</h5>
     <div class="mt-5 card">
         @can('configuracion_tipoactivo_create')
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+            {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Categorías de Activos</strong></h3>
-            </div>
+            </div> --}}
 
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -23,9 +24,6 @@
                         </th>
                         <th>
                             Categoría
-                        </th>
-                        <th>
-                            Subcategoría
                         </th>
                         <th>
                             Opciones
@@ -158,13 +156,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -192,10 +190,6 @@
                     {
                         data: 'tipo',
                         name: 'tipo'
-                    },
-                    {
-                        data: 'subtipo',
-                        name: 'subtipo'
                     },
                     {
                         data: 'actions',

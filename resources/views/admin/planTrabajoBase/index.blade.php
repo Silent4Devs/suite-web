@@ -69,9 +69,9 @@
 
 
         /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          fill: #fff !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          height: 15px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  fill: #fff !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  height: 15px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }*/
 
 
         #workSpace {
@@ -93,7 +93,7 @@
 
         .icons_propios_gantt.guardar {
             transform: scale(1.5);
-            color: #00abb2 !important;
+            color: #345183 !important;
         }
 
 
@@ -108,24 +108,24 @@
             display: inline-block;
             padding: 5px 10px;
             background-color: #fff;
-            color: #00abb2;
+            color: #345183;
             font-size: 9pt;
             cursor: pointer;
-            border: 1px solid #00abb2;
+            border: 1px solid #345183;
             border-radius: 5px;
             text-align: center;
             vertical-align: middle;
         }
 
         .botones_vistas_gantt a:hover {
-            border: 1px solid #00abb2;
-            background-color: #00abb2;
+            border: 1px solid #345183;
+            background-color: #345183;
             color: #fff;
         }
 
         .boton_activo {
-            border: 1px solid #00abb2 !important;
-            background-color: #00abb2 !important;
+            border: 1px solid #345183 !important;
+            background-color: #345183 !important;
             color: #fff !important;
         }
 
@@ -220,11 +220,8 @@
 
     {{ Breadcrumbs::render('admin.planTrabajoBase.index') }}
 
-
+    <h5 class="col-12 titulo_general_funcion">Plan de Implementación ISO 27001 </h5>
     <div class="mt-5 mb-5">
-        <div class="py-3 col-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Plan de Implementación ISO 27001</strong></h3>
-        </div>
         <div id="bloqueado"></div>
 
         <div class="botones_vistas_gantt">
@@ -233,9 +230,10 @@
                     <h2 id="titlo-tab" class="text-capitalize">Diagrama Gantt</h2>
                 </div>
                 <div class="text-right col-8 caja_botones_menu">
-                    <a href="#" data-tabs="original_gantt" onclick="loadGanttFromServer();cambiarTitulo('Gantt');"
-                        class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
-                    <a href="#" data-tabs="tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');"
+                    <a href="#" id="tabla_remove" data-tabs="original_gantt"
+                        onclick="loadGanttFromServer();cambiarTitulo('Gantt');" class="btn_gantt_vista boton_activo"><i
+                            class="fas fa-stream"></i>Gantt</a>
+                    <a href="#" id="tabla_gantt_click" data-tabs="tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');"
                         class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
                     <a href="#" data-tabs="calendario_gantt" onclick="initCalendar();cambiarTitulo('Calendario');"
                         class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
@@ -286,6 +284,13 @@
         }
         let idleTime = 0;
         document.addEventListener('DOMContentLoaded', function() {
+            if (@json($texto)) {
+                console.log("asdasdasd");
+                /*document.getElementById("tabla_remove").classList.remove("boton_activo");
+                document.getElementById("tabla_gantt_click").classList.add("btn_activo", "boton_activo");*/
+                console.log("vvvvv");
+                initTable();
+            }
             // let isBlocked = JSON.parse(Cookies.get('bloqueo'));
             // if (!isBlocked.bloqueado) {
             //     Cookies.set('bloqueo', '{"user":"Uriel", "bloqueado":true}');
