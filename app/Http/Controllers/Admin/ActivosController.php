@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivoRequest;
 use App\Http\Requests\StoreActivoRequest;
@@ -13,10 +12,10 @@ use App\Models\Empleado;
 use App\Models\Marca;
 use App\Models\Modelo;
 use App\Models\Sede;
+use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\User;
-use App\Models\SubcategoriaActivo;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -153,7 +152,7 @@ class ActivosController extends Controller
 
         $modelos = Modelo::get();
 
-        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos','subcategorias'));
+        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'subcategorias'));
     }
 
     public function store(StoreActivoRequest $request)

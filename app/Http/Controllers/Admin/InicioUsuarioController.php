@@ -215,11 +215,9 @@ class InicioUsuarioController extends Controller
             $activos = false;
             $cumpleaños_usuario = null;
             $cumpleaños_felicitados_like_contador = collect();
-            $cumpleaños_felicitados_like_usuarios =  collect();
+            $cumpleaños_felicitados_like_usuarios = collect();
             $cumpleaños_felicitados_comentarios = collect();
         }
-
-
 
         $organizacion = Organizacion::first();
 

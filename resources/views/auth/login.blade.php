@@ -113,6 +113,9 @@
     .modal-body{
         height: auto;
     }
+    .modal-body{
+        text-align: justify;
+    }
     #btn_closed_modal{
         position: absolute;
         top: 20px;

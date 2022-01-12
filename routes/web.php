@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
-use App\Http\Controllers\Admin\ConfigurarSoporteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -157,8 +156,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
     Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');
-
-
 
     Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
     Route::post('portal-comunicacion/cumpleaños/{id}', 'PortalComunicacionController@felicitarCumpleaños')->name('portal-comunicacion.cumples');
@@ -419,7 +416,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('getgetEmployeeData', 'ConfigurarSoporteController@getgetEmployeeData')->name('getgetEmployeeData');
     Route::get('soporte', 'ConfigurarSoporteController@visualizarSoporte')->name('soporte');
 
-
     //Configuración Consultores
     // Route::delete('configurar-consultor/destroy', 'ConfigurarConsultorController@massDestroy')->name('configurar-consultor.massDestroy');
     // Route::resource('configurar-consultor', 'ConfigurarConsultorController');
@@ -631,15 +627,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('subtipoactivos/destroy', 'SubcategoriaActivoContoller@massDestroy')->name('subtipoactivos.massDestroy');
     Route::post('subtipoactivos/parse-csv-import', 'SubcategoriaActivoContoller@parseCsvImport')->name('subtipoactivos.parseCsvImport');
     Route::post('subtipoactivos/process-csv-import', 'SubcategoriaActivoContoller@processCsvImport')->name('subtipoactivos.processCsvImport');
-    Route::resource('subtipoactivos', 'SubcategoriaActivoContoller') ->names([
+    Route::resource('subtipoactivos', 'SubcategoriaActivoContoller')->names([
         'index' => 'subtipoactivos.index',
         'create' => 'subtipoactivos.create',
         'store' => 'subtipoactivos.store',
         'show' => 'subtipoactivos.show',
         'edit' => 'subtipoactivos.edit',
         'update' => 'subtipoactivos.update',
-    ]);;
-
+    ]);
 
     // Puestos
     Route::delete('puestos/destroy', 'PuestosController@massDestroy')->name('puestos.massDestroy');
