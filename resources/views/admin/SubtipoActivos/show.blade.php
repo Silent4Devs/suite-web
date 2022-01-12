@@ -17,10 +17,10 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.tipoactivo.fields.id') }}
+                            ID
                         </th>
                         <td>
-                            {{ $tipos->id }}
+                            {{ $subcategoria->id }}
                         </td>
                     </tr>
                     <tr>
@@ -28,7 +28,7 @@
                             Categoría
                         </th>
                         <td>
-                            {{ $tipos->tipo }}
+                            {{ $subcategoria->categoria_id }}
                         </td>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@
                            Subcategoría
                         </th>
                         <td>
-                            {{ $tipos->subtipo }}
+                            {{ $subcategoria->subcategoria }}
                         </td>
                     </tr>
                 </tbody>

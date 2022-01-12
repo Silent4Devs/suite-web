@@ -11,6 +11,7 @@ class CategoriaSubcategoria extends Component
     public $categorias;
     public $subcategorias;
     public $categoria;
+    public $subcategoria;
 
     public $selectedState = NULL;
 
@@ -32,4 +33,5 @@ class CategoriaSubcategoria extends Component
             $this->subcategorias = SubcategoriaActivo::select('id','subcategoria')->where('categoria_id', $value)->get();
         }
     }
+
 }
