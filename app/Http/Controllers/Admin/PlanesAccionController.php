@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PlanImplementacion;
-use Carbon\Carbon;
+use App\Models\Iso9001\PlanImplementacion AS PlanItemIplementacion9001;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class PlanesAccionController extends Controller
@@ -16,8 +17,17 @@ class PlanesAccionController extends Controller
      */
     public function index(Request $request)
     {
+        $iso2007 = PlanImplementacion::with('elaborador')->get();
+        $original = new Collection($iso2007);
+        $iso9001 = PlanItemIplementacion9001::with('elaborador')->get();
+        $latest = new Collection($iso9001);
+        // dd($iso9001);
+        $merged = $original->concat($latest);
+        // $merged = $original->union($latest);
+        // dd($merged);
+
         if ($request->ajax()) {
-            $planesImplementacion = PlanImplementacion::with('elaborador')->get();
+            $planesImplementacion = $merged;
 
             return datatables()->of($planesImplementacion)->toJson();
         }

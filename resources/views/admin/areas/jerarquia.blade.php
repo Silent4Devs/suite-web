@@ -52,7 +52,7 @@
         }
 
         .avatar {
-            border-color: #00abb2;
+            border-color: #345183;
         }
 
         .orgchart.r2l .avatar {
@@ -267,8 +267,8 @@
         }
 
         /* #shot_screen{
-            width:100% !important;
-        } */
+                width:100% !important;
+            } */
 
     </style>
     <style>
@@ -282,7 +282,7 @@
 
         .range-slider__range {
             -webkit-appearance: none;
-            width:100%;
+            width: 100%;
             height: 10px;
             border-radius: 5px;
             background: #d7dcdf;
@@ -482,59 +482,69 @@
         .caja_btn_a a {
             padding: 15px;
             margin-top: 10px;
-            color: #008186;
+            color: #345183;
             display: inline-block;
         }
 
         .caja_btn_a a:hover,
         .btn_a_seleccionado {
-            border-bottom: 2px solid #00abb2;
+            border-bottom: 2px solid #345183;
             margin-bottom: -2px;
             margin-right: 10px;
         }
-        #chart-container{
+
+        #chart-container {
             /* background-color:red; */
             /* z-index:1 !important; */
-            position:relative !important;
-        }
-        .charContainerAll{
-            /* background-color:yellow; */
-            z-index:0 !important;
             position: relative !important;
         }
-        .caja_grupos{
-            left:20px;
-            transition:0.5s !important;
-            margin-left:-200px;
-            position:absolute;
-            top:30px;
-            background: white;
-            z-index:1;
+
+        .charContainerAll {
+            /* background-color:yellow; */
+            z-index: 0 !important;
+            position: relative !important;
         }
-        .grupos_funciones .caja_grupos{
-            margin-left:0px;
+
+        .caja_grupos {
+            left: 20px;
+            transition: 0.5s !important;
+            margin-left: -200px;
+            position: absolute;
+            top: 30px;
+            background: white;
+            z-index: 1;
+        }
+
+        .grupos_funciones .caja_grupos {
+            margin-left: 0px;
             /* transition:0.5s !important; */
 
         }
-        .btn_grupos{
-            transform:rotate(0deg);
-            transition:0.5s;
+
+        .btn_grupos {
+            transform: rotate(0deg);
+            transition: 0.5s;
         }
-        .grupos_funciones .btn_grupos{
-            transform:rotate(180deg);
+
+        .grupos_funciones .btn_grupos {
+            transform: rotate(180deg);
         }
-        .modal-backdrop{
-            display:none;
+
+        .modal-backdrop {
+            display: none;
         }
-        .caja_grupos ul{
-            transition:0.5s !important;
+
+        .caja_grupos ul {
+            transition: 0.5s !important;
         }
-        .btn_iconos_areas{
-            margin-top:15px;
+
+        .btn_iconos_areas {
+            margin-top: 15px;
             transform: scale(1.25);
         }
-        @media(min-width:2000px){
-            .contenido_blanco{
+
+        @media(min-width:2000px) {
+            .contenido_blanco {
                 padding-bottom: 300px !important;
             }
         }
@@ -542,7 +552,7 @@
     </style>
 @endsection
 @section('content')
-{{ Breadcrumbs::render('areas-render') }}
+    {{ Breadcrumbs::render('areas-render') }}
 
 
 
@@ -550,9 +560,13 @@
     <div class="w-full px-6 py-4 mb-16 bg-white rounded-lg shadow-lg contenido_blanco">
         <div class="card-body">
             @if ($organizacion)
-                <h3 class="mb-2 text-center text-white" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de {{ $organizacion->empresa}}</strong></h3>
+                <h3 class="mb-2 text-center text-white"
+                    style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de
+                        {{ $organizacion->empresa }}</strong></h3>
             @else
-                 <h3 class="mb-2 text-center text-white" style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de la organización</strong></h3>
+                <h3 class="mb-2 text-center text-white"
+                    style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de la
+                        organización</strong></h3>
             @endif
         </div>
         @if (!$areasTree)
@@ -596,7 +610,8 @@
                                         <i class="mr-1 fas fa-search-plus"></i>
                                         Control de zoom
                                     </span>
-                                    <div class="d-flex justify-content-center align-items-center" style="height: 75%; width:100% !important;">
+                                    <div class="d-flex justify-content-center align-items-center"
+                                        style="height: 75%; width:100% !important;">
                                         <input id="zoomer" class="range-slider__range" type="range" value="70" min="10"
                                             max="200">
                                         <span id="output" class="range-slider__value">70</span>
@@ -619,7 +634,8 @@
 
                         {{-- <div id="exportData"></div> --}}
                         <div class="contenedor-areas">
-                            <i class="fas fa-caret-right btn_grupos" title="Ver grupos" style= "position:absolute; top:0; font-size:25pt; cursor:pointer;"></i>
+                            <i class="fas fa-caret-right btn_grupos" title="Ver grupos"
+                                style="position:absolute; top:0; font-size:25pt; cursor:pointer;"></i>
                             <div class="row caja_grupos">
                                 <ul style="max-width: 200px !important; overflow:hidden !important;">
                                     @foreach ($grupos as $grupo)
@@ -692,8 +708,10 @@
 
                     <section id="contenido2" class="mt-4">
                         <div class="col-12 text-right">
-                        <a href="{{route("admin.areas.exportar")}}" class="mr-5"><i class="fas fa-file-csv" style="font-size:18pt;"></i></a>
-                        <a href="{{route("admin.areas.exportar")}}" class="mr-5"><i class="fas fa-camera" style="font-size:18pt;"></i></a>
+                            <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-file-csv"
+                                    style="font-size:18pt;"></i></a>
+                            <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-camera"
+                                    style="font-size:18pt;"></i></a>
                         </div>
                         <div class="row">
 
@@ -718,7 +736,8 @@
                                                                 <div class="mb-3 ml-2 mr-2 bg-white rounded col-3 sesioninicio"
                                                                     style="height:40px; border:1px solid #ccc !important"
                                                                     onclick="renderModal(this,'{{ $area->area }}', '{{ $area->descripcion }}', '{{ $grupo->color }}')">
-                                                                    <p class="text-center" style="cursor:pointer border:1px solid #ccc !important">
+                                                                    <p class="text-center"
+                                                                        style="cursor:pointer border:1px solid #ccc !important">
                                                                         {{ $area->area }}
                                                                     </p>
                                                                 </div>
@@ -758,11 +777,9 @@
 @section('scripts')
 
     <script>
-
-    $(".btn_grupos").click(function(){
-        $(".contenedor-areas").toggleClass("grupos_funciones");
-    });
-
+        $(".btn_grupos").click(function() {
+            $(".contenedor-areas").toggleClass("grupos_funciones");
+        });
     </script>
 
     <script type="module">
@@ -824,6 +841,7 @@
                         let container = document.querySelector('.imagen-search');
                         container.src = "";
                         document.querySelector('.texto-search').innerHTML = "";
+
                         let orgchart = new OrgChart({
                             'chartContainer': '#chart-container',
                             'zoomSlider': '#zoomer',

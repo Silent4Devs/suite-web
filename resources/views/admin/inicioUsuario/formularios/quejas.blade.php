@@ -8,7 +8,7 @@
     </style>
     {{ Breadcrumbs::render('quejas-create') }}
     <div class="card">
-        <div class="text-center card-header" style="background-color: #00abb2;">
+        <div class="text-center card-header" style="background-color: #345183;">
             <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-frown"></i>Quejas</strong>
         </div>
         <div class="card-body">

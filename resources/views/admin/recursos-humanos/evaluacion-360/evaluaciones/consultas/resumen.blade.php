@@ -19,13 +19,13 @@
             <h3 class="mb-1 text-center text-white"><strong> Resumen: </strong> Evaluación </h3>
         </div>
         <div class="mt-3 col-12">
-            <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                 RESUMEN GENERAL
             </div>
         </div>
         @livewire('ev360-resumen-tabla', ['evaluacion' => $evaluacion->id])
         <div class="mt-3 col-12">
-            <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                 GRÁFICAS
             </div>
         </div>

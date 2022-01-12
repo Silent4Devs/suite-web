@@ -1,8 +1,6 @@
 @can('planaccion_correctiva_create')
+<h5 class="col-12 titulo_general_funcion">Plan acción</h5>
 <div class="card mt-5" style="border: none;">
-    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; border:none; ">
-        <h3 class="mb-2  text-center text-white"><strong>Plan acción</strong></h3>
-    </div>
     <div style="margin-bottom: 10px; margin-left:12px; border:none;" class="row">
         <div class="col-12 text-right">
             <div class="btn btn-success boton_verde">

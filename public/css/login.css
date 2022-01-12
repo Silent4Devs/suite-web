@@ -2,13 +2,14 @@ body{
     background-image: url(none);
     margin: 0;
     padding: 0;
-    background-color: #fff !important;
+    background-color: #F5F7FA !important;
 }
 body::before{
     content: "";
     background: url(../img/login/chip_a.png);
     background-size: auto 600px; 
     background-position: -200px -200px; 
+    opacity: 40%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     top: 0;
@@ -20,8 +21,9 @@ body::before{
 }
 body::after{
     content: "";
-    background:  url(../img/login/chip_b.png);
+    background:  url(../img/login/chip_a.png);
     background-size: auto 700px; 
+    opacity: 40%;
     background-position: 100% 70px; 
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -34,7 +36,6 @@ body::after{
     z-index: 0;
 }
 .c-app.flex-row.align-items-center{
-    background-color: #fff;
 }
 .fondo{
     width: 100%;
@@ -59,7 +60,7 @@ body::after{
     text-align: center;
 }
 .marca img{
-    width: 400px;
+    width: 380px;
 }
 .marca .by{
     width: 400px;
@@ -74,7 +75,7 @@ body::after{
     position: absolute;
     top: 0;
     right: 0;
-    background-color: rgba(239, 239, 239, 0.8);
+    background-color: rgba(28, 39, 74, 0.07);
     width: 450px;
     height: 100%;
     overflow: hidden;
@@ -82,7 +83,7 @@ body::after{
 }
 form{
     width: 350px;
-    height: 450px;
+    height: 630px;
     box-sizing: border-box;
     text-align: center;
 
@@ -96,29 +97,38 @@ form{
 form img.logo_silent{
     width: 100px;
     margin: auto;
+    filter: grayscale(100%) brightness(0.5) opacity(50%);
 }
 form h3{
     font-weight: bolder;
 }
 form .btn_enviar{
-    width: 40%;
-    height: 40px;
-    background-color: #3c4b64;
+    width: 100%;
+    height: 56px;
+    background-color: #345183;
     color: #fff;
-    border-radius: 0px;
     border: none;
     box-shadow: none;
     transition: 1s;
+    border-radius: 4px;
 }
 form .btn_enviar:hover{
     border-radius: 100px;
 }
 form .btn_registrate{
     display: inline-block;
-    padding: 5px 10px;
-    border: 1px solid #3c4b64;
-    color: #3c4b64;
+    width: 100%;
+    height: 56px;
+    border-radius: 4px;
+    padding-top: 10px;
+    border: 1px solid #1C274A59;
+    color: #1C274A59;
     font-size: 15pt;
+}
+
+.form-control{
+
+    height: 56px;
 }
 
 

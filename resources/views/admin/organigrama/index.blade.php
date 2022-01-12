@@ -52,7 +52,7 @@
         }
 
         .avatar {
-            border-color: #00abb2;
+            border-color: #345183;
         }
 
         .orgchart.r2l .avatar {
@@ -166,7 +166,7 @@
         }
 
         .side.title-nav {
-            background-color: #00abb2;
+            background-color: #345183;
             color: white;
             font-size: 13px;
             border-radius: 5px;
@@ -367,22 +367,19 @@
             height: 80px !important;
         }
 
-
     </style>
 @endsection
 
 @section('content')
-    <div class="text-center">
-        <h1 class="mb-4 text-2xl font-black leading-tight md:text-2xl lg:text-3xl">
-            Organigrama de {{ $organizacion }}
-        </h1>
-    </div>
+
+    <h5 class="col-12 titulo_general_funcion">Organigrama de {{ $organizacion }} </h5>
+
 
 
     <!-- component -->
     <div id="contenedorOrganigrama" style="position: relative" class="w-full px-8 py-4 mb-16 bg-white rounded-lg shadow-lg">
         {{-- <div class="flex justify-center -mt-16 md:justify-end">
-            <img class="object-cover w-20 h-20 border-2 rounded-full" style="border-color: #00abb2;"
+            <img class="object-cover w-20 h-20 border-2 rounded-full" style="border-color: #345183;"
                 src="{{ $org_foto }}">
         </div> --}}
         @if (is_null($organizacionTree))
@@ -416,7 +413,7 @@
                                 <label for="participantes_search"> <span
                                         class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
                                         <i class="mr-1 fas fa-user-circle"></i>
-                                        Búsqueda por empleado
+                                        Empleado
                                     </span></label>
                                 <input class="form-control" type="search" id="participantes_search"
                                     placeholder="Nombre del empleado" style="position: relative" autocomplete="off" />
@@ -432,9 +429,9 @@
                             <div class="col-sm-12 col-lg-4">
                                 <label for="areas"> <span class="text-sm leading-tight md:text-sm lg:text-sm">
                                         <i class="mr-1 fas fa-building"></i>
-                                        Búsqueda por área
+                                        Área
                                     </span></label>
-                                <select name="areas" id="areas" class="form-control" >
+                                <select name="areas" id="areas" class="form-control">
                                     <option value="" selected disabled>-- Selecciona área --</option>
                                     @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">
@@ -710,7 +707,7 @@
 
             let areas = document.querySelector("#areas");
             areas.addEventListener('change', function(event) {
-                if($("#areas option:selected").attr("id") != "ver_todos_option"){
+                if ($("#areas option:selected").attr("id") != "ver_todos_option") {
                     let area_id = event.target.value;
                     orientacion = localStorage.getItem('orientationOrgChart');
                     renderOrganigrama(OrgChart, orientacion, null, true, area_id);
@@ -732,21 +729,21 @@
 
 
             document.querySelector('#areas').addEventListener('change', function(e) {
-                    e.preventDefault();
-                    if($("#areas option:selected").attr("id") == "ver_todos_option"){
-                        document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
-                        $('.areas').val(null).trigger('change');
-                        document.querySelector("#participantes_search").value = "";
-                        document.querySelector("#zoomer").value = 70;
-                        document.querySelector("#output").innerHTML = 70;
-                        contador = 0;
-                        orientacion = orientaciones[contador];
-                        localStorage.setItem('orientationOrgChart', orientaciones[contador]);
-                        img.src =
-                            `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
-                        renderOrganigrama(OrgChart, orientacion);
-                        console.log("funcion");
-                    }
+                e.preventDefault();
+                if ($("#areas option:selected").attr("id") == "ver_todos_option") {
+                    document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
+                    $('.areas').val(null).trigger('change');
+                    document.querySelector("#participantes_search").value = "";
+                    document.querySelector("#zoomer").value = 70;
+                    document.querySelector("#output").innerHTML = 70;
+                    contador = 0;
+                    orientacion = orientaciones[contador];
+                    localStorage.setItem('orientationOrgChart', orientaciones[contador]);
+                    img.src =
+                        `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
+                    renderOrganigrama(OrgChart, orientacion);
+                    console.log("funcion");
+                }
 
             });
 

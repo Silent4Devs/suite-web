@@ -333,6 +333,33 @@
         font-size: 8px;
     }
 
+    .seleccionado {
+        background-color: rgb(0, 195, 255) !important;
+        animation: pulse 2s infinite;
+    }
+
+    .code {
+        background-color: white;
+        color: rgb(0, 183, 255);
+        border-style: groove none groove groove;
+        width: 36px;
+        animation: pulse 2s infinite;
+    }
+
+    @-webkit-keyframes pulse {
+        0% {
+            -webkit-box-shadow: 0 0 0 0 rgba(0, 26, 255, 0.4);
+        }
+
+        70% {
+            -webkit-box-shadow: 0 0 0 20px rgba(255, 0, 0, 0);
+        }
+
+        100% {
+            -webkit-box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+        }
+    }
+
 </style>
 
 <div class="card" style="box-shadow: none; !important">
@@ -344,14 +371,20 @@
 </div>
 
 
-
-
 @section('scripts')
     @parent
     <script type="text/javascript">
         $(document).ready(function() {
             initTable();
+
         });
+
+        function pintarId() {
+            let textobuscar = @json($texto).replace(/\s+/g, '').toLowerCase();
+            document.getElementById(textobuscar).focus();
+            document.getElementById(textobuscar).classList.add('seleccionado');
+            document.getElementById(textobuscar + 'code').classList.add('code');
+        }
 
         function initTable() {
             // let url = '{{ asset('storage/gantt/') }}/{{ $name_file_gantt }}';
@@ -387,7 +420,7 @@
                 success: function(response) {
                     $('#workSpace').trigger('refreshTasks.gantt');
                     console.log(response)
-                    document.getElementById('ultima_modificacion').innerHTML=response.ultima_modificacion;
+                    document.getElementById('ultima_modificacion').innerHTML = response.ultima_modificacion;
                     // toastr.success('Tarea actualizada con éxito');
                 }
             });
@@ -452,16 +485,18 @@
 					`;
 
                 } else if (Number(task.level) > 1) {
+                    let idname = task.name.replace(/\s+/g, '').toLowerCase();
+
                     html += `
 
 						<tr id="${task.id}" data-level=${task.level} numero-registro="${contador_registros}">
-							<td>${contador_registros}</td>
-							<td style="padding-left: ${task.level * 15}px;">
+							<td class="" id="${idname}">${contador_registros}</td>
+							<td class="" style="padding-left: ${task.level * 15}px;">
 								<div class="d-flex" style="width: calc(400px - ${task.level * 15}px);">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-up" viewBox="0 0 16 16">
 										<path fill-rule="evenodd" d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z"/>
 									</svg>
-									<input class="name_input" value="${task.name}" style="width: 100%">
+									<input class="name_input" id="${idname}code" value="${task.name}" style="width: 100%">
 								</div>
 							</td>`;
                     let assigs = [];
@@ -1024,6 +1059,9 @@
                 $(".tabla_gantt_fase:hover thead").toggleClass('th_activo');
             });
 
+            if (@json($texto)) {
+                pintarId();
+            }
         }
 
         function recalculateProgress(task, tasks) {

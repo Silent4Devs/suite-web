@@ -1,11 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-
+    <h5 class="col-12 titulo_general_funcion">Registrar: Área</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Área </h3>
-        </div>
-
         <div class="card-body">
             @if (!$direccion_exists)
                 <div class="px-1 py-2 mx-3 mb-3 rounded shadow"
@@ -31,8 +27,8 @@
             <form method="POST" action="{{ route('admin.areas.store') }}" enctype="multipart/form-data">
                 @csrf
 
-                <div class="row">
-                    <div class="form-group col-sm-6">
+                <div class="row col-12">
+                    <div class="form-group col-sm-4">
                         <label for="area"><i
                                 class="fab fa-adn iconos-crear"></i>{{ trans('cruds.area.fields.area') }}</label>
                         <input class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" type="text" name="area"
@@ -44,32 +40,31 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.area.fields.area_helper') }}</span>
                     </div>
-                    <div class="form-group col-sm-6">
-                        <label for="grupo_id"><i class="fas fa-users iconos-crear"></i>Grupo</label>
-                        <select class="form-control select2 {{ $errors->has('grupo') ? 'is-invalid' : '' }}"
-                            name="id_grupo" id="id_grupo">
-                            @foreach ($grupoareas as $grupo)
-                                <option value="{{ $grupo->id }}">
-                                    {{ $grupo->nombre }}
-                                </option>
 
+
+
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                        <label for="empleados_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del área</label>
+                        <select class="form-control {{ $errors->has('empleados_id') ? 'is-invalid' : '' }}" name="empleados_id" id="empleados_id">
+                            @foreach ($reportas as $reporta)
+                            <option data-puesto="{{ $reporta->puesto }}" value="{{ $reporta->id }}" data-area="{{ $reporta->area->area }}">
+                                {{ $reporta->name }}
+                            </option>
                             @endforeach
                         </select>
-                        @if ($errors->has('grupo'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('area') }}
-                            </div>
+                        @if ($errors->has('reporta'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('empleados_id') }}
+                        </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
                     </div>
 
 
-                </div>
 
-                <div class="row">
+
                     @if ($direccion_exists)
-                        <div class="form-group col-sm-6">
-                            <label class="required" for="jefe"><i class="fas fa-user iconos-crear"></i>Reporta a</label>
+                        <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                            <label class="required" for="jefe"><i class="fas fa-user iconos-crear"></i>Área a la que reporta</label>
                             <div class="mb-3 input-group">
                                 <select class="custom-select supervisor" id="inputGroupSelect01" name="id_reporta">
                                     <option selected value="" disabled>-- Selecciona area --</option>
@@ -91,6 +86,28 @@
                         </div>
                     @endif
 
+                </div>
+
+                <div class="row col-12">
+                    <div class="form-group col-sm-6">
+                        <label for="grupo_id"><i class="fas fa-users iconos-crear"></i>Grupo</label>
+                        <select class="form-control select2 {{ $errors->has('grupo') ? 'is-invalid' : '' }}"
+                            name="id_grupo" id="id_grupo">
+                            @foreach ($grupoareas as $grupo)
+                                <option value="{{ $grupo->id }}">
+                                    {{ $grupo->nombre }}
+                                </option>
+
+                            @endforeach
+                        </select>
+                        @if ($errors->has('grupo'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('area') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
+                    </div>
+
                     <div class="form-group col-sm-6">
                         <label for="foto_area"> <i class="fas fa-images iconos-crear"></i>Fotografía del área</label>
                                 <input type="file"name="foto_area"
@@ -105,7 +122,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row col-12">
                     <div class="form-group col-sm-{{ $direccion_exists ? '12' : '12' }}">
                         <label for="descripcion"><i class="fas fa-pencil-alt iconos-crear"></i>Descripción</label>
                         <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"

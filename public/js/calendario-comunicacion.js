@@ -35,7 +35,7 @@ $(document).ready(function () {
         var color = "#444444";
         calendar.calHeader.find("h2").text(i[passed_month] + " " + passed_year);
         calendar.weekline.find("div").css("color", color);
-        calendar.datesBody.find(".today").css("color", "#00abb2");
+        calendar.datesBody.find(".today").css("color", "#345183");
 
         // find elements (dates) to be clicked on each time
         // the calendar is generated

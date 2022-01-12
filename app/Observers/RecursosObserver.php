@@ -29,11 +29,16 @@ class RecursosObserver
         // $recurso->participantes()->sync($this->request->input('participantes', []));
         $recurso->empleados()->sync($this->request->input('participantes', []));
         $empleados = Empleado::find($this->request->input('participantes', []));
-        if ($this->request->has('enviarInvitacionParticipantes')) {
-            foreach ($empleados as $empleado) {
-                Mail::to($empleado->email)->send(new InvitacionCapacitacionMail($empleado->name));
+        if ($this->request->estatus == 'Draft') {
+            // Code..
+        } elseif ($recurso->estatus == 'Enviado') {
+            if ($recurso->configuracion_invitacion_envio->enviar_ahora) {
+                foreach ($empleados as $empleado) {
+                    Mail::to($empleado->email)->send(new InvitacionCapacitacionMail($empleado->name));
+                }
             }
         }
+
         event(new RecursosEvent($recurso, 'create', 'recurso', 'Curso y Capacitación'));
     }
 
@@ -45,10 +50,22 @@ class RecursosObserver
      */
     public function updated(Recurso $recurso)
     {
-        // $recurso->participantes()->sync($this->request->input('participantes', []));
+        $empleados = Empleado::find($this->request->input('participantes', []));
 
-        $recurso->empleados()->detach();
-        $recurso->empleados()->sync($this->request->input('participantes', []));
+        if (count($this->request->input('participantes', [])) > 0) {
+            // $recurso->empleados()->detach();
+            $recurso->empleados()->sync($this->request->input('participantes', []));
+        }
+        if ($this->request->estatus == 'Draft') {
+            // Code..
+        } elseif ($recurso->estatus == 'Enviado') {
+            if ($recurso->configuracion_invitacion_envio->enviar_ahora) {
+                foreach ($empleados as $empleado) {
+                    Mail::to($empleado->email)->send(new InvitacionCapacitacionMail($empleado->name));
+                }
+            }
+        }
+
         event(new RecursosEvent($recurso, 'update', 'recurso', 'Curso y Capacitación'));
     }
 

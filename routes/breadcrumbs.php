@@ -123,7 +123,7 @@ Breadcrumbs::for('admin.politica-sgsis.create', function ($trail) {
 
 Breadcrumbs::for('admin.politicaSgsis.visualizacion', function ($trail) {
     $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
-    $trail->push('Politica SGSI');
+    $trail->push('Politicas');
 });
 
 Breadcrumbs::for('admin.roles-responsabilidades.index', function ($trail) {

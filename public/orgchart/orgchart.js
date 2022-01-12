@@ -40,7 +40,7 @@ export default class OrgChart {
     chart.dataset.options = JSON.stringify(opts);
     chart.setAttribute('class', 'orgchart' + (opts.chartClass !== '' ? ' ' + opts.chartClass : '') +
       (opts.direction !== 't2b' ? ' ' + opts.direction : ''));
-    console.log(typeof data);
+    console.log("type" + typeof data);
     if (typeof data === 'object') { // local json datasource
       this.buildHierarchy(chart, opts.ajaxURL ? data : this._attachRel(data, '00'), 0);
     } else if (typeof data === 'string' && data.startsWith('#')) { // ul datasource
@@ -68,7 +68,7 @@ export default class OrgChart {
     // append the export button to the chart-container
     if (opts.exportButton && !chartContainer.querySelector('.oc-export-btn')) {
       let exportBtn = document.createElement('button'),
-        exportCSV = document.createElement('button'),
+        exportCSV = document.createElement('a'),
         downloadBtn = document.createElement('a');
 
       exportBtn.setAttribute('class', 'oc-export-btn btn btn-lg' + (opts.chartClass !== '' ? ' ' + opts.chartClass : ''));
@@ -82,6 +82,7 @@ export default class OrgChart {
         exportBtn.style.fontSize = "14pt";
         exportCSV.title = "Exportar Organigrama a Excel/CSV";
         exportCSV.innerHTML = '<i class="fas fa-file-csv" title="Exportar"></i>';
+        console.log(this);
         exportCSV.addEventListener('click', this._clickExportCSVButton.bind(this));
       }
       downloadBtn.setAttribute('class', 'oc-download-btn' + (opts.chartClass !== '' ? ' ' + opts.chartClass : ''));
@@ -426,14 +427,14 @@ export default class OrgChart {
         photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
       }
     }
-      else {
-        photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
-      }
-      console.log(dataSourceJSON);
-      photo_info.classList.add('side');
-      photo_info.classList.add('img-nav');
-      photo_info.src = `${dataSourceJSON.foto_ruta}`
-      div_img.appendChild(photo_info);
+    else {
+      photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
+    }
+    console.log(dataSourceJSON);
+    photo_info.classList.add('side');
+    photo_info.classList.add('img-nav');
+    photo_info.src = `${dataSourceJSON.foto_ruta}`
+    div_img.appendChild(photo_info);
 
     //title
     let title_info_text = document.createElement('p');
@@ -463,10 +464,12 @@ export default class OrgChart {
             photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;
           }
           content_more += `
-                <div class="supervisor justify-content-center" >
-                <h4 class="supervisor-title">Responsable del área:</h4>
-                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.area}</span></p>
-                <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
+                <div class="supervisor justify-content-center" style="text-align:center !important" >
+                <h4 class="supervisor-title">Responsables del área:</h4>
+                <img src="${dataSourceJSON.lider?.avatar_ruta}"
+                class="text-center img_empleado" title="${dataSourceJSON.lider?.name}" >
+                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider?dataSourceJSON.lider.name:'sin definir'}</span></p>
+                <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider?.puesto}</span></p>
               </div>
             `;
     }
@@ -588,13 +591,12 @@ export default class OrgChart {
         photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;
       }
       content_more += `
-                <div class="supervisor">
-                <h4 class="supervisor-title">Supervisado Por:</h4>
-                <img src="${photo_s}" alt="Admin" class="rounded-circle mb-2" style="height: 140px;width: 80px;clip-path:circle(40px at 50% 50%);margin: auto;">
-                <p class="supervisor-name"><i class="fas fa-user"></i><span>${dataSourceJSON.supervisor.name}</span></p>
-                <p class="supervisor-puesto"><i class="fas fa-info-circle"></i><span>${dataSourceJSON.supervisor.puesto}</span></p>
-              </div>
-            `;
+      <div class="supervisor justify-content-center" >
+        <h4 class="supervisor-title">Responsable del área:</h4>
+        <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
+        <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
+    </div>`;
+
     }
     c_more.innerHTML = content_more;
     chartContainer.appendChild(a_close);
@@ -1856,26 +1858,30 @@ export default class OrgChart {
       chartContainer.innerHTML = '';
       chartContainer.style.width = "0px";
     }
-}
-    _clickExportButton() {
-      let opts = this.options,
-        chartContainer = this.chartContainer,
-        mask = chartContainer.querySelector(':scope > .mask'),
-        sourceChart = chartContainer.querySelector('.charContainerAll:not(.hidden)'),
-        flag = opts.direction === 'l2r' || opts.direction === 'r2l' || opts.direction === 'b2t';
-        console.log()
-        let tableAll = document.querySelector('.charContainerAll');
-      if (!mask) {
-        mask = document.createElement('div');
-        mask.setAttribute('class', 'mask');
-        mask.innerHTML = `<i class="fa fa-circle-o-notch fa-spin spinner"></i>`;
-        chartContainer.appendChild(mask);
-      } else {
-        mask.classList.remove('hidden');
-      }
-      chartContainer.classList.add('canvasContainer');
-      let zoomActual = document.querySelector("#zoomer").value;
-     if(opts.typeOrgChart =='employees'){
+  }
+  _clickExportCSVButton(e, options) {
+    let opts = this.options;
+    e.target.closest('a').setAttribute('href', opts.urlExportCSV);
+  }
+  _clickExportButton() {
+    let opts = this.options,
+      chartContainer = this.chartContainer,
+      mask = chartContainer.querySelector(':scope > .mask'),
+      sourceChart = chartContainer.querySelector('.charContainerAll:not(.hidden)'),
+      flag = opts.direction === 'l2r' || opts.direction === 'r2l' || opts.direction === 'b2t';
+    console.log()
+    let tableAll = document.querySelector('.charContainerAll');
+    if (!mask) {
+      mask = document.createElement('div');
+      mask.setAttribute('class', 'mask');
+      mask.innerHTML = `<i class="fa fa-circle-o-notch fa-spin spinner"></i>`;
+      chartContainer.appendChild(mask);
+    } else {
+      mask.classList.remove('hidden');
+    }
+    chartContainer.classList.add('canvasContainer');
+    let zoomActual = document.querySelector("#zoomer").value;
+    if (opts.typeOrgChart == 'employees') {
       if (flag) {
         let contenedorL2R = document.querySelector('.orgchart').classList.contains('l2r');
         let contenedorR2L = document.querySelector('.orgchart').classList.contains('r2l');
@@ -1904,72 +1910,72 @@ export default class OrgChart {
         }
       }
     }
-    else if (opts.typeOrgChart == 'area'){
-        document.querySelector('.orgchart').classList.remove('l2r');
+    else if (opts.typeOrgChart == 'area') {
+      document.querySelector('.orgchart').classList.remove('l2r');
 
-        document.querySelector('.orgchart').classList.add('t2b');
+      document.querySelector('.orgchart').classList.add('t2b');
     }
     setTimeout(() => {
-        window.html2canvas(sourceChart, {
-            // 'width': 1000,
-            height: tableAll.clientHeight + 100,
-            onclone: function (cloneDoc) {
+      window.html2canvas(sourceChart, {
+        // 'width': 1000,
+        height: tableAll.clientHeight + 100,
+        onclone: function (cloneDoc) {
 
-              // let canvasContainer = cloneDoc.querySelector('.canvasContainer');
-              // canvasContainer.style.overflow = 'visible';
-              // canvasContainer.querySelector('.orgchart:not(.hidden)').transform = '';
+          // let canvasContainer = cloneDoc.querySelector('.canvasContainer');
+          // canvasContainer.style.overflow = 'visible';
+          // canvasContainer.querySelector('.orgchart:not(.hidden)').transform = '';
 
-            // if (flag) {
-            //   let contenedorL2R = cloneDoc.querySelector('.orgchart').classList.contains('l2r');
-            //   let contenedorR2L = cloneDoc.querySelector('.orgchart').classList.contains('r2l');
-            //   if (contenedorL2R) {
-            //     cloneDoc.querySelector('.orgchart').classList.remove('l2r')
-            //   }
-            //   if (contenedorR2L) {
-            //     cloneDoc.querySelector('.orgchart').classList.remove('r2l')
-            //   }
-            // }
-            // let orgChart = cloneDoc.querySelector('.charContainerAll');
-            // console.log(orgChart);
-            // orgChart.style.transform="scale(0.5) rotate(-90deg) rotateY(180deg)";
-            // orgChart.style.background="red";
+          // if (flag) {
+          //   let contenedorL2R = cloneDoc.querySelector('.orgchart').classList.contains('l2r');
+          //   let contenedorR2L = cloneDoc.querySelector('.orgchart').classList.contains('r2l');
+          //   if (contenedorL2R) {
+          //     cloneDoc.querySelector('.orgchart').classList.remove('l2r')
+          //   }
+          //   if (contenedorR2L) {
+          //     cloneDoc.querySelector('.orgchart').classList.remove('r2l')
+          //   }
+          // }
+          // let orgChart = cloneDoc.querySelector('.charContainerAll');
+          // console.log(orgChart);
+          // orgChart.style.transform="scale(0.5) rotate(-90deg) rotateY(180deg)";
+          // orgChart.style.background="red";
 
-            let title = cloneDoc.querySelectorAll('.title');
-            title.forEach(element => {
-              element.innerText = element.textContent.replaceAll(" ", '\u202F'); //Replace space with Unicode No Break Word
-            });
-            let content = cloneDoc.querySelectorAll('.content');
-            content.forEach(element => {
-              element.innerText = element.textContent.replaceAll(" ", '\u202F'); //Replace space with Unicode No Break Word
-            });
-          }
-        })
-          .then((canvas) => {
-            let downloadBtn = chartContainer.querySelector('.oc-download-btn');
-            chartContainer.querySelector('.mask').classList.add('hidden');
-            downloadBtn.setAttribute('href', canvas.toDataURL());
-            // Hola
-            downloadBtn.click();
-          })
-
-          .catch((err) => {
-            console.error('Failed to export the curent orgchart!', err);
-          })
-          .finally(() => {
-            if (opts.typeOrgChart == 'employees') {
-              document.querySelector('.orgchart').classList.remove('t2b');
-              document.querySelector('.orgchart').classList.add(localStorage.getItem('orientationOrgChart'));
-              document.querySelector("#zoomer").value = zoomActual;
-              document.querySelector("#output").innerHTML = zoomActual;
-              let newScale = zoomActual / 100;
-              this._setNewChartScale(this.chart, newScale);
-              chartContainer.classList.remove('canvasContainer');
-            }else if (opts.typeOrgChart == 'area') {
-                document.querySelector('.orgchart').classList.add('l2r');
-                document.querySelector('.orgchart').classList.remove('t2b');
-
-            }
+          let title = cloneDoc.querySelectorAll('.title');
+          title.forEach(element => {
+            element.innerText = element.textContent.replaceAll(" ", '\u202F'); //Replace space with Unicode No Break Word
           });
+          let content = cloneDoc.querySelectorAll('.content');
+          content.forEach(element => {
+            element.innerText = element.textContent.replaceAll(" ", '\u202F'); //Replace space with Unicode No Break Word
+          });
+        }
+      })
+        .then((canvas) => {
+          let downloadBtn = chartContainer.querySelector('.oc-download-btn');
+          chartContainer.querySelector('.mask').classList.add('hidden');
+          downloadBtn.setAttribute('href', canvas.toDataURL());
+          // Hola
+          downloadBtn.click();
+        })
+
+        .catch((err) => {
+          console.error('Failed to export the curent orgchart!', err);
+        })
+        .finally(() => {
+          if (opts.typeOrgChart == 'employees') {
+            document.querySelector('.orgchart').classList.remove('t2b');
+            document.querySelector('.orgchart').classList.add(localStorage.getItem('orientationOrgChart'));
+            document.querySelector("#zoomer").value = zoomActual;
+            document.querySelector("#output").innerHTML = zoomActual;
+            let newScale = zoomActual / 100;
+            this._setNewChartScale(this.chart, newScale);
+            chartContainer.classList.remove('canvasContainer');
+          } else if (opts.typeOrgChart == 'area') {
+            document.querySelector('.orgchart').classList.add('l2r');
+            document.querySelector('.orgchart').classList.remove('t2b');
+
+          }
+        });
     }, 1000);
 
   }

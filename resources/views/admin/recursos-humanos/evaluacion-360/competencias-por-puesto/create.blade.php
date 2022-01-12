@@ -8,13 +8,10 @@
         }
 
     </style>
+    <h5 class="col-12 titulo_general_funcion">Competencias para: {{ $puesto->puesto }}</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong>Competencias para: {{ $puesto->puesto }}</strong>
-            </h3>
-        </div>
         <div class="card-body">
-            <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                 Asignar Competencias
             </div>
             <form id="formCompetenciaCreate" method="POST"
@@ -28,7 +25,7 @@
             </div> --}}
             <span id="asignando_competencia" class="d-none"><i class=" fas fa-circle-notch fa-spin"></i>
                 Asignando competencia</span>
-            <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                 Competencias Asignadas
             </div>
             <div class="datatable-fix">

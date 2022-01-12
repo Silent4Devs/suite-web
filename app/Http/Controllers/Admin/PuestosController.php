@@ -11,6 +11,10 @@ use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Language;
 use App\Models\Puesto;
+use App\Models\PuestoIdiomaPorcentajePivot;
+use App\Models\PuestoResponsabilidade;
+use App\Models\PuestosCertificado;
+use App\Models\RH\Competencia;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
@@ -151,14 +155,24 @@ class PuestosController extends Controller
         $areas = Area::get();
         $reportas = Empleado::get();
         $idis = Language::all();
+        $competencias = Competencia::all();
+        $responsabilidades = PuestoResponsabilidade::get();
+        $certificados = PuestosCertificado::get();
+
         // dd($idis);
 
-        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis'));
+        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados'));
     }
 
     public function store(StorePuestoRequest $request)
     {
+        // dd($request->all());
         $puesto = Puesto::create($request->all());
+
+        // $this->saveOrUpdateLanguage($request->idiomas, $puesto);
+        $this->saveOrUpdateLanguage($request, $puesto);
+        $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
+        $this->saveUpdateCertificados($request->certificados, $puesto);
 
         return redirect()->route('admin.puestos.index');
     }
@@ -199,18 +213,27 @@ class PuestosController extends Controller
                     "idioma":"Spanish; Castilian"
                 }]
         ';
-
+        // $this->saveOrUpdateSchedule($request, $puesto);
         $lenguajes = (json_decode($json));
         $areas = Area::get();
         $reportas = Empleado::get();
         $puesto->load('team');
+        $competencias = Competencia::all();
+        $idis = Language::all();
+        $responsabilidades = PuestoResponsabilidade::get();
+        $certificados = PuestosCertificado::get();
 
-        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes'));
+        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)
     {
         $puesto->update($request->all());
+
+        // $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
+        $this->saveOrUpdateLanguage($request, $puesto);
+        $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
+        $this->saveUpdateCertificados($request->certificados, $puesto);
 
         return redirect()->route('admin.puestos.index');
     }
@@ -245,5 +268,146 @@ class PuestosController extends Controller
         // $areas = Area::get();
 
         return view('admin.puestos.consultapuestos');
+    }
+
+    public function saveOrUpdateLanguage($idiomas, $puesto)
+    {
+        $id = $puesto->id;
+        $i = 0;
+        if (isset($request->id_language)) {
+            if (count($request->id_language)) {
+                foreach ($request->id_language as $w) {
+                    if (isset($w['id'])) {
+                        $model = PuestoIdiomaPorcentajePivot::where('id', $w['id']);
+                        $registerAlreadyExists = $model->exists();
+
+                        if ($registerAlreadyExists) {
+                            $dataModel = $model->first();
+
+                            $dataModel->update([
+                                'id_language'  => $w['language'][$i],
+                                'porcentaje' =>  $w['porcentaje'][$i],
+                                'nivel' =>  $w['nivel'][$i],
+                                ]);
+                        }
+                    } else {
+                        for ($i = 0; $i >= count($request->id_language); $i++) {
+                            $language = PuestoIdiomaPorcentajePivot::create([
+
+                                'id_language'=> $w['language'][$i],
+                                'porcentaje'=> $w['porcentaje'][$i],
+                                'nivel'=> $w['nivel'][$i],
+                                'id_puesto'=>$id,
+                                ]);
+                            echo $i;
+                        }
+
+                        // }
+                        // dd($w['language'][$i]);
+                        // dd('Hola');
+                    }
+                }
+            }
+        }
+
+        // foreach ($idiomas as $idioma) {
+        //     // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
+        //     if (PuestoIdiomaPorcentajePivot::find($idioma['id'] == null)) {
+        //         PuestoIdiomaPorcentajePivot::find($idioma['id'])->update([
+        //             'id_language' => $idioma['language'],
+        //             'porcentaje' =>  $idioma['porcentaje'],
+        //             'nivel' =>  $idioma['nivel'],
+        //             ]);
+        //     } else {
+        //         PuestoIdiomaPorcentajePivot::create([
+        //                 'puesto_id' => $puesto->id,
+        //                 'id_language' => $idioma['language'],
+        //                 'porcentaje' =>  $idioma['porcentaje'],
+        //                 'nivel' =>  $idioma['nivel'],
+        //             ]);
+        //     }
+        // }
+
+        // dd($request->all());
+    }
+
+    public function updateLanguage(Request $request, $language)
+    {
+        // dd($language);
+        $language = PuestoIdiomaPorcentajePivot::find($language);
+
+        $language->update([
+            $request->typeInput => $request->value,
+        ]);
+
+        return response()->json(['status' => 'success', 'message' => 'Dato Actualizado']);
+    }
+
+    public function deleteLanguage(Request $request, $language)
+    {
+        $language = PuestoIdiomaPorcentajePivot::find($language);
+        $language->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
+    }
+
+    public function saveUpdateResponsabilidades($responsabilidades, $puesto)
+    {
+        foreach ($responsabilidades as $responsabilidad) {
+            // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
+            if (PuestoResponsabilidade::find($responsabilidad['id'] == null)) {
+                PuestoResponsabilidade::find($responsabilidad['id'])->update([
+                    'tiempo_asignado' => $responsabilidad['tiempo_asignado'],
+                    'indicador' =>  $responsabilidad['indicador'],
+                    'resultado' =>  $responsabilidad['resultado'],
+                    'actividad' =>  $responsabilidad['actividad'],
+                    ]);
+            } else {
+                PuestoResponsabilidade::create([
+                        'puesto_id' => $puesto->id,
+                        'tiempo_asignado' => $responsabilidad['tiempo_asignado'],
+                        'indicador' =>  $responsabilidad['indicador'],
+                        'resultado' =>  $responsabilidad['resultado'],
+                        'actividad' =>  $responsabilidad['actividad'],
+                    ]);
+            }
+        }
+        // dd($responsabilidades);
+    }
+
+    public function deleteResponsabilidades(Request $request, $responsabilidades)
+    {
+        $responsabilidades = PuestoResponsabilidade::find($responsabilidades);
+        $responsabilidades->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
+    }
+
+    public function saveUpdateCertificados($certificados, $puesto)
+    {
+        foreach ($certificados as $certificado) {
+            // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
+            if (PuestosCertificado::find($certificado['id'] == null)) {
+                PuestosCertificado::find($certificado['id'])->update([
+                    'nombre' => $certificado['nombre'],
+                    'requisito' =>  $certificado['requisito'],
+                    ]);
+            } else {
+                PuestosCertificado::create([
+                        'puesto_id' => $puesto->id,
+                        'nombre' => $certificado['nombre'],
+                        'requisito' =>  $certificado['requisito'],
+                    ]);
+            }
+        }
+        // dd($responsabilidades);
+    }
+
+    public function deleteCertificados(Request $request, $certificados)
+    {
+        $certificados = PuestosCertificado::find($certificados);
+        $certificados->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
     }
 }

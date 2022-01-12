@@ -6,11 +6,11 @@
         .nav-pills .nav-link.active,
         .nav-pills .show>.nav-link {
             color: #fff;
-            background-color: #008186;
+            background-color: #345183;
         }
 
         a.nav-link {
-            color: #008186;
+            color: #345183;
         }
 
         table.no-footer,
@@ -31,7 +31,7 @@
 
         .add_evaluador:hover {
             transition: .3s;
-            color: #008186;
+            color: #345183;
         }
 
         .restantes {
@@ -51,8 +51,8 @@
 
         .restantes:hover {
             transition: .3s;
-            border: 2px solid #008186;
-            color: #008186;
+            border: 2px solid #345183;
+            color: #345183;
         }
 
         .alerta-no-preguntas {
@@ -72,10 +72,8 @@
         }
 
     </style>
+    <h5 class="col-12 titulo_general_funcion">Evaluación: {{ $evaluacion->nombre }}</h5>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong>Evaluación: </strong>{{ $evaluacion->nombre }}</h3>
-        </div>
         <div class="card-body">
             <div>
                 {{-- <h3><i class="mr-2 fas fa-book"></i>Información general de la evaluación:
@@ -85,7 +83,7 @@
                     <div class="w-100" style="color:rgb(51, 51, 51);">
                         <div>
                             <div class="text-center form-group"
-                                style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                                style="background-color:#345183; border-radius: 100px; color: white;">
                                 INFORMACIÓN GENERAL
                             </div>
                             <div style="float: right">
@@ -231,7 +229,7 @@
                 </div>
                 <div class="datatable-fix w-100">
                     <div class="text-center form-group"
-                        style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                        style="background-color:#345183; border-radius: 100px; color: white;">
                         PROGRESO DE EVALUACIÓNES POR EMPLEADO
                     </div>
                     <table id="tblParticipantes" class="table">

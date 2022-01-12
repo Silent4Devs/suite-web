@@ -37,14 +37,32 @@
             color: #212529;
         }
 
+        .cdr-celeste{
+            background: #4A98FF;
+        }
+        .cdr-amarillo{
+            background: #FFCB63;
+        }
+        .cdr-morado{
+            background: #AC84FF;
+        }
+        .cdr-azul{
+            background: #6863FF;
+        }
+        .cdr-verde{
+            background: #6DC866;
+        }
+        .cdr-rojo{
+            background: #FF417B;
+        }
+
     </style>
 
     @include('partials.flashMessages')
     {{ Breadcrumbs::render('centro-atencion') }}
+    <h5 class="col-12 titulo_general_funcion">Centro de Atención</h5>
     <div id="desk" class="mt-5 card" style="">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Centro de Atención </strong></h3>
-        </div>
+
 
         <div class="caja_botones_secciones">
 

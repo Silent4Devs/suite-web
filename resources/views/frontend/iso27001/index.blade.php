@@ -10,7 +10,7 @@
             width: 33.33%;
             text-decoration: none;
             display: inline-block;
-            color: #008186;
+            color: #345183;
             padding: 5px 0px;
             border-top: 1px solid #ccc !important;
             border-right: 1px solid #ccc;
@@ -112,7 +112,7 @@
             align-items: center;
             justify-content: center;
             background-color: #eee;
-            color: #008186;
+            color: #345183;
             border-radius: 6px;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
             transition: 0.1s;
@@ -121,8 +121,8 @@
 
         section a:hover {
             text-decoration: none !important;
-            color: #008186;
-            border: 1px solid #00abb2;
+            color: #345183;
+            border: 1px solid #345183;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
             background-color: #fff;
         }
@@ -323,7 +323,7 @@
                                             Análisis de riesgos
                                         </div>
                                     </a></li>
-                                <div class="ventana_menu" id="riesgos" style="color:#008186 !important">
+                                <div class="ventana_menu" id="riesgos" style="color:#345183 !important">
                                     <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana"
                                         data-ventana="riesgos"
                                         style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
@@ -397,7 +397,7 @@
                                             Capacitaciones
                                         </div>
                                     </a></li>
-                                <div class="ventana_menu" id="capacitacion" style="color:#008186 !important">
+                                <div class="ventana_menu" id="capacitacion" style="color:#345183 !important">
                                     <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana"
                                         data-ventana="capacitacion"
                                         style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>

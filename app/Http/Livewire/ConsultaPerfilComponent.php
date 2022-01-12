@@ -14,10 +14,12 @@ class ConsultaPerfilComponent extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $areas;
+    public $competencias;
     public $reporto;
     public $puestos;
     public $empleado_id;
     public $area_id;
+    public $competencia_id;
     public $reporto_id;
     public $puesto_id;
     public $empleado_experiencia;
@@ -107,9 +109,14 @@ class ConsultaPerfilComponent extends Component
 
     public function render()
     {
-        $perfilesInfo = Puesto::with('area')->
+        $perfilesInfo = Puesto::with(['area', 'competencias' => function ($q) {
+            $q->with('competencia');
+        }])->
             when($this->puesto_id, function ($q3) {
                 $q3->where('id', $this->puesto_id);
+            })
+            ->when($this->area_id, function ($q4) {
+                $q4->where('id_area', $this->area_id);
             })
             ->when($this->area_id, function ($q4) {
                 $q4->where('id_area', $this->area_id);

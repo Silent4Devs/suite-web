@@ -142,22 +142,21 @@
 
         #dom_wrapper{
 
-            border-bottom: solid 2px #0CA193 !important;
+            border-bottom: solid 2px #345183 !important;
             width: 100% !important;
         }
 
 
     </style>
 
+    <h5 class="col-12 titulo_general_funcion">Directorio de Empleados</h5>
+    
     <div id="desk" class="mt-5 card" style="">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Directorio de Empleados </strong></h3>
-        </div>
 
 
         <div class="card-body datatable-fix ">
 
-            <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #0CA193 !important;">
+            <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183 !important;">
             </div>
 
             <table id="dom" class="responsive-table" style="width: 100%; margin-top:50px !important">
@@ -189,7 +188,7 @@
 
                             <td>
                                 {{-- <div>
-                                    <strong class="nombre-empleado" style="color:#0CA193;">{{ $empleado->name }}</strong>
+                                    <strong class="nombre-empleado" style="color:#345183;">{{ $empleado->name }}</strong>
                                     @if (is_null($empleado->telefono_movil))
                                         <p>Sin teléfono</p>
                                     @else

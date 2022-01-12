@@ -48,6 +48,9 @@ class Puesto extends Model
         'horario_fin',
         'genero',
         'estado_civil',
+        'fecha_puesto',
+        'edad',
+        'horario',
 
     ];
 
@@ -79,12 +82,27 @@ class Puesto extends Model
     public function language()
     {
         return $this->belongsToMany('\App\Language', 'puesto_idioma_porcentaje_pivot')
-            ->withPivot('id_idioma');
+            ->withPivot('id_language');
     }
 
-    public function porcentaje()
+    // public function porcentaje()
+    // {
+    //     return $this->belongsToMany('\App\Porcentaje', 'puesto_idioma_porcentaje_pivot')
+    //         ->withPivot('id_porcentaje');
+    // }
+
+    public function competencia()
     {
-        return $this->belongsToMany('\App\Porcentaje', 'puesto_idioma_porcentaje_pivot')
-            ->withPivot('id_porcentaje');
+        return $this->hasMany('App\Models\RH\Competencia', 'competencias_id', 'id');
+    }
+
+    public function responsabilidades()
+    {
+        return $this->hasMany('App\Models\PuestoResponsabilidade', 'puesto_id')->orderBy('id');
+    }
+
+    public function certificados()
+    {
+        return $this->hasMany('App\Models\PuestosCertificado', 'puesto_id')->orderBy('id');
     }
 }

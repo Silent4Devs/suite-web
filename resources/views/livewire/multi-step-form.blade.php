@@ -3,8 +3,8 @@
         .alerta-error {
             font-size: 13px;
             padding: 5px;
-            background: #00abb27a;
-            border: 2px solid #00abb2;
+            background: #3451837a;
+            border: 2px solid #345183;
             color: #353535;
             border-radius: 5px;
         }
@@ -41,7 +41,7 @@
             height: 20px;
             width: 20px;
             background-color: #f9f9f9;
-            border: 1px solid #00abb2;
+            border: 1px solid #345183;
         }
 
         /* On mouse-over, add a grey background color */
@@ -87,7 +87,7 @@
             height: 120px;
             margin: 5px;
             float: left;
-            border: 2px solid #00abb2;
+            border: 2px solid #345183;
             box-sizing: border-box;
             border-radius: 10px;
         }
@@ -128,7 +128,7 @@
 
         input[type=checkbox]:checked~div {
             color: #ffffff;
-            background: #00abb2;
+            background: #345183;
             border-radius: 7px;
             border: none;
             /* box-shadow: 5px 5px 5px 0px #004d4d; */
@@ -137,7 +137,7 @@
         input[type=checkbox]:checked~input[type=number] {
             border-bottom: 2px solid rgb(78 230 236);
             color: #ffffff;
-            background: #00abb2;
+            background: #345183;
             text-align: center;
         }
 
@@ -175,7 +175,7 @@
 
         #progressbar .active {
             z-index: 1;
-            color: #00abb2;
+            color: #345183;
         }
 
         #progressbar li {
@@ -244,7 +244,7 @@
 
         #progressbar li.active:before,
         #progressbar li.active:after {
-            background: #00abb2;
+            background: #345183;
             z-index: -1;
         }
 
@@ -253,12 +253,12 @@
         }
 
         .progress-bar {
-            background-color: #00abb2;
+            background-color: #345183;
         }
 
         .head {
             text-transform: capitalize;
-            color: #00abb2;
+            color: #345183;
             font-weight: normal
         }
 

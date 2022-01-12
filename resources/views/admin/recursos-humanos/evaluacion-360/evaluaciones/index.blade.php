@@ -17,10 +17,9 @@
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Evaluaciones') }}
     </div>
+    <h5 class="col-12 titulo_general_funcion">Evaluaciones 360°</h5>
     <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Evaluaciones 360°</strong></h3>
-        </div>
+  
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <div class="px-1 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
