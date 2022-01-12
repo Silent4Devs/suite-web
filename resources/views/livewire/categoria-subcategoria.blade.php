@@ -19,10 +19,10 @@
 
     <div class="form-group col-md-6">
         <label for="subtipo_id" class="required "><i class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
-    <select class="form-control select2 {{ $errors->has('subtipo') ? 'is-invalid' : '' }}"
-        name="subtipo_id" id="subtipo_id" required>
+    <select class="form-control select2 {{ $errors->has('subtipo') ? 'is-invalid' : '' }}" wire:model='subcategoria'
+        name="subtipo_id" id="subtipo_id">
         @foreach($subcategorias as $subcategoria)
-            <option value="{{$subcategoria->categoria_id}}">{{$subcategoria->subcategoria}}</option>
+            <option value="{{$subcategoria->id}}">{{$subcategoria->subcategoria}}</option>
         @endforeach
     </select>
     @if ($errors->has('subtipo_id'))
