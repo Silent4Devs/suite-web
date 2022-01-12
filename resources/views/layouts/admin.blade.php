@@ -337,7 +337,7 @@
         }
 
         table.dataTable thead {
-            background: #345183 !important;
+            background: #788BAC !important;
             color: #fff !important;
         }
 
@@ -351,6 +351,7 @@
     <style type="text/css">
         .caja_botones_menu {
             display: flex;
+            justify-content: center;
         }
 
         .caja_botones_menu a {

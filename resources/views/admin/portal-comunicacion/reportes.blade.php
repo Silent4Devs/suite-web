@@ -132,7 +132,6 @@
                             idea o recomendación que se presenta
                             con el objetivo de proponer una o
                             más acciones.
-
                         </p>
                         <p>
                             Las sugerencias se canalizarán a las áreas correspondientes.

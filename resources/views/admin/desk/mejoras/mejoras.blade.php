@@ -1,42 +1,36 @@
 <div class="row">
     <div class="col-6 col-md-2">
-        <div class="tarjetas_seguridad_indicadores"
-            style="background: linear-gradient(144deg, rgba(12, 119, 255, 1) 35%, rgba(0, 213, 214, 1) 100%);">
+        <div class="tarjetas_seguridad_indicadores cdr-celeste">
             <div class="numero"><i class="fas fa-exclamation-triangle"></i> {{ $total_mejoras }}</div>
             <div>Mejoras</div>
         </div>
     </div>
     <div class="col-6 col-md-2 ">
-        <div class="tarjetas_seguridad_indicadores"
-            style="background: linear-gradient(144deg, rgba(255, 115, 0, 1) 33%, rgba(237, 255, 86, 1) 100%);">
+        <div class="tarjetas_seguridad_indicadores cdr-amarillo">
             <div class="numero"><i class="far fa-arrow-alt-circle-right"></i> {{ $nuevos_mejoras }}</div>
             <div>Nuevos</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
-        <div class="tarjetas_seguridad_indicadores"
-            style=" background: linear-gradient(144deg, rgba(132, 0, 255, 1) 34%, rgba(255, 54, 240, 1) 100%);">
+        <div class="tarjetas_seguridad_indicadores cdr-morado">
             <div class="numero"><i class="fas fa-redo-alt"></i> {{ $en_curso_mejoras }}</div>
             <div>En curso</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
-        <div class="tarjetas_seguridad_indicadores"
-            style="background: linear-gradient(144deg, rgba(0, 27, 222, 1) 33%, rgba(0, 164, 255, 1) 91%);">
+        <div class="tarjetas_seguridad_indicadores cdr-azul">
             <div class="numero"><i class="fas fa-history"></i> {{ $en_espera_mejoras }}</div>
             <div>En espera</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
-        <div class="tarjetas_seguridad_indicadores"
-            style="background: linear-gradient(144deg, rgba(56, 198, 67, 1) 34%, rgba(57, 255, 220, 1) 100%);">
+        <div class="tarjetas_seguridad_indicadores cdr-verde">
             <div class="numero"><i class="far fa-check-circle"></i> {{ $cerrados_mejoras }}</div>
             <div>Cerrados</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
-        <div class="tarjetas_seguridad_indicadores"
-            style="background: linear-gradient(144deg, rgba(255, 61, 61, 1) 33%, rgba(255, 86, 223, 1) 100%);">
+        <div class="tarjetas_seguridad_indicadores cdr-rojo">
             <div class="numero"><i class="far fa-circle"></i> {{ $cancelados_mejoras }}</div>
             <div>Cancelados</div>
         </div>

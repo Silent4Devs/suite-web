@@ -95,7 +95,7 @@ form{
     margin: auto;
 }
 form img.logo_silent{
-    width: 80px;
+    width: 100px;
     margin: auto;
     filter: grayscale(100%) brightness(0.5) opacity(50%);
 }

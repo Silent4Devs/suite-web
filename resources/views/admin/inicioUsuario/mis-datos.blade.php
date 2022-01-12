@@ -192,7 +192,7 @@
         right: 0px;
         animation: regalo 0.35s alternate infinite ease-out;
         cursor: pointer;
-        fill: #345183 !important;
+        opacity: 0.5;
     }
 
     .regalo:hover {

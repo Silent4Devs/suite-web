@@ -37,6 +37,25 @@
             color: #212529;
         }
 
+        .cdr-celeste{
+            background: #4A98FF;
+        }
+        .cdr-amarillo{
+            background: #FFCB63;
+        }
+        .cdr-morado{
+            background: #AC84FF;
+        }
+        .cdr-azul{
+            background: #6863FF;
+        }
+        .cdr-verde{
+            background: #6DC866;
+        }
+        .cdr-rojo{
+            background: #FF417B;
+        }
+
     </style>
 
     @include('partials.flashMessages')
