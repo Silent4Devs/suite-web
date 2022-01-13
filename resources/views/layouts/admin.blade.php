@@ -49,6 +49,7 @@
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+
     <style type="text/css">
 
         .material-modulos{
@@ -1098,7 +1099,9 @@
     </div>
     {{-- daterangepicker --}}
 
-
+    {{-- Librerías para visualizar en campo el dolar --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.min.js"></script>
 
 
     <script src="{{ asset('js/app.js') }}"></script>

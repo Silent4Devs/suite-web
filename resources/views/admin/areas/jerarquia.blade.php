@@ -543,6 +543,10 @@
             transform: scale(1.25);
         }
 
+        .text-center.img_empleado{
+            margin:auto !important;
+        }
+
         @media(min-width:2000px) {
             .contenido_blanco {
                 padding-bottom: 300px !important;
