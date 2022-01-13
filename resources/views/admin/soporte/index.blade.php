@@ -185,7 +185,7 @@
 		<div class="contacto" style=" width:100% !important;">
 			<div class="genreal" style=" width:100% !important;">
 				{{-- <p class="tiulo">¿CÓMO PODEMOS AYUDARTE? &nbsp;&nbsp; <font>CONTÁCTANOS</font></p> --}}
-                
+
                     <div class="" style="display:flex; justify-content:center; align-items: center; width:100% !important; margin-top: 150px;">
 						<div class="card_equipos">
 							<p class="info">
@@ -201,7 +201,7 @@
 								<div id="btn_soporte" class="btn btn-success">Soporte técnico</div>
 						</div>
                     </div>
-                
+
 			</div>
 			<div class="tabla_consultores">
 				<div class="py-3 col-md-12 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">

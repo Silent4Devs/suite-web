@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Composer\Util\Http\Response;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MassDestroyAnalisisBrechasRequest extends FormRequest
@@ -13,6 +14,7 @@ class MassDestroyAnalisisBrechasRequest extends FormRequest
      */
     public function authorize()
     {
+        abort_if(Gate::denies('analisis_brechas_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // return Gate::allows('comiteseguridad_create');
         return true;
     }
