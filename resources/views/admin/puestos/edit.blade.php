@@ -338,8 +338,8 @@
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
                         <label class="required" for="sueldo"><i class="fas fa-dollar-sign iconos-crear"></i>Sueldo</label>
-                        <input class="form-control {{ $errors->has('sueldo') ? 'is-invalid' : '' }}" type="number" name="sueldo"
-                            id="sueldo" value="{{ old('sueldo', $puesto->sueldo )}}" required>
+                        <input class="form-control {{ $errors->has('sueldo') ? 'is-invalid' : '' }}" type="text" name="sueldo"
+                        id="teste" value="{{ old('sueldo', $puesto->sueldo )}}" required>
                         @if ($errors->has('sueldo'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('sueldo') }}
@@ -368,7 +368,7 @@
                         <select class="form-control {{ $errors->has('edad') ? 'is-invalid' : '' }}" name="edad" id="edad_rango">
                             <option value="{{ old('edad', $puesto->edad )}}" selected>Selecciona</option>
                             <option {{ old('edad', $puesto->edad) == 'Indistinto' ? 'selected' : '' }}>Indistinto</option>
-                            <option {{ old('edad', $puesto->edad) == 'Rango' ? 'selected' : '' }}>Rango</option>
+                            <option {{ old('edad', $puesto->edad) == 'Rango' ? 'selected' : '' }} value="Rango">Rango</option>
                         </select>
                     </div>
 
@@ -392,11 +392,11 @@
                     </div>
                 </div>
 
-                <div class="row col-sm-5 col-md-5 col-lg-5 d-none" id="campos_edad">
+                <div class="row col-sm-6 col-md-6 col-lg-6 d-none" id="campos_edad">
 
-                    <div class="form-group col-sm-5 col-md-5 col-lg-5">
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
                         <label class="required" for="edad_de">De</label>
-                            <input  class="form-control {{ $errors->has('edad_de') ? 'is-invalid' : '' }}" type="text" name="edad_de"
+                            <input  class="form-control {{ $errors->has('edad_de') ? 'is-invalid' : '' }}" type="number" name="edad_de"
                                 value="{{ old('edad_de', $puesto->edad_de )}}">
                             @if ($errors->has('edad_de'))
                                 <div class="invalid-feedback">
@@ -407,8 +407,8 @@
 
                     <div class="form-group col-sm-5 col-md-5 col-lg-5">
                         <label class="required" for="edad_a">A</label>
-                            <input  class="form-control {{ $errors->has('edad_a') ? 'is-invalid' : '' }}" type="text" name="edad_a"
-                              value="{{ old('edad_a', $puesto->edad_a )}}">
+                        <div style="display:flex;"> <input  class="form-control {{ $errors->has('edad_a') ? 'is-invalid' : '' }}" type="number" name="edad_a"
+                              value="{{ old('edad_a', $puesto->edad_a )}}"><strong class="mt-2">&nbsp;&nbsp;&nbsp;Años</strong></div>
                             @if ($errors->has('edad_a'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('edad_a') }}
@@ -433,6 +433,17 @@
 
 
 @section('scripts')
+
+    <script type="text/javascript">
+        $(document).on('change', '#edad_rango', function(event) {
+            if($('#edad_rango option:selected').attr('value') == 'Rango'){
+                console.log('hola');
+                $('#campos_edad').removeClass('d-none');
+            }else{
+                $('#campos_edad').addClass('d-none');
+            }
+        });
+    </script>
     <script>
         $(document).ready(function() {
             CKEDITOR.replace('descripcion', {
@@ -627,6 +638,13 @@
       let count = 0;
 
     //   renderizarTablaResponsabilidades(count);
+    // Foreach(item, index cada valor){agregar fila responsabilidad}
+    responsabilidades.forEach(element => {
+        console.log(element);
+        const formulario= {actividad}
+        agregarFilaResponsabilidad(contador,formulario);
+    });
+
 
       function agregarFilaResponsabilidad(contador,formulario) {
           console.log(formulario)
@@ -664,13 +682,15 @@
           const resultado = document.getElementById('resultado_certificado_responsabilidades').value;
           const indicador = document.getElementById('indicador_responsabilidades').value;
           const tiempoAsignado = document.getElementById('tiempo_asignado_responsabilidades').value;
-
+        // index el de la 686 se queda tal cual, y desde la 680 a la 683 colocar los valores desde mi base despues de actividad : color el valor item.y el valor
           let formulario={
               actividad,
               resultado,
               indicador,
               tiempoAsignado
           }
+
+
         agregarFilaResponsabilidad(count,formulario);
         count ++;
 
@@ -769,86 +789,101 @@
     </script>
 
 
-<script>
-    $(document).ready(function() {
-        CKEDITOR.replace('estudios', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
+    <script>
+        $(document).ready(function() {
+            CKEDITOR.replace('estudios', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
+            CKEDITOR.replace('experiencia', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
+            CKEDITOR.replace('conocimientos', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
+            CKEDITOR.replace('certificaciones', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
+            CKEDITOR.replace('conocimientos_esp', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
         });
-        CKEDITOR.replace('experiencia', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-        CKEDITOR.replace('conocimientos', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-        CKEDITOR.replace('certificaciones', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-        CKEDITOR.replace('conocimientos_esp', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-    });
 
-</script>
+    </script>
 
-<script type="text/javascript">
-    $(document).on('change', '#edad_rango', function(event) {
-        if($('#edad_rango option:selected').attr('value') == 'Rango'){
-            $('#campos_edad').removeClass('d-none');
-        }else{
-            $('#campos_edad').addClass('d-none');
-        }
-    });
-</script>
+    <script>
+        $(document).ready(function() {
+            $(function() {
+
+                new AutoNumeric('#teste', {
+
+                    decimalCharacter: ',',
+
+                    decimalCharacter: '.',
+
+                    maximumValue: '100000000000',
+
+                    minimumValue: '0.00',
+
+                    currencySymbol: '$',
+
+                    decimalPlacesOverride: 2
+
+                });
+
+            });
+        });
+
+    </script>
 
 
 
