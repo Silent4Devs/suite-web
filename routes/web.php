@@ -567,6 +567,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('planificacion-controls', 'PlanificacionControlController');
 
     // Activos
+
+    // Route::post('activos/create', 'ActivosController@save');
+    Route::get('activos/descargar', 'ActivosController@DescargaFormato')->name('activos.descargar');
     Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
     Route::resource('activos', 'ActivosController');
 
@@ -1133,6 +1136,61 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
         Route::get('two-factor/resend', 'TwoFactorController@resend')->name('twoFactor.resend');
     }
 });
+Route::group(['middleware' => ['auth', '2fa']], function () {
+     //Ruta ImportExcel
+     Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
+     Route::post('CargaAmenaza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
+     Route::post('CargaVulnerabilidad', 'SubidaExcel@Vulnerabilidad')->name('carga-vulnerabilidad');
+     Route::post('CargaUsuario', 'SubidaExcel@Usuario')->name('carga-usuario');
+     Route::post('CargaPuesto', 'SubidaExcel@Puesto')->name('carga-puesto');
+     Route::post('CargaControl', 'SubidaExcel@Control')->name('carga-control');
+     Route::post('CargaEjecutarenlace', 'SubidaExcel@Ejecutarenlace')->name('carga-ejecutarenlace');
+     Route::post('CargaTeam', 'SubidaExcel@Team')->name('carga-team');
+     Route::post('CargaEstadoIncidente', 'SubidaExcel@EstadoIncidente')->name('carga-estadoincidente');
+     Route::post('CargaRole', 'SubidaExcel@Roles')->name('carga-roles');
+     Route::post('CargaCompetencia', 'SubidaExcel@Competencia')->name('carga-competencia');
+     Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion');
+     Route::post('CargaCategoriaCapacitacion', 'SubidaExcel@CategoriaCapacitacion')->name('carga-categoriacapacitacion');
+     Route::post('CargaRevisionDireccion', 'SubidaExcel@RevisionDireccion')->name('carga-revisiondireccion');
+     Route::post('CargaAnalisisRiesgo', 'SubidaExcel@AnalisisRiesgo')->name('carga-analisis_riego');
+     Route::post('CargaPartesInteresadas', 'SubidaExcel@PartesInteresadas')->name('carga-partes_interesadas');
+     Route::post('CargaMatrizRequisitosLegales', 'SubidaExcel@MatrizRequisitosLegales')->name('carga-matriz_requisitos_legales');
+     Route::post('CargaFoda', 'SubidaExcel@Foda')->name('carga-foda');
+     Route::post('CargaDeterminacionAlcance', 'SubidaExcel@DeterminacionAlcance')->name('carga-determinacion_alcance');
+     Route::post('CargaComiteSeguridad', 'SubidaExcel@ComiteSeguridad')->name('carga-comite_seguridad');
+     Route::post('CargaAltaDireccion', 'SubidaExcel@AltaDireccion')->name('carga-alta_direccion');
+     Route::post('CargaEvidenciaRecursos', 'SubidaExcel@EvidenciaRecursos')->name('carga-evidencia_recursos');
+     Route::post('CargaPoliticaSgsi', 'SubidaExcel@PoliticaSgsi')->name('carga-politica_sgi');
+     Route::post('CargaGrupoArea', 'SubidaExcel@GrupoArea')->name('carga-grupo_area');
+     Route::post('CargaDatosArea', 'SubidaExcel@DatosArea')->name('carga-datos_area');
+     Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo_inventario');
+     Route::post('CargaEmpleado', 'SubidaExcel@Empleado')->name('carga-empleado');
+     // Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
+
+     //Ruta ExportExcel
+     Route::get('ExportAmenaza', 'ExportExcel@Amenaza')->name('descarga-amenaza');
+     Route::get('ExportVulnerabilidad', 'ExportExcel@Vulnerabilidad')->name('descarga-vulnerabilidad');
+     Route::get('ExportAnalisisRiesgo', 'ExportExcel@AnalisisRiesgo')->name('descarga-analisis_riego');
+     Route::get('ExportPartesInteresadas', 'ExportExcel@PartesInteresadas')->name('descarga-partes_interesadas');
+     Route::get('ExportMatrizRequisitosLegales', 'ExportExcel@MatrizRequisitosLegales')->name('descarga-matriz_requisitos_legales');
+     Route::get('ExportFoda', 'ExportExcel@Foda')->name('descarga-foda');
+     Route::get('ExportDeterminacionAlcance', 'ExportExcel@DeterminacionAlcance')->name('descarga-determinacion_alcance');
+     Route::get('ExportComiteSeguridad', 'ExportExcel@ComiteSeguridad')->name('descarga-comite_seguridad');
+     Route::get('ExportAltaDireccion', 'ExportExcel@AltaDireccion')->name('descarga-alta_direccion');
+     Route::get('ExportCategoriaCapacitacion', 'ExportExcel@CategoriaCapacitacion')->name('descarga-categoriacapacitacion');
+     Route::get('ExportRevisionDireccion', 'ExportExcel@RevisionDireccion')->name('descarga-revisiondireccion');
+     Route::get('ExportCategoria', 'ExportExcel@CategoriaActivo')->name('descarga-categoria');
+     Route::get('ExportPuesto', 'ExportExcel@Puesto')->name('descarga-puesto');
+     Route::get('ExportEstadoIncidente', 'ExportExcel@EstadoIncidente')->name('descarga-estadoincidente');
+     Route::post('ExportRole', 'ExportExcel@Roles')->name('descarga-roles');
+     Route::get('ExportPoliticaSgsi', 'ExportExcel@PoliticaSgsi')->name('descarga-politica_sgi');
+     Route::get('ExportGrupoArea', 'ExportExcel@GrupoArea')->name('descarga-grupo_area');
+     Route::get('ExportEmpleado', 'ExportExcel@Empleado')->name('descarga-empleado');
+     Route::get('ExportActivos', 'ExportExcel@Activos')->name('descarga-activo_inventario');
+
+    //  Route::get('ExportFormatoResponsivo', 'ActivosController@ExportFormato')->name('descarga-formato_reponsivo');
+
+});
 
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
     Route::view('sitemap', 'admin.sitemap.index');
@@ -1143,54 +1201,5 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 
     Route::view('post_register', 'auth.post_register');
 
-    //Ruta ImportExcel
-    Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
-    Route::post('CargaAmenaza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
-    Route::post('CargaVulnerabilidad', 'SubidaExcel@Vulnerabilidad')->name('carga-vulnerabilidad');
-    Route::post('CargaUsuario', 'SubidaExcel@Usuario')->name('carga-usuario');
-    Route::post('CargaPuesto', 'SubidaExcel@Puesto')->name('carga-puesto');
-    Route::post('CargaControl', 'SubidaExcel@Control')->name('carga-control');
-    Route::post('CargaEjecutarenlace', 'SubidaExcel@Ejecutarenlace')->name('carga-ejecutarenlace');
-    Route::post('CargaTeam', 'SubidaExcel@Team')->name('carga-team');
-    Route::post('CargaEstadoIncidente', 'SubidaExcel@EstadoIncidente')->name('carga-estadoincidente');
-    Route::post('CargaRole', 'SubidaExcel@Roles')->name('carga-roles');
-    Route::post('CargaCompetencia', 'SubidaExcel@Competencia')->name('carga-competencia');
-    Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion');
-    Route::post('CargaCategoriaCapacitacion', 'SubidaExcel@CategoriaCapacitacion')->name('carga-categoriacapacitacion');
-    Route::post('CargaRevisionDireccion', 'SubidaExcel@RevisionDireccion')->name('carga-revisiondireccion');
-    Route::post('CargaAnalisisRiesgo', 'SubidaExcel@AnalisisRiesgo')->name('carga-analisis_riego');
-    Route::post('CargaPartesInteresadas', 'SubidaExcel@PartesInteresadas')->name('carga-partes_interesadas');
-    Route::post('CargaMatrizRequisitosLegales', 'SubidaExcel@MatrizRequisitosLegales')->name('carga-matriz_requisitos_legales');
-    Route::post('CargaFoda', 'SubidaExcel@Foda')->name('carga-foda');
-    Route::post('CargaDeterminacionAlcance', 'SubidaExcel@DeterminacionAlcance')->name('carga-determinacion_alcance');
-    Route::post('CargaComiteSeguridad', 'SubidaExcel@ComiteSeguridad')->name('carga-comite_seguridad');
-    Route::post('CargaAltaDireccion', 'SubidaExcel@AltaDireccion')->name('carga-alta_direccion');
-    Route::post('CargaEvidenciaRecursos', 'SubidaExcel@EvidenciaRecursos')->name('carga-evidencia_recursos');
-    Route::post('CargaPoliticaSgsi', 'SubidaExcel@PoliticaSgsi')->name('carga-politica_sgi');
-    Route::post('CargaGrupoArea', 'SubidaExcel@GrupoArea')->name('carga-grupo_area');
-    Route::post('CargaDatosArea', 'SubidaExcel@DatosArea')->name('carga-datos_area');
-    Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo_inventario');
-    Route::post('CargaEmpleado', 'SubidaExcel@Empleado')->name('carga-empleado');
-    // Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
 
-    //Ruta ExportExcel
-    Route::get('ExportAmenaza', 'ExportExcel@Amenaza')->name('descarga-amenaza');
-    Route::get('ExportVulnerabilidad', 'ExportExcel@Vulnerabilidad')->name('descarga-vulnerabilidad');
-    Route::get('ExportAnalisisRiesgo', 'ExportExcel@AnalisisRiesgo')->name('descarga-analisis_riego');
-    Route::get('ExportPartesInteresadas', 'ExportExcel@PartesInteresadas')->name('descarga-partes_interesadas');
-    Route::get('ExportMatrizRequisitosLegales', 'ExportExcel@MatrizRequisitosLegales')->name('descarga-matriz_requisitos_legales');
-    Route::get('ExportFoda', 'ExportExcel@Foda')->name('descarga-foda');
-    Route::get('ExportDeterminacionAlcance', 'ExportExcel@DeterminacionAlcance')->name('descarga-determinacion_alcance');
-    Route::get('ExportComiteSeguridad', 'ExportExcel@ComiteSeguridad')->name('descarga-comite_seguridad');
-    Route::get('ExportAltaDireccion', 'ExportExcel@AltaDireccion')->name('descarga-alta_direccion');
-    Route::get('ExportCategoriaCapacitacion', 'ExportExcel@CategoriaCapacitacion')->name('descarga-categoriacapacitacion');
-    Route::get('ExportRevisionDireccion', 'ExportExcel@RevisionDireccion')->name('descarga-revisiondireccion');
-    Route::get('ExportCategoria', 'ExportExcel@CategoriaActivo')->name('descarga-categoria');
-    Route::get('ExportPuesto', 'ExportExcel@Puesto')->name('descarga-puesto');
-    Route::get('ExportEstadoIncidente', 'ExportExcel@EstadoIncidente')->name('descarga-estadoincidente');
-    Route::post('ExportRole', 'ExportExcel@Roles')->name('descarga-roles');
-    Route::get('ExportPoliticaSgsi', 'ExportExcel@PoliticaSgsi')->name('descarga-politica_sgi');
-    Route::get('ExportGrupoArea', 'ExportExcel@GrupoArea')->name('descarga-grupo_area');
-    Route::get('ExportEmpleado', 'ExportExcel@Empleado')->name('descarga-empleado');
-    Route::get('ExportActivos', 'ExportExcel@Activos')->name('descarga-activo_inventario');
 });

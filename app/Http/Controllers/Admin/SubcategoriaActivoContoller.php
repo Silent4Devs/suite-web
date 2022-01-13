@@ -85,25 +85,31 @@ class SubcategoriaActivoContoller extends Controller
         return view('admin.SubtipoActivos.edit', compact('categorias'))->with('subcategoria', $subcategoria);
     }
 
-    public function update(Request $request, SubcategoriaActivo $subcategoria)
+    public function update(Request $request,$subcategoria)
     {
-        $subcategoria->update($request->all());
+        $subcategoria = SubcategoriaActivo::find($subcategoria);
+
+            $subcategoria->update($request->all());
 
         return redirect()->route('admin.subtipoactivos.index');
     }
 
-    public function show(SubcategoriaActivo $tipos)
-    {
-        $tipos->load('team');
+    public function show(Request $request,$subcategoria)
 
-        return view('admin.SubtipoActivos.show', compact('tipos'));
+    {
+
+        $subcategoria = SubcategoriaActivo::find($subcategoria);
+        return view('admin.SubtipoActivos.show', compact('subcategoria'));
     }
 
-    public function destroy(SubcategoriaActivo $tipos)
+    public function destroy($id)
     {
-        $tipos->delete();
 
-        return back()->with('deleted', 'Registro eliminado con éxito');
+        $subcategoria = SubcategoriaActivo::find($id);
+        $subcategoria->delete();
+        $subcategoria = SubcategoriaActivo::get();
+
+        return view('admin.SubtipoActivos.index', compact('subcategoria'));
     }
 
     public function massDestroy(Request $request)
