@@ -316,24 +316,34 @@
                                             {{ html_entity_decode(strip_tags( $puestoModel->descripcion ), ENT_QUOTES, 'UTF-8')}}
                                         <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                             <span style="font-size: 17px; font-weight: bold;">
+                                                Responsabilidades</span>
+                                        </div>
+
+                                        <strong style="color:#00A57E;text-transform: uppercase">
+                                        <br>
+                                        <span style="text-transform:capitalize; font-weight:bold"></span>
+                                        <p style="text-align:justify"></p>
+
+                                        <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
+                                            <span style="font-size: 17px; font-weight: bold;">
                                                 Experiencia Profesional</span>
                                         </div>
                                         <p style="text-align:justify">
-                                            {{ $puestoModel->experiencia }}
+                                            {{ html_entity_decode(strip_tags ($puestoModel->experiencia ), ENT_QUOTES, 'UTF-8')}}
                                         </p>
                                         <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                             <span style="font-size: 17px; font-weight: bold;">
                                                 Educación Académica</span>
                                         </div>
                                         <p style="text-align:justify">
-                                            {{ $puestoModel->estudios }}
+                                            {{ html_entity_decode(strip_tags ($puestoModel->estudios ), ENT_QUOTES, 'UTF-8')}}
                                         </p>
                                         <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                             <span style="font-size: 17px; font-weight: bold;">
                                                 Conocimientos</span>
                                         </div>
                                         <p style="text-align:justify">
-                                            {{ $puestoModel->conocimientos }}
+                                            {{ html_entity_decode(strip_tags ($puestoModel->conocimientos ), ENT_QUOTES, 'UTF-8')}}
                                         </p>
                                         <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                             <span style="font-size: 17px; font-weight: bold;">
@@ -503,7 +513,7 @@
                                             <label class="ml-4">Sin registro</label>
                                             @else
                                             <div style="margin-left:28px;">
-                                                <span>{{ $puestoModel->ugar_trabajo}}</span>
+                                                <span>{{ $puestoModel->lugar_trabajo}}</span>
                                             </div>
                                             @endif
                                             <br>
