@@ -5,11 +5,11 @@
         <div class="card-body">
             @if (!$direccion_exists)
                 <div class="px-1 py-2 mx-3 mb-3 rounded shadow"
-                    style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                    style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                     <div class="row w-100">
                         <div class="text-center col-1 align-items-center d-flex justify-content-center">
                             <div class="w-100">
-                                <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                             </div>
                         </div>
                         <div class="col-11">

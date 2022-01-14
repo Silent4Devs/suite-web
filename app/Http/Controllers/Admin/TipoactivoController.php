@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyTipoactivoRequest;
-use App\Http\Requests\StoreTipoactivoRequest;
-use App\Http\Requests\UpdateTipoactivoRequest;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use Gate;
@@ -23,7 +21,7 @@ class TipoactivoController extends Controller
         abort_if(Gate::denies('configuracion_tipoactivo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Tipoactivo::select("*")->orderByDesc('id');
+            $query = Tipoactivo::select('*')->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

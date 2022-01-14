@@ -7,10 +7,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\Tipoactivo;
-use Composer\Util\Http\Response;
-use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
-use Laracasts\Flash\Flash;
 
 class SubcategoriaActivoContoller extends Controller
 {
@@ -23,7 +20,7 @@ class SubcategoriaActivoContoller extends Controller
         // dd($query);
 
         if ($request->ajax()) {
-            $query = SubcategoriaActivo::with("tipoactivo")->select("*")->orderByDesc('id');
+            $query = SubcategoriaActivo::with('tipoactivo')->select('*')->orderByDesc('id');
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -61,7 +58,6 @@ class SubcategoriaActivoContoller extends Controller
 
         $teams = Team::get();
 
-
         return view('admin.SubtipoActivos.index', compact('teams'));
     }
 
@@ -69,7 +65,7 @@ class SubcategoriaActivoContoller extends Controller
     {
         $tipos = Tipoactivo::get();
 
-        return view('admin.SubtipoActivos.create',compact('tipos'));
+        return view('admin.SubtipoActivos.create', compact('tipos'));
     }
 
     public function store(Request $request)
@@ -101,12 +97,14 @@ class SubcategoriaActivoContoller extends Controller
     public function show(Request $request,$subcategoria)
 
     {
+
         $subcategoria = SubcategoriaActivo::find($subcategoria);
         return view('admin.SubtipoActivos.show', compact('subcategoria'));
     }
 
     public function destroy($id)
     {
+
         $subcategoria = SubcategoriaActivo::find($id);
         $subcategoria->delete();
         $subcategoria = SubcategoriaActivo::get();
@@ -117,7 +115,5 @@ class SubcategoriaActivoContoller extends Controller
     public function massDestroy(Request $request)
     {
         SubcategoriaActivo::whereIn('id', request('ids'))->delete();
-
-
     }
 }

@@ -22,9 +22,9 @@ class CrearTablaSubcategoriaActivos extends Migration
             $table->softDeletes();
         });
 
-            Schema::table('tipoactivos', function (Blueprint $table) {
+        Schema::table('tipoactivos', function (Blueprint $table) {
             $table->dropColumn(['subtipo']);
-            });
+        });
     }
 
     /**
