@@ -98,6 +98,7 @@ class MinutasaltadireccionController extends Controller
         abort_if(Gate::denies('minutasaltadireccion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsablereunions = Empleado::select('id', 'name', 'foto')->with('area')->get();
         $esta_vinculado = auth()->user()->empleado ? true : false;
+        // dd($esta_vinculado);
 
         return view('admin.minutasaltadireccions.create', compact('responsablereunions', 'esta_vinculado'));
     }
