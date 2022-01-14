@@ -372,7 +372,7 @@
 
 @section('content')
 
-    <h5 class="col-12 titulo_general_funcion">Organigrama de {{ $organizacion }} </h5>
+    <h5 class="col-12 titulo_general_funcion" style="font-size:20px; font-weight: bold;">Organigrama de {{ $organizacion }} </h5>
 
 
 
