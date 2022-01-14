@@ -67,7 +67,7 @@
                 width: 98%;
                 left: 0;
                 line-height: 134px;
-                background: #1bb0b0;
+                background: #345183;
                 color: white;
                 font-weight: 500;
             }
@@ -97,7 +97,7 @@
         @endphp
 
         @if (!$isPersonal)
-            <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                 PERFILES DE PUESTO
             </div>
         @else
@@ -147,7 +147,7 @@
                             <p class="text-muted"><i class="fas fa-filter mr-2"></i>BÚSQUEDA ESPECÍFICA</p>
                         </div>
                         <div class="col-12">
-                            <p class="text-muted" style="border-bottom: 2px solid #1BB0B0">CERTIFICACIONES</p>
+                            <p class="text-muted" style="border-bottom: 2px solid #345183">CERTIFICACIONES</p>
                         </div>
                         <div class="col-12">
                             <label class="text-muted" for=""><i class="fas fa-award mr-2"></i>Certificación</label>
@@ -155,14 +155,14 @@
                                 placeholder="Certificación" wire:model.debounce.800ms="certificacion">
                         </div>
                         <div class="col-12 mt-3">
-                            <p class="text-muted" style="border-bottom: 2px solid #1BB0B0">CURSOS / DIPLOMADOS</p>
+                            <p class="text-muted" style="border-bottom: 2px solid #345183">CURSOS / DIPLOMADOS</p>
                         </div>
                         <div class="col-12">
                             <label class="text-muted" for=""><i class="fas fa-chalkboard-teacher mr-2"></i>Curso</label>
                             <input type="text" class="form-control" placeholder="Curso" wire:model.debounce.800ms="curso">
                         </div> --}}
                         {{-- <div class="col-12 mt-3">
-                            <p class="text-muted" style="border-bottom: 2px solid #1BB0B0">EXPERIENCIA</p>
+                            <p class="text-muted" style="border-bottom: 2px solid #345183">EXPERIENCIA</p>
                         </div>
                         <div class="col-12 mt-2">
                             <label class="text-muted" for=""><i class="fas fa-briefcase mr-2"></i>Puesto</label>
@@ -219,12 +219,12 @@
                 @else
 
                     <div class="px-1 py-2 mx-3 rounded shadow"
-                        style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                        style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
 
                         <div class="row w-100">
                             <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                 <div class="w-100">
-                                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                    <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                 </div>
                             </div>
                             <div class="col-11">
@@ -316,24 +316,34 @@
                                             {{ html_entity_decode(strip_tags( $puestoModel->descripcion ), ENT_QUOTES, 'UTF-8')}}
                                         <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                             <span style="font-size: 17px; font-weight: bold;">
+                                                Responsabilidades</span>
+                                        </div>
+
+                                        <strong style="color:#00A57E;text-transform: uppercase">
+                                        <br>
+                                        <span style="text-transform:capitalize; font-weight:bold"></span>
+                                        <p style="text-align:justify"></p>
+
+                                        <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
+                                            <span style="font-size: 17px; font-weight: bold;">
                                                 Experiencia Profesional</span>
                                         </div>
                                         <p style="text-align:justify">
-                                            {{ $puestoModel->experiencia }}
+                                            {{ html_entity_decode(strip_tags ($puestoModel->experiencia ), ENT_QUOTES, 'UTF-8')}}
                                         </p>
                                         <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                             <span style="font-size: 17px; font-weight: bold;">
                                                 Educación Académica</span>
                                         </div>
                                         <p style="text-align:justify">
-                                            {{ $puestoModel->estudios }}
+                                            {{ html_entity_decode(strip_tags ($puestoModel->estudios ), ENT_QUOTES, 'UTF-8')}}
                                         </p>
                                         <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                             <span style="font-size: 17px; font-weight: bold;">
                                                 Conocimientos</span>
                                         </div>
                                         <p style="text-align:justify">
-                                            {{ $puestoModel->conocimientos }}
+                                            {{ html_entity_decode(strip_tags ($puestoModel->conocimientos ), ENT_QUOTES, 'UTF-8')}}
                                         </p>
                                         <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                             <span style="font-size: 17px; font-weight: bold;">
@@ -503,7 +513,7 @@
                                             <label class="ml-4">Sin registro</label>
                                             @else
                                             <div style="margin-left:28px;">
-                                                <span>{{ $puestoModel->ugar_trabajo}}</span>
+                                                <span>{{ $puestoModel->lugar_trabajo}}</span>
                                             </div>
                                             @endif
                                             <br>

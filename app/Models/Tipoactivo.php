@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -8,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Tipoactivo
+ * Class Tipoactivo.
  *
  * @property int $id
  * @property character varying $tipo
@@ -21,39 +20,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Collection|SubcategoriaActivo[] $subcategoria_activos
  * @property Collection|Marca[] $marcas
  * @property Collection|Activo[] $activos
- *
- * @package App\Models
  */
 class Tipoactivo extends Model
 {
-	use SoftDeletes;
-	protected $table = 'tipoactivos';
+    use SoftDeletes;
+    protected $table = 'tipoactivos';
 
-	protected $casts = [
-		'tipo' => 'string',
-	];
+    protected $casts = [
+        'tipo' => 'string',
+    ];
 
-	protected $fillable = [
-		'tipo',
-	];
+    protected $fillable = [
+        'tipo',
+    ];
 
-	public function team()
-	{
-		return $this->belongsTo(Team::class);
-	}
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 
-	public function subcategoria_activos()
-	{
-		return $this->hasMany(SubcategoriaActivo::class, 'categoria_id');
-	}
+    public function subcategoria_activos()
+    {
+        return $this->hasMany(SubcategoriaActivo::class, 'categoria_id');
+    }
 
-	public function marcas()
-	{
-		return $this->hasMany(Marca::class, 'activo_id');
-	}
+    public function marcas()
+    {
+        return $this->hasMany(Marca::class, 'activo_id');
+    }
 
-	public function activos()
-	{
-		return $this->hasMany(Activo::class, 'subtipo_id');
-	}
+    public function activos()
+    {
+        return $this->hasMany(Activo::class, 'subtipo_id');
+    }
 }
