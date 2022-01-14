@@ -26,6 +26,7 @@ use App\Models\PlanImplementacion;
 use App\Models\Proceso;
 use App\Models\Quejas;
 use App\Models\Recurso;
+use App\Models\Puesto;
 use App\Models\RevisionDocumento;
 use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluacionRepuesta;
@@ -975,5 +976,12 @@ class InicioUsuarioController extends Controller
         ]);
 
         return redirect()->route('admin.inicio-Usuario.index');
+    }
+
+    public function perfilPuesto(){
+        $puesto_id = auth()->user()->empleado->puesto_id;
+        $puesto = Puesto::find($puesto_id);
+
+        return view('admin.inicio-Usuario.perfil-puesto');
     }
 }

@@ -23,7 +23,7 @@
     @endif
 
     <div class="caja_form">
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login') }}" style="height:513px;">
             @csrf
 
             @php
@@ -66,10 +66,10 @@
             @if(Route::has('password.request'))
                 <a class="btn" href="{{ route('password.request') }}" style="margin-top:20px; color: #006DDB; font-size: 12px;">¿Olvidó su contraseña?</a>
              @endif
-            <div class=" mt-2">
+            {{-- <div class=" mt-2">
                 <a class="btn_registrate" href="{{ route('register') }}" style="margin-top:52px;">Crear Cuenta</a>
-            </div>
-            <a class="btn" href="#" style="margin-top: 50px; color: #006DDB; font-size: 12px;" id="btn_modal_aviso">Aviso de privacidad </a>
+            </div> --}}
+            <a class="btn" href="#" style="margin-top: 20px; color: #006DDB; font-size: 12px;" id="btn_modal_aviso">Aviso de privacidad </a>
         </form>
     </div>
 </div>
@@ -118,8 +118,8 @@
     }
     #btn_closed_modal{
         position: absolute;
-        top: 20px;
-        right: 20px;
+        top: 10px;
+        right: 10px;
         font-size: 18pt;
         color: #bbb;
         cursor: pointer;
@@ -127,20 +127,24 @@
     #btn_closed_modal:hover{
         color: #aaa;
     }
+
+    .modal_body p{
+        text-align: justify;
+    }
 </style>
 <div id="modal_aviso">
     <div class="contenido_modal card">
         <i class="fas fa-times" id="btn_closed_modal"></i>
         <div class="modal_header">
             <img src="{{ asset('img/silent4business.png') }}">
-            <h4>SILENT4BUSINESS. S.A. DE C.V.</h4>
-            <img src="{{ asset('img/logo_policromatico.png') }}" style="height: 80px;">
+            <h4>SILENT4BUSINESS S.A. DE C.V.</h4>
+            <img src="{{ asset('img/logo_policromatico.png') }}" style="height: 85px;">
         </div>
         <hr>
         <div class="modal_body">
             <p>AVISO DE PRIVACIDAD</p>
 
-            <p>SILENT4BUSINESS. S.A. DE C.V.</p>
+            <p>SILENT4BUSINESS S.A. DE C.V.</p>
 
             <p>La protección de sus datos personales es muy importante para SILENT4BUSINESS, S.A. DE C.V., (en adelante referido como “S4B”) con domicilio en Insurgentes Sur No. 2453, Cuarto Piso, Colonia San Ángel, Delegación Álvaro Obregón, C.P. 01109 en la Ciudad de México, y página web www.silent4business.com, quien pone a su disposición el presente AVISO DE PRIVACIDAD, el cual tiene como finalidad informarle el tipo de datos personales (los “Datos Personales”) que en su caso podríamos recabar de usted, cómo los usamos, manejamos y aprovechamos; en cumplimiento a lo establecido en la Ley Federal de Protección de Datos Personales en Posesión de Particulares y su reglamento (la “Ley”).</p>
 
@@ -216,7 +220,7 @@
 
 
 
-{{ \TawkTo::widgetCode('https://tawk.to/chat/5fa08d15520b4b7986a0a19b/default') }}
+{{-- {{ \TawkTo::widgetCode('https://tawk.to/chat/5fa08d15520b4b7986a0a19b/default') }} --}}
 
 @endsection
 

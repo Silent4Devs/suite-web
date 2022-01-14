@@ -203,6 +203,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('inicioUsuario/actividades/recuperar/{id}', 'InicioUsuarioController@recuperarActividades')->name('inicio-Usuario.actividades.recuperar');
     Route::get('inicioUsuario/actividades/archivo', 'InicioUsuarioController@archivoActividades')->name('inicio-Usuario.acctividades.archivo');
 
+    Route::get('inicioUsuario/perfil-puesto', 'InicioUsuarioController@perfilPuesto')->name('inicio-Usuario.perfil-puesto');
+
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
     Route::post('desk/{seguridad}/analisis_seguridad-update', 'DeskController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');

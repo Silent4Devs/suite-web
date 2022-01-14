@@ -12,7 +12,7 @@
         <div class="marca">
             <img src="{{ asset('img/logo_policromatico.png') }}"><br>
             <p class="by">By <strong>Silent</strong>for<strong>Business</strong></p>
-            <p class="bienvenidos"><strong>Bienvenidos al</strong> Sistema de Gestión Normativa</p>
+            <p class="bienvenidos"><strong>Bienvenidos al</strong> Sistema Integral de Gestión Empresarial</p>
         </div>
     </div>
 
@@ -117,6 +117,6 @@
 
 
 
-{{ \TawkTo::widgetCode('https://tawk.to/chat/5fa08d15520b4b7986a0a19b/default') }}
+{{-- {{ \TawkTo::widgetCode('https://tawk.to/chat/5fa08d15520b4b7986a0a19b/default') }} --}}
 
 @endsection

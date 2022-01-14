@@ -12,7 +12,7 @@
         <div class="marca">
             <img src="{{ asset('img/logo_policromatico.png') }}"><br>
             <p class="by">By <strong>Silent</strong>for<strong>Business</strong></p>
-            <p class="bienvenidos"><strong>Bienvenidos al</strong> Sistema de Gestión Normativa</p>
+            <p class="bienvenidos"><strong>Bienvenidos al</strong> Sistema Integral de Gestión Empresarial</p>
         </div>
     </div>
 
@@ -23,7 +23,7 @@
     @endif
 
     <div class="caja_form">
-        <form method="POST" action="{{ route('password.email') }}">
+        <form method="POST" action="{{ route('password.email') }}" style="height:591px;">
             @csrf
 
             @php
@@ -39,7 +39,7 @@
             <img src="{{ asset($logotipo) }}" class="logo_silent">
             <h3 class="mt-5" style="color: #345183; font-weight: normal; font-size:24px;">Recuperar Contraseña</h3>
 
-            <p class="text-muted mt-4">Introduce tu correo electrónico registrado y recibirás un correo con las instrucciones para recuperar tu contraseña...</p>
+            <p class="text-muted mt-4">Introduce tu correo electrónico registrado y recibirás un correo con las instrucciones para recuperar tu contraseña.</p>
 
             <div class="input-group mt-5">
                 <div class="input-group-prepend">
@@ -58,7 +58,9 @@
                 <button type="submit" class="btn_enviar" style="background-color: #3c4b64;">Recuperar contraseña</button>
             </div>
 
-            <p class="mt-4">En caso de requerir asesoria tecnica contactar a soporte tecnico al siguiente correo <a href="mailto:contacto@silent4business.com">contacto@silent4business.com</a></p>
+            <p class="mt-4">En caso de requerir asesoría, contactar a soporte técnico al siguiente correo:
+            <br><br> 
+                <a href="mailto:contacto@silent4business.com">contacto@silent4business.com</a></p>
         </form>
 
     </div>
@@ -73,6 +75,6 @@
 
 
 
-{{ \TawkTo::widgetCode('https://tawk.to/chat/5fa08d15520b4b7986a0a19b/default') }}
+{{-- {{ \TawkTo::widgetCode('https://tawk.to/chat/5fa08d15520b4b7986a0a19b/default') }} --}}
 
 @endsection
