@@ -6,9 +6,14 @@ use App\Models\Empleado;
 use App\Models\EvaluacionObjetivo;
 use App\Models\VariablesObjetivosseguridad;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 
 class ObjetivosSeguridadComponent extends Component
 {
+
+    use LivewireAlert;
+
     public $nombre;
     public $description;
     public $formula;
@@ -56,6 +61,7 @@ class ObjetivosSeguridadComponent extends Component
             'customFields' => $this->customFields,
             'evaluaciones' => $evaluaciones,
         ]);
+
     }
 
     public function store()
@@ -80,7 +86,6 @@ class ObjetivosSeguridadComponent extends Component
             'id_objetivo' => $this->objetivos->id,
         ]);
         $this->default();
-
         $this->alert('success', 'Registro añadido!');
     }
 

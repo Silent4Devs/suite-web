@@ -165,7 +165,7 @@
                             <a class="mr-2 btn btn-sm btn-editar" title="Agregar Conductas" href="${urlBtnEditarConductas}"><i class="fas fa-chalkboard-teacher"></i></a>
                                 <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-editar" title="Visualizar" href="${urlBtnVisualizar}"><i class="fas fa-eye"></i></a>
-                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" data-action="Eliminar" data-url="${urlBtnEliminar}"><i class="fas fa-trash-alt"></i></button>
                             `;
                             return botones;
                         }
@@ -180,6 +180,92 @@
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
             };
             let table = $('.tblCompetencias').DataTable(dtOverrideGlobals);
+            document.querySelector('.datatable-fix').addEventListener('click', function(e) {
+                let target = e.target;
+                if (e.target.tagName == 'I') {
+                    target = e.target.closest('button');
+                }
+                if (target.getAttribute('data-action') == 'Eliminar') {
+                    const url = target.getAttribute('data-url');
+                    Swal.fire({
+                        title: '¿Desea eliminar esta competencia?',
+                        html: '',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Eliminar',
+                        cancelButtonText: 'Cancelar',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "DELETE",
+                                url: url,
+                                data: {
+                                    _token: "{{ csrf_token() }}"
+                                },
+                                beforeSend: function() {
+                                    let timerInterval
+                                    Swal.fire({
+                                        title: 'Eliminando!',
+                                        html: 'Estamos eliminando el registro, espere un momento.',
+                                        timer: 2000,
+                                        timerProgressBar: true,
+                                        didOpen: () => {
+                                            Swal.showLoading()
+                                            timerInterval = setInterval(
+                                            () => {
+                                                    const content = Swal
+                                                        .getHtmlContainer()
+                                                    if (content) {
+                                                        const b =
+                                                            content
+                                                            .querySelector(
+                                                                'b')
+                                                        if (b) {
+                                                            b.textContent =
+                                                                Swal
+                                                                .getTimerLeft()
+                                                        }
+                                                    }
+                                                }, 100)
+                                        },
+                                        willClose: () => {
+                                            clearInterval(timerInterval)
+                                        }
+                                    })
+
+                                },
+                                success: function(response) {
+                                    if (response.deleted) {
+                                        Swal.fire(
+                                            '¡Registro Eliminado!',
+                                            // 'Las áreas relacionadas quedarán sin grupo asignado',
+                                            'success'
+                                        )
+                                        table.ajax.reload();
+                                    } else {
+                                        Swal.fire(
+                                            '¡No se eliminó el registro!',
+                                            'Ocurrió un error',
+                                            'error'
+                                        )
+                                    }
+
+                                },
+                                error: function(err) {
+                                    Swal.fire(
+                                        'Ocurrió un error',
+                                        `${err.message}`,
+                                        'error'
+                                    )
+                                }
+                            });
+
+                        }
+                    });
+                }
+            })
         });
     </script>
 @endsection
