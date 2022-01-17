@@ -32,5 +32,4 @@ class CategoriaSubcategoria extends Component
             $this->subcategorias = SubcategoriaActivo::select('id', 'subcategoria')->where('categoria_id', $value)->get();
         }
     }
-
 }

@@ -1194,7 +1194,6 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     Route::get('ExportActivos', 'ExportExcel@Activos')->name('descarga-activo_inventario');
 
     //  Route::get('ExportFormatoResponsivo', 'ActivosController@ExportFormato')->name('descarga-formato_reponsivo');
-
 });
 
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {

@@ -202,8 +202,7 @@ class AnalisisBrechaController extends Controller
      * @param  \App\Models\AnalisisBrecha  $analisisBrecha
      * @return \Illuminate\Http\Response
      */
-
-    public function destroy ($AnalisisBrecha)
+    public function destroy($AnalisisBrecha)
     {
         //  abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $AnalisisBrecha = AnalisisBrecha::find($AnalisisBrecha);

@@ -51,17 +51,20 @@ class RevisionDocumentoController extends Controller
             $revisiones = RevisionDocumento::with(['documento' => function ($query) {
                 $query->with('revisor', 'macroproceso', 'elaborador', 'aprobador', 'responsable', 'proceso');
             }])->where('empleado_id', auth()->user()->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
+
             return $revisiones;
         } else {
             return [];
         }
     }
+
     public function obtenerDocumentosDeboAprobarArchivo()
     {
         if (auth()->user()->empleado) {
             $revisiones = RevisionDocumento::with(['documento' => function ($query) {
                 $query->with('revisor', 'macroproceso', 'elaborador', 'aprobador', 'responsable', 'proceso');
             }])->where('empleado_id', auth()->user()->empleado->id)->where('archivado', RevisionDocumento::ARCHIVADO)->get();
+
             return $revisiones;
         } else {
             return [];

@@ -656,6 +656,7 @@ class DocumentosController extends Controller
 
         // $documentos = Documento::where('estatus', Documento::PUBLICADO)->get();
         $documentos = Documento::get();
+
         return view('admin.documentos.list-published', compact('documentos', 'organizacion', 'macroprocesosAndProcesos'));
     }
 }

@@ -620,6 +620,7 @@ class RecursosController extends Controller
             return response()->json(['estatus' => 500, 'mensaje' => 'No se han podido enviar las invitaciones ya que la fecha límite de confirmación para la capacitación fue:' . $recurso->fecha_limite_name]);
         }
     }
+
     public function guardarAsistenciaCapacitacion(Request $request, Recurso $recurso)
     {
         $empleado = $request->empleado;
