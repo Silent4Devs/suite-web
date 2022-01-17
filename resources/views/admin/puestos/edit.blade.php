@@ -437,7 +437,7 @@
     <script type="text/javascript">
         $(document).on('change', '#edad_rango', function(event) {
             if($('#edad_rango option:selected').attr('value') == 'Rango'){
-                console.log('hola');
+                // console.log('hola');
                 $('#campos_edad').removeClass('d-none');
             }else{
                 $('#campos_edad').addClass('d-none');
@@ -508,7 +508,7 @@
         function inputsToMoneyFormat() {
             $("input[data-type='currency']").on({
                 init: function() {
-                    console.log(this);
+                    // console.log(this);
                 },
                 keyup: function() {
                     formatCurrency($(this));
@@ -582,23 +582,37 @@
 
 <script>
     $(document).ready(function () {
-    const lenguajes=@json($idis);
+    const lenguajes=@json($puesto->language);
     console.log(lenguajes);
-      var count = 1;
+      var anadir = 1;
 
-      AgregarFilaLenguaje(count);
+        lenguajes.forEach((lengua,inx) => {
+        // console.log(lengua);
+        let formleng={
+              id:lengua.id,
+              languajeIdioma:lengua.id_language,
+              porcentaje:lengua.porcentaje,
+              nivel:lengua.nivel,
+          }
+        AgregarFilaLenguaje(inx,formleng);
+        anadir ++;
+    });
 
-      function AgregarFilaLenguaje(number) {
+
+    //   AgregarFilaLenguaje(count,formleng);
+
+      function AgregarFilaLenguaje(count,formleng){
         html = `<tr>
             <td class="col-4" >
-            <select  class="workingSelect form-control" name="id_language[${count}][language]" >`
+            <input type="hidden" name="id_language[${count}][id]" value="${formleng.id?formleng.id:0}">
+            <select  class="workingSelect form-control" name="id_language[${count}][language]" id="lenguaje_lenguaje">`
             lenguajes.forEach(lenguaje=>{
                 html+=`<option value="${lenguaje.id}">${lenguaje.idioma}</option>`
             })
             html+=`</select>
             </td >
-            <td class="col-2" ><input type="text" name="id_language[${count}][porcentaje]" class="form-control" /></td>
-            <td class="col-4"><select class="workingSelect form-control" name="id_language[${count}][nivel]" id="working_day"><option value="">Seleccione una opción</option>
+            <td class="col-2" ><input type="text" name="id_language[${count}][porcentaje]" value="${formleng.porcentaje}" id="porcentaje_lenguaje"  class="form-control" /></td>
+            <td class="col-4"><select class="workingSelect form-control" name="id_language[${count}][nivel]" value="${formleng.nivel}" id="nivel_lenguaje" ><option value="">Seleccione una opción</option>
             <option  value="Basico" >Básico</option>
             <option  value="Intermedio" >Intermedio</option>
             <option  value="Avanzado" >Avanzado</option>
@@ -606,24 +620,39 @@
             `;
 
 
-        if (number > 1) {
+        if (count > 0) {
           html +=
             '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Eliminar</button></td></tr>';
-          $("#user_table tbody").append(html);
+        //   $("#user_table tbody").append(html);
         } else {
           html +=
             '<td col-2><button type="button" name="add" id="add" class="btn btn-success">Agregar</button></td></tr>';
-          $("#user_table tbody").html(html);
+        //   $("#user_table tbody").append(html);
         }
+        document.querySelector('#user_table tbody').innerHTML +=html
       }
 
+
+
       $(document).on("click", "#add", function () {
-        count++;
-        AgregarFilaLenguaje(count);
+
+          const languajeIdioma = document.getElementById('lenguaje_lenguaje').value;
+          const porcentaje = document.getElementById('porcentaje_lenguaje').value;
+          const nivel = document.getElementById('nivel_lenguaje').value;
+
+          let formleng={
+              languajeIdioma,
+              porcentaje,
+              nivel
+          }
+
+
+        AgregarFilaLenguaje(count,formleng);
+        anadir++;
       });
 
       $(document).on("click", ".remove", function () {
-        count--;
+        anadir--;
         $(this).closest("tr").remove();
       });
 
@@ -633,21 +662,28 @@
 
 <script>
     $(document).ready(function () {
-    const responsabilidades=@json($responsabilidades);
-    console.log(responsabilidades);
+    const responsabilidades=@json($puesto->responsabilidades);
+    // console.log(responsabilidades);
       let count = 0;
 
     //   renderizarTablaResponsabilidades(count);
     // Foreach(item, index cada valor){agregar fila responsabilidad}
-    responsabilidades.forEach(element => {
-        console.log(element);
-        const formulario= {actividad}
-        agregarFilaResponsabilidad(contador,formulario);
+    responsabilidades.forEach((responsabilidad,index) => {
+        // console.log(responsabilidad);
+        let formulario={
+              id:responsabilidad.id,
+              actividad:responsabilidad.actividad,
+              resultado:responsabilidad.resultado,
+              indicador:responsabilidad.indicador,
+              tiempoAsignado:responsabilidad.tiempo_asignado
+          }
+        agregarFilaResponsabilidad(index,formulario);
+        count ++;
     });
 
 
       function agregarFilaResponsabilidad(contador,formulario) {
-          console.log(formulario)
+        //   console.log(formulario)
           const contenedorResponsabilidades=document.getElementById('contenedor_responsabilidades');
           let html=`
           <tr>
@@ -707,13 +743,33 @@
 
 <script>
     $(document).ready(function () {
-    const certificados=@json($certificados);
-    console.log(certificados);
+    //$certificados el nombre de la relacion definida en mi modelo
+    const certificados=@json($puesto->certificados);
+    // console.log(certificados);
     let sumar = 0;
 
 
+    // ForEach: Va traer mis datos de la base
+    //dentro de mi let formulario va ir
+    // 1. nombre asignado de cada campo en la const
+    // 2.variable asignada dentro del forEach (certificado)
+    //3. Nombre del campo en la base de datos
+    //El primer campo que se agrega dentro de mi let es mi id que trae los datos
+    certificados.forEach((certificado,ind) => {
+        // console.log(certificado);
+        let certificacion={
+              id:certificado.id,
+              nombreCertificado:certificado.nombre,
+              requisito:certificado.requisito,
+
+          }
+        agregarFilaCertificados(ind,certificacion) ;
+        sumar ++;
+
+    });
+
     function agregarFilaCertificados(contable,certificacion) {
-          console.log(certificacion)
+        //   console.log(certificacion)
           const contenedorCertificados=document.getElementById('contenedor_certificados');
           let html=`
           <tr>
