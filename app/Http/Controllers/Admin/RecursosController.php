@@ -211,10 +211,12 @@ class RecursosController extends Controller
 
     public function validateRequestParticipantes($request)
     {
-        $request->validate([
-            'tipo_de_grupo' => 'required',
-            'participantes' => 'required',
-        ]);
+        if ($request->tipo_guardado != 'Borrador') {
+            $request->validate([
+                'tipo_de_grupo' => 'required',
+                'participantes' => 'required',
+            ]);
+        }
     }
 
     public function edit(Recurso $recurso)
@@ -618,7 +620,18 @@ class RecursosController extends Controller
             return response()->json(['estatus' => 500, 'mensaje' => 'No se han podido enviar las invitaciones ya que la fecha límite de confirmación para la capacitación fue:' . $recurso->fecha_limite_name]);
         }
     }
+    public function guardarAsistenciaCapacitacion(Request $request, Recurso $recurso)
+    {
+        $empleado = $request->empleado;
+        $asistio = $request->asistio == 'true' ? true : false;
 
+        $recurso->empleados()->syncWithoutDetaching([$empleado => ['asistio' => $asistio]]);
+        if ($asistio) {
+            return response()->json(['estatus' => 200, 'mensaje' => 'Asistencia Almacenada']);
+        } else {
+            return response()->json(['estatus' => 201, 'mensaje' => 'Asistencia Removida']);
+        }
+    }
     // public function eliminarParticipante(Request $request)
     // {
     //     $int_recurso = intval($request->id_recurso);

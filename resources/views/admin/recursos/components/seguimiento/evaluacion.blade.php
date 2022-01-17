@@ -5,112 +5,65 @@
         font-size: 11pt;
     }
 
-    #comentariosEvaluacion ul,
-    #comentariosEvaluacion li {
-        list-style: none;
-        padding: 0;
+    .titulo_acordeon_eventos {
+        all: unset;
+        padding: 10px;
+        font-size: 16px;
+        color: #747474;
     }
 
-    #comentariosEvaluacion .container {
+    .acordeon_separado {
+        margin-top: 15px;
+    }
+
+    .titulos_acordeon_i_name_i {
+        cursor: pointer;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        padding: 0 1rem;
-        background: linear-gradient(45deg, #209cff, #68e0cf);
-        padding: 3rem 0;
-    }
-
-    #comentariosEvaluacion .wrapper {
-        background: #eaf6ff;
-        padding: 2rem;
-        border-radius: 15px;
-    }
-
-    #comentariosEvaluacion h1 {
-        font-size: 1.1rem;
-        font-family: sans-serif;
-    }
-
-    #comentariosEvaluacion .sessions {
-        margin-top: 2rem;
-        border-radius: 12px;
         position: relative;
     }
 
-    #comentariosEvaluacion li {
-        padding-bottom: 1.5rem;
-        border-left: 1px solid #abaaed;
-        position: relative;
-        padding-left: 20px;
-        margin-left: 10px;
-    }
-
-    #comentariosEvaluacion li:last-child {
-        border: 0px;
-        padding-bottom: 0;
-    }
-
-    #comentariosEvaluacion li:before {
-        content: '';
-        width: 15px;
-        height: 15px;
-        background: white;
-        border: 1px solid #4e5ed3;
-        box-shadow: 3px 3px 0px #bab5f8;
-        box-shadow: 3px 3px 0px #bab5f8;
-        border-radius: 50%;
-        position: absolute;
-        left: -10px;
-        top: 0px;
-    }
-
-    #comentariosEvaluacion .time {
-        color: #2a2839;
-        font-family: 'Poppins', sans-serif;
-        font-weight: 500;
-    }
-
-    @media screen and (min-width: 601px) {
-        #comentariosEvaluacion .time {
-            font-size: 0.9rem;
-        }
-    }
-
-    @media screen and (max-width: 600px) {
-        #comentariosEvaluacion .time {
-            margin-bottom: 0.3rem;
-            font-size: 0.85rem;
-        }
-    }
-
-    #comentariosEvaluacion p {
-        color: #4f4f4f;
-        font-family: sans-serif;
-        line-height: 1.5;
-        margin-top: 0.4rem;
-    }
-
-    @media screen and (max-width: 600px) {
-        #comentariosEvaluacion p {
-            font-size: 0.9rem;
-        }
+    .titulos_acordeon_i_name_i span {
+        margin-right: 20px;
     }
 
 </style>
+@include('admin.recursos.components.seguimiento.css.comentarios')
 <div class="row mt-4 align-items-center">
-    <div class="col-12" x-data="{show:true}">
-        <div>
-            <span>RADAR</span><span x-on:click="show=!show"><i class="fas fa-minus"
-                    x-bind:class="show?'fa-minus':'fa-plus'"></i></span>
+    @php
+        $empleados = $recurso->empleados;
+        $contador = 0;
+        foreach ($recurso->empleados as $empleado) {
+            if (!is_null($empleado->pivot->evaluacion)) {
+                $contador++;
+            }
+        }
+    @endphp
+    <p class="pl-3"><strong><i class="fas fa-info-circle mr-2"></i>Total de evaluaciones realizadas:
+            {{ $contador }}</strong></p>
+    <div class="container" x-data="{show:true}">
+        <div class="acordeon_separado">
+            <p x-on:click="show=!show" class="titulos_acordeon_i_name_i">
+                <span>
+                    <i class="fas fa-chart-area mr-2"></i>RADAR
+                </span>
+                <i class="fas" x-bind:class="show?'fa-chevron-up':'fa-chevron-down'"></i>
+            </p>
         </div>
-        <canvas x-show="show" x-transition id="radarChart" width="400" height="400"></canvas>
+        <div x-bind:style="show?'height: 400px !important':''">
+            <canvas x-show="show" x-transition.delay.50ms id="radarChart" width="400" height="400"></canvas>
+        </div>
     </div>
-    <div class="col-12" x-data="{show:false}">
-        <div>
-            <span>GENERAL</span><span x-on:click="show=!show"><i class="fas fa-minus"
-                    x-bind:class="show?'fa-minus':'fa-plus'"></i></span>
+    <div class="container" x-data="{show:false}">
+        <div class="acordeon_separado">
+            <p x-on:click="show=!show" class="titulos_acordeon_i_name_i"><span>
+                    <i class="far fa-chart-bar mr-2"></i>GENERAL
+                </span>
+                <i class="fas" x-bind:class="show?'fa-chevron-up':'fa-chevron-down'"></i>
+            </p>
         </div>
-        <div class="row" x-show="show" x-transition>
+        <div class="row" x-show="show" x-transition.delay.50ms>
             <div class="col-12 titulo-seccion">
                 CONTENIDO
             </div>
@@ -168,12 +121,16 @@
         </div>
     </div>
     <div id="comentariosEvaluacion" class="container" x-data="{show:false}">
-        <div>
-            <span>COMENTARIOS</span><span x-on:click="show=!show"><i class="fas fa-minus"
-                    x-bind:class="show?'fa-minus':'fa-plus'"></i></span>
+        <div class="acordeon_separado">
+            <p x-on:click="show=!show" class="titulos_acordeon_i_name_i">
+                <span>
+                    <i class="far fa-comments mr-2"></i>COMENTARIOS
+                </span>
+                <i class="fas" x-bind:class="show?'fa-chevron-up':'fa-chevron-down'"></i>
+            </p>
         </div>
-        <div class="wrapper" x-show="show" x-transition>
-            <h1> Comentarios de la Evaluación</h1>
+        <div class="wrapper" x-show="show" x-transition.delay.50ms>
+            {{-- <h1> Comentarios de la Evaluación</h1> --}}
             <ul class="sessions" id="comentarios">
             </ul>
         </div>
@@ -237,8 +194,8 @@
             console.log(comentario.porqueSeRecomiendaElCurso.trim() != null);
             if (comentario.comentariosAcercaInstructores != null && comentario.porqueSeRecomiendaElCurso !=
                 null) {
+                // <p class="text-muted"><i class="fas fa-user-secret"></i> Anónimo ${index+1}</p>
                 comentariosContenedor.innerHTML += `
-                    <p class="text-muted"><i class="fas fa-user-secret"></i> Anónimo ${index+1}</p>
                     ${comentario.comentariosAcercaInstructores.trim()!= null&&comentario.comentariosAcercaInstructores.trim()!= "" ? `
                         <li>
                             <div class="time">Comentarios acerca de los instructores</div>
@@ -283,6 +240,8 @@
             },
             options: {
                 indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: true

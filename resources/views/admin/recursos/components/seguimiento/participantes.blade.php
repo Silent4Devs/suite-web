@@ -1,9 +1,14 @@
 <div class="row mt-4 align-items-center">
-    <div class="datatable-fix col-12">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
+
+    <div class=" col-12">
         <table class="table w-100" id="tblParticipantes">
             <thead>
                 <tr>
-                    <th scope="col" style="width:50%">Empleado</th>
+                    @if ($recurso->ya_finalizo)
+                        <th style="text-align: center !important;">Asistencia</th>
+                    @endif
+                    <th scope="col" style="width:40%">Empleado</th>
                     <th scope="col" style="width:20%">Area</th>
                     <th scope="col" style="width:20%">Estatus</th>
                     <th scope="col" style="width:20%">Calificación</th>
@@ -12,28 +17,6 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- @foreach ($recurso->empleados as $empleado)
-                    <tr>
-                        <td style="width:50%">
-                            <img src="{{ $empleado->avatar_ruta }}" class="img-empleado-tabla" />
-                            {{ $empleado->name }}
-                        </td>
-                        <td style="width:20%">{{ $empleado->area->area }}</td>
-                        @if ($empleado->pivot->es_aceptada == null)
-                            <td style="width:20%"><i class="text-muted far fa-question-circle mr-2"></i> Pendiente</td>
-                        @elseif($empleado->pivot->es_aceptada == true)
-                            <td style="width:20%"><i class="text-success far fa-check-circle mr-2"></i> Aceptada</td>
-                        @elseif($empleado->pivot->es_aceptada == false)
-                            <td style="width:20%"><i class="text-danger far fa-times-circle mr-2"></i> Rechazada</td>
-                        @endif
-                        @if (\Carbon\Carbon::now()->isAfter(\Carbon\Carbon::parse($recurso->fecha_fin)))
-                            <td style="width:10%">
-                                <i class="fas fa-graduation-cap btnModal" style="cursor: pointer;" data-toggle="modal"
-                                    data-target="#modalParticipante" data-empleado="{{ json_encode($empleado) }}"></i>
-                            </td>
-                        @endif
-                    </tr>
-                @endforeach --}}
             </tbody>
         </table>
     </div>
