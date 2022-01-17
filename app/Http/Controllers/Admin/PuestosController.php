@@ -272,8 +272,6 @@ class PuestosController extends Controller
 
     public function saveOrUpdateLanguage(Request $request, $puesto)
     {
-
-
         $id = $puesto->id;
         // dd($id);
         $i = 0;
@@ -306,8 +304,6 @@ class PuestosController extends Controller
             }
         }
     }
-
-
 
     public function deleteLanguage(Request $request, $language)
     {
@@ -354,7 +350,6 @@ class PuestosController extends Controller
     public function saveUpdateCertificados($certificados, $puesto)
     {
         if (!is_null($certificados)) {
-
             foreach ($certificados as $certificado) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (PuestosCertificado::find($certificado['id'] == null)) {

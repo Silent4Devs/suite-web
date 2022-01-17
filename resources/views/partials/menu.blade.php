@@ -33,7 +33,7 @@
         @can('mi_perfil_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.inicio-Usuario.index') }}#datos"
-                    class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') ||request()->is('admin/competencias/*/cv') ? 'active' : '' }}">
+                    class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') || request()->is('admin/competencias/*/cv') ? 'active' : '' }}">
                     <i class="bi bi-file-person iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Mi perfil</font>
                 </a>
@@ -110,7 +110,16 @@
             </li>
         @endcan --}}
         @can('documentos_publicados_respositorio_access')
-            <li
+            @can('documentos_publicados_lista_access')
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route('admin.documentos.publicados') }}"
+                        class="c-sidebar-nav-link {{ request()->is('admin/publicados') || request()->is('admin/publicados*') ? 'active' : '' }}">
+                        <i class="bi bi-files iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca"> Lista de Documentos </font>
+                    </a>
+                </li>
+            @endcan
+            {{-- <li
                 class="c-sidebar-nav-dropdown {{ request()->is('admin/carpeta*') ? 'c-show' : '' }} {{ request()->is('admin/crear-documentos*') ? 'c-show' : '' }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="bi bi-folder iconos_menu letra_blanca"></i>
@@ -136,7 +145,7 @@
                         </li>
                     @endcan
                 </ul>
-            </li>
+            </li> --}}
         @endcan
         <li class="c-sidebar-nav-item">
             <a href="{{ route('admin.planes-de-accion.index') }}"
@@ -230,7 +239,7 @@
                 @endcan --}}
                 <li class="c-sidebar-nav-item">
                     <a href="{{ route('admin.capital-humano.index') }}"
-                        class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*') || request()->is('admin/expedientes-profesionales/*')? 'active' : '' }}">
+                        class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*') || request()->is('admin/expedientes-profesionales/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-file iconos_menu letra_blanca"></i>
                         <font class="letra_blanca" style="margin-left:10px;"> Capital Humano Menú </font>
                     </a>
@@ -316,7 +325,7 @@
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.calendario-oficial.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('calendario-oficial') || request()->is('calendario-oficial/*') ? 'active' : '' }}">
-                                <i class="ml-2 fas fa-drum iconos_menu letra_blanca"style="font-size:12pt;"></i>
+                                <i class="ml-2 fas fa-drum iconos_menu letra_blanca" style="font-size:12pt;"></i>
                                 <font class="letra_blanca" style="margin-left:10px;">Dias Festivos</font>
                             </a>
                         </li>
@@ -384,13 +393,35 @@
             </ul>
         </li> --}}
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') || request()->is('admin/analisisdebrechas') || request()->is('admin/planTrabajoBase') || request()->is('admin/partes-interesadas')
-            || request()->is('admin/matriz-requisito-legales') || request()->is('admin/entendimiento-organizacions') || request()->is('admin/alcance-sgsis') || request()->is('admin/comiteseguridads')
-            || request()->is('admin/minutasaltadireccions') || request()->is('admin/evidencias-sgsis') || request()->is('admin/politica-sgsis') || request()->is('admin/paneldeclaracion')
-            || request()->is('admin/objetivosseguridads')  || request()->is('admin/concientizacion-sgis') || request()->is('admin/material-sgsis') || request()->is('admin/comunicacion-sgis')
-            || request()->is('admin/control-accesos') || request()->is('admin/declaracion-aplicabilidad') || request()->is('admin/planificacion-controls') || request()->is('admin/tratamiento-riesgos')
-            || request()->is('admin/indicadores-sgsis') || request()->is('admin/auditoria-anuals') || request()->is('admin/plan-auditoria')
-            || request()->is('admin/revision-direccions')  || request()->is('admin/auditoria-internas') || request()->is('admin/accion-correctivas') || request()->is('admin/inicioUsuario/reportes/mejoras')? 'active' : '' }}"
+            <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') ||
+            request()->is('admin/analisisdebrechas') ||
+            request()->is('admin/planTrabajoBase') ||
+            request()->is('admin/partes-interesadas') ||
+            request()->is('admin/matriz-requisito-legales') ||
+            request()->is('admin/entendimiento-organizacions') ||
+            request()->is('admin/alcance-sgsis') ||
+            request()->is('admin/comiteseguridads') ||
+            request()->is('admin/minutasaltadireccions') ||
+            request()->is('admin/evidencias-sgsis') ||
+            request()->is('admin/politica-sgsis') ||
+            request()->is('admin/paneldeclaracion') ||
+            request()->is('admin/objetivosseguridads') ||
+            request()->is('admin/concientizacion-sgis') ||
+            request()->is('admin/material-sgsis') ||
+            request()->is('admin/comunicacion-sgis') ||
+            request()->is('admin/control-accesos') ||
+            request()->is('admin/declaracion-aplicabilidad') ||
+            request()->is('admin/planificacion-controls') ||
+            request()->is('admin/tratamiento-riesgos') ||
+            request()->is('admin/indicadores-sgsis') ||
+            request()->is('admin/auditoria-anuals') ||
+            request()->is('admin/plan-auditoria') ||
+            request()->is('admin/revision-direccions') ||
+            request()->is('admin/auditoria-internas') ||
+            request()->is('admin/accion-correctivas') ||
+            request()->is('admin/inicioUsuario/reportes/mejoras')
+                ? 'active'
+                : '' }}"
                 href="{{ route('admin.iso27001.index') }}#contexto">
                 <i class="bi bi-globe2 iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> ISO 27001 </font>
@@ -852,16 +883,16 @@
             </li>
         @endcan
         {{-- @can('') este acceso no corresponde --}}
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route('admin.configurar-soporte.index') }}"
-                    class="c-sidebar-nav-link {{ request()->is('admin/configurar-soporte') || request()->is('admin/configurar-soporte/*') ? 'active' : '' }}">
-                    <i class="bi bi-gear iconos_menu letra_blanca"></i>
-                    <font class="letra_blanca">Configurar Soporte</font>
-                </a>
-            </li>
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.configurar-soporte.index') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/configurar-soporte') || request()->is('admin/configurar-soporte/*') ? 'active' : '' }}">
+                <i class="bi bi-gear iconos_menu letra_blanca"></i>
+                <font class="letra_blanca">Configurar Soporte</font>
+            </a>
+        </li>
         {{-- @endcan --}}
 
- {{-- este acceso no corresponde --}}
+        {{-- este acceso no corresponde --}}
         {{-- @can('configuracion_procesos_access')
             <li class="c-sidebar-nav-dropdown btn_bajar_scroll">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -942,7 +973,7 @@
             </li>
         @endcan --}}
         <style type="text/css">
-            .botones_g_s a{
+            .botones_g_s a {
                 display: inline-block;
                 padding: 0px 25px;
                 font-size: 15pt;
@@ -952,9 +983,11 @@
                 border: 1px solid #E1E1E1;
 
             }
+
         </style>
         <div class="text-center botones_g_s" style="margin-top: 80px;">
-            <a href="{{ route('admin.soporte') }}" title="Soporte" style="margin-right:14px;"><i class="bi bi-headset"></i></a>
+            <a href="{{ route('admin.soporte') }}" title="Soporte" style="margin-right:14px;"><i
+                    class="bi bi-headset"></i></a>
             <a href="{{ route('admin.glosarios.render') }}" title="Glosario"><i class="bi bi-book"></i></a>
         </div>
 

@@ -85,26 +85,24 @@ class SubcategoriaActivoContoller extends Controller
         return view('admin.SubtipoActivos.edit', compact('categorias'))->with('subcategoria', $subcategoria);
     }
 
-    public function update(Request $request,$subcategoria)
+    public function update(Request $request, $subcategoria)
     {
         $subcategoria = SubcategoriaActivo::find($subcategoria);
 
-            $subcategoria->update($request->all());
+        $subcategoria->update($request->all());
 
         return redirect()->route('admin.subtipoactivos.index');
     }
 
-    public function show(Request $request,$subcategoria)
-
+    public function show(Request $request, $subcategoria)
     {
-
         $subcategoria = SubcategoriaActivo::find($subcategoria);
+
         return view('admin.SubtipoActivos.show', compact('subcategoria'));
     }
 
     public function destroy($id)
     {
-
         $subcategoria = SubcategoriaActivo::find($id);
         $subcategoria->delete();
         $subcategoria = SubcategoriaActivo::get();

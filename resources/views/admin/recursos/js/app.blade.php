@@ -23,6 +23,7 @@
                 const keyTab = this.getAttribute('data-type');
                 if (keyTab == 'participantes') {
                     limpiarErrores();
+                    mostrarLoader();
                     const url = "{{ route('admin.recursos.validateForm') }}";
                     const formData = new FormData(document.getElementById(
                         'form-informacion-general'));
@@ -38,6 +39,7 @@
                     const data = await response.json();
                     console.log(data.errors);
                     if (data.errors) {
+                        ocultarLoader();
                         $.each(data.errors, function(indexInArray,
                             valueOfElement) {
                             document.querySelector(`span.${indexInArray}_error`)
@@ -46,11 +48,13 @@
                         });
                     }
                     if (data.isValid) {
+                        ocultarLoader();
                         $(this).tab('show');
                         localStorage.setItem('menu-capacitaciones-active', 'participantes');
                     }
                 } else if (keyTab == 'invitaciones') {
                     limpiarErrores();
+                    mostrarLoader();
                     const url = "{{ route('admin.recursos.validateForm') }}";
                     const formData = new FormData(document.getElementById(
                         'form-informacion-general'));
@@ -66,6 +70,7 @@
                     const data = await response.json();
                     console.log(data.errors);
                     if (data.errors) {
+                        ocultarLoader();
                         $.each(data.errors, function(indexInArray,
                             valueOfElement) {
                             document.querySelector(`span.${indexInArray}_error`)
@@ -74,6 +79,7 @@
                         });
                     }
                     if (data.isValid) {
+                        ocultarLoader();
                         $(this).tab('show');
                         localStorage.setItem('menu-capacitaciones-active', 'participantes');
                     }
@@ -102,109 +108,149 @@
             })
         }
 
+        function mostrarLoader() {
+            const loaderCapacitaciones = document.getElementById('loaderCapacitaciones');
+            loaderCapacitaciones.style.display = 'flex';
+        }
+
+        function ocultarLoader() {
+            const loaderCapacitaciones = document.getElementById('loaderCapacitaciones');
+            loaderCapacitaciones.style.display = 'none';
+        }
+
         function guardarCapacitacion() {
-            const btnGuardarRecurso = document.getElementById('btnGuardarRecurso');
-            btnGuardarRecurso.addEventListener('click', async function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                if (!hayParticipantes()) {
-                    Swal.fire({
-                        title: '¡No has agregado participantes!',
-                        text: "¿Quieres agregarlos después?",
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Agregar Después',
-                        cancelButtonText: 'Permanecer'
-                    }).then(async (result) => {
-                        if (result.isConfirmed) {
-                            const response = await guardarEnElServidor();
-                            console.log(response);
-                            if (response.status == "success") {
-                                Swal.fire(
-                                    '¡Excelente!',
-                                    'Capacitación Creada',
-                                    'success'
-                                )
-                                setTimeout(() => {
-                                    window.location.href =
-                                        "{{ route('admin.recursos.index') }}";
-                                }, 1500);
-                            } else {
-                                toastr.error('Ocurrió un error');
+            const btnGuardarRecurso = document.querySelector('.btnGuardarRecurso');
+            // const btnGuardarRecurso = document.getElementById('btnGuardarRecurso');
+            const tabContent = document.getElementById('nav-tabContent');
+            tabContent.addEventListener('click', async function(e) {
+                if (e.target.classList.contains('btnGuardarRecurso')) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    if (!hayParticipantes()) {
+                        Swal.fire({
+                            title: '¡No has agregado participantes!',
+                            text: "¿Quieres agregarlos después?",
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Agregar Después',
+                            cancelButtonText: 'Permanecer'
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                mostrarLoader();
+                                const response = await guardarEnElServidor();
+                                console.log(response);
+                                if (response.status == "success") {
+                                    Swal.fire(
+                                        '¡Excelente!',
+                                        'Capacitación Creada',
+                                        'success'
+                                    )
+                                    setTimeout(() => {
+                                        window.location.href =
+                                            "{{ route('admin.recursos.index') }}";
+                                        ocultarLoader();
+                                    }, 1500);
+                                } else {
+                                    toastr.error('Ocurrió un error');
+                                    setTimeout(() => {
+                                        window.location.href =
+                                            "{{ route('admin.recursos.index') }}";
+                                        ocultarLoader();
+                                    }, 1500);
+                                }
                             }
-                        }
-                    })
-                } else {
-                    const response = await guardarEnElServidor();
-                    console.log(response);
-                    if (response.status == "success") {
-                        Swal.fire(
-                            '¡Excelente!',
-                            'Capacitación Creada',
-                            'success'
-                        )
-                        setTimeout(() => {
-                            window.location.href =
-                                "{{ route('admin.recursos.index') }}";
-                        }, 1500);
+                        })
                     } else {
-                        toastr.error('Ocurrió un error');
+                        mostrarLoader();
+                        const response = await guardarEnElServidor();
+                        if (response.status == "success") {
+                            Swal.fire(
+                                '¡Excelente!',
+                                'Capacitación Creada',
+                                'success'
+                            )
+                            setTimeout(() => {
+                                window.location.href =
+                                    "{{ route('admin.recursos.index') }}";
+                                ocultarLoader();
+                            }, 1500);
+                        } else {
+                            toastr.error('Ocurrió un error');
+                            setTimeout(() => {
+                                window.location.href =
+                                    "{{ route('admin.recursos.index') }}";
+                                ocultarLoader();
+                            }, 1500);
+                        }
                     }
                 }
             })
         }
 
         function draftCapacitacion() {
-            const btnGuardarDraftRecurso = document.getElementById('btnGuardarDraftRecurso');
-            btnGuardarDraftRecurso.addEventListener('click', async function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                if (!hayParticipantes()) {
-                    Swal.fire({
-                        title: '¡No has agregado participantes!',
-                        text: "¿Quieres agregarlos después?",
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Agregar Después',
-                        cancelButtonText: 'Permanecer'
-                    }).then(async (result) => {
-                        if (result.isConfirmed) {
-                            const response = await guardarEnElServidor('Borrador');
-                            console.log(response);
-                            if (response.status == "success") {
-                                Swal.fire(
-                                    '¡Excelente!',
-                                    'Capacitación Creada',
-                                    'success'
-                                )
-                                setTimeout(() => {
-                                    window.location.href =
-                                        "{{ route('admin.recursos.index') }}";
-                                }, 1500);
-                            } else {
-                                toastr.error('Ocurrió un error');
+            // const btnGuardarDraftRecurso = document.getElementById('btnGuardarDraftRecurso');
+            const btnGuardarDraftRecurso = document.querySelector('.btnGuardarDraftRecurso');
+            const tabContent = document.getElementById('nav-tabContent');
+            tabContent.addEventListener('click', async function(e) {
+                if (e.target.classList.contains('btnGuardarDraftRecurso')) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    if (!hayParticipantes()) {
+                        Swal.fire({
+                            title: '¡No has agregado participantes!',
+                            text: "¿Quieres agregarlos después?",
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Agregar Después',
+                            cancelButtonText: 'Permanecer'
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                mostrarLoader();
+                                const response = await guardarEnElServidor('Borrador');
+                                console.log(response);
+                                if (response.status == "success") {
+                                    Swal.fire(
+                                        '¡Excelente!',
+                                        'Capacitación Creada',
+                                        'success'
+                                    )
+                                    setTimeout(() => {
+                                        window.location.href =
+                                            "{{ route('admin.recursos.index') }}";
+                                    }, 1500);
+                                    ocultarLoader();
+                                } else {
+                                    toastr.error('Ocurrió un error');
+                                    ocultarLoader();
+                                }
                             }
-                        }
-                    })
-                } else {
-                    const response = await guardarEnElServidor('Borrador');
-                    console.log(response);
-                    if (response.status == "success") {
-                        Swal.fire(
-                            '¡Excelente!',
-                            'Capacitación Creada',
-                            'success'
-                        )
-                        setTimeout(() => {
-                            window.location.href =
-                                "{{ route('admin.recursos.index') }}";
-                        }, 1500);
+                        })
                     } else {
-                        toastr.error('Ocurrió un error');
+                        mostrarLoader();
+                        const response = await guardarEnElServidor('Borrador');
+                        if (response.status == "success") {
+                            Swal.fire(
+                                '¡Excelente!',
+                                'Capacitación Creada',
+                                'success'
+                            )
+                            setTimeout(() => {
+                                window.location.href =
+                                    "{{ route('admin.recursos.index') }}";
+                            }, 1500);
+                            ocultarLoader();
+                        } else {
+                            toastr.error('Ocurrió un error');
+                            setTimeout(() => {
+                                window.location.href =
+                                    "{{ route('admin.recursos.index') }}";
+                            }, 1500);
+                            ocultarLoader();
+                        }
                     }
                 }
             })

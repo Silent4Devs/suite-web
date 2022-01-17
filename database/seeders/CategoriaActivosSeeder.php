@@ -7,7 +7,6 @@ use Illuminate\Database\Seeder;
 
 class CategoriaActivosSeeder extends Seeder
 {
-
     public function run()
     {
         $categoria = [
@@ -20,6 +19,6 @@ class CategoriaActivosSeeder extends Seeder
             ['tipo' => 'Controles de Entorno'],
         ];
 
-            Tipoactivo::insert($categoria);
+        Tipoactivo::insert($categoria);
     }
 }

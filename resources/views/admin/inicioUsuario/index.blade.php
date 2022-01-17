@@ -5,9 +5,11 @@
         body {
             background-color: #fff;
         }
-        html{
+
+        html {
             overflow-y: scroll !important;
         }
+
         .info-personal .caja_img_perfil {
             border-radius: 100px;
             height: 100px;
@@ -57,25 +59,25 @@
         }
 
         /*.caja_botones_secciones a {
-                position: relative;
-            }
+                                            position: relative;
+                                        }
 
-            .caja_botones_secciones a span {
-                position: absolute;
-                right: 0;
-                top: 0;
-                width: 20px;
-                height: 20px;
-                background-color: #FF5252;
-                color: #fff;
-                border-radius: 50px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-top: -5px;
-                margin-right: -5px;
-                z-index: 1;
-            }*/
+                                        .caja_botones_secciones a span {
+                                            position: absolute;
+                                            right: 0;
+                                            top: 0;
+                                            width: 20px;
+                                            height: 20px;
+                                            background-color: #FF5252;
+                                            color: #fff;
+                                            border-radius: 50px;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            margin-top: -5px;
+                                            margin-right: -5px;
+                                            z-index: 1;
+                                        }*/
 
         .caja_botones_menu a {
             outline: none;
@@ -220,13 +222,11 @@
                     </a> --}}
                     <a href="#" id="b_capacitaciones" onclick="almacenarMenuEnLocalStorage('capacitaciones')"
                         data-tabs="s_capacitaciones">
-                        @if ($contador_recursos)
-                            <span class="indicador_numero">{{ $contador_recursos }}</span>
-                        @endif
+                        <span class="indicador_numero" id="contadorDeCapacitaciones"></span>
                         <i class="bi bi-mortarboard"></i>Capacitaciones
                     </a>
                     <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')" data-tabs="s_reportes">
-                    <i class="bi bi-clipboard-check"></i>
+                        <i class="bi bi-clipboard-check"></i>
                         Reportes</a>
                 </div>
             @endif
@@ -270,7 +270,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             seleccionarMenuAlIniciar();
-
+            const btnActividades = document.getElementById('b_actividades');
+            btnActividades.addEventListener('click', (e) => {
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust();
+            })
         })
 
         function seleccionarMenuAlIniciar() {
