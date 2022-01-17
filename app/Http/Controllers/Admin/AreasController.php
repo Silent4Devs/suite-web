@@ -200,6 +200,7 @@ class AreasController extends Controller
             'id_grupo' =>  $request->id_grupo,
             'id_reporta' =>  $request->id_reporta,
             'descripcion' =>  $request->descripcion,
+            'empleados_id' =>  $request->empleados_id,
             'foto_area' => $image,
 
         ]);
