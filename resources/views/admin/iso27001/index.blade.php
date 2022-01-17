@@ -172,13 +172,33 @@
 
     </style>
 
+
+
+
+    <div class="modal fade" id="modal_guia_general" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div data-dismiss="modal">Close</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     {{-- {{ Breadcrumbs::render('admin.iso27001.index') }} --}}
     <div style="display:flex; justify-content:space-between;">
         <h5 class="titulo_general_funcion">ISO - 27001 - Seguridad de la Información</h5>
+        <div class="d-flex">
+            <a href="#" class="btn btn-secundario" style="width: 160px !important;" data-toggle="modal" data-target="#modal_guia_general">
+                &nbsp;GUÍA&nbsp;GENERAL
+            </a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="{{ route('admin.home') }}" class="btn btn-success">
                 <i class="fas fa-chart-pie mr-2"></i>
-                Dashboard
+                DASHBOARD
             </a>
+        </div>
     </div>
     <div class="mt-5 card">
         <div class="card-body">

@@ -935,6 +935,22 @@
             background-color:#FCFCFC;
         }
 
+        /*iconos de alertas azules*/
+        .w-100 .bi.bi-info.mr-3{
+            margin-right: 0px !important;
+            margin-left: 20px !important;
+            font-size: 20px;
+        }
+
+        .nav.nav-tabs{
+            margin-bottom: 30px !important;
+        }
+
+        .nav.nav-tabs .nav-link.active{
+            background-color: #345183 !important;
+            color: #fff !important;
+        }
+
     </style>
 
     @yield('styles')
