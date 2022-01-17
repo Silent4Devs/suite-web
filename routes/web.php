@@ -134,6 +134,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'store' => 'ev360-competencias.store',
         'show' => 'ev360-competencias.show',
         'update' => 'ev360-competencias.update',
+        'destroy' => 'ev360-competencias.destroy',
     ])->except(['edit']);
 
     Route::post('recursos-humanos/evaluacion-360/conductas/store', 'RH\EV360ConductasController@store')->name('ev360-conductas.store');

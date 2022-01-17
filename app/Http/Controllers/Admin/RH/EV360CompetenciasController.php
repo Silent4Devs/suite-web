@@ -212,4 +212,11 @@ class EV360CompetenciasController extends Controller
 
         return $nivel;
     }
+    public function destroy(Competencia $competencia)
+    {
+        // $competencia = Competencia::find($competencia);
+        $competencia->delete();
+
+        return response()->json(['deleted'=> true]);
+    }
 }
