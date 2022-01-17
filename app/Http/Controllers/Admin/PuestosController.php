@@ -233,6 +233,7 @@ class PuestosController extends Controller
         // $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
         $this->saveOrUpdateLanguage($request, $puesto);
         $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
+
         $this->saveUpdateCertificados($request->certificados, $puesto);
 
         return redirect()->route('admin.puestos.index');
@@ -244,7 +245,12 @@ class PuestosController extends Controller
 
         $puesto->load('team');
 
-        return view('admin.puestos.show', compact('puesto'));
+        $idiomas= PuestoIdiomaPorcentajePivot::get();
+        $competencias = Competencia::get();
+        $responsabilidades = PuestoResponsabilidade::get();
+        $certificados = PuestosCertificado::get();
+
+        return view('admin.puestos.show', compact('puesto','idiomas','competencias','responsabilidades','certificados'));
     }
 
     public function destroy(Puesto $puesto)
@@ -272,7 +278,6 @@ class PuestosController extends Controller
 
     public function saveOrUpdateLanguage(Request $request, $puesto)
     {
-
 
         $id = $puesto->id;
         // dd($id);
@@ -319,10 +324,12 @@ class PuestosController extends Controller
 
     public function saveUpdateResponsabilidades($responsabilidades, $puesto)
     {
+
         if (!is_null($responsabilidades)) {
             foreach ($responsabilidades as $responsabilidad) {
+                // dd($responsabilidad);
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
-                if (PuestoResponsabilidade::find($responsabilidad['id'] == null)) {
+                if (PuestoResponsabilidade::find($responsabilidad['id']) !=null) {
                     PuestoResponsabilidade::find($responsabilidad['id'])->update([
                         'tiempo_asignado' => $responsabilidad['tiempo_asignado'],
                         'indicador' =>  $responsabilidad['indicador'],
@@ -357,7 +364,7 @@ class PuestosController extends Controller
 
             foreach ($certificados as $certificado) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
-                if (PuestosCertificado::find($certificado['id'] == null)) {
+                if (PuestosCertificado::find($certificado['id']) !=null) {
                     PuestosCertificado::find($certificado['id'])->update([
                         'nombre' => $certificado['nombre'],
                         'requisito' =>  $certificado['requisito'],
