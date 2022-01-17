@@ -559,20 +559,10 @@
     {{ Breadcrumbs::render('areas-render') }}
 
 
-
+    <h5 class="col-12 titulo_general_funcion" style="font-size:20px;">Áreas de {{ $organizacion->empresa ? $organizacion->empresa : 'La Organización' }}</h5>
     <!-- component -->
     <div class="w-full px-6 py-4 mb-16 bg-white rounded-lg shadow-lg contenido_blanco">
-        <div class="card-body">
-            @if ($organizacion)
-                <h3 class="mb-2 text-center text-white"
-                    style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de
-                        {{ $organizacion->empresa }}</strong></h3>
-            @else
-                <h3 class="mb-2 text-center text-white"
-                    style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Áreas de la
-                        organización</strong></h3>
-            @endif
-        </div>
+        
         @if (!$areasTree)
             <div class="px-4 py-3 text-blue-900 bg-blue-100 border-t-4 border-blue-500 rounded-b shadow-md" role="alert">
                 <div class="row w-100">
@@ -637,7 +627,7 @@
 
 
                         {{-- <div id="exportData"></div> --}}
-                        <div class="contenedor-areas">
+                        <div class="contenedor-areas grupos_funciones">
                             <i class="fas fa-caret-right btn_grupos" title="Ver grupos"
                                 style="position:absolute; top:0; font-size:25pt; cursor:pointer;"></i>
                             <div class="row caja_grupos">

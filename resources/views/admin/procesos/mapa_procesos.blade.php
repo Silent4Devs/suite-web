@@ -360,11 +360,7 @@
         </div>
     @endif
     <h5 class="col-12 titulo_general_funcion">Mapa de Procesos de {{ $organizacion->empresa }}</h5>
-    <div class="card-body">
-
-    </div>
-
-
+    
     <div class="col-12 text-right">
         <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-file-csv"
                 style="font-size:18pt;"></i></a>

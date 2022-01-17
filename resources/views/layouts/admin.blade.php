@@ -221,7 +221,7 @@
             height: 35px;
             background-color: #345183 !important;
             color: #fff !important;
-            border-radius: 100px;
+            border-radius: 2px;
             border: none !important;
         }
 
@@ -242,7 +242,7 @@
             height: 35px;
             background-color: #aaa !important;
             color: #fff !important;
-            border-radius: 100px;
+            border-radius: 2px;
             border: none !important;
             transition: 0.2s;
             display: inline-block;
@@ -1181,8 +1181,7 @@
 
     <script>
         window.Laravel.user = {!! json_encode([
-    'user' => auth()->check() ? auth()->user()->id : null,
-]) !!};
+        'user' => auth()->check() ? auth()->user()->id : null,]) !!};
     </script>
     <script src="//unpkg.com/alpinejs" defer></script>
 

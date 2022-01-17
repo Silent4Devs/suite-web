@@ -110,7 +110,7 @@
             </li>
         @endcan --}}
         @can('documentos_publicados_respositorio_access')
-            <li
+            {{-- <li
                 class="c-sidebar-nav-dropdown {{ request()->is('admin/carpeta*') ? 'c-show' : '' }} {{ request()->is('admin/crear-documentos*') ? 'c-show' : '' }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="bi bi-folder iconos_menu letra_blanca"></i>
@@ -136,6 +136,14 @@
                         </li>
                     @endcan
                 </ul>
+            </li> --}}
+
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.documentos.publicados') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/publicados') || request()->is('admin/publicados*') ? 'active' : '' }}">
+                    <i class="bi bi-folder iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca">  Documentos </font>
+                </a>
             </li>
         @endcan
         <li class="c-sidebar-nav-item">
@@ -400,7 +408,7 @@
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->is('admin/iso9001') ? 'active' : '' }}"
                 href="{{ route('admin.iso9001.index') }}#contexto">
-                <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
+                <i class="bi bi-globe2 iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> ISO 9001 </font>
             </a>
         </li>
