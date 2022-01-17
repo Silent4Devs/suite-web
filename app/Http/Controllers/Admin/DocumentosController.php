@@ -10,6 +10,7 @@ use App\Models\Empleado;
 use App\Models\HistorialRevisionDocumento;
 use App\Models\HistorialVersionesDocumento;
 use App\Models\Macroproceso;
+use App\Models\Organizacion;
 use App\Models\Proceso;
 use App\Models\RevisionDocumento;
 use App\Models\VistaDocumento;
@@ -78,7 +79,7 @@ class DocumentosController extends Controller
             'aprobo_id' => 'required|exists:empleados,id',
             'reviso_id' => 'required|exists:empleados,id',
             'responsable_id' => 'required|exists:empleados,id',
-            'version'=>'required|numeric',
+            'version' => 'required|numeric',
         ], [
             'codigo.unique' => 'El código de documento ya ha sido tomado',
             'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
@@ -642,8 +643,20 @@ class DocumentosController extends Controller
 
     public function publicados()
     {
-        $documentos = Documento::where('estatus', Documento::PUBLICADO)->get();
+        $existsOrganizacion = Organizacion::first()->exists();
 
-        return view('admin.documentos.list-published', compact('documentos'));
+        if ($existsOrganizacion) {
+            $organizacion = Organizacion::first()->empresa;
+        } else {
+            $organizacion = 'La Organización';
+        }
+        $macroprocesos = Macroproceso::pluck('nombre')->toArray();
+        $procesos = Proceso::pluck('nombre')->toArray();
+        $macroprocesosAndProcesos = array_merge($macroprocesos, $procesos);
+
+        // $documentos = Documento::where('estatus', Documento::PUBLICADO)->get();
+        $documentos = Documento::get();
+
+        return view('admin.documentos.list-published', compact('documentos', 'organizacion', 'macroprocesosAndProcesos'));
     }
 }

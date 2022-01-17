@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Iso9001\PlanImplementacion as PlanItemIplementacion9001;
 use App\Models\PlanImplementacion;
-use App\Models\Iso9001\PlanImplementacion AS PlanItemIplementacion9001;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
