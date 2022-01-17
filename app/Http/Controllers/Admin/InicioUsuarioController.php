@@ -24,6 +24,7 @@ use App\Models\Organizacion;
 use App\Models\PanelInicioRule;
 use App\Models\PlanImplementacion;
 use App\Models\Proceso;
+use App\Models\Puesto;
 use App\Models\Quejas;
 use App\Models\Recurso;
 use App\Models\RevisionDocumento;
@@ -215,11 +216,9 @@ class InicioUsuarioController extends Controller
             $activos = false;
             $cumpleaños_usuario = null;
             $cumpleaños_felicitados_like_contador = collect();
-            $cumpleaños_felicitados_like_usuarios =  collect();
+            $cumpleaños_felicitados_like_usuarios = collect();
             $cumpleaños_felicitados_comentarios = collect();
         }
-
-
 
         $organizacion = Organizacion::first();
 
@@ -977,5 +976,13 @@ class InicioUsuarioController extends Controller
         ]);
 
         return redirect()->route('admin.inicio-Usuario.index');
+    }
+
+    public function perfilPuesto()
+    {
+        $puesto_id = auth()->user()->empleado->puesto_id;
+        $puesto = Puesto::find($puesto_id);
+
+        return view('admin.inicio-Usuario.perfil-puesto');
     }
 }

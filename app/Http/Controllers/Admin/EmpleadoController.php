@@ -1182,15 +1182,24 @@ class EmpleadoController extends Controller
             $nombre = $request->nombre;
             if ($nombre != null) {
                 $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
+                // dd(compact('usuarios'));
+                return compact('usuarios');
+            }
+        }
+        /*
+        if ($request->ajax()) {
+            $nombre = $request->nombre;
+            if ($nombre != null) {
+                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
                 $lista = "<ul class='list-group' id='empleados-lista'>";
                 foreach ($usuarios as $usuario) {
-                    $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'><i class='mr-2 fas fa-user-circle'></i>" . $usuario->name . '</button>';
+                    $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.")' > <i class='mr-2 fas fa-user-circle'></i>" . $usuario->name . '</button>';
                 }
                 $lista .= '</ul>';
-
                 return $lista;
             }
         }
+        */
     }
 
     public function getListaEmpleados(Request $request)
@@ -1260,13 +1269,13 @@ class EmpleadoController extends Controller
         $empleadoID = auth()->user()->empleado->id;
         $empleado = Empleado::find($empleadoID);
         $request->validate([
-            'name' => 'required|string|max:255',
+            // 'name' => 'required|string|max:255',
             // 'email'=>'required|email|max:255',
             'cumpleaños' => 'required|date',
             'telefono_movil' => 'nullable|string|max:255',
         ]);
         $empleado->update([
-            'name' => $request->name,
+            // 'name' => $request->name,
             // 'email'=>$request->email,
             'mostrar_telefono' => $request->has('mostrar_telefono'),
             'cumpleaños' => $request->cumpleaños,

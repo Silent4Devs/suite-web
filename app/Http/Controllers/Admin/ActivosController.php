@@ -2,28 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivoRequest;
-use App\Http\Requests\StoreActivoRequest;
 use App\Http\Requests\UpdateActivoRequest;
 use App\Models\Activo;
 use App\Models\Area;
-use App\Models\DocumentoActivo;
 use App\Models\Empleado;
 use App\Models\Marca;
 use App\Models\Modelo;
 use App\Models\Sede;
+use App\Models\SubcategoriaActivo;
+use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\User;
-use App\Models\SubcategoriaActivo;
-use Defuse\Crypto\File;
-use finfo;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use PhpOffice\PhpWord\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -158,13 +153,11 @@ class ActivosController extends Controller
 
         $modelos = Modelo::get();
 
-        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos','subcategorias'));
+        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'subcategorias'));
     }
 
     public function store(Request $request)
     {
-
-
         $data = [];
 
         if ($request->hasfile('documentos_relacionados')) {
@@ -204,18 +197,16 @@ class ActivosController extends Controller
 
         ]);
 
+        $file = $request->file('documento');
 
-       $file = $request->file('documento');
+        //obtenemos el nombre del archivo
+        $nombre = $file->getClientOriginalName();
+        //    dd($nombre);
 
-       //obtenemos el nombre del archivo
-       $nombre = $file->getClientOriginalName();
-    //    dd($nombre);
-
-
-       //indicamos que queremos guardar un nuevo archivo en el disco local
-    //    Storage::disk(('app\public\responsivasActivos'))->put($nombre,$file);
-        $file->storeAs('public\responsivasActivos',$nombre);
-       $activo->update(['documento' =>$nombre]);
+        //indicamos que queremos guardar un nuevo archivo en el disco local
+        //    Storage::disk(('app\public\responsivasActivos'))->put($nombre,$file);
+        $file->storeAs('public\responsivasActivos', $nombre);
+        $activo->update(['documento' =>$nombre]);
 
         return redirect()->route('admin.activos.index')->with('success', 'Guardado con éxito');
     }
@@ -313,32 +304,34 @@ class ActivosController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
     protected function downloadFile($src)
     {
-        if(is_file($src)){
+        if (is_file($src)) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $content_type = finfo_file($finfo,$src);
+            $content_type = finfo_file($finfo, $src);
             finfo_close($finfo);
-            $file_name = basename($src).PHP_EOL;
-            $size=filesize($src);
+            $file_name = basename($src) . PHP_EOL;
+            $size = filesize($src);
             header("Content_Type: $content_type");
             header("Content-Disposition: attachemt; filename=$file_name");
-            header("Content-Transfer-Encoding: binary");
+            header('Content-Transfer-Encoding: binary');
             header("Content-Lenght: $size");
             readfile($src);
+
             return true;
-        }else{
+        } else {
             return false;
         }
-
 
         // $path = storage_path('app/public/exportActivos/Responsiva.docx');
 
         // return response()->download($path);
     }
+
     public function DescargaFormato()
     {
-        if(!$this->downloadFile(storage_path('app/public/exportActivos/Responsiva.docx'))){
+        if (!$this->downloadFile(storage_path('app/public/exportActivos/Responsiva.docx'))) {
             return redirect()->back();
         }
     }

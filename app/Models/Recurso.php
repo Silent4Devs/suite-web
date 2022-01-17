@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Jenssegers\Date\Date;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+// use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -17,10 +17,10 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Recurso extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    use QueryCacheable;
+    // use QueryCacheable;
 
-    public $cacheFor = 600;
-    protected static $flushCacheOnUpdate = true;
+    // public $cacheFor = 600;
+    // protected static $flushCacheOnUpdate = true;
     public $table = 'recursos';
 
     const TIPOS = [
@@ -249,7 +249,7 @@ class Recurso extends Model implements HasMedia
 
     public function empleados()
     {
-        return $this->belongsToMany(Empleado::class)->with('area')->withPivot('certificado', 'calificacion', 'archivado', 'es_aceptada', 'evaluacion');
+        return $this->belongsToMany(Empleado::class)->with('area')->withPivot('certificado', 'calificacion', 'archivado', 'es_aceptada', 'evaluacion', 'asistio');
     }
 
     public function categoria_capacitacion()

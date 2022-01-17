@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class ConfigurarSoporteModel extends Model
 {
@@ -28,6 +26,7 @@ class ConfigurarSoporteModel extends Model
         'deleted_at',
         'team_id',
     ];
+
     public function empleado()
     {
         return $this->belongsTo(Empleado::class, 'id_elaboro');

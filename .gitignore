@@ -29,5 +29,6 @@ storage/logs/
 *.cache
 
 storage/app/public/activos/
+storage/app/livewire-tmp/
 storage/app/public/expedientes/
 storage/app/public/cursos_empleados/

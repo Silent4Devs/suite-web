@@ -11926,7 +11926,7 @@ html:not([dir="rtl"]) .dropleft .dropdown-toggle:empty::after {
   line-height: 1.5;
   background-clip: padding-box;
   border: 1px solid;
-  color: #768192;
+  color: #747474;
   background-color: #fff;
   border-color: #d8dbe0;
   border-radius: 0.25rem;
@@ -15180,6 +15180,7 @@ html:not([dir="rtl"]) .modal-header .close {
 
 .nav {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   margin-bottom: 0;
   list-style: none;
@@ -26967,7 +26968,7 @@ pre code {
   font-size: 14px;
   font-weight: 400;
   line-height: 1.6;
-  color: #495057;
+  color: #747474;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;

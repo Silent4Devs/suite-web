@@ -48,10 +48,8 @@
 
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-
     <style type="text/css">
-
+        
         .material-modulos{
             font-size: 50px;
             margin-bottom: 3px;
@@ -132,7 +130,7 @@
 
         .iconos-crear {
             font-size: 15pt;
-            color: #345183;
+            color: #3086AF;
             margin-right: 10px;
         }
 
@@ -922,7 +920,19 @@
 
         .titulo_general_funcion{
             color: #788BAC;
-            margin-bottom: 75px;
+            margin-bottom: 65px;
+        }
+
+        .form-group label{
+            color: #3086AF;
+        }
+
+        .titulo-formulario{
+            /*background-color: #fff; */
+            font-size:20px;
+        }
+        .card_formulario{
+            background-color:#FCFCFC;
         }
 
     </style>

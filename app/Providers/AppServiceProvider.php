@@ -2,18 +2,18 @@
 
 namespace App\Providers;
 
+use App\Extensions\CustomSessionHandler;
 use Carbon\Carbon;
-use Spatie\Health\Facades\Health;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use App\Extensions\CustomSessionHandler;
 use Spatie\Health\Checks\Checks\DatabaseCheck;
 use Spatie\Health\Checks\Checks\EnvironmentCheck;
 use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
+use Spatie\Health\Facades\Health;
 
 class AppServiceProvider extends ServiceProvider
 {

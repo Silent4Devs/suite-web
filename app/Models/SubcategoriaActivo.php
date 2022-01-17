@@ -1,14 +1,12 @@
 <?php
 
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Tipoactivo;
 
 /**
- * Class SubcategoriaActivo
+ * Class SubcategoriaActivo.
  *
  * @property int $id
  * @property character varying $subcategoria
@@ -18,26 +16,24 @@ use App\Models\Tipoactivo;
  * @property string|null $deleted_at
  *
  * @property Tipoactivo $tipoactivo
- *
- * @package App\Models
  */
 class SubcategoriaActivo extends Model
 {
-	use SoftDeletes;
-	protected $table = 'subcategoria_activos';
+    use SoftDeletes;
+    protected $table = 'subcategoria_activos';
 
-	protected $casts = [
-		'subcategoria' => 'string',
-		'categoria_id' => 'int',
-	];
+    protected $casts = [
+        'subcategoria' => 'string',
+        'categoria_id' => 'int',
+    ];
 
-	protected $fillable = [
-		'subcategoria',
-		'categoria_id'
-	];
+    protected $fillable = [
+        'subcategoria',
+        'categoria_id',
+    ];
 
-	public function tipoactivo()
-	{
-		return $this->belongsTo(Tipoactivo::class, 'categoria_id');
-	}
+    public function tipoactivo()
+    {
+        return $this->belongsTo(Tipoactivo::class, 'categoria_id');
+    }
 }
