@@ -82,7 +82,7 @@
             </select>
         </div>
     </div>
-    <div class="row" style="height: 310px;" x-show="!show" x-transition:enter.duration.500ms
+    <div class="row" style="height: calc(100vh + 230px);" x-show="!show" x-transition:enter.duration.500ms
         x-transition:leave.duration.400ms>
         <div class="col-12">
             <div class="cards-mis-capacitaciones row" id="cards-mis-capacitaciones"></div>
