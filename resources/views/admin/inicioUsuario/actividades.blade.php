@@ -37,16 +37,16 @@
     <table id="tabla_usuario_actividades" class="table">
         <thead>
             <tr>
-                <th>Actividad</th>
-                <th>Origen</th>
+                <th style="min-width:100px;">Actividad</th>
+                <th style="min-width:100px;">Origen</th>
                 {{-- <th>Categoria</th> --}}
                 {{-- <th>Urgencia</th> --}}
-                <th style="min-width:100px;">Fecha&nbsp;inicio</th>
-                <th style="min-width:100px;">Fecha&nbsp;fin</th>
-                <th>Compartida&nbsp;con</th>
+                <th style="min-width:200px;">Fecha&nbsp;inicio</th>
+                <th style="min-width:200px;">Fecha&nbsp;fin</th>
+                <th style="min-width:200px;">Compartida&nbsp;con</th>
                 {{-- <th>Asignada por</th> --}}
-                <th>Estatus</th>
-                <th>Opciones</th>
+                <th style="min-width:200px;">Estatus</th>
+                <th style="min-width:100px;">Opciones</th>
             </tr>
         </thead>
         <tbody>

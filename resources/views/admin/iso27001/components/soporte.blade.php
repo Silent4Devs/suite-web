@@ -1,8 +1,9 @@
 @can('soporte_access')
+    <div href="#" class="btn btn-secundario btn_modal_video" data-toggle="modal" data-target="#modal_guia_general"><i class="far fa-play-circle mr-2"></i> GUÍA DE USO</div>
     <ul class="mt-4">
         <li><a href="#" data-ventana="capacitacion" data-ruta="Capacitaciones" class="btn_ventana_menu">
                 <div>
-                    <i class="fas fa-chalkboard-teacher"></i>
+                    <i class="bi bi-person-video3"></i> <br>
                     Transferencia de Conocimiento
                 </div>
             </a></li>
@@ -27,19 +28,19 @@
         </div>
         <li><a href="{{ route('admin.buscarCV') }}">
                 <div>
-                    <i class="fas fa-flag-checkered"></i>
+                    <i class="bi bi-capslock"></i> <br>
                     Competencias
                 </div>
             </a></li>
         <li><a href="{{ route('admin.concientizacion-sgis.index') }}">
                 <div>
-                    <i class="fas fa-book-reader"></i>
+                    <i class="bi bi-window-desktop"></i> <br>
                     Concientización SGI
                 </div>
             </a></li>
         <li><a href="{{ route('admin.material-sgsis.index') }}">
                 <div>
-                    <i class="fas fa-cubes"></i>
+                    <i class="bi bi-boxes"></i> <br>
                     Material SGSI
                 </div>
             </a></li>
@@ -51,19 +52,19 @@
             </a></li> --}}
         <li><a href="{{ route('admin.comunicacion-sgis.index') }}">
                 <div>
-                    <i class="far fa-comments"></i>
+                    <i class="bi bi-chat-right-text"></i> <br>
                     Comunicados Generales
                 </div>
             </a></li>
         <li><a href="{{ route('admin.control-accesos.index') }}">
                 <div>
-                    <i class="fas fa-vote-yea"></i>
+                    <i class="bi bi-person-badge"></i> <br>
                     Control de Accesos
                 </div>
             </a></li>
         <li><a href="{{ asset('admin/documentos/publicados') }}">
                 <div>
-                    <i class="far fa-folder-open"></i>
+                    <i class="bi bi-file-earmark-post"></i> <br>
                     Infomación Documentada
                 </div>
             </a></li>

@@ -93,7 +93,7 @@
                 <div class="nav nav-tabs" id="tabsAnalisisRiesgos" role="tablist">
                     <a class="nav-link active" id="nav-riesgo-tab" data-type="riesgo" data-toggle="tab" href="#nav-riesgo"
                         role="tab" aria-controls="nav-riesgo" aria-selected="true">
-                        <i class="mr-2 fas fa-users" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="mr-2 bi bi-exclamation-triangle" style="font-size:20px;" style="text-decoration:none;"></i>
                         Riesgos
                     </a>
                 </div>

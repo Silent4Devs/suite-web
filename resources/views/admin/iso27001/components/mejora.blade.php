@@ -1,8 +1,9 @@
 @can('mejoras_access')
+    <div href="#" class="btn btn-secundario btn_modal_video" data-toggle="modal" data-target="#modal_guia_general"><i class="far fa-play-circle mr-2"></i> GUÍA DE USO</div>
     <ul class="mt-4">
         <li><a href="{{ route('admin.accion-correctivas.index') }}">
                 <div>
-                    <i class="far fa-thumbs-down"></i>
+                    <i class="bi bi-diagram-2"></i> <br>
                     Acción Correctiva
                 </div>
             </a></li>
@@ -15,7 +16,8 @@
             </a> --}}
             <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
                 <div>
-                    <i class="fas fa-rocket"></i> Registro Mejora
+                    <i class="bi bi-hand-thumbs-up"></i> <br>
+                     Registro Mejora
                 </div>
             </a>
         </li>

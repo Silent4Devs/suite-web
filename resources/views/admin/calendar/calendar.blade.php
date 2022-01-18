@@ -16,6 +16,7 @@
 <style type="text/css">
     .caja{
         width: 50% !important;
+        height:740px;
         padding: 0;
         overflow: hidden !important;
     }
@@ -31,7 +32,7 @@
     }
     #calendar{
         width: 100%;
-        overflow: hidden;
+        /*overflow: hidden;*/
         /* overflow-y: scroll; */
         border: none !important;
         height: auto !important;
@@ -100,22 +101,18 @@
    .i_calendar_cuadro{
         margin: 0px 8px;
    }
-
-
-
-
 </style>
 
 
 <h5 class="col-12 titulo_general_funcion"> Calendario de {{ $nombre_organizacion }} </h5>
-<div class="card" style="margin-top:50px;">
+<div class="card">
 
 
-        <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
-            style="margin-top:0px !important; ">
+    <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
+        style="margin-top:0px !important; ">
 
-        </div>
-    <div class="card-body" style="height: 600px;">
+    </div>
+    <div class="card-body" style="height: 700px;">
         <div class="caja">
             <div id="lnb">
 

@@ -395,9 +395,11 @@
                                     @endif
 
                                     @if ($usuario->empleado)
-                                        <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}" style="">
-                                            Ver Perfil Profesional
-                                        </a>
+                                        @if($usuario->empleado->puesto)
+                                            <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}" style="">
+                                                Ver Perfil Profesional
+                                            </a>
+                                        @endif
                                     @endif
 
                                     @if ($usuario->empleado)

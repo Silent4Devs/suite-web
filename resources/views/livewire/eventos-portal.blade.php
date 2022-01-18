@@ -68,7 +68,7 @@
                 <span> Mapa de procesos </span>
             </a>
             <a class="btn-silent" href="{{ asset('admin/organigrama') }}">
-                <i class="mr-2 fas fa-sitemap"></i>
+                <i class="bi bi-diagram-3"></i>
                 <span>Organigrama</span>
             </a>
             <a class="btn-silent" href="{{ asset('admin/directorio') }}">
