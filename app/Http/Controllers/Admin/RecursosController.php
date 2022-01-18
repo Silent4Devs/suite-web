@@ -110,7 +110,6 @@ class RecursosController extends Controller
 
     public function store(Request $request)
     {
-
         $request->merge([
             'tipo_seleccion_participantes' => [
                 'tipo' => $request->tipo_de_grupo,
@@ -172,7 +171,7 @@ class RecursosController extends Controller
             'tipo_seleccion_participantes' => $request->tipo_seleccion_participantes,
             'configuracion_invitacion_envio' => $request->configuracion_invitacion_envio,
             'estatus' => $estatus,
-            'is_sync_elearning' => $request->isElearning ? $request->isElearning : false
+            'is_sync_elearning' => $request->isElearning ? $request->isElearning : false,
         ]);
 
         if ($request->file('recurso_capacitacion')) {
@@ -196,6 +195,7 @@ class RecursosController extends Controller
     {
         if ($request->tipo_validacion == 'general') {
             $this->validateRequestGeneral($request);
+
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'lecciones') {
             $this->validateRequestGeneral($request);
@@ -243,6 +243,7 @@ class RecursosController extends Controller
             ]);
         }
     }
+
     public function validateRequestLecciones($request)
     {
         if ($request->tipo_guardado != 'Borrador') {

@@ -1388,6 +1388,7 @@ class EmpleadoController extends Controller
         $participantes = $request->participantes;
 
         $empleados = Empleado::whereIn('email', $participantes)->get();
+
         return $empleados;
     }
 }

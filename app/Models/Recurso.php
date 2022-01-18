@@ -87,7 +87,7 @@ class Recurso extends Model implements HasMedia
         'estatus',
         'configuracion_invitacion_envio',
         'lista_asistencia',
-        'is_sync_elearning'
+        'is_sync_elearning',
     ];
 
     // SCOPES

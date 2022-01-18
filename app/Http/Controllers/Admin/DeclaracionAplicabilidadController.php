@@ -349,7 +349,6 @@ class DeclaracionAplicabilidadController extends Controller
 
     public function enviarCorreo(Request $request)
     {
-
         dd($request);
         // if ($request->enviarTodos) {
         //     $destinatarios = DeclaracionAplicabilidadAprobadores::distinct('aprobadores_id')->pluck('aprobadores_id')->toArray();
