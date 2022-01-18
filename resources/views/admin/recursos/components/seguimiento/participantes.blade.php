@@ -12,6 +12,7 @@
                     <th scope="col" style="width:20%">Area</th>
                     <th scope="col" style="width:20%">Estatus</th>
                     <th scope="col" style="width:20%">Calificación</th>
+                    <th scope="col" style="width:20%">Progreso</th>
                     <th scope="col" style="width:20%">Certificado</th>
                     <th scope="col" style="width:10%">Opciones</th>
                 </tr>
