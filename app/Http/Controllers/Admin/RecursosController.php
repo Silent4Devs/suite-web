@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyRecursoRequest;
 use App\Mail\CapacitacionCanceladaMail;
 use App\Mail\CapacitacionReprogramadaMail;
+use App\Mail\ElearningInscripcionMail;
 use App\Mail\InvitacionCapacitaciones;
 use App\Models\Area;
 use App\Models\CategoriaCapacitacion;
@@ -20,6 +21,7 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
@@ -108,6 +110,7 @@ class RecursosController extends Controller
 
     public function store(Request $request)
     {
+
         $request->merge([
             'tipo_seleccion_participantes' => [
                 'tipo' => $request->tipo_de_grupo,
@@ -138,6 +141,19 @@ class RecursosController extends Controller
             $estatus = 'Programado';
         }
 
+        if ($request->isElearning) {
+            $empleados = Empleado::select('id', 'name', 'email')->find($request->participantes)->toArray();
+
+            $emails = Http::post(env('APP_ELEARNING') . '/api/users', [
+                'students' => json_encode($empleados),
+                'course' =>  $request->cursoscapacitaciones,
+            ]);
+            foreach ($emails->json() as $email) {
+                $empleado = Empleado::where('email', $email['email'])->first();
+                Mail::to($empleado->email)->send(new ElearningInscripcionMail($empleado));
+            }
+        }
+
         $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
         // dd($request->all());
         $recurso = Recurso::create([
@@ -155,6 +171,7 @@ class RecursosController extends Controller
             'tipo_seleccion_participantes' => $request->tipo_seleccion_participantes,
             'configuracion_invitacion_envio' => $request->configuracion_invitacion_envio,
             'estatus' => $estatus,
+            'is_sync_elearning' => $request->isElearning ? $request->isElearning : false
         ]);
 
         if ($request->file('recurso_capacitacion')) {
@@ -178,10 +195,15 @@ class RecursosController extends Controller
     {
         if ($request->tipo_validacion == 'general') {
             $this->validateRequestGeneral($request);
+            return response()->json(['isValid' => true]);
+        } elseif ($request->tipo_validacion == 'lecciones') {
+            $this->validateRequestGeneral($request);
+            $this->validateRequestLecciones($request);
 
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'participantes') {
             $this->validateRequestGeneral($request);
+            $this->validateRequestLecciones($request);
             $this->validateRequestParticipantes($request);
 
             return response()->json(['isValid' => true]);
@@ -200,12 +222,14 @@ class RecursosController extends Controller
             'fecha_curso' => 'date|required',
             'fecha_fin' => 'date|required|after:fecha_curso',
             'instructor' => 'string|required',
-            'cursoscapacitaciones'  => 'string|required',
+            'cursoscapacitaciones'  => 'required|max:255',
             'modalidad'  => 'string|required',
             'ubicacion' => 'string|required',
             'categoria_capacitacion_id'  => 'string|required',
             'modalidad' => 'string|required',
             'recurso_capacitacion' => 'nullable|mimes:pdf|max:10000',
+        ], [
+            'cursoscapacitaciones.required' => 'El titulo de la capacitación es requerido',
         ]);
     }
 
@@ -215,6 +239,14 @@ class RecursosController extends Controller
             $request->validate([
                 'tipo_de_grupo' => 'required',
                 'participantes' => 'required',
+            ]);
+        }
+    }
+    public function validateRequestLecciones($request)
+    {
+        if ($request->tipo_guardado != 'Borrador') {
+            $request->validate([
+                'lecciones.*' => 'required',
             ]);
         }
     }

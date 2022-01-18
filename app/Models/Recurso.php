@@ -87,6 +87,7 @@ class Recurso extends Model implements HasMedia
         'estatus',
         'configuracion_invitacion_envio',
         'lista_asistencia',
+        'is_sync_elearning'
     ];
 
     // SCOPES
@@ -255,5 +256,10 @@ class Recurso extends Model implements HasMedia
     public function categoria_capacitacion()
     {
         return $this->belongsTo(CategoriaCapacitacion::class);
+    }
+
+    public function secciones()
+    {
+        return $this->hasMany(SeccionRecurso::class, 'recurso_id', 'id');
     }
 }

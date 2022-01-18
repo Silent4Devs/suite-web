@@ -543,9 +543,16 @@
                     `;
             }
             if (modelo.modalidad == 'linea') {
-                html += `
-            <a href="${modelo.ubicacion}" target="_blank"><i class="fas fa-link mr-2" style="cursor: pointer;" title="Abrir Vínculo"></i></a>
-            `;
+                if (!modelo.is_sync_elearning) {
+                    html += `
+                <a href="${modelo.ubicacion}" target="_blank"><i class="fas fa-link mr-2" style="cursor: pointer;" title="Abrir Vínculo"></i></a>
+                `;
+                } else {
+                    let URL_API_ELEARNING = @json(env('APP_ELEARNING'));
+                    html += `
+                <a href="${URL_API_ELEARNING}/course-status/${modelo.ubicacion}" target="_blank"><i class="fas fa-link mr-2" style="cursor: pointer;" title="Abrir Vínculo"></i></a>
+                `;
+                }
             }
             if (capacitacionArchivada == 'false') {
                 if (categoriaColumn == 'terminado' || capacitacionAceptada === 'false') {
