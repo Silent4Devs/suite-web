@@ -10,7 +10,7 @@
             width: 33.33%;
             text-decoration: none;
             display: inline-block;
-            color: #008186;
+            color: #345183;
             padding: 5px 0px;
             border-top: 1px solid #ccc !important;
             border-right: 1px solid #ccc;
@@ -80,11 +80,11 @@
     </style>
     <style type="text/css">
         div.nav .nav-link {
-            color: #008186;
+            color: #345183;
         }
 
         .nav-tabs .nav-link.active {
-            border-top: 2px solid #008186;
+            border-top: 2px solid #345183;
         }
 
         div.tab-pane ul {
@@ -119,7 +119,7 @@
             align-items: center;
             justify-content: center;
             background-color: #eee;
-            color: #008186;
+            color: #345183;
             border-radius: 6px;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
             transition: 0.1s;
@@ -128,8 +128,8 @@
 
         div.tab-pane a:hover {
             text-decoration: none !important;
-            color: #008186;
-            border: 1px solid #00abb2;
+            color: #345183;
+            border: 1px solid #345183;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
             background-color: #fff;
         }
@@ -156,8 +156,6 @@
             outline: none;
         }
 
-    </style>
-    <style>
         .ventana_menu {
             width: calc(100% - 40px);
             background-color: #fff;
@@ -170,21 +168,45 @@
 
         }
 
+        .btn_modal_video{
+            width: 160px !important; transform: scale(0.7); position:absolute; right: 0; margin-top:-35px;
+        }
+
     </style>
 
     {{-- Breadcrumbs::render('admin.iso27001.index') --}}
 
+
+    <div class="modal fade" id="modal_guia_general" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document" style="margin-top:150px;">
+        <div class="modal-content" style="background-color: #1C274A; position:relative; min-width: 600px; width: 90% !important; border:1px solid rgba(255, 255, 255, 0.3);">
+            <div class="text-right p-3" data-dismiss="modal" style="font-size: 20px; color:#fff; cursor: pointer;"><i class="fas fa-times"></i></div>
+            <div class="modal-body">
+                <video src="" autoplay controls style="width:100%;"></video>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div style="display:flex; justify-content:space-between;">
+        <h5 class="titulo_general_funcion">ISO 9001 - Gestión de la calidad</h5>
+        <div class="d-flex">
+            <a href="#" class="btn btn-secundario" style="width: 160px !important;" data-toggle="modal" data-target="#modal_guia_general">
+               <i class="far fa-play-circle mr-2"></i> 
+               GUÍA GENERAL
+            </a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{{ route('admin.home') }}" class="btn btn-success">
+                <i class="fas fa-chart-pie mr-2"></i>
+                DASHBOARD
+            </a>
+        </div>
+    </div>
+
     <div class="mt-5 card">
         <div class="py-3 col-md-12 col-sm-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <div class="row">
-                <div class="col-3"></div>
-                <div class="col-6 justify-content-center text-center">
-                    <h3 class="mb-2 text-center text-white d-inline-block">
-                        <strong>
-                            ISO 9001 - Gestión de la calidad
-                        </strong>
-                    </h3>
-                </div>
                 {{-- <div class="col-4 justify-content-end pr-0" style="text-align:end">
                     <span style="font-size:15px">
                         <a href="{{ route('admin.home') }}" class="btn btn-success">
@@ -235,6 +257,7 @@
                     </a>
                 </div>
             </nav>
+            
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
                     aria-labelledby="nav-contexto-tab">

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\ConfigurarSoporteModel;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -49,6 +48,7 @@ class DatabaseSeeder extends Seeder
             Clausula9001Seeder::class,
             NormasSeeder::class,
             ConfigurarSoporteSeeder::class,
+            // SubcategoriaActivosSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }

@@ -17,11 +17,11 @@
 
 </style>
 <div class="card-body datatable-fix w-100">
-    <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+    <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
         <div class="row w-100">
             <div class="text-center col-1 align-items-center d-flex justify-content-center">
                 <div class="w-100">
-                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                    <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                 </div>
             </div>
             <div class="col-11">
@@ -37,16 +37,16 @@
     <table id="tabla_usuario_actividades" class="table">
         <thead>
             <tr>
-                <th>Actividad</th>
-                <th>Origen</th>
+                <th style="min-width:100px;">Actividad</th>
+                <th style="min-width:100px;">Origen</th>
                 {{-- <th>Categoria</th> --}}
                 {{-- <th>Urgencia</th> --}}
-                <th style="min-width:100px;">Fecha&nbsp;inicio</th>
-                <th style="min-width:100px;">Fecha&nbsp;fin</th>
-                <th>Compartida&nbsp;con</th>
+                <th style="min-width:200px;">Fecha&nbsp;inicio</th>
+                <th style="min-width:200px;">Fecha&nbsp;fin</th>
+                <th style="min-width:200px;">Compartida&nbsp;con</th>
                 {{-- <th>Asignada por</th> --}}
-                <th>Estatus</th>
-                <th>Opciones</th>
+                <th style="min-width:200px;">Estatus</th>
+                <th style="min-width:100px;">Opciones</th>
             </tr>
         </thead>
         <tbody>

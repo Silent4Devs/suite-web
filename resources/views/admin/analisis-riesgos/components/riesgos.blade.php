@@ -2,7 +2,7 @@
     <li>
         <a href="{{ route('admin.amenazas.index') }}">
             <div>
-                <i class="fas fa-fire"></i>
+                <i class="bi bi-radioactive"></i> <br>
                 Amenazas
             </div>
         </a>
@@ -10,7 +10,7 @@
     <li>
         <a href="{{ route('admin.vulnerabilidads.index') }}">
             <div>
-                <i class="fas fa-shield-alt"></i>
+                <i class="bi bi-shield-x"></i> <br>
                 Vulnerabilidades
             </div>
         </a>
@@ -18,7 +18,7 @@
     <li>
         <a href="{{ route('admin.analisis-riesgos.index') }}">
             <div>
-                <i class="fas fa-table"></i>
+                <i class="bi bi-table"></i> <br>
                 Matríz de Riesgos
             </div>
         </a>

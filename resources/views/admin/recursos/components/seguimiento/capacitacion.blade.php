@@ -4,6 +4,10 @@
         width: 35px;
     }
 
+    .progress-bar {
+        background-color: #345183 !important;
+    }
+
 </style>
 <div class="row mt-4 align-items-center">
     <div class="col-12 text-muted pr-0 mb-3" style="text-align:right">
@@ -28,45 +32,34 @@
             <span id="timer" style="font-weight: bold;"></span>
         </p>
     </div>
-    <div class="col-12 p-2 rounded">
-        <ul class="list-group list-group-horizontal w-100">
-            <li class="pl-0 pr-0 list-group-item w-100" style="border:none;">
-                <p class="m-0 text-muted">Nombre de la evaluación</p>
-                <p class="m-0" style="font-weight: bold; text-transform: capitalize">
-                    {{ $recurso->cursoscapacitaciones }}
-                </p>
-            </li>
-            <li class="px-0 text-center list-group-item w-100" style="border:none;width: 90px !important;">
-                <p class="m-0 text-center text-muted">Estatus</p>
-                <p class="m-0"> <span class="badge badge-primary">
+    <div class="col-12 p-0 rounded">
+        <table class="w-100 mb-3" style="text-align: center">
+            <thead style="background: #788BAC;color: white;">
+                <th>Nombre Evaluación</th>
+                <th>Estatus</th>
+                <th>Comienza El</th>
+                <th>Finaliza El</th>
+                <th>Instructor</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="p-3">{{ $recurso->cursoscapacitaciones }}</td>
+                    <td class="p-3">
                         @if ($recurso->ya_finalizo && $recurso->estatus != 'Cancelado')
                             {{ 'Finalizado' }}
                         @else
                             {{ $recurso->estatus }}
                         @endif
-                    </span>
-                </p>
-            </li>
-            <li class="px-0 text-center list-group-item w-100" style="border:none;">
-                <p class="m-0 text-center text-muted">Comienza el</p>
-                <p class="m-0" style="text-transform: capitalize;"><i class="mr-1 fas fa-calendar-check"></i>
-                    {{ $recurso->fecha_inicio_name }}
-                </p>
-            </li>
-            <li class="px-0 text-center list-group-item w-100" style="border:none;">
-                <p class="m-0 text-center text-muted">Finaliza el</p>
-                <p class="m-0" style="text-transform: capitalize;"><i class="mr-1 fas fa-calendar-times"></i>
-                    {{ $recurso->fecha_fin_name }}
-                </p>
-            </li>
-            <li class="pl-0 pr-0 list-group-item w-100" style="border:none;">
-                <p class="m-0 text-muted">Instructor</p>
-                <p class="m-0" style="font-weight: bold; text-transform: capitalize;">
-                    <i class="fas fa-user-circle mr-2"></i>
-                    {{ $recurso->instructor }}
-                </p>
-            </li>
-        </ul>
+                    </td>
+                    <td class="p-3"><i
+                            class="mr-1 fas fa-calendar-check"></i>{{ $recurso->fecha_inicio_name }}</td>
+                    <td class="p-3"><i
+                            class="mr-1 fas fa-calendar-times"></i>{{ $recurso->fecha_fin_name }}</td>
+                    <td class="p-3"><i class="fas fa-user-circle mr-2"></i>{{ $recurso->instructor }}</td>
+                </tr>
+            </tbody>
+        </table>
+
         @php
             $aceptadas = 0;
             foreach ($recurso->empleados as $empleado) {
@@ -75,7 +68,7 @@
                 }
             }
             $invitaciones = count($recurso->empleados) > 0 ? count($recurso->empleados) : 1;
-            $porcentaje = ($aceptadas * 100) / $invitaciones;
+            $porcentaje = round(($aceptadas * 100) / $invitaciones);
         @endphp
         <div class="row align-items-center">
             <div class="col-10 pr-0">
@@ -92,7 +85,9 @@
             </div>
         </div>
     </div>
-    <div class="col-12 mb-3 text-center">
+    <div class="col-12 mt-3 text-center p-0">
+        <a id="descargarFormato">Descargar
+            Formato</a>
         @if ($recurso->ya_finalizo && $recurso->estatus != 'Cancelado')
             @livewire('subir-lista-asistencia-archivo',['recurso'=>$recurso])
         @endif
@@ -152,8 +147,64 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js"
+integrity="sha512-vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A=="
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const recurso = @json($recurso);
+        document.getElementById('descargarFormato').addEventListener('click', function(e) {
+            let html = `
+            <div class="w-100">
+                <h3>Lista de asistencias para la capacitación: ${recurso.cursoscapacitaciones}</h3>
+                <table class="w-100 table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Empleado</th>
+                            <th class="text-center">¿Asistió?</th>
+                        </tr>
+                    </thead>
+                    <tbody>`
+            recurso.empleados.forEach(empleado => {
+                html += `
+                    <tr>
+                        <td>
+                            <img class="img_empleado" src="${empleado.avatar_ruta}">
+                            ${empleado.name}
+                        </td>
+                        <td class="d-flex justify-content-center">
+                            <input class="form-control" type="checkbox">
+                        </td>
+                    </tr> 
+                            `;
+            });
+            html += `</tbody>
+                </table>
+            </div>
+            `;
+            const options = {
+                margin: 1,
+                filename: `Lista-de-asistencia-${recurso.cursoscapacitaciones}.pdf`,
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+                html2canvas: {
+                    scale: 3,
+                    letterRendering: true
+                },
+                jsPDF: {
+                    unit: 'in',
+                    format: 'a3',
+                    orientation: 'portrait'
+                }
+            };
+            // New Promise-based usage:
+            // html2pdf().from(html).set(options).save();
+            html2pdf(html, options);
+
+        })
+
         document.getElementById('btnReprogramar').addEventListener('click', function() {
             $('#reprogramarCapacitacion').modal('show');
         })

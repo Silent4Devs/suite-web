@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
-use App\Http\Controllers\Admin\ConfigurarSoporteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -135,6 +134,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'store' => 'ev360-competencias.store',
         'show' => 'ev360-competencias.show',
         'update' => 'ev360-competencias.update',
+        'destroy' => 'ev360-competencias.destroy',
     ])->except(['edit']);
 
     Route::post('recursos-humanos/evaluacion-360/conductas/store', 'RH\EV360ConductasController@store')->name('ev360-conductas.store');
@@ -157,8 +157,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
     Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');
-
-
 
     Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
     Route::post('portal-comunicacion/cumpleaños/{id}', 'PortalComunicacionController@felicitarCumpleaños')->name('portal-comunicacion.cumples');
@@ -205,6 +203,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('inicioUsuario/actividades/archivar/{id}', 'InicioUsuarioController@archivarActividades')->name('inicio-Usuario.actividades.archivar');
     Route::post('inicioUsuario/actividades/recuperar/{id}', 'InicioUsuarioController@recuperarActividades')->name('inicio-Usuario.actividades.recuperar');
     Route::get('inicioUsuario/actividades/archivo', 'InicioUsuarioController@archivoActividades')->name('inicio-Usuario.acctividades.archivo');
+
+    Route::get('inicioUsuario/perfil-puesto', 'InicioUsuarioController@perfilPuesto')->name('inicio-Usuario.perfil-puesto');
 
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
@@ -419,7 +419,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('getgetEmployeeData', 'ConfigurarSoporteController@getgetEmployeeData')->name('getgetEmployeeData');
     Route::get('soporte', 'ConfigurarSoporteController@visualizarSoporte')->name('soporte');
 
-
     //Configuración Consultores
     // Route::delete('configurar-consultor/destroy', 'ConfigurarConsultorController@massDestroy')->name('configurar-consultor.massDestroy');
     // Route::resource('configurar-consultor', 'ConfigurarConsultorController');
@@ -483,6 +482,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
 
     // Recursos
+    Route::post('recursos/{recurso}/asistencia-capacitacion', 'RecursosController@guardarAsistenciaCapacitacion')->name('recursos.guardarAsistenciaCapacitacion');
     Route::post('recursos/capacitacion-evaluacion', 'RecursosController@guardarEvaluacionCapacitacion')->name('recursos.guardarEvaluacionCapacitacion');
     // Route::post('recursos/reprogramar-capacitacion', 'RecursosController@reprogramarCapacitacion')->name('recursos.reprogramarCapacitacion');
     Route::post('recursos/{recurso}/reprogramar-capacitacion', 'RecursosController@reprogramarCapacitacion')->name('recursos.reprogramarCapacitacion');
@@ -571,6 +571,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('planificacion-controls', 'PlanificacionControlController');
 
     // Activos
+
+    // Route::post('activos/create', 'ActivosController@save');
+    Route::get('activos/descargar', 'ActivosController@DescargaFormato')->name('activos.descargar');
     Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
     Route::resource('activos', 'ActivosController');
 
@@ -631,15 +634,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('subtipoactivos/destroy', 'SubcategoriaActivoContoller@massDestroy')->name('subtipoactivos.massDestroy');
     Route::post('subtipoactivos/parse-csv-import', 'SubcategoriaActivoContoller@parseCsvImport')->name('subtipoactivos.parseCsvImport');
     Route::post('subtipoactivos/process-csv-import', 'SubcategoriaActivoContoller@processCsvImport')->name('subtipoactivos.processCsvImport');
-    Route::resource('subtipoactivos', 'SubcategoriaActivoContoller') ->names([
+    Route::resource('subtipoactivos', 'SubcategoriaActivoContoller')->names([
         'index' => 'subtipoactivos.index',
         'create' => 'subtipoactivos.create',
         'store' => 'subtipoactivos.store',
         'show' => 'subtipoactivos.show',
         'edit' => 'subtipoactivos.edit',
         'update' => 'subtipoactivos.update',
-    ]);;
-
+    ]);
 
     // Puestos
     Route::delete('puestos/destroy', 'PuestosController@massDestroy')->name('puestos.massDestroy');
@@ -816,6 +818,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/revisiones/archivo', 'RevisionDocumentoController@archivo')->name('revisiones.archivo');
     Route::post('/revisiones/archivar', 'RevisionDocumentoController@archivar')->name('revisiones.archivar');
     Route::post('/revisiones/desarchivar', 'RevisionDocumentoController@desarchivar')->name('revisiones.desarchivar');
+    Route::post('/revisiones/documentos-debo-aprobar', 'RevisionDocumentoController@obtenerDocumentosDeboAprobar')->name('revisiones.obtenerDocumentosDeboAprobar');
+    Route::post('/revisiones/documentos-debo-aprobar-archivo', 'RevisionDocumentoController@obtenerDocumentosDeboAprobarArchivo')->name('revisiones.obtenerDocumentosDeboAprobarArchivo');
 
     //Documentos
     Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');
@@ -1138,16 +1142,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
         Route::get('two-factor/resend', 'TwoFactorController@resend')->name('twoFactor.resend');
     }
 });
-
-Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
-    Route::view('sitemap', 'admin.sitemap.index');
-    // Route::view('stepper', 'stepper');
-    //Route::view('admin/gantt', 'admin.gantt.grap');
-
-    //URL::forceScheme('https');
-
-    Route::view('post_register', 'auth.post_register');
-
+Route::group(['middleware' => ['auth', '2fa']], function () {
     //Ruta ImportExcel
     Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
     Route::post('CargaAmenaza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
@@ -1198,4 +1193,16 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
     Route::get('ExportGrupoArea', 'ExportExcel@GrupoArea')->name('descarga-grupo_area');
     Route::get('ExportEmpleado', 'ExportExcel@Empleado')->name('descarga-empleado');
     Route::get('ExportActivos', 'ExportExcel@Activos')->name('descarga-activo_inventario');
+
+    //  Route::get('ExportFormatoResponsivo', 'ActivosController@ExportFormato')->name('descarga-formato_reponsivo');
+});
+
+Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
+    Route::view('sitemap', 'admin.sitemap.index');
+    // Route::view('stepper', 'stepper');
+    //Route::view('admin/gantt', 'admin.gantt.grap');
+
+    //URL::forceScheme('https');
+
+    Route::view('post_register', 'auth.post_register');
 });

@@ -83,7 +83,7 @@ body::after{
 }
 form{
     width: 350px;
-    height: 630px;
+    padding: 20px 0;
     box-sizing: border-box;
     text-align: center;
 

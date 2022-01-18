@@ -307,6 +307,17 @@
                     @endif
                 </div>
 
+                <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                    <li><a href="{{url('admin/activos/descargar')}}">Descargar formato sugerido de responsiva </a></li>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                    <label for="documento"><i class="fas fa-folder-open iconos-crear"></i>Cargar Documento</label>
+                    <form method="POST" action="{{ route('admin.activos.store') }}" accept-charset="UTF-8" enctype="multipart/form-data">
+                    <input type="file" name="documento" multiple class="form-control" id="documento"
+                        accept="application/pdf" value="{{ old('files[]') }}">
+                </div>
+
 
 
 

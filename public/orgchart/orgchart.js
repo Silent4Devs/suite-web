@@ -465,7 +465,7 @@ export default class OrgChart {
           }
           content_more += `
                 <div class="supervisor justify-content-center" style="text-align:center !important" >
-                <h4 class="supervisor-title">Responsables del área:</h4>
+                <h4 class="supervisor-title">Responsable del área:</h4>
                 <img src="${dataSourceJSON.lider?.avatar_ruta}"
                 class="text-center img_empleado" title="${dataSourceJSON.lider?.name}" >
                 <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider?dataSourceJSON.lider.name:'sin definir'}</span></p>

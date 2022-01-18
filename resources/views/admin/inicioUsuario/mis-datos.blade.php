@@ -395,8 +395,16 @@
                                     @endif
 
                                     @if ($usuario->empleado)
-                                        <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}" style="">
-                                            Ver Perfil Profesional
+                                        @if($usuario->empleado->puesto)
+                                            <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}" style="">
+                                                Ver Perfil Profesional
+                                            </a>
+                                        @endif
+                                    @endif
+
+                                    @if ($usuario->empleado)
+                                        <a href="{{ route('admin.inicio-Usuario.perfil-puesto') }}" class="mt-2">
+                                            Ver Perfil de Puesto
                                         </a>
                                     @endif
 
@@ -432,7 +440,7 @@
                             </h5>
                             <hr class="hr-custom-title">
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
-                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
+                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms style="margin-top: 15px;">
                                 @forelse ($equipo_a_cargo as $empleado)
                                     <div class="col-md-12">
                                         <div class="card" style="position:relative;">
@@ -479,7 +487,7 @@
                                                     </div>
                                                 </div>
                                                 <div
-                                                    style="width:100%;height: 80px;position: absolute;top: 0;left: 0;background: aliceblue;z-index: 0;">
+                                                    style="width:100%;height: 80px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
                                                 </div>
                                             </div>
                                         </div>
@@ -518,7 +526,7 @@
                                                         </div>
                                                     </div>
                                                     <div
-                                                        style="width:100%;height: 80px;position: absolute;top: 0;left: 0;background: aliceblue;z-index: 0;">
+                                                        style="width:100%;height: 80px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -779,7 +787,7 @@
                                                         </div>
                                                     </div>
                                                     <div
-                                                        style="width: 100%;height: 38px;position: absolute;top: 0;left: 0;background: aliceblue;z-index: 0;">
+                                                        style="width: 100%;height: 38px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
                                                         <div>
                                                             <img src="{{ $objetivo->objetivo->tipo->imagen_ruta }}"
                                                                 class="d-inline-block"
@@ -848,7 +856,7 @@
                                                     @endif
                                                 </div>
                                                 <div
-                                                    style="width: 100%;height: 38px;position: absolute;top: 0;left: 0;background: aliceblue;z-index: 0;">
+                                                    style="width: 100%;height: 38px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
                                                     <div></div>
                                                 </div>
                                             </div>
@@ -921,7 +929,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div
-                                                                    style="width:100%;height: 50px;position: absolute;top: 0;left: 0;background: aliceblue;z-index: 0;">
+                                                                    style="width:100%;height: 50px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -11,12 +11,13 @@ class CategoriaSubcategoria extends Component
     public $categorias;
     public $subcategorias;
     public $categoria;
+    public $subcategoria;
 
-    public $selectedState = NULL;
+    public $selectedState = null;
 
     public function mount()
     {
-        $this->categorias = Tipoactivo::select('id','tipo')->get();
+        $this->categorias = Tipoactivo::select('id', 'tipo')->get();
         $this->subcategorias = collect();
     }
 
@@ -27,9 +28,8 @@ class CategoriaSubcategoria extends Component
 
     public function updatedCategoria($value)
     {
-
         if (!is_null($value)) {
-            $this->subcategorias = SubcategoriaActivo::select('id','subcategoria')->where('categoria_id', $value)->get();
+            $this->subcategorias = SubcategoriaActivo::select('id', 'subcategoria')->where('categoria_id', $value)->get();
         }
     }
 }

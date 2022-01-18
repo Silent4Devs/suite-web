@@ -462,7 +462,7 @@
                     @endif
                     @if ($panel_rules->antecedentes)
                         @if (!is_null($organizacion->antecedentes))
-                            <div class="form-group col-{{$panel_rules->valores ? '6':'12'}}">
+                            <div class="form-group col-12">
                                 <label for="antecedentes"> <i class="far fa-file-alt iconos-crear"></i> Antecedentes
                                 </label>
                                 <div class="c_text text-justify"

@@ -427,6 +427,7 @@
             // });
             // htmlTerminado += "</div>";
             if (capacitaciones.length > 0) {
+                document.getElementById('contadorDeCapacitaciones').innerText = capacitaciones.length;
                 let htmlMezcladas = `<div class="col-12" id="mezcladas"><div class="row">`;
                 capacitaciones.forEach(element => {
                     const icono = definirIconoParaCardPrincipal(element);
@@ -445,6 +446,7 @@
                 html += htmlMezcladas;
                 cardsMisCapacitaciones.innerHTML = html;
             } else {
+                document.getElementById('contadorDeCapacitaciones').innerText = 0;
                 cardsMisCapacitaciones.innerHTML = sinCapacitaciones(mensaje);
             }
         }

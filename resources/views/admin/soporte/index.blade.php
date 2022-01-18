@@ -208,9 +208,9 @@
 					<h3 class="mb-2 text-center text-white"><strong>Consultores</strong></h3>
 				</div>
 				<div class="caja_btn text-center">
-					<a class="btn btn-success" href="tel:525572480010"><i class="fas fa-phone-square"></i>Teléfono</a>
-					<a class="btn btn-success" href="https://wa.me/525572480010" target="_blank"><i class="fab fa-whatsapp-square"></i>Whatsapp</a>
-					<a class="btn btn-success" href="mailto:miguel.gaspar@silent4business.com"><i class="fas fa-envelope-square"></i>Correo</a>
+					<a class="btn btn-success" href="tel:525572480010"><i class="fas fa-phone"></i>Teléfono</a>
+					<a class="btn btn-success" href="https://wa.me/525572480010" target="_blank"><i class="fab fa-whatsapp"></i>Whatsapp</a>
+					<a class="btn btn-success" href="mailto:miguel.gaspar@silent4business.com"><i class="fas fa-envelope"></i>Correo</a>
 				</div>
 
 				<table>
@@ -275,9 +275,9 @@
 					<h3 class="mb-2 text-center text-white"><strong>Soporte Técnico</strong></h3>
 				</div>
 				<div class="caja_btn text-center">
-					<a class="btn btn-success" href="tel:525525115770"><i class="fas fa-phone-square"></i>Teléfono</a>
-					<a class="btn btn-success" href="https://wa.me/525525115770" target="_blank"><i class="fab fa-whatsapp-square"></i>Whatsapp</a>
-					<a class="btn btn-success" href="mailto:contacto@silent4business.com"><i class="fas fa-envelope-square"></i>Correo</a>
+					<a class="btn btn-success" href="tel:525525115770"><i class="fas fa-phone"></i>Teléfono</a>
+					<a class="btn btn-success" href="https://wa.me/525525115770" target="_blank"><i class="fab fa-whatsapp"></i>Whatsapp</a>
+					<a class="btn btn-success" href="mailto:contacto@silent4business.com"><i class="fas fa-envelope"></i>Correo</a>
 				</div>
 				<table>
 					<thead>

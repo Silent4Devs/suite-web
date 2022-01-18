@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivoRequest;
-use App\Http\Requests\StoreActivoRequest;
 use App\Http\Requests\UpdateActivoRequest;
 use App\Models\Activo;
 use App\Models\Area;
@@ -13,12 +11,14 @@ use App\Models\Empleado;
 use App\Models\Marca;
 use App\Models\Modelo;
 use App\Models\Sede;
+use App\Models\SubcategoriaActivo;
+use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\User;
-use App\Models\SubcategoriaActivo;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -139,7 +139,7 @@ class ActivosController extends Controller
 
         $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $subtipos = Tipoactivo::all()->pluck('subtipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $subtipos = SubcategoriaActivo::all()->pluck('subcategoria', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -153,23 +153,11 @@ class ActivosController extends Controller
 
         $modelos = Modelo::get();
 
-        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos','subcategorias'));
+        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'subcategorias'));
     }
 
-    public function store(StoreActivoRequest $request)
+    public function store(Request $request)
     {
-        // $request->validate(
-        //     [
-        //         'nombre_activo_id' => 'required|string',
-        //         'tipoactivo_id' => 'required|string',
-        //         'subtipo' => 'required|integer',
-
-        //     ],
-        // );
-
-        // dd($request->all());
-        // dd($request->hasfile('documentos_relacionados'));
-        // $activo = Activo::create($request->all());
         $data = [];
 
         if ($request->hasfile('documentos_relacionados')) {
@@ -186,14 +174,7 @@ class ActivosController extends Controller
             $data = [];
         }
 
-        // $extension = pathinfo($request->file('documentos_relacionados')->getClientOriginalName(), PATHINFO_EXTENSION);
-        // $nombre_original =  $request->nombreactivo;
-        // $nombre_compuesto = basename($nombre_original) . '.' . $extension;
-        // $request->file('documentos_relacionados')->storeAs('public/activos', $nombre_compuesto); // Almacenar Archivo
-        // $activo->documentos_relacionados = $data;
-        // $activo->save();
-
-        Activo::create([
+        $activo = Activo::create([
             'nombreactivo' => $request->nombreactivo,
             'descripcion' => $request->descripcion,
             'marca' => intval($request->marca),
@@ -212,8 +193,20 @@ class ActivosController extends Controller
             'sede' => $request->sede,
             'observaciones' => $request->observaciones,
             'documentos_relacionados' => json_encode($data),
+            'documento' => $request->documento,
 
         ]);
+
+        $file = $request->file('documento');
+
+        //obtenemos el nombre del archivo
+        $nombre = $file->getClientOriginalName();
+        //    dd($nombre);
+
+        //indicamos que queremos guardar un nuevo archivo en el disco local
+        //    Storage::disk(('app\public\responsivasActivos'))->put($nombre,$file);
+        $file->storeAs('public\responsivasActivos', $nombre);
+        $activo->update(['documento' =>$nombre]);
 
         return redirect()->route('admin.activos.index')->with('success', 'Guardado con éxito');
     }
@@ -310,5 +303,36 @@ class ActivosController extends Controller
         Activo::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    protected function downloadFile($src)
+    {
+        if (is_file($src)) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $content_type = finfo_file($finfo, $src);
+            finfo_close($finfo);
+            $file_name = basename($src) . PHP_EOL;
+            $size = filesize($src);
+            header("Content_Type: $content_type");
+            header("Content-Disposition: attachemt; filename=$file_name");
+            header('Content-Transfer-Encoding: binary');
+            header("Content-Lenght: $size");
+            readfile($src);
+
+            return true;
+        } else {
+            return false;
+        }
+
+        // $path = storage_path('app/public/exportActivos/Responsiva.docx');
+
+        // return response()->download($path);
+    }
+
+    public function DescargaFormato()
+    {
+        if (!$this->downloadFile(storage_path('app/public/exportActivos/Responsiva.docx'))) {
+            return redirect()->back();
+        }
     }
 }

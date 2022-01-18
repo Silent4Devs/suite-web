@@ -93,7 +93,7 @@
 
         .icons_propios_gantt.guardar {
             transform: scale(1.5);
-            color: #00abb2 !important;
+            color: #345183 !important;
         }
 
 
@@ -108,24 +108,24 @@
             display: inline-block;
             padding: 5px 10px;
             background-color: #fff;
-            color: #00abb2;
+            color: #345183;
             font-size: 9pt;
             cursor: pointer;
-            border: 1px solid #00abb2;
+            border: 1px solid #345183;
             border-radius: 5px;
             text-align: center;
             vertical-align: middle;
         }
 
         .botones_vistas_gantt a:hover {
-            border: 1px solid #00abb2;
-            background-color: #00abb2;
+            border: 1px solid #345183;
+            background-color: #345183;
             color: #fff;
         }
 
         .boton_activo {
-            border: 1px solid #00abb2 !important;
-            background-color: #00abb2 !important;
+            border: 1px solid #345183 !important;
+            background-color: #345183 !important;
             color: #fff !important;
         }
 
@@ -338,11 +338,11 @@
                         ponerBloqueo();
                     } else if (response.error) {
                         document.getElementById('bloqueado').innerHTML = `
-                     <div class="px-3 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                     <div class="px-3 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                         <div class="row w-100">
                             <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                 <div class="w-100">
-                                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                    <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                 </div>
                             </div>
                             <div class="col-11">

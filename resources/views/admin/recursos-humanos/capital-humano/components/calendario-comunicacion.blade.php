@@ -1,40 +1,38 @@
 <ul class="mt-4">
     <li><a href="{{ route('admin.systemCalendar') }}">
             <div>
-                <i class="fas fa-calendar-alt"></i>
+                <i class="bi bi-calendar"></i><br>
                 Calendario Corporativo
             </div>
         </a></li>
     <li><a href="{{ route('admin.calendario-oficial.index') }}">
             <div>
-                <i class="fas fa-drum"></i>
+                <i class="bi bi-calendar2-check"></i><br>
                 Días Festivos
             </div>
         </a></li>
     <li><a href="{{ route('admin.tabla-calendario.index') }}">
             <div>
-                <i class="fas fa-gifts"></i>
+                <i class="bi bi-calendar-event"></i><br>
                 Eventos
             </div>
         </a></li>
     <li><a href="{{ route('admin.comunicacion-sgis.index') }}">
             <div>
-                <i class="fas fa-newspaper"></i>
+                <i class="bi bi-megaphone"></i><br>
                 Comunicados
             </div>
         </a></li>
     <li><a href="{{ route('admin.desk.index') }}">
             <div>
-                <i class="fas fa-chalkboard-teacher"></i>
+                <i class="bi bi-person-workspace"></i><br>
                 Centro de Atención
             </div>
         </a></li>
     <li>
         <a href="#">
             <div>
-                <span class="material-icons material-modulos">
-                    perm_contact_calendar
-                </span>
+                <i class="bi bi-file-spreadsheet"></i><br>
                 TimeSheet
             </div>
         </a>
@@ -42,7 +40,7 @@
     <li>
         <a href="#">
             <div>
-                <i class="fas fa-columns"></i>
+                <i class="bi bi-file-minus"></i><br> 
                 Minutas
             </div>
         </a>

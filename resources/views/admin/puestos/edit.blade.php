@@ -338,8 +338,8 @@
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
                         <label class="required" for="sueldo"><i class="fas fa-dollar-sign iconos-crear"></i>Sueldo</label>
-                        <input class="form-control {{ $errors->has('sueldo') ? 'is-invalid' : '' }}" type="number" name="sueldo"
-                            id="sueldo" value="{{ old('sueldo', $puesto->sueldo )}}" required>
+                        <input class="form-control {{ $errors->has('sueldo') ? 'is-invalid' : '' }}" type="text" name="sueldo"
+                        id="teste" value="{{ old('sueldo', $puesto->sueldo )}}" required>
                         @if ($errors->has('sueldo'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('sueldo') }}
@@ -368,7 +368,7 @@
                         <select class="form-control {{ $errors->has('edad') ? 'is-invalid' : '' }}" name="edad" id="edad_rango">
                             <option value="{{ old('edad', $puesto->edad )}}" selected>Selecciona</option>
                             <option {{ old('edad', $puesto->edad) == 'Indistinto' ? 'selected' : '' }}>Indistinto</option>
-                            <option {{ old('edad', $puesto->edad) == 'Rango' ? 'selected' : '' }}>Rango</option>
+                            <option {{ old('edad', $puesto->edad) == 'Rango' ? 'selected' : '' }} value="Rango">Rango</option>
                         </select>
                     </div>
 
@@ -392,11 +392,11 @@
                     </div>
                 </div>
 
-                <div class="row col-sm-5 col-md-5 col-lg-5 d-none" id="campos_edad">
+                <div class="row col-sm-6 col-md-6 col-lg-6 d-none" id="campos_edad">
 
-                    <div class="form-group col-sm-5 col-md-5 col-lg-5">
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
                         <label class="required" for="edad_de">De</label>
-                            <input  class="form-control {{ $errors->has('edad_de') ? 'is-invalid' : '' }}" type="text" name="edad_de"
+                            <input  class="form-control {{ $errors->has('edad_de') ? 'is-invalid' : '' }}" type="number" name="edad_de"
                                 value="{{ old('edad_de', $puesto->edad_de )}}">
                             @if ($errors->has('edad_de'))
                                 <div class="invalid-feedback">
@@ -407,8 +407,8 @@
 
                     <div class="form-group col-sm-5 col-md-5 col-lg-5">
                         <label class="required" for="edad_a">A</label>
-                            <input  class="form-control {{ $errors->has('edad_a') ? 'is-invalid' : '' }}" type="text" name="edad_a"
-                              value="{{ old('edad_a', $puesto->edad_a )}}">
+                        <div style="display:flex;"> <input  class="form-control {{ $errors->has('edad_a') ? 'is-invalid' : '' }}" type="number" name="edad_a"
+                              value="{{ old('edad_a', $puesto->edad_a )}}"><strong class="mt-2">&nbsp;&nbsp;&nbsp;Años</strong></div>
                             @if ($errors->has('edad_a'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('edad_a') }}
@@ -433,6 +433,17 @@
 
 
 @section('scripts')
+
+    <script type="text/javascript">
+        $(document).on('change', '#edad_rango', function(event) {
+            if($('#edad_rango option:selected').attr('value') == 'Rango'){
+                // console.log('hola');
+                $('#campos_edad').removeClass('d-none');
+            }else{
+                $('#campos_edad').addClass('d-none');
+            }
+        });
+    </script>
     <script>
         $(document).ready(function() {
             CKEDITOR.replace('descripcion', {
@@ -497,7 +508,7 @@
         function inputsToMoneyFormat() {
             $("input[data-type='currency']").on({
                 init: function() {
-                    console.log(this);
+                    // console.log(this);
                 },
                 keyup: function() {
                     formatCurrency($(this));
@@ -571,23 +582,37 @@
 
 <script>
     $(document).ready(function () {
-    const lenguajes=@json($idis);
+    const lenguajes=@json($puesto->language);
     console.log(lenguajes);
-      var count = 1;
+      var anadir = 1;
 
-      AgregarFilaLenguaje(count);
+        lenguajes.forEach((lengua,inx) => {
+        // console.log(lengua);
+        let formleng={
+              id:lengua.id,
+              languajeIdioma:lengua.id_language,
+              porcentaje:lengua.porcentaje,
+              nivel:lengua.nivel,
+          }
+        AgregarFilaLenguaje(inx,formleng);
+        anadir ++;
+    });
 
-      function AgregarFilaLenguaje(number) {
+
+    //   AgregarFilaLenguaje(count,formleng);
+
+      function AgregarFilaLenguaje(count,formleng){
         html = `<tr>
             <td class="col-4" >
-            <select  class="workingSelect form-control" name="id_language[${count}][language]" >`
+            <input type="hidden" name="id_language[${count}][id]" value="${formleng.id?formleng.id:0}">
+            <select  class="workingSelect form-control" name="id_language[${count}][language]" id="lenguaje_lenguaje">`
             lenguajes.forEach(lenguaje=>{
                 html+=`<option value="${lenguaje.id}">${lenguaje.idioma}</option>`
             })
             html+=`</select>
             </td >
-            <td class="col-2" ><input type="text" name="id_language[${count}][porcentaje]" class="form-control" /></td>
-            <td class="col-4"><select class="workingSelect form-control" name="id_language[${count}][nivel]" id="working_day"><option value="">Seleccione una opción</option>
+            <td class="col-2" ><input type="text" name="id_language[${count}][porcentaje]" value="${formleng.porcentaje}" id="porcentaje_lenguaje"  class="form-control" /></td>
+            <td class="col-4"><select class="workingSelect form-control" name="id_language[${count}][nivel]" value="${formleng.nivel}" id="nivel_lenguaje" ><option value="">Seleccione una opción</option>
             <option  value="Basico" >Básico</option>
             <option  value="Intermedio" >Intermedio</option>
             <option  value="Avanzado" >Avanzado</option>
@@ -595,24 +620,39 @@
             `;
 
 
-        if (number > 1) {
+        if (count > 0) {
           html +=
             '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Eliminar</button></td></tr>';
-          $("#user_table tbody").append(html);
+        //   $("#user_table tbody").append(html);
         } else {
           html +=
             '<td col-2><button type="button" name="add" id="add" class="btn btn-success">Agregar</button></td></tr>';
-          $("#user_table tbody").html(html);
+        //   $("#user_table tbody").append(html);
         }
+        document.querySelector('#user_table tbody').innerHTML +=html
       }
 
+
+
       $(document).on("click", "#add", function () {
-        count++;
-        AgregarFilaLenguaje(count);
+
+          const languajeIdioma = document.getElementById('lenguaje_lenguaje').value;
+          const porcentaje = document.getElementById('porcentaje_lenguaje').value;
+          const nivel = document.getElementById('nivel_lenguaje').value;
+
+          let formleng={
+              languajeIdioma,
+              porcentaje,
+              nivel
+          }
+
+
+        AgregarFilaLenguaje(count,formleng);
+        anadir++;
       });
 
       $(document).on("click", ".remove", function () {
-        count--;
+        anadir--;
         $(this).closest("tr").remove();
       });
 
@@ -622,14 +662,28 @@
 
 <script>
     $(document).ready(function () {
-    const responsabilidades=@json($responsabilidades);
-    console.log(responsabilidades);
+    const responsabilidades=@json($puesto->responsabilidades);
+    // console.log(responsabilidades);
       let count = 0;
 
     //   renderizarTablaResponsabilidades(count);
+    // Foreach(item, index cada valor){agregar fila responsabilidad}
+    responsabilidades.forEach((responsabilidad,index) => {
+        // console.log(responsabilidad);
+        let formulario={
+              id:responsabilidad.id,
+              actividad:responsabilidad.actividad,
+              resultado:responsabilidad.resultado,
+              indicador:responsabilidad.indicador,
+              tiempoAsignado:responsabilidad.tiempo_asignado
+          }
+        agregarFilaResponsabilidad(index,formulario);
+        count ++;
+    });
+
 
       function agregarFilaResponsabilidad(contador,formulario) {
-          console.log(formulario)
+        //   console.log(formulario)
           const contenedorResponsabilidades=document.getElementById('contenedor_responsabilidades');
           let html=`
           <tr>
@@ -664,13 +718,15 @@
           const resultado = document.getElementById('resultado_certificado_responsabilidades').value;
           const indicador = document.getElementById('indicador_responsabilidades').value;
           const tiempoAsignado = document.getElementById('tiempo_asignado_responsabilidades').value;
-
+        // index el de la 686 se queda tal cual, y desde la 680 a la 683 colocar los valores desde mi base despues de actividad : color el valor item.y el valor
           let formulario={
               actividad,
               resultado,
               indicador,
               tiempoAsignado
           }
+
+
         agregarFilaResponsabilidad(count,formulario);
         count ++;
 
@@ -687,13 +743,33 @@
 
 <script>
     $(document).ready(function () {
-    const certificados=@json($certificados);
-    console.log(certificados);
+    //$certificados el nombre de la relacion definida en mi modelo
+    const certificados=@json($puesto->certificados);
+    // console.log(certificados);
     let sumar = 0;
 
 
+    // ForEach: Va traer mis datos de la base
+    //dentro de mi let formulario va ir
+    // 1. nombre asignado de cada campo en la const
+    // 2.variable asignada dentro del forEach (certificado)
+    //3. Nombre del campo en la base de datos
+    //El primer campo que se agrega dentro de mi let es mi id que trae los datos
+    certificados.forEach((certificado,ind) => {
+        // console.log(certificado);
+        let certificacion={
+              id:certificado.id,
+              nombreCertificado:certificado.nombre,
+              requisito:certificado.requisito,
+
+          }
+        agregarFilaCertificados(ind,certificacion) ;
+        sumar ++;
+
+    });
+
     function agregarFilaCertificados(contable,certificacion) {
-          console.log(certificacion)
+        //   console.log(certificacion)
           const contenedorCertificados=document.getElementById('contenedor_certificados');
           let html=`
           <tr>
@@ -769,86 +845,101 @@
     </script>
 
 
-<script>
-    $(document).ready(function() {
-        CKEDITOR.replace('estudios', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
+    <script>
+        $(document).ready(function() {
+            CKEDITOR.replace('estudios', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
+            CKEDITOR.replace('experiencia', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
+            CKEDITOR.replace('conocimientos', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
+            CKEDITOR.replace('certificaciones', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
+            CKEDITOR.replace('conocimientos_esp', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
         });
-        CKEDITOR.replace('experiencia', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-        CKEDITOR.replace('conocimientos', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-        CKEDITOR.replace('certificaciones', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-        CKEDITOR.replace('conocimientos_esp', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-    });
 
-</script>
+    </script>
 
-<script type="text/javascript">
-    $(document).on('change', '#edad_rango', function(event) {
-        if($('#edad_rango option:selected').attr('value') == 'Rango'){
-            $('#campos_edad').removeClass('d-none');
-        }else{
-            $('#campos_edad').addClass('d-none');
-        }
-    });
-</script>
+    <script>
+        $(document).ready(function() {
+            $(function() {
+
+                new AutoNumeric('#teste', {
+
+                    decimalCharacter: ',',
+
+                    decimalCharacter: '.',
+
+                    maximumValue: '100000000000',
+
+                    minimumValue: '0.00',
+
+                    currencySymbol: '$',
+
+                    decimalPlacesOverride: 2
+
+                });
+
+            });
+        });
+
+    </script>
 
 
 
