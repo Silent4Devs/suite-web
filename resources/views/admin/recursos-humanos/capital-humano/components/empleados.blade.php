@@ -1,6 +1,6 @@
 <ul class="mt-4">
     {{-- <li><a href="{{ route('admin.puestos.index') }}"> --}}
-    <li><a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
+    <li><a href="#" data-ventana="puestos" data-ruta="Capacitaciones" class="btn_ventana_menu">
             <div>
                 <i class="bi bi-briefcase"></i>
                 <br>
@@ -8,8 +8,8 @@
             </div>
         </a></li>
 
-        <div class="ventana_menu" id="capacitaciones" style="color:#008186 !important">
-            <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="capacitaciones"
+        <div class="ventana_menu" id="puestos" style="color:#008186 !important">
+            <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="puestos"
                 style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
             <h3 class="text-center"><strong>Perfil de Puesto</strong></h3>
             <ul>
