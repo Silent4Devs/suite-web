@@ -7,10 +7,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\Tipoactivo;
-use Composer\Util\Http\Response;
-use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
-use Laracasts\Flash\Flash;
 
 class SubcategoriaActivoContoller extends Controller
 {
@@ -23,7 +20,7 @@ class SubcategoriaActivoContoller extends Controller
         // dd($query);
 
         if ($request->ajax()) {
-            $query = SubcategoriaActivo::with("tipoactivo")->select("*")->orderByDesc('id');
+            $query = SubcategoriaActivo::with('tipoactivo')->select('*')->orderByDesc('id');
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -61,7 +58,6 @@ class SubcategoriaActivoContoller extends Controller
 
         $teams = Team::get();
 
-
         return view('admin.SubtipoActivos.index', compact('teams'));
     }
 
@@ -69,7 +65,7 @@ class SubcategoriaActivoContoller extends Controller
     {
         $tipos = Tipoactivo::get();
 
-        return view('admin.SubtipoActivos.create',compact('tipos'));
+        return view('admin.SubtipoActivos.create', compact('tipos'));
     }
 
     public function store(Request $request)
@@ -89,29 +85,33 @@ class SubcategoriaActivoContoller extends Controller
         return view('admin.SubtipoActivos.edit', compact('categorias'))->with('subcategoria', $subcategoria);
     }
 
-    public function update(Request $request, SubcategoriaActivo $subcategoria)
+    public function update(Request $request, $subcategoria)
     {
+        $subcategoria = SubcategoriaActivo::find($subcategoria);
+
         $subcategoria->update($request->all());
 
         return redirect()->route('admin.subtipoactivos.index');
     }
 
-    public function show(SubcategoriaActivo $tipos)
+    public function show(Request $request, $subcategoria)
     {
-        $tipos->load('team');
-        return view('admin.SubtipoActivos.show', compact('tipos'));
+        $subcategoria = SubcategoriaActivo::find($subcategoria);
+
+        return view('admin.SubtipoActivos.show', compact('subcategoria'));
     }
 
-    public function destroy(SubcategoriaActivo $tipos)
+    public function destroy($id)
     {
-        $tipos->delete();
-        return back()->with('deleted', 'Registro eliminado con éxito');
+        $subcategoria = SubcategoriaActivo::find($id);
+        $subcategoria->delete();
+        $subcategoria = SubcategoriaActivo::get();
+
+        return view('admin.SubtipoActivos.index', compact('subcategoria'));
     }
 
     public function massDestroy(Request $request)
     {
         SubcategoriaActivo::whereIn('id', request('ids'))->delete();
-
-
     }
 }

@@ -1,6 +1,22 @@
 @extends('layouts.admin')
 @section('content')
     {{ Breadcrumbs::render('admin.recursos.create') }}
+    <style>
+        .nav-link {
+            color: #345183 !important;
+        }
+
+        .nav-link.active {
+            background: #345183 !important;
+            color: white !important;
+            border: none !important;
+        }
+
+        .nav.nav-tabs {
+            border: none !important;
+        }
+
+    </style>
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Seguimiento de la </strong> Capacitación </h3>
@@ -12,7 +28,8 @@
                         <div class="nav nav-tabs" id="tabsSeguimientoCapacitaciones" role="tablist">
                             <a class="nav-link active" data-type="capacitacion" id="nav-capacitacion-tab" data-toggle="tab"
                                 href="#nav-capacitacion" role="tab" aria-controls="nav-capacitacion" aria-selected="true">
-                                <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
+                                <i class="mr-2 fas fa-chalkboard-teacher" style="font-size:20px;"
+                                    style="text-decoration:none;"></i>
                                 Capacitación
                             </a>
                             <a class="nav-link" data-type="participantes" id="nav-participantes-tab"
@@ -46,6 +63,7 @@
 @endsection
 
 @section('scripts')
+
     <script type="module">
         import timer from '{{ asset('js/timer/timer.js') }}';
         document.addEventListener('DOMContentLoaded', function() {
@@ -154,11 +172,52 @@
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
-                ]
+                ],
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
+                }
             };
+
+            if (recurso.ya_finalizo) {
+                dtOverrideGlobals.columns.unshift({
+                    data: 'id',
+                    name: 'id',
+                    render: function(data, type, row, meta) {
+                        return `
+                        <input ${row.pivot.asistio?'checked':''} type="checkbox" name="asistio" data-empleado="${row.id}" data-recurso="${recurso.id}">                            
+                        `;
+                    }
+                });
+            }
+
             const tblParticipantes = $("#tblParticipantes").DataTable(dtOverrideGlobals);
 
-            document.getElementById('tblParticipantes').addEventListener('click', function(e) {
+            document.getElementById('tblParticipantes').addEventListener('click', async function(e) {
+
+                if (e.target.getAttribute('name') == 'asistio') {
+                    const checked = e.target.checked;
+                    const empleado = e.target.getAttribute('data-empleado');
+                    const url = @json(route('admin.recursos.guardarAsistenciaCapacitacion', $recurso));
+                    let formData = new FormData();
+                    formData.append('asistio', checked);
+                    formData.append('empleado', empleado);
+                    const response = await fetch(url, {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    })
+                    const data = await response.json();
+                    if (data.estatus == 200) {
+                        toastr.success(data.mensaje);
+                    }
+
+                    if (data.estatus == 201) {
+                        toastr.success(data.mensaje);
+                    }
+                }
                 if (e.target.classList.contains('btnModal')) {
                     empleado = JSON.parse(unescape(e.target.getAttribute('data-empleado')));
                     let html = `
@@ -193,7 +252,8 @@
                     document.getElementById('certificado').addEventListener('change', function(e) {
                         const files = this.files;
                         document.getElementById('labelCertificado').classList.add('d-none');
-                        const informacionArchivo = document.getElementById('informacionArchivo');
+                        const informacionArchivo = document.getElementById(
+                            'informacionArchivo');
                         informacionArchivo.innerHTML =
                             `<strong><i class="fas fa-upload mr-2 text-primary"></i>${files.length} Archivo Seleccionado <i style="cursor: pointer;" class="fas fa-times" id="quitarSeleccionArchivo"></i></strong>`;
 

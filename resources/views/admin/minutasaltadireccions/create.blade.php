@@ -370,12 +370,22 @@
                         $("#cargando_participantes").show();
                     },
                     success: function(data) {
+                        let lista ="<ul class='list-group id=empleados-lista' >";
+                        $.each(data.usuarios, function (ind, usuario) {
+                            var result = `{"id":"${usuario.id}",
+                                "name":"${usuario.name}",
+                                "email":"${usuario.email}",
+                                "puesto":"${usuario.puesto}",
+                                "area":"${usuario.area.area}"
+                                }`;
+                            lista += "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario("+result+")' ><i class='mr-2 fas fa-user-circle'></i>"+usuario.name+"</button>";
+                        });
+                        lista += "</ul>";
+
                         $("#cargando_participantes").hide();
                         $("#participantes_sugeridos").show();
-                        let sugeridos = document.querySelector(
-                            "#participantes_sugeridos");
-                        sugeridos.innerHTML = data;
-
+                        let sugeridos = document.querySelector("#participantes_sugeridos");
+                        sugeridos.innerHTML = lista;
                         $("#participantes_search").css("background", "#FFF");
                     }
                 });
@@ -396,12 +406,11 @@
         });
 
         function seleccionarUsuario(user) {
-            console.log(user);
             $("#participantes_search").val(user.name);
             $("#id_empleado").val(user.id);
             $("#email").val(user.email);
             $("#puesto").val(user.puesto);
-            $("#area").val(user.area.area);
+            $("#area").val(user.area);
             $("#participantes_sugeridos").hide();
         }
 
@@ -410,6 +419,7 @@
             //form-participantes
 
             let participantes = tblParticipantes.rows().data().toArray();
+            // console.log(tblParticipantes.rows().data().toArray());
             let arrParticipantes = [];
             participantes.forEach(participante => {
                 arrParticipantes.push(participante[0])
@@ -451,7 +461,6 @@
 
             });
             document.getElementById('participantes').value = arrParticipantes;
-            console.log(arrParticipantes);
         }
     </script>
 

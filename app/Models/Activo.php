@@ -47,6 +47,7 @@ class Activo extends Model
         'fecha_alta',
         'sede',
         'documentos_relacionados',
+        'documento',
     ];
 
     protected $casts = [
@@ -72,7 +73,7 @@ class Activo extends Model
 
     public function subtipo()
     {
-        return $this->belongsTo(Tipoactivo::class, 'subtipo_id');
+        return $this->belongsTo(SubcategoriaActivo::class, 'subtipo_id');
     }
 
     public function dueno()
@@ -104,4 +105,8 @@ class Activo extends Model
     {
         return $this->belongsTo(Modelo::class, 'modelo', 'id');
     }
+    // public function documento_activo()
+    // {
+    //     return $this->hasMany(DocumentoActivo::class, 'activo_id', 'id');
+    // }
 }

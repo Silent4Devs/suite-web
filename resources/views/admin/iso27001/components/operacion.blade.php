@@ -1,14 +1,15 @@
 @can('operacion_access')
+    <div href="#" class="btn btn-secundario btn_modal_video" data-toggle="modal" data-target="#modal_guia_general"><i class="far fa-play-circle mr-2"></i> GUÍA DE USO</div>
     <ul class="mt-4">
         <li><a href="{{ route('admin.planificacion-controls.index') }}">
                 <div>
-                    <i class="fas fa-clipboard-list"></i>
+                    <i class="bi bi-list-stars"></i> <br>
                     Planificación y Control
                 </div>
             </a></li>
         <li><a href="{{ route('admin.tratamiento-riesgos.index') }}">
                 <div>
-                    <i class="fas fa-viruses"></i>
+                    <i class="bi bi-exclamation-square"></i> <br>
                     Tratamiento de riesgos
                 </div>
             </a></li>

@@ -29,10 +29,11 @@
             outline: 0;
         }
 
-        .form-group label{
+        .form-group label {
             color: #3086AF;
         }
-        .card{
+
+        .card {
             background-color: #FCFCFC;
         }
 
@@ -43,224 +44,237 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                
-                    @include('partials.flashMessages')
-                    <div class="row">
-                        <div class="col-sm-5 col-lg-5 col-5">
-                            <div class="row">
-                                <div class="text-center col-sm-12 col-lg-12 col-12 justify-content-center align-items-center">
-                                    <div class="card">
-                                        <div class="card-body" style="background-color: #788BAC; color:#fff;">
-                                            @if (auth()->user()->empleado)
-                                                <div>
-                                                    <img class="rounded-circle"
-                                                        style="height: 140px;clip-path: circle(70px at 50% 50%); position: relative; display:initial"
-                                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                                        alt="{{ auth()->user()->empleado->name }}">
-                                                    <label for="imgProfile"
-                                                        style="position: relative;bottom: -73px;right: 53px;font-size: 18px;"><i
-                                                            class="fas fa-camera"></i></label>
-                                                    <input id="imgProfile" type="file" name="image" class="image"
-                                                        style="display:none">
-                                                </div>
-                                                <div class="mt-1">
-                                                    <h6 style="color: #fff; font-size: 20px !important; margin-top: 31px;"> 
-                                                        {{ auth()->user()->empleado->name }}
-                                                    </h6>
-                                                    <p class="m-0">
-                                                        <i class="fa fa-at"></i> Email:
-                                                        {{ auth()->user()->empleado->email }}
-                                                    </p>
-                                                    <p class="mt-2">
-                                                        @foreach (auth()->user()->roles as $rol)
-                                                            <span class="badge"
-                                                                style="font-size:13px; background-color: #006DDB">{{ $rol->title }}</span>
-                                                        @endforeach
-                                                    </p>
-                                                </div>
-                                            @else
-                                                <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
-                                            @endif
-                                        </div>
+
+                @include('partials.flashMessages')
+                <div class="row">
+                    <div class="col-sm-5 col-lg-5 col-5">
+                        <div class="row">
+                            <div class="text-center col-sm-12 col-lg-12 col-12 justify-content-center align-items-center">
+                                <div class="card">
+                                    <div class="card-body" style="background-color: #788BAC; color:#fff;">
+                                        @if (auth()->user()->empleado)
+                                            <div>
+                                                <img class="rounded-circle"
+                                                    style="height: 140px;clip-path: circle(70px at 50% 50%); position: relative; display:initial"
+                                                    src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
+                                                    alt="{{ auth()->user()->empleado->name }}">
+                                                <label for="imgProfile"
+                                                    style="position: relative;bottom: -73px;right: 53px;font-size: 18px;"><i
+                                                        class="fas fa-camera"></i></label>
+                                                <input id="imgProfile" type="file" name="image" class="image"
+                                                    style="display:none">
+                                            </div>
+                                            <div class="mt-1">
+                                                <h6 style="color: #fff; font-size: 20px !important; margin-top: 31px;">
+                                                    {{ auth()->user()->empleado->name }}
+                                                </h6>
+                                                <p class="m-0">
+                                                    <i class="fa fa-at"></i> Email:
+                                                    {{ auth()->user()->empleado->email }}
+                                                </p>
+                                                <p class="mt-2">
+                                                    @foreach (auth()->user()->roles as $rol)
+                                                        <span class="badge"
+                                                            style="font-size:13px; background-color: #006DDB">{{ $rol->title }}</span>
+                                                    @endforeach
+                                                </p>
+                                            </div>
+                                        @else
+                                            <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
+                                        @endif
                                     </div>
-                                </div>
-                                <div class="col-sm-12 col-lg-12 col-12">
-                                    <div class="card">
-
-                                        <div class="card-body">
-                                            <h6 style="font-size:18px;">{{ trans('global.change_password') }}</h6>
-                                            <hr>
-                                            <form method="POST" action="{{ route('profile.password.update') }}">
-                                                @csrf
-                                                <div class="form-group">
-                                                    <label class="required" for="title">Nueva
-                                                        contraseña</label>
-                                                    <input
-                                                        class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                                                        type="password" name="password" id="password" required>
-                                                    @if ($errors->has('password'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('password') }}
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="required" for="title">Confirmar nueva
-                                                        {{ trans('cruds.user.fields.password') }}</label>
-                                                    <input class="form-control" type="password" name="password_confirmation"
-                                                        id="password_confirmation" required>
-                                                </div>
-                                                <div class="form-group" style="text-align: end">
-                                                    <button class="btn btn-danger" type="submit">
-                                                        {{ trans('global.save') }}
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                    <div class="card card-body card_vacia">
-                                        <div class="row card_admin_oculto">
-                                            @if (auth()->user()->isAdmin)
-                                                <div class="col-6">
-                                                    <h6 style="font-size:18px;">Permisos del usuario</h6>
-                                                </div>
-                                                <div class="col-6" style="font-size:10px; color: #fff;">
-                                                    
-                                                    <div class="" style="background-color:#006DDB; padding: 10px;">
-                                                        <i class="mr-2 fa fa-info-circle"></i>El administrador tiene todos los permisos
-                                                    </div>
-                                                
-                                                </div>
-                                             @else
-                                                <div class="col-6">
-                                                    <h6 style="font-size:18px;">Permisos del usuario</h6>
-                                                </div>
-                                                <div class="col-6" style="font-size:10px; color: #fff;">
-                                                    
-                                                    <div class="" style="background-color:#4B4C4F; padding: 10px;">
-                                                        <i class="mr-2 fa fa-info-circle"></i>El {{auth()->user()->roles[0]->title}} tiene los siguientes permisos
-                                                    </div>
-                                                
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    
-
                                 </div>
                             </div>
-                        </div>
+                            <div class="col-sm-12 col-lg-12 col-12">
+                                <div class="card">
 
-                        <div class="col-sm-7 col-lg-7 col-7">
-                            <div class="row">
-                                <div class="col-sm-12 col-lg-12 col-12">
-                                    <div class="card">
-
-                                        <div class="card-body">
-                                            <h6 style="font-size:18px;">Datos de perfil</h6>
-                                            <hr>
-                                            <form method="POST" action="{{ route('admin.empleado.update-profile') }}" class="row">
-                                                @csrf
-                                                <div class="form-group col-6">
-                                                    <label class="required"
-                                                        for="name">{{ trans('cruds.user.fields.name') }}</label>
-                                                    <input
-                                                        class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                                        type="text" name="name" id="name"
-                                                        value="{{ old('name', auth()->user()->empleado->name) }}" required>
-                                                    @if ($errors->has('name'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('name') }}
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                                <div class="form-group col-6">
-                                                    <label class="required"
-                                                        for="title">{{ trans('cruds.user.fields.email') }}</label>
-                                                    <input
-                                                        class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                                                        type="text" name="email" id="email" readonly disabled
-                                                        value="{{ old('email', auth()->user()->empleado->email) }}">
-                                                    @if ($errors->has('email'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('email') }}
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                                <div class="form-group col-6">
-                                                    <label for="cumpleaños" class="required">Fecha de nacimiento</label>
-                                                    <input
-                                                        class=" form-control {{ $errors->has('cumpleaños') ? 'is-invalid' : '' }}"
-                                                        type="date" name="cumpleaños" id="cumpleaños"
-                                                        value="{{ old('cumpleaños', auth()->user()->empleado->cumpleaños) }}">
-                                                    @if ($errors->has('cumpleaños'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('cumpleaños') }}
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                                <div class="form-group col-6">
-                                                    <label for="">Teléfono móvil</label>
-                                                    <input
-                                                        class="form-control {{ $errors->has('telefono_movil') ? 'is-invalid' : '' }}"
-                                                        type="tel" name="telefono_movil" id="telefono_movil"
-                                                        value="{{ old('telefono_movil', auth()->user()->empleado->telefono_movil) }}">
-                                                    @if ($errors->has('telefono_movil'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('telefono_movil') }}
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                                <div class="form-check col-12" style="display:flex; justify-content:space-between;">
-                                                    <input type="checkbox" class="form-check-input" id="ValidacionNumero" name="mostrar_telefono" {{auth()->user()->empleado->mostrar_telefono ? "checked": ""}}>
-                                                    <label class="form-check-label" for="exampleCheck1" style="font-size:12px;">Mostrar mi telefono en directorio organizacional</label>
-
-                                                    <button class="btn btn-danger" type="submit">
-                                                        {{ trans('global.save') }}
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
+                                    <div class="card-body">
+                                        <h6 style="font-size:18px;">{{ trans('global.change_password') }}</h6>
+                                        <hr>
+                                        <form method="POST" action="{{ route('profile.password.update') }}">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label class="required" for="title">Nueva
+                                                    contraseña</label>
+                                                <input
+                                                    class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                                                    type="password" name="password" id="password" required>
+                                                @if ($errors->has('password'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('password') }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="required" for="title">Confirmar nueva
+                                                    {{ trans('cruds.user.fields.password') }}</label>
+                                                <input class="form-control" type="password" name="password_confirmation"
+                                                    id="password_confirmation" required>
+                                            </div>
+                                            <div class="form-group" style="text-align: end">
+                                                <button class="btn btn-danger" type="submit">
+                                                    {{ trans('global.save') }}
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                                <div class="row" style="padding: 18px;">
-                                    <div class="col-sm-12 col-lg-12 col-12">
-                                        @if (Route::has('profile.password.toggleTwoFactor'))
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <form method="POST" action="{{ route('profile.password.toggleTwoFactor') }}"  style="display: flex; justify-content: space-between; align-items: center;">
-                                                        @csrf
-                                                            <h6 style="font-size:18px;">Autentificación en dos facotes</h6>
-                                                            <button class="btn btn-danger" type="submit">
-                                                                {{ auth()->user()->two_factor ? 'Deshabilitar' : 'Habilitar' }}
-                                                            </button>
-                                                    </form>
+
+                                <div class="card card-body card_vacia">
+                                    <div class="row card_admin_oculto">
+                                        @if (auth()->user()->isAdmin)
+                                            <div class="col-6">
+                                                <h6 style="font-size:18px;">Permisos del usuario</h6>
+                                            </div>
+                                            <div class="col-6" style="font-size:10px; color: #fff;">
+
+                                                <div class=""
+                                                    style="background-color:#006DDB; padding: 10px;">
+                                                    <i class="mr-2 fa fa-info-circle"></i>El administrador tiene todos los
+                                                    permisos
                                                 </div>
+
+                                            </div>
+                                        @else
+                                            <div class="col-6">
+                                                <h6 style="font-size:18px;">Permisos del usuario</h6>
+                                            </div>
+                                            <div class="col-6" style="font-size:10px; color: #fff;">
+
+                                                <div class=""
+                                                    style="background-color:#4B4C4F; padding: 10px;">
+                                                    <i class="mr-2 fa fa-info-circle"></i>El
+                                                    {{ auth()->user()->roles[0]->title }} tiene los siguientes permisos
+                                                </div>
+
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="col-sm-12 col-lg-12 col-12">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-lg-12 col-12">
-                                                <div class="card">
-                                                    <div class="card-body"  style="height:355px !important;">
-                                                        <h6 style="font-size:18px;">Contactos de emergencia</h6>
-                                                        <hr style="opacity: 0;">
-                                                        <form action="{{ route('admin.empleado.update-related-info-profile') }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @include('admin.empleados.components.contactos-emergencia',[
-                                                            'empleado'=>auth()->user()->empleado
-                                                            ])
-                                                            <div class="form-group" style="text-align: end">
-                                                                <button class="btn btn-danger" type="submit">
-                                                                    {{ trans('global.save') }}
-                                                                </button>
-                                                            </div>
-                                                        </form>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-7 col-lg-7 col-7">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-12 col-12">
+                                <div class="card">
+
+                                    <div class="card-body">
+                                        <h6 style="font-size:18px;">Datos de perfil</h6>
+                                        <hr>
+                                        <form method="POST" action="{{ route('admin.empleado.update-profile') }}"
+                                            class="row">
+                                            @csrf
+                                            <div class="form-group col-6">
+                                                <label class="required"
+                                                    for="name">{{ trans('cruds.user.fields.name') }}</label>
+                                                <input
+                                                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                                    type="text" name="name" id="name"
+                                                    value="{{ old('name', auth()->user()->empleado->name) }}" required
+                                                    readonly disabled>
+                                                @if ($errors->has('name'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('name') }}
                                                     </div>
+                                                @endif
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label class="required"
+                                                    for="title">{{ trans('cruds.user.fields.email') }}</label>
+                                                <input
+                                                    class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                                                    type="text" name="email" id="email" readonly disabled
+                                                    value="{{ old('email', auth()->user()->empleado->email) }}">
+                                                @if ($errors->has('email'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('email') }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label for="cumpleaños" class="required">Fecha de nacimiento</label>
+                                                <input
+                                                    class=" form-control {{ $errors->has('cumpleaños') ? 'is-invalid' : '' }}"
+                                                    type="date" name="cumpleaños" id="cumpleaños"
+                                                    value="{{ old('cumpleaños', auth()->user()->empleado->cumpleaños) }}">
+                                                @if ($errors->has('cumpleaños'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('cumpleaños') }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label for="">Teléfono móvil</label>
+                                                <input
+                                                    class="form-control {{ $errors->has('telefono_movil') ? 'is-invalid' : '' }}"
+                                                    type="tel" name="telefono_movil" id="telefono_movil"
+                                                    value="{{ old('telefono_movil', auth()->user()->empleado->telefono_movil) }}">
+                                                @if ($errors->has('telefono_movil'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('telefono_movil') }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="form-check col-12"
+                                                style="display:flex; justify-content:space-between;">
+                                                <input type="checkbox" class="form-check-input" id="ValidacionNumero"
+                                                    name="mostrar_telefono"
+                                                    {{ auth()->user()->empleado->mostrar_telefono ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="exampleCheck1"
+                                                    style="font-size:12px;">Mostrar mi telefono en directorio
+                                                    organizacional</label>
+
+                                                <button class="btn btn-danger" type="submit">
+                                                    {{ trans('global.save') }}
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="padding: 18px;">
+                                <div class="col-sm-12 col-lg-12 col-12">
+                                    @if (Route::has('profile.password.toggleTwoFactor'))
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <form method="POST"
+                                                    action="{{ route('profile.password.toggleTwoFactor') }}"
+                                                    style="display: flex; justify-content: space-between; align-items: center;">
+                                                    @csrf
+                                                    <h6 style="font-size:18px;">Autentificación en dos facotes</h6>
+                                                    <button class="btn btn-danger" type="submit">
+                                                        {{ auth()->user()->two_factor ? 'Deshabilitar' : 'Habilitar' }}
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="col-sm-12 col-lg-12 col-12">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-lg-12 col-12">
+                                            <div class="card">
+                                                <div class="card-body" style="height:355px !important;">
+                                                    <h6 style="font-size:18px;">Contactos de emergencia</h6>
+                                                    <hr style="opacity: 0;">
+                                                    <form
+                                                        action="{{ route('admin.empleado.update-related-info-profile') }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @include('admin.empleados.components.contactos-emergencia',[
+                                                        'empleado'=>auth()->user()->empleado
+                                                        ])
+                                                        <div class="form-group" style="text-align: end">
+                                                            <button class="btn btn-danger" type="submit">
+                                                                {{ trans('global.save') }}
+                                                            </button>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -268,34 +282,35 @@
                                 </div>
                             </div>
                         </div>
-
-                        @if (!auth()->user()->isAdmin)
-                            @foreach (auth()->user()->roles as $rol)
-                                <div class="col-12">
-                                    <div class="card card-body">
-                                        <h6 style="font-size:18px;">Permisos del usuario</h6>
-                                        <hr>
-                                        <table class="table w-100" id="tblPermisos">
-                                            <thead>
-                                                <th>No.</th>
-                                                <th>Nombre</th>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($rol->permissions as $idx => $permission)
-                                                    <tr>
-                                                        <td>{{ $idx + 1 }}</td>
-                                                        <td>{{ $permission->name }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @endif
-                        
                     </div>
-                    {{-- <div class="mt-3 row">
+
+                    @if (!auth()->user()->isAdmin)
+                        @foreach (auth()->user()->roles as $rol)
+                            <div class="col-12">
+                                <div class="card card-body">
+                                    <h6 style="font-size:18px;">Permisos del usuario</h6>
+                                    <hr>
+                                    <table class="table w-100" id="tblPermisos">
+                                        <thead>
+                                            <th>No.</th>
+                                            <th>Nombre</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($rol->permissions as $idx => $permission)
+                                                <tr>
+                                                    <td>{{ $idx + 1 }}</td>
+                                                    <td>{{ $permission->name }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+
+                </div>
+                {{-- <div class="mt-3 row">
 
                         <div class="col-sm-12 col-lg-6 col-12">
                             <div class="row">
@@ -320,10 +335,10 @@
                             </div>
                         </div>
                     </div> --}}
-                    <div class="row">
-                        
-                    </div>
-               
+                <div class="row">
+
+                </div>
+
             </div>
         </div>
         <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

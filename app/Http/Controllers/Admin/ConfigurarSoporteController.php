@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyConfiguracionSoporteRequest;
-use Illuminate\Http\Request;
 use App\Models\ConfigurarSoporteModel;
 use App\Models\Empleado;
 use App\Models\Puesto;
 use Composer\Util\Http\Response;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ConfigurarSoporteController extends Controller
@@ -79,17 +79,18 @@ class ConfigurarSoporteController extends Controller
         // dd($ConfigurarSoporteModel);
         // $ConfigurarSoporteModel = ConfigurarSoporteModel::join('empleados', 'empleados.id', '=', 'configuracion_soporte.puesto')->get();
 
-
         return view('admin.confSoporte.index', compact('ConfigurarSoporteModel'));
-
     }
+
     public function create()
     {
         $ConfigurarSoporteModel = ConfigurarSoporteModel::all();
         $empleados = Empleado::get();
         $puestos = Puesto::get();
-        return view('admin.confSoporte.create', compact('ConfigurarSoporteModel','empleados', 'puestos' ));
+
+        return view('admin.confSoporte.create', compact('ConfigurarSoporteModel', 'empleados', 'puestos'));
     }
+
     // StorePartesInteresadaRequest
     public function store(Request $request)
     {
@@ -108,8 +109,9 @@ class ConfigurarSoporteController extends Controller
         // $ConfigurarSoporteModel->puesto = $request->puesto;
         // $ConfigurarSoporteModel->save();
 
-         return redirect()->route('admin.configurar-soporte.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.configurar-soporte.index')->with('success', 'Guardado con éxito');
     }
+
     public function edit($ConfigurarSoporteModel)
     {
         // dd($ConfigurarSoporteModel);
@@ -117,6 +119,7 @@ class ConfigurarSoporteController extends Controller
         // dd($ConfigurarSoporteModel);
         $empleados = Empleado::get();
         $puestos = Puesto::get();
+
         return view('admin.confSoporte.edit', compact('ConfigurarSoporteModel', 'empleados', 'puestos'));
     }
 
@@ -137,6 +140,7 @@ class ConfigurarSoporteController extends Controller
 
         return redirect()->route('admin.configurar-soporte.index')->with('success', 'Editado con éxito');
     }
+
     public function destroy($ConfigurarSoporteModel)
     {
 
@@ -157,11 +161,11 @@ class ConfigurarSoporteController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function visualizarSoporte(Request $request){
+    public function visualizarSoporte(Request $request)
+    {
         $ConfigurarSoporteModel = ConfigurarSoporteModel::join('empleados', 'empleados.id', '=', 'configuracion_soporte.id_elaboro')
         ->join('puestos', 'puestos.id', '=', 'empleados.puesto_id')
         ->get();
-
 
         return view('admin.soporte.index', compact('ConfigurarSoporteModel'));
     }
@@ -174,6 +178,4 @@ class ConfigurarSoporteController extends Controller
         // return response()->json([$empleados->extension]);
         return response()->json(['id_puesto' => $empleados->id, 'puesto' => $empleados->puesto, 'telefono' => $empleados->telefono, 'extension' => $empleados->extension, 'telefono_movil' => $empleados->telefono_movil, 'email' => $empleados->email]);
     }
-
 }
-

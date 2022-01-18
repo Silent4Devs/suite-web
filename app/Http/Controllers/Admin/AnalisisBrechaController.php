@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Functions\GenerateAnalisisB;
 use App\Functions\Porcentaje;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyAnalisisBrechasRequest;
 use App\Models\AnalisisBrecha;
 use App\Models\Empleado;
 use App\Models\GapDo;
@@ -180,7 +181,7 @@ class AnalisisBrechaController extends Controller
      * @param  \App\Models\AnalisisBrecha  $analisisBrecha
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AnalisisBrecha $analisisBrecha)
+    public function update(Request $request, $id)
     {
         $analisisBrecha = AnalisisBrecha::find($id);
 
@@ -201,7 +202,16 @@ class AnalisisBrechaController extends Controller
      * @param  \App\Models\AnalisisBrecha  $analisisBrecha
      * @return \Illuminate\Http\Response
      */
-    public function massDestroy(Request $request)
+    public function destroy($AnalisisBrecha)
+    {
+        //  abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $AnalisisBrecha = AnalisisBrecha::find($AnalisisBrecha);
+        $AnalisisBrecha->delete();
+
+        return back()->with('deleted', 'Registro eliminado con éxito');
+    }
+
+    public function massDestroy(MassDestroyAnalisisBrechasRequest $request)
     {
         AnalisisBrecha::whereIn('id', request('ids'))->delete();
 

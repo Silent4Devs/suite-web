@@ -33,11 +33,12 @@
 
                         </div>
                     </nav>
+                    @include('admin.recursos.components.parciales.loader')
                     <form id="form-informacion-general" method="POST"
                         action="{{ route('admin.recursos.update', $recurso) }}" enctype="multipart/form-data"
                         class="mt-3 row">
                         @csrf
-                        <div class="tab-content col-12" id="nav-tabContent">
+                        <div class="tab-content col-12" id="nav-tabContent" style="position:relative">
                             <div class="tab-pane fade show active" id="nav-general" role="tabpanel"
                                 aria-labelledby="nav-general-tab">
                                 @include('admin.recursos.components.configuracion-inicial')
@@ -49,17 +50,17 @@
                                 @include('admin.recursos.components.invitaciones')
                             </div>
                         </div>
-                        <div class="text-right form-group col-12">
+                        {{-- <div class="text-right form-group col-12">
                             <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                             @if ($recurso->estatus == 'Borrador' || $recurso->estatus == null)
                                 <button class="btn btn-danger" type="submit" id="btnGuardarDraftRecurso">
-                                    Draft
+                                    Borrador
                                 </button>
                             @endif
                             <button class="btn btn-danger" type="submit" id="btnGuardarRecurso">
                                 Enviar
                             </button>
-                        </div>
+                        </div> --}}
                     </form>
                 </div>
             </div>

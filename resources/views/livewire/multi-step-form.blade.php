@@ -432,7 +432,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="px-1 py-2 mb-3 rounded shadow-sm"
-                                            style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                            style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                             <div class="row w-100">
                                                 <div
                                                     class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -664,7 +664,7 @@
                                 <div class="row justify-content-center align-items-center">
                                     <div class="col-12">
                                         <div class="px-1 py-2 mb-3 rounded shadow-sm"
-                                            style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                            style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                             <div class="row w-100">
                                                 <div
                                                     class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -793,7 +793,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="px-1 py-2 mb-3 rounded shadow-sm"
-                                    style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                    style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                     <div class="row w-100">
                                         <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                             <div class="w-100">
@@ -975,7 +975,7 @@
                                     Define los periodos que requieras para la evaluación
                                 </p> --}}
                                 <div class="px-1 py-2 mb-3 rounded shadow-sm"
-                                    style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                    style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                     <div class="row w-100">
                                         <div
                                             class="text-center col-1 align-items-center d-flex justify-content-center">
