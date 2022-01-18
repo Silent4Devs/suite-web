@@ -142,15 +142,16 @@ class RecursosController extends Controller
         }
 
         if ($request->isElearning) {
-            $empleados = Empleado::select('id', 'name', 'email')->find($request->participantes)->toArray();
-
-            $emails = Http::post(env('APP_ELEARNING') . '/api/users', [
-                'students' => json_encode($empleados),
-                'course' =>  $request->cursoscapacitaciones,
-            ]);
-            foreach ($emails->json() as $email) {
-                $empleado = Empleado::where('email', $email['email'])->first();
-                Mail::to($empleado->email)->send(new ElearningInscripcionMail($empleado));
+            if ($request->estatus == 'Enviado') {
+                $empleados = Empleado::select('id', 'name', 'email')->find($request->participantes)->toArray();
+                $emails = Http::post(env('APP_ELEARNING') . '/api/users', [
+                    'students' => json_encode($empleados),
+                    'course' =>  $request->cursoscapacitaciones,
+                ]);
+                foreach ($emails->json() as $email) {
+                    $empleado = Empleado::where('email', $email['email'])->first();
+                    Mail::to($empleado->email)->send(new ElearningInscripcionMail($empleado));
+                }
             }
         }
 
