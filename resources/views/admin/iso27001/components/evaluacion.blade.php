@@ -3,13 +3,13 @@
     <ul class="mt-4">
         <li><a href="{{ route('admin.indicadores-sgsis.index') }}">
                 <div>
-                    <i class="fas fa-list-ul"></i>
+                    <i class="bi bi-window-desktop"></i> <br>
                     Indicadores SGSI
                 </div>
             </a></li>
         <li><a href="{{ route('admin.desk.index') }}">
                 <div>
-                    <i class="fas fa-lock"></i>
+                    <i class="bi bi-cone-striped"></i> <br>
                     Incidentes de Seguridad
                 </div>
             </a></li>
@@ -21,25 +21,25 @@
             </a></li> --}}
         <li><a href="{{ route('admin.auditoria-anuals.index') }}">
                 <div>
-                    <i class="far fa-calendar-alt"></i>
+                    <i class="bi bi-calendar4-range"></i> <br>
                     Programa Anual de Auditoria
                 </div>
             </a></li>
         <li><a href="{{ route('admin.plan-auditoria.index') }}">
                 <div>
-                    <i class="fas fa-clipboard-list"></i>
+                    <i class="bi bi-clipboard-data"></i> <br>
                     Plan de Auditoria
                 </div>
             </a></li>
         <li><a href="{{ route('admin.auditoria-internas.index') }}">
                 <div>
-                    <i class="fas fa-network-wired"></i>
+                    <i class="bi bi-diagram-2"></i> <br>
                     Auditoria Interna
                 </div>
             </a></li>
         <li><a href="{{ route('admin.revision-direccions.index') }}">
                 <div>
-                    <i class="fas fa-tasks"></i>
+                    <i class="bi bi-journal-check"></i> <br>
                     Revisión por dirección
                 </div>
             </a></li>

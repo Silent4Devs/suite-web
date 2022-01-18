@@ -3,7 +3,7 @@
     <ul class="mt-4">
         <li><a href="#" data-ventana="riesgos" data-ruta="Análisis de riesgos" class="btn_ventana_menu">
                 <div>
-                    <i class="fas fa-exclamation-triangle"></i>
+                    <i class="bi bi-exclamation-triangle"></i> <br>
                     Análisis de riesgos
                 </div>
             </a></li>
@@ -34,13 +34,13 @@
         </div>
         <li><a href="{{ route('admin.paneldeclaracion.index') . '#controles' }}">
                 <div>
-                    <i class="fas fa-user-lock"></i>
+                    <i class="bi bi-file-earmark-zip"></i> <br>
                     Asignación de Controles
                 </div>
             </a></li>
         <li><a href="{{ route('admin.declaracion-aplicabilidad.index') . '#declaracion' }}">
                 <div>
-                    <i class="far fa-file"></i>
+                    <i class="bi bi-file-diff"></i> <br>
                     Declaración de aplicabilidad
                 </div>
             </a></li>
@@ -52,7 +52,7 @@
             </a></li> --}}
         <li><a href="{{ route('admin.objetivosseguridads.index') }}">
                 <div>
-                    <i class="fas fa-lock"></i>
+                    <i class="bi bi-shield-lock"></i>  <br>
                     Objetivos de seguridad
                 </div>
             </a></li>

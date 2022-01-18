@@ -35045,3 +35045,8 @@ h3 {
 .dataTables_filter input{
   background-color: rgba(0, 0, 0, 0) !important;
 }
+
+.nav-tabs .nav-link i{
+  font-size: 20px;
+  margin-right: 10px;
+} 

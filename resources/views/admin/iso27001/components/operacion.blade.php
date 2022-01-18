@@ -3,13 +3,13 @@
     <ul class="mt-4">
         <li><a href="{{ route('admin.planificacion-controls.index') }}">
                 <div>
-                    <i class="fas fa-clipboard-list"></i>
+                    <i class="bi bi-list-stars"></i> <br>
                     Planificación y Control
                 </div>
             </a></li>
         <li><a href="{{ route('admin.tratamiento-riesgos.index') }}">
                 <div>
-                    <i class="fas fa-viruses"></i>
+                    <i class="bi bi-exclamation-square"></i> <br>
                     Tratamiento de riesgos
                 </div>
             </a></li>

@@ -3,37 +3,37 @@
     <ul class="mt-4">
         <li><a href="{{ url('/admin/analisisdebrechas') }}">
                 <div>
-                    <i class="fas fa-search"></i>
+                    <i class="bi bi-binoculars"></i><br>
                     Análisis de brechas
                 </div>
             </a></li>
         <li><a href="{{ route('admin.planTrabajoBase.index') }}">
                 <div>
-                    <i class="fas fa-stream"></i>
+                    <i class="bi bi-file-earmark-arrow-up"></i><br>
                     Plan de implementación
                 </div>
             </a></li>
         <li><a href="{{ route('admin.partes-interesadas.index') }}">
                 <div>
-                    <i class="far fa-handshake"></i>
+                    <i class="bi bi-layout-wtf"></i><br>
                     Partes interesadas
                 </div>
             </a></li>
         <li><a href="{{ route('admin.matriz-requisito-legales.index') }}">
                 <div>
-                    <i class="fas fa-balance-scale"></i>
+                    <i class="fas fa-balance-scale"></i><br>
                     Matriz de requisitos legales y regulatorios
                 </div>
             </a></li>
         <li><a href="{{ route('admin.entendimiento-organizacions.index') }}">
                 <div>
-                    <i class="far fa-list-alt"></i>
+                    <i class="bi bi-file-earmark-ruled"></i><br>
                     Análisis FODA
                 </div>
             </a></li>
         <li><a href="{{ route('admin.alcance-sgsis.index') }}">
                 <div>
-                    <i class="fas fa-bullseye"></i>
+                    <i class="bi bi-bookmark-heart"></i><br>
                     Determinación de alcance
                 </div>
             </a></li>

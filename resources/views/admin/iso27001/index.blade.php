@@ -213,37 +213,37 @@
                 <div class="nav nav-tabs" id="tabsIso27001" role="tablist">
                     <a class="nav-link active" id="nav-contexto-tab" data-type="contexto" data-toggle="tab"
                         href="#nav-contexto" role="tab" aria-controls="nav-contexto" aria-selected="true">
-                        <i class="mr-2 fas fa-box" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="bi bi-body-text"></i>
                         Contexto
                     </a>
                     <a class="nav-link" id="nav-liderazgo-tab" data-type="liderazgo" data-toggle="tab"
                         href="#nav-liderazgo" role="tab" aria-controls="nav-liderazgo" aria-selected="false">
-                        <i class="mr-2 fas fa-gavel" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="bi bi-brightness-high"></i>
                         Liderazgo
                     </a>
                     <a class="nav-link" id="nav-planificacion-tab" data-type="planificacion" data-toggle="tab"
                         href="#nav-planificacion" role="tab" aria-controls="nav-planificacion" aria-selected="false">
-                        <i class="mr-2 fas fa-tasks" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="bi bi-archive"></i>
                         Planificación
                     </a>
                     <a class="nav-link" id="nav-soporte-tab" data-type="soporte" data-toggle="tab" href="#nav-soporte"
                         role="tab" aria-controls="nav-soporte" aria-selected="false">
-                        <i class="mr-2 fas fa-headset" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="bi bi-headset"></i>
                         Soporte
                     </a>
                     <a class="nav-link" id="nav-operacion-tab" data-type="operacion" data-toggle="tab"
                         href="#nav-operacion" role="tab" aria-controls="nav-operacion" aria-selected="false">
-                        <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="bi bi-briefcase"></i>
                         Operación
                     </a>
                     <a class="nav-link" id="nav-evaluacion-tab" data-type="evaluacion" data-toggle="tab"
                         href="#nav-evaluacion" role="tab" aria-controls="nav-evaluacion" aria-selected="false">
-                        <i class="mr-2 fas fa-file-signature" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="bi bi-clipboard-check"></i>
                         Evaluación
                     </a>
                     <a class="nav-link" id="nav-mejora-tab" data-type="mejora" data-toggle="tab" href="#nav-mejora"
                         role="tab" aria-controls="nav-mejora" aria-selected="false">
-                        <i class="mr-2 fas fa-infinity" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="bi bi-award"></i>
                         Mejora
                     </a>
                 </div>

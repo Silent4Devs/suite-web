@@ -3,25 +3,25 @@
     <ul class="mt-4">
         <li><a href="{{ route('admin.comiteseguridads.index') }}">
                 <div>
-                    <i class="fas fa-shield-alt"></i>
+                    <i class="bi bi-shield"></i> <br>
                     Conformación del comité de seguridad
                 </div>
             </a></li>
         <li><a href="{{ route('admin.minutasaltadireccions.index') }}">
                 <div>
-                    <i class="fas fa-columns"></i>
+                    <i class="bi bi-file-earmark-text"></i>  <br>
                     Minutas de sesiones con alta dirección
                 </div>
             </a></li>
         <li><a href="{{ route('admin.evidencias-sgsis.index') }}">
                 <div>
-                    <i class="far fa-window-restore"></i>
+                    <i class="bi bi-window-desktop"></i> <br>
                     Evidencias de asignación de recursos al SGSI
                 </div>
             </a></li>
         <li><a href="{{ route('admin.politica-sgsis.index') }}">
                 <div>
-                    <i class="fas fa-landmark"></i>
+                    <i class="bi bi-bank"></i> <br>
                     Política SGSI
                 </div>
             </a></li>
