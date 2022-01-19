@@ -69,7 +69,7 @@
         </label>
         {{-- Modulo para tipo de objetivo --}}
         <div class="row align-items-center">
-            <div class="col-11" style="margin-top:-9px">
+            <div class="col-10" style="margin-top:-9px">
                 @livewire('tipo-objetivos-select',['tipo_seleccionado'=>$tipo_seleccionado])
             </div>
             @if (!$editar)
@@ -77,12 +77,18 @@
                     <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
                         data-toggle="modal" data-target="#tipoObjetivoModal" title="Agregar Tipo"><i
                             class="fas fa-plus"></i></button>
+                    {{-- <button type="button" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></button> --}}
+                    {{-- <a href="{{ route('admin.glosarios.edit',$perspectiva->id )}}"><i class="fas fa-edit"></i></a> --}}
+                     <a href="{{ route('admin.Perspectiva.index')}}" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
                 </div>
             @endif
         </div>
+
         @livewire('tipo-objetivos-create')
         {{-- Fin Modulo para tipo de competencia --}}
+
     </div>
+
 </div>
 <div class="col-sm-12 col-lg-6 col-md-6 col-12">
     <div class="form-group">
@@ -133,14 +139,15 @@
         </label>
         {{-- Modulo para metrica de objetivo --}}
         <div class="row align-items-center">
-            <div class="col-11" style="margin-top:-9px">
+            <div class="col-10" style="margin-top:-11px">
                 @livewire('metrica-objetivo-select',['metrica_seleccionada'=>$metrica_seleccionada])
             </div>
             @if (!$editar)
-                <div class="p-0 col" style="margin-top: -26px;height: 28px;margin-left: -10px;">
+                <div class="p-1 col" style="margin-top:-48px;height: 38px;margin-left: -12px;">
                     <button id="btnAgregarMetrica" class="text-white btn btn-sm"
                         style="background:#3eb2ad;height: 32px;" data-toggle="modal" data-target="#metricaObjetivoModal"
                         title="Agregar unidad"><i class="fas fa-plus"></i></button>
+                    <a href="{{ route('admin.Metrica.index')}}" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
                 </div>
             @endif
         </div>

@@ -140,9 +140,9 @@
                 }, {
                     data: 'competencias',
                     render: function(data, type, row, meta) {
+                        console.log(data);
                         let html = '<div>';
                         data.forEach(competencia => {
-                            console.log(competencia);
                             html += `
                                 <img class="imagen-responsiva" src="${competencia.competencia.imagen_ruta}" title="${competencia.competencia.nombre}"/>
                                 `;
