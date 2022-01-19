@@ -273,6 +273,7 @@ class PuestosController extends Controller
     {
         // $areas = Area::get();
 
+
         return view('admin.puestos.consultapuestos');
     }
 
