@@ -2,14 +2,14 @@
 @section('content')
     <style>
         .img-profile {
-            width: 80px;
-            height: 80px;
+            width: 95px;
+            height: 95px;
             clip-path: circle(40px at 50% 50%);
         }
 
         .img-profile-lg {
-            width: 120px;
-            height: 120px;
+            width: 95px;
+            height: 95px;
             clip-path: circle(100px at 50% 50%);
         }
 
@@ -51,14 +51,15 @@
                             @php
                                 use App\Models\Organizacion;
                                 $organizacion = Organizacion::first();
-                                $logotipo = 'img/logo_policromatico_2.png';
+                                 $logotipo = 'img/logo_policromatico_2.png';
                                 if ($organizacion) {
                                     if ($organizacion->logotipo) {
-                                        $logotipo = 'images/' . $organizacion->logotipo;
+                                        $logotipo = '' . $organizacion->logotipo;
                                     }
                                 }
                             @endphp
-                            <img class="img-profile-lg" style="position: relative;" src="{{ asset($logotipo) }}">
+
+                            <img class="img-profile-lg" style="position: relative;" src="{{ ($logotipo) }}">
                         </div>
                     </div>
                 </div>
