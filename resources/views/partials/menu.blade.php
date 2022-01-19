@@ -225,7 +225,7 @@
         </li> --}}
 
         <li class="c-sidebar-nav-title">
-            <font class="letra_blanca" style="color: #345183;">Módulos Tabantaj</font>
+            <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
         </li>
         <li class="c-sidebar-nav-item">
             <a href="{{ route('admin.capital-humano.index') }}"

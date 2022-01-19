@@ -950,7 +950,6 @@
             background-color: #345183 !important;
             color: #fff !important;
         }
-
     </style>
 
     @yield('styles')
@@ -963,14 +962,33 @@
         <header class="px-3 c-header c-header-fixed" style="border: none;">
             <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
-                <i class="fas fa-fw fa-bars iconos_cabecera"></i>
+                <i class="fas fa-fw fa-bars iconos_cabecera" style="color:#fff;"></i>
             </button>
 
 
-            <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="body"
-                data-class="c-sidebar-lg-show" responsive="true">
-                <i id="btnMenu" class="fas fa-fw fa-bars" style=""></i>
+            <button id="btnMenu" style="all:unset; color: #fff; cursor:pointer;" class="d-md-down-none">
+                <i class="fas fa-fw fa-bars" style=""></i>
             </button>
+
+            <script>
+                const btnMenu = document.querySelector('#btnMenu');
+
+                btnMenu.addEventListener('click', () => {
+                    document.body.classList.toggle('c-sidebar-lg-show');
+
+                    if (document.body.classList.contains('c-sidebar-lg-show')) {
+                        localStorage.setItem('menu-mode', 'true');
+                    } else {
+                        localStorage.setItem('menu-mode', 'false');
+                    }
+                });
+
+                if (localStorage.getItem('menu-mode') === 'true') {
+                    document.body.classList.add('c-sidebar-lg-show');
+                } else {
+                    document.body.classList.remove('c-sidebar-lg-show');
+                }
+            </script>
 
 
             <form class="form-inline col-sm-3" style="position: relative;">
@@ -1160,7 +1178,7 @@
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
     <script
         src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"
-        defer></script>
+        defer></script> {{--  quitar script en el glosario  --}}
     <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
     {{-- <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
