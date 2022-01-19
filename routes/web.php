@@ -330,6 +330,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('users', 'UsersController');
 
     // Empleados
+    Route::post('empleado/buscar-empleado-por-correo', 'EmpleadoController@buscarEmpleadoPorCorreo')->name('empleado.buscarEmpleadoPorCorreo');
     Route::get('empleado/{empleado}/documentos', 'EmpleadoController@getDocumentos')->name('empleado.documentos');
     Route::post('empleado/{empleado}/documentos', 'EmpleadoController@storeDocumentos')->name('empleado.storeDocumentos');
     Route::delete('empleado/{documento}/documentos', 'EmpleadoController@deleteDocumento')->name('empleado.deleteDocumento');

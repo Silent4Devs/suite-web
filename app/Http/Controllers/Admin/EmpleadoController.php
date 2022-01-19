@@ -1382,4 +1382,13 @@ class EmpleadoController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Archivo eliminado']);
     }
+
+    public function buscarEmpleadoPorCorreo(Request $request)
+    {
+        $participantes = $request->participantes;
+
+        $empleados = Empleado::whereIn('email', $participantes)->get();
+
+        return $empleados;
+    }
 }

@@ -5,13 +5,11 @@ namespace App\Http\Livewire;
 use App\Models\Empleado;
 use App\Models\EvaluacionObjetivo;
 use App\Models\VariablesObjetivosseguridad;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-
+use Livewire\Component;
 
 class ObjetivosSeguridadComponent extends Component
 {
-
     use LivewireAlert;
 
     public $nombre;
@@ -61,7 +59,6 @@ class ObjetivosSeguridadComponent extends Component
             'customFields' => $this->customFields,
             'evaluaciones' => $evaluaciones,
         ]);
-
     }
 
     public function store()
