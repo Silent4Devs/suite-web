@@ -16,7 +16,7 @@
         </p>
         <p id="nivelEditCreate" class="text-muted m-0"> <i class="fas fa-circle-notch fa-spin mr-2"></i> Cargando...</p>
     </div>
-    <div class="col-sm-12 col-lg-12 col-md-12 col-12">
+    <div class="col-sm-12 col-lg-12 col-md-12 col-12" style="margin-top:30px;">
         <div class="form-group">
             <label for="definicion">
                 <i class="fas fa-pencil-alt iconos-crear"></i> Descripción de la conducta esperada
