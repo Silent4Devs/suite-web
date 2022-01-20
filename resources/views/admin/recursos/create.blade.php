@@ -15,12 +15,19 @@
                                 <span class="material-icons" style="text-decoration:none;">
                                     cast_for_education
                                 </span>
-                                <span>Crear Capacitación</span>
+                                <span>Información</span>
                             </a>
+                            {{-- <a class="nav-link" data-type="lecciones" id="nav-lecciones-tab" href="#nav-lecciones"
+                                style="position:relative">
+                                <i class="mr-2 fas fa-file-signature" style="font-size:20px;"
+                                    style="text-decoration:none;"></i>
+                                Lecciones
+                                <span class="indicador_numero" id="contador-lecciones-tab">0</span>
+                            </a> --}}
                             <a class="nav-link" data-type="participantes" id="nav-participantes-tab"
                                 href="#nav-participantes" style="position:relative">
                                 <i class="mr-2 fas fa-users" style="font-size:20px;" style="text-decoration:none;"></i>
-                                Agregar Participantes
+                                Estudiantes
                                 <span class="indicador_numero" id="contador-participantes-tab">0</span>
                             </a>
                             <a class="nav-link" data-type="invitaciones" id="nav-invitaciones-tab"
@@ -42,6 +49,9 @@
                                 aria-labelledby="nav-general-tab">
                                 @include('admin.recursos.components.configuracion-inicial')
                             </div>
+                            {{-- <div class="tab-pane fade show" id="nav-lecciones">
+                                @include('admin.recursos.components.lecciones')
+                            </div> --}}
                             <div class="tab-pane fade" id="nav-participantes">
                                 @include('admin.recursos.components.participantes')
                             </div>
