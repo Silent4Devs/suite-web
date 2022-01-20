@@ -463,8 +463,8 @@
                     </a>
                 </li>
             @endcan
-            <li class="c-sidebar-nav-dropdown btn_bajar_scroll">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                     <i class="bi bi-building iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Configurar Organización </font>
                 </a>
@@ -579,33 +579,7 @@
                                 @endcan
                             </ul>
                         </li>
-                        <li
-                            class="c-sidebar-nav-dropdown {{ request()->is('admin/carpeta*') ? 'c-show' : '' }} {{ request()->is('admin/crear-documentos*') ? 'c-show' : '' }}">
-                            <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="bi bi-folder iconos_menu letra_blanca"></i> 
-                                <font class="letra_blanca"> Documentos </font>
-                            </a>
-                            <ul class="c-sidebar-nav-dropdown-items">
-                                @can('documentos_create')
-                                    <li class="c-sidebar-nav-item">
-                                        <a href="{{ route('admin.documentos.index') }}"
-                                            class="c-sidebar-nav-link {{ request()->is('admin/crear-documentos') || request()->is('admin/crear-documentos*') ? 'active' : '' }}">
-                                            <i class="bi bi-folder-plus iconos_menu letra_blanca"></i> 
-                                            <font class="letra_blanca"> Crear Documentos </font>
-                                        </a>
-                                    </li>
-                                @endcan
-                                @can('carpetum_access')
-                                    <li class="c-sidebar-nav-item">
-                                        <a href="{{ route('admin.carpeta.index') }}"
-                                            class="c-sidebar-nav-link {{ request()->is('admin/carpeta') || request()->is('admin/carpeta/*') ? 'active' : '' }}">
-                                            <i class="bi bi-folder2-open iconos_menu letra_blanca"></i> 
-                                            <font class="letra_blanca"> Gestor Documental </font>
-                                        </a>
-                                    </li>
-                                @endcan
-                            </ul>
-                        </li>
+
                         @can('organizacion_access')
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route('admin.glosarios.index') }}"
@@ -631,9 +605,50 @@
                 </ul>
             </li>
         @endcan
+
+
+        
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
+                    <i class="bi bi-folder iconos_menu letra_blanca"></i> 
+                    <font class="letra_blanca"> Documentos </font>
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.documentos.create') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/create') || request()->is('admin/create*') ? 'active' : '' }}">
+                            <i class="bi bi-folder-plus iconos_menu letra_blanca"></i> 
+                            <font class="letra_blanca"> Agregar Documento </font>
+                        </a>
+                    </li>
+                     @can('documentos_create')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.documentos.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/crear-documentos') || request()->is('admin/crear-documentos*') ? 'active' : '' }}">
+                                <i class="bi bi-card-checklist letra_blanca iconos_menu"></i> 
+                                <font class="letra_blanca"> Control Documental </font>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('carpetum_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.carpeta.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/carpeta') || request()->is('admin/carpeta/*') ? 'active' : '' }}">
+                                <i class="bi bi-folder2-open iconos_menu letra_blanca"></i> 
+                                <font class="letra_blanca"> Repositorio Documental </font>
+                            </a>
+                        </li>
+                    @endcan
+                    
+                </ul>
+            </li>
+
+
+
         @can('configuracion_datos_access')
-            <li class="c-sidebar-nav-dropdown btn_bajar_scroll">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                     <i class="bi bi-person-plus iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Configurar C. Humano </font>
                 </a>
@@ -713,8 +728,8 @@
             </li>
         @endcan
         @can('user_management_access')
-            <li class="c-sidebar-nav-dropdown btn_bajar_scroll">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                     <i class="bi bi-pc-display-horizontal iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Configurar Vistas </font>
                 </a>
@@ -737,8 +752,8 @@
             </li>
         @endcan
         @can('user_management_access')
-            <li class="c-sidebar-nav-dropdown btn_bajar_scroll">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                     <i class="bi bi-gear iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Ajustes de Usuario </font>
                 </a>

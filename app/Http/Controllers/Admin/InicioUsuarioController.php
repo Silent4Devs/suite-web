@@ -23,6 +23,7 @@ use App\Models\Mejoras;
 use App\Models\Organizacion;
 use App\Models\PanelInicioRule;
 use App\Models\PlanImplementacion;
+use App\Models\PuestoIdiomaPorcentajePivot;
 use App\Models\Proceso;
 use App\Models\Puesto;
 use App\Models\Quejas;
@@ -983,6 +984,8 @@ class InicioUsuarioController extends Controller
         $puesto_id = auth()->user()->empleado->puesto_id;
         $puesto = Puesto::find($puesto_id);
 
-        return view('admin.inicioUsuario.perfil_puesto', compact('puesto'));
+        $idiomas= PuestoIdiomaPorcentajePivot::get();
+
+        return view('admin.inicioUsuario.perfil_puesto', compact('puesto', 'idiomas'));
     }
 }
