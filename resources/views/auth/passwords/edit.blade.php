@@ -220,13 +220,13 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                            <div class="form-check col-12"
-                                                style="display:flex; justify-content:space-between;">
+                                            <div class="form-check col-12" 
+                                                style="display:flex; justify-content:space-between; padding-left: 42px;">
                                                 <input type="checkbox" class="form-check-input" id="ValidacionNumero"
                                                     name="mostrar_telefono"
                                                     {{ auth()->user()->empleado->mostrar_telefono ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="exampleCheck1"
-                                                    style="font-size:12px;">Mostrar mi telefono en directorio
+                                                    style="font-size:12px; margin-top: 3px;">Mostrar mi telefono en directorio
                                                     organizacional</label>
 
                                                 <button class="btn btn-danger" type="submit">
@@ -246,7 +246,7 @@
                                                     action="{{ route('profile.password.toggleTwoFactor') }}"
                                                     style="display: flex; justify-content: space-between; align-items: center;">
                                                     @csrf
-                                                    <h6 style="font-size:18px;">Autentificación en dos facotes</h6>
+                                                    <h6 style="font-size:18px;">Doble factor de autenticación <i class="fas fa-question-circle ml-2" title="Medida de seguridad adicional en la que además de ingresar tu usuario y contraseña se te enviará un código al correo electrónico corporativo para acceder a la plataforma Tabantaj."></i></h6>
                                                     <button class="btn btn-danger" type="submit">
                                                         {{ auth()->user()->two_factor ? 'Deshabilitar' : 'Habilitar' }}
                                                     </button>
