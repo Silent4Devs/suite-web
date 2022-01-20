@@ -148,6 +148,9 @@
             margin-top: -10px;
         }
 
+        .container{
+            max-width: 1500px !important;
+        }
     </style>
 
     @include('partials.flashMessages')
@@ -237,22 +240,31 @@
                             @include('admin.inicioUsuario.mis-datos')
                         </section>
                         <section id="s_calendario" data-id="calendario">
-                            @include('admin.inicioUsuario.calendario')
+                            <div class="container">
+                                @include('admin.inicioUsuario.calendario')
+                            </div>
                         </section>
                         <section id="s_actividades" data-id="actividades">
+                            <div class="container">
                             @include('admin.inicioUsuario.actividades')
                         </section>
                         <section id="s_aprobaciones" data-id="aprobaciones">
-                            @include('admin.inicioUsuario.aprobaciones')
+                            <div class="container">
+                                @include('admin.inicioUsuario.aprobaciones')
+                            </div>
                         </section>
                         {{-- <section id="evaluaciones">
                             @include('admin.inicioUsuario.evaluaciones')
                         </section> --}}
                         <section id="s_capacitaciones" data-id="capacitaciones">
-                            @include('admin.inicioUsuario.capacitaciones')
+                            <div class="container">
+                                @include('admin.inicioUsuario.capacitaciones')
+                            </div>
                         </section>
                         <section id="s_reportes" data-id="reportes">
-                            @include('admin.inicioUsuario.reportes')
+                            <div class="container">
+                                @include('admin.inicioUsuario.reportes')
+                            </div>
                         </section>
                     </div>
                 @else

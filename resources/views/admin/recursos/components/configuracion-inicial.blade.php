@@ -79,14 +79,23 @@
             </select>
             <span class="modalidad_error text-danger errores"></span>
         </div>
-        <div class="form-group col-sm-12 col-md-12 col-lg-6">
-            <label for=""> <i class="fas fa-map-marker-alt iconos-crear"></i>
-                <font id="font_modalidad_seleccionada"> Ubicación</font>
-                </font>
-            </label>
-            <input type="text" name="ubicacion" class="form-control"
-                value="{{ old('ubicacion', $recurso->ubicacion) }}" id="ubicacionConfInicial">
-            <span class="ubicacion_error text-danger errores"></span>
+        <input type="checkbox" class="form-control d-none" id="isElearning" name="isElearning">
+        <div id="contenedorSeleccionModalidad" class="col-sm-12 col-md-12 col-lg-6">
+            <div class="form-group">
+                <label for=""> <i class="fas fa-map-marker-alt iconos-crear"></i>
+                    @php
+                        $modalidad = 'Ubicación';
+                        if ($recurso->modalidad == 'linea') {
+                            $modalidad = 'Enlace';
+                        }
+                    @endphp
+                    <font id="font_modalidad_seleccionada">{{ $modalidad }}</font>
+                    </font>
+                </label>
+                <input type="text" name="ubicacion" class="form-control"
+                    value="{{ old('ubicacion', $recurso->ubicacion) }}" id="ubicacionConfInicial">
+                <span class="ubicacion_error text-danger errores"></span>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -156,6 +165,18 @@
         Borrador
     </button>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="elearningCargando" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="elearningCargandoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="https://c.tenor.com/1qrYT711uEoAAAAC/cargando.gif" alt="">
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         //Contantes de pestaña conf. inicial para añadir eventos
@@ -179,6 +200,9 @@
         const instructorInvitaciones = document.getElementById('instructor_invitaciones');
         const descripcionInvitaciones = document.getElementById('descripcion_invitaciones');
 
+        // Lecciones
+        const tituloCapacitacionLecciones = document.getElementById('tituloCapacitacionLecciones');
+
         //Inicializar fechas
         fechaInicioInvitaciones.innerHTML = new Date(Date()).toLocaleString();
         fechaFinInvitaciones.innerHTML = new Date(Date()).toLocaleString();
@@ -188,6 +212,7 @@
 
         function inicializarInformacionGeneral() {
             tituloInvitaciones.innerHTML = nombreCapacitacion.value;
+            tituloCapacitacionLecciones.innerHTML = nombreCapacitacion.value;
             categoriaInvitaciones.innerHTML = categoria.options[categoria.selectedIndex].getAttribute(
                 'data-nombre');
             tipoInvitaciones.innerHTML = selectTipo.value;
@@ -201,6 +226,7 @@
 
         nombreCapacitacion.addEventListener('keyup', function(e) {
             tituloInvitaciones.innerHTML = this.value;
+            tituloCapacitacionLecciones.innerHTML = this.value;
         })
 
         $('#categoria_capacitacion_id').on('select2:select', function(e) {

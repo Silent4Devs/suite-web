@@ -38,7 +38,7 @@ class EV360CompetenciasController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string|max:255',
+            'descripcion' => 'nullable|string',
             'tipo_id' => 'required|exists:ev360_tipo_competencias,id',
         ]);
         $competencia = Competencia::create($request->all());
@@ -69,7 +69,7 @@ class EV360CompetenciasController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string|max:255',
+            'descripcion' => 'nullable|string',
             'tipo_id' => 'required|exists:ev360_tipo_competencias,id',
         ]);
         $competencia = Competencia::create($request->all());
@@ -96,7 +96,7 @@ class EV360CompetenciasController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string|max:255',
+            'descripcion' => 'nullable|string',
             'tipo_id' => 'required|exists:ev360_tipo_competencias,id',
         ]);
         $competencia = Competencia::find(intval($competencia));
@@ -143,8 +143,8 @@ class EV360CompetenciasController extends Controller
     public function conductas(Request $request, $competencia)
     {
         if ($request->ajax()) {
-            $conductas = Conducta::where('competencia_id', intval($competencia))->get()->sortBy('ponderacion');
-
+            // $conductas = Conducta::where('competencia_id', intval($competencia))->get()->sortBy('ponderacion');
+            $conductas = Conducta::where('competencia_id', intval($competencia))->orderBy('ponderacion')->get();
             return datatables()->of($conductas)->toJson();
         }
     }
@@ -212,6 +212,7 @@ class EV360CompetenciasController extends Controller
 
         return $nivel;
     }
+
     public function destroy(Competencia $competencia)
     {
         // $competencia = Competencia::find($competencia);

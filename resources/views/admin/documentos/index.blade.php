@@ -5,6 +5,45 @@
         <div class="mt-5 card">
         @endcan
         <div class="card-body datatable-fix">
+
+            <div class="mb-2 row">
+                    <div class="col-4">
+                        <label for=""><i class="fas fa-filter"></i> Filtrar por Tipo</label>
+                        <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="tipoSelect">
+                            <option value="" disabled selected>--Seleccionar--</option>
+                            <option value="Proceso">Proceso</option>
+                            <option value="Politica">Política</option>
+                            <option value="Procedimiento">Procedimiento</option>
+                            <option value="Manual">Manual</option>
+                            <option value="Plan">Plan</option>
+                            <option value="Instructivo">Instructivo</option>
+                            <option value="Reglamento">Reglamento</option>
+                            <option value="Externo">Documento Externo</option>
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <label for=""><i class="fas fa-filter"></i> Filtrar por Estatus</label>
+                        <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="estatusSelect">
+                            <option value="" disabled selected>--Seleccionar--</option>
+                            <option value="Publicado">Publicado</option>
+                            <option value="En Revisión">En Revisión</option>
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <label for=""><i class="fas fa-filter"></i> Filtrar por Vínculo</label>
+                        <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}"
+                            id="vinculadoSelect">
+                            <option value="" disabled selected>--Seleccionar--</option>
+                            @foreach ($macroprocesosAndProcesos as $item)
+                                <option value="{{ $item }}">{{ $item }}</option>
+                            @endforeach
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                </div>
+
             @include('partials.flashMessages')
             <table id="tbl_documentos_control" class="table table-bordered w-100 datatable-ControlDocumento">
                 <thead class="thead-dark">
@@ -276,7 +315,7 @@
         ];
 
         let btnAgregar = {
-            text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar Documento',
             titleAttr: 'Agregar documento',
             url: "{{ route('admin.documentos.create') }}",
             className: "btn-xs btn-outline-success rounded ml-2 pr-3",
@@ -455,4 +494,46 @@
         })
     }
 </script>
+
+
+    <script>
+        $(document).ready(function() {
+
+            let tblDocumentos = $("#tbl_documentos_control").DataTable({
+                buttons: [],
+            });
+
+            $('#tipoSelect').on('change', function() {
+                if (this.value != null && this.value != "") {
+                    this.style.border = "2px solid #20a4a1";
+                    tblDocumentos.columns(3).search(this.value, true, false).draw();
+                } else {
+                    this.style.border = "1px solid rgb(206 212 218)";
+                    tblDocumentos.columns(3).search(this.value).draw();
+                }
+            });
+            $('#estatusSelect').on('change', function() {
+                if (this.value != null && this.value != "") {
+                    this.style.border = "2px solid #20a4a1";
+                    tblDocumentos.search(this.value.toUpperCase(), true, false)
+                        .draw();
+                } else {
+                    this.style.border = "1px solid rgb(206 212 218)";
+                    tblDocumentos.search(this.value)
+                        .draw();
+                }
+            });
+            $('#vinculadoSelect').on('change', function() {
+                if (this.value != null && this.value != "") {
+                    this.style.border = "2px solid #20a4a1";
+                    tblDocumentos.search(this.value, true, false)
+                        .draw();
+                } else {
+                    this.style.border = "1px solid rgb(206 212 218)";
+                    tblDocumentos.search(this.value)
+                        .draw();
+                }
+            });
+        });
+    </script>
 @endsection

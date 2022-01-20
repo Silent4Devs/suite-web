@@ -139,15 +139,45 @@
                         data: 'id',
                         name: 'id',
                         render: function(data, type, row, meta) {
+                            if (!recurso.is_sync_elearning) return '0%';
+                            try {
+                                var currentCell = $("#tblParticipantes").DataTable().cells({
+                                    "row": meta.row,
+                                    "column": meta.col
+                                }).nodes(0);
+                                let URL_API_ELEARNING = @json(env('APP_ELEARNING'));
+                                URL_API_ELEARNING = `${URL_API_ELEARNING}/api/student/${row.email}/course/${recurso.cursoscapacitaciones.replaceAll(' ','-').toLowerCase().replaceAll('.','')}/course-status
+                                `;
+                                fetch(URL_API_ELEARNING, {
+                                        method: 'GET',
+                                        headers: {
+                                            Accept: "application/json",
+                                            'Content-Type': 'application/json'
+                                        }
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        $(currentCell).text(`${data} %`);
+                                    })
+                                return `0 %`;
+                            } catch (error) {
+                                return '0%';
+                            }
+                        }
+                    },
+                    {
+                        data: 'id',
+                        name: 'id',
+                        render: function(data, type, row, meta) {
                             let certificadosFolder = @json(asset('storage/capacitaciones/certificados/'));
                             let carpetaCertificado = `${recurso.id}_capacitacion/${row.n_empleado}`;
                             let certificado =
                                 `${certificadosFolder}/${carpetaCertificado}/${row.pivot.certificado}`;
                             return row.pivot.certificado ?
                                 `<a href="${certificado}">
-                                    <img width="40" src="{{ asset('img/graduation-diploma.png') }}"
-                                    alt="Certificado">
-                                    </a>` :
+                                        <img width="40" src="{{ asset('img/graduation-diploma.png') }}"
+                                        alt="Certificado">
+                                        </a>` :
                                 'Sin Certificado';
                         }
                     },
@@ -160,9 +190,9 @@
                                 if (row.pivot.es_aceptada) {
                                     const data = escape(JSON.stringify(row));
                                     botones += `
-                                    <i class="fas fa-medal btnModal" style="cursor: pointer;" data-toggle="modal"
-                                    data-target="#modalParticipante" data-empleado="${data}"></i>
-                                    `;
+                                        <i class="fas fa-medal btnModal" style="cursor: pointer;" data-toggle="modal"
+                                        data-target="#modalParticipante" data-empleado="${data}"></i>
+                                        `;
                                 }
                             }
                             return botones;
@@ -184,8 +214,8 @@
                     name: 'id',
                     render: function(data, type, row, meta) {
                         return `
-                        <input ${row.pivot.asistio?'checked':''} type="checkbox" name="asistio" data-empleado="${row.id}" data-recurso="${recurso.id}">                            
-                        `;
+                            <input ${row.pivot.asistio?'checked':''} type="checkbox" name="asistio" data-empleado="${row.id}" data-recurso="${recurso.id}">                            
+                            `;
                     }
                 });
             }
@@ -221,32 +251,32 @@
                 if (e.target.classList.contains('btnModal')) {
                     empleado = JSON.parse(unescape(e.target.getAttribute('data-empleado')));
                     let html = `
-                        <div>
-                            <label for="calificacion"><i class="fas fa-calculator mr-2"></i>Calificación</label>
-                            <input name="calificacion" id="calificacion" type="number" class="form-control"
-                                placeholder="Calificación Obtenida" value="${empleado.pivot.calificacion}">
-                            <small id="calificacion_error" class="text-danger"></small>
-                        </div>
-                        <div class="mt-3 text-center">`;
+                            <div>
+                                <label for="calificacion"><i class="fas fa-calculator mr-2"></i>Calificación</label>
+                                <input name="calificacion" id="calificacion" type="number" class="form-control"
+                                    placeholder="Calificación Obtenida" value="${empleado.pivot.calificacion}">
+                                <small id="calificacion_error" class="text-danger"></small>
+                            </div>
+                            <div class="mt-3 text-center">`;
                     if (empleado.pivot.certificado != null) {
                         html += `
-                        <strong id="certificadoCargado"><img width="40" src="{{ asset('img/graduation-diploma.png') }}" alt="Certificado"> ${empleado.pivot.certificado}<i style="cursor: pointer;" class="ml-2 fas fa-times" id="quitarSeleccionArchivo"></i></strong>
-                        `;
+                            <strong id="certificadoCargado"><img width="40" src="{{ asset('img/graduation-diploma.png') }}" alt="Certificado"> ${empleado.pivot.certificado}<i style="cursor: pointer;" class="ml-2 fas fa-times" id="quitarSeleccionArchivo"></i></strong>
+                            `;
                     }
                     html += `<div id="labelCertificado" class="${empleado.pivot.certificado != null?'d-none':''}"><label for="certificado" style="cursor: pointer">
-                                <img width="40" src="{{ asset('img/graduation-diploma.png') }}" alt="Certificado">
-                                <span>Subir Certificado</span>
-                                </label>
-                                <p class="m-0"><small id="certificado_error" class="text-danger"></small></p>
-                                <p class="m-0"><small class="text-muted"><i class="fas fa-file mr-2"></i>Máximo 5MB</small></p>
-                            </div>
-                            `;
+                                    <img width="40" src="{{ asset('img/graduation-diploma.png') }}" alt="Certificado">
+                                    <span>Subir Certificado</span>
+                                    </label>
+                                    <p class="m-0"><small id="certificado_error" class="text-danger"></small></p>
+                                    <p class="m-0"><small class="text-muted"><i class="fas fa-file mr-2"></i>Máximo 5MB</small></p>
+                                </div>
+                                `;
                     html += `                            
-                            <small id="informacionArchivo" class="m-0 text-muted"></small>
-                            <input name="certificado" id="certificado" type="file" class="form-control d-none"
-                                accept="image/jpeg,image/png,application/pdf">
-                        </div>
-                    `;
+                                <small id="informacionArchivo" class="m-0 text-muted"></small>
+                                <input name="certificado" id="certificado" type="file" class="form-control d-none"
+                                    accept="image/jpeg,image/png,application/pdf">
+                            </div>
+                        `;
                     formularioModal.innerHTML = html;
 
                     document.getElementById('certificado').addEventListener('change', function(e) {
