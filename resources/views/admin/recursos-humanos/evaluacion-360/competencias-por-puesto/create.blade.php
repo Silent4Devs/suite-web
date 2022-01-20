@@ -159,6 +159,7 @@
                         console.log(response);
                         document.getElementById("modalEditarCompetenciaLabel").innerHTML =
                             competencia_nombre;
+
                         let modalBody = document.getElementById("modalBody");
                         let formHTML = `<form id="formCambioNivel${competencia_id}" action="${urlActualizar}" method='post'>
                             <label>Cambiar Nivel Esperado</label>
@@ -263,6 +264,7 @@
 
             $('#competencia_id').on('select2:select', function(e) {
                 let competencia_id = e.params.data.id;
+                let competencia_descripcion = $(e.params.data.element).data('description');
                 let competencia_nombre = e.params.data.text;
                 $.ajax({
                     type: "POST",
@@ -297,15 +299,17 @@
                                 <div class="text-center col-sm-1 col-lg-1 d-flex justify-content-center align-items-center" style="font-weight:bold;
                                 font-size:12px;">
                                 <p>${opcion.ponderacion}</p>
-                                </div>    
+                                </div>
                                 <div class="px-0 py-2 col-sm-11 col-lg-11" style="font-size: 11px;">
                                     ${opcion.definicion}
-                                    </div>    
+                                    </div>
                             </div>
                             `;
                         });
                         document.getElementById('titulo_competencia').innerHTML =
                             competencia_nombre;
+                        document.getElementById('descripcion_competencia').innerHTML =
+                        competencia_descripcion;
                         document.getElementById('competenciaInformacion').innerHTML = html;
 
                     }
