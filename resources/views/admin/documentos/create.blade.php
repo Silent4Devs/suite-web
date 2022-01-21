@@ -5,6 +5,11 @@
             border: 2px solid red !important;
         }
 
+        .buscador-global{
+            border: none !important;
+            border-bottom: 1px solid #fff !important;
+        }
+
         .not-exists {
             border: 2px solid rgb(18, 250, 114) !important;
         }
@@ -23,7 +28,7 @@
 
         .select2-search__field {
             margin-top: 28px !important;
-            display: none !important;
+            /*display: none !important;*/
         }
 
         .select2-selection__choice:not(:first-child) {

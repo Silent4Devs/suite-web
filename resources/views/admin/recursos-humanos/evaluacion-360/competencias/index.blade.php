@@ -28,6 +28,9 @@
                         <th style="vertical-align: top">
                             ID
                         </th>
+                        <th>
+                            Competencias
+                        </th>
                         <th style="vertical-align: top">
                             Nombre
                         </th>
@@ -140,6 +143,20 @@
                 columns: [{
                         data: 'id'
                     }, {
+                        data:'imagen',
+                        // render: function(data, type, row, meta) {
+                        //     console.log(row.imagen_ruta);
+                        //     let html = '<div>';
+                        //     data.forEach(competencia => {
+                        //         html += `
+                        //             <img class="imagen-responsiva" src="${competencia.competencia.imagen_ruta}" title="${competencia.competencia.nombre}"/>
+                        //             `;
+                        //     });
+                        //     html += '</div>';
+                        //     return html;
+                        // },
+
+                    }, {
                         data: 'nombre'
                     }, {
                         data: 'tipo',
@@ -173,7 +190,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [0, 'desc']
                 ],
                 dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +

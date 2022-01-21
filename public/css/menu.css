@@ -121,7 +121,7 @@ body.c-dark-theme .needsclick {
 #sidebar {
     background-color: #fff;
     box-shadow: 0px 7px 7px 1px rgba(0, 0, 0, 0.3);
-    z-index: 10;
+    z-index: 12;
 }
 
 #sidebar::before {}

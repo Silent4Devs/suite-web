@@ -310,7 +310,7 @@
                     <ul class="comentarios_felicidades">
                         <li>
                             <strong>
-                                
+
 
                                 <img class="img_empleado" src="{{ asset($logotipo) }}">
                                 {{ $organizacion->empresa }}
@@ -564,7 +564,91 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="p-34 card card_margin_b_n" x-data="{show:false}">
+                            <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
+                                <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
+                                        class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+                            </h5>
+                            <hr class="hr-custom-title">
+                            <div class="row align-items-center" id="listaEquipo" x-show="show"
+                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
+                                <div class="container" style="padding-top: 10px;">
+                                    @if (count($competencias) === 0)
+                                        No se han definido competencias actualmente
+                                    @else
+                                        <div class="row">
+                                        </div>
+                                        {{-- @foreach ($competencias as $competencia) --}}
+                                            <div class="row" style="margin-top: 1px;">
+                                                <div class="col-12 text-muted" style="font-size:10px">
+                                                    <table id="dom" class="table table-bordered w-100 datatable-glosario" style="width: 100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="font-size:100%">Competencia</th>
+                                                                <th style="font-size:80%">Nivel Esperado</th>
+                                                                <th style="ont-size:100%">Mas</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ( $competencias as $competencia )
+                                                            <tr>
+                                                                <td>{{$competencia->nombre}}</td>
+                                                                <td>{{$competencia->tipo_id}}</td>
+                                                                <td>
+                                                                 <!-- Button trigger modal -->
+                                                                        <div class="text-center">
+                                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">+</button>
+                                                                                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                                                    <div class="modal-dialog modal-lg">
+                                                                                        <div class="modal-content">
+                                                                                            <table id="dom" class="table table-bordered w-100 datatable-glosario" style="width: 100%">
+                                                                                                <thead class="thead-dark">
+                                                                                                    <tr>
+                                                                                                        <th>Imagen</th>
+                                                                                                        <th>Competencia</th>
+                                                                                                        <th>Tipo</th>
+                                                                                                        <th>Descripción</th>
+
+
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    @foreach ( $competencias as $competencia )
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            <img class="img_empleado_presentacion_mis_datos" style="position: relative;"
+                                                                                                            src="{{$competencia->imagen_ruta}}">
+                                                                                                        </td>
+                                                                                                        <td>{{$competencia->nombre}}</td>
+                                                                                                        <td>{{$competencia->tipo_id}}</td>
+                                                                                                        <td>{{$competencia->descripcion}}</td>
+                                                                                                    </tr>
+                                                                                                    @endforeach
+                                                                                                </tbody>
+                                                                                                </table>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+
+
+                                                </div>
+                                            </div>
+                                        {{-- @endforeach --}}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+
+                {{-- MOD Informacion General --}}
                     <div class="col-md-8">
                         <div class="card_data_mis_datos card" style="height: 450px !important;">
                             <div class="card-body" style="padding-bottom: 14px !important;">
@@ -1145,5 +1229,10 @@
         function ocultarValidando() {
             document.getElementById('displayAlmacenandoUniversal').style.display = 'none';
         }
-    </script>
+
+
+
+
+
+</script>
 @endsection

@@ -2,10 +2,21 @@
 @section('content')
 
 
-
+    <style type="text/css">
+        .filtro_caja{
+            margin-bottom: -40px;
+            position: relative;
+            z-index: 2;
+        }
+        @media(max-width:775px){
+            .filtro_caja{
+                margin-bottom: 0px;
+            }
+        }
+    </style>
 
     <h5 class="col-12 titulo_general_funcion">Documentos de {{ $organizacion }}</h5>
-    <div class="mt-5 card p-2">
+    <div class="mt-5 card p-4">
 
         @if (count($documentos) == 0)
             <div class="container pb-4 text-center">
@@ -15,9 +26,9 @@
                 <h5 class="col-12 titulo_general_funcion">Ningún documento se ha publicado</h5>
             </div>
         @else
-            <div class="container datatable-fix">
-                <div class="mb-2 row">
-                    <div class="col-4">
+            <div class="datatable-fix">
+                <div class="row justify-content-center">
+                    <div class="col-md-3 filtro_caja mt-2" style="">
                         <label for=""><i class="fas fa-filter"></i> Filtrar por Tipo</label>
                         <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="tipoSelect">
                             <option value="" disabled selected>--Seleccionar--</option>
@@ -32,17 +43,8 @@
                             <option value="">Todos</option>
                         </select>
                     </div>
-                    <div class="col-4">
-                        <label for=""><i class="fas fa-filter"></i> Filtrar por Estatus</label>
-                        <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="estatusSelect">
-                            <option value="" disabled selected>--Seleccionar--</option>
-                            <option value="Publicado">Publicado</option>
-                            <option value="En Revisión">En Revisión</option>
-                            <option value="">Todos</option>
-                        </select>
-                    </div>
-                    <div class="col-4">
-                        <label for=""><i class="fas fa-filter"></i> Filtrar por Vinculación</label>
+                    <div class="col-md-3 filtro_caja mt-2" style="">
+                        <label for=""><i class="fas fa-filter"></i> Filtrar por Vínculo</label>
                         <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}"
                             id="vinculadoSelect">
                             <option value="" disabled selected>--Seleccionar--</option>
