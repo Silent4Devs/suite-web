@@ -290,7 +290,7 @@
 
                                         .datos_der_cv {
                                             margin-top: 20px;
-                                            width: 30%;
+                                            width: 100%;
                                             color: #fff;
                                         }
 
@@ -349,9 +349,13 @@
                                             <span style="font-size: 17px; font-weight: bold;">
                                                 Certificaciones</span>
                                         </div>
-                                        <p style="text-align:justify">
-                                            {{ $puestoModel->certificaciones }}
-                                        </p>
+
+                                           @foreach ( $puestoModel->certificados as $certificado )
+                                           <p style="text-align:justify">
+                                            {{$certificado->nombre}}
+                                            </p>
+                                           @endforeach
+
                                         {{-- @foreach ($empleadoModel->empleado_experiencia as $experiencia)
                                             <div>
                                                 <strong style="color:#00A57E;text-transform: uppercase">
@@ -455,7 +459,7 @@
                                         @endforeach --}}
                                         </ul>
                                     </div>
-                                    <div class="mt-4 col-md-4 datos_der_cv">
+                                    <div class="mt-4 col-12 datos_der_cv">
                                         <div
                                             style="background: linear-gradient(0deg, rgba(69,125,182,1) 0%, rgba(8,170,157,1) 60%); height:100%; padding:10px;">
                                             {{-- <div class="text-center w-100"><img class="mt-3"
