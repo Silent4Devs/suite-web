@@ -261,6 +261,16 @@
         max-height: 140px !important;
         min-height: 140px !important;
     }
+    .img_empleado_competencia {
+        clip-path: circle(70px at 50% 50%);
+        width: 50px !important;
+        height: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+
+        max-height: 50px !important;
+        min-height: 50px !important;
+    }
 
 </style>
 
@@ -579,10 +589,9 @@
                                     @else
                                         <div class="row">
                                         </div>
-                                        {{-- @foreach ($competencias as $competencia) --}}
                                             <div class="row" style="margin-top: 1px;">
                                                 <div class="col-12 text-muted" style="font-size:10px">
-                                                    <table id="dom" class="table table-bordered w-100 datatable-glosario" style="width: 100%">
+                                                    <table id="dom" class="table table-bordered w-100" style="width: 100%">
                                                         <thead>
                                                             <tr>
                                                                 <th style="font-size:100%">Competencia</th>
@@ -593,8 +602,8 @@
                                                         <tbody>
                                                             @foreach ( $competencias as $competencia )
                                                             <tr>
-                                                                <td>{{$competencia->nombre}}</td>
-                                                                <td>{{$competencia->tipo_id}}</td>
+                                                                <td>{{$competencia->competencia->nombre}}</td>
+                                                                <td>{{$competencia->nivel_esperado}}</td>
                                                                 <td>
                                                                  <!-- Button trigger modal -->
                                                                         <div class="text-center">
@@ -602,27 +611,36 @@
                                                                                 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                                                     <div class="modal-dialog modal-lg">
                                                                                         <div class="modal-content">
-                                                                                            <table id="dom" class="table table-bordered w-100 datatable-glosario" style="width: 100%">
+                                                                                            <table class="table table-bordered w-100" style="width: 100%">
                                                                                                 <thead class="thead-dark">
                                                                                                     <tr>
                                                                                                         <th>Imagen</th>
                                                                                                         <th>Competencia</th>
-                                                                                                        <th>Tipo</th>
+                                                                                                        <th>Nivel Esperado</th>
                                                                                                         <th>Descripción</th>
-
-
                                                                                                     </tr>
                                                                                                 </thead>
                                                                                                 <tbody>
                                                                                                     @foreach ( $competencias as $competencia )
                                                                                                     <tr>
                                                                                                         <td>
-                                                                                                            <img class="img_empleado_presentacion_mis_datos" style="position: relative;"
-                                                                                                            src="{{$competencia->imagen_ruta}}">
+                                                                                                            <div style="text-align: center !important;">
+                                                                                                                <img class="img_empleado_competencia" src="{{$competencia->competencia->imagen_ruta}}">
+                                                                                                            </div>
                                                                                                         </td>
-                                                                                                        <td>{{$competencia->nombre}}</td>
-                                                                                                        <td>{{$competencia->tipo_id}}</td>
-                                                                                                        <td>{{$competencia->descripcion}}</td>
+                                                                                                        <td>
+                                                                                                            <div style="text-align: center !important;">
+                                                                                                            {{$competencia->competencia->nombre}}</td>
+                                                                                                            </div>
+                                                                                                        <td>
+                                                                                                            <div style="text-align: center !important;">
+                                                                                                            {{$competencia->nivel_esperado}}</td>
+                                                                                                        {{-- <td>{{$competencia->competencia->tipo_id}}</td> --}}
+                                                                                                            </div>
+                                                                                                        <td>
+                                                                                                            <div style="text-align: center !important;">
+                                                                                                            {{$competencia->competencia->descripcion}}</td>
+                                                                                                            </div>
                                                                                                     </tr>
                                                                                                     @endforeach
                                                                                                 </tbody>
@@ -636,11 +654,8 @@
                                                             @endforeach
                                                         </tbody>
                                                     </table>
-
-
                                                 </div>
                                             </div>
-                                        {{-- @endforeach --}}
                                     @endif
                                 </div>
                             </div>
