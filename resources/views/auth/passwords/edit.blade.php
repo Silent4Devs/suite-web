@@ -228,7 +228,6 @@
                                                 <label class="form-check-label" for="exampleCheck1"
                                                     style="font-size:12px; margin-top: 3px;">Mostrar mi telefono en directorio
                                                     organizacional</label>
-
                                                 <button class="btn btn-danger" type="submit">
                                                     {{ trans('global.save') }}
                                                 </button>
