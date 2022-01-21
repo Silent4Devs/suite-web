@@ -7,14 +7,14 @@
 
     </style>
     {{ Breadcrumbs::render('riesgos-create') }}
-    <h5 class="col-12 titulo_general_funcion">Riesgos identificados</h5>
-    <div class="container"> 
+    <h5 class="col-12 titulo_general_funcion">Riesgo identificado</h5>
+    <div class="container">
         <div class="card card_formulario">
 
             <div class="card-body">
 
                 <div class="titulo-formulario">
-                    <i class="bi bi-shield-exclamation mr-3"></i> Riesgos identificados
+                    <i class="bi bi-shield-exclamation mr-3"></i> Riesgo identificado
                 </div>
 
                 <hr style="">
@@ -67,13 +67,13 @@
 
 
 
-                    <div class="mt-2 form-group col-md-8">
+                    <div class="mt-2 form-group col-md-6">
                         <label class="form-label"><i class="fas fa-text-width iconos-crear"></i>Título corto del
                             riesgo</label>
                         <input class="form-control" name="titulo">
                     </div>
 
-                    <div class="mt-2 form-group col-md-4">
+                    <div class="mt-2 form-group col-md-6">
                         <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i> Fecha y hora de
                             identificación</label>
                         <input type="datetime-local" name="fecha" class="form-control">
