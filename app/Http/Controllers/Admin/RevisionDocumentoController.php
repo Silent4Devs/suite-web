@@ -71,10 +71,12 @@ class RevisionDocumentoController extends Controller
             return [];
         }
     }
+
     public function obtenerDocumentosMeDebenAprobar()
     {
         if (auth()->user()->empleado) {
-            $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', auth()->user()->empleado->id)->get();;
+            $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', auth()->user()->empleado->id)->get();
+
             return $mis_documentos;
         } else {
             return [];
