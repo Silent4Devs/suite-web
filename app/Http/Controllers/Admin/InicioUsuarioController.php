@@ -224,10 +224,10 @@ class InicioUsuarioController extends Controller
         }
 
         $organizacion = Organizacion::first();
-        $competencias = CompetenciaPuesto::with(['puesto_id'=>function($q){$q->with('competencias_id');}]);
+        $competencias = [];
         // $puesto = Puesto::find(intval($puesto));
 
-        return view('admin.inicioUsuario.index', compact('usuario','competencias', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios', 'cumpleaños_felicitados_like_usuarios', 'esLider', 'organizacion', 'usuarioVinculadoConEmpleado'));
+        return view('admin.inicioUsuario.index', compact('usuario', 'competencias', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios', 'cumpleaños_felicitados_like_usuarios', 'esLider', 'organizacion', 'usuarioVinculadoConEmpleado'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -988,7 +988,7 @@ class InicioUsuarioController extends Controller
         $puesto_id = auth()->user()->empleado->puesto_id;
         $puesto = Puesto::find($puesto_id);
 
-        $idiomas= PuestoIdiomaPorcentajePivot::get();
+        $idiomas = PuestoIdiomaPorcentajePivot::get();
 
         return view('admin.inicioUsuario.perfil_puesto', compact('puesto', 'idiomas'));
     }
