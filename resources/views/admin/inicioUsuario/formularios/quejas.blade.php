@@ -6,7 +6,17 @@
         }
 
     </style>
-    {{ Breadcrumbs::render('quejas-create') }}
+
+    @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('quejas-create-perfil') }}
+    @endif
+    @if(asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('quejas-create-portal') }}
+    @endif
+    @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('quejas-create') }}
+    @endif
+    
     <h5 class="col-12 titulo_general_funcion">Quejas</h5>
     <div class="container">
         <div class="card card_formulario">

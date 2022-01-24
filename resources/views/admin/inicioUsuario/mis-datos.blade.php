@@ -544,7 +544,7 @@
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container" style="padding-top: 10px;">
-                                    @if (count($activos) === 0)
+                                    @if (is_null($activos))
                                         No cuenta con activos a su cargo
                                     @else
                                         <div class="row">
@@ -569,69 +569,34 @@
                             <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+                                
                             </h5>
                             <hr class="hr-custom-title">
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container" style="padding-top: 10px;">
-                                    @if (count($competencias) === 0)
+                                    @if (is_null($competencias))
                                         No se han definido competencias actualmente
                                     @else
                                         <div class="row">
                                         </div>
                                         {{-- @foreach ($competencias as $competencia) --}}
                                             <div class="row" style="margin-top: 1px;">
-                                                <div class="col-12 text-muted" style="font-size:10px">
-                                                    <table id="dom" class="table table-bordered w-100 datatable-glosario" style="width: 100%">
+                                                <div class="col-12 text-muted" style="">
+                                                    <table id="dom" class="table table-bordered w-100 datatable-glosario" style="width: 100%; border: none !important;">
                                                         <thead>
                                                             <tr>
-                                                                <th style="font-size:100%">Competencia</th>
-                                                                <th style="font-size:80%">Nivel Esperado</th>
-                                                                <th style="ont-size:100%">Mas</th>
+                                                                <th style="border-bottom: none !important;">Logo</th>
+                                                                <th style="border-bottom: none !important;">Competencia</th>
+                                                                <th style="text-align: center !important; border-bottom: none !important;">Nivel Esperado</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach ( $competencias as $competencia )
-                                                            <tr>
-                                                                <td>{{$competencia->nombre}}</td>
-                                                                <td>{{$competencia->tipo_id}}</td>
-                                                                <td>
-                                                                 <!-- Button trigger modal -->
-                                                                        <div class="text-center">
-                                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">+</button>
-                                                                                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                                                                    <div class="modal-dialog modal-lg">
-                                                                                        <div class="modal-content">
-                                                                                            <table id="dom" class="table table-bordered w-100 datatable-glosario" style="width: 100%">
-                                                                                                <thead class="thead-dark">
-                                                                                                    <tr>
-                                                                                                        <th>Imagen</th>
-                                                                                                        <th>Competencia</th>
-                                                                                                        <th>Tipo</th>
-                                                                                                        <th>Descripción</th>
-
-
-                                                                                                    </tr>
-                                                                                                </thead>
-                                                                                                <tbody>
-                                                                                                    @foreach ( $competencias as $competencia )
-                                                                                                    <tr>
-                                                                                                        <td>
-                                                                                                            <img class="img_empleado_presentacion_mis_datos" style="position: relative;"
-                                                                                                            src="{{$competencia->imagen_ruta}}">
-                                                                                                        </td>
-                                                                                                        <td>{{$competencia->nombre}}</td>
-                                                                                                        <td>{{$competencia->tipo_id}}</td>
-                                                                                                        <td>{{$competencia->descripcion}}</td>
-                                                                                                    </tr>
-                                                                                                    @endforeach
-                                                                                                </tbody>
-                                                                                                </table>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                </td>
+                                                            <tr data-toggle="modal" data-target="#modal_competencia{{ $competencia->id }}" style="cursor: pointer;">
+                                                                <td style="vertical-align: middle;"><img class="img_empleado" style="transform: scale(0.7);" src="{{$competencia->imagen_ruta}}"></td>
+                                                                <td style="vertical-align: middle; text-align: left !important;">{{$competencia->nombre}}</td>
+                                                                <td style="text-align: center !important; vertical-align: middle;">{{$competencia->tipo_id}}</td>
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
@@ -641,11 +606,125 @@
                                                 </div>
                                             </div>
                                         {{-- @endforeach --}}
+
+                                        {{-- <button class="btn btn_cancelar" data-toggle="modal" data-target="#modal_competencias" style="margin-right: 3px; float: right; border-radius: 0px !important;">
+                                            <i class="fas fa-book mr-2" ></i>
+                                            Diccionario
+                                        </button> --}}
                                     @endif
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    {{-- modal competencia --}}
+                    {{-- <div id="modal_competencias" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <table id="dom" class="table table-bordered w-100 datatable-glosario" style="width: 100%">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Logo</th>
+                                        <th>Competencia</th>
+                                        <th>Tipo</th>
+                                        <th>Descripción</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ( $competencias as $competencia )
+                                    <tr>
+                                        <td>
+                                            <img class="img_empleado" style="position: relative;"
+                                            src="{{$competencia->imagen_ruta}}">
+                                        </td>
+                                        <td>{{$competencia->nombre}}</td>
+                                        <td>{{$competencia->tipo->nombre}}</td>
+                                        <td>{{$competencia->descripcion}}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> --}}
+
+                    {{-- modal competencia por registro--}}
+                    @if (!(count($competencias) === 0))
+                        @foreach ( $competencias as $competencia )
+                            <div id="modal_competencia{{ $competencia->id }}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header" style="display: flex; justify-content: space-between; align-items:center; color: #fff; background-color:#345183; font-size:20px;">
+                                            <span><img class="img_empleado mr-4" src="{{$competencia->imagen_ruta}}">
+                                            <strong>{{ $competencia->nombre }}</strong></span>
+                                            <span class="mr-2">Tipo: {{ $competencia->tipo->nombre }}</span>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                           {{-- <h5 style="display: flex; justify-content: space-between; align-items:center;">
+                                                <span><img class="img_empleado" src="{{$competencia->imagen_ruta}}">
+                                                <strong>{{ $competencia->nombre }}</strong></span>
+                                                <span class="mr-2">Tipo: {{ $competencia->tipo->nombre }}</span>
+                                            </h5>
+                                            <hr> --}}
+
+                                            <div class="mt-3">
+                                                <strong>Descripción: </strong>
+                                                <p style="text-align: justify;">
+                                                    {{$competencia->descripcion}}
+                                                </p>
+                                            </div>
+
+                                            <div>
+                                                <strong style="font-size: 15px;">Conductas</strong>
+
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <td>Nivel</td>
+                                                                <td>Conducta esperada</td>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            @foreach($competencia->opciones as $conducta)
+                                                                <tr>
+                                                                    <td>{{ $conducta->ponderacion }}</td>
+                                                                    <td>{!! htmlspecialchars_decode($conducta->definicion) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+
+
+
+                                                    {{-- @foreach($competencia->opciones as $conducta)
+                                                        <div class="card-body card" style="background-color:#eee;">
+                                                            {!! htmlspecialchars_decode($conducta->definicion) !!}
+                                                        </div>
+                                                    @endforeach --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+
+
+
+
+
+
+
+
+
+
+
 
 
                 {{-- MOD Informacion General --}}
