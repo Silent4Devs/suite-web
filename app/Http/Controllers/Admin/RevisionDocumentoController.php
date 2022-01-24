@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Documento;
 use App\Models\RevisionDocumento;
 use Illuminate\Http\Request;
 
@@ -70,4 +71,28 @@ class RevisionDocumentoController extends Controller
             return [];
         }
     }
+
+    public function obtenerDocumentosMeDebenAprobar()
+    {
+        if (auth()->user()->empleado) {
+            $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', auth()->user()->empleado->id)->get();
+
+            return $mis_documentos;
+        } else {
+            return [];
+        }
+    }
+
+    // public function obtenerDocumentosMeDebenAprobarArchivo()
+    // {
+    //     if (auth()->user()->empleado) {
+    //         $revisiones = RevisionDocumento::with(['documento' => function ($query) {
+    //             $query->with('revisor', 'macroproceso', 'elaborador', 'aprobador', 'responsable', 'proceso');
+    //         }])->where('empleado_id', auth()->user()->empleado->id)->where('archivado', RevisionDocumento::ARCHIVADO)->get();
+
+    //         return $revisiones;
+    //     } else {
+    //         return [];
+    //     }
+    // }
 }
