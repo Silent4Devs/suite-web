@@ -12,8 +12,17 @@
         }
 
     </style>
-    {{ Breadcrumbs::render('seguridad-create') }}
-
+    
+    @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('seguridad-create-perfil') }}
+    @endif
+    @if(asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('seguridad-create-portal') }}
+    @endif
+    @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('seguridad-create') }}
+    @endif
+    
     <h5 class="col-12 titulo_general_funcion">Incidentes de Seguridad</h5>
     <div class="container">
         <div class="card card_formulario">

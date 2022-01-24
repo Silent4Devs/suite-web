@@ -11,7 +11,17 @@
         }
 
     </style>
-    {{ Breadcrumbs::render('denuncias-create') }}
+
+    @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('denuncias-create-perfil') }}
+    @endif
+    @if(asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('denuncias-create-portal') }}
+    @endif
+    @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('denuncias-create') }}
+    @endif
+    
     <h5 class="col-12 titulo_general_funcion">Denuncias</h5>
     <div class="container">
         <div class="card card_formulario">
