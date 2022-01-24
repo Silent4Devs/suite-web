@@ -442,6 +442,11 @@
                                             <span style="font-size: 17px; font-weight: bold;">
                                                 Idiomas</span>
                                         </div>
+                                        @foreach ( $puestoModel->language as $id_language )
+                                        <p style="text-align:justify">
+                                         {{$id_language->language->idioma}}
+                                         </p>
+                                        @endforeach
                                         {{-- @foreach ($empleadoModel->idiomas as $idioma)
                                             <div>
                                                 <strong class="font-weight-bold"
