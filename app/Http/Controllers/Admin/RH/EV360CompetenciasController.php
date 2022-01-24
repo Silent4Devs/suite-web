@@ -145,6 +145,7 @@ class EV360CompetenciasController extends Controller
         if ($request->ajax()) {
             // $conductas = Conducta::where('competencia_id', intval($competencia))->get()->sortBy('ponderacion');
             $conductas = Conducta::where('competencia_id', intval($competencia))->orderBy('ponderacion')->get();
+
             return datatables()->of($conductas)->toJson();
         }
     }

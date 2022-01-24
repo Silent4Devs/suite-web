@@ -34,7 +34,7 @@ class TipoCompetenciaController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.competencias.tipo.edit', compact('tipos'));
     }
 
-    public function update(Request $request,$tipos)
+    public function update(Request $request, $tipos)
     {
         $tipos = TipoCompetencia::find($tipos);
 
@@ -46,6 +46,7 @@ class TipoCompetenciaController extends Controller
     public function show($tipos)
     {
         $tipos = TipoCompetencia::find($tipos);
+
         return view('admin.recursos-humanos.evaluacion-360.competencias.tipo.show', compact('tipos'));
     }
 

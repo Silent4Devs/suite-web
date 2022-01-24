@@ -81,8 +81,7 @@ class Puesto extends Model
 
     public function language()
     {
-        return $this->belongsToMany(Language::class, 'puesto_idioma_porcentaje_pivot','id_puesto', 'id_language');
-
+        return $this->belongsToMany(Language::class, 'puesto_idioma_porcentaje_pivot', 'id_puesto', 'id_language');
     }
 
     // public function responsables()
