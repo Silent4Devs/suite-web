@@ -23,7 +23,7 @@
                         $logotipo = $organizacion->logotipo;
                     @endphp
                     <div class="caja_img_logo">
-                        <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 20%;">
+                        <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 200px;">
                     </div>
                     <div class="row medidas">
                         <div class="mt-4 ml-4 col-md-7 datos_iz_cv">
