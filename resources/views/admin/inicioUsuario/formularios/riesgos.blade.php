@@ -6,7 +6,17 @@
         }
 
     </style>
-    {{ Breadcrumbs::render('riesgos-create') }}
+    
+    @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('riesgos-create-perfil') }}
+    @endif
+    @if(asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('riesgos-create-portal') }}
+    @endif
+    @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('riesgos-create') }}
+    @endif
+    
     <h5 class="col-12 titulo_general_funcion">Riesgo identificado</h5>
     <div class="container">
         <div class="card card_formulario">

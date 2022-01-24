@@ -57,19 +57,19 @@ function hexToRGBA(hex) {
     calendar.borderColor = '#B1F094';
     addCalendar(calendar);
 
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = 'Auditorias';
-    calendar.color = '#2E2E2E';
-    calendar.bgColor = '#FCB3C2';
-    calendar.dragBgColor = '#FCB3C2';
-    calendar.borderColor = '#FCB3C2';
-    addCalendar(calendar);
+    // calendar = new CalendarInfo();
+    // id += 1;
+    // calendar.id = String(id);
+    // calendar.name = 'Auditorias';
+    // calendar.color = '#2E2E2E';
+    // calendar.bgColor = '#FCB3C2';
+    // calendar.dragBgColor = '#FCB3C2';
+    // calendar.borderColor = '#FCB3C2';
+    // addCalendar(calendar);
 
 
     calendar = new CalendarInfo();
-    id += 1;
+    id += 2;
     calendar.id = String(id);
     calendar.name = 'Eventos';
     calendar.color = '#2E2E2E';
