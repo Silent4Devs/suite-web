@@ -41,10 +41,9 @@ class EV360EvaluacionesController extends Controller
 
     public function create()
     {
-        $evaluacion = new Evaluacion;
+        $evaluacion = Evaluacion::all();
         $areas = Area::all();
         $empleados = Empleado::all();
-
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.create', compact('evaluacion', 'areas', 'empleados'));
     }
 

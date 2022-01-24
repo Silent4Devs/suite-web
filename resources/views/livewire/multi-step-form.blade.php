@@ -447,7 +447,7 @@
                                                         Instrucciones</p>
                                                     <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
                                                         Empieza
-                                                        configurando tu evaluación, defininendo el nombre y agregando
+                                                        configurando tu evaluación, definiendo el nombre y agregando
                                                         una
                                                         descripción<small
                                                             class="text-muted">(opcionalmente)</small>,
@@ -861,7 +861,7 @@
                                                         <span class="icono-card-evaluadores"><i
                                                                 class="fas fa-user-friends"></i></span>
                                                         <br>
-                                                        Por Area
+                                                        Del Área
                                                         <br>
                                                         @if ($errors->has('evaluado_por_misma_area'))
                                                             <small style="font-size:9px;"
@@ -893,7 +893,7 @@
                                                     <span class="icono-card-evaluadores"><i
                                                             class="fas fa-users"></i></span>
                                                     <br>
-                                                    Equipo a cargo
+                                                    Del equipo de trabajo
                                                     <br>
                                                     @if ($errors->has('evaluado_por_equipo_a_cargo'))
                                                         <small style="font-size:9px;"
@@ -947,8 +947,140 @@
                                 <div class="mt-3 text-center">
                                     <h3>
                                         Evaluación <span class="silent-color">{{ $typeEvaluation }}°</span>
+
                                     </h3>
                                 </div>
+
+                            </div>
+                            <div class="datatable-fix w-100">
+                                <table class="table">
+                                    <thead class="bg-dark">
+                                        <tr>
+                                            <th>Evaluado</th>
+                                            <th>Área</th>
+                                            <th>Autoevaluación</th>
+                                            <th>Jefe Inmediato</th>
+                                            <th>Misma Área</th>
+                                            <th>Equipo a Cargo</th>
+                                            {{-- <th>Equipo a cargo</th> --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($listaEvaluados as $listaEvaluado)
+                                            <tr>
+                                                {{-- <td>
+                                                    <select
+                                                        class="mt-3 form-control {{ $errors->has('') ? 'is-invalid' : '' }}"
+                                                        id="ddlViewBy" wire:model.defer="">
+                                                        @foreach ($empleados as $empleado)
+                                                        <?php
+                                                            // $selected='';
+                                                            // if($listaEvaluado['evaluado']->name == $empleado->name )
+                                                            //     $selected="selected";
+                                                        ?>
+                                                            <option value="{{ $empleado->id }}" {{$selected}} >
+                                                                {{ $empleado->name }}
+                                                            </option>
+
+
+                                                        @endforeach
+                                                    </select>
+                                                </td> --}}
+
+                                                <td style="text-align: left !important;">{{$listaEvaluado['evaluado']->name}}</td>
+                                                <td style="text-align: left !important;">{{$listaEvaluado['evaluado']->area->area}}</td>
+                                                {{-- <td style="text-align: left !important;">
+                                                    @foreach ($listaEvaluado['evaluadores'] as $evaluador)
+                                                        {{$evaluador['tipo']}}
+                                                    @endforeach
+                                                </td> --}}
+                                                <?php
+                                                    $jefes = array(
+                                                        0 => 'Autoevaluación',
+                                                        1 => 'Jefe Inmediato',
+                                                        2 => 'Misma Área',
+                                                        3 => 'Equipo a Cargo'
+                                                    );
+                                                    for ($i = 0; $i <= 3; $i++) {
+                                                            // foreach ($listaEvaluado['evaluadores'] as $evaluador){
+                                                            //     echo $jefes[$evaluador['tipo']];
+                                                            // }
+                                                            echo "<td>";
+                                                            /*
+                                                            foreach ($listaEvaluado['evaluadores'] as $evaluador){
+                                                                // echo $jefes[$evaluador['tipo']];
+                                                                if($evaluador['tipo'] == $i){
+                                                                    echo $jefes[$evaluador['tipo']];
+                                                                }
+                                                            }
+                                                            */
+                                                            echo "<select>";
+                                                                echo "<option value = '0' selected >Seleccione una opción</option>";
+                                                                foreach ($listaEvaluado['evaluadores'] as $evaluador){
+                                                                    if($i == 0){
+                                                                        if(isset($evaluador['tipo']) && $evaluador['tipo'] == $i ){
+                                                                            echo "<option value = '0' selected >Autoevaluación</option>";
+                                                                            echo "<option value = '1' >Jefe inmediato</option>";
+                                                                            echo "<option value = '2' >Misma área</option>";
+                                                                            echo "<option value = '3' >Equipo a cargo</option>";
+                                                                        }else if( empty($evaluador['tipo']) ){
+                                                                            echo "<option value = '0' >Autoevaluación</option>";
+                                                                            echo "<option value = '1' >Jefe inmediato</option>";
+                                                                            echo "<option value = '2' >Misma área</option>";
+                                                                            echo "<option value = '3' >Equipo a cargo</option>";
+                                                                        }
+                                                                    }
+                                                                    if($i == 1){
+                                                                        if(isset($evaluador['tipo']) && $evaluador['tipo'] == $i ){
+                                                                            echo "<option value = '0' >Autoevaluación</option>";
+                                                                            echo "<option value = '1' selected >Jefe inmediato</option>";
+                                                                            echo "<option value = '2' >Misma área</option>";
+                                                                            echo "<option value = '3' >Equipo a cargo</option>";
+                                                                        }else if( !isset($evaluador['tipo']) && empty($evaluador['tipo'])  ){
+                                                                            echo "<option value = '0' >Autoevaluación</option>";
+                                                                            echo "<option value = '1' >Jefe inmediato</option>";
+                                                                            echo "<option value = '2' >Misma área</option>";
+                                                                            echo "<option value = '3' >Equipo a cargo</option>";
+                                                                        }
+                                                                    }
+                                                                    if($i == 2){
+                                                                        if(isset($evaluador['tipo']) && $evaluador['tipo'] == $i ){
+                                                                            echo "<option value = '0' >Autoevaluación</option>";
+                                                                            echo "<option value = '1' >Jefe inmediato</option>";
+                                                                            echo "<option value = '2' selected >Misma área</option>";
+                                                                            echo "<option value = '3' >Equipo a cargo</option>";
+                                                                        }else if( !isset($evaluador['tipo']) && empty($evaluador['tipo'])  ){
+                                                                            echo "<option value = '0' >Autoevaluación</option>";
+                                                                            echo "<option value = '1' >Jefe inmediato</option>";
+                                                                            echo "<option value = '2' >Misma área</option>";
+                                                                            echo "<option value = '3' >Equipo a cargo</option>";
+                                                                        }
+                                                                    }
+                                                                    if($i == 3){
+                                                                        if(isset($evaluador['tipo']) && $evaluador['tipo'] == $i ){
+                                                                            echo "<option value = '0' >Autoevaluación</option>";
+                                                                            echo "<option value = '1' >Jefe inmediato</option>";
+                                                                            echo "<option value = '2' >Misma área</option>";
+                                                                            echo "<option value = '3' selected >Equipo a cargo</option>";
+                                                                        }else if( !isset($evaluador['tipo']) && empty($evaluador['tipo'])  ){
+                                                                            echo "<option value = '0' >Autoevaluación</option>";
+                                                                            echo "<option value = '1' >Jefe inmediato</option>";
+                                                                            echo "<option value = '2' >Misma área</option>";
+                                                                            echo "<option value = '3' >Equipo a cargo</option>";
+                                                                        }
+                                                                    }
+
+                                                                }
+
+                                                            echo "</select>";
+                                                            echo "</td>";
+                                                    }
+
+                                                ?>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -1223,5 +1355,16 @@
                 $('#grupoModal').modal('hide');
             });
         })
+
+        $('#ddlViewBy').on('load', function() {
+            console.log( $("option:selected", this));
+
+            /*
+            this.$('.textbox').hide();
+            var myTag = element.attr("myTag");
+            */
+        }());
+
     </script>
+
 </div>

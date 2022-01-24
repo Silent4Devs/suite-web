@@ -252,7 +252,7 @@
                         <label class="" for="num_empleados">Número de empleados</label>
                         <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}" type="number"
                             name="num_empleados" id="num_empleados"
-                            value="{{ old('num_empleados', $organizacion->num_empleados) }}" readonly>
+                            value="{{ old('num_empleados', $countEmpleados) }}" readonly>
                         @if ($errors->has('num_empleados'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('num_empleados') }}
@@ -263,7 +263,7 @@
                     <div class="form-group col-sm-6">
                         <label class="" for="tamano">Tamaño</label>
                         <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text"
-                            name="tamano" id="tamano" value="{{ old('tamano', $organizacion->tamano) }}" readonly>
+                            name="tamano" id="tamano" value="{{ old('tamano', $tamanoEmpresa) }}" readonly>
                         @if ($errors->has('tamano'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('tamano') }}
