@@ -11,6 +11,13 @@
         <div class="card-body">
             <form method="POST" action="{{ route('admin.puestos.store') }}" enctype="multipart/form-data">
                 @csrf
+
+
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <span style="font-size: 17px; font-weight: bold;">
+                        Identificación del Puesto</span>
+                </div>
+
                 <div class="row col-12">
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
                         <label class="required" for="puesto"><i
@@ -86,8 +93,45 @@
                     </div>
                 </div>
 
+
+
+
+                <div class="row col-12 mt-2">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        <div style="display:flex;"><label class="col-sm-4 col-md-4 col-lg-4" for="personas_externas"><i class="fas fa-users iconos-crear"></i>No de personas a su cargo</label>
+                            <strong class="col-sm-2 col-md-2 col-lg-2" >Internas</strong><input class="col-sm-2 col-md-2 col-lg-2 form-control {{ $errors->has('personas_externas') ? 'is-invalid' : '' }}" type="number" name="personas_externas"
+                              value="{{ old('personas_externas', '') }}"></div>
+                            @if ($errors->has('personas_externas'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('personas_externas') }}
+                                </div>
+                            @endif
+                    </div>
+                </div>
+
+                <div class="row col-12 mt-4">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        <div style="display:flex;"> <label class="col-sm-6 col-md-6 col-lg-6" for="personas_externas"><i class="fas fa-users iconos-crear"></i>No de personas externas a su cargo</label>
+                        <input  class="col-sm-6 col-md-6 col-lg-6 form-control {{ $errors->has('personas_externas') ? 'is-invalid' : '' }}" type="text" name="personas_externas"
+                              value="{{ old('personas_externas', '') }}"></div>
+                            @if ($errors->has('personas_externas'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('personas_externas') }}
+                                </div>
+                            @endif
+                    </div>
+                </div>
+
+
+
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <span style="font-size: 17px; font-weight: bold;">
+                        Descripción del puesto</span>
+                </div>
+
+
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label for="descripcion"><i class="fas fa-clipboard-list iconos-crear"></i>Descripción del puesto<span
+                    <label for="descripcion"><i class="fas fa-clipboard-list iconos-crear"></i>Objetivo general del puesto<span
                             class="text-danger">*</span></label>
                     <textarea class="form-control date" type="text" name="descripcion" id="descripcion">
                                         {{ old('descripcion') }}
@@ -99,11 +143,134 @@
                     @endif
                 </div>
 
-
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <span style="font-size: 17px; font-weight: bold;">
+                        Principales responsabilidades</span>
+                </div>
 
                 <div class="row col-12">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <label for="actividad"><i class="fas fa-file-signature iconos-crear"></i>Actividad</label>
+                        <input class="form-control {{ $errors->has('actividad') ? 'is-invalid' : '' }}" type="text" name="actividad"
+                            id="actividad_responsabilidades" value="{{ old('actividad', '') }}">
+                        <span class="errors actividad_error text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row col-12 mt-3">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label for="resultado"><i class="fas fa-chart-line iconos-crear"></i>Resultado Esperado</label>
+                            <input class="form-control {{ $errors->has('resultado') ? 'is-invalid' : '' }}" type="text" name="resultado"
+                                id="resultado_certificado_responsabilidades" value="{{ old('resultado', '') }}">
+                            <span class="errors resultado_error text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row col-12 mt-3">
+                    <div class="col-sm-8 col-lg-8 col-md-8">
+                        <label for="indicador"><i class="fas fa-clipboard-check iconos-crear"></i>Cumplimiento</label>
+                        <input class="form-control {{ $errors->has('indicador') ? 'is-invalid' : '' }}" type="text" name="indicador"
+                            id="indicador_responsabilidades" value="{{ old('indicador', '') }}">
+                        <span class="errors indicador_error text-danger"></span>
+                    </div>
+
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <label for="tiempo_asignado"><i
+                            class="far fa-percent iconos-crear"></i> de tiempo</label>
+                        <input class="form-control {{ $errors->has('tiempo_asignado') ? 'is-invalid' : '' }}" type="text" name="tiempo_asignado"
+                            id="tiempo_asignado_responsabilidades" value="{{ old('tiempo_asignado', '') }}">
+                        <span class="errors tiempo_asignado_error text-danger"></span>
+                    </div>
+                </div>
+
+
+
+                <div class="mb-3 col-12 mt-4 " style="text-align: end">
+                    <button type="button" name="btn-suscribir-responsabilidades" id="btn-suscribir-responsabilidades" class="btn btn-success">Agregar</button>
+                </div>
+
+                <div class="row col-12">
+                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
+                        <table class="table w-100" id="responsabilidades_table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Actividad</th>
+                                    <th>Resultado Esperado</th>
+                                    <th>Cumplimiento</th>
+                                    <th>% de tiempo</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contenedor_responsabilidades">
+                                {{-- <tr>
+                                    <td><input class="form-control" type="text" id="actividad" name="actividad"></td>
+                                    <td><input class="form-control" type="text" id="resultado" name="resultado"></td>
+                                    <td><input class="form-control" type="text" id="cumplimiento" name="indicador"></td>
+                                    <td><input class="form-control" type="text" id="tiempo_asignado" name="tiempo_asignado"></td>
+                                    <td><button type="button" name="btn-remove-responsabilidades" id="" class="btn btn-danger remove">Eliminar</button></td>
+                                </tr> --}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <span style="font-size: 17px; font-weight: bold;">
+                       Herramientas para desempeñar el puesto</span>
+                </div>
+
+
+                <div class="row col-12 mt-3">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <label for="nombre_herramienta"><i class="fas fa-tools iconos-crear"></i>Nombre</label>
+                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
+                            id="indicador_responsabilidades_puesto" value="{{ old('indicador', '') }}">
+                        <span class="errors indicador_error text-danger"></span>
+                    </div>
+
+                    <div class="col-sm-12 col-lg-12 col-md-12 mt-2">
+                        <label for="descripcion_herramienta"><i class="fas fa-clipboard-list iconos-crear"></i>Descripción de la herramienta</label>
+                        <input class="form-control {{ $errors->has('descripcion_herramienta') ? 'is-invalid' : '' }}" type="text" name="descripcion_herramienta"
+                            id="descripcion_herramienta_puesto" value="{{ old('descripcion_herramienta', '') }}">
+                        <span class="errors descripcion_herramienta_error text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3 col-12 mt-4 " style="text-align: end">
+                    <button type="button" name="btn-suscribir-herramientas" id="btn-suscribir-herramientas" class="btn btn-success">Agregar</button>
+                </div>
+
+                <div class="row col-12">
+                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
+                        <table class="table w-100" id="herramientas_table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contenedor_herramientas">
+                                {{-- <tr>
+                                    <td><input class="form-control" type="text" id="actividad" name="actividad"></td>
+                                    <td><input class="form-control" type="text" id="resultado" name="resultado"></td>
+                                    <td><input class="form-control" type="text" id="cumplimiento" name="indicador"></td>
+                                    <td><input class="form-control" type="text" id="tiempo_asignado" name="tiempo_asignado"></td>
+                                    <td><button type="button" name="btn-remove-responsabilidades" id="" class="btn btn-danger remove">Eliminar</button></td>
+                                </tr> --}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <span style="font-size: 17px; font-weight: bold;">
+                       Requisitos y habilidades para el puesto</span>
+                </div>
+
+                <div class="row col-12 mt-4">
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="estudios"><i class="fas fa-graduation-cap iconos-crear"></i>Educación Academica(estudios)<span
+                        <label for="estudios"><i class="fas fa-graduation-cap iconos-crear"></i>Educación Academica (Estudios)<span
                                 class="text-danger">*</span></label>
                         <textarea class="form-control date" type="text" name="estudios" id="estudios">
                                             {{ old('estudios') }}
@@ -160,7 +327,7 @@
 
                 <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
                     <span style="font-size: 17px; font-weight: bold;">
-                        Idioma</span>
+                        Idiomas</span>
                 </div>
 
                 <div class="row col-12">
@@ -235,75 +402,12 @@
                 </div>
 
 
+
+
                 <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
                     <span style="font-size: 17px; font-weight: bold;">
-                        Principales responsabilidades</span>
+                       Datos generales</span>
                 </div>
-
-                <div class="row col-12">
-                    <div class="col-sm-12 col-lg-12 col-md-12">
-                        <label for="actividad"><i class="fas fa-file-signature iconos-crear"></i>Actividad</label>
-                        <input class="form-control {{ $errors->has('actividad') ? 'is-invalid' : '' }}" type="text" name="actividad"
-                            id="actividad_responsabilidades" value="{{ old('actividad', '') }}">
-                        <span class="errors actividad_error text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="row col-12 mt-3">
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                            <label for="resultado"><i class="fas fa-chart-line iconos-crear"></i>Resultado Esperado</label>
-                            <input class="form-control {{ $errors->has('resultado') ? 'is-invalid' : '' }}" type="text" name="resultado"
-                                id="resultado_certificado_responsabilidades" value="{{ old('resultado', '') }}">
-                            <span class="errors resultado_error text-danger"></span>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <label for="indicador"><i class="fas fa-clipboard-check iconos-crear"></i>Cumplimiento</label>
-                        <input class="form-control {{ $errors->has('indicador') ? 'is-invalid' : '' }}" type="text" name="indicador"
-                            id="indicador_responsabilidades" value="{{ old('indicador', '') }}">
-                        <span class="errors indicador_error text-danger"></span>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <label for="tiempo_asignado"><i
-                            class="far fa-percent iconos-crear"></i> de tiempo</label>
-                        <input class="form-control {{ $errors->has('tiempo_asignado') ? 'is-invalid' : '' }}" type="text" name="tiempo_asignado"
-                            id="tiempo_asignado_responsabilidades" value="{{ old('tiempo_asignado', '') }}">
-                        <span class="errors tiempo_asignado_error text-danger"></span>
-                    </div>
-
-                </div>
-
-                <div class="mb-3 col-12 mt-4 " style="text-align: end">
-                    <button type="button" name="btn-suscribir-responsabilidades" id="btn-suscribir-responsabilidades" class="btn btn-success">Agregar</button>
-                </div>
-
-                <div class="row col-12">
-                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
-                        <table class="table w-100" id="responsabilidades_table" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Actividad</th>
-                                    <th>Resultado Esperado</th>
-                                    <th>Cumplimiento</th>
-                                    <th>% de tiempo</th>
-                                    <th>Opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="contenedor_responsabilidades">
-                                {{-- <tr>
-                                    <td><input class="form-control" type="text" id="actividad" name="actividad"></td>
-                                    <td><input class="form-control" type="text" id="resultado" name="resultado"></td>
-                                    <td><input class="form-control" type="text" id="cumplimiento" name="indicador"></td>
-                                    <td><input class="form-control" type="text" id="tiempo_asignado" name="tiempo_asignado"></td>
-                                    <td><button type="button" name="btn-remove-responsabilidades" id="" class="btn btn-danger remove">Eliminar</button></td>
-                                </tr> --}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-
 
 
 
@@ -416,6 +520,31 @@
 
                 </div>
 
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <span style="font-size: 17px; font-weight: bold;">
+                       Contactos del puesto</span>
+                </div>
+
+
+                <div class="row col-12 mt-4">
+
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                        <label for="id_reporta"><i class="fas fa-user-tie iconos-crear"></i>Puesto</label>
+                        <select class="form-control {{ $errors->has('id_reporta') ? 'is-invalid' : '' }}" name="id_reporta" id="id_reporta">
+                            @foreach ($puestos as $puesto)
+                            <option data-puesto="{{ $puesto->puesto }}" value="{{ $puesto->id }}" >
+                                {{ $puesto->puesto }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('puesto'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_puesto') }}
+                        </div>
+                        @endif
+                    </div>
+
+                </div>
 
 
 

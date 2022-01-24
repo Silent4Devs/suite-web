@@ -544,7 +544,7 @@
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container" style="padding-top: 10px;">
-                                    @if (count($activos) === 0)
+                                    @if (is_null($activos))
                                         No cuenta con activos a su cargo
                                     @else
                                         <div class="row">
@@ -575,7 +575,7 @@
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container" style="padding-top: 10px;">
-                                    @if (count($competencias) === 0)
+                                    @if (is_null($competencias))
                                         No se han definido competencias actualmente
                                     @else
                                         <div class="row">
