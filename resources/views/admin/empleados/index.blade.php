@@ -7,20 +7,22 @@
         }
 
         .dataTables_length:before {
-            content: "Mostrar" !important;
+            content: "" !important;
             color: #111 !important;
-            margin-right: -40px !important;
+            margin-right: -50px !important;
             position: relative;
             z-index: 2;
+            padding: 0px !important;
 
         }
 
         .dataTables_length:after {
-            content: "empleados" !important;
+            content: "Mostrar empleados" !important;
             color: #111 !important;
             margin-left: -50px !important;
             position: relative;
             z-index: 2;
+            /* padding: 0px; */
         }
 
         .btn_cargar {

@@ -761,6 +761,7 @@ class EmpleadoController extends Controller
 
     public function storeExperiencia(Request $request, $empleado)
     {
+        dd($request);
         $request->validate([
             'empresa' => 'required|string|max:255',
             'puesto' => 'required|string|max:255',
