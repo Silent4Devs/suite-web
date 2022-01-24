@@ -34,7 +34,7 @@ class ObejetivoPerspectivaController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.objetivos.perspectiva.edit', compact('perspectiva'));
     }
 
-    public function update(Request $request,$perspectiva)
+    public function update(Request $request, $perspectiva)
     {
         $perspectiva = TipoObjetivo::find($perspectiva);
 
@@ -46,6 +46,7 @@ class ObejetivoPerspectivaController extends Controller
     public function show($perspectiva)
     {
         $perspectiva = TipoObjetivo::find($perspectiva);
+
         return view('admin.recursos-humanos.evaluacion-360.objetivos.perspectiva.show', compact('perspectiva'));
     }
 
