@@ -143,7 +143,7 @@
                 @livewire('metrica-objetivo-select',['metrica_seleccionada'=>$metrica_seleccionada])
             </div>
             @if (!$editar)
-                <div class="p-1 col" style="margin-top:-48px;height: 38px;margin-left: -12px;">
+                <div class="p-1 col" style="margin-top:-28px;height: 38px;margin-left: -12px;">
                     <button id="btnAgregarMetrica" class="text-white btn btn-sm"
                         style="background:#3eb2ad;height: 32px;" data-toggle="modal" data-target="#metricaObjetivoModal"
                         title="Agregar unidad"><i class="fas fa-plus"></i></button>

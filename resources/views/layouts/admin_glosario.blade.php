@@ -49,12 +49,12 @@
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style type="text/css">
-        
-        .material-modulos{
+        .material-modulos {
             font-size: 50px;
             margin-bottom: 3px;
             display: block;
         }
+
         .select2-selection--multiple {
             overflow: hidden !important;
             height: auto !important;
@@ -221,7 +221,7 @@
             height: 35px;
             background-color: #345183 !important;
             color: #fff !important;
-            border-radius: 100px;
+            border-radius: 2px;
             border: none !important;
         }
 
@@ -242,7 +242,7 @@
             height: 35px;
             background-color: #aaa !important;
             color: #fff !important;
-            border-radius: 100px;
+            border-radius: 2px;
             border: none !important;
             transition: 0.2s;
             display: inline-block;
@@ -287,11 +287,12 @@
             border-bottom: 1px solid #fff;
             color: #fff !important;
         }
-        .buscador-global::placeholder{
+
+        .buscador-global::placeholder {
             color: #fff;
         }
 
-        .buscador-global:focus-visible{
+        .buscador-global:focus-visible {
             all: unset;
             border-bottom: 2px solid #fff;
         }
@@ -366,11 +367,9 @@
             border-top-right-radius: 5px;
         }
 
-        .caja_botones_menu a:first-child {
-        }
+        .caja_botones_menu a:first-child {}
 
-        .caja_botones_menu a:not(.caja_botones_menu a.btn_activo) {
-        }
+        .caja_botones_menu a:not(.caja_botones_menu a.btn_activo) {}
 
         .caja_botones_menu a i {
             margin-right: 7px;
@@ -918,21 +917,22 @@
             text-align: justify !important;
         }
 
-        .titulo_general_funcion{
+        .titulo_general_funcion {
             color: #788BAC;
             margin-bottom: 65px;
         }
 
-        .form-group label{
+        .form-group label {
             color: #3086AF;
         }
 
-        .titulo-formulario{
+        .titulo-formulario {
             /*background-color: #fff; */
-            font-size:20px;
+            font-size: 20px;
         }
-        .card_formulario{
-            background-color:#FCFCFC;
+
+        .card_formulario {
+            background-color: #FCFCFC;
         }
 
         /*iconos de alertas azules*/
@@ -950,13 +950,11 @@
             background-color: #345183 !important;
             color: #fff !important;
         }
-
     </style>
 
     @yield('styles')
     @livewireStyles
 </head>
-
 
 <body class="">
     @include('partials.menu')
@@ -964,14 +962,33 @@
         <header class="px-3 c-header c-header-fixed" style="border: none;">
             <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
-                <i class="fas fa-fw fa-bars iconos_cabecera"></i>
+                <i class="fas fa-fw fa-bars iconos_cabecera" style="color:#fff;"></i>
             </button>
 
 
-            <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="body"
-                data-class="c-sidebar-lg-show" responsive="true">
-                <i id="btnMenu" class="fas fa-fw fa-bars" style=""></i>
+            <button id="btnMenu" style="all:unset; color: #fff; cursor:pointer;" class="d-md-down-none">
+                <i class="fas fa-fw fa-bars" style=""></i>
             </button>
+
+            <script>
+                const btnMenu = document.querySelector('#btnMenu');
+
+                btnMenu.addEventListener('click', () => {
+                    document.body.classList.toggle('c-sidebar-lg-show');
+
+                    if (document.body.classList.contains('c-sidebar-lg-show')) {
+                        localStorage.setItem('menu-mode', 'true');
+                    } else {
+                        localStorage.setItem('menu-mode', 'false');
+                    }
+                });
+
+                if (localStorage.getItem('menu-mode') === 'true') {
+                    document.body.classList.add('c-sidebar-lg-show');
+                } else {
+                    document.body.classList.remove('c-sidebar-lg-show');
+                }
+            </script>
 
 
             <form class="form-inline col-sm-3" style="position: relative;">
@@ -1037,15 +1054,14 @@
                 <ul class="ml-auto c-header-nav">
 
                     <li class="c-header-nav-item dropdown show">
-                        <a class="c-header-nav-link" data-toggle="dropdown"
-                            href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                            aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
                                 @if (auth()->user()->empleado)
                                     <span class="mr-2" style="font-weight: bold;">
                                         {!! auth()->user()->empleado->saludo !!}
                                     </span>
-                                    <img class="img_empleado"
-                                        style=""
+                                    <img class="img_empleado" style=""
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
                                         alt="{{ auth()->user()->empleado->name }}">
                                 @else
@@ -1053,7 +1069,8 @@
                                 @endif
                             </div>
                         </a>
-                        <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
+                        <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
+                            style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
                             <div class="p-2">
                                 @if (auth()->user()->empleado)
                                     {{-- <img class="shadow rounded-circle"
@@ -1070,7 +1087,8 @@
                                 @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                                     @can('profile_password_edit')
 
-                                        <a style="all: unset; color: #747474; cursor: pointer;" class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                                        <a style="all: unset; color: #747474; cursor: pointer;"
+                                            class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
                                             href="{{ route('profile.password.edit') }}">
                                             <i class="bi bi-gear"></i>
                                             Configurar Perfil
@@ -1078,8 +1096,9 @@
 
                                     @endcan
                                 @endif
-                                 &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a style="all: unset; color: #747474; cursor: pointer;" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a style="all: unset; color: #747474; cursor: pointer;"
+                                    onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                     <i class="bi bi-box-arrow-right"></i> Salir
                                 </a>
                             </div>
@@ -1127,6 +1146,9 @@
     </div>
     {{-- daterangepicker --}}
 
+    {{-- Librerías para visualizar en campo el dolar --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.min.js"></script>
 
 
     <script src="{{ asset('js/app.js') }}"></script>
@@ -1172,10 +1194,14 @@
     <script src="https://cdn.datatables.net/fixedcolumns/4.0.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+
     <script>
         window.Laravel.user = {!! json_encode([
-    'user' => auth()->check() ? auth()->user()->id : null,
-]) !!};
+        'user' => auth()->check() ? auth()->user()->id : null,]) !!};
     </script>
     <script src="//unpkg.com/alpinejs" defer></script>
 
@@ -1194,12 +1220,11 @@
             $('[data-toggle="tooltip"]').tooltip()
         })
 
-        $(".btn_bajar_scroll").click(function(){
+        $(".btn_bajar_scroll").click(function() {
             $("lemnt_row_menu").fadeIn(0);
-            $('.c-sidebar-nav').delay(1000).scrollTop( 900);
+            $('.c-sidebar-nav').delay(1000).scrollTop(900);
         });
     </script>
-
     <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>

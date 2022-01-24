@@ -18555,12 +18555,12 @@ html:not([dir="rtl"]) .c-switch-label .c-switch-slider::after {
 }
 
 .c-switch-info .c-switch-input:checked + .c-switch-slider {
-  background-color: #39f;
-  border-color: #0080ff;
+  background-color: #345183;
+  border-color: #345183;
 }
 
 .c-switch-info .c-switch-input:checked + .c-switch-slider::before {
-  border-color: #0080ff;
+  border-color: #345183;
 }
 
 .c-switch-3d-info .c-switch-input:checked + .c-switch-slider {
