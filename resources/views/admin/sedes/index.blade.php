@@ -195,7 +195,7 @@
                         data: 'foto_sedes',
                         name: 'foto_sedes',
                         render: function(data, type, row, meta) {
-                            return `<div class="text-center w-100"><img style="width:${data!=""?"50px":"80px"}" src="{{ asset('storage/sedes/imagenes/') }}/${data !=""?data:"organizacion.png"}"></div>`;
+                            return `<div class="text-center w-100"><img style="width:${data!=""?"50px":"80px"}" src="{{ asset('storage/sedes/imagenes/') }}/${data !=""?data:"sedes.png"}"></div>`;
                         }
                     },
                     {

@@ -38,8 +38,8 @@ class Sede extends Model
     use HasFactory;
     use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    // public $cacheFor = 3600;
+    // protected static $flushCacheOnUpdate = true;
     protected $table = 'sedes';
 
     protected $casts = [
