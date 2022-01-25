@@ -232,6 +232,15 @@
             <b>Periodo laboral:</b>
         </div>
 
+	    <div class="col-12 form-group p-0">
+            <div class="form-check" >
+                <input class="form-check-input" name="trabactualmente" type="checkbox" id="trabactualmente"
+                    x-on:change="open = !open">
+                <label class="form-check-label" for="trabactualmente">
+                    Trabajo actualmente
+                </label>
+            </div>
+        </div>
 
         <div class="row">
             <div class="form-group col-sm-6">
@@ -243,7 +252,7 @@
 
 
 
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6" id="fin_mes_contenedor">
                 <label for="fin_mes"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
                 <input class="form-control {{ $errors->has('fin_mes') ? 'is-invalid' : '' }}" type="date"
                     name="fin_mes" id="fin_mes" value="{{ old('fin_mes', '') }}">
@@ -332,6 +341,15 @@
                 <span class="errors nivel_error text-danger"></span>
             </div>
         </div>
+        <div class="col-12 form-group p-0">
+            <div class="form-check" >
+                <input class="form-check-input" name="estudactualmente" type="checkbox" id="estudactualmente"
+                    x-on:change="open = !open">
+                <label class="form-check-label" for="estudactualmente">
+                    Estudio actualmente
+                </label>
+            </div>
+        </div>
         <div class="row">
             <div class="form-group col-sm-6">
                 <label for="año_inicio"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
@@ -339,7 +357,7 @@
                     name="año_inicio" id="año_inicio_inst" value="{{ old('año_inicio', '') }}">
                 <span class="errors año_inicio_error text-danger"></span>
             </div>
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6" id="año_fin_contenedor">
                 <label for="año_fin"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
                 <input class="form-control {{ $errors->has('año_fin') ? 'is-invalid' : '' }}" type="date"
                     name="año_fin" id="año_fin_inst" value="{{ old('año_fin', '') }}">
