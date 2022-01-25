@@ -90,9 +90,9 @@
 
                 <div class="col-md-12 col-sm-12">
                     @if ($panel_rules->linkedin || $panel_rules->logotipo || $panel_rules->youtube || $panel_rules->facebook || $panel_rules->twitter || $panel_rules->empresa || $panel_rules->razon_social || $panel_rules->rfc || $panel_rules->schedule || $panel_rules->direccion || $panel_rules->telefono || $panel_rules->correo || $panel_rules->pagina_web)
-                        
+
                         <h5 class="" style="font-size: 18px;">DATOS GENERALES</h5>
-                        
+
                     @endif
                 </div>
 
@@ -294,7 +294,7 @@
                     </div>
                 </div>
 
-                
+
             </div>
         </div>
 
@@ -309,7 +309,7 @@
 
                     @if ($panel_rules->representante_legal)
                         @if (!is_null($organizacion->representante_legal))
-                                <div class="mb-4 col-{{ $panel_rules->fecha_constitucion ? '4' : '12' }}">
+                                <div class="mb-4 col-{{ $panel_rules->fecha_constitucion ? '6' : '12' }} && {{$panel_rules->num_empleados ? '4' : '12'}}">
                                     <label class="" for="representante_legal"><i
                                             class="fas fa-user-tie iconos-crear"></i>Representante Legal</label>
                                     <input
@@ -327,8 +327,8 @@
 
                     @if ($panel_rules->fecha_constitucion)
                         @if (!is_null($organizacion->fecha_constitucion))
-                            <div class="mb-4 col-{{ !$panel_rules->representante_legal ? '12' : '4' }}">
-                                <label for="fecha_constitucion"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha deconstitución</label>
+                            <div class="mb-4 col-{{ !$panel_rules->representante_legal ? '6' : '6' }}">
+                                <label for="fecha_constitucion"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha de constitución</label>
                                 <input class="form-control date {{ $errors->has('fecha_constitucion') ? 'is-invalid' : '' }}"
                                     type="date" name="fecha_constitucion" id="fecha_constitucion"
                                     value="{{ $organizacion->fecha_constitucion }}" disabled>
@@ -345,7 +345,7 @@
 
                     @if ($panel_rules->num_empleados)
                         @if (!is_null($organizacion->num_empleados))
-                            <div class="form-group col-{{$panel_rules->tamano ? '4' : '12'}}">
+                            <div class="form-group col-{{ $panel_rules->fecha_constitucion ? '6' : '6' }} && {{$panel_rules->tamano ? '6' : '12' }}">
                                 <label class="" for="num_empleados"><i
                                         class="fas fa-users iconos-crear"></i>Número de empleados</label>
                                 <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}"
@@ -361,7 +361,7 @@
                     @endif
                     @if ($panel_rules->tamano)
                         @if (!is_null($organizacion->tamano))
-                            <div class="form-group  col-{{$panel_rules->num_empleados ? '4' : '12'}}">
+                            <div class="form-group  col-{{$panel_rules->num_empleados ? '6' : '12'}}">
                                 <label class="" for="tamano"><i
                                         class="fas fa-boxes iconos-crear"></i>Tamaño</label>
                                 <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text"
@@ -375,25 +375,25 @@
                         @endif
                     @endif
                     @if ($panel_rules->giro)
-                        @if (!is_null($organizacion->giro))
-                            <div class="form-group col-{{$organizacion->servicios ? '4' : '12'}}">
-                                <label for="giro"> <i class="fas fa-briefcase iconos-crear"></i>
-                                    {{ trans('cruds.organizacion.fields.giro') }}
-                                </label>
-                                <input class="form-control {{ $errors->has('giro') ? 'is-invalid' : '' }}" type="text"
-                                    name="giro" id="giro" value="{{ $organizacion->giro }}" disabled>
-                                @if ($errors->has('giro'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('giro') }}
-                                    </div>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.organizacion.fields.giro_helper') }}</span>
-                            </div>
-                        @endif
+                    @if (!is_null($organizacion->giro))
+                        <div class="form-group col-{{$panel_rules->servicios ? '6' : '12'}}">
+                            <label for="giro"><i class="fas fa-briefcase iconos-crear"></i>
+                                {{ trans('cruds.organizacion.fields.giro') }}
+                            </label>
+                            <input class="form-control {{ $errors->has('giro') ? 'is-invalid' : '' }}" type="text"
+                                name="giro" id="giro" value="{{ $organizacion->giro }}" disabled>
+                            @if ($errors->has('giro'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('giro') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.organizacion.fields.servicios_helper') }}</span>
+                        </div>
                     @endif
+                @endif
                     @if ($panel_rules->servicios)
                         @if (!is_null($organizacion->servicios))
-                            <div class="form-group col-{{$panel_rules->giro ? '4' : '12'}}">
+                            <div class="form-group col-{{$panel_rules->giro ? '6' : '12'}}">
                                 <label for="servicios"><i class="fas fa-briefcase iconos-crear"></i>
                                     {{ trans('cruds.organizacion.fields.servicios') }}
                                 </label>
@@ -462,7 +462,7 @@
                     @endif
                     @if ($panel_rules->antecedentes)
                         @if (!is_null($organizacion->antecedentes))
-                            <div class="form-group col-12">
+                            <div class="form-group col-6">
                                 <label for="antecedentes"> <i class="far fa-file-alt iconos-crear"></i> Antecedentes
                                 </label>
                                 <div class="c_text text-justify"

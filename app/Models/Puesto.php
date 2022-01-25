@@ -81,18 +81,10 @@ class Puesto extends Model
 
     public function language()
     {
-        return $this->belongsToMany(Language::class, 'puesto_idioma_porcentaje_pivot', 'id_puesto', 'id_language');
-    }
+        // return $this->belongsToMany(Language::class, 'puesto_idioma_porcentaje_pivot','id_puesto', 'id_language');
+        return $this->hasMany('App\Models\PuestoIdiomaPorcentajePivot', 'id_puesto')->orderBy('id');
 
-    // public function responsables()
-    // {
-    //     return $this->belongsToMany(Empleado::class, 'actividades_incidentes_responsables', 'actividad_id', 'responsable_id');
-    // }
-    // public function porcentaje()
-    // {
-    //     return $this->belongsToMany('\App\Porcentaje', 'puesto_idioma_porcentaje_pivot')
-    //         ->withPivot('id_porcentaje');
-    // }
+    }
 
     public function competencia()
     {

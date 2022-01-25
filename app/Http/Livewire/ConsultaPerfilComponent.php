@@ -15,6 +15,7 @@ class ConsultaPerfilComponent extends Component
     protected $paginationTheme = 'bootstrap';
     public $areas;
     public $competencias;
+    public $language;
     public $reporto;
     public $puestos;
     public $empleado_id;
@@ -180,7 +181,7 @@ class ConsultaPerfilComponent extends Component
 
     public function mostrarPuestos($puestoID)
     {
-        $this->puestoModel = Puesto::with('area', 'certificados')->find($puestoID);
+        $this->puestoModel = Puesto::with(['area','certificados','language'=>function($q){$q->with('language');}])->find($puestoID);
         $this->emit('tagify');
     }
 
