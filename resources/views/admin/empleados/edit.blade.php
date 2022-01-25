@@ -754,6 +754,12 @@
                         data: 'fin_mes_ymd',
                         name: 'fin_mes_ymd',
                         render: function(data, type, row, meta) {
+                            if (row.trabactualmente) {
+                                return `trabajando actualmente
+                                <input class="form-group" type="checkbox" ${row.trabactualmente ? 'checked': ''} data-name-input="trabactualmente" data-experiencia-id="${row.id}" />
+                                <span class="errors fin_mes_error text-danger"></span>
+                                `;
+                            }
                             if (data) {
                                 return `<input class="form-control" type="date" value="${data}" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>`;
@@ -764,6 +770,7 @@
                             }
                         }
                     },
+
                     {
                         data: 'id',
                         render: function(data, type, route, meta) {
@@ -786,11 +793,15 @@
             //Eventos para editar registros
             document.getElementById('tbl-experiencia').addEventListener('change', async function(e) {
                 if (e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') {
+                    console.log(e.target.type)
                     if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
-                        'number') {
+                        'number' || e.target.type == 'checkbox') {
                         const experienciaId = e.target.getAttribute('data-experiencia-id');
                         const typeInput = e.target.getAttribute('data-name-input');
-                        const value = e.target.value;
+                        let value = e.target.value;
+                        if (e.target.type == 'checkbox') {
+                            value = e.target.checked;
+                        }
                         console.log(experienciaId);
                         const formData = new FormData();
                         formData.append(typeInput, value);
@@ -956,6 +967,12 @@
                         data: 'year_fin_ymd',
                         name: 'year_fin_ymd',
                         render: function(data, type, row, meta) {
+                            if (row.estudactualmente) {
+                                return `trabajando actualmente
+                                <input class="form-group" type="checkbox" ${row.estudactualmente ? 'checked': ''} data-name-input="estudactualmente" data-experiencia-id="${row.id}" />
+                                <span class="errors año_fin_error text-danger"></span>
+                                `;
+                            }
                             if (data) {
                                 return `<input class="form-control" type="date" value="${data}" data-name-input="año_fin" data-educacion-id="${row.id}" />
                                 <span class="errors año_fin_error text-danger"></span>`;
@@ -988,10 +1005,13 @@
             document.getElementById('tbl-educacion').addEventListener('change', async function(e) {
                 if (e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') {
                     if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
-                        'number') {
+                        'number'|| e.target.type == 'checkbox') {
                         const educacionId = e.target.getAttribute('data-educacion-id');
                         const typeInput = e.target.getAttribute('data-name-input');
-                        const value = e.target.value;
+                        let value = e.target.value;
+                        if (e.target.type == 'checkbox') {
+                            value = e.target.checked;
+                        }
                         console.log(educacionId);
                         const formData = new FormData();
                         formData.append(typeInput, value);
@@ -1157,11 +1177,11 @@
                         name: 'duracion',
                         render: function(data, type, row, meta) {
                             return `
-                            <div class="form-control" 
-                                type="number" 
-                                data-name-input="duracion" 
-                                data-name-input-id="duracion${row.id}" 
-                                data-curso-id="${row.id}" 
+                            <div class="form-control"
+                                type="number"
+                                data-name-input="duracion"
+                                data-name-input-id="duracion${row.id}"
+                                data-curso-id="${row.id}"
                             />
                             <small>${data} Día(s)</small>
                             </div>
@@ -2268,6 +2288,7 @@
             formData.append('inicio_mes', document.getElementById('inicio_mes').value)
             formData.append('fin_mes', document.getElementById('fin_mes').value)
             formData.append('descripcion', document.getElementById('descripcion_exp').value)
+            formData.append('trabactualmente', document.getElementById('trabactualmente').checked)
             $.ajax({
                 type: "post",
                 url: url,
@@ -2338,6 +2359,8 @@
             formData.append('año_inicio', document.getElementById('año_inicio_inst').value)
             formData.append('año_fin', document.getElementById('año_fin_inst').value)
             formData.append('empleado_id', document.getElementById('empleado_id_inst').value)
+            formData.append('estudactualmente', document.getElementById('estudactualmente').checked)
+
             $.ajax({
                 type: "post",
                 url: url,
@@ -2599,5 +2622,25 @@
 
 
         })
+    </script>
+    <script>
+        $(document).ready(function(){
+        $('#trabactualmente').on('change',function(){
+            if (this.checked) {
+            $("#fin_mes_contenedor").hide();
+            } else {
+            $("#fin_mes_contenedor").show();
+            }
+        })
+        });
+        $(document).ready(function(){
+        $('#estudactualmente').on('change',function(){
+            if (this.checked) {
+            $("#año_fin_contenedor").hide();
+            } else {
+            $("#año_fin_contenedor").show();
+            }
+        })
+        });
     </script>
 @endsection

@@ -40,6 +40,8 @@ class EducacionEmpleados extends Model
         'empleado_id' => 'int',
         'institucion' => 'string',
         'nivel' => 'string',
+        'estudactualmente' => 'boolean',
+
     ];
 
     protected $fillable = [
@@ -49,6 +51,7 @@ class EducacionEmpleados extends Model
         'año_inicio',
         'año_fin',
         'titulo_obtenido',
+        'estudactualmente',
     ];
 
     protected $appends = ['year_inicio_ymd', 'year_fin_ymd'];
