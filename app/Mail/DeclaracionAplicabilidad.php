@@ -18,14 +18,14 @@ class DeclaracionAplicabilidad extends Mailable
     public $tipo;
     public $nombre;
     public $controles;
+
     //inicializa de la clase
-    public function __construct($nombre, $tipo,$controles)
+    public function __construct($nombre, $tipo, $controles)
     {
         $this->tipo = $tipo;
         $this->nombre = $nombre;
-        $this->controles =$controles;
+        $this->controles = $controles;
     }
-
 
     /**
      * Build the message.

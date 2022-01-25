@@ -365,6 +365,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
     Route::resource('empleados', 'EmpleadoController');
 
+    // Timesheet
+    Route::get('timesheet', 'TimesheetController@index')->name('timesheet');
+    Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
+
+    Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
+    Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
+
+    Route::get('timesheet/aprobar', 'TimesheetController@aprobar')->name('timesheet-aprobar');
+
     //Competencia Tipo
 
     Route::get('Tipo/edit/{tipo}', 'RH\TipoCompetenciaController@edit')->name('tipo.edit');
