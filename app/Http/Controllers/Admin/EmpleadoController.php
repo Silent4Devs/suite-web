@@ -761,16 +761,21 @@ class EmpleadoController extends Controller
 
     public function storeExperiencia(Request $request, $empleado)
     {
-        dd($request);
+        // dd($request->all());
+        // dd($request->trabactualmente);
         $request->validate([
             'empresa' => 'required|string|max:255',
             'puesto' => 'required|string|max:255',
             'inicio_mes' => 'required|date',
-            'fin_mes' => 'required|date',
             'descripcion' => 'required',
             'empleado_id' => 'required|exists:empleados,id',
 
         ]);
+        $fechaFin = null;
+        if ($request->trabactualmente == 'false') {
+            $request->validate(['fin_mes' => 'required|date']);
+            $fechaFin = $request->fin_mes;
+        }
         // dd($request->all());
         if ($request->ajax()) {
             $empleado = Empleado::find(intval($empleado));
@@ -779,8 +784,9 @@ class EmpleadoController extends Controller
                 'empresa' => $request->empresa,
                 'puesto' =>  $request->puesto,
                 'inicio_mes' =>  $request->inicio_mes,
-                'fin_mes' =>  $request->fin_mes,
+                'fin_mes' =>  $fechaFin,
                 'descripcion' =>  $request->descripcion,
+                'trabactualmente' =>  $request->trabactualmente,
             ]);
             if ($experiencia) {
                 return response()->json(['success' => true]);
@@ -792,6 +798,15 @@ class EmpleadoController extends Controller
 
     public function updateExperiencia(Request $request, ExperienciaEmpleados $experiencia)
     {
+
+        if (array_key_exists('trabactualmente', $request->all())) {
+            if ($request->trabactualmente == 'true') {
+                $isTrabActualmente = true;
+            }else{
+                $isTrabActualmente = false;
+            }
+            $request->replace(['trabactualmente' => $isTrabActualmente]);
+        }
         if (array_key_exists('empresa', $request->all())) {
             $request->validate([
                 'empresa' => 'required|string|max:255',
@@ -813,10 +828,15 @@ class EmpleadoController extends Controller
                 'inicio_mes' => 'required|date',
             ]);
         }
-        if (array_key_exists('fin_mes', $request->all())) {
-            $request->validate([
-                'fin_mes' => 'required|date',
-            ]);
+
+        if ($request->trabactualmente == 'false') {
+            if (array_key_exists('fin_mes', $request->all())) {
+                if ($request->fin_mes != 'undefided' ) {
+                    $request->validate([
+                        'fin_mes' => 'required|date',
+                    ]);
+                }
+            }
         }
 
         $experiencia->update($request->all());
@@ -834,6 +854,11 @@ class EmpleadoController extends Controller
             'empleado_id' => 'required|exists:empleados,id',
             'titulo_obtenido' => 'required|string|max:255',
         ]);
+        $fechaFin = null;
+        if ($request->trabactualmente == 'false') {
+            $request->validate(['año_fin' => 'required|date']);
+            $fechaFin = $request->año_fin;
+        }
         // dd($request->all());
         if ($request->ajax()) {
             $empleado = Empleado::find(intval($empleado));
@@ -842,8 +867,9 @@ class EmpleadoController extends Controller
                 'institucion' => $request->institucion,
                 'nivel' =>  $request->nivel,
                 'año_inicio' =>  $request->año_inicio,
-                'año_fin' =>  $request->año_fin,
+                'año_fin' =>  $fechaFin,
                 'titulo_obtenido' =>  $request->titulo_obtenido,
+                'estudactualmente' =>  $request->estudactualmente,
             ]);
 
             if ($educacion) {
@@ -856,6 +882,14 @@ class EmpleadoController extends Controller
 
     public function updateEducacion(Request $request, EducacionEmpleados $educacion)
     {
+        if (array_key_exists('estudactualmente', $request->all())) {
+            if ($request->estudactualmente == 'true') {
+                $isEstdActualmente = true;
+            }else{
+                $isEstdActualmente = false;
+            }
+            $request->replace(['estudactualmente' => $isEstdActualmente]);
+        }
         if (array_key_exists('institucion', $request->all())) {
             $request->validate([
                 'institucion' => 'required|string|max:255',
@@ -871,10 +905,12 @@ class EmpleadoController extends Controller
                 'año_inicio' => 'required|date',
             ]);
         }
-        if (array_key_exists('año_fin', $request->all())) {
-            $request->validate([
-                'año_fin' => 'required|date',
-            ]);
+        if ($request->estudactualmente == 'false') {
+            if (array_key_exists('año_fin', $request->all())) {
+                $request->validate([
+                    'año_fin' => 'required|date',
+                ]);
+            }
         }
         if (array_key_exists('titulo_obtenido', $request->all())) {
             $request->validate([
