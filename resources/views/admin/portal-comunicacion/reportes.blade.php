@@ -153,10 +153,13 @@
                             Mejoras Estratégicas: Son aquellas
                             mejoras que impactan directamente a
                             las estrategias y objetivos del negocio.
-                            Mejoras de Procesos: Son aquellas
+                        </p>
+                        <p> Mejoras de Procesos: Son aquellas
                             mejoras donde su impacto se ve
                             reflejado en los procesos de la
                             organización.
+                        </p>
+                        <p>
                             Mejoras Operativas: Son aquellas
                             mejoras donde su impacto se ve
                             reflejado en la operación del día a día.
