@@ -579,7 +579,7 @@
                             <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
-                                
+
                             </h5>
                             <hr class="hr-custom-title">
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
@@ -697,7 +697,7 @@
                 </div> --}}
 
                     {{-- modal competencia por registro--}}
-                    @if (!(count($competencias) === 0))
+                    @if (!(count($competencias) === 0))}
                         @foreach ( $competencias as $competencia )
                             <div id="modal_competencia{{ $competencia->id }}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
@@ -711,12 +711,7 @@
 
                                         <div class="modal-body">
 
-                                           {{-- <h5 style="display: flex; justify-content: space-between; align-items:center;">
-                                                <span><img class="img_empleado" src="{{$competencia->imagen_ruta}}">
-                                                <strong>{{ $competencia->nombre }}</strong></span>
-                                                <span class="mr-2">Tipo: {{ $competencia->tipo->nombre }}</span>
-                                            </h5>
-                                            <hr> --}}
+
 
                                             <div class="mt-3">
                                                 <strong>Descripción: </strong>
@@ -748,11 +743,6 @@
 
 
 
-                                                    {{-- @foreach($competencia->opciones as $conducta)
-                                                        <div class="card-body card" style="background-color:#eee;">
-                                                            {!! htmlspecialchars_decode($conducta->definicion) !!}
-                                                        </div>
-                                                    @endforeach --}}
                                             </div>
                                         </div>
                                     </div>

@@ -965,8 +965,8 @@
                                             {{-- <th>Equipo a cargo</th> --}}
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach ($listaEvaluados as $listaEvaluado)
+                                    <tbody >
+                                        @foreach ($listaEvaluados as $index => $listaEvaluado)
                                             <tr>
                                                 {{-- <td>
                                                     <select
@@ -989,94 +989,110 @@
 
                                                 <td style="text-align: left !important;">{{$listaEvaluado['evaluado']->name}}</td>
                                                 <td style="text-align: left !important;">{{$listaEvaluado['evaluado']->area->area}}</td>
-                                                {{-- <td style="text-align: left !important;">
-                                                    @foreach ($listaEvaluado['evaluadores'] as $evaluador)
-                                                        {{$evaluador['tipo']}}
-                                                    @endforeach
-                                                </td> --}}
-                                                <?php
-                                                    $jefes = array(
-                                                        0 => 'Autoevaluación',
-                                                        1 => 'Jefe Inmediato',
-                                                        2 => 'Misma Área',
-                                                        3 => 'Equipo a Cargo'
-                                                    );
-                                                    for ($i = 0; $i <= 3; $i++) {
-                                                            // foreach ($listaEvaluado['evaluadores'] as $evaluador){
-                                                            //     echo $jefes[$evaluador['tipo']];
-                                                            // }
-                                                            echo "<td>";
-                                                            /*
-                                                            foreach ($listaEvaluado['evaluadores'] as $evaluador){
-                                                                // echo $jefes[$evaluador['tipo']];
-                                                                if($evaluador['tipo'] == $i){
-                                                                    echo $jefes[$evaluador['tipo']];
-                                                                }
-                                                            }
-                                                            */
-                                                            echo "<select>";
-                                                                echo "<option value = '0' selected >Seleccione una opción</option>";
-                                                                foreach ($listaEvaluado['evaluadores'] as $evaluador){
-                                                                    if($i == 0){
-                                                                        if(isset($evaluador['tipo']) && $evaluador['tipo'] == $i ){
-                                                                            echo "<option value = '0' selected >Autoevaluación</option>";
-                                                                            echo "<option value = '1' >Jefe inmediato</option>";
-                                                                            echo "<option value = '2' >Misma área</option>";
-                                                                            echo "<option value = '3' >Equipo a cargo</option>";
-                                                                        }else if( empty($evaluador['tipo']) ){
-                                                                            echo "<option value = '0' >Autoevaluación</option>";
-                                                                            echo "<option value = '1' >Jefe inmediato</option>";
-                                                                            echo "<option value = '2' >Misma área</option>";
-                                                                            echo "<option value = '3' >Equipo a cargo</option>";
-                                                                        }
-                                                                    }
-                                                                    if($i == 1){
-                                                                        if(isset($evaluador['tipo']) && $evaluador['tipo'] == $i ){
-                                                                            echo "<option value = '0' >Autoevaluación</option>";
-                                                                            echo "<option value = '1' selected >Jefe inmediato</option>";
-                                                                            echo "<option value = '2' >Misma área</option>";
-                                                                            echo "<option value = '3' >Equipo a cargo</option>";
-                                                                        }else if( !isset($evaluador['tipo']) && empty($evaluador['tipo'])  ){
-                                                                            echo "<option value = '0' >Autoevaluación</option>";
-                                                                            echo "<option value = '1' >Jefe inmediato</option>";
-                                                                            echo "<option value = '2' >Misma área</option>";
-                                                                            echo "<option value = '3' >Equipo a cargo</option>";
-                                                                        }
-                                                                    }
-                                                                    if($i == 2){
-                                                                        if(isset($evaluador['tipo']) && $evaluador['tipo'] == $i ){
-                                                                            echo "<option value = '0' >Autoevaluación</option>";
-                                                                            echo "<option value = '1' >Jefe inmediato</option>";
-                                                                            echo "<option value = '2' selected >Misma área</option>";
-                                                                            echo "<option value = '3' >Equipo a cargo</option>";
-                                                                        }else if( !isset($evaluador['tipo']) && empty($evaluador['tipo'])  ){
-                                                                            echo "<option value = '0' >Autoevaluación</option>";
-                                                                            echo "<option value = '1' >Jefe inmediato</option>";
-                                                                            echo "<option value = '2' >Misma área</option>";
-                                                                            echo "<option value = '3' >Equipo a cargo</option>";
-                                                                        }
-                                                                    }
-                                                                    if($i == 3){
-                                                                        if(isset($evaluador['tipo']) && $evaluador['tipo'] == $i ){
-                                                                            echo "<option value = '0' >Autoevaluación</option>";
-                                                                            echo "<option value = '1' >Jefe inmediato</option>";
-                                                                            echo "<option value = '2' >Misma área</option>";
-                                                                            echo "<option value = '3' selected >Equipo a cargo</option>";
-                                                                        }else if( !isset($evaluador['tipo']) && empty($evaluador['tipo'])  ){
-                                                                            echo "<option value = '0' >Autoevaluación</option>";
-                                                                            echo "<option value = '1' >Jefe inmediato</option>";
-                                                                            echo "<option value = '2' >Misma área</option>";
-                                                                            echo "<option value = '3' >Equipo a cargo</option>";
-                                                                        }
-                                                                    }
+                                                @isset($listaEvaluado['evaluadores'][0])
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.0.id" style="pointer-events: none; -webkit-appearance: none;">
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @else
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.0.id" style="pointer-events: none; -webkit-appearance: none;">
+                                                        <option value="" selected>Selecciona un evaluador</option>
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @endisset
+                                                @isset($listaEvaluado['evaluadores'][1])
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.1.id">
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @else
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.1.id">
+                                                        <option value="" selected>Selecciona un evaluador</option>
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @endisset
+                                                @isset($listaEvaluado['evaluadores'][2])
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.2.id">
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @else
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.2.id">
+                                                        <option value="" selected>Selecciona un evaluador</option>
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @endisset
+                                                @isset($listaEvaluado['evaluadores'][3])
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.3.id">
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @else
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.3.id">
+                                                        <option value="" selected>Selecciona un evaluador</option>
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @endisset
+                                                {{-- @foreach ($listaEvaluado['evaluadores'] as $evaluador)
+                                                    {{count($listaEvaluado['evaluadores'])}}
+                                                    @if(array_key_exists('tipo', $evaluador))
+                                                        @if ($evaluador['tipo'] == 0)
+                                                            <td style="text-align: left !important;">
+                                                                    {{$evaluador['empleado']->name}}
+                                                            </td>
+                                                        @endif
 
-                                                                }
+                                                        @if ($evaluador['tipo'] == 1)
+                                                            <td style="text-align: left !important;">
+                                                                    {{$evaluador['empleado']->name}}
+                                                            </td>
+                                                        @endif
 
-                                                            echo "</select>";
-                                                            echo "</td>";
-                                                    }
+                                                        @if ($evaluador['tipo'] == 2)
+                                                            <td style="text-align: left !important;">
+                                                                    {{$evaluador['empleado']->name}}
+                                                            </td>
+                                                        @endif
+                                                        @if ($evaluador['tipo'] == 3)
+                                                            <td style="text-align: left !important;">
+                                                                {{$evaluador['empleado']->name}}
+                                                            </td>
 
-                                                ?>
+                                                        @endif
+                                                    @else
+                                                        <td style="text-align: left !important;">
+                                                            no tiene evaluador
+                                                        </td>
+                                                    @endif
+                                                @endforeach --}}
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -155,6 +155,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'index' => 'ev360-objetivos.index',
     ])->except(['create', 'show']);
 
+
+
     Route::get('Perspectiva/edit/{perspectivas}', 'RH\ObejetivoPerspectivaController@edit')->name('perspectivas.edit');
     Route::resource('Perspectiva', 'RH\ObejetivoPerspectivaController', ['except' => ['edit']]);
 
@@ -364,15 +366,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('empleados/get-all', 'EmpleadoController@getAllEmpleados')->name('empleados.getAll');
     Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
     Route::resource('empleados', 'EmpleadoController');
-
-    // Timesheet
-    Route::get('timesheet', 'TimesheetController@index')->name('timesheet');
-    Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
-
-    Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
-    Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
-
-    Route::get('timesheet/aprobar', 'TimesheetController@aprobar')->name('timesheet-aprobar');
 
     //Competencia Tipo
 
@@ -841,8 +834,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('/revisiones/desarchivar', 'RevisionDocumentoController@desarchivar')->name('revisiones.desarchivar');
     Route::post('/revisiones/documentos-debo-aprobar', 'RevisionDocumentoController@obtenerDocumentosDeboAprobar')->name('revisiones.obtenerDocumentosDeboAprobar');
     Route::post('/revisiones/documentos-debo-aprobar-archivo', 'RevisionDocumentoController@obtenerDocumentosDeboAprobarArchivo')->name('revisiones.obtenerDocumentosDeboAprobarArchivo');
-    Route::post('/revisiones/documentos-me-deben-aprobar', 'RevisionDocumentoController@obtenerDocumentosMeDebenAprobar')->name('revisiones.obtenerDocumentosMeDebenAprobar');
-    Route::post('/revisiones/documentos-me-deben-aprobar-archivo', 'RevisionDocumentoController@obtenerDocumentosMeDebenAprobarArchivo')->name('revisiones.obtenerDocumentosMeDebenAprobarArchivo');
 
     //Documentos
     Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');
