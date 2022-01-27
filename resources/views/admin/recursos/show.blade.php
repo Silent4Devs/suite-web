@@ -63,7 +63,6 @@
 @endsection
 
 @section('scripts')
-
     <script type="module">
         import timer from '{{ asset('js/timer/timer.js') }}';
         document.addEventListener('DOMContentLoaded', function() {
