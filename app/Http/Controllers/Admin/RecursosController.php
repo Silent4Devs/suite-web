@@ -104,6 +104,7 @@ class RecursosController extends Controller
         $areas = Area::with('empleados')->get();
         $grupos = GruposEvaluado::with('empleados')->get();
         $empleados = Empleado::get();
+
         return view('admin.recursos.create', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }
 
@@ -210,6 +211,7 @@ class RecursosController extends Controller
         } else {
             $this->validateRequestGeneral($request);
             $this->validateRequestParticipantes($request);
+
             return response()->json(['isValid' => true]);
         }
     }
@@ -258,6 +260,7 @@ class RecursosController extends Controller
         $areas = Area::with('empleados')->get();
         $grupos = GruposEvaluado::with('empleados')->get();
         $empleados = Empleado::get();
+
         return view('admin.recursos.edit', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }
 
@@ -325,6 +328,7 @@ class RecursosController extends Controller
         abort_if(Gate::denies('recurso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $recurso->load('participantes', 'empleados');
+
         return view('admin.recursos.show', compact('recurso'));
     }
 
@@ -404,11 +408,13 @@ class RecursosController extends Controller
 
         if (Carbon::now()->isAfter(Carbon::parse($recurso->fecha_fin))) {
             $recurso->empleados()->syncWithoutDetaching([$empleado => ['evaluacion' => $evaluacion]]);
+
             return response()->json(['estatus' => 200, 'mensaje' => 'Evaluación almacenada']);
         } else {
             return response()->json(['estatus' => 500, 'mensaje' => 'Esta capacitación no acepta evaluaciones aún']);
         }
     }
+
     public function respuestaCapacitacion(Request $request)
     {
         $empleado = auth()->user()->empleado->id;
@@ -421,6 +427,7 @@ class RecursosController extends Controller
             } else {
                 $mensaje = 'Capacitación Rechazada';
             }
+
             return response()->json(['estatus' => 200, 'mensaje' => $mensaje]);
         } else {
             return response()->json(['estatus' => 500, 'mensaje' => 'Esta capacitación no acepta más respuestas']);
@@ -439,6 +446,7 @@ class RecursosController extends Controller
             } else {
                 $mensaje = 'Capacitación Removida del Archivo';
             }
+
             return response()->json(['estatus' => 200, 'mensaje' => $mensaje]);
         } else {
             return response()->json(['estatus' => 500, 'mensaje' => 'Esta capacitación no se puede archivar, aún está en curso']);
@@ -466,6 +474,7 @@ class RecursosController extends Controller
     {
         $empleado = auth()->user()->empleado->id;
         $capacitacionesCard = $this->obtenerCapacitacionesMezcladas($empleado, 'todo', true);
+
         return response()->json(['capacitaciones' => $capacitacionesCard]);
     }
 
@@ -477,6 +486,7 @@ class RecursosController extends Controller
             $query->where('empleado_id', $empleado)->where('archivado', $archivado);
         })->get();
     }
+
     public function obtenerCapacitacionesProximasDelParticipante($empleado, $archivado = false)
     {
         return Recurso::capacitacionesProximas()->with(['archivos', 'categoria_capacitacion', 'empleados' => function ($q) use ($empleado) {
@@ -485,6 +495,7 @@ class RecursosController extends Controller
             $query->where('empleado_id', $empleado)->where('archivado', $archivado);
         })->get();
     }
+
     public function obtenerCapacitacionesTerminadasDelParticipante($empleado, $archivado = false)
     {
         return Recurso::capacitacionesTerminadas()->with(['archivos', 'categoria_capacitacion', 'empleados' => function ($q) use ($empleado) {
@@ -493,6 +504,7 @@ class RecursosController extends Controller
             $query->where('empleado_id', $empleado)->where('archivado', $archivado);
         })->get();
     }
+
     private function obtenerCapacitacionesMezcladas($empleado, $filtro = 'todo', $archivado = false)
     {
         return Recurso::with(['archivos', 'categoria_capacitacion', 'empleados' => function ($q) use ($empleado) {

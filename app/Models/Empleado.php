@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 // use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
@@ -217,7 +218,6 @@ class Empleado extends Model
 
         return $this->foto;
     }
-
 
     public function getAvatarRutaAttribute()
     {
@@ -454,6 +454,7 @@ class Empleado extends Model
     {
         return $this->hasMany(Puesto::class, 'id_reporta');
     }
+
     public function getObtenerAntiguedadAttribute()
     {
         $antiguedad = $this->calcularAntiguedad($this->antiguedad);
