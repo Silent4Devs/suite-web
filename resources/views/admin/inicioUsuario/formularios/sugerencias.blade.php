@@ -6,8 +6,17 @@
         }
 
     </style>
-    {{ Breadcrumbs::render('sugerencias-create') }}
-
+     
+    @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('sugerencias-create-perfil') }}
+    @endif
+    @if(asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('sugerencias-create-portal') }}
+    @endif
+    @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('sugerencias-create') }}
+    @endif
+    
     <h5 class="col-12 titulo_general_funcion">Sugerencias</h5>
     
     <div class="container">

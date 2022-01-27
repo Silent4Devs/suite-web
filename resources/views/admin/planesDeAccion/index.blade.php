@@ -128,7 +128,21 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Restaurar a estado anterior',
                 }
+
             ];
+            let btnAgregar = {
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                titleAttr: 'Agregar nuevo',
+                url: "{{ route('admin.planes-de-accion.create') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
+                }
+            };
+            dtButtons.push(btnAgregar);
 
             let url = "{{ route('admin.planes-de-accion.index') }}"
             let tblPlanesAccion = $('#tblPlanesAccion').DataTable({
@@ -267,6 +281,7 @@
                         // }
 
 
+
                         let urlEliminarPlanAccion = `/admin/planes-de-accion/${data}`;
                         if (data == 1) {
                             urlVerPlanAccion = "{{ route('admin.planTrabajoBase.index') }}";
@@ -289,6 +304,7 @@
                              `;
                         }
                         return botones;
+
                     }
                 }]
             });

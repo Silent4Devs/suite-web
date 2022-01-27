@@ -23,12 +23,13 @@ use App\Models\Mejoras;
 use App\Models\Organizacion;
 use App\Models\PanelInicioRule;
 use App\Models\PlanImplementacion;
-use App\Models\PuestoIdiomaPorcentajePivot;
 use App\Models\Proceso;
 use App\Models\Puesto;
+use App\Models\PuestoIdiomaPorcentajePivot;
 use App\Models\Quejas;
 use App\Models\Recurso;
 use App\Models\RevisionDocumento;
+use App\Models\RH\CompetenciaPuesto;
 use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
@@ -222,8 +223,19 @@ class InicioUsuarioController extends Controller
         }
 
         $organizacion = Organizacion::first();
+        $competencias = collect();
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios', 'cumpleaños_felicitados_like_usuarios', 'esLider', 'organizacion', 'usuarioVinculadoConEmpleado'));
+        if(auth()->user()->empleado){
+            $competencias = Empleado::with(
+                ['puestoRelacionado'=>function($q)
+                {
+                    $q->with(['competencias'=>function($q){
+                        $q->with('competencia');
+                    }]);
+                }])->find(auth()->user()->empleado->id)->puestoRelacionado->competencias;
+        }
+
+        return view('admin.inicioUsuario.index', compact('usuario', 'competencias', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios', 'cumpleaños_felicitados_like_usuarios', 'esLider', 'organizacion', 'usuarioVinculadoConEmpleado'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -984,7 +996,7 @@ class InicioUsuarioController extends Controller
         $puesto_id = auth()->user()->empleado->puesto_id;
         $puesto = Puesto::find($puesto_id);
 
-        $idiomas= PuestoIdiomaPorcentajePivot::get();
+        $idiomas = PuestoIdiomaPorcentajePivot::get();
 
         return view('admin.inicioUsuario.perfil_puesto', compact('puesto', 'idiomas'));
     }

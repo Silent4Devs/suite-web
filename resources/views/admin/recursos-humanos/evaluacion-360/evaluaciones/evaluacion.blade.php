@@ -536,11 +536,11 @@
                                 data.forEach((element, idx) => {
                                     if (idx <= 5) {
                                         html +=
-                                            `                                        
+                                            `
                                         <img style="" src="${@json(asset('storage/empleados/imagenes/'))}/${element.evaluador.avatar}"
                                             class="rounded-circle" alt="${element.evaluador.name}"
                                             title="${element.evaluador.name}" width="40" height="37">
-                                            ${element.evaluado?'<i class="fas fa-check-circle" style="    position: relative;top: 0;left: -20px;z-index: 1;color: #002102;text-shadow: 1px 1px 0px gainsboro;"></i>':''}                                
+                                            ${element.evaluado?'<i class="fas fa-check-circle" style="    position: relative;top: 0;left: -20px;z-index: 1;color: #002102;text-shadow: 1px 1px 0px gainsboro;"></i>':''}
                                         `
                                     }
                                     seleccionados.push(element.evaluador.id);
@@ -622,7 +622,7 @@
                         JSON.parse(response).forEach(element => {
                             html +=
                                 `<li class="list-group-item ${seleccionados.includes(element.id)?'active':''}">${element.name}${evaluado==element.id?'<span class="ml-2 badge badge-light">Autoevaluación</span>':''}
-                                ${seleccionados.includes(element.id)?`<span onclick="event.preventDefault();QuitarEvaluador('${evaluado}','${element.id}',${evaluacion})" title="Quitar" style="float: right;cursor: pointer;"><i class="text-white fas fa-trash-alt"></i></span>`:`<span onclick="event.preventDefault();AgregarEvaluador('${evaluado}','${element.id}',${evaluacion})" title="Añadir" style="float: right;cursor: pointer;"><i class="text-dark fas fa-plus-circle"></i></span>`}    
+                                ${seleccionados.includes(element.id)?`<span onclick="event.preventDefault();QuitarEvaluador('${evaluado}','${element.id}',${evaluacion})" title="Quitar" style="float: right;cursor: pointer;"><i class="text-white fas fa-trash-alt"></i></span>`:`<span onclick="event.preventDefault();AgregarEvaluador('${evaluado}','${element.id}',${evaluacion})" title="Añadir" style="float: right;cursor: pointer;"><i class="text-dark fas fa-plus-circle"></i></span>`}
                                 </li>`;
                         });
                         html += '</ul></div>';

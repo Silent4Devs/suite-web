@@ -25,13 +25,13 @@ class OrganigramaController extends Controller
                 $treeByArea = Area::with(['lider' => function ($query) {
                     $query->select('id', 'name', 'area_id', 'foto', 'puesto_id', 'antiguedad', 'email', 'telefono', 'estatus', 'n_registro', 'n_empleado', 'genero', 'telefono_movil')->with('children');
                 }])->find($request->area_id)->lider;
-                // $treeByArea = Empleado::select('id', 'name', 'area_id', 'foto', 'puesto_id', 'antiguedad', 'email', 'telefono', 'estatus', 'n_registro', 'n_empleado', 'genero', 'telefono_movil')->with(['area' => function ($queryC) {
-                //     return $queryC->select('id', 'area');
-                // }, 'children' => function ($q) use ($request) {
-                //     $q->where('area_id', $request->area_id);
-                // }, 'children.children' => function ($q) use ($request) {
-                //     $q->where('area_id', $request->area_id);
-                // }])->where('area_id', $request->area_id)->first();
+                $treeByArea = Empleado::select('id', 'name', 'area_id', 'foto', 'puesto_id', 'antiguedad', 'email', 'telefono', 'estatus', 'n_registro', 'n_empleado', 'genero', 'telefono_movil')->with(['area' => function ($queryC) {
+                    return $queryC->select('id', 'area');
+                }, 'children' => function ($q) use ($request) {
+                    $q->where('area_id', $request->area_id);
+                }, 'children.children' => function ($q) use ($request) {
+                    $q->where('area_id', $request->area_id);
+                }])->where('area_id', $request->area_id)->first();
                 return $treeByArea->toJson();
             } else {
                 if ($request->id == null) {

@@ -16,7 +16,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property string $tipo
  * @property Carbon $fecha
  * @property string $porcentaje_implementacion
- * @property int|null $id_elaboro
+ * @property int|null $id_empleado
  * @property int $estatus
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -35,7 +35,7 @@ class AnalisisDeRiesgo extends Model
     protected $table = 'analisis_de_riesgo';
 
     protected $casts = [
-        'id_elaboro' => 'int',
+        'id_empleado' => 'int',
         'estatus' => 'int',
     ];
 
@@ -48,7 +48,7 @@ class AnalisisDeRiesgo extends Model
         'tipo',
         'fecha',
         'porcentaje_implementacion',
-        'id_elaboro',
+        'id_empleado',
         'estatus',
     ];
 
@@ -64,7 +64,7 @@ class AnalisisDeRiesgo extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_elaboro');
+        return $this->belongsTo(Empleado::class, 'id_empleado');
     }
 
     public function matriz_riesgos()
