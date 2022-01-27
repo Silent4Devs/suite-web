@@ -83,7 +83,6 @@ class Puesto extends Model
     {
         // return $this->belongsToMany(Language::class, 'puesto_idioma_porcentaje_pivot','id_puesto', 'id_language');
         return $this->hasMany('App\Models\PuestoIdiomaPorcentajePivot', 'id_puesto')->orderBy('id');
-
     }
 
     public function competencia()

@@ -32,6 +32,7 @@ class OrganigramaController extends Controller
                 }, 'children.children' => function ($q) use ($request) {
                     $q->where('area_id', $request->area_id);
                 }])->where('area_id', $request->area_id)->first();
+
                 return $treeByArea->toJson();
             } else {
                 if ($request->id == null) {
