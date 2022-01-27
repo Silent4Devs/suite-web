@@ -554,7 +554,7 @@
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container" style="padding-top: 10px;">
-                                    @if (is_null($activos))
+                                    @if (count($activos) === 0)
                                         No cuenta con activos a su cargo
                                     @else
                                         <div class="row">
@@ -585,9 +585,9 @@
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container" style="padding-top: 10px;">
-                                    @if (is_null($competencias))
+                                    {{-- @if ($competencias == null)
                                         No se han definido competencias actualmente
-                                    @else
+                                    @else --}}
                                         <div class="row">
                                         </div>
                                             <div class="row" style="margin-top: 1px;">
@@ -595,9 +595,9 @@
                                                     <table id="dom" class="table table-bordered w-100" style="width: 100%">
                                                         <thead>
                                                             <tr>
-                                                                <th style="border-bottom: none !important;">Logo</th>
-                                                                <th style="border-bottom: none !important;">Competencia</th>
-                                                                <th style="text-align: center !important; border-bottom: none !important;">Nivel Esperado</th>
+                                                                <th style="font-size:100%">Competencia</th>
+                                                                <th style="font-size:80%">Nivel Esperado</th>
+                                                                <th style="ont-size:100%">Más</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -657,23 +657,12 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                    @endif
+                                    {{-- @endif --}}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {{-- modal competencia --}}
-                    {{-- <div id="modal_competencias" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <table id="dom" class="table table-bordered w-100 datatable-glosario" style="width: 100%">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Logo</th>
-                                        <th>Competencia</th>
-                                        <th>Tipo</th>
-                                        <th>Descripción</th>
 
 
                                     </tr>

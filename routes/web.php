@@ -367,6 +367,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
     Route::resource('empleados', 'EmpleadoController');
 
+    // Timesheet
+    Route::get('timesheet', 'TimesheetController@index')->name('timesheet');
+    Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
+
+    Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
+    Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
+
+    Route::get('timesheet/aprobar', 'TimesheetController@aprobar')->name('timesheet-aprobar');
+
+    Route::resource('timesheet', 'TimesheetController')->except(['create', 'index']);
+
     //Competencia Tipo
 
     Route::get('Tipo/edit/{tipo}', 'RH\TipoCompetenciaController@edit')->name('tipo.edit');
@@ -398,7 +409,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Planes de Acción
     Route::post('planes-de-accion/{plan}/save', 'PlanesAccionController@saveProject')->name('planes-de-accion.saveProject');
     Route::post('planes-de-accion/{plan}/load', 'PlanesAccionController@loadProject')->name('planes-de-accion.loadProject');
-    Route::resource('planes-de-accion', 'PlanesAccionController')->except(['create']);
+    Route::resource('planes-de-accion', 'PlanesAccionController');
 
     // Glosarios
     Route::get('glosario/acervo', 'GlosarioController@render')->name('glosarios.render');

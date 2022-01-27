@@ -67,7 +67,7 @@
 
 
             <div class="form-group col-md-12 col-sm-12 col-lg-6">
-                <label for="area_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del documento</label>
+                <label for="area_id"><i class="fas fa-user-tie iconos-crear"></i>Área reponsable del documento</label>
                 <select class="form-control {{ $errors->has('area_id') ? 'is-invalid' : '' }}" name="area_id" id="area_id">
                     @foreach ($areas as $area)
                     <option value="{{ $area->id }}">

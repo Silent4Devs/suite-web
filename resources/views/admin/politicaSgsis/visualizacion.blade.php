@@ -20,19 +20,20 @@
             bottom: 0;
         }
         .form-group{
-            color: #fff;
+            color: rgb(188, 180, 224) !important;
         }
         .iconos-crear{
-            color: #fff !important;
+            color: rgb(255, 255, 255) ;
         }
         .dato_politica{
             font-size: 9pt !important;
             margin-left: 25px;
-        } 
+        }
         .form-label{
             font-size: 9pt !important;
             font-weight: bolder !important;
-        }       
+            color: rgb(255, 255, 255) !important;
+        }
     </style>
 @endsection
 {{ Breadcrumbs::render('admin.politicaSgsis.visualizacion') }}
@@ -41,7 +42,7 @@
 
     <div class="row" style="border-bottom: 2px solid #ccc;">
         <div class="col-12 caja_titulo">
-            <h3>Policita SGSI</h3>
+            <h3>Política SGSI</h3>
 
         </div>
     </div>
