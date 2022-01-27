@@ -10,13 +10,14 @@ class TimesheetHorasFilas extends Component
     public $tareas;
     public $contador = 5;
 
-    public function mount($proyectos, $tareas){
+    public function mount($proyectos, $tareas)
+    {
         $this->proyectos = $proyectos;
         $this->tareas = $tareas;
     }
+
     public function render()
     {
-
         return view('livewire.timesheet.timesheet-horas-filas');
     }
 

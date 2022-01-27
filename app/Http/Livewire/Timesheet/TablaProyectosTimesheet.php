@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use Livewire\Component;
 use App\Models\TimesheetProyecto;
+use Livewire\Component;
 
 class TablaProyectosTimesheet extends Component
 {
