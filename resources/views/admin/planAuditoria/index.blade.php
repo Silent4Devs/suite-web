@@ -94,7 +94,7 @@
                             Criterios&nbsp;de&nbsp;auditoría&nbsp;a&nbsp;utilizar
                         </th>
                         <th>
-                            Procesos&nbsp;y&nbsp;documentos&nbsp;auditar
+                            Procesos&nbsp;y&nbsp;documentos&nbsp;a&nbsp;auditar
                         </th>
                         <th>
                             Equipo&nbsp;auditor
