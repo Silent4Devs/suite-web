@@ -798,7 +798,7 @@ class EmpleadoController extends Controller
 
     public function updateExperiencia(Request $request, ExperienciaEmpleados $experiencia)
     {
-
+        // dd($request);
         if (array_key_exists('trabactualmente', $request->all())) {
             if ($request->trabactualmente == 'true') {
                 $isTrabActualmente = true;

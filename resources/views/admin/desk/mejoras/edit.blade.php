@@ -114,7 +114,7 @@
 
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
-                                <div class="form-control">{{ $mejoras->mejoro->name }}</div>
+                                <div class="form-control">{{ Str::limit($mejoras->mejoro->name, 30, '...')  }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-4">
@@ -315,7 +315,7 @@
 
                                     <div id="digrama" class="caja_oculta_dinamica">
                                         <div class="mt-5 col-12" style="overflow: auto;">
-                                            <div style="width: 100%; min-width:540px; position: relative;">
+                                            <div style="width: 100%; min-width:930px; position: relative;">
                                                 <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
                                                     style="width:100%">
 
@@ -376,7 +376,7 @@
                             @if (count($mejoras->planes))
                                 <a style="position:absolute; right: 170px; top:2px;"
                                     href="{{ route('admin.planes-de-accion.show', $mejoras->planes->first()->id) }}"
-                                    class="btn btn-success btn_modal_form"><i class="mr-2 fas fa-stream"></i> Plan De
+                                    class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De
                                     Acción</a>
                             @endif
                         </div>
