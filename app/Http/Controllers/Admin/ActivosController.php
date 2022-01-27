@@ -12,7 +12,6 @@ use App\Models\Marca;
 use App\Models\Modelo;
 use App\Models\Sede;
 use App\Models\SubcategoriaActivo;
-use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\User;

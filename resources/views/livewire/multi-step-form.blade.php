@@ -447,7 +447,7 @@
                                                         Instrucciones</p>
                                                     <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
                                                         Empieza
-                                                        configurando tu evaluación, defininendo el nombre y agregando
+                                                        configurando tu evaluación, definiendo el nombre y agregando
                                                         una
                                                         descripción<small
                                                             class="text-muted">(opcionalmente)</small>,
@@ -861,7 +861,7 @@
                                                         <span class="icono-card-evaluadores"><i
                                                                 class="fas fa-user-friends"></i></span>
                                                         <br>
-                                                        Por Area
+                                                        Del Área
                                                         <br>
                                                         @if ($errors->has('evaluado_por_misma_area'))
                                                             <small style="font-size:9px;"
@@ -893,7 +893,7 @@
                                                     <span class="icono-card-evaluadores"><i
                                                             class="fas fa-users"></i></span>
                                                     <br>
-                                                    Equipo a cargo
+                                                    Del equipo de trabajo
                                                     <br>
                                                     @if ($errors->has('evaluado_por_equipo_a_cargo'))
                                                         <small style="font-size:9px;"
@@ -947,8 +947,156 @@
                                 <div class="mt-3 text-center">
                                     <h3>
                                         Evaluación <span class="silent-color">{{ $typeEvaluation }}°</span>
+
                                     </h3>
                                 </div>
+
+                            </div>
+                            <div class="datatable-fix w-100">
+                                <table class="table">
+                                    <thead class="bg-dark">
+                                        <tr>
+                                            <th>Evaluado</th>
+                                            <th>Área</th>
+                                            <th>Autoevaluación</th>
+                                            <th>Jefe Inmediato</th>
+                                            <th>Misma Área</th>
+                                            <th>Equipo a Cargo</th>
+                                            {{-- <th>Equipo a cargo</th> --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody >
+                                        @foreach ($listaEvaluados as $index => $listaEvaluado)
+                                            <tr>
+                                                {{-- <td>
+                                                    <select
+                                                        class="mt-3 form-control {{ $errors->has('') ? 'is-invalid' : '' }}"
+                                                        id="ddlViewBy" wire:model.defer="">
+                                                        @foreach ($empleados as $empleado)
+                                                        <?php
+                                                            // $selected='';
+                                                            // if($listaEvaluado['evaluado']->name == $empleado->name )
+                                                            //     $selected="selected";
+                                                        ?>
+                                                            <option value="{{ $empleado->id }}" {{$selected}} >
+                                                                {{ $empleado->name }}
+                                                            </option>
+
+
+                                                        @endforeach
+                                                    </select>
+                                                </td> --}}
+
+                                                <td style="text-align: left !important;">{{$listaEvaluado['evaluado']->name}}</td>
+                                                <td style="text-align: left !important;">{{$listaEvaluado['evaluado']->area->area}}</td>
+                                                @isset($listaEvaluado['evaluadores'][0])
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.0.id" style="pointer-events: none; -webkit-appearance: none;">
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @else
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.0.id" style="pointer-events: none; -webkit-appearance: none;">
+                                                        <option value="" selected>Selecciona un evaluador</option>
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @endisset
+                                                @isset($listaEvaluado['evaluadores'][1])
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.1.id">
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @else
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.1.id">
+                                                        <option value="" selected>Selecciona un evaluador</option>
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @endisset
+                                                @isset($listaEvaluado['evaluadores'][2])
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.2.id">
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @else
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.2.id">
+                                                        <option value="" selected>Selecciona un evaluador</option>
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @endisset
+                                                @isset($listaEvaluado['evaluadores'][3])
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.3.id">
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @else
+                                                <td style="text-align: left !important;">
+                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.3.id">
+                                                        <option value="" selected>Selecciona un evaluador</option>
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                @endisset
+                                                {{-- @foreach ($listaEvaluado['evaluadores'] as $evaluador)
+                                                    {{count($listaEvaluado['evaluadores'])}}
+                                                    @if(array_key_exists('tipo', $evaluador))
+                                                        @if ($evaluador['tipo'] == 0)
+                                                            <td style="text-align: left !important;">
+                                                                    {{$evaluador['empleado']->name}}
+                                                            </td>
+                                                        @endif
+
+                                                        @if ($evaluador['tipo'] == 1)
+                                                            <td style="text-align: left !important;">
+                                                                    {{$evaluador['empleado']->name}}
+                                                            </td>
+                                                        @endif
+
+                                                        @if ($evaluador['tipo'] == 2)
+                                                            <td style="text-align: left !important;">
+                                                                    {{$evaluador['empleado']->name}}
+                                                            </td>
+                                                        @endif
+                                                        @if ($evaluador['tipo'] == 3)
+                                                            <td style="text-align: left !important;">
+                                                                {{$evaluador['empleado']->name}}
+                                                            </td>
+
+                                                        @endif
+                                                    @else
+                                                        <td style="text-align: left !important;">
+                                                            no tiene evaluador
+                                                        </td>
+                                                    @endif
+                                                @endforeach --}}
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -1223,5 +1371,16 @@
                 $('#grupoModal').modal('hide');
             });
         })
+
+        $('#ddlViewBy').on('load', function() {
+            console.log( $("option:selected", this));
+
+            /*
+            this.$('.textbox').hide();
+            var myTag = element.attr("myTag");
+            */
+        }());
+
     </script>
+
 </div>

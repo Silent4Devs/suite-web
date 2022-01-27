@@ -233,6 +233,8 @@ class PanelDeclaracionController extends Controller
     public function enviarCorreo(Request $request)
     {
         // // return response()->json(['message'=>$request->all()],200);
+        // dd($request->all());
+        // $declaracion = $request->declaracion;
 
         if ($request->enviarTodos) {
             $destinatarios = DeclaracionAplicabilidadResponsable::distinct('empleado_id')->pluck('empleado_id')->toArray();
@@ -241,11 +243,21 @@ class PanelDeclaracionController extends Controller
         } else {
             $destinatarios = json_decode($request->responsables);
         }
+        // dd( $declaracion);
         // dd($destinatarios);
         $tipo = $request->tipo;
+        $declaracion = $request->declaracion;
+
         foreach ($destinatarios as $destinatario) {
             $empleado = Empleado::select('id', 'name', 'email')->find(intval($destinatario));
-            Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidad($empleado->name, $tipo));
+            // dd($empleado); Hacer la consulta de controles se la envio como controles buscar la tabla where->
+            $responsable = DeclaracionAplicabilidadResponsable::with('declaracion_aplicabilidad')->where('empleado_id', $destinatario)->get();
+            // dd($responsable);
+            $controles = collect();
+            foreach ($responsable as $control) {
+                $controles->push($control->declaracion_aplicabilidad);
+            }
+            Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidad($empleado->name, $tipo, $controles));
             $responsable = DeclaracionAplicabilidadResponsable::where('empleado_id', $destinatario)->each(function ($item) {
                 $item->notificado = true;
             });

@@ -158,10 +158,10 @@ class PuestosController extends Controller
         $competencias = Competencia::all();
         $responsabilidades = PuestoResponsabilidade::get();
         $certificados = PuestosCertificado::get();
-
+        $puestos = Puesto::get();
         // dd($idis);
 
-        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados'));
+        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puestos'));
     }
 
     public function store(StorePuestoRequest $request)

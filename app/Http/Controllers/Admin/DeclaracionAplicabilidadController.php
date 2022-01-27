@@ -349,24 +349,23 @@ class DeclaracionAplicabilidadController extends Controller
 
     public function enviarCorreo(Request $request)
     {
-        dd($request);
-        // if ($request->enviarTodos) {
-        //     $destinatarios = DeclaracionAplicabilidadAprobadores::distinct('aprobadores_id')->pluck('aprobadores_id')->toArray();
-        // } elseif ($request->enviarNoNotificados) {
-        //     $destinatarios = DeclaracionAplicabilidadAprobadores::where('notificado', false)->distinct('aprobadores_id')->pluck('aprobadores_id')->toArray();
-        // } else {
-        //     $destinatarios = json_decode($request->aprobadores);
-        // }
-        // // dd($destinatarios);
-        // $tipo = $request->tipo;
-        // foreach ($destinatarios as $destinatario) {
-        //     $empleado = Empleado::select('id', 'name', 'email')->find(intval($destinatario));
-        //     Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidadAprobadores($empleado->name, $tipo));
-        //     $responsable = DeclaracionAplicabilidadAprobadores::where('empleado_id', $destinatario)->each(function ($item) {
-        //         $item->notificado = true;
-        //     });
-        // }
+        if ($request->enviarTodos) {
+            $destinatarios = DeclaracionAplicabilidadAprobadores::distinct('aprobadores_id')->pluck('aprobadores_id')->toArray();
+        } elseif ($request->enviarNoNotificados) {
+            $destinatarios = DeclaracionAplicabilidadAprobadores::where('notificado', false)->distinct('aprobadores_id')->pluck('aprobadores_id')->toArray();
+        } else {
+            $destinatarios = json_decode($request->aprobadores);
+        }
+        // dd($destinatarios);
+        $tipo = $request->tipo;
+        foreach ($destinatarios as $destinatario) {
+            $empleado = Empleado::select('id', 'name', 'email')->find(intval($destinatario));
+            Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidadAprobadores($empleado->name, $tipo));
+            $responsable = DeclaracionAplicabilidadAprobadores::where('empleado_id', $destinatario)->each(function ($item) {
+                $item->notificado = true;
+            });
+        }
 
-        // return response()->json(['message'=>'Correo enviado'], 200);
+        return response()->json(['message'=>'Correo enviado'], 200);
     }
 }

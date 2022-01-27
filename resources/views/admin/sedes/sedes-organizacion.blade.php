@@ -21,12 +21,12 @@
                                         src="{{ asset('storage/sedes/imagenes/organizacion.png') }}" alt=""
                                         class="img-fluid"> --}}
                                     <img class="card justify-content-center" style="height: 165px; margin:auto;"
-                                        src="{{ asset('storage/sedes/imagenes/organizacion.png') }}" alt=""
+                                        src="{{ asset('storage/sedes/imagenes/sedes.png') }}" alt=""
                                         class="img-fluid">
                                 @else
-                                    {{-- <img class="card justify-content-center" style="height: 180px; margin:auto;"
-                                        src="https://edificioscorporativos.com/wp-content/uploads/renta-de-oficinas-cdmx-mexico-df-torre-murano-10.jpg" alt=""
-                                        class="img-fluid"> --}}
+                                    <img class="card justify-content-center" style="height: 165px; margin:auto;"
+                                        src="{{asset("storage/sedes/imagenes/".$sedes->foto_sedes)}}" alt=""
+                                        class="img-fluid">
 
                                 @endif
 
@@ -46,7 +46,7 @@
                                 </div>
                                 <div style="display:flex;">
                                     <div>
-                                        <strong>Dirección:&nbsp;</strong> 
+                                        <strong>Dirección:&nbsp;</strong>
                                     </div>
                                     <div>
                                         {{ $sedes->direccion }}

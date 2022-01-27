@@ -3,6 +3,16 @@
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Competencias') }}
     </div>
+    <style>
+        .imagen-responsiva {
+            clip-path: circle(10px at 50% 50%);
+            height: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+    </style>
     <h5 class="col-12 titulo_general_funcion">Competencias</h5>
     <div class="mt-5 card">
         @include('partials.flashMessages')
@@ -28,7 +38,7 @@
                         <th style="vertical-align: top">
                             ID
                         </th>
-                        <th>
+                        <th style="min-width:100px;">
                             Competencias
                         </th>
                         <th style="vertical-align: top">
@@ -144,17 +154,15 @@
                         data: 'id'
                     }, {
                         data:'imagen',
-                        // render: function(data, type, row, meta) {
-                        //     console.log(row.imagen_ruta);
-                        //     let html = '<div>';
-                        //     data.forEach(competencia => {
-                        //         html += `
-                        //             <img class="imagen-responsiva" src="${competencia.competencia.imagen_ruta}" title="${competencia.competencia.nombre}"/>
-                        //             `;
-                        //     });
-                        //     html += '</div>';
-                        //     return html;
-                        // },
+                        render: function(data, type, row, meta) {
+                            // console.log(row.imagen_ruta)
+                            let html = '<div>';
+                            html += `
+                                <img class="imagen-responsiva" src="${row.imagen_ruta}" title="${row.nombre}"/>
+                                `;
+                            html += '</div>';
+                            return html;
+                        },
 
                     }, {
                         data: 'nombre'

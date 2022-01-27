@@ -6,7 +6,15 @@
         }
 
     </style>
-    {{ Breadcrumbs::render('mejoras-create') }}
+    @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('mejoras-create-perfil') }}
+    @endif
+    @if(asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('mejoras-create-portal') }}
+    @endif
+    @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('mejoras-create') }}
+    @endif
     <h5 class="col-12 titulo_general_funcion">Mejoras</h5>
     <div class="container">
         <div class="card card_formulario">
@@ -15,7 +23,6 @@
                 <div class="titulo-formulario">
                     <i class="bi bi-award mr-3"></i> Mejoras
                 </div>
-
                 <hr style="">
 
                 <div class="mt-4">

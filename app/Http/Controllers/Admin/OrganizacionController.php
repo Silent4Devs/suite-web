@@ -154,13 +154,25 @@ class OrganizacionController extends Controller
 
     public function edit(Organizacion $organizacion)
     {
+        $countEmpleados = Empleado::get()->count();
+
+        if ($countEmpleados == 0) {
+            $tamanoEmpresa = 'debe registrar a los empleados';
+        } elseif ($countEmpleados >= 1 && $countEmpleados <= 249) {
+            $tamanoEmpresa = 'Chica (menos de 250 empleados)';
+        } elseif ($countEmpleados >= 250 && $countEmpleados <= 1000) {
+            $tamanoEmpresa = 'Mediana (entre 250 y 1000 empleados)';
+        } elseif ($countEmpleados >= 1000) {
+            $tamanoEmpresa = 'Grande (más de 1000 empleados)';
+        }
+
         abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->load('team');
         $schedule = Organizacion::find(1)->schedules;
 
         $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 
-        return view('admin.organizacions.edit', compact('organizacion', 'dias', 'schedule'));
+        return view('admin.organizacions.edit', compact('organizacion', 'dias', 'schedule', 'countEmpleados','tamanoEmpresa'));
     }
 
     public function update(UpdateOrganizacionRequest $request, Organizacion $organizacion)
@@ -237,6 +249,7 @@ class OrganizacionController extends Controller
         $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 
         $panel_rules = PanelOrganizacion::select('empresa', 'direccion', 'telefono', 'correo', 'pagina_web', 'giro', 'servicios', 'mision', 'vision', 'valores', 'team_id', 'antecedentes', 'logotipo', 'razon_social', 'rfc', 'representante_legal', 'fecha_constitucion', 'num_empleados', 'tamano', 'schedule', 'linkedln', 'facebook', 'youtube', 'twitter')->get()->first();
+
 
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();

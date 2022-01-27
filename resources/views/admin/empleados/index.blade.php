@@ -9,10 +9,11 @@
         .dataTables_length:before {
             content: "Mostrar" !important;
             color: #111 !important;
-            margin-right: -40px !important;
-            position: relative;
+            margin-right: -20px !important;
+            position: absolute;
             z-index: 2;
-
+            padding-right:18px !important;
+            margin-top: 5px !important;
         }
 
         .dataTables_length:after {
@@ -21,6 +22,7 @@
             margin-left: -50px !important;
             position: relative;
             z-index: 2;
+            /* padding: 0px; */
         }
 
         .btn_cargar {

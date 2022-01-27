@@ -6,8 +6,17 @@
         }
 
     </style>
-    {{ Breadcrumbs::render('sugerencias-create') }}
-
+     
+    @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('sugerencias-create-perfil') }}
+    @endif
+    @if(asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('sugerencias-create-portal') }}
+    @endif
+    @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
+        {{ Breadcrumbs::render('sugerencias-create') }}
+    @endif
+    
     <h5 class="col-12 titulo_general_funcion">Sugerencias</h5>
     
     <div class="container">
@@ -34,7 +43,7 @@
 
                     <div class="mt-0 form-group col-4">
                         <label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
-                        <div class="form-control">{{ auth()->user()->empleado->name }}</div>
+                        <div class="form-control">{{ Str::limit(auth()->user()->empleado->name, 30, '...') }}</div>
                     </div>
 
                     <div class="mt-0 form-group col-4">

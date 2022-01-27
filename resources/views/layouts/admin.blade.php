@@ -144,7 +144,7 @@
         }
 
         .iconos_cabecera {
-            color: #345183;
+            color: #ffffff;
             font-size: 1.2rem;
         }
 
@@ -1070,42 +1070,40 @@
                                 @endif
                             </div>
                         </a>
-                        <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
-                            style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
-                            <div class="p-2">
-                                @if (auth()->user()->empleado)
-                                    {{-- <img class="shadow rounded-circle"
-                                        style="max-width: 65px;clip-path: circle(50% at 50% 50%);"
-                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                        alt="" srcset=""> --}}
-                                    <p class="m-0 text-muted mt-2" style="font-size:14px">
-                                        Hola, <strong>{{ auth()->user()->empleado->name }}</strong></p>
-                                @else
-                                    <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
-                                @endif
-                            </div>
-                            <div class="px-3 mt-1 d-flex justify-content-center">
-                                @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-                                    @can('profile_password_edit')
 
-                                        <a style="all: unset; color: #747474; cursor: pointer;"
-                                            class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
-                                            href="{{ route('profile.password.edit') }}">
-                                            <i class="bi bi-gear"></i>
-                                            Configurar Perfil
+                                @if (auth()->user()->empleado == null)
+                                <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"style="width:100px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
+                                    <div class="px-3 mt-1 d-flex justify-content-center">
+                                        <a style="all: unset; color: #747474; cursor: pointer;"onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                            <i class="bi bi-box-arrow-right"></i> Salir
                                         </a>
-
-                                    @endcan
-                                @endif
-                                &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a style="all: unset; color: #747474; cursor: pointer;"
-                                    onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                                    <i class="bi bi-box-arrow-right"></i> Salir
-                                </a>
+                                @else
+                                <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
+                                    <div class="p-2">
+                                        @if (auth()->user()->empleado)
+                                        <p class="m-0 text-muted mt-2" style="font-size:14px">Hola, <strong>{{ auth()->user()->empleado->name }}</strong></p>
+                                        @else
+                                        <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
+                                        @endif
+                                    </div>
+                                <div class="px-3 mt-1 d-flex justify-content-center">
+                                    @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+                                        @can('profile_password_edit')
+                                            <a style="all: unset; color: #747474; cursor: pointer;"class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"href="{{ route('profile.password.edit') }}">
+                                                <i class="bi bi-gear"></i>
+                                                Configurar Perfil
+                                            </a>
+                                        @endcan
+                                    @endif
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a style="all: unset; color: #747474; cursor: pointer;"
+                                        onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                        <i class="bi bi-box-arrow-right"></i> Salir
+                                    </a>
+                                     @endif
                             </div>
                         </div>
                     </li>
-
                 </ul>
             </ul>
         </header>

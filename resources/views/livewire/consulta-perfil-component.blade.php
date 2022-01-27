@@ -197,7 +197,7 @@
                                             <div class="col-sm-2 col-md-2 col-lg-2">
                                                 <i class="fas fa-user-tie mt-2" style="font-size:25px; color:rgb(160, 158, 158)"></i>
                                             </div>
-                                            <div class="col-sm-10 col-md-10 col-lg-10 mt-2">
+                                            <div class="col-sm-9 col-md-9 col-lg-9 mt-2">
                                                 <p class="m-0 texto" style="font-size:10px; font-weight:bold; "><span
                                                         > {{ $item->puesto}}</span></p>
                                                 <p class="m-0 text-muted" style="font-size:10px "><span
@@ -442,6 +442,11 @@
                                             <span style="font-size: 17px; font-weight: bold;">
                                                 Idiomas</span>
                                         </div>
+                                        @foreach ( $puestoModel->language as $id_language )
+                                        <p style="text-align:justify">
+                                         {{$id_language->language->idioma}}
+                                         </p>
+                                        @endforeach
                                         {{-- @foreach ($empleadoModel->idiomas as $idioma)
                                             <div>
                                                 <strong class="font-weight-bold"

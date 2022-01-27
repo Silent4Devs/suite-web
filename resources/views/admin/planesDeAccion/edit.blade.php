@@ -2,8 +2,8 @@
 @section('content')
     {{-- @can('planes_accion_create') --}}
     <h5 class="col-12 titulo_general_funcion">Editar - {{ $planImplementacion->parent }} {{$planImplementacion->norma}} </h5>
-    <div class="pb-4 mt-5 card">
-        <div class="container">
+    <div class="mt-4 card">
+        <div class="card-body">
             <form method="POST" action="{{ route('admin.planes-de-accion.update', $planImplementacion) }}">
                 @csrf
                 @method('PATCH')
@@ -16,10 +16,4 @@
         </div>
     </div>
     {{-- @endcan --}}
-@endsection
-@section('scripts')
-    @parent
-    <script>
-
-    </script>
 @endsection
