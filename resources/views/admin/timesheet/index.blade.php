@@ -10,40 +10,34 @@
 	            <table id="datatable_timesheet" class="table w-100">
 	                <thead class="w-100">
 	                    <tr>
-	                        <th>Finde semana </th>
-	                        <th>Billable</th>
-	                        <th>Non Billable</th>
-	                        <th>Employee</th>
-	                        <th>Manager</th>
-	                        <th>Status</th>
+	                        <th>Fin de semana </th>
+	                        <th>Empleado</th>
+	                        <th>Responsable</th>
+                            <th>Aprobación</th>
 	                        <th>opciones</th>
 	                    </tr>
 	                </thead>
 
 	                <tbody>
-	                	<tr>
-	                        <td>
-	                            Finde semana 
-	                        </td>
-	                        <td>
-	                            Billable
-	                        </td>
-	                        <td>
-	                            Non Billable
-	                        </td>
-	                        <td>
-	                        	Employee
-	                        </td>
-	                        <td>
-	                        	Manager
-	                        </td>
-	                        <td>
-	                        	Status
-	                        </td>
-	                        <td>
-	                        	opciones
-							</td>	                    
-						</tr>
+                        @foreach($times as $time)
+    	                	<tr>
+    	                        <td>
+    	                            {{ $time->fecha_dia }} 
+    	                        </td>
+    	                        <td>
+    	                            {{ $time->empleado->name }}
+    	                        </td>
+    	                        <td>
+                                    {{ $time->aprobador->name }}
+    	                        </td>
+    	                        <td>
+    	                        	{{ $time->aprobado }}
+    	                        </td>
+    	                        <td>
+    	                        	<a href="{{ route('admin.timesheet.show', $time->id) }}" class="btn">ver</a>
+    							</td>	                    
+    						</tr>
+                        @endforeach
 	                </tbody>
 	            </table>
 	        </div>

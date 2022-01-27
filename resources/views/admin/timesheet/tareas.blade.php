@@ -6,30 +6,7 @@
 	<div class="card card-body">
 		<div class="row">
 
-            <div class="form-group w-100">
-                <label>Tarea Nuevo</label>
-                <div class="d-flex justify-content-center w-100">
-                    <input type="" name="" class="form-control w-100 mr-4"> <button class="btn btn-success"><i class="fas fa-plus"></i> Agregar</button>
-                </div>
-            </div>
-			
-	        <div class="datatable-fix w-100 mt-5">
-	            <table id="datatable_timesheet_tareas" class="table w-100">
-	                <thead class="w-100">
-	                    <tr>
-	                        <th>Tarea </th>
-	                        <th style="max-width:200px;">Opciones</th>
-	                    </tr>
-	                </thead>
-
-	                <tbody>
-	                	<tr>
-	                        <td>Tarea </td>
-	                        <td>opciones</td>                    
-						</tr>
-	                </tbody>
-	            </table>
-	        </div>
+            @livewire('timesheet.tabla-tareas-timesheet')
 
 		</div>
 	</div>

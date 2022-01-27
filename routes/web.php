@@ -374,6 +374,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('timesheet/aprobar', 'TimesheetController@aprobar')->name('timesheet-aprobar');
 
+    Route::resource('timesheet', 'TimesheetController')->except(['create', 'index']);
+
     //Competencia Tipo
 
     Route::get('Tipo/edit/{tipo}', 'RH\TipoCompetenciaController@edit')->name('tipo.edit');
