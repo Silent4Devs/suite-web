@@ -7,6 +7,12 @@
             <form method="POST" action="{{ route('admin.puestos.update', [$puesto->id]) }}" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
+
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <span style="font-size: 17px; font-weight: bold;">
+                        Identificación del Puesto</span>
+                </div>
+
                 <div class="row col-12">
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
                         <label class="required" for="puesto"><i
@@ -97,7 +103,81 @@
                     <span class="help-block">{{ trans('cruds.puesto.fields.descripcion_helper') }}</span>
                 </div>
 
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <span style="font-size: 17px; font-weight: bold;">
+                        Principales responsabilidades</span>
+                </div>
+
+
                 <div class="row col-12">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <label for="actividad"><i class="fas fa-file-signature iconos-crear"></i>Actividad</label>
+                        <input class="form-control {{ $errors->has('actividad') ? 'is-invalid' : '' }}" type="text" name="actividad"
+                            id="actividad_responsabilidades" value="{{ old('actividad', '') }}">
+                        <span class="errors actividad_error text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row col-12 mt-3">
+                    <div class="col-sm-4 col-lg-12 col-md-12">
+                            <label for="resultado"><i class="fas fa-chart-line iconos-crear"></i>Resultado Esperado</label>
+                            <input class="form-control {{ $errors->has('resultado') ? 'is-invalid' : '' }}" type="text" name="resultado"
+                                id="resultado_certificado_responsabilidades" value="{{ old('resultado', '') }}">
+                            <span class="errors resultado_error text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row col-12 mt-3">
+
+                    <div class="col-sm-8 col-lg-8 col-md-8">
+                        <label for="indicador"><i class="fas fa-clipboard-check iconos-crear"></i>Cumplimiento</label>
+                        <input class="form-control {{ $errors->has('indicador') ? 'is-invalid' : '' }}" type="text" name="indicador"
+                            id="indicador_responsabilidades" value="{{ old('indicador', '') }}">
+                        <span class="errors indicador_error text-danger"></span>
+                    </div>
+
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <label for="tiempo_asignado"><i
+                            class="far fa-percent iconos-crear"></i> de tiempo</label>
+                        <input class="form-control {{ $errors->has('tiempo_asignado') ? 'is-invalid' : '' }}" type="text" name="tiempo_asignado"
+                            id="tiempo_asignado_responsabilidades" value="{{ old('tiempo_asignado', '') }}">
+                        <span class="errors tiempo_asignado_error text-danger"></span>
+                    </div>
+
+                </div>
+
+
+
+                <div class="mb-3 col-12 mt-4 " style="text-align: end">
+                    <button type="button" name="btn-suscribir-responsabilidades" id="btn-suscribir-responsabilidades" class="btn btn-success">Agregar</button>
+                </div>
+
+                <div class="row col-12">
+                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
+                        <table class="table w-100" id="responsabilidades_table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Actividad</th>
+                                    <th>Resultado Esperado</th>
+                                    <th>Cumplimiento</th>
+                                    <th>% de tiempo</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contenedor_responsabilidades">
+                                {{-- <tr>
+                                    <td><input class="form-control" type="text" id="actividad" name="actividad"></td>
+                                    <td><input class="form-control" type="text" id="resultado" name="resultado"></td>
+                                    <td><input class="form-control" type="text" id="cumplimiento" name="indicador"></td>
+                                    <td><input class="form-control" type="text" id="tiempo_asignado" name="tiempo_asignado"></td>
+                                    <td><button type="button" name="btn-remove-responsabilidades" id="" class="btn btn-danger remove">Eliminar</button></td>
+                                </tr> --}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row col- mt-4">
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                         <label for="estudios"><i class="fas fa-graduation-cap iconos-crear"></i>Educación Academica(estudios)<span
                                 class="text-danger">*</span></label>
@@ -251,74 +331,7 @@
                 </div>
 
 
-                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
-                    <span style="font-size: 17px; font-weight: bold;">
-                        Principales responsabilidades</span>
-                </div>
 
-
-                <div class="row col-12">
-                    <div class="col-sm-12 col-lg-12 col-md-12">
-                        <label for="actividad"><i class="fas fa-file-signature iconos-crear"></i>Actividad</label>
-                        <input class="form-control {{ $errors->has('actividad') ? 'is-invalid' : '' }}" type="text" name="actividad"
-                            id="actividad_responsabilidades" value="{{ old('actividad', '') }}">
-                        <span class="errors actividad_error text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="row col-12 mt-3">
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                            <label for="resultado"><i class="fas fa-chart-line iconos-crear"></i>Resultado Esperado</label>
-                            <input class="form-control {{ $errors->has('resultado') ? 'is-invalid' : '' }}" type="text" name="resultado"
-                                id="resultado_certificado_responsabilidades" value="{{ old('resultado', '') }}">
-                            <span class="errors resultado_error text-danger"></span>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <label for="indicador"><i class="fas fa-clipboard-check iconos-crear"></i>Cumplimiento</label>
-                        <input class="form-control {{ $errors->has('indicador') ? 'is-invalid' : '' }}" type="text" name="indicador"
-                            id="indicador_responsabilidades" value="{{ old('indicador', '') }}">
-                        <span class="errors indicador_error text-danger"></span>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <label for="tiempo_asignado"><i
-                            class="far fa-percent iconos-crear"></i> de tiempo</label>
-                        <input class="form-control {{ $errors->has('tiempo_asignado') ? 'is-invalid' : '' }}" type="text" name="tiempo_asignado"
-                            id="tiempo_asignado_responsabilidades" value="{{ old('tiempo_asignado', '') }}">
-                        <span class="errors tiempo_asignado_error text-danger"></span>
-                    </div>
-
-                </div>
-
-                <div class="mb-3 col-12 mt-4 " style="text-align: end">
-                    <button type="button" name="btn-suscribir-responsabilidades" id="btn-suscribir-responsabilidades" class="btn btn-success">Agregar</button>
-                </div>
-
-                <div class="row col-12">
-                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
-                        <table class="table w-100" id="responsabilidades_table" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Actividad</th>
-                                    <th>Resultado Esperado</th>
-                                    <th>Cumplimiento</th>
-                                    <th>% de tiempo</th>
-                                    <th>Opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="contenedor_responsabilidades">
-                                {{-- <tr>
-                                    <td><input class="form-control" type="text" id="actividad" name="actividad"></td>
-                                    <td><input class="form-control" type="text" id="resultado" name="resultado"></td>
-                                    <td><input class="form-control" type="text" id="cumplimiento" name="indicador"></td>
-                                    <td><input class="form-control" type="text" id="tiempo_asignado" name="tiempo_asignado"></td>
-                                    <td><button type="button" name="btn-remove-responsabilidades" id="" class="btn btn-danger remove">Eliminar</button></td>
-                                </tr> --}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
 
                 <div class="row col-12">
 

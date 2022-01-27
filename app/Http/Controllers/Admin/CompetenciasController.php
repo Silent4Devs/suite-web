@@ -200,6 +200,7 @@ class CompetenciasController extends Controller
 
     public function miCurriculum(Request $request, Empleado $empleado)
     {
+        // dd($empleado);
         return view('admin.competencia.mi-cv', compact('empleado'));
     }
 

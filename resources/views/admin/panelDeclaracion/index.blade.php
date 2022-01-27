@@ -103,11 +103,11 @@
                                         siguientes</p>
                                     <input type="radio" id="contactChoice1" name="contact" value="1"> Enviar actualizaciones
                                     solo
-                                    a los responsables agregados o eliminados
+                                    a los responsables agregados.
                                     <br>
-                                    <input type="radio" id="contactChoice1" name="contact" value="2">&nbsp;Enviar
+                                    <input type="radio" id="contactChoice2" name="contact" value="2">&nbsp;Enviar
                                     actualizaciones a todos
-                                    los responsables
+                                    los responsables.
                                     <br>
 
                                 </div>
@@ -501,23 +501,33 @@
 
             window.enviarCorreo = (e, tipo) => {
                 let enviarRadio = document.getElementsByName('contact');
-                let dataRadio = "";
-                for (var i = 0, length = enviarRadio.length; i < length; i++) {
-                    if (enviarRadio[i].checked) {
-                        // do whatever you want with the checked radio
-                        dataRadio = enviarRadio[i].value;
-                        // only one radio can be logically checked, don't check the rest
-                        break;
-                    }
-                }
+
+                //false
+                let dataRadio =document.querySelector('input[name=contact]:checked').value;
+                // for (var i = 0, length = enviarRadio.length; i < length; i++) {
+                //     // for(var i = 0; i < enviarRadio.length; i++){
+                //     // Si enviarRadio es de tipo i es decir si esta marcado
+                //     if (enviarRadio[i].checked) {
+                //         //true
+                //         // do whatever you want with the checked radio
+                //         dataRadio = enviarRadio[i].value;
+                //         // only one radio can be logically checked, don't check the rest
+                //         break;
+                //     }
+                // }
 
                 const responsables = $(e.target.parentElement.querySelector('select')).select2('data');
-                console.log(responsables);
+                console.log(dataRadio);
                 const array_responsables = [];
-                responsables.forEach(responsable => {
+                if (responsables) {
+                    responsables.forEach(responsable => {
                     const responsable_id = responsable.element.getAttribute('data-id-empleado')
                     array_responsables.push(responsable_id)
                 })
+                }
+
+                const enviarTodos=dataRadio==1?false:true;
+                const enviarNoNotificados=dataRadio==2?false:true;
                 const url = "{{ route('admin.paneldeclaracion.enviarcorreo') }}"
                 const token = "{{ csrf_token() }}";
                 const request = fetch(url, {
@@ -529,7 +539,8 @@
                         },
                         method: 'POST',
                         body: JSON.stringify({
-                            dataRadio: dataRadio,
+                            enviarTodos,
+                            enviarNoNotificados,
                             responsables: JSON.stringify(array_responsables),
                             tipo
                         })

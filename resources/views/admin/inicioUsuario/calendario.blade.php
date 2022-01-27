@@ -299,22 +299,22 @@
                 },
             @endforeach
 
-            @foreach($auditoria_internas as $it_auditoria_internas)
-                {
-                    id: 'auditoria{{$it_auditoria_internas->id}}',
-                    calendarId: '3',
-                    title: '<i class="fas fa-clipboard-list i_calendar_cuadro"></i> Alcance: {{$it_auditoria_internas->alcance}}',
-                    category: 'time',
-                    dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() }}',
-                    end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() }}',
-                    isReadOnly : true,
-                    body: `
-                       <font style="font-weight: bold;">Inicio:</font> ${@json($it_auditoria_internas->fecha_inicio->format("d-m-Y"))}<br>
-                       <font style="font-weight: bold;">Fin:</font> ${@json($it_auditoria_internas->fecha_fin->format("d-m-Y"))}<br>
-                    `,
-                },
-            @endforeach
+            {{-- @foreach($auditoria_internas as $it_auditoria_internas) --}}
+                //{
+                //    id: 'auditoria{{-- $it_auditoria_internas->id --}}',
+                //    calendarId: '3',
+                //    title: '<i class="fas fa-clipboard-list i_calendar_cuadro"></i> Alcance: {{-- $it_auditoria_internas->alcance --}}',
+                //    category: 'time',
+                //    dueDateClass: '',
+                //    start: '{{--  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() --}}',
+                //    end: '{{--  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() --}}',
+                //    isReadOnly : true,
+                //    body: `
+                //       <font style="font-weight: bold;">Inicio:</font> ${  {{-- @json($it_auditoria_internas->fecha_inicio->format("d-m-Y")) --}}  }<br>
+                //       <font style="font-weight: bold;">Fin:</font> ${  {{--@json($it_auditoria_internas->fecha_fin->format("d-m-Y"))--}}  }<br>
+                //    `,
+                //},
+            {{-- @endforeach --}}
 
             @foreach($actividades as $task)
                  {
