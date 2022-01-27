@@ -87,7 +87,7 @@
                         <tr>
                             <td>{{ $comiteseguridad->nombrerol }}</td>
                             <td>
-                                <img src="{{ asset('storage/empleados/imagenes/' . $comiteseguridad->asignacion->foto) }}"
+                                <img src="{{ asset('storage/empleados/imagenes/'.$comiteseguridad->asignacion->foto)}}/{{ $comiteseguridad->asignacion->avatar }}"
                                     class="img_empleado"> {{ $comiteseguridad->asignacion->name }}
                             </td>
                             <td>{{ $comiteseguridad->fechavigor }}</td>

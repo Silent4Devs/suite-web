@@ -459,8 +459,7 @@
                                         <div class="col-10" style="white-space: nowrap;">
                                             <span style="font-size: 17px; font-weight: bold;"><i
                                                     class="fas iconos-crear"
-                                                    x-bind:class="! open ? 'fa-folder' : 'fa-folder-open'"></i>Documentos
-                                                Personales
+                                                    x-bind:class="! open ? 'fa-folder' : 'fa-folder-open'"></i>Mis Documentos
                                             </span>
                                         </div>
                                         <div class="col text-center">
@@ -556,19 +555,19 @@
                                                 Documento
                                             </label>
                                         </div>
-                                        
+
 
                                     @endif
                                     @foreach ($empleadoModel->empleado_documentos as $documentos)
                                         <div class="list-group list-border-y list-group-flush">
-                                            <a {{ $documentos->ruta_documento ? "href={$documentos->ruta_documento}" : '' }}
+                                            <a href="{{$documentos->ruta_documento}}"
                                                 target="_blank" class="list-group-item list-group-item-action">
                                                 <div class="d-flex w-100 justify-content-between">
                                                     <h6 class="mb-1">{{ $documentos->nombre }}</h6>
                                                     <small>{{ $documentos->created_at->diffForHumans() }}</small>
                                                 </div>
                                                 <small class="mb-1"><strong>ID:
-                                                        {{ $documentos->numero ? $documentos->numero : 'xxx-xxx' }}</strong></small>
+                                                        {{ $documentos->numero ? $documentos->numero : '' }}</strong></small>
                                             </a>
                                         </div>
                                     @endforeach
@@ -719,12 +718,12 @@
                                                     Certificación
                                                 </label>
                                             </div>
-                                            
+
                                         </div>
                                     @endif
                                     @foreach ($empleadoModel->empleado_certificaciones as $certificaciones)
                                         <div class="list-group list-border-y list-group-flush">
-                                            <a {{ $certificaciones->ruta_documento ? "href={$certificaciones->ruta_documento}" : '' }}
+                                            <a href="{{$certificaciones->ruta_documento}}"
                                                 target="_blank" class="list-group-item list-group-item-action">
                                                 <div class="d-flex w-100 justify-content-between">
                                                     <h6 class="mb-1">{{ $certificaciones->nombre }}</h6>
@@ -903,13 +902,13 @@
                                                     Subir Capacitación
                                                 </label>
                                             </div>
-                                            
+
                                         </div>
                                     @endif
                                     @foreach ($empleadoModel->empleado_cursos as $cursoIt)
                                         <div class="list-group list-border-y list-group-flush">
-                                            <a {{ $cursoIt->ruta_documento ? "href={$cursoIt->ruta_documento}" : '' }}
-                                                target="_blank" class="list-group-item list-group-item-action">
+
+                                            <a href="{{$cursoIt->ruta_documento}}"target="_blank" class="list-group-item list-group-item-action">
                                                 <div class="d-flex w-100 justify-content-between">
                                                     <h6 class="mb-1">{{ $cursoIt->curso_diploma }}</h6>
                                                     <small>{{ $cursoIt->created_at->diffForHumans() }}</small>
