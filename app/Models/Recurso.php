@@ -95,13 +95,11 @@ class Recurso extends Model implements HasMedia
     {
         return $query->whereDate('fecha_curso', '>', Carbon::now()->format('Y-m-d h:i:s'));
     }
-
     public function scopeCapacitacionesEnCurso($query)
     {
         // dd(Carbon::now()->format('Y-m-d h:i:s'));
         return $query->whereDate('fecha_curso', '<=', Carbon::now()->format('Y-m-d h:i:s'))->whereDate('fecha_fin', '>=', Carbon::now()->format('Y-m-d h:i:s'));
     }
-
     public function scopeCapacitacionesTerminadas($query)
     {
         return $query->whereDate('fecha_fin', '<', Carbon::now()->format('Y-m-d h:i:s'));
@@ -113,7 +111,6 @@ class Recurso extends Model implements HasMedia
         if ($this->lista_asistencia != null) {
             return asset("storage/capacitaciones/listas/{$this->id}_capacitacion/{$this->lista_asistencia}");
         }
-
         return null;
     }
 
@@ -135,7 +132,6 @@ class Recurso extends Model implements HasMedia
     {
         return Carbon::parse($this->fecha_limite)->format('Y-m-d h:i:s');
     }
-
     public function getFechaInicioYMDAttribute()
     {
         return Carbon::parse($this->fecha_curso)->format('Y-m-d h:i:s');
@@ -145,17 +141,14 @@ class Recurso extends Model implements HasMedia
     {
         return Carbon::parse($this->fecha_curso)->format('d/m/Y');
     }
-
     public function getOnlyFechaInicioHoraAttribute()
     {
         return Carbon::parse($this->fecha_curso)->format('g:i A');
     }
-
     public function getOnlyFechaFinAttribute()
     {
         return Carbon::parse($this->fecha_fin)->format('d/m/Y');
     }
-
     public function getOnlyFechaFinHoraAttribute()
     {
         return Carbon::parse($this->fecha_fin)->format('g:i A');
@@ -196,7 +189,6 @@ class Recurso extends Model implements HasMedia
     {
         return Carbon::parse($this->fecha_curso)->format('d/m/Y g:i A');
     }
-
     public function getFechaFinFormatDiagonalAttribute()
     {
         return Carbon::parse($this->fecha_fin)->format('d/m/Y g:i A');
