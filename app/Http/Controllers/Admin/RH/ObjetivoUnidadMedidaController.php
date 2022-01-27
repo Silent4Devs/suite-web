@@ -34,7 +34,7 @@ class ObjetivoUnidadMedidaController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.objetivos.metricas.edit', compact('metricas'));
     }
 
-    public function update(Request $request,$metricas)
+    public function update(Request $request, $metricas)
     {
         $metricas = MetricasObjetivo::find($metricas);
 
@@ -46,6 +46,7 @@ class ObjetivoUnidadMedidaController extends Controller
     public function show($metricas)
     {
         $metricas = MetricasObjetivo::find($metricas);
+
         return view('admin.recursos-humanos.evaluacion-360.objetivos.metricas.show', compact('metricas'));
     }
 

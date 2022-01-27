@@ -36,7 +36,7 @@
             contenedorInformacionDeboAprobar.innerHTML = null;
         }
 
-        async function inicializarCapacitacionesGeneralesCards(mensaje = "Sin Capacitaciones", filtro = 'todo',
+        async function inicializarCapacitacionesGeneralesCards(mensaje = "Sin Documentos", filtro = 'todo',
             url =
             "{{ route('admin.revisiones.obtenerDocumentosDeboAprobar') }}") {
             const cardsMisCapacitaciones = document.getElementById('cards-debo-aprobar');
@@ -525,7 +525,7 @@
             let html = `
             <div class="col-12 text-center" id="sinCapacitaciones">
                     <p><strong style="text-transform: capitalize">${mensaje}</strong></p>
-                    <img class="img-fluid" src="{{ asset('img/empleados_no_encontrados.svg') }}" alt="sin participante" width="300">    
+                    <img class="img-fluid" src="{{ asset('img/empleados_no_encontrados.svg') }}" alt="sin participante" width="300">
             </div>
             `;
             return html;

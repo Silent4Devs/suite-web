@@ -261,6 +261,16 @@
         max-height: 140px !important;
         min-height: 140px !important;
     }
+    .img_empleado_competencia {
+        clip-path: circle(70px at 50% 50%);
+        width: 50px !important;
+        height: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+
+        max-height: 50px !important;
+        min-height: 50px !important;
+    }
 
 </style>
 
@@ -310,7 +320,7 @@
                     <ul class="comentarios_felicidades">
                         <li>
                             <strong>
-                                
+
 
                                 <img class="img_empleado" src="{{ asset($logotipo) }}">
                                 {{ $organizacion->empresa }}
@@ -564,7 +574,96 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="p-34 card card_margin_b_n" x-data="{show:false}">
+                            <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
+                                <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
+                                        class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+                            </h5>
+                            <hr class="hr-custom-title">
+                            <div class="row align-items-center" id="listaEquipo" x-show="show"
+                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
+                                <div class="container" style="padding-top: 10px;">
+                                    {{-- @if ($competencias == null)
+                                        No se han definido competencias actualmente
+                                    @else --}}
+                                        <div class="row">
+                                        </div>
+                                            <div class="row" style="margin-top: 1px;">
+                                                <div class="col-12 text-muted" style="font-size:10px">
+                                                    <table id="dom" class="table table-bordered w-100" style="width: 100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="font-size:100%">Competencia</th>
+                                                                <th style="font-size:80%">Nivel Esperado</th>
+                                                                <th style="ont-size:100%">Más</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ( $competencias as $competencia )
+                                                            <tr>
+                                                                <td>{{$competencia->competencia->nombre}}</td>
+                                                                <td>{{$competencia->nivel_esperado}}</td>
+                                                                <td>
+                                                                 <!-- Button trigger modal -->
+                                                                        <div class="text-center">
+                                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">+</button>
+                                                                                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                                                    <div class="modal-dialog modal-lg">
+                                                                                        <div class="modal-content">
+                                                                                            <table class="table table-bordered w-100" style="width: 100%">
+                                                                                                <thead class="thead-dark">
+                                                                                                    <tr>
+                                                                                                        <th>Imagen</th>
+                                                                                                        <th>Competencia</th>
+                                                                                                        <th>Nivel Esperado</th>
+                                                                                                        <th>Descripción</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    @foreach ( $competencias as $competencia )
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            <div style="text-align: center !important;">
+                                                                                                                <img class="img_empleado_competencia" src="{{$competencia->competencia->imagen_ruta}}">
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            <div style="text-align: center !important;">
+                                                                                                            {{$competencia->competencia->nombre}}</td>
+                                                                                                            </div>
+                                                                                                        <td>
+                                                                                                            <div style="text-align: center !important;">
+                                                                                                            {{$competencia->nivel_esperado}}</td>
+                                                                                                        {{-- <td>{{$competencia->competencia->tipo_id}}</td> --}}
+                                                                                                            </div>
+                                                                                                        <td>
+                                                                                                            <div style="text-align: center !important;">
+                                                                                                            {{$competencia->competencia->descripcion}}</td>
+                                                                                                            </div>
+                                                                                                    </tr>
+                                                                                                    @endforeach
+                                                                                                </tbody>
+                                                                                                </table>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                    {{-- @endif --}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+
+                {{-- MOD Informacion General --}}
                     <div class="col-md-8">
                         <div class="card_data_mis_datos card" style="height: 450px !important;">
                             <div class="card-body" style="padding-bottom: 14px !important;">
@@ -1145,5 +1244,10 @@
         function ocultarValidando() {
             document.getElementById('displayAlmacenandoUniversal').style.display = 'none';
         }
-    </script>
+
+
+
+
+
+</script>
 @endsection

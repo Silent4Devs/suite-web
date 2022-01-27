@@ -87,9 +87,9 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <nav>
+            <nav >
                 <div class="nav nav-tabs" id="tabsCapitalHumano" role="tablist">
-                    <a class="nav-link active" id="nav-empleados-tab" data-type="empleados" data-toggle="tab"
+                    <a class="nav-link active" style="border-top: 2px solid #ffffff;" id="nav-empleados-tab" data-type="empleados" data-toggle="tab"
                         href="#nav-empleados" role="tab" aria-controls="nav-empleados" aria-selected="true">
                         <i class="bi bi-people" style="font-size:20px;" style="text-decoration:none;"></i>
                         Empleados

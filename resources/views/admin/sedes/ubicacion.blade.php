@@ -7,7 +7,7 @@
         }
 
     </style>
-    <h5 class="col-12 titulo_general_funcion">Cómo llegar a &nbsp; {{$sede->sede}}</h5>
+    <h5 class="col-12 titulo_general_funcion">Cómo llegar a&nbsp;{{$sede->sede}}</h5>
     <div class="py-2 mt-4 card">
         <div class="card-body">
                 {{-- <h4 class="mb-1 text-center "><strong> Cómo llegar: </strong>{{ $sede->sede }}</h4> --}}

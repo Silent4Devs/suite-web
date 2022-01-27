@@ -158,10 +158,10 @@ class PuestosController extends Controller
         $competencias = Competencia::all();
         $responsabilidades = PuestoResponsabilidade::get();
         $certificados = PuestosCertificado::get();
-
+        $puestos = Puesto::get();
         // dd($idis);
 
-        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados'));
+        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puestos'));
     }
 
     public function store(StorePuestoRequest $request)
@@ -245,12 +245,12 @@ class PuestosController extends Controller
 
         $puesto->load('team');
 
-        $idiomas= PuestoIdiomaPorcentajePivot::get();
+        $idiomas = PuestoIdiomaPorcentajePivot::get();
         $competencias = Competencia::get();
         $responsabilidades = PuestoResponsabilidade::get();
         $certificados = PuestosCertificado::get();
 
-        return view('admin.puestos.show', compact('puesto','idiomas','competencias','responsabilidades','certificados'));
+        return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados'));
     }
 
     public function destroy(Puesto $puesto)
@@ -321,12 +321,11 @@ class PuestosController extends Controller
 
     public function saveUpdateResponsabilidades($responsabilidades, $puesto)
     {
-
         if (!is_null($responsabilidades)) {
             foreach ($responsabilidades as $responsabilidad) {
                 // dd($responsabilidad);
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
-                if (PuestoResponsabilidade::find($responsabilidad['id']) !=null) {
+                if (PuestoResponsabilidade::find($responsabilidad['id']) != null) {
                     PuestoResponsabilidade::find($responsabilidad['id'])->update([
                         'tiempo_asignado' => $responsabilidad['tiempo_asignado'],
                         'indicador' =>  $responsabilidad['indicador'],
@@ -360,7 +359,7 @@ class PuestosController extends Controller
         if (!is_null($certificados)) {
             foreach ($certificados as $certificado) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
-                if (PuestosCertificado::find($certificado['id']) !=null) {
+                if (PuestosCertificado::find($certificado['id']) != null) {
                     PuestosCertificado::find($certificado['id'])->update([
                         'nombre' => $certificado['nombre'],
                         'requisito' =>  $certificado['requisito'],

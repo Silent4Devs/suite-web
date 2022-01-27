@@ -27,6 +27,7 @@ class ExperienciaEmpleados extends Model
         'empresa' => 'string',
         'puesto' => 'string',
         'descripcion' => 'string',
+        'trabactualmente' => 'boolean',
     ];
 
     protected $fillable = [
@@ -36,6 +37,7 @@ class ExperienciaEmpleados extends Model
         'inicio_mes',
         'fin_mes',
         'descripcion',
+        'trabactualmente',
 
     ];
 
