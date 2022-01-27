@@ -579,6 +579,7 @@
                             <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+
                             </h5>
                             <hr class="hr-custom-title">
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
@@ -661,6 +662,94 @@
                             </div>
                         </div>
                     </div>
+
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ( $competencias as $competencia )
+                                    <tr>
+                                        <td>
+                                            <img class="img_empleado" style="position: relative;"
+                                            src="{{$competencia->imagen_ruta}}">
+                                        </td>
+                                        <td>{{$competencia->nombre}}</td>
+                                        <td>{{$competencia->tipo->nombre}}</td>
+                                        <td>{{$competencia->descripcion}}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> --}}
+
+                    {{-- modal competencia por registro--}}
+                    @if (!(count($competencias) === 0))}
+                        @foreach ( $competencias as $competencia )
+                            <div id="modal_competencia{{ $competencia->id }}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header" style="display: flex; justify-content: space-between; align-items:center; color: #fff; background-color:#345183; font-size:20px;">
+                                            <span><img class="img_empleado mr-4" src="{{$competencia->imagen_ruta}}">
+                                            <strong>{{ $competencia->nombre }}</strong></span>
+                                            <span class="mr-2">Tipo: {{ $competencia->tipo->nombre }}</span>
+                                        </div>
+
+                                        <div class="modal-body">
+
+
+
+                                            <div class="mt-3">
+                                                <strong>Descripción: </strong>
+                                                <p style="text-align: justify;">
+                                                    {{$competencia->descripcion}}
+                                                </p>
+                                            </div>
+
+                                            <div>
+                                                <strong style="font-size: 15px;">Conductas</strong>
+
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <td>Nivel</td>
+                                                                <td>Conducta esperada</td>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            @foreach($competencia->opciones as $conducta)
+                                                                <tr>
+                                                                    <td>{{ $conducta->ponderacion }}</td>
+                                                                    <td>{!! htmlspecialchars_decode($conducta->definicion) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+
+
+
+
+
+
+
+
+
+
+
 
 
                 {{-- MOD Informacion General --}}
