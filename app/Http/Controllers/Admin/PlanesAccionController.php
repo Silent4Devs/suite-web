@@ -48,7 +48,6 @@ class PlanesAccionController extends Controller
         return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo', 'referencia'));
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
@@ -127,9 +126,8 @@ class PlanesAccionController extends Controller
 
     public function crearPlanDeAccion($modelo)
     {
-
-                 if (!count($modelo->planes)) {
-                $tasks = [
+        if (!count($modelo->planes)) {
+            $tasks = [
                     [
                         'id' => 'tmp_' . (strtotime(now())) . '_1',
                         'end' => strtotime(now()) * 1000,
@@ -174,27 +172,25 @@ class PlanesAccionController extends Controller
                     ],
                 ];
 
-                $assigs = [];
+            $assigs = [];
 
+            $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+            $planImplementacion->tasks = $tasks;
+            $planImplementacion->canAdd = true;
+            $planImplementacion->canWrite = true;
+            $planImplementacion->canWriteOnParent = true;
+            $planImplementacion->changesReasonWhy = false;
+            $planImplementacion->selectedRow = 0;
+            $planImplementacion->zoom = '3d';
+            $planImplementacion->parent = 'Incidente - ' . $modelo->folio;
+            $planImplementacion->norma = 'ISO 27001';
+            $planImplementacion->modulo_origen = 'Incidentes';
+            $planImplementacion->objetivo = null;
+            $planImplementacion->elaboro_id = auth()->user()->empleado->id;
 
-                $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
-                $planImplementacion->tasks = $tasks;
-                $planImplementacion->canAdd = true;
-                $planImplementacion->canWrite = true;
-                $planImplementacion->canWriteOnParent = true;
-                $planImplementacion->changesReasonWhy = false;
-                $planImplementacion->selectedRow = 0;
-                $planImplementacion->zoom = '3d';
-                $planImplementacion->parent = 'Incidente - ' . $modelo->folio;
-                $planImplementacion->norma = 'ISO 27001';
-                $planImplementacion->modulo_origen = 'Incidentes';
-                $planImplementacion->objetivo = null;
-                $planImplementacion->elaboro_id = auth()->user()->empleado->id;
-
-                $modelo->planes()->save($planImplementacion);
+            $modelo->planes()->save($planImplementacion);
         }
     }
-
 
     public function show($planImplementacion)
     {
