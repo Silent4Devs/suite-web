@@ -367,6 +367,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Timesheet
     Route::get('timesheet', 'TimesheetController@index')->name('timesheet');
+    Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
     Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
 
     Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');

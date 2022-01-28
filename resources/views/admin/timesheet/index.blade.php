@@ -34,7 +34,7 @@
     	                        	{{ $time->aprobado }}
     	                        </td>
     	                        <td>
-    	                        	<a href="{{ route('admin.timesheet.show', $time->id) }}" class="btn">ver</a>
+    	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" class="btn">ver</a>
     							</td>	                    
     						</tr>
                         @endforeach

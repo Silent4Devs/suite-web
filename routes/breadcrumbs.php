@@ -743,3 +743,11 @@ Breadcrumbs::for('sugerencias-create-portal', function ($trail) {
     $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));;
     $trail->push('Sugerencias', route('admin.reportes-sugerencias'));
 });
+
+
+
+
+Breadcrumbs::for('admin.timesheet.visualizacion', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Politicas');
+});

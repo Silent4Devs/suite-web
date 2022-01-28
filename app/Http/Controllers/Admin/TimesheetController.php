@@ -24,6 +24,14 @@ class TimesheetController extends Controller
         return view('admin.timesheet.index' , compact('times'));
     }
 
+    
+    public function timesheetInicio()
+    {
+
+        return view('admin.timesheet.timesheet-inicio');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -45,7 +53,7 @@ class TimesheetController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->timesheet);
+        // dd($request->fecha_dia);
 
         $request->validate([
             'timesheet.1.proyecto'=>'required',
@@ -91,7 +99,7 @@ class TimesheetController extends Controller
         }
 
         $timesheet_nuevo = Timesheet::create([
-            'fecha_dia'=>Carbon::now(),
+            'fecha_dia'=>$request->fecha_dia,
             'empleado_id'=>auth()->user()->empleado->id,
             'aprobador_id'=>auth()->user()->empleado->supervisor_id,
         ]);
