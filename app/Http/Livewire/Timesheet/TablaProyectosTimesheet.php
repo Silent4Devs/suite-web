@@ -7,6 +7,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\TimesheetProyecto;
 use App\Models\Area;
 
+
 class TablaProyectosTimesheet extends Component
 {
     use LivewireAlert;

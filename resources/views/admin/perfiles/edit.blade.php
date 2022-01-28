@@ -4,7 +4,7 @@
     <h5 class="col-12 titulo_general_funcion">Editar: Perfil</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.perfiles.update', [$perfil->id]) }}"
+            <form method="POST" action="{{ route("admin.perfiles.update",$perfil) }}"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf

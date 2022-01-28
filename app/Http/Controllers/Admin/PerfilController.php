@@ -61,28 +61,22 @@ class PerfilController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $perfil = PerfilEmpleado::create($request->all());
 
         return redirect()->route('admin.perfiles.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit($id)
+    public function edit($perfil)
     {
-        $empleados = Empleado::get();
-        $perfil = PerfilEmpleado::find($id);
+        $perfil = PerfilEmpleado::find($perfil);
 
-        return view('admin.perfiles.edit', compact('empleados', 'perfil'));
+        return view('admin.perfiles.edit', compact('perfil'));
     }
 
-    public function update(Request $request, PerfilEmpleado $perfil)
+    public function update(Request $request, $perfil)
     {
+        $perfil = PerfilEmpleado::find($perfil);
         $perfil->update($request->all());
-
-        $perfil->update([
-            'nombre' =>  $request->nombre,
-            'descripcion' =>  $request->descripcion,
-        ]);
 
         return redirect()->route('admin.perfiles.index')->with('success', 'Editado con éxito');
     }

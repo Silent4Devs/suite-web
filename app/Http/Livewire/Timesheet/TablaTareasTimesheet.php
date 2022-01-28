@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use Livewire\Component;
-use App\Models\TimesheetTarea;
 use App\Models\TimesheetProyecto;
+use App\Models\TimesheetTarea;
+use Livewire\Component;
 
 class TablaTareasTimesheet extends Component
 {

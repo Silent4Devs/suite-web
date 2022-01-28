@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\TimesheetProyecto;
-use App\Models\TimesheetTarea;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
+use App\Models\TimesheetProyecto;
+use App\Models\TimesheetTarea;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class TimesheetController extends Controller
 {
@@ -21,7 +21,7 @@ class TimesheetController extends Controller
     {
         $times = timesheet::get();
 
-        return view('admin.timesheet.index' , compact('times'));
+        return view('admin.timesheet.index', compact('times'));
     }
 
     
@@ -57,41 +57,37 @@ class TimesheetController extends Controller
 
         $request->validate([
             'timesheet.1.proyecto'=>'required',
-            'timesheet.1.tarea'=>'required'
+            'timesheet.1.tarea'=>'required',
         ]);
-        if ($request->timesheet[1]['lunes'] == null && 
+        if ($request->timesheet[1]['lunes'] == null &&
             $request->timesheet[1]['martes'] == null &&
             $request->timesheet[1]['miercoles'] == null &&
             $request->timesheet[1]['jueves'] == null &&
             $request->timesheet[1]['viernes'] == null &&
             $request->timesheet[1]['sabado'] == null &&
             $request->timesheet[1]['domingo'] == null) {
-
             $request->validate([
-                "timesheet.1.horas"=>'required'
+                'timesheet.1.horas'=>'required',
             ]);
         }
 
-        foreach($request->timesheet as $index=>$hora){
-
+        foreach ($request->timesheet as $index=>$hora) {
             if ($index > 1) {
-                
                 if (array_key_exists('proyecto', $hora) || array_key_exists('tarea', $hora)) {
                     $request->validate([
                         "timesheet.{$index}.proyecto"=>'required',
                         "timesheet.{$index}.tarea"=>'required',
                     ]);
 
-                    if ($hora['lunes'] == null && 
+                    if ($hora['lunes'] == null &&
                         $hora['martes'] == null &&
                         $hora['miercoles'] == null &&
                         $hora['jueves'] == null &&
                         $hora['viernes'] == null &&
                         $hora['sabado'] == null &&
                         $hora['domingo'] == null) {
-
                         $request->validate([
-                            "timesheet.{$index}.horas"=>'required'
+                            "timesheet.{$index}.horas"=>'required',
                         ]);
                     }
                 }
@@ -104,14 +100,13 @@ class TimesheetController extends Controller
             'aprobador_id'=>auth()->user()->empleado->supervisor_id,
         ]);
 
-        foreach($request->timesheet as $index=>$hora){
-
+        foreach ($request->timesheet as $index=>$hora) {
             if (array_key_exists('proyecto', $hora) && array_key_exists('tarea', $hora)) {
                 $horas_nuevas = TimesheetHoras::create([
                     'timesheet_id'=>$timesheet_nuevo->id,
                     'proyecto_id'=>array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
                     'tarea_id'=>array_key_exists('tarea', $hora) ? $hora['tarea'] : null,
-                    'facturable'=>array_key_exists('facturable', $hora) ? true : false, 
+                    'facturable'=>array_key_exists('facturable', $hora) ? true : false,
                     'horas_lunes'=>$hora['lunes'],
                     'horas_martes'=>$hora['martes'],
                     'horas_miercoles'=>$hora['miercoles'],
@@ -135,7 +130,6 @@ class TimesheetController extends Controller
      */
     public function show($id)
     {
-        
         return view('admin.timesheet.show');
     }
 
@@ -173,15 +167,18 @@ class TimesheetController extends Controller
         //
     }
 
-    public function proyectos(){
+    public function proyectos()
+    {
         return view('admin.timesheet.proyectos');
     }
 
-    public function tareas(){
+    public function tareas()
+    {
         return view('admin.timesheet.tareas');
     }
 
-    public function aprobar(){
+    public function aprobar()
+    {
         return view('admin.timesheet.aprobar');
     }
 }

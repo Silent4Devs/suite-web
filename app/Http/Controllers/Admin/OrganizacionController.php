@@ -172,7 +172,7 @@ class OrganizacionController extends Controller
 
         $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 
-        return view('admin.organizacions.edit', compact('organizacion', 'dias', 'schedule', 'countEmpleados','tamanoEmpresa'));
+        return view('admin.organizacions.edit', compact('organizacion', 'dias', 'schedule', 'countEmpleados', 'tamanoEmpresa'));
     }
 
     public function update(UpdateOrganizacionRequest $request, Organizacion $organizacion)
