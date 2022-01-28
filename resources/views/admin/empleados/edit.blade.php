@@ -731,7 +731,7 @@
                         name: 'descripcion',
                         render: function(data, type, row, meta) {
                             return `
-                            <input class="form-control" type="text" value="${data}" data-name-input="descripcion" data-experiencia-id="${row.id}" />
+                            <textarea class="form-control" type="text" data-name-input="descripcion" data-experiencia-id="${row.id}" style="min-height: 25px !important;" >${data}</textarea>
                             <span class="errors descripcion_error text-danger"></span>
                             `;
                         }

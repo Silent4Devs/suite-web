@@ -1309,6 +1309,7 @@
                     {
                         data: 'descripcion',
                         name: 'descripcion'
+
                     },
                     {
                         data: 'inicio_mes',
