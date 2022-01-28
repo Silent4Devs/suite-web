@@ -798,11 +798,10 @@ class EmpleadoController extends Controller
 
     public function updateExperiencia(Request $request, ExperienciaEmpleados $experiencia)
     {
-        // dd($request);
         if (array_key_exists('trabactualmente', $request->all())) {
             if ($request->trabactualmente == 'true') {
                 $isTrabActualmente = true;
-            }else{
+            } else {
                 $isTrabActualmente = false;
             }
             $request->replace(['trabactualmente' => $isTrabActualmente]);
@@ -831,7 +830,7 @@ class EmpleadoController extends Controller
 
         if ($request->trabactualmente == 'false') {
             if (array_key_exists('fin_mes', $request->all())) {
-                if ($request->fin_mes != 'undefided' ) {
+                if ($request->fin_mes != 'undefided') {
                     $request->validate([
                         'fin_mes' => 'required|date',
                     ]);
@@ -885,7 +884,7 @@ class EmpleadoController extends Controller
         if (array_key_exists('estudactualmente', $request->all())) {
             if ($request->estudactualmente == 'true') {
                 $isEstdActualmente = true;
-            }else{
+            } else {
                 $isEstdActualmente = false;
             }
             $request->replace(['estudactualmente' => $isEstdActualmente]);
