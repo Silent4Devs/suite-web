@@ -716,7 +716,7 @@ if (!is_null($organizacion)) {
                 </div> --}}
 
 {{-- modal competencia por registro --}}
-@if (!(count($competencias) === 0))}
+@if (count($competencias))
     @foreach ($competencias as $competencia)
         <div id="modal_competencia{{ $competencia->id }}" class="modal fade bd-example-modal-lg" tabindex="-1"
             role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -727,7 +727,7 @@ if (!is_null($organizacion)) {
                         style="display: flex; justify-content: space-between; align-items:center; color: #fff; background-color:#345183; font-size:20px;">
                         <span><img class="img_empleado mr-4" src="{{ $competencia->imagen_ruta }}">
                             <strong>{{ $competencia->nombre }}</strong></span>
-                        <span class="mr-2">Tipo: {{ $competencia->tipo->nombre }}</span>
+                        <span class="mr-2">Tipo: {{ $competencia->tipo ? $competencia->tipo->nombre:"existe" }}</span>
                     </div>
 
                     <div class="modal-body">
@@ -753,12 +753,16 @@ if (!is_null($organizacion)) {
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($competencia->opciones as $conducta)
-                                        <tr>
-                                            <td>{{ $conducta->ponderacion }}</td>
-                                            <td>{!! htmlspecialchars_decode($conducta->definicion) !!}</td>
-                                        </tr>
-                                    @endforeach
+                                    @if ($competencia->opciones)
+                                        
+                                    
+                                        @foreach ($competencia->opciones as $conducta)
+                                            <tr>
+                                                <td>{{ $conducta->ponderacion }}</td>
+                                                <td>{!! htmlspecialchars_decode($conducta->definicion) !!}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
 
