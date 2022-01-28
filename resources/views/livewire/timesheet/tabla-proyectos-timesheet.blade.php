@@ -27,7 +27,7 @@
                 <tr>
                     <th>Proyecto </th>
                     <th>Área a la que pertenece</th>
-                    {{-- <th style="max-width:200px;">Opciones</th> --}}
+                    <th style="max-width:200px;">Opciones</th>
                 </tr>
             </thead>
 
@@ -36,7 +36,7 @@
                     <tr>
                         <td>{{ $proyecto->proyecto }} </td>
                         <td>{{ $proyecto->area_id ? $proyecto->area->area : '' }} </td>
-                        {{-- <td><i class="fas fa-trash-alt" wire:click="destroy({{ $proyecto->id }})"></i></td>                     --}}
+                        <td><i class="fas fa-trash-alt" wire:click="destroy({{ $proyecto->id }})"></i></td>
                     </tr>
                 @endforeach
             </tbody>
