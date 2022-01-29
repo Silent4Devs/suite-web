@@ -181,4 +181,10 @@ class TimesheetController extends Controller
     {
         return view('admin.timesheet.aprobar');
     }
+
+    public function tareasProyecto($proyecto_id)
+    {
+        $proyecto_id = $proyecto_id;
+        return view('admin.timesheet.tareas-proyecto', compact('proyecto_id'));
+    }
 }

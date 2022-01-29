@@ -65,16 +65,12 @@
                 <div class="form-group col-sm-6">
                     <i class="fas fa-fire iconos-crear"></i>{!! Form::label('amenaza', 'Amenaza') !!}
                     <div class="caja_btn_input">
-                        {{-- {!! Form::open(['route' => 'carga-amenaza', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-sm" type="file" name="archivo" required>
-                        {!! Form::button('<i class="fas fa-file-upload"></i>', ['class' => 'btn btn_importar', 'title' => 'Cargar documento']) !!}
-                        {!! Form::close() !!} --}}
                         {!! Form::open(['route' => 'carga-amenaza', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" id="csv_file" name="archivo" required>
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload "></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-amenaza', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
 
                     </div>
@@ -89,7 +85,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-vulnerabilidad', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -103,7 +99,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-analisis_riego', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -138,9 +134,6 @@
                     </div>
                 </div> --}}
 
-
-
-
                 <div class="py-1 form-group col-12" style="border-bottom:2px solid #345183; color: #345183; font-weight: bold; margin-top: 25px;">ISO 27001 | Contexto</div>
 
 
@@ -153,7 +146,8 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-partes_interesadas', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
+                        {{-- {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!} --}}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -167,7 +161,8 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-matriz_requisitos_legales', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
+                        {{-- {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!} --}}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -180,7 +175,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-foda', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -193,7 +188,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-determinacion_alcance', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -212,7 +207,8 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-comite_seguridad', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
+                        {{-- {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!} --}}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -224,7 +220,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-alta_direccion', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -248,7 +244,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-politica_sgi', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -267,7 +263,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-categoriacapacitacion', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -281,7 +277,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-revisiondireccion', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -339,7 +335,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-puesto', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -390,7 +386,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-roles', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -437,7 +433,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-grupo_area', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -469,7 +465,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-empleado', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -481,7 +477,7 @@
                         <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i class="fas fa-file-upload"></i></button>
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-activo_inventario', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
+                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -507,6 +503,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function importar(formData) {
         const url = "{{ route('carga-amenaza') }}";
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    Accept: "application/json",
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+            })
+            const data = await response.json();
+            return data;
+    }
+
+
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('btn_exportar').addEventListener('click', async function(e) {
+                e.preventDefault();
+                    const response = await exportar(formData, "{{ route('descarga-amenaza') }}")
+                    const response = await exportar(formData, "{{ route('descarga-vulnerabilidad') }}")
+                    const response = await exportar(formData, "{{ route('descarga-analisis_riego') }}")
+                    const response = await exportar(formData, "{{ route('descarga-partes_interesadas') }}")
+                    const response = await exportar(formData, "{{ route('descarga-matriz_requisitos_legales') }}")
+                    const response = await exportar(formData, "{{ route('descarga-foda') }}")
+                    const response = await exportar(formData, "{{ route('descarga-determinacion_alcance') }}")
+                    const response = await exportar(formData, "{{ route('descarga-comite_seguridad') }}")
+                    const response = await exportar(formData, "{{ route('descarga-alta_direccion') }}")
+                    const response = await exportar(formData, "{{ route('descarga-categoriacapacitacion') }}")
+                    const response = await exportar(formData, "{{ route('descarga-revisiondireccion') }}")
+                    const response = await exportar(formData, "{{ route('descarga-puesto') }}")
+                    const response = await exportar(formData, "{{ route('descarga-politica_sgi') }}")
+                    const response = await exportar(formData, "{{ route('descarga-grupo_area') }}")
+                    const response = await exportar(formData, "{{ route('descarga-empleado') }}")
+                    const response = await exportar(formData, "{{ route('descarga-activo_inventario') }}")
+                }
+            });
+        })
+        async function exportar(formData, url) {
             const response = await fetch(url, {
                 method: 'POST',
                 body: formData,

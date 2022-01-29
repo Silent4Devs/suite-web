@@ -1,79 +1,83 @@
 @extends('layouts.admin')
 @section('content')
 
-<style>
+    <style>
+        .table tr th:nth-child(2) {
 
 
-    .table tr th:nth-child(2){
+            min-width: 80px !important;
+            text-align: center !important;
+        }
+
+        .table tr th:nth-child(3) {
 
 
-    min-width:80px !important;
-    text-align:center !important;
-    }
-    .table tr th:nth-child(3){
+            min-width: 80px !important;
+            text-align: center !important;
+        }
+
+        .table tr td:nth-child(3) {
+
+            text-align: center !important;
+        }
+
+        .table tr th:nth-child(4) {
+
+            min-width: 130px !important;
+            text-align: center !important;
+        }
+
+        .table tr td:nth-child(4) {
+
+            text-align: center !important;
+        }
+
+        .table tr th:nth-child(5) {
 
 
-    min-width:80px !important;
-    text-align:center !important;
-    }
+            min-width: 900px !important;
+            text-align: center !important;
+        }
 
-    .table tr td:nth-child(3){
+        .table tr td:nth-child(5) {
 
-    text-align:center !important;
-    }
-    .table tr th:nth-child(4){
+            text-align: justify !important;
+        }
 
-    min-width:130px !important;
-    text-align:center !important;
-    }
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
 
-    .table tr td:nth-child(4){
+        .btn_cargar:hover {
+            color: #fff;
+            background: #345183;
+        }
 
-    text-align:center !important;
-    }
-    .table tr th:nth-child(5){
+        .btn_cargar i {
+            font-size: 15pt;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        .agregar {
+            margin-right: 15px;
+        }
 
-    min-width:900px !important;
-    text-align:center !important;
-    }
-
-    .table tr td:nth-child(5){
-
-    text-align:justify !important;
-    }
-
-    .btn_cargar{
-        border-radius: 100px !important;
-        border: 1px solid #345183;
-        color: #345183;
-        text-align: center;
-        padding: 0;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-    .btn_cargar:hover{
-        color: #fff;
-        background:#345183 ;
-    }
-    .btn_cargar i{
-        font-size: 15pt;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .agregar{
-        margin-right:15px;
-    }
-
-</style>
+    </style>
 
     {{ Breadcrumbs::render('admin.comiteseguridads.index') }}
 
@@ -82,7 +86,8 @@
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modalcomitedeseguridad', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
+                    @include('csvImport.modalcomitedeseguridad', ['model' => 'Vulnerabilidad', 'route' =>
+                    'admin.vulnerabilidads.parseCsvImport'])
                 </div>
             </div>
         @endcan
@@ -156,7 +161,7 @@
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible'],
-                        orthogonal:"empleadoText"
+                        orthogonal: "empleadoText"
 
                     }
                 },
@@ -168,7 +173,7 @@
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible'],
-                        orthogonal:"empleadoText"
+                        orthogonal: "empleadoText"
 
                     }
                 },
@@ -181,7 +186,7 @@
                     orientation: 'portrait',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible'],
-                        orthogonal:"empleadoText"
+                        orthogonal: "empleadoText"
                     },
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
@@ -197,7 +202,7 @@
                     titleAttr: 'Imprimir',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible'],
-                        orthogonal:"empleadoText"
+                        orthogonal: "empleadoText"
 
                     }
                 },
@@ -263,25 +268,29 @@
                 }
                 };
                 let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
+                text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-comite_seguridad') }}",
                 action: function(e, dt, node, config) {
-                    $('#').modal('show');
+                let {
+                url
+                } = config;
+                window.location.href = url;
                 }
-            };
-            let btnImport = {
-                text: '<i  class="fas fa-file-upload"></i>',
+                };
+                let btnImport = {
+                text: '<i class="fas fa-file-upload"></i>',
                 titleAttr: 'Importar datos',
                 className: "btn btn_cargar",
                 action: function(e, dt, node, config) {
-                    $('#xlsxImportModal').modal('show');
+                $('#xlsxImportModal').modal('show');
                 }
-            };
+                };
 
-            dtButtons.push(btnAgregar);
-            dtButtons.push(btnExport);
-            dtButtons.push(btnImport);
+                dtButtons.push(btnAgregar);
+                dtButtons.push(btnExport);
+                dtButtons.push(btnImport);
             @endcan
 
             let dtOverrideGlobals = {
@@ -303,7 +312,7 @@
                         data: 'asignada',
                         name: 'asignada',
                         render: function(data, type, row, meta) {
-                            if (type==="empleadoText") {
+                            if (type === "empleadoText") {
                                 return row.asignacion.name;
                             }
                             let responsablereunion = "";
@@ -348,6 +357,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

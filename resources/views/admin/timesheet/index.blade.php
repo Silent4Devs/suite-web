@@ -1,5 +1,29 @@
 @extends('layouts.admin')
 @section('content')
+    
+    <style type="text/css">
+        .aprobada{
+            padding: 3px;
+            background-color: #61CB5C;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .rechazada{
+            padding: 3px;
+            background-color: #EA7777;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .pendiente{
+            padding: 3px;
+            background-color: #F48C16;
+            color: #fff;
+            border-radius: 4px;
+        }
+    </style>
+
+
+     {{ Breadcrumbs::render('timesheet-index') }}
 	
 	<h5 class="col-12 titulo_general_funcion">TimeSheet </h5>
 
@@ -31,7 +55,17 @@
                                     {{ $time->aprobador->name }}
     	                        </td>
     	                        <td>
-    	                        	{{ $time->aprobado }}
+                                    @if($time->aprobado)
+                                        <span class="aprobada">Aprobada</span>
+                                    @endif
+
+                                    @if($time->rechazado)
+                                        <span class="rechazada">Rechazada</span>
+                                    @endif
+
+                                    @if(($time->rechazado == false) && ($time->aprobado == false))
+                                        <span class="pendiente">Pendiente</span>
+                                    @endif
     	                        </td>
     	                        <td>
     	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" class="btn">ver</a>
