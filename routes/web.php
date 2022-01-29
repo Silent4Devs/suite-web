@@ -373,6 +373,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
     Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
+    Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
 
     Route::get('timesheet/aprobar', 'TimesheetController@aprobar')->name('timesheet-aprobar');
 

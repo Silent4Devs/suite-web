@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 @section('content')
-
-	{{ Breadcrumbs::render('timesheet-tareas') }}
+	
+    {{ Breadcrumbs::render('timesheet-tareas-proyecto') }}
 
 	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Tareas</font></h5>
 
 	<div class="card card-body">
 		<div class="row">
 
-            @livewire('timesheet.tabla-tareas-timesheet', ['proyecto_id'=>null, 'origen'=>'tareas'])
+            @livewire('timesheet.tabla-tareas-timesheet', ['proyecto_id'=>$proyecto_id, 'origen'=>'tareas-proyectos'])
 
 		</div>
 	</div>

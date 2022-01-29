@@ -44,6 +44,6 @@ class TablaProyectosTimesheet extends Component
     {
         TimesheetProyecto::destroy($id);
 
-        $this->alert('error', 'Registro eliminado!');
+        $this->alert('success', 'Registro eliminado!');
     }
 }
