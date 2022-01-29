@@ -365,6 +365,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
     Route::resource('empleados', 'EmpleadoController');
 
+
+    // Timesheet
+    Route::get('timesheet', 'TimesheetController@index')->name('timesheet');
+    Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
+    Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
+
+    Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
+    Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
+
+    Route::get('timesheet/aprobar', 'TimesheetController@aprobar')->name('timesheet-aprobar');
+
+    Route::resource('timesheet', 'TimesheetController')->except(['create', 'index']);
+
     //Competencia Tipo
 
     Route::get('Tipo/edit/{tipo}', 'RH\TipoCompetenciaController@edit')->name('tipo.edit');
@@ -1199,10 +1212,10 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     Route::get('ExportAltaDireccion', 'ExportExcel@AltaDireccion')->name('descarga-alta_direccion');
     Route::get('ExportCategoriaCapacitacion', 'ExportExcel@CategoriaCapacitacion')->name('descarga-categoriacapacitacion');
     Route::get('ExportRevisionDireccion', 'ExportExcel@RevisionDireccion')->name('descarga-revisiondireccion');
-    Route::get('ExportCategoria', 'ExportExcel@CategoriaActivo')->name('descarga-categoria');
+    // Route::get('ExportCategoria', 'ExportExcel@CategoriaActivo')->name('descarga-categoria');
     Route::get('ExportPuesto', 'ExportExcel@Puesto')->name('descarga-puesto');
-    Route::get('ExportEstadoIncidente', 'ExportExcel@EstadoIncidente')->name('descarga-estadoincidente');
-    Route::post('ExportRole', 'ExportExcel@Roles')->name('descarga-roles');
+    // Route::get('ExportEstadoIncidente', 'ExportExcel@EstadoIncidente')->name('descarga-estadoincidente');
+    Route::get('ExportRole', 'ExportExcel@Roles')->name('descarga-roles');
     Route::get('ExportPoliticaSgsi', 'ExportExcel@PoliticaSgsi')->name('descarga-politica_sgi');
     Route::get('ExportGrupoArea', 'ExportExcel@GrupoArea')->name('descarga-grupo_area');
     Route::get('ExportEmpleado', 'ExportExcel@Empleado')->name('descarga-empleado');

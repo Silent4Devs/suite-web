@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet <font style="font-weight:lighter;">Tareas</font></h5>
+	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Tareas</font></h5>
 
 	<div class="card card-body">
 		<div class="row">

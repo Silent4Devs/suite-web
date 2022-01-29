@@ -739,3 +739,4 @@ Breadcrumbs::for('sugerencias-create-portal', function ($trail) {
     $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
     $trail->push('Sugerencias', route('admin.reportes-sugerencias'));
 });
+

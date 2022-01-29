@@ -23,6 +23,11 @@ class TablaTareasTimesheet extends Component
 
     public function create()
     {
+        $this->validate([
+            'tarea_name'=>'required',
+            'proyecto_id'=>'required'
+        ]);
+        
         $nueva_tarea = TimesheetTarea::create([
             'tarea' => $this->tarea_name,
             'proyecto_id' => $this->proyecto_id,
