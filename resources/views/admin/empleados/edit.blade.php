@@ -731,7 +731,7 @@
                         name: 'descripcion',
                         render: function(data, type, row, meta) {
                             return `
-                            <input class="form-control" type="text" value="${data}" data-name-input="descripcion" data-experiencia-id="${row.id}" />
+                            <textarea class="form-control" type="text" data-name-input="descripcion" data-experiencia-id="${row.id}" style="min-height: 25px !important;" >${data}</textarea>
                             <span class="errors descripcion_error text-danger"></span>
                             `;
                         }
@@ -755,7 +755,7 @@
                         name: 'fin_mes_ymd',
                         render: function(data, type, row, meta) {
                             if (row.trabactualmente) {
-                                return `trabajando actualmente
+                                return `Trabajo actual
                                 <input class="form-group" type="checkbox" ${row.trabactualmente ? 'checked': ''} data-name-input="trabactualmente" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>
                                 `;
@@ -968,7 +968,7 @@
                         name: 'year_fin_ymd',
                         render: function(data, type, row, meta) {
                             if (row.estudactualmente) {
-                                return `trabajando actualmente
+                                return `estudiando actualmente
                                 <input class="form-group" type="checkbox" ${row.estudactualmente ? 'checked': ''} data-name-input="estudactualmente" data-experiencia-id="${row.id}" />
                                 <span class="errors año_fin_error text-danger"></span>
                                 `;
@@ -2633,6 +2633,8 @@
             }
         })
         });
+    </script>
+    <script>
         $(document).ready(function(){
         $('#estudactualmente').on('change',function(){
             if (this.checked) {

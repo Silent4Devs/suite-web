@@ -7,17 +7,17 @@
         }
 
         .dataTables_length:before {
-            content: "" !important;
+            content: "Mostrar" !important;
             color: #111 !important;
-            margin-right: -50px !important;
-            position: relative;
+            margin-right: -20px !important;
+            position: absolute;
             z-index: 2;
-            padding: 0px !important;
-
+            padding-right:18px !important;
+            margin-top: 5px !important;
         }
 
         .dataTables_length:after {
-            content: "Mostrar empleados" !important;
+            content: "empleados" !important;
             color: #111 !important;
             margin-left: -50px !important;
             position: relative;
@@ -229,13 +229,17 @@
                 }
                 };
                 let btnExport = {
-                text: '<i class="fas fa-download"></i>',
+                text: '<i  class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-empleado') }}",
                 action: function(e, dt, node, config) {
-                $('#').modal('show');
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
-                };
+            };
                 let btnImport = {
                 text: '<i class="fas fa-file-upload"></i>',
                 titleAttr: 'Importar datos',

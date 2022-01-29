@@ -46,7 +46,7 @@
 
                     <div class="mt-2 form-group col-4">
                         <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                        <div class="form-control">{{ auth()->user()->empleado->name }}</div>
+                        <div class="form-control">{{ Str::limit(auth()->user()->empleado->name, 30, '...') }}</div>
                     </div>
 
                     <div class="mt-2 form-group col-4">

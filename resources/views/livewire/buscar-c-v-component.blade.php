@@ -14,7 +14,7 @@
         .medidas {
             max-height: 1200px;
             overflow: auto;
-            margin-top: 30px;
+
             z-index: 1;
         }
 
@@ -264,6 +264,7 @@
 
                                     .caja_logo {
                                         width: 50%;
+
                                     }
 
                                     .h5 {
@@ -291,11 +292,11 @@
                                 }
 
                             </style>
-                            <div class="caja_img_logo">
-                                <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 200px;">
+                            <div class="caja_img_logo mt-4">
+                                <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 100px;">
                             </div>
                             <div class="row medidas">
-                                <div class="mt-4 ml-4 col-md-7 datos_iz_cv">
+                                <div class="mt-4 mb-3  ml-4 col-md-7 datos_iz_cv">
                                     <h5 class="py-2 pl-2"
                                         style="color:#fff; font-weight:bold; background-color:#7F7F7F; width:100%">
                                         {{ $empleadoModel->name }}</h5>
@@ -323,7 +324,12 @@
                                                 Del
                                                 <strong>{{ \Carbon\Carbon::parse($experiencia->inicio_mes)->format('d/m/Y') }}</strong>
                                                 al
-                                                <strong>{{ \Carbon\Carbon::parse($experiencia->fin_mes)->format('d/m/Y') }}</strong>
+                                                @if ($experiencia->trabactuamente = true)
+                                                <strong>día de hoy</strong>
+                                                @else
+                                                    <strong>{{ \Carbon\Carbon::parse($experiencia->fin_mes)->format('d/m/Y') }}</strong>
+                                                @endif
+
                                             </span>
                                             <span style="text-transform:capitalize; text-align:justify">
                                                 <br>
@@ -388,7 +394,13 @@
                                                 Del
                                                 <strong>{{ \Carbon\Carbon::parse($educacion->año_inicio)->format('d/m/Y') }}</strong>
                                                 al
-                                                <strong>{{ \Carbon\Carbon::parse($educacion->año_fin)->format('d/m/Y') }}</strong>
+                                                @if ($eduacion->estudactuamente = true)
+                                                <strong>día de hoy</strong>
+                                                @else
+                                                    <strong>{{ \Carbon\Carbon::parse($educacion->año_fin)->format('d/m/Y') }}</strong>
+                                                @endif
+
+                                                {{-- <strong>{{ \Carbon\Carbon::parse($educacion->año_fin)->format('d/m/Y') }}</strong> --}}
                                             </span>
                                         </div>
                                     @endforeach
@@ -406,7 +418,7 @@
                                                 <strong>Nivel:</strong> {{ $idioma->nivel }}
                                             </span>
                                             <br>
-                                            <span style="text-transform:capitalize">
+                                            <span style="text-transform:capitalize" class="mb-">
                                                 <strong>Porcentaje:</strong> {{ $idioma->porcentaje }} %
                                             </span>
                                         </div>

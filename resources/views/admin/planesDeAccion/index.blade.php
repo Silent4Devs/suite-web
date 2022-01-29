@@ -12,9 +12,9 @@
             <table class="table table-bordered w-100" id="tblPlanesAccion">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        {{-- <th>
                             ID
-                        </th>
+                        </th> --}}
                         <th style="min-width:150px;">
                             Nombre
                         </th>
@@ -148,9 +148,11 @@
             let tblPlanesAccion = $('#tblPlanesAccion').DataTable({
                 buttons: dtButtons,
                 ajax: url,
-                columns: [{
-                    data: 'id',
-                }, {
+                columns: [
+                //     {
+                //     data: 'id',
+                // },
+                {
                     data: 'parent',
                 }, {
                     data: 'norma',

@@ -237,7 +237,7 @@
                 <input class="form-check-input" name="trabactualmente" type="checkbox" id="trabactualmente"
                     x-on:change="open = !open">
                 <label class="form-check-label" for="trabactualmente">
-                    Trabajo actualmente
+                    Trabajo actual
                 </label>
             </div>
         </div>
@@ -287,9 +287,9 @@
         <table class="table w-100" id="tbl-experiencia">
             <thead>
                 <tr>
-                    <th>Empresa</th>
-                    <th>Puesto</th>
-                    <th>Descripción</th>
+                    <th  style="min-width:150px;">Empresa</th>
+                    <th  style="min-width:150px;">Puesto</th>
+                    <th style="min-width:300px;">Descripción</th>
                     <th>Inicio</th>
                     <th>Fin</th>
                     <th>Eliminar</th>

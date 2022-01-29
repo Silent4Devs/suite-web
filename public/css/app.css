@@ -26663,6 +26663,8 @@ pre code {
 .table thead th {
   vertical-align: bottom;
   border-bottom: 2px solid #dee2e6;
+  background-color: #788BAC;
+  color: #fff;
 }
 .table tbody + tbody {
   border-top: 2px solid #dee2e6;
@@ -35050,3 +35052,13 @@ h3 {
   font-size: 20px;
   margin-right: 10px;
 } 
+
+
+.tabla-animada td{
+    animation: creado 1s;
+}
+@keyframes creado{
+    0%{
+        background-color: rgba(200, 228, 255, 1);
+    }
+}

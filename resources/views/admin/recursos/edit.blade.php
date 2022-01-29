@@ -2,7 +2,7 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.recursos.create') }}
-    <h5 class="col-12 titulo_general_funcion"> Registrar: Capacitación</h5>
+    <h5 class="col-12 titulo_general_funcion"> Editar: Capacitación</h5>
     @include('admin.recursos.styles.style')
     <div class="mt-4 card">
         <div class="card-body">

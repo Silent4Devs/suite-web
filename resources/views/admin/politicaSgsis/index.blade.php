@@ -2,76 +2,78 @@
 @section('content')
 
 
-<style>
+    <style>
+        .table tr td:nth-child(2) {
+            text-align: justify !important;
+        }
 
-.table tr td:nth-child(2){
-    text-align: justify !important;
-}
+        .table tr th:nth-child(2) {
+            min-width: 900px !important;
+            text-align: center !important;
 
-.table tr th:nth-child(2){
-    min-width:900px !important;
-    text-align: center !important;
+        }
 
-}
+        .table tr th:nth-child(3) {
+            text-align: center !important;
+        }
 
-.table tr th:nth-child(3){
-    text-align: center !important;
-}
+        .table tr th:nth-child(4) {
+            min-width: 70px !important;
+            text-align: center !important;
+        }
 
-.table tr th:nth-child(4){
-    min-width:70px !important;
-    text-align: center !important;
-}
+        .table tr td:nth-child(4) {
+            text-align: center !important;
+        }
 
-.table tr td:nth-child(4){
-    text-align: center !important;
-}
+        .table tr td:nth-child(5) {
+            text-align: center !important;
+        }
 
-.table tr td:nth-child(5){
-    text-align: center !important;
-}
+        .table tr th:nth-child(6) {
+            text-align: center !important;
+            min-width: 130px !important;
+        }
 
-.table tr th:nth-child(6){
-    text-align: center !important;
-    min-width:130px !important;
-}
+        .table tr th:nth-child(8) {
+            text-align: center !important;
+            min-width: 70px !important;
+        }
 
-.table tr th:nth-child(8){
-    text-align: center !important;
-    min-width:70px !important;
-}
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
 
-.btn_cargar{
-        border-radius: 100px !important;
-        border: 1px solid #345183;
-        color: #345183;
-        text-align: center;
-        padding: 0;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-    .btn_cargar:hover{
-        color: #fff;
-        background:#345183 ;
-    }
-    .btn_cargar i{
-        font-size: 15pt;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .agregar{
-        margin-right:15px;
-    }
+        .btn_cargar:hover {
+            color: #fff;
+            background: #345183;
+        }
 
-</style>
+        .btn_cargar i {
+            font-size: 15pt;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .agregar {
+            margin-right: 15px;
+        }
+
+    </style>
 
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
 
@@ -84,45 +86,46 @@
             </div> --}}
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modelpoliticasgsi', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
+                    @include('csvImport.modelpoliticasgsi', ['model' => 'Vulnerabilidad', 'route' =>
+                    'admin.vulnerabilidads.parseCsvImport'])
                 </div>
             </div>
         @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-                <table class="table table-bordered w-100 datatable-PoliticaSgsi" id="datatable-PoliticaSgsi">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th style="text-transform: capitalize">
-                                {{ trans('cruds.politicaSgsi.fields.id') }}
-                            </th>
-                            <th>
-                                Política&nbsp;del&nbsp;Sistema&nbsp;de&nbsp;Gestión&nbsp;de&nbsp;Seguridad&nbsp;de&nbsp;la&nbsp;Información&nbsp;(SGSI)
-                            </th>
-                            <th>
-                                Fecha de publicación
-                            </th>
-                            <th>
-                                Fecha&nbsp;de&nbsp;entrada en vigor
-                            </th>
-                            <th>
-                                Revisó
-                            </th>
-                            <th>
-                               Puesto
-                            </th>
-                            <th>
-                                Área
-                             </th>
-                             <th>
-                                Fecha de revisión
-                             </th>
-                            <th>
-                                Opciones
-                            </th>
-                        </tr>
-                        {{-- <tr>
+            <table class="table table-bordered w-100 datatable-PoliticaSgsi" id="datatable-PoliticaSgsi">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="text-transform: capitalize">
+                            {{ trans('cruds.politicaSgsi.fields.id') }}
+                        </th>
+                        <th>
+                            Política&nbsp;del&nbsp;Sistema&nbsp;de&nbsp;Gestión&nbsp;de&nbsp;Seguridad&nbsp;de&nbsp;la&nbsp;Información&nbsp;(SGSI)
+                        </th>
+                        <th>
+                            Fecha de publicación
+                        </th>
+                        <th>
+                            Fecha&nbsp;de&nbsp;entrada en vigor
+                        </th>
+                        <th>
+                            Revisó
+                        </th>
+                        <th>
+                            Puesto
+                        </th>
+                        <th>
+                            Área
+                        </th>
+                        <th>
+                            Fecha de revisión
+                        </th>
+                        <th>
+                            Opciones
+                        </th>
+                    </tr>
+                    {{-- <tr>
                             <td>
                             </td>
                             <td>
@@ -134,10 +137,10 @@
                             <td>
                             </td>
                         </tr> --}}
-                    </thead>
-                </table>
-            </div>
+                </thead>
+            </table>
         </div>
+    </div>
 
 @endsection
 @section('scripts')
@@ -223,25 +226,29 @@
                 }
                 };
                 let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
+                text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-politica_sgi') }}",
                 action: function(e, dt, node, config) {
-                    $('#').modal('show');
+                let {
+                url
+                } = config;
+                window.location.href = url;
                 }
-            };
-            let btnImport = {
-                text: '<i  class="fas fa-file-upload"></i>',
+                };
+                let btnImport = {
+                text: '<i class="fas fa-file-upload"></i>',
                 titleAttr: 'Importar datos',
                 className: "btn btn_cargar",
                 action: function(e, dt, node, config) {
-                    $('#xlsxImportModal').modal('show');
+                $('#xlsxImportModal').modal('show');
                 }
-            };
+                };
 
-            dtButtons.push(btnAgregar);
-            dtButtons.push(btnExport);
-            dtButtons.push(btnImport);
+                dtButtons.push(btnAgregar);
+                dtButtons.push(btnExport);
+                dtButtons.push(btnImport);
             @endcan
             @can('politica_sgsi_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
@@ -335,9 +342,9 @@
             };
 
             // let table = $('.datatable-PoliticaSgsi:not(.ajaxTable)').DataTable({
-                let table = $('#datatable-PoliticaSgsi').DataTable(dtOverrideGlobals);
+            let table = $('#datatable-PoliticaSgsi').DataTable(dtOverrideGlobals);
 
-                // buttons: dtButtons
+            // buttons: dtButtons
             // })
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
@@ -352,6 +359,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection
