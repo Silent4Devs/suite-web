@@ -38,7 +38,7 @@
 	                        <th>Empleado</th>
 	                        <th>Responsable</th>
                             <th>Aprobación</th>
-	                        <th>opciones</th>
+	                        {{-- <th>opciones</th> --}}
 	                    </tr>
 	                </thead>
 
@@ -67,9 +67,9 @@
                                         <span class="pendiente">Pendiente</span>
                                     @endif
     	                        </td>
-    	                        <td>
+    	                        {{-- <td>
     	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" class="btn">ver</a>
-    							</td>	                    
+    							</td>	 --}}                    
     						</tr>
                         @endforeach
 	                </tbody>
