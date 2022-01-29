@@ -6,8 +6,9 @@
         <form method="POST" action="{{ route("admin.subtipoactivos.store") }}" enctype="multipart/form-data">
             @csrf
 
+        <div class="row">
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="id_asignada"><i class="fas fa-layer-group iconos-crear"></i>Categoria</label>
+                <label for="id_asignada"><i class="fas fa-layer-group iconos-crear"></i>Categoría</label>
                 <select class="form-control  {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
                     name="categoria_id" id="categoria_id">
                     <option value="">Seleccione una opción</option>
@@ -34,6 +35,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tipoactivo.fields.tipo_helper') }}</span>
             </div>
+        </div>
 
             <div class="form-group col-12 text-right" style="margin-left:15px;" >
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>

@@ -87,7 +87,6 @@
                             </div>
                             <div class="col-sm-12 col-lg-12 col-12">
                                 <div class="card">
-
                                     <div class="card-body">
                                         <h6 style="font-size:18px;">{{ trans('global.change_password') }}</h6>
                                         <hr>
@@ -120,37 +119,13 @@
                                     </div>
                                 </div>
 
-                                <div class="card card-body card_vacia">
-                                    <div class="row card_admin_oculto">
-                                        @if (auth()->user()->isAdmin)
-                                            <div class="col-6">
-                                                <h6 style="font-size:18px;">Permisos del usuario</h6>
-                                            </div>
-                                            <div class="col-6" style="font-size:10px; color: #fff;">
 
-                                                <div class=""
-                                                    style="background-color:#006DDB; padding: 10px;">
-                                                    <i class="mr-2 fa fa-info-circle"></i>El administrador tiene todos los
-                                                    permisos
-                                                </div>
 
-                                            </div>
-                                        @else
-                                            <div class="col-6">
-                                                <h6 style="font-size:18px;">Permisos del usuario</h6>
-                                            </div>
-                                            <div class="col-6" style="font-size:10px; color: #fff;">
 
-                                                <div class=""
-                                                    style="background-color:#4B4C4F; padding: 10px;">
-                                                    <i class="mr-2 fa fa-info-circle"></i>El
-                                                    {{ auth()->user()->roles[0]->title }} tiene los siguientes permisos
-                                                </div>
 
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
+
+
+
 
 
 
@@ -163,7 +138,7 @@
                             <div class="col-sm-12 col-lg-12 col-12">
                                 <div class="card">
 
-                                    <div class="card-body">
+                                    <div class="card-body" style="height:340px !important;">
                                         <h6 style="font-size:18px;">Datos de perfil</h6>
                                         <hr>
                                         <form method="POST" action="{{ route('admin.empleado.update-profile') }}"
@@ -220,7 +195,7 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                            <div class="form-check col-12" 
+                                            <div class="form-check col-12"
                                                 style="display:flex; justify-content:space-between; padding-left: 42px;">
                                                 <input type="checkbox" class="form-check-input" id="ValidacionNumero"
                                                     name="mostrar_telefono"
@@ -236,11 +211,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" style="padding: 18px;">
+                            <div class="row" style="padding: 15px;">
                                 <div class="col-sm-12 col-lg-12 col-12">
                                     @if (Route::has('profile.password.toggleTwoFactor'))
                                         <div class="card">
-                                            <div class="card-body">
+                                            <div class="card-body" style="height:330px !important;width:500px !important;">
                                                 <form method="POST"
                                                     action="{{ route('profile.password.toggleTwoFactor') }}"
                                                     style="display: flex; justify-content: space-between; align-items: center;">
@@ -254,34 +229,15 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="col-sm-12 col-lg-12 col-12">
-                                    <div class="row">
-                                        <div class="col-sm-12 col-lg-12 col-12">
-                                            <div class="card">
-                                                <div class="card-body" style="height:355px !important;">
-                                                    <h6 style="font-size:18px;">Contactos de emergencia</h6>
-                                                    <hr style="opacity: 0;">
-                                                    <form
-                                                        action="{{ route('admin.empleado.update-related-info-profile') }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @include('admin.empleados.components.contactos-emergencia',[
-                                                        'empleado'=>auth()->user()->empleado
-                                                        ])
-                                                        <div class="form-group" style="text-align: end">
-                                                            <button class="btn btn-danger" type="submit">
-                                                                {{ trans('global.save') }}
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
+
+
+
                         </div>
                     </div>
+
+
 
                     @if (!auth()->user()->isAdmin)
                         @foreach (auth()->user()->roles as $rol)
@@ -308,6 +264,64 @@
                         @endforeach
                     @endif
 
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-12">
+                        <div class="card">
+                            <div class="card-body" style="height:355px !important;">
+                                <h6 style="font-size:18px;">Contactos de emergencia</h6>
+                                <hr style="opacity: 0;">
+                                <form
+                                    action="{{ route('admin.empleado.update-related-info-profile') }}"
+                                    method="POST">
+                                    @csrf
+                                    @include('admin.empleados.components.contactos-emergencia',[
+                                    'empleado'=>auth()->user()->empleado
+                                    ])
+                                    <div class="form-group" style="text-align: end">
+                                        <button class="btn btn-danger" type="submit">
+                                            {{ trans('global.save') }}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-12">
+                        <div class="card card-body card_vacia">
+                            <div class="row card_admin_oculto">
+                                @if (auth()->user()->isAdmin)
+                                    <div class="col-6">
+                                        <h6 style="font-size:18px;">Permisos del usuario</h6>
+                                    </div>
+                                    <div class="col-6" style="font-size:10px; color: #fff;">
+
+                                        <div class=""
+                                            style="background-color:#006DDB; padding: 10px;">
+                                            <i class="mr-2 fa fa-info-circle"></i>El administrador tiene todos los
+                                            permisos
+                                        </div>
+
+                                    </div>
+                                @else
+                                    <div class="col-6">
+                                        <h6 style="font-size:18px;">Permisos del usuario</h6>
+                                    </div>
+                                    <div class="col-6" style="font-size:10px; color: #fff;">
+
+                                        <div class=""
+                                            style="background-color:#4B4C4F; padding: 10px;">
+                                            <i class="mr-2 fa fa-info-circle"></i>El
+                                            {{ auth()->user()->roles[0]->title }} tiene los siguientes permisos
+                                        </div>
+
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {{-- <div class="mt-3 row">
 

@@ -113,53 +113,6 @@
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($tipoactivos as $key => $item)
-                                    <option value="{{ $item->tipo }}">{{ $item->tipo }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($tipoactivos as $key => $item)
-                                    <option value="{{ $item->subtipo }}">{{ $item->subtipo }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($sedes as $key => $item)
-                                    <option value="{{ $item->sede }}">{{ $item->sede }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
@@ -324,8 +277,15 @@
                         name: 'tipoactivo.tipo'
                     },
                     {
-                        data: 'subtipo_subtipo',
-                        name: 'subtipo.subtipo'
+                        data: 'id',
+                        render: function(data, type, row, meta){
+                            let html= `<div> `
+                                row.tipoactivo.subcategoria_activos.forEach(element => {
+                                    html +=`${element.subcategoria}`
+                                });
+                                html +='</div>'
+                        return html;
+                        }
                     },
                     {
                         data: 'descripcion',
@@ -345,12 +305,10 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-
-
                             let html =
-                                `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.responsable.avatar}" title="${row.responsable.name}"></img>`;
+                                `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.empleado.avatar}" title="${row.empleado.name}"></img>`;
 
-                            return `${row.responsable ? html: ''}`;
+                            return  html;
                         }
                     },
                     {

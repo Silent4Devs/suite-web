@@ -755,7 +755,7 @@
                         name: 'fin_mes_ymd',
                         render: function(data, type, row, meta) {
                             if (row.trabactualmente) {
-                                return `trabajando actualmente
+                                return `Trabajo actual
                                 <input class="form-group" type="checkbox" ${row.trabactualmente ? 'checked': ''} data-name-input="trabactualmente" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>
                                 `;
