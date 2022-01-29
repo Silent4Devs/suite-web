@@ -46,6 +46,13 @@
                 <font class="letra_blanca"> Portal de Comunicación </font>
             </a>
         </li>
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.timesheet-inicio') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'active' : '' }}">
+                <i class="bi bi-calendar3-range letra_blanca iconos_menu"></i>
+                <font class="letra_blanca"> Timesheet </font>
+            </a>
+        </li>
         @can('agenda_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.systemCalendar') }}"

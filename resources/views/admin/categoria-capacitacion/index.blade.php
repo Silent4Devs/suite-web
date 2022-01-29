@@ -3,45 +3,49 @@
     @can('recurso_create')
 
 
-    <style>
-    .btn_cargar{
-        border-radius: 100px !important;
-        border: 1px solid #345183;
-        color: #345183;
-        text-align: center;
-        padding: 0;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-    .btn_cargar:hover{
-        color: #fff;
-        background:#345183 ;
-    }
-    .btn_cargar i{
-        font-size: 15pt;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .agregar{
-        margin-right:15px;
-    }
+        <style>
+            .btn_cargar {
+                border-radius: 100px !important;
+                border: 1px solid #345183;
+                color: #345183;
+                text-align: center;
+                padding: 0;
+                width: 45px;
+                height: 45px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 !important;
+                margin-right: 10px !important;
+            }
 
-    </style>
+            .btn_cargar:hover {
+                color: #fff;
+                background: #345183;
+            }
 
-    {{ Breadcrumbs::render('admin.recursos.index') }}
+            .btn_cargar i {
+                font-size: 15pt;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .agregar {
+                margin-right: 15px;
+            }
+
+        </style>
+
+        {{ Breadcrumbs::render('admin.recursos.index') }}
         <h5 class="col-12 titulo_general_funcion">Categorías de capacitaciones</h5>
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modalcategoriacapacitacion', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
+                    @include('csvImport.modalcategoriacapacitacion', ['model' => 'Vulnerabilidad', 'route' =>
+                    'admin.vulnerabilidads.parseCsvImport'])
                 </div>
             </div>
         @endcan
@@ -150,25 +154,29 @@
                 }
                 };
                 let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
+                text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-categoriacapacitacion') }}",
                 action: function(e, dt, node, config) {
-                    $('#').modal('show');
+                let {
+                url
+                } = config;
+                window.location.href = url;
                 }
-            };
-            let btnImport = {
-                text: '<i  class="fas fa-file-upload"></i>',
+                };
+                let btnImport = {
+                text: '<i class="fas fa-file-upload"></i>',
                 titleAttr: 'Importar datos',
                 className: "btn btn_cargar",
                 action: function(e, dt, node, config) {
-                    $('#xlsxImportModal').modal('show');
+                $('#xlsxImportModal').modal('show');
                 }
-            };
+                };
 
-            dtButtons.push(btnAgregar);
-            dtButtons.push(btnExport);
-            dtButtons.push(btnImport);
+                dtButtons.push(btnAgregar);
+                dtButtons.push(btnExport);
+                dtButtons.push(btnImport);
             @endcan
 
             let dtOverrideGlobals = {
@@ -203,6 +211,5 @@
             let table = $('.tbl-categorias').DataTable(dtOverrideGlobals);
 
         });
-
     </script>
 @endsection

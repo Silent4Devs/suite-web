@@ -58,27 +58,6 @@
             overflow: hidden;
         }
 
-        /*.caja_botones_secciones a {
-                                            position: relative;
-                                        }
-
-                                        .caja_botones_secciones a span {
-                                            position: absolute;
-                                            right: 0;
-                                            top: 0;
-                                            width: 20px;
-                                            height: 20px;
-                                            background-color: #FF5252;
-                                            color: #fff;
-                                            border-radius: 50px;
-                                            display: flex;
-                                            align-items: center;
-                                            justify-content: center;
-                                            margin-top: -5px;
-                                            margin-right: -5px;
-                                            z-index: 1;
-                                        }*/
-
         .caja_botones_menu a {
             outline: none;
         }
@@ -148,9 +127,10 @@
             margin-top: -10px;
         }
 
-        .container{
+        .container {
             max-width: 1500px !important;
         }
+
     </style>
 
     @include('partials.flashMessages')
@@ -246,7 +226,7 @@
                         </section>
                         <section id="s_actividades" data-id="actividades">
                             <div class="container">
-                            @include('admin.inicioUsuario.actividades')
+                                @include('admin.inicioUsuario.actividades')
                         </section>
                         <section id="s_aprobaciones" data-id="aprobaciones">
                             <div class="container">

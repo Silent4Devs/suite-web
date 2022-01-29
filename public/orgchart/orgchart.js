@@ -433,6 +433,7 @@ export default class OrgChart {
     console.log(dataSourceJSON);
     photo_info.classList.add('side');
     photo_info.classList.add('img-nav');
+    photo_info.style.clipPath = "circle()"
     photo_info.src = `${dataSourceJSON.foto_ruta}`
     div_img.appendChild(photo_info);
 
@@ -449,26 +450,26 @@ export default class OrgChart {
         <h4>Descripción</h4>
         <p>${dataSourceJSON.descripcion}</p>
         `;
-          if (dataSourceJSON.supervisor != null) {
-            let photo_s;
-            if (dataSourceJSON.supervisor.foto == null) {
-              if (dataSourceJSON.supervisor.genero == 'H') {
-                  photo_s = `${this.options.nodeRepositoryImages}/man.png`;
-                } else if(dataSourceJSON.supervisor.genero == 'M') {
-                  photo_s = `${this.options.nodeRepositoryImages}/woman.png`;
-                }else{
-                  photo_s = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
-                }
-            }
-          else {
-            photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;
-          }
-          content_more += `
+    if (dataSourceJSON.supervisor != null) {
+      let photo_s;
+      if (dataSourceJSON.supervisor.foto == null) {
+        if (dataSourceJSON.supervisor.genero == 'H') {
+          photo_s = `${this.options.nodeRepositoryImages}/man.png`;
+        } else if (dataSourceJSON.supervisor.genero == 'M') {
+          photo_s = `${this.options.nodeRepositoryImages}/woman.png`;
+        } else {
+          photo_s = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
+        }
+      }
+      else {
+        photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;
+      }
+      content_more += `
                 <div class="supervisor justify-content-center" style="text-align:center !important" >
                 <h4 class="supervisor-title">Responsable del área:</h4>
                 <img src="${dataSourceJSON.lider?.avatar_ruta}"
                 class="text-center img_empleado" title="${dataSourceJSON.lider?.name}" >
-                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider?dataSourceJSON.lider.name:'sin definir'}</span></p>
+                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider ? dataSourceJSON.lider.name : 'sin definir'}</span></p>
                 <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider?.puesto}</span></p>
               </div>
             `;
@@ -535,6 +536,7 @@ export default class OrgChart {
 
     photo_info.classList.add('side');
     photo_info.classList.add('img-nav');
+    photo_info.style.clipPath = "circle()"
     photo_info.src = photo;
     div_img.appendChild(photo_info);
     //Name
@@ -592,9 +594,11 @@ export default class OrgChart {
       }
       content_more += `
       <div class="supervisor justify-content-center" >
-        <h4 class="supervisor-title">Responsable del área:</h4>
-        <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
-        <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
+        <h4 class="supervisor-title">Supervisor:</h4>
+        <img src="${dataSourceJSON.supervisor?.avatar_ruta}" style="clip-path: circle(50% at 50% 50%);"
+        class="text-center img_empleado m-auto" title="${dataSourceJSON.supervisor?.name}" >
+        <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.name}</span></p>
+        <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.supervisor.puesto}</span></p>
     </div>`;
 
     }
