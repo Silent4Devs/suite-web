@@ -71,10 +71,10 @@ class Activo extends Model
         return $this->belongsTo(Tipoactivo::class, 'tipoactivo_id');
     }
 
-    public function subtipo()
-    {
-        return $this->belongsTo(SubcategoriaActivo::class, 'subtipo_id');
-    }
+    // public function subtipo()
+    // {
+    //     return $this->belongsTo(SubcategoriaActivo::class, 'subtipo_id');
+    // }
 
     public function dueno()
     {
@@ -109,4 +109,10 @@ class Activo extends Model
     // {
     //     return $this->hasMany(DocumentoActivo::class, 'activo_id', 'id');
     // }
+
+    public function subtipo(){
+
+        return $this->hasMany(SubcategoriaActivo::class,'subcategoria','id');
+
+        }
 }
