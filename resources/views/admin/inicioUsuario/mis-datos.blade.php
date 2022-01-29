@@ -376,7 +376,7 @@ if (!is_null($organizacion)) {
             <div class="main-body">
                 <div class="row gutters-sm">
                     <div class="col-md-4 card_data_mis_datos">
-                        <div class="card card_margin_b_n" style="position:relative; height: 450px !important;">
+                        <div class="card card_margin_b_n" style="position:relative; height: 480px !important;">
                             @if ($cumpleaños_usuario != null && $cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m'))
                                 <img src="https://images.vexels.com/media/users/3/143347/isolated/preview/c418aa571078b11dcb69704acf1077c4-icono-de-sombrero-de-cumpleanos-3d.png"
                                     class="gorro">
@@ -422,12 +422,7 @@ if (!is_null($organizacion)) {
                                     @endif
 
 
-                                    @if ($last_evaluacion)
-                                        @if ($esLider)
-                                            <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
-                                                class="btn btn-xs btn-light mt-3">Evaluaciones de mi equipo</a>
-                                        @endif
-                                    @endif
+                                    
                                 </div>
                             </div>
                         </div>
@@ -790,14 +785,14 @@ if (!is_null($organizacion)) {
 
 {{-- MOD Informacion General --}}
 <div class="col-md-8">
-    <div class="card_data_mis_datos card" style="height: 450px !important;">
+    <div class="card_data_mis_datos card" style="height: 480px !important;">
         <div class="card-body" style="padding-bottom: 14px !important;">
             <h5 class="mb-0 d-inline-block"><i class="bi bi-file-text mr-2"></i>Información
                 General
             </h5>
             <hr class="hr-custom-title">
             <div class="row"
-                style="margin-top: 40px; color: #3086AF !important; font-weight:bold; font-size:14px;">
+                style="margin-top: 15px; color: #3086AF !important; font-weight:bold; font-size:14px;">
                 @if (!empty($panel_rules->n_empleado))
                     @if ($panel_rules->n_empleado)
                         <div class="col-3 title-info-personal">N° Empleado</div>
@@ -1099,6 +1094,14 @@ if (!is_null($organizacion)) {
                     <div id="evaluacionesRealizar" class="row" x-show="show"
                         x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                         @if ($evaluaciones->count())
+                            <div class="text-right">
+                                @if ($last_evaluacion)
+                                    @if ($esLider)
+                                        <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
+                                            class="btn btn-xs btn-light mt-3">Evaluaciones de mi equipo</a>
+                                    @endif
+                                @endif
+                            </div>
                             @foreach ($evaluaciones as $evaluacion)
                                 <div class="col-md-6">
                                     <div class="card" style="margin: ; margin-top:25px;">
