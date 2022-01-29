@@ -333,7 +333,7 @@
                             <div class="mt-0 form-group col-md-4">
                                 <label class="form-label"><i
                                         class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                                <div class="form-control">{{ $incidentesSeguridad->reporto->name }}</div>
+                                <div class="form-control">{{ Str::limit($incidentesSeguridad->reporto->name, 30, '...')  }}</div>
                             </div>
 
                             <div class="mt-0 form-group col-md-4">
@@ -521,7 +521,7 @@
 
                                     <div id="digrama" class="caja_oculta_dinamica">
                                         <div class="mt-5 col-md-12" style="overflow: auto;">
-                                            <div style="width: 100%; min-width:540px; position: relative;">
+                                            <div style="width: 100%; min-width:930px; position: relative;">
                                                 <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
                                                     style="width:100%">
 

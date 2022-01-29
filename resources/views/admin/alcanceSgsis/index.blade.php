@@ -340,8 +340,12 @@
                 text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-determinacion_alcance') }}",
                 action: function(e, dt, node, config) {
-                $('#').modal('show');
+                let {
+                url
+                } = config;
+                window.location.href = url;
                 }
                 };
                 let btnImport = {

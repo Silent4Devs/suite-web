@@ -16,7 +16,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 bootstrap/cache/config.php
-routes/web.php
+
 npm-debug.log
 yarn-error.log
 bootstrap/cache/

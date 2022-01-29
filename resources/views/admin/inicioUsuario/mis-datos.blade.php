@@ -261,6 +261,7 @@
         max-height: 140px !important;
         min-height: 140px !important;
     }
+
     .img_empleado_competencia {
         clip-path: circle(70px at 50% 50%);
         width: 50px !important;
@@ -291,11 +292,11 @@
 
 
 @php
-    if (!is_null($organizacion)) {
-        $logotipo = $organizacion->logotipo;
-    } else {
-        $logotipo = 'logotipo-tabantaj.png';
-    }
+if (!is_null($organizacion)) {
+    $logotipo = $organizacion->logotipo;
+} else {
+    $logotipo = 'logotipo-tabantaj.png';
+}
 @endphp
 @if ($cumpleaños_usuario != null && $cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m'))
     @php
@@ -375,7 +376,7 @@
             <div class="main-body">
                 <div class="row gutters-sm">
                     <div class="col-md-4 card_data_mis_datos">
-                        <div class="card card_margin_b_n" style="position:relative; height: 450px !important;">
+                        <div class="card card_margin_b_n" style="position:relative; height: 480px !important;">
                             @if ($cumpleaños_usuario != null && $cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m'))
                                 <img src="https://images.vexels.com/media/users/3/143347/isolated/preview/c418aa571078b11dcb69704acf1077c4-icono-de-sombrero-de-cumpleanos-3d.png"
                                     class="gorro">
@@ -405,26 +406,23 @@
                                     @endif
 
                                     @if ($usuario->empleado)
-                                        @if($usuario->empleado->puesto)
-                                            <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}" style="">
+                                        @if ($usuario->empleado->puesto)
+                                            <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}"
+                                                style="">
                                                 Ver Perfil Profesional
                                             </a>
                                         @endif
                                     @endif
 
                                     @if ($usuario->empleado)
-                                        <a href="{{ route('admin.inicio-Usuario.perfil-puesto') }}" class="mt-2">
+                                        <a href="{{ route('admin.inicio-Usuario.perfil-puesto') }}"
+                                            class="mt-2">
                                             Ver Perfil de Puesto
                                         </a>
                                     @endif
 
 
-                                    @if ($last_evaluacion)
-                                        @if ($esLider)
-                                            <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
-                                                class="btn btn-xs btn-light mt-3">Evaluaciones de mi equipo</a>
-                                        @endif
-                                    @endif
+                                    
                                 </div>
                             </div>
                         </div>
@@ -450,7 +448,8 @@
                             </h5>
                             <hr class="hr-custom-title">
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
-                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms style="margin-top: 15px;">
+                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms
+                                style="margin-top: 15px;">
                                 @forelse ($equipo_a_cargo as $empleado)
                                     <div class="col-md-12">
                                         <div class="card" style="position:relative;">
@@ -554,7 +553,7 @@
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container" style="padding-top: 10px;">
-                                    @if (count($activos) === 0)
+                                    @if (is_null($activos))
                                         No cuenta con activos a su cargo
                                     @else
                                         <div class="row">
@@ -579,100 +578,142 @@
                             <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+
                             </h5>
                             <hr class="hr-custom-title">
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container" style="padding-top: 10px;">
-                                    {{-- @if ($competencias == null)
+                                    @if (count($competencias) === 0)
                                         No se han definido competencias actualmente
-                                    @else --}}
+                                    @else
                                         <div class="row">
                                         </div>
+                                        {{-- @foreach ($competencias as $competencia) --}}
                                             <div class="row" style="margin-top: 1px;">
-                                                <div class="col-12 text-muted" style="font-size:10px">
-                                                    <table id="dom" class="table table-bordered w-100" style="width: 100%">
+                                                <div class="col-12 text-muted" style="">
+                                                    <table id="dom" class="table table-bordered w-100 datatable-glosario" style="width: 100%; border: none !important;">
                                                         <thead>
                                                             <tr>
-                                                                <th style="font-size:100%">Competencia</th>
-                                                                <th style="font-size:80%">Nivel Esperado</th>
-                                                                <th style="ont-size:100%">Más</th>
+                                                                <th style="border-bottom: none !important;">Logo</th>
+                                                                <th style="border-bottom: none !important;">Competencia</th>
+                                                                <th style="text-align: center !important; border-bottom: none !important;">Nivel&nbsp;Esperado</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach ( $competencias as $competencia )
-                                                            <tr>
-                                                                <td>{{$competencia->competencia->nombre}}</td>
-                                                                <td>{{$competencia->nivel_esperado}}</td>
-                                                                <td>
-                                                                 <!-- Button trigger modal -->
-                                                                        <div class="text-center">
-                                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">+</button>
-                                                                                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                                                                    <div class="modal-dialog modal-lg">
-                                                                                        <div class="modal-content">
-                                                                                            <table class="table table-bordered w-100" style="width: 100%">
-                                                                                                <thead class="thead-dark">
-                                                                                                    <tr>
-                                                                                                        <th>Imagen</th>
-                                                                                                        <th>Competencia</th>
-                                                                                                        <th>Nivel Esperado</th>
-                                                                                                        <th>Descripción</th>
-                                                                                                    </tr>
-                                                                                                </thead>
-                                                                                                <tbody>
-                                                                                                    @foreach ( $competencias as $competencia )
-                                                                                                    <tr>
-                                                                                                        <td>
-                                                                                                            <div style="text-align: center !important;">
-                                                                                                                <img class="img_empleado_competencia" src="{{$competencia->competencia->imagen_ruta}}">
-                                                                                                            </div>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <div style="text-align: center !important;">
-                                                                                                            {{$competencia->competencia->nombre}}</td>
-                                                                                                            </div>
-                                                                                                        <td>
-                                                                                                            <div style="text-align: center !important;">
-                                                                                                            {{$competencia->nivel_esperado}}</td>
-                                                                                                        {{-- <td>{{$competencia->competencia->tipo_id}}</td> --}}
-                                                                                                            </div>
-                                                                                                        <td>
-                                                                                                            <div style="text-align: center !important;">
-                                                                                                            {{$competencia->competencia->descripcion}}</td>
-                                                                                                            </div>
-                                                                                                    </tr>
-                                                                                                    @endforeach
-                                                                                                </tbody>
-                                                                                                </table>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                </td>
+                                                            <tr data-toggle="modal" data-target="#modal_competencia{{ $competencia->competencia->id }}" style="cursor: pointer;">
+                                                                <td style="vertical-align: middle;"><img class="img_empleado" style="transform: scale(0.7);" src="{{$competencia->competencia->imagen_ruta}}"></td>
+                                                                <td style="vertical-align: middle; text-align: left !important;">{{$competencia->competencia->nombre}}</td>
+                                                                <td style="text-align: center !important; vertical-align: middle;">{{$competencia->competencia->tipo_id}}</td>
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
                                                     </table>
+
+
                                                 </div>
                                             </div>
-                                    {{-- @endif --}}
+                                        {{-- @endforeach --}}
+
+                                        {{-- <button class="btn btn_cancelar" data-toggle="modal" data-target="#modal_competencias" style="margin-right: 3px; float: right; border-radius: 0px !important;">
+                                            <i class="fas fa-book mr-2" ></i>
+                                            Diccionario
+                                        </button> --}}
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
 
 
-                {{-- MOD Informacion General --}}
+
+
+
+                    @if (count($competencias))
+                        @foreach ( $competencias as $competencia )
+                            <div id="modal_competencia{{ $competencia->competencia->id }}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header" style="display: flex; justify-content: space-between; align-items:center; color: #fff; background-color:#345183; font-size:20px;">
+                                            <span><img class="img_empleado mr-4" src="{{$competencia->competencia->imagen_ruta}}">
+                                            <strong>{{ $competencia->competencia->nombre }}</strong></span>
+                                            <span class="mr-2">Tipo: {{ $competencia->competencia->tipo ? $competencia->competencia->tipo->nombre : '' }}</span>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                           {{-- <h5 style="display: flex; justify-content: space-between; align-items:center;">
+                                                <span><img class="img_empleado" src="{{$competencia->competencia->imagen_ruta}}">
+                                                <strong>{{ $competencia->competencia->nombre }}</strong></span>
+                                                <span class="mr-2">Tipo: {{ $competencia->competencia->tipo->nombre }}</span>
+                                            </h5>
+                                            <hr> --}}
+
+                                            <div class="mt-3">
+                                                <strong>Descripción: </strong>
+                                                <p style="text-align: justify;">
+                                                    {{$competencia->competencia->descripcion}}
+                                                </p>
+                                            </div>
+
+                                            <div>
+                                                <strong style="font-size: 15px;">Conductas</strong>
+
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Nivel</td>
+                                                            <td>Conducta esperada</td>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        @if($competencia->competencia->opciones)
+                                                            @foreach($competencia->competencia->opciones as $conducta)
+                                                                <tr>
+                                                                    <td>{{ $conducta->ponderacion }}</td>
+                                                                    <td>{!! htmlspecialchars_decode($conducta->definicion) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+
+
+
+                                                {{-- @foreach($competencia->competencia->opciones as $conducta)
+                                                    <div class="card-body card" style="background-color:#eee;">
+                                                        {!! htmlspecialchars_decode($conducta->definicion) !!}
+                                                    </div>
+                                                @endforeach --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+
+
+
+
+
+
+
+
+
+                    {{-- MOD Informacion General --}}
                     <div class="col-md-8">
-                        <div class="card_data_mis_datos card" style="height: 450px !important;">
+                        <div class="card_data_mis_datos card" style="height: 480px !important;">
                             <div class="card-body" style="padding-bottom: 14px !important;">
                                 <h5 class="mb-0 d-inline-block"><i class="bi bi-file-text mr-2"></i>Información
                                     General
                                 </h5>
                                 <hr class="hr-custom-title">
                                 <div class="row"
-                                    style="margin-top: 40px; color: #3086AF !important; font-weight:bold; font-size:14px;">
+                                    style="margin-top: 15px; color: #3086AF !important; font-weight:bold; font-size:14px;">
                                     @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->n_empleado)
                                             <div class="col-3 title-info-personal">N° Empleado</div>
@@ -712,8 +753,7 @@
                                         @endif
                                     @endif
                                 </div>
-                                <div class="row"
-                                    style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
+                                <div class="row" style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
                                     @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->area)
                                             <div class="col-3 title-info-personal">Área</div>
@@ -753,8 +793,7 @@
                                         @endif
                                     @endif
                                 </div>
-                                <div class="row"
-                                    style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
+                                <div class="row" style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
                                     @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->cumpleaños)
                                             <div class="col-3 title-info-personal">Cumpleaños</div>
@@ -763,8 +802,8 @@
                                             <div class="col-3 title-info-personal">Perfil</div>
                                         @endif
                                         {{-- @if ($panel_rules->cumpleaños)
-                                            <div class="col-3 title-info-personal">Sede</div>
-                                        @endif --}}
+                                                                <div class="col-3 title-info-personal">Sede</div>
+                                                            @endif --}}
                                     @endif
                                     @if ($panel_rules->genero)
                                         <div class="col-3 title-info-personal">Género</div>
@@ -795,8 +834,7 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="row"
-                                    style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
+                                <div class="row" style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
                                     @if ($panel_rules->direccion)
                                         <div class="col-3 title-info-personal">Dirección</div>
                                     @endif
@@ -826,8 +864,7 @@
                                                     href="{{ route('admin.ev360-objetivos-empleado.show', ['empleado' => auth()->user()->empleado->id]) }}">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <span style="cursor: pointer" @click="show=!show"><i
-                                                        class="fas"
+                                                <span style="cursor: pointer" @click="show=!show"><i class="fas"
                                                         :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
                                             </div>
                                         </div>
@@ -835,42 +872,42 @@
                                         <div style="padding-top: 25px;" x-show="show" x-transition:enter.duration.500ms
                                             x-transition:leave.duration.400ms>
                                             {{-- @foreach ($lista_evaluaciones as $evaluacion)
-                                                <small class="mt-3 d-inline-block"
-                                                    style="font-size:15px">{{ $evaluacion['nombre'] }}</small>
-                                                <br>
-                                                <small><i
-                                                        class="mr-1 fas fa-calendar-day"></i>{{ $evaluacion['fecha_inicio'] }}</small>
-                                                <small><i
-                                                        class="mr-1 fas fa-calendar-day"></i>{{ $evaluacion['fecha_fin'] }}</small>
-                                                @foreach ($evaluacion['informacion_evaluacion']['evaluadores_objetivos'] as $evaluador)
-                                                    @if ($evaluador['esSupervisor'])
-                                                        <small>{{ $evaluador['nombre'] }}</small>
-                                                        <br>
-                                                        @foreach ($evaluador['objetivos'] as $objetivo)
-                                                            <small style="font-size:13px"
-                                                                class="m-0">{{ $objetivo['nombre'] }}</small>
-                                                            <br>
-                                                            <small>KPI:
-                                                                <strong>{{ $objetivo['KPI'] }}</strong></small>
-                                                            <small>Meta:
-                                                                <strong>{{ $objetivo['meta'] }}</strong></small>
-                                                            <small>Alcanzado:
-                                                                <strong>{{ $objetivo['calificacion'] }}</strong></small>
-                                                            <small>Comentario(s): <strong>
-                                                                    {{ $objetivo['meta_alcanzada'] }}</strong></small>
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                                                    role="progressbar"
-                                                                    style="width: {{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}%;"
-                                                                    aria-valuenow="{{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}"
-                                                                    aria-valuemin="0" aria-valuemax="100">
-                                                                    {{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}%
-                                                                </div>
-                                                            </div>
-                                                        @endforeach
-                                                    @endif
-                                                @endforeach
-                                            @endforeach --}}
+                                                                    <small class="mt-3 d-inline-block"
+                                                                        style="font-size:15px">{{ $evaluacion['nombre'] }}</small>
+                                                                    <br>
+                                                                    <small><i
+                                                                            class="mr-1 fas fa-calendar-day"></i>{{ $evaluacion['fecha_inicio'] }}</small>
+                                                                    <small><i
+                                                                            class="mr-1 fas fa-calendar-day"></i>{{ $evaluacion['fecha_fin'] }}</small>
+                                                                    @foreach ($evaluacion['informacion_evaluacion']['evaluadores_objetivos'] as $evaluador)
+                                                                        @if ($evaluador['esSupervisor'])
+                                                                            <small>{{ $evaluador['nombre'] }}</small>
+                                                                            <br>
+                                                                            @foreach ($evaluador['objetivos'] as $objetivo)
+                                                                                <small style="font-size:13px"
+                                                                                    class="m-0">{{ $objetivo['nombre'] }}</small>
+                                                                                <br>
+                                                                                <small>KPI:
+                                                                                    <strong>{{ $objetivo['KPI'] }}</strong></small>
+                                                                                <small>Meta:
+                                                                                    <strong>{{ $objetivo['meta'] }}</strong></small>
+                                                                                <small>Alcanzado:
+                                                                                    <strong>{{ $objetivo['calificacion'] }}</strong></small>
+                                                                                <small>Comentario(s): <strong>
+                                                                                        {{ $objetivo['meta_alcanzada'] }}</strong></small>
+                                                                                <div class="progress">
+                                                                                    <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                                                        role="progressbar"
+                                                                                        style="width: {{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}%;"
+                                                                                        aria-valuenow="{{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}"
+                                                                                        aria-valuemin="0" aria-valuemax="100">
+                                                                                        {{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}%
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    @endforeach
+                                                                @endforeach --}}
                                             @foreach ($mis_objetivos as $objetivo)
                                                 <div class="card" style="position:relative">
                                                     <div class="card-body"
@@ -894,8 +931,7 @@
                                                             <h6 class="d-inline-block"
                                                                 style="padding-left: 41px;font-weight: bold;margin-top: 10px;">
                                                                 {{ $objetivo->objetivo->nombre }}</h6>
-                                                            <span
-                                                                style="float: right;margin-top: 12px;margin-right: 7px;"
+                                                            <span style="float: right;margin-top: 12px;margin-right: 7px;"
                                                                 class="badge badge-success">{{ $objetivo->objetivo->tipo->nombre }}</span>
                                                         </div>
                                                     </div>
@@ -921,21 +957,20 @@
                                                 <div class="card-body" style="z-index: 1;">
 
                                                     {{-- <div class="progress-bar" role="progressbar" style="width: 25%;
-                                                            background: #345183;
-                                                            font-weight: bold;
-                                                            font-size: 13px;" aria-valuenow="25" aria-valuemin="0"
-                                                            aria-valuemax="100">25%</div> --}}
+                                                                                background: #345183;
+                                                                                font-weight: bold;
+                                                                                font-size: 13px;" aria-valuenow="25" aria-valuemin="0"
+                                                                                aria-valuemax="100">25%</div> --}}
                                                     @if ($last_evaluacion)
 
 
 
                                                         @if ($mis_evaluaciones)
-                                                            <div class="progress"
-                                                                style="height: 28px; margin-top: 20px;">
+                                                            <div class="progress" style="height: 28px; margin-top: 20px;">
                                                                 <div class="progress-bar" role="progressbar"
                                                                     style="width: {{ $mis_evaluaciones->progreso_competencias }}%;background: #345183;font-weight: bold;font-size: 13px;"
                                                                     aria-valuenow="
-                                                                {{ $mis_evaluaciones->progreso_competencias }}"
+                                                                                    {{ $mis_evaluaciones->progreso_competencias }}"
                                                                     aria-valuemin="0" aria-valuemax="100">
                                                                     {{ $mis_evaluaciones->progreso_competencias }}%
                                                                 </div>
@@ -966,12 +1001,10 @@
                             <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100">
                                     <div class="pb-personzalizado mb-0 card-body" x-data="{show:false}">
-                                        <h5 class="mb-0 d-inline-block"><i
-                                                class="bi bi-person-badge-fill mr-2"></i>Evaluaciones a
+                                        <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge-fill mr-2"></i>Evaluaciones a
                                             Realizar
                                             <div class="circle-total-evaluaciones" style="top:-5px !important;">
-                                                <span
-                                                    style="position: absolute;top: 3px;">{{ $evaluaciones->count() }}</span>
+                                                <span style="position: absolute;top: 3px;">{{ $evaluaciones->count() }}</span>
                                             </div>
                                         </h5>
                                         @if ($last_evaluacion)
@@ -982,13 +1015,20 @@
                                         <div id="evaluacionesRealizar" class="row" x-show="show"
                                             x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                             @if ($evaluaciones->count())
+                                                <div class="text-right">
+                                                    @if ($last_evaluacion)
+                                                        @if ($esLider)
+                                                            <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
+                                                                class="btn btn-xs btn-light mt-3">Evaluaciones de mi equipo</a>
+                                                        @endif
+                                                    @endif
+                                                </div>
                                                 @foreach ($evaluaciones as $evaluacion)
                                                     <div class="col-md-6">
                                                         <div class="card" style="margin: ; margin-top:25px;">
                                                             <div class="card-body"
                                                                 style="position:relative; padding: 10px !important;">
-                                                                <div
-                                                                    class="text-center d-flex flex-column align-items-center">
+                                                                <div class="text-center d-flex flex-column align-items-center">
 
                                                                     <img class="img-fluid img-profile-sm"
                                                                         style="position: relative;z-index: 1;"
@@ -1008,23 +1048,23 @@
                                                                             href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}">
                                                                             Evaluar</a>
                                                                         {{-- @if ($evaluacion->empleado_evaluado->supervisor)
-                                                                        @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->supervisor->id)
-                                                                            <span
-                                                                                style="position: absolute;top: 7px;z-index: 1;right: 7px;"
-                                                                                class="badge badge-success">Eres su
-                                                                                supervisor</span>
-                                                                            <span
-                                                                                class="btn btn-sm btn-light sendInvitacion">
-                                                                                <i data-evaluacion={{ $evaluacion->evaluacion->id }}
-                                                                                    data-evaluado={{ $evaluacion->empleado_evaluado->id }}
-                                                                                    data-evaluador={{ $evaluacion->evaluador->id }}
-                                                                                    title="Solicitar reunión"
-                                                                                    class="fas fa-envelope-open-text"
-                                                                                    style="font-size:11px;"></i>
-                                                                                Reunión
-                                                                            </span>
-                                                                        @endif
-                                                                    @endif --}}
+                                                                                            @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->supervisor->id)
+                                                                                                <span
+                                                                                                    style="position: absolute;top: 7px;z-index: 1;right: 7px;"
+                                                                                                    class="badge badge-success">Eres su
+                                                                                                    supervisor</span>
+                                                                                                <span
+                                                                                                    class="btn btn-sm btn-light sendInvitacion">
+                                                                                                    <i data-evaluacion={{ $evaluacion->evaluacion->id }}
+                                                                                                        data-evaluado={{ $evaluacion->empleado_evaluado->id }}
+                                                                                                        data-evaluador={{ $evaluacion->evaluador->id }}
+                                                                                                        title="Solicitar reunión"
+                                                                                                        class="fas fa-envelope-open-text"
+                                                                                                        style="font-size:11px;"></i>
+                                                                                                    Reunión
+                                                                                                </span>
+                                                                                            @endif
+                                                                                        @endif --}}
                                                                     </div>
                                                                 </div>
                                                                 <div
@@ -1036,48 +1076,48 @@
                                                 @endforeach
                                             @endif
                                             {{-- @foreach ($evaluaciones as $evaluacion)
-                                                <small>{{ $evaluacion->empleado_evaluado->name }}
-                                                    @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->id)
-                                                        <span class="badge badge-primary">Autoevaluación</span>
-                                                    @endif
-                                                    @if ($evaluacion->empleado_evaluado->supervisor)
-                                                        @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->supervisor->id)
-                                                            <span class="badge badge-success">Supervisor</span>
-                                                            <i data-evaluacion={{ $evaluacion->evaluacion->id }}
-                                                                data-evaluado={{ $evaluacion->empleado_evaluado->id }}
-                                                                data-evaluador={{ $evaluacion->evaluador->id }}
-                                                                title="Solicitar reunión"
-                                                                class="fas fa-envelope-open-text sendInvitacion"
-                                                                style="font-size:11px;"></i>
-                                                        @endif
-                                                    @endif
-                                                </small>
-                                                <a
-                                                    href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}"><i
-                                                        class="fas fa-link" style="font-size:11px;"></i></a>
-                                                @if ($evaluacion->evaluacion->include_competencias)
-                                                    <div class="progress">
-                                                        <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                                            role="progressbar"
-                                                            style="width: {{ $evaluacion->progreso_competencias }}%;"
-                                                            aria-valuenow="{{ $evaluacion->progreso_competencias }}"
-                                                            aria-valuemin="0" aria-valuemax="100">
-                                                            {{ $evaluacion->progreso_competencias }}%
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                                @if ($evaluacion->evaluacion->include_objetivos)
-                                                    <div class="mt-2 progress">
-                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                                                            role="progressbar"
-                                                            style="width: {{ $evaluacion->progreso_objetivos }}%;"
-                                                            aria-valuenow="{{ $evaluacion->progreso_objetivos }}"
-                                                            aria-valuemin="0" aria-valuemax="100">
-                                                            {{ $evaluacion->progreso_objetivos }}%
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                            @endforeach --}}
+                                                                    <small>{{ $evaluacion->empleado_evaluado->name }}
+                                                                        @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->id)
+                                                                            <span class="badge badge-primary">Autoevaluación</span>
+                                                                        @endif
+                                                                        @if ($evaluacion->empleado_evaluado->supervisor)
+                                                                            @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->supervisor->id)
+                                                                                <span class="badge badge-success">Supervisor</span>
+                                                                                <i data-evaluacion={{ $evaluacion->evaluacion->id }}
+                                                                                    data-evaluado={{ $evaluacion->empleado_evaluado->id }}
+                                                                                    data-evaluador={{ $evaluacion->evaluador->id }}
+                                                                                    title="Solicitar reunión"
+                                                                                    class="fas fa-envelope-open-text sendInvitacion"
+                                                                                    style="font-size:11px;"></i>
+                                                                            @endif
+                                                                        @endif
+                                                                    </small>
+                                                                    <a
+                                                                        href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}"><i
+                                                                            class="fas fa-link" style="font-size:11px;"></i></a>
+                                                                    @if ($evaluacion->evaluacion->include_competencias)
+                                                                        <div class="progress">
+                                                                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                                                role="progressbar"
+                                                                                style="width: {{ $evaluacion->progreso_competencias }}%;"
+                                                                                aria-valuenow="{{ $evaluacion->progreso_competencias }}"
+                                                                                aria-valuemin="0" aria-valuemax="100">
+                                                                                {{ $evaluacion->progreso_competencias }}%
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+                                                                    @if ($evaluacion->evaluacion->include_objetivos)
+                                                                        <div class="mt-2 progress">
+                                                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                                                                role="progressbar"
+                                                                                style="width: {{ $evaluacion->progreso_objetivos }}%;"
+                                                                                aria-valuenow="{{ $evaluacion->progreso_objetivos }}"
+                                                                                aria-valuemin="0" aria-valuemax="100">
+                                                                                {{ $evaluacion->progreso_objetivos }}%
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach --}}
                                         </div>
                                     </div>
                                 </div>
@@ -1244,10 +1284,5 @@
         function ocultarValidando() {
             document.getElementById('displayAlmacenandoUniversal').style.display = 'none';
         }
-
-
-
-
-
-</script>
+    </script>
 @endsection

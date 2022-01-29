@@ -22,6 +22,8 @@
         }    
     </style>
 
+    {{ Breadcrumbs::render('timesheet-create') }}
+
 	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Llenar Horas</font> </h5>
 
 	<div class="card card-body">

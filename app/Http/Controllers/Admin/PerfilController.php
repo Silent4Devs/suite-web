@@ -61,7 +61,6 @@ class PerfilController extends Controller
 
     public function store(Request $request)
     {
-
         $perfil = PerfilEmpleado::create($request->all());
 
         return redirect()->route('admin.perfiles.index')->with('success', 'Guardado con éxito');
@@ -69,16 +68,16 @@ class PerfilController extends Controller
 
     public function edit($perfil)
     {
-
         $perfil = PerfilEmpleado::find($perfil);
 
         return view('admin.perfiles.edit', compact('perfil'));
     }
 
-    public function update(Request $request,$perfil)
+    public function update(Request $request, $perfil)
     {
         $perfil = PerfilEmpleado::find($perfil);
         $perfil->update($request->all());
+
         return redirect()->route('admin.perfiles.index')->with('success', 'Editado con éxito');
     }
 

@@ -678,40 +678,36 @@ Breadcrumbs::for('admin.visualizarorganizacion', function ($trail) {
     $trail->push('Organización');
 });
 
-
-
 Breadcrumbs::for('seguridad-create-perfil', function ($trail) {
     $trail->parent('Mi-Perfil');
-    $trail->push('Reportes', route('admin.inicio-Usuario.index').'#reportes');
+    $trail->push('Reportes', route('admin.inicio-Usuario.index') . '#reportes');
     $trail->push('Incidentes de Seguridad', route('admin.reportes-seguridad'));
 });
 Breadcrumbs::for('riesgos-create-perfil', function ($trail) {
     $trail->parent('Mi-Perfil');
-    $trail->push('Reportes', route('admin.inicio-Usuario.index').'#reportes');
+    $trail->push('Reportes', route('admin.inicio-Usuario.index') . '#reportes');
     $trail->push('Riesgos Identificados', route('admin.reportes-riesgos'));
 });
 Breadcrumbs::for('quejas-create-perfil', function ($trail) {
     $trail->parent('Mi-Perfil');
-    $trail->push('Reportes', route('admin.inicio-Usuario.index').'#reportes');
+    $trail->push('Reportes', route('admin.inicio-Usuario.index') . '#reportes');
     $trail->push('Quejas', route('admin.reportes-quejas'));
 });
 Breadcrumbs::for('denuncias-create-perfil', function ($trail) {
     $trail->parent('Mi-Perfil');
-    $trail->push('Reportes', route('admin.inicio-Usuario.index').'#reportes');
+    $trail->push('Reportes', route('admin.inicio-Usuario.index') . '#reportes');
     $trail->push('Denuncias', route('admin.reportes-denuncias'));
 });
 Breadcrumbs::for('mejoras-create-perfil', function ($trail) {
     $trail->parent('Mi-Perfil');
-    $trail->push('Reportes', route('admin.inicio-Usuario.index').'#reportes');
+    $trail->push('Reportes', route('admin.inicio-Usuario.index') . '#reportes');
     $trail->push('Mejoras', route('admin.reportes-mejoras'));
 });
 Breadcrumbs::for('sugerencias-create-perfil', function ($trail) {
     $trail->parent('Mi-Perfil');
-    $trail->push('Reportes', route('admin.inicio-Usuario.index').'#reportes');
+    $trail->push('Reportes', route('admin.inicio-Usuario.index') . '#reportes');
     $trail->push('Sugerencias', route('admin.reportes-sugerencias'));
 });
-
-
 
 Breadcrumbs::for('seguridad-create-portal', function ($trail) {
     $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
@@ -740,6 +736,31 @@ Breadcrumbs::for('mejoras-create-portal', function ($trail) {
 });
 Breadcrumbs::for('sugerencias-create-portal', function ($trail) {
     $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
-    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));;
+    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
     $trail->push('Sugerencias', route('admin.reportes-sugerencias'));
 });
+
+
+Breadcrumbs::for('timesheet-index', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Mi Timesheet');
+});
+Breadcrumbs::for('timesheet-create', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Llenar Horas');
+});
+Breadcrumbs::for('timesheet-proyectos', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Proyectos');
+});
+
+Breadcrumbs::for('timesheet-tareas-proyecto', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Proyectos', route('admin.timesheet-proyectos'));
+    $trail->push('Tareas');
+});
+Breadcrumbs::for('timesheet-tareas', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Tareas');
+});
+
