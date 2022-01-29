@@ -129,4 +129,10 @@ class ExportExcel extends Controller
 
         return response()->download($path);
     }
+    public function Roles()
+    {
+        $path = storage_path('app/public/exportExcel/users.xlsx');
+
+        return response()->download($path);
+    }
 }

@@ -9,6 +9,8 @@ use App\Models\Team;
 use App\Models\Tipoactivo;
 use Gate;
 use Illuminate\Http\Request;
+use Laracasts\Flash\Flash;
+use Symfony\Component\Console\Input\Input;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -67,10 +69,14 @@ class TipoactivoController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $tipoactivo = Tipoactivo::create($request->all());
 
-        return redirect()->route('admin.tipoactivos.index')->with('success', 'Guardado con éxito');
+    {
+       $val = $request->validate([
+            'tipo'=> 'unique:tipoactivos,tipo',
+        ]);
+
+         $tipoactivo = Tipoactivo::create($request->all());
+         return redirect()->route('admin.tipoactivos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Tipoactivo $tipoactivo)
