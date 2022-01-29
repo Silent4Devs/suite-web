@@ -194,10 +194,16 @@
                             <span class="help-block"></span>
                         </div>
 
-                        <div class="col-md-1 col-sm-1" class="btn btn-primary" data-toggle="modal" data-target="#marcaslec"
+                        <div style="margin-top:17px;height: 28px !important;margin-left: -10px !important;">
+                            <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+                            data-toggle="modal" data-target="#marcaslec" data-whatever="@mdo" data-whatever="@mdo" title="Agregar Tipo"><i
+                                class="fas fa-plus"></i></button>
+                        </div>
+
+                        {{-- <div class="col-md-1 col-sm-1" class="btn btn-primary" data-toggle="modal" data-target="#marcaslec"
                             data-whatever="@mdo" style="padding: 0; margin-top: 15px;">
                             <i class="fas fa-plus-circle iconos-crear" style="font-size:25px;!important"></i>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -218,10 +224,16 @@
                             <span class="help-block"></span>
                         </div>
 
-                        <div class="col-md-1 col-sm-1" class="btn btn-primary" data-toggle="modal" data-target="#modelolec"
-                            data-whatever="@mdo" style="padding: 0; margin-top: 15px;">
-                            <i class="fas fa-plus-circle iconos-crear" style="font-size:25px;!important"></i>
+                        <div style="margin-top:17px;height: 28px !important;margin-left: -10px !important;">
+                            <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+                            data-toggle="modal" data-target="#modelolec" data-whatever="@mdo" title="Agregar Tipo"><i
+                                class="fas fa-plus"></i></button>
                         </div>
+
+                        {{-- <div class="col-md-1 col-sm-1" data-toggle="modal" data-target="#modelolec"
+                            data-whatever="@mdo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;">
+                            <i class="fas fa-plus-circle iconos-crear" style="font-size:25px;!important"></i>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -251,39 +263,40 @@
                 </div>
 
 
-                <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="fecha_alta"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de alta </label>
-                    <input class="form-control" type="date" id="fecha_alta" value="{{ date('Y-m-d') }}"
-                        name="fecha_alta">
-                    @if ($errors->has('fecha_alta'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fecha_alta') }}
-                        </div>
-                    @endif
-                </div>
+                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                        <label for="fecha_alta"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de alta </label>
+                        <input class="form-control" type="date" id="fecha_alta" value="{{ date('Y-m-d') }}"
+                            name="fecha_alta">
+                        @if ($errors->has('fecha_alta'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('fecha_alta') }}
+                            </div>
+                        @endif
+                    </div>
 
 
 
-                <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="fecha_compra"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de compra </label>
-                    <input class="form-control" type="date" id="fecha_compra" name="fecha_compra">
-                    @if ($errors->has('fecha_compra'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fecha_compra') }}
-                        </div>
-                    @endif
-                </div>
+                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                        <label for="fecha_compra"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de compra </label>
+                        <input class="form-control" type="date" id="fecha_compra" name="fecha_compra">
+                        @if ($errors->has('fecha_compra'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('fecha_compra') }}
+                            </div>
+                        @endif
+                    </div>
 
 
-                <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="fecha_fin"> <i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin de garantía</label>
-                    <input class="form-control" type="date" id="fecha_fin" name="fecha_fin">
-                    @if ($errors->has('fecha_fin'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fecha_fin') }}
-                        </div>
-                    @endif
-                </div>
+                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                        <label for="fecha_fin"> <i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin de garantía</label>
+                        <input class="form-control" type="date" id="fecha_fin" name="fecha_fin">
+                        @if ($errors->has('fecha_fin'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('fecha_fin') }}
+                            </div>
+                        @endif
+                    </div>
+
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
                     <label for="fecha_baja"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de baja</label>
@@ -312,10 +325,10 @@
                 </div>
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="documento"><i class="fas fa-folder-open iconos-crear"></i>Cargar Documento</label>
+                    <label  class="required" for="documento"><i class="fas fa-folder-open iconos-crear"></i>Cargar Documento</label>
                     <form method="POST" action="{{ route('admin.activos.store') }}" accept-charset="UTF-8" enctype="multipart/form-data">
                     <input type="file" name="documento" multiple class="form-control" id="documento"
-                        accept="application/pdf" value="{{ old('files[]') }}">
+                        accept="application/pdf" value="{{ old('files[]') }}"  required>
                 </div>
 
 

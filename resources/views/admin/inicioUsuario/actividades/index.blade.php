@@ -25,7 +25,7 @@
                                 @endphp
                                 <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"></i></a>
                                 <a href="plantTrabajoBase/{{ $task->name }}" target="_blank"><i
-                                        class="fas fa-eye"></i></a>
+                                        class="fas fa-eye" style="font-size:12pt;"></i></a>
                                 @if ($task->status == 'STATUS_DONE' or $task->status == 'STATUS_FAILED')
                                     <button class="btn_archivar" title="Archivar" data-toggle="modal"
                                         data-target="#alert_activ{{ $task->id }}">
@@ -189,13 +189,13 @@
                                         $ruta = '/admin/planes-de-accion/' . $task->parent_id;
                                     }
                                 @endphp
-                                <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"></i></a>
+                                <a href="{{ asset($ruta) }}"><i class="far fas fa-stream" style="font-size:12pt"></i></a>
                                 <a href="plantTrabajoBase/{{ $task->name }}" target="_blank"><i
-                                        class="fas fa-eye"></i></a>
-                                @if ($task->status == 'STATUS_DONE' or $task->status == 'STATUS_FAILED')
+                                        class="fas fa-eye" style="font-size:12pt"></i></a>
+                                @if ($task->status == 'STATUS_DONE' or $task->status == 'STATUS_SUSPENDED')
                                     <button class="btn_archivar" title="Archivar" data-toggle="modal"
                                         data-target="#alert_activ{{ $task->id }}">
-                                        <i class="fas fa-archive"></i>
+                                        <i class="fas fa-archive" style="font-size:12pt" ></i>
                                     </button>
                                 @endif
                             </td>

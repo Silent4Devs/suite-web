@@ -5,7 +5,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.tipoactivos.store") }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
+            <div class="form-group" >
                 <label class="required" for="tipo"><i class="fas fa-layer-group iconos-crear"></i>Categoría</label>
                 <input class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" type="text" name="tipo" id="tipo" value="{{ old('tipo', '') }}" required>
                 @if($errors->has('tipo'))
