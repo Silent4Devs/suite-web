@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyPoliticaSgsiRequest;
 use App\Http\Requests\StorePoliticaSgsiRequest;
 use App\Http\Requests\UpdatePoliticaSgsiRequest;
 use App\Models\Empleado;
-use App\Models\organizacion;
+use App\Models\Organizacion;
 use App\Models\PoliticaSgsi;
 use App\Models\Team;
 use Gate;
