@@ -1,43 +1,45 @@
 @extends('layouts.admin')
 @section('content')
 
-<style>
+    <style>
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
 
-    .btn_cargar{
-        border-radius: 100px !important;
-        border: 1px solid #345183;
-        color: #345183;
-        text-align: center;
-        padding: 0;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-    .btn_cargar:hover{
-        color: #fff;
-        background:#345183 ;
-    }
-    .btn_cargar i{
-        font-size: 15pt;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .agregar{
-        margin-right:15px;
-    }
+        .btn_cargar:hover {
+            color: #fff;
+            background: #345183;
+        }
 
-</style>
+        .btn_cargar i {
+            font-size: 15pt;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .agregar {
+            margin-right: 15px;
+        }
+
+    </style>
     @can('role_create')
 
 
-        <h5 class="col-12 titulo_general_funcion">Roles</h5> 
+        <h5 class="col-12 titulo_general_funcion">Roles</h5>
         <div class="mt-5 card">
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Roles</strong></h3>
@@ -173,25 +175,27 @@
                 }
                 };
                 let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
+                text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-roles') }}",
                 action: function(e, dt, node, config) {
-                    $('#').modal('show');
+                let {url} = config;
+                window.location.href = url;
                 }
-            };
-            let btnImport = {
-                text: '<i  class="fas fa-file-upload"></i>',
+                };
+                let btnImport = {
+                text: '<i class="fas fa-file-upload"></i>',
                 titleAttr: 'Importar datos',
                 className: "btn btn_cargar",
                 action: function(e, dt, node, config) {
-                    $('#xlsxImportModal').modal('show');
+                $('#xlsxImportModal').modal('show');
                 }
-            };
+                };
 
-            dtButtons.push(btnAgregar);
-            dtButtons.push(btnExport);
-            dtButtons.push(btnImport);
+                dtButtons.push(btnAgregar);
+                dtButtons.push(btnExport);
+                dtButtons.push(btnImport);
 
             @endcan
             @can('role_delete')
