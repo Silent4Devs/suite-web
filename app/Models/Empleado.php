@@ -487,4 +487,9 @@ class Empleado extends Model
     {
         return $this->hasMany(ConfigurarSoporteModel::class, 'id_elaboro');
     }
+
+    public function contactos()
+    {
+        return $this->hasMany('App\Models\PuestoContactos', 'id_contacto')->orderBy('id');
+    }
 }
