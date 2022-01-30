@@ -13,5 +13,11 @@ class TimesheetProyecto extends Model
 
     protected $fillable = [
         'proyecto',
+        'area_id',
     ];
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'area_id');
+    }
 }

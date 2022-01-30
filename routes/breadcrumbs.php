@@ -739,3 +739,28 @@ Breadcrumbs::for('sugerencias-create-portal', function ($trail) {
     $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
     $trail->push('Sugerencias', route('admin.reportes-sugerencias'));
 });
+
+
+Breadcrumbs::for('timesheet-index', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Mi Timesheet');
+});
+Breadcrumbs::for('timesheet-create', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Llenar Horas');
+});
+Breadcrumbs::for('timesheet-proyectos', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Proyectos');
+});
+
+Breadcrumbs::for('timesheet-tareas-proyecto', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Proyectos', route('admin.timesheet-proyectos'));
+    $trail->push('Tareas');
+});
+Breadcrumbs::for('timesheet-tareas', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Tareas');
+});
+

@@ -4,42 +4,42 @@
 
     <style>
         /* .img-size {
-            height: 450px;
-            width: 700px;
-            background-size: cover;
-            overflow: hidden;
-        }
+                height: 450px;
+                width: 700px;
+                background-size: cover;
+                overflow: hidden;
+            }
 
-        .modal-content {
-            width: 700px;
-            border: none;
-        }
+            .modal-content {
+                width: 700px;
+                border: none;
+            }
 
-        .modal-body {
-            padding: 0;
-        }
+            .modal-body {
+                padding: 0;
+            }
 
-        .carousel-control-prev-icon {
-            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-            width: 30px;
-            height: 48px;
-        }
+            .carousel-control-prev-icon {
+                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+                width: 30px;
+                height: 48px;
+            }
 
-        .carousel-control-next-icon {
-            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-            width: 30px;
-            height: 48px;
-        }
+            .carousel-control-next-icon {
+                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+                width: 30px;
+                height: 48px;
+            }
 
-        .carousel-control-next {
-            top: 100px;
-            height: 10px;
-        }
+            .carousel-control-next {
+                top: 100px;
+                height: 10px;
+            }
 
-        .carousel-control-prev {
-            height: 40px;
-            top: 80px;
-        } */
+            .carousel-control-prev {
+                height: 40px;
+                top: 80px;
+            } */
 
         .btn_cargar {
             border-radius: 100px !important;
@@ -251,8 +251,12 @@
                 text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-matriz_requisitos_legales') }}",
                 action: function(e, dt, node, config) {
-                $('#').modal('show');
+                let {
+                url
+                } = config;
+                window.location.href = url;
                 }
                 };
                 let btnImport = {
@@ -362,18 +366,18 @@
                                             <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                        <li
-                                                        data-target='#carouselExampleIndicators${row.id}'
-                                                        data-slide-to='${idx}'
-                                                        ></li>`
+                                                            <li
+                                                            data-target='#carouselExampleIndicators${row.id}'
+                                                            data-slide-to='${idx}'
+                                                            ></li>`
                                                     })}
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                        <div class='carousel-item ${idx==0?"active":""}'>
-                                                            <iframe seamless class='img-size' src='{{ asset('storage/matriz_evidencias') }}/${archivo.evidencia}'></iframe>
-                                                        </div>`
+                                                            <div class='carousel-item ${idx==0?"active":""}'>
+                                                                <iframe seamless class='img-size' src='{{ asset('storage/matriz_evidencias') }}/${archivo.evidencia}'></iframe>
+                                                            </div>`
                                                     })}
 
                                             </div>
@@ -391,29 +395,29 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                            ${archivos.length==0?`
-                                                <a
-                                                    class='carousel-control-prev'
-                                                    href='#carouselExampleIndicators${row.id}'
-                                                    role='button'
-                                                    data-slide='prev'
-                                                    >
-                                                    <span class='carousel-control-prev-icon'
-                                                        aria-hidden='true'
-                                                        ></span>
-                                                    <span class='sr-only'>Previous</span>
-                                                </a>
-                                                <a
-                                                    class='carousel-control-next'
-                                                    href='#carouselExampleIndicators${row.id}'
-                                                    role='button'
-                                                    data-slide='next'
-                                                    >
-                                                    <span
-                                                        class='carousel-control-next-icon'
-                                                        aria-hidden='true'
-                                                        ></span>
-                                                    <span class='sr-only'>Next</span>
-                                                </a>`:""}
+                                                    <a
+                                                        class='carousel-control-prev'
+                                                        href='#carouselExampleIndicators${row.id}'
+                                                        role='button'
+                                                        data-slide='prev'
+                                                        >
+                                                        <span class='carousel-control-prev-icon'
+                                                            aria-hidden='true'
+                                                            ></span>
+                                                        <span class='sr-only'>Previous</span>
+                                                    </a>
+                                                    <a
+                                                        class='carousel-control-next'
+                                                        href='#carouselExampleIndicators${row.id}'
+                                                        role='button'
+                                                        data-slide='next'
+                                                        >
+                                                        <span
+                                                            class='carousel-control-next-icon'
+                                                            aria-hidden='true'
+                                                            ></span>
+                                                        <span class='sr-only'>Next</span>
+                                                    </a>`:""}
                                         </div>
                                         </div>
                                     </div>
@@ -467,23 +471,23 @@
                                 <a class="btn btn-sm" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm" href="${urlVerMatrizRequisitoLegal}" title="Visualizar Matríz de Requisito Legal"><i class="fas fa-eye"></i></a>
                                 ${row.planes ? `
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-stream"></i>
-                                            </a>
+                                            <div class="dropdown">
+                                                <a class="btn btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-stream"></i>
+                                                </a>
 
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <a class="dropdown-item" href="${urlCrearPlanAccion}" title="Crear Plan de Acción para: ${row.nombrerequisito}"><i class="mr-1 fas fa-stream"></i>Crear y vincular plan de acción</a>
-                                                    <div class="dropdown-divider"></div>
-                                                <span class="ml-4 badge badge-dark">Planes de acción asociados</span>
-                                               ${row.planes.map(plan => {
-                                                   return `
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item" href="${urlCrearPlanAccion}" title="Crear Plan de Acción para: ${row.nombrerequisito}"><i class="mr-1 fas fa-stream"></i>Crear y vincular plan de acción</a>
+                                                        <div class="dropdown-divider"></div>
+                                                    <span class="ml-4 badge badge-dark">Planes de acción asociados</span>
+                                                   ${row.planes.map(plan => {
+                                                       return `
                                                 <a class="dropdown-item" href="/admin/planes-de-accion/${plan.id}"><i class="mr-1 fas fa-search"></i>${plan.parent} ${plan.tasks?.find(t=>Number(t.level) == 0) != undefined ? `<span class="badge badge-primary">${plan.tasks?.find(t=>Number(t.level) == 0).progress} %</span>` : `<span class="badge badge-primary">0 %</span>`}<a>
                                                `;
-                                               })}
+                                                   })}
+                                                </div>
                                             </div>
-                                        </div>
-                                        `:''}
+                                            `:''}
                                  <button class="btn btn-sm" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i></button>
                             </div>
                              `;

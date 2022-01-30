@@ -26,7 +26,7 @@
                             Categoría
                         </th>
                         <th>
-                            Subategoría
+                            Subcategoría
                         </th>
                         <th>
                             Opciones

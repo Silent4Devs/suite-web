@@ -237,7 +237,7 @@
                 <input class="form-check-input" name="trabactualmente" type="checkbox" id="trabactualmente"
                     x-on:change="open = !open">
                 <label class="form-check-label" for="trabactualmente">
-                    Trabajo actualmente
+                    Trabajo actual
                 </label>
             </div>
         </div>

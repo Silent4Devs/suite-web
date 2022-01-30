@@ -1,80 +1,14 @@
 @extends('layouts.admin')
 @section('content')
-    
-    <style type="text/css">
-        .aprobada{
-            padding: 3px;
-            background-color: #61CB5C;
-            color: #fff;
-            border-radius: 4px;
-        }
-        .rechazada{
-            padding: 3px;
-            background-color: #EA7777;
-            color: #fff;
-            border-radius: 4px;
-        }
-        .pendiente{
-            padding: 3px;
-            background-color: #F48C16;
-            color: #fff;
-            border-radius: 4px;
-        }
-    </style>
-
-
-     {{ Breadcrumbs::render('timesheet-index') }}
 	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet </h5>
+    {{ Breadcrumbs::render('timesheet-tareas-proyecto') }}
+
+	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Tareas</font></h5>
 
 	<div class="card card-body">
 		<div class="row">
-			
-	        <div class="datatable-fix w-100">
-	            <table id="datatable_timesheet" class="table w-100">
-	                <thead class="w-100">
-	                    <tr>
-	                        <th>Fin de semana </th>
-	                        <th>Empleado</th>
-	                        <th>Responsable</th>
-                            <th>Aprobación</th>
-	                        {{-- <th>opciones</th> --}}
-	                    </tr>
-	                </thead>
 
-	                <tbody>
-                        @foreach($times as $time)
-    	                	<tr>
-    	                        <td>
-    	                            {{ $time->fecha_dia }} 
-    	                        </td>
-    	                        <td>
-    	                            {{ $time->empleado->name }}
-    	                        </td>
-    	                        <td>
-                                    {{ $time->aprobador->name }}
-    	                        </td>
-    	                        <td>
-                                    @if($time->aprobado)
-                                        <span class="aprobada">Aprobada</span>
-                                    @endif
-
-                                    @if($time->rechazado)
-                                        <span class="rechazada">Rechazada</span>
-                                    @endif
-
-                                    @if(($time->rechazado == false) && ($time->aprobado == false))
-                                        <span class="pendiente">Pendiente</span>
-                                    @endif
-    	                        </td>
-    	                        {{-- <td>
-    	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" class="btn">ver</a>
-    							</td>	 --}}                    
-    						</tr>
-                        @endforeach
-	                </tbody>
-	            </table>
-	        </div>
+            @livewire('timesheet.tabla-tareas-timesheet', ['proyecto_id'=>$proyecto_id, 'origen'=>'tareas-proyectos'])
 
 		</div>
 	</div>
@@ -173,7 +107,7 @@
                             [0,'desc']
                         ]
             };
-            let table = $('#datatable_timesheet').DataTable(dtOverrideGlobals);
+            let table = $('#datatable_timesheet_tareas').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();
@@ -189,5 +123,9 @@
         });
     </script>
 
-
+    <script type="text/javascript">
+        $('.select2').select2({
+            'theme' : 'bootstrap4',
+        });
+    </script>
 @endsection
