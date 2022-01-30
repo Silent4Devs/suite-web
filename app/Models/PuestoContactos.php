@@ -32,5 +32,4 @@ class PuestoContactos extends Model
     {
         return $this->belongsTo(Empleado::class, 'id_contacto', 'id')->with('area');
     }
-
 }

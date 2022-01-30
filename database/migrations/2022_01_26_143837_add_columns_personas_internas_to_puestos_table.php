@@ -16,7 +16,6 @@ class AddColumnsPersonasInternasToPuestosTable extends Migration
         Schema::table('puestos', function (Blueprint $table) {
             $table->string('personas_internas')->nullable();
             $table->string('personas_externas')->nullable();
-
         });
     }
 

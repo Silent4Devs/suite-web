@@ -183,7 +183,7 @@ class ConsultaPerfilComponent extends Component
 
     public function mostrarPuestos($puestoID)
     {
-        $this->puestoModel = Puesto::with([ 'contactos','area', 'certificados', 'language' =>function ($q) {
+        $this->puestoModel = Puesto::with(['contactos', 'area', 'certificados', 'language' =>function ($q) {
             $q->with('language');
         }])->find($puestoID);
         $this->emit('tagify');
