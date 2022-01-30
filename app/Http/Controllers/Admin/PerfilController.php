@@ -81,6 +81,13 @@ class PerfilController extends Controller
         return redirect()->route('admin.perfiles.index')->with('success', 'Editado con éxito');
     }
 
+    public function show($perfil)
+    {
+        $perfil = PerfilEmpleado::find($perfil);
+
+        return view('admin.perfiles.show', compact('perfil'));
+    }
+
     public function destroy($perfil)
     {
         $perfil = PerfilEmpleado::find($perfil);

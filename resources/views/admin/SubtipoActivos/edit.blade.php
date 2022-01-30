@@ -7,6 +7,7 @@
             @method('PUT')
             @csrf
 
+        <div class="row">
             <div class="form-group col-sm-6">
                 <i class="fas fa-layer-group iconos-crear"></i>{!! Form::label('categoria_id', 'Categoria:') !!}
                 <select class="custom-select" id="categoria_id" name="categoria_id">
@@ -31,12 +32,13 @@
                     </div>
                 @endif
             </div>
-            <div class="form-group">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
+        </div>
+        <div class="form-group col-12 text-right" style="margin-left:15px;" >
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+            <button class="btn btn-danger" type="submit">
+                {{ trans('global.save') }}
+            </button>
+        </div>
         </form>
     </div>
 </div>
