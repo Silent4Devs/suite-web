@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Area;
-use App\Models\Team;
-use App\Models\Puesto;
-use App\Models\Empleado;
-use App\Models\Language;
-use Illuminate\Http\Request;
-use App\Models\RH\Competencia;
-use App\Models\PuestoContactos;
-use App\Models\PuestosCertificado;
-use App\Models\HerramientasPuestos;
 use App\Http\Controllers\Controller;
-use App\Models\PuestoResponsabilidade;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\StorePuestoRequest;
-use App\Http\Requests\UpdatePuestoRequest;
-use App\Models\PuestoIdiomaPorcentajePivot;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyPuestoRequest;
+use App\Http\Requests\StorePuestoRequest;
+use App\Http\Requests\UpdatePuestoRequest;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\HerramientasPuestos;
+use App\Models\Language;
+use App\Models\Puesto;
+use App\Models\PuestoContactos;
+use App\Models\PuestoIdiomaPorcentajePivot;
+use App\Models\PuestoResponsabilidade;
+use App\Models\PuestosCertificado;
+use App\Models\RH\Competencia;
+use App\Models\Team;
+use Gate;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class PuestosController extends Controller
 {
@@ -161,12 +161,12 @@ class PuestosController extends Controller
         $responsabilidades = PuestoResponsabilidade::get();
         $certificados = PuestosCertificado::get();
         $puestos = Puesto::get();
-        $herramientas=HerramientasPuestos::get();
-        $contactos=PuestoContactos::get();
+        $herramientas = HerramientasPuestos::get();
+        $contactos = PuestoContactos::get();
         $empleados = Empleado::get();
         // dd($idis);
 
-        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puestos','herramientas','contactos','empleados'));
+        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puestos', 'herramientas', 'contactos', 'empleados'));
     }
 
     public function store(StorePuestoRequest $request)
@@ -230,12 +230,12 @@ class PuestosController extends Controller
         $idis = Language::all();
         $responsabilidades = PuestoResponsabilidade::get();
         $certificados = PuestosCertificado::get();
-        $herramientas=HerramientasPuestos::get();
-        $contactos=PuestoContactos::get();
+        $herramientas = HerramientasPuestos::get();
+        $contactos = PuestoContactos::get();
         $empleados = Empleado::get();
-        $language =PuestoIdiomaPorcentajePivot::get();
+        $language = PuestoIdiomaPorcentajePivot::get();
 
-        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados','herramientas','contactos','empleados','language'));
+        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)
@@ -264,13 +264,13 @@ class PuestosController extends Controller
         $competencias = Competencia::get();
         $responsabilidades = PuestoResponsabilidade::get();
         $certificados = PuestosCertificado::get();
-        $idiomas =PuestoIdiomaPorcentajePivot::where('id_puesto','=',$puesto->id)->get();
+        $idiomas = PuestoIdiomaPorcentajePivot::where('id_puesto', '=', $puesto->id)->get();
         $herramientas = HerramientasPuestos::get();
-        $contactos=PuestoContactos::get();
-        $empleados =Empleado::get();
-        $areas=Area::get();
+        $contactos = PuestoContactos::get();
+        $empleados = Empleado::get();
+        $areas = Area::get();
 
-        return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados','idiomas','herramientas','contactos','empleados','areas'));
+        return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas'));
     }
 
     public function destroy(Puesto $puesto)
@@ -331,8 +331,8 @@ class PuestosController extends Controller
     //     }
     // }
 
-    public function saveOrUpdateLanguage($languajes, $puesto){
-
+    public function saveOrUpdateLanguage($languajes, $puesto)
+    {
         if (!is_null($languajes)) {
             foreach ($languajes as $languaje) {
                 // dd($languaje);
@@ -354,7 +354,6 @@ class PuestosController extends Controller
                 }
             }
         }
-
     }
 
     public function deleteLanguage(Request $request, $language)

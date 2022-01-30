@@ -81,7 +81,6 @@ class Puesto extends Model
         return $this->belongsTo(Empleado::class, 'id_reporta', 'id')->with('area');
     }
 
-
     // public function empleado()
     // {
     //     return $this->belongsTo(Empleado::class, 'id_contacto')->with('area');
@@ -128,5 +127,4 @@ class Puesto extends Model
     {
         return $this->hasMany('App\Models\PuestoContactos', 'puesto_id')->orderBy('id');
     }
-
 }

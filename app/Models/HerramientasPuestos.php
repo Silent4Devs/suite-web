@@ -11,7 +11,6 @@ class HerramientasPuestos extends Model
 
     protected $table = 'herramientas_puesto';
 
-
     protected $fillable = [
         'nombre_herramienta',
         'descripcion_herramienta',

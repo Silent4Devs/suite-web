@@ -17,7 +17,6 @@ class DropCertificacionesHorarioInicioToPuestosTable extends Migration
             $table->dropColumn('horario_inicio');
             $table->dropColumn('horario_termino');
             $table->dropColumn('certificaciones');
-
         });
     }
 
