@@ -59,19 +59,30 @@
     </div>
     <div class="row mb-4 align-items-center">
         <div class="pr-0" x-bind:class="show?'col-12':'col-10'" style="text-align:right;">
+
             <span class="mr-2" x-bind:class="!show?'menu-active':''" title="Visualizar Tarjetas"
                 style="font-size: 1.1rem;cursor: pointer;" x-on:click="show=false"><i class="fas fa-th"></i></span>
+
+
             <span class="mr-2" style="font-size: 1.1rem;cursor: pointer;" x-bind:class="show?'menu-active':''"
                 x-on:click="show=true" title="Visualizar Tabla"><i class="fas fa-th-list"></i></span>
+
+
             <span x-show="!show" x-data="{archivado:false}">
-                <span id="btnArchivo" data-url="{{ route('admin.recursos.obtenerCapacitacionesArchivadas') }}"
+                <span id="btnArchivo" class="mr-2" style="font-size: 1.1rem;cursor: pointer;" title="Archivo"
+                x-show="!archivado" x-on:click="archivado=true" x-transition ><a href="{{ asset('admin/inicioUsuario/capacitaciones/archivo') }}" style="color: #7c7777;text-decoration: none;"><i class="fas fa-archive"></i></a></span>
+
+                {{-- <span id="btnArchivo" data-url="{{ route('admin.recursos.obtenerCapacitacionesArchivadas') }}"
                     class="mr-2" style="font-size: 1.1rem;cursor: pointer;" title="Archivo"
                     x-show="!archivado" x-on:click="archivado=true" x-transition><i class="fas fa-archive"></i></span>
+
                 <span id="btnPrincipales" data-url="{{ route('admin.recursos.obtenerCapacitacionesPrincipales') }}"
                     class="mr-2" style="font-size: 1.1rem;cursor: pointer;" title="Principales"
                     x-show="archivado" x-on:click="archivado=false" x-transition><i
-                        class="fas fa-chalkboard-teacher"></i></span>
+                        class="fas fa-chalkboard-teacher"></i></span> --}}
             </span>
+
+
         </div>
         <div class="pl-0" x-bind:class="!show?'col-2':''">
             <select class="form-control" id="selectTipoCapacitacion" x-show="!show">
@@ -251,23 +262,23 @@
 
 
             ];
-            let btnArchivo = {
-                text: '<i class="pl-2 pr-3 fas fa-archive"></i> Archivo',
-                titleAttr: 'Archivo',
-                url: "{{ asset('admin/inicioUsuario/capacitaciones/archivo') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
+            // let btnArchivo = {
+            //     text: '<i class="pl-2 pr-3 fas fa-archive"></i> Archivo',
+            //     titleAttr: 'Archivo',
+            //     url: "{{ asset('admin/inicioUsuario/capacitaciones/archivo') }}",
+            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+            //     action: function(e, dt, node, config) {
+            //         let {
+            //             url
+            //         } = config;
+            //         window.location.href = url;
+            //     }
+            // };
 
-            dtButtons.push(btnArchivo);
-            $("#tabla_usuario_capacitaciones").DataTable({
-                buttons: dtButtons,
-            });
+            // dtButtons.push(btnArchivo);
+            // $("#tabla_usuario_capacitaciones").DataTable({
+            //     buttons: dtButtons,
+            // });
 
 
             // window.archivarCapacitacion = function(id_empleado, recurso_id, url){

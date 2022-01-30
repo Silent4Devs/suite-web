@@ -20,7 +20,7 @@
             bottom: 0;
         }
         .form-group{
-            color: rgb(188, 180, 224) !important;
+            color: rgb(255, 255, 255) !important;
         }
         .iconos-crear{
             color: rgb(255, 255, 255) ;

@@ -180,8 +180,12 @@
                 text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
+                url:"{{ route('descarga-grupo_area') }}",
                 action: function(e, dt, node, config) {
-                $('#').modal('show');
+                let {
+                url
+                } = config;
+                window.location.href = url;
                 }
                 };
                 let btnImport = {
@@ -306,11 +310,11 @@
                     title: '¿Desea eliminar este grupo?',
                     html: `<div>
                             ${areasRelacionadas.length > 0 ? `<p>El grupo que desea eliminar está vinculado con las siguientes áreas</p>
-                                                                                        <ul class="list-group list-group-horizontal justify-content-center">
-                                                                                            ${areasRelacionadas.map(area=>{
-                                                                                                return `<li class="list-group-item">${area.area}</li>`;
-                                                                                            })}
-                                                                                        </ul>`:`<p>No hay relación con ningún área</p>`}
+                                                                                            <ul class="list-group list-group-horizontal justify-content-center">
+                                                                                                ${areasRelacionadas.map(area=>{
+                                                                                                    return `<li class="list-group-item">${area.area}</li>`;
+                                                                                                })}
+                                                                                            </ul>`:`<p>No hay relación con ningún área</p>`}
                         </div>`,
                     icon: 'warning',
                     showCancelButton: true,

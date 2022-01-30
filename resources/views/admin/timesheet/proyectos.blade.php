@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 	
+    {{ Breadcrumbs::render('timesheet-proyectos') }}
+
 	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Proyectos</font> </h5>
 
 	<div class="card card-body">
