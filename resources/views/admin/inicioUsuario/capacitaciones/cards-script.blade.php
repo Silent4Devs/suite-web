@@ -49,7 +49,7 @@
                                     <div class="col-12" id="contenedorInformacionGeneral">
                                         <p class="m-0" style="text-transform: capitalize; font-weight: bold">
                                             ${modelo.cursoscapacitaciones}
-                                        </p>    
+                                        </p>
                                         <p class="m-0" style="font-size: 12px">Tipo: ${modelo.tipo}</p>
                                         <p class="m-0" style="font-size: 12px">Categoría: ${modelo.categoria_capacitacion.nombre}</p>
                                         <p class="m-0" style="font-size: 12px">Instructor: ${modelo.instructor}</p>
@@ -57,7 +57,7 @@
                 if (capacitacionAceptada == 'null') {
                     html += `
                         <p class="m-0" style="font-size: 12px">
-                            <span id="timer" style="font-weight: bold;">${timer(modelo.fecha_limite_ymd)?timer(modelo.fecha_inicio_ymd):''}</span>    
+                            <span id="timer" style="font-weight: bold;">${timer(modelo.fecha_limite_ymd)?timer(modelo.fecha_inicio_ymd):''}</span>
                         </p>
                     `;
                 }
@@ -69,7 +69,7 @@
                                     <div class="col-12">
                                         <p class="m-0">
                                         <strong>Descripción</strong>
-                                        </p>    
+                                        </p>
                                         <p class="m-0" style="overflow: auto;max-height: 95px;">${modelo.descripcion?modelo.descripcion:'Sin descripción'}</p>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                             </button>
                         </div>
                     </div>
-                  
+
                     <div id="arrow" data-popper-arrow></div>
                 </div>
                 `;
@@ -582,7 +582,7 @@
             let html = `
             <div class="col-12 text-center" id="sinCapacitaciones">
                     <p><strong style="text-transform: capitalize">${mensaje}</strong></p>
-                    <img class="img-fluid" src="{{ asset('img/empleados_no_encontrados.svg') }}" alt="sin participante" width="300">    
+                    <img class="img-fluid" src="{{ asset('img/empleados_no_encontrados.svg') }}" alt="sin participante" width="300">
             </div>
             `;
             return html;
@@ -640,8 +640,8 @@
                     Te quedan ${days} d ${hours} h y ${minutes} m con ${seconds} s para confirmar tu asistencia
                     `;
                 // days + "d" + hours + "h"
-                // + minutes + "m " + seconds + "s "; 
-                // If the count down is over, write some text 
+                // + minutes + "m " + seconds + "s ";
+                // If the count down is over, write some text
                 if (distance < 0) {
                     clearInterval(x);
                     document.getElementById("timer").innerHTML =
