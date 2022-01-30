@@ -2,13 +2,25 @@
     <div class="row">
         <div class="col-6">
             <h3>Información Actual de la Capacitación:</h3>
-            <p><strong>Titulo: </strong><span id="titulo_invitaciones" style="text-transform: capitalize"></span></p>
-            <p><strong>Categoría: </strong><span id="categoria_invitaciones" style="text-transform: capitalize"></span>
+            <p>
+                <strong>Titulo: </strong>
+                <span id="titulo_invitaciones" style="text-transform: capitalize"></span>
             </p>
-            <p><strong>Tipo: </strong><span id="tipo_invitaciones" style="text-transform: capitalize"></span></p>
-            <p><strong>Modalidad: </strong><span id="modalidad_invitaciones" style="text-transform: capitalize"></span>
+            <p>
+                <strong>Categoría: </strong>
+                <span id="categoria_invitaciones" style="text-transform: capitalize"></span>
             </p>
-            <p><strong>Ubicación: </strong><span id="ubicacion_invitaciones" style="text-transform: capitalize"></span>
+            <p>
+                <strong>Tipo: </strong>
+                <span id="tipo_invitaciones" style="text-transform: capitalize"></span>
+            </p>
+            <p>
+                <strong>Modalidad: </strong>
+                <span id="modalidad_invitaciones" style="text-transform: capitalize"></span>
+            </p>
+            <p>
+                <strong>Ubicación: </strong>
+                <span id="ubicacion_invitaciones" style="text-transform: capitalize"></span>
             </p>
             <p>
                 <strong>Fecha: </strong>
@@ -17,10 +29,14 @@
                 al
                 <span id="fecha_fin_invitaciones" style="text-transform: capitalize"></span>
             </p>
-            <p><strong>Instructor: </strong><span id="instructor_invitaciones"
-                    style="text-transform: capitalize"></span></p>
-            <p><strong>Descripción: </strong><span id="descripcion_invitaciones"
-                    style="text-transform: capitalize"></span></p>
+            <p>
+                <strong>Instructor: </strong>
+                <span id="instructor_invitaciones" style="text-transform: capitalize"></span>
+            </p>
+            <p>
+                <strong>Descripción: </strong>
+                <span id="descripcion_invitaciones" style="text-transform: capitalize"></span>
+            </p>
         </div>
         <div class="col-6" id="participantes_invitaciones" style="max-height: 500px;overflow: auto;"></div>
         <div class="col-12">
@@ -82,7 +98,7 @@
                         <label for="enviarInvitacionAhora">
                             <i class="fas fa-calendar-day mr-1 iconos-crear"></i>
                             Programar Fecha de Envío de Invitación
-                        </label>  
+                        </label>
                         <input class="form-control" type="datetime-local" id="fechaProgramarEnvioInvitacion" name="fecha_envio_invitacion">
                         <small class="text-muted">Debe seleccionar una fecha anterior como mínimo de 5 días a la fecha limite de la capacitación</small>
                         <span class="fecha_envio_invitacion_error text-danger errores"></span>

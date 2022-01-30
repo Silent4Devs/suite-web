@@ -203,9 +203,12 @@
                         @endif
                         <i class="fas fa-check"></i>Evaluaciones
                     </a> --}}
+
                     <a href="#" id="b_capacitaciones" onclick="almacenarMenuEnLocalStorage('capacitaciones')"
                         data-tabs="s_capacitaciones">
-                        <span class="indicador_numero" id="contadorDeCapacitaciones"></span>
+                        @if ($contador_recursos >=1)
+                            <span class="indicador_numero" id="contadorDeCapacitaciones"></span>
+                        @endif
                         <i class="bi bi-mortarboard"></i>Capacitaciones
                     </a>
                     <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')" data-tabs="s_reportes">

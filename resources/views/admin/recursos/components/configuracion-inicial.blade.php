@@ -212,9 +212,11 @@
 
         function inicializarInformacionGeneral() {
             tituloInvitaciones.innerHTML = nombreCapacitacion.value;
+            // console.log(tituloInvitaciones);
             tituloCapacitacionLecciones.innerHTML = nombreCapacitacion.value;
             categoriaInvitaciones.innerHTML = categoria.options[categoria.selectedIndex].getAttribute(
                 'data-nombre');
+
             tipoInvitaciones.innerHTML = selectTipo.value;
             modalidadInvitaciones.innerHTML = selectModalidad.value;
             ubicacionInvitaciones.innerHTML = ubicacionConfInicial.value;
