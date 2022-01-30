@@ -51,6 +51,8 @@ class Puesto extends Model
         'fecha_puesto',
         'edad',
         'horario',
+        'personas_internas',
+        'personas_externas',
 
     ];
 
@@ -74,9 +76,20 @@ class Puesto extends Model
         return $this->belongsTo(Area::class, 'id_area');
     }
 
-    public function empleados()
+    public function reportara()
     {
-        return $this->belongsTo(Empleado::class, 'id_reporta');
+        return $this->belongsTo(Empleado::class, 'id_reporta', 'id')->with('area');
+    }
+
+
+    // public function empleado()
+    // {
+    //     return $this->belongsTo(Empleado::class, 'id_contacto')->with('area');
+    // }
+
+    public function reporto()
+    {
+        return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->with('area');
     }
 
     public function language()
@@ -84,6 +97,12 @@ class Puesto extends Model
         // return $this->belongsToMany(Language::class, 'puesto_idioma_porcentaje_pivot','id_puesto', 'id_language');
         return $this->hasMany('App\Models\PuestoIdiomaPorcentajePivot', 'id_puesto')->orderBy('id');
     }
+
+    // public function idioma()
+    // {
+    //     // return $this->belongsToMany(Language::class, 'puesto_idioma_porcentaje_pivot','id_puesto', 'id_language');
+    //     return $this->hasMany('App\Models\Language')->orderBy('id');
+    // }
 
     public function competencia()
     {
@@ -99,4 +118,15 @@ class Puesto extends Model
     {
         return $this->hasMany('App\Models\PuestosCertificado', 'puesto_id')->orderBy('id');
     }
+
+    public function herramientas()
+    {
+        return $this->hasMany('App\Models\HerramientasPuestos', 'puesto_id')->orderBy('id');
+    }
+
+    public function contactos()
+    {
+        return $this->hasMany('App\Models\PuestoContactos', 'puesto_id')->orderBy('id');
+    }
+
 }
