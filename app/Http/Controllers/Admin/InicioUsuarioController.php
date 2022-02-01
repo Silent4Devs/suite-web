@@ -973,6 +973,7 @@ class InicioUsuarioController extends Controller
             if ($item->id == $taskID) {
                 $item->archivado = true;
             }
+
             return $item;
         }, $tasks);
 
@@ -994,6 +995,7 @@ class InicioUsuarioController extends Controller
             if ($item->id == $taskID) {
                 $item->archivado = false;
             }
+
             return $item;
         }, $tasks);
 
