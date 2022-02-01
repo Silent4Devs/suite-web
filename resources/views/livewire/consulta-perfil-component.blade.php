@@ -285,11 +285,11 @@
                                             <span style="font-size: 17px; font-weight: bold;">
                                                 Identificación del puesto</span>
                                         </div>
-                                        <span><strong>Área:</strong> {{$puestoModel->area->area}}</span>
+                                        <span><strong>Área:</strong> {{$puestoModel->area ? $puestoModel->area->area : ''}}</span>
                                         <br>
                                         <span><strong>Fecha de creación:</strong>{{ \Carbon\Carbon::parse($puestoModel->fecha_puesto)->format('d/m/Y') }}</span>
                                         <br>
-                                        <span><strong>Reportará a:</strong>{{$puestoModel->reportara->name}}</span>
+                                        <span><strong>Reportará a:</strong>{{$puestoModel->reportara ? $puestoModel->reportara->name : ''}}</span>
                                         <br>
                                         <span><strong>N° de personas a su cargo:</strong> &nbsp;{{$puestoModel->personas_internas}} <strong>Internas</strong>
                                             &nbsp; {{$puestoModel->personas_externas}} <strong>Externas</strong>

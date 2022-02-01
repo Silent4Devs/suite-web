@@ -991,7 +991,7 @@ class InicioUsuarioController extends Controller
         $puesto_id = auth()->user()->empleado->puesto_id;
         $puesto = Puesto::find($puesto_id);
 
-        $idiomas = PuestoIdiomaPorcentajePivot::get();
+        $idiomas = PuestoIdiomaPorcentajePivot::where('id_puesto', '=', $puesto->id)->get();
 
         return view('admin.inicioUsuario.perfil_puesto', compact('puesto', 'idiomas'));
     }
