@@ -2,7 +2,7 @@
 @section('content')
 
     <style type="text/css">
-    
+
         .datos_der_cv{
             color: #fff;
         }
@@ -23,7 +23,7 @@
                         $logotipo = $organizacion->logotipo;
                     @endphp
                     <div class="caja_img_logo">
-                        <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 200px;">
+                        <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 100px;">
                     </div>
                     <div class="row medidas">
                         <div class="mt-4 ml-4 col-md-7 datos_iz_cv">
@@ -175,6 +175,6 @@
 
     </div>
 
-    
+
 
 @endsection

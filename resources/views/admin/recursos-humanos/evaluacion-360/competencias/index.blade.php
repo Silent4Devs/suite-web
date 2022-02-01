@@ -35,19 +35,16 @@
             <table class="table table-bordered w-100 tblCompetencias">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="vertical-align: top">
-                            ID
-                        </th>
-                        <th style="min-width:100px;">
+                        <th style="min-width:50px;">
                             Competencias
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width:250px;">
                             Nombre
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width:150px;">
                             Tipo
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top;min-width:150px;">
                             Opciones
                         </th>
                     </tr>
@@ -150,9 +147,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.ev360-competencias.index') }}",
-                columns: [{
-                        data: 'id'
-                    }, {
+                columns: [ {
                         data:'imagen',
                         render: function(data, type, row, meta) {
                             // console.log(row.imagen_ruta)
