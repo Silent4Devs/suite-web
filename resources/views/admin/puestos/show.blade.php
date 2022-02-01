@@ -33,6 +33,24 @@
                                 {{ $puesto->puesto }}</h5>
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
+                                    Identificación del puesto</span>
+                            </div>
+
+                            <span><strong>Área:</strong> {{$puesto->area->area}}</span>
+
+                            <br>
+                            <span><strong>Fecha de creación:</strong>
+                                {{ \Carbon\Carbon::parse($puesto->fecha_puesto)->format('d/m/Y') }}</span>
+                            <br>
+                            <span><strong>Reportará a:</strong> {{$puesto->reportara->name}}</span>
+                            <br>
+                            <span><strong>N° de personas a su cargo:</strong> &nbsp;{{$puesto->personas_internas}} <strong>Internas</strong>
+                                &nbsp; {{$puesto->personas_externas}} <strong>Externas</strong>
+                            </span>
+                            <br>
+
+                            <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
+                                <span style="font-size: 17px; font-weight: bold;">
                                     Descripción</span>
                             </div>
                             <p style="text-align:justify">
@@ -43,20 +61,32 @@
                             </div>
 
                             @foreach($puesto->responsabilidades as $responsabilidad)
-                            {{$responsabilidad->actividad}}
-                             @endforeach
+                            <div>
+                                <span>{{$responsabilidad->actividad}}</span>
+                                <br>
+                                <span><strong>Resultado:&nbsp;</strong>{{$responsabilidad->resultado}}</span>
+                                <br>
+                                <span><strong>Indicador:&nbsp;</strong>{{$responsabilidad->indicador}}</span>
+                                <br>
+                                <span><strong>Tiempo:&nbsp;</strong>{{$responsabilidad->tiempo_asignado}}</span>
+                             </div>
                              <br>
-                             @foreach($puesto->responsabilidades as $responsabilidad)
-                             <span><strong style="font-size:10pt;">Resultado:&nbsp;</strong>{{$responsabilidad->resultado}}</span>
                             @endforeach
+
+                            <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
+                                <span style="font-size: 17px; font-weight: bold;">
+                                    Herramientas para desempeñar puesto</span>
+                            </div>
+                            @foreach($puesto->herramientas as $herramienta)
+                            <div>
+                                <strong style="color:#00A57E;text-transform: uppercase">
+                                    {{$herramienta->nombre_herramienta}}
+                                </strong>
+                                <br>
+                                <span>{{$herramienta->descripcion_herramienta}}</span>
+                            </div>
                             <br>
-                            @foreach($puesto->responsabilidades as $responsabilidad)
-                                <span><strong style="font-size:10pt;">Indicador:&nbsp;</strong>{{$responsabilidad->indicador}}</span>
-                            @endforeach
-                            <br>
-                            @foreach($puesto->responsabilidades as $responsabilidad)
-                            <span><strong  style="font-size:10pt;">Tiempo:&nbsp;</strong>{{$responsabilidad->tiempo_asignado}}</span>
-                            @endforeach
+                           @endforeach
 
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                             <span style="font-size: 17px; font-weight: bold;">
@@ -85,30 +115,51 @@
                                     Certificaciones</span>
                             </div>
                             @foreach($puesto->certificados as $certificado)
+                            <div>
                                 <strong style="color:#00A57E;text-transform: uppercase">
                                     {{ $certificado->nombre }}</strong>
-                            @endforeach
+
                             <br>
-                            @foreach($puesto->certificados as $certificado)
                                 <span>
                                     {{ $certificado->requisito }}
                                 </span>
+                            </div>
                             @endforeach
                             <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Idiomas</span>
                             </div>
-                            @php
-                            use App\Models\PuestoIdiomaPorcentajePivot;
-                            @endphp
-                            @foreach($idiomas as $idioma)
-                                @php
-                                    $porcentaje_puesto=PuestoIdiomaPorcentajePivot::where('id_language', $idioma->id)->where('id_puesto', $puesto->id)->first();
-                                @endphp
-                            <strong>
-                                {{$porcentaje_puesto}}</strong>
-                            @endforeach
+                            @foreach ($puesto->language as $id_language)
+                            <div>
+                                <strong class="font-weight-bold" style="color:#00A57E;text-transform: uppercase">
+                                    {{ $id_language->language->idioma }}
+                                </strong>
+                                <br>
+                                <span>
+                                    <strong>Nivel:</strong> {{ $id_language->nivel }}
+                                </span>
+                                <br>
+                                <span><strong>Porcentaje:</strong> {{ $id_language->porcentaje }}</span>
+                            </div>
                             <br>
+                            @endforeach
+                            <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
+                                <span style="font-size: 17px; font-weight: bold;">
+                                    Contactos del puesto</span>
+                            </div>
+
+                            @foreach($puesto->contactos as $contacto)
+                                <div>
+                                    <strong>{{$contacto->empleados->name}}</strong>
+                                    <br>
+                                    <span><strong>Area:</strong> {{$contacto->empleados->area->area}}</span>
+                                    <br>
+                                    <span>{{$contacto->descripcion_contacto}}</span>
+                                </div>
+                            @endforeach
+
+
+
 
 
                             {{-- <strong class="font-weight-bold"style="color:#00A57E;text-transform: uppercase">

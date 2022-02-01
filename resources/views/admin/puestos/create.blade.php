@@ -91,34 +91,34 @@
                         <div class="form-control" id="area_reviso"></div>
 
                     </div>
-                </div>
+
+                    <div class="form-group col-md-4 mt-3">
+                        <label for="id_area_reviso"><i class="fas fa-users iconos-crear"></i>No de personas a su cargo</label>
 
 
-
-
-                <div class="row col-12 mt-2">
-                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <div style="display:flex;"><label class="col-sm-4 col-md-4 col-lg-4" for="personas_externas"><i class="fas fa-users iconos-crear"></i>No de personas a su cargo</label>
-                            <strong class="col-sm-2 col-md-2 col-lg-2" >Internas</strong><input class="col-sm-2 col-md-2 col-lg-2 form-control {{ $errors->has('personas_externas') ? 'is-invalid' : '' }}" type="number" name="personas_externas"
-                              value="{{ old('personas_externas', '') }}"></div>
-                            @if ($errors->has('personas_externas'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('personas_externas') }}
-                                </div>
-                            @endif
                     </div>
-                </div>
 
-                <div class="row col-12 mt-4">
-                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <div style="display:flex;"> <label class="col-sm-6 col-md-6 col-lg-6" for="personas_externas"><i class="fas fa-users iconos-crear"></i>No de personas externas a su cargo</label>
-                        <input  class="col-sm-6 col-md-6 col-lg-6 form-control {{ $errors->has('personas_externas') ? 'is-invalid' : '' }}" type="text" name="personas_externas"
-                              value="{{ old('personas_externas', '') }}"></div>
-                            @if ($errors->has('personas_externas'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('personas_externas') }}
-                                </div>
-                            @endif
+                    <div style="display:flex; justify-content:space-between;" class="form-group col-md-4 mt-3">
+                        <strong class="mr-2">Internas</strong>
+                        <input class="form-control {{ $errors->has('personas_internas') ? 'is-invalid' : '' }}" type="number" name="personas_internas"
+                            value="{{ old('personas_internas', '') }}">
+                        @if ($errors->has('personas_internas'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('personas_internas') }}
+                            </div>
+                        @endif
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between;" class="form-group col-md-4 mt-3">
+                        <strong class="mr-2">Externas</strong>
+                        <input class="form-control {{ $errors->has('personas_externas') ? 'is-invalid' : '' }}" type="number" name="personas_externas"
+                            value="{{ old('personas_externas', '') }}">
+                        @if ($errors->has('personas_externas'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('personas_externas') }}
+                            </div>
+                        @endif
+
                     </div>
                 </div>
 
@@ -224,7 +224,7 @@
                     <div class="col-sm-12 col-lg-12 col-md-12">
                         <label for="nombre_herramienta"><i class="fas fa-tools iconos-crear"></i>Nombre</label>
                         <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
-                            id="indicador_responsabilidades_puesto" value="{{ old('indicador', '') }}">
+                            id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
                         <span class="errors indicador_error text-danger"></span>
                     </div>
 
@@ -235,6 +235,7 @@
                         <span class="errors descripcion_herramienta_error text-danger"></span>
                     </div>
                 </div>
+
 
                 <div class="mb-3 col-12 mt-4 " style="text-align: end">
                     <button type="button" name="btn-suscribir-herramientas" id="btn-suscribir-herramientas" class="btn btn-success">Agregar</button>
@@ -528,9 +529,9 @@
 
                 <div class="row col-12 mt-4">
 
-                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                    {{-- <div class="form-group col-sm-6 col-md-6 col-lg-6">
                         <label for="id_reporta"><i class="fas fa-user-tie iconos-crear"></i>Puesto</label>
-                        <select class="form-control {{ $errors->has('id_reporta') ? 'is-invalid' : '' }}" name="id_reporta" id="id_reporta">
+                        <select class="form-control {{ $errors->has('id_reporta') ? 'is-invalid' : '' }}" name="id_reporta" id="puesto_contacto_puesto">
                             @foreach ($puestos as $puesto)
                             <option data-puesto="{{ $puesto->puesto }}" value="{{ $puesto->id }}" >
                                 {{ $puesto->puesto }}
@@ -542,9 +543,65 @@
                             {{ $errors->first('id_puesto') }}
                         </div>
                         @endif
+                    </div> --}}
+
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                        <label for="id_contacto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                        <select class="form-control {{ $errors->has('id_contacto') ? 'is-invalid' : '' }}" name="id_contacto" id="nombre_contacto_puesto">
+                            @foreach ($empleados as $empleado)
+                            <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
+                                {{ $empleado->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('id_contacto'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_contacto') }}
+                        </div>
+                        @endif
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                        <label for="puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                        <div class="form-control" id="contacto_puesto"></div>
+
                     </div>
 
                 </div>
+
+                <div class="row col-12 ">
+                    <div class="col-sm-12 col-lg-12 col-md-12 mt-2">
+                        <label for="contacto"><i class="fas fa-clipboard-list iconos-crear"></i>Proposito del contacto</label>
+                        <input class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" type="text" name="contacto"
+                            id="descripcion_contacto_puesto" value="{{ old('contacto', '') }}">
+                        <span class="errors contacto_error text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="mb-3 col-12 mt-4 " style="text-align: end">
+                    <button type="button" name="btn-suscribir-contactos" id="btn-suscribir-contactos" class="btn btn-success">Agregar</button>
+                </div>
+
+                <div class="row col-12">
+                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
+                        <table class="table w-100" id="contactos_table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Puesto</th>
+                                    <th style="min-width:300px;">Proposito</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contenedor_contactos">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
 
 
 
@@ -659,7 +716,7 @@
 
     </script> --}}
 
-    {{-- <script>
+     <script>
         $(document).ready(function () {
         const lenguajes=@json($idis);
         console.log(lenguajes);
@@ -701,7 +758,7 @@
 
 
         });
-      </script> --}}
+      </script>
 
 <script>
     $(document).ready(function () {
@@ -753,6 +810,53 @@
 
     });
   </script>
+
+  <script>
+      $(document).ready(function () {
+      const herramientas=@json($herramientas);
+      console.log(herramientas);
+      let agregar = 0;
+
+      function agregarFilaHerramienta(cont,informacion) {
+          console.log(informacion)
+          const contenedorHerramientas=document.getElementById('contenedor_herramientas');
+          let html=`
+          <tr>
+            <td><input type="hidden" name="herramientas[${cont}][id]" value="${informacion.id?informacion.id:0}"><input class="form-control" type="text"  name="herramientas[${cont}][nombre_herramienta]" value="${informacion.nombreHerramienta}" ></td>
+            <td><textarea class="form-control" type="text"  style="min-height: 25px !important;" name="herramientas[${cont}][descripcion_herramienta]" value="">${informacion.descripcionHerramienta}</textarea></td>
+            <td><button type="button" name="btn-remove-herramientas" id="" class="btn btn-danger remove">Eliminar</button></td>
+         </tr>
+          `
+        contenedorHerramientas.innerHTML += html;
+         limpiarFormularioHerramientas();
+        }
+
+        function limpiarFormularioHerramientas(){
+        const nombreHerramienta = document.getElementById('nombre_herramienta_puesto').value=null;
+        const descripcionHerramienta = document.getElementById('descripcion_herramienta_puesto').value=null;
+      }
+
+      $(document).on("click", "#btn-suscribir-herramientas", function () {
+
+
+        const nombreHerramienta = document.getElementById('nombre_herramienta_puesto').value;
+        const descripcionHerramienta = document.getElementById('descripcion_herramienta_puesto').value;
+
+        let informacion={
+                nombreHerramienta,
+                descripcionHerramienta
+        }
+
+      agregarFilaHerramienta(agregar,informacion);
+            agregar ++;
+
+         });
+        $(document).on("click", ".btn-remove-herramientas", function () {
+            $(this).closest("tr").remove();
+            agregar --;
+     });
+});
+</script>
 
 <script>
     $(document).ready(function () {
@@ -831,8 +935,11 @@
           const contenedorCertificados=document.getElementById('contenedor_certificados');
           let html=`
           <tr>
-            <td><input type="hidden" name="certificados[${contable}][id]" value="${certificacion.id?certificacion.id:0}"><input class="form-control" type="text" name="certificados[${contable}][nombre]" value="${certificacion.nombreCertificado}" style="border:none;" ></td>
-            <td><input class="form-control" type="text" name="certificados[${contable}][requisito]" value="${certificacion.requisito}"  style="border:none;"></td>
+            <td><input type="hidden" name="certificados[${contable}][id]" value="${certificacion.id?certificacion.id:0}"><input class="form-control" type="text" name="certificados[${contable}][nombre]" value="${certificacion.nombreCertificado}"></td>
+            <td class="col-4"><select class="form-control" name="certificados[${contable}][requisito]" value="${certificacion.requisito}"><option value="">Seleccione una opción</option>
+            <option  ${certificacion.requisito == "Indispensable" ? "selected":''} value="Indispensable" >Indispensable</option>
+            <option  ${certificacion.requisito == "Deseable" ? "selected":''} value="Deseable" >Deseable</option>
+            </select></td>
             <td><button type="button" name="btn-remove-certificaciones" id="" class="btn btn-danger remove">Eliminar</button></td>
          </tr>
           `
@@ -870,6 +977,85 @@
   </script>
 
 
+    <script>
+
+    $(document).ready(function () {
+        const empleados=@json($empleados);
+        const contactos=@json($contactos);
+        console.log(contactos);
+        let fila = 0;
+
+
+    function agregarFilaContactos(contable,contact) {
+          console.log(contact)
+          const contenedorContactos=document.getElementById('contenedor_contactos');
+          let html=`
+          <tr>
+            <td><input type="hidden" name="contactos[${contable}][id]"  value="${contact.id?contact.id:0}"><select class="form-control" value="${contact.nombreContacto}" name="contactos[${contable}][id_contacto]">`
+                empleados.forEach(empleado=>{
+                html+=`<option data-puesto="${empleado.puesto}" data-contact="${contact.id}" value="${empleado.id}">${empleado.name}</option>`
+            })
+            html+=`</select>
+            </td >
+            <td><div class="form-control" style="white-space:nowrap" id="puesto${contact.id}">${contact.puestoContacto}</div>
+            <td><textarea class="form-control" style="min-height: 25px !important;" type="text" name="contactos[${contable}][descripcion_contacto]" value="" >${contact.descripcionContacto }</textarea></td>
+            <td><button type="button"  name="btn-remove-contactos" id="" class="btn btn-danger remove">Eliminar</button></td>
+         </tr>
+          `
+          contenedorContactos.innerHTML += html;
+          limpiarFormularioContactos();
+
+        }
+
+        function limpiarFormularioContactos(){
+        //   const puestoContacto = document.getElementById('puesto_contacto_puesto').value=null;
+          const nombreContacto = document.getElementById('nombre_contacto_puesto').value=null;
+          const puestoContacto = document.getElementById('contacto_puesto').innerText=null;
+          const descripcionContacto = document.getElementById('descripcion_contacto_puesto').value=null;
+      }
+
+      $(document).on("click", "#btn-suscribir-contactos", function () {
+
+        // const puestoContacto = document.getElementById('puesto_contacto_puesto').value;
+        const nombreContacto = document.getElementById('nombre_contacto_puesto').value;
+        const puestoContacto = document.getElementById('contacto_puesto').innerText;
+        const descripcionContacto = document.getElementById('descripcion_contacto_puesto').value;
+        console.log(puestoContacto);
+
+        let contact={
+            // puestoContacto,
+            nombreContacto,
+            puestoContacto,
+            descripcionContacto
+        }
+
+        agregarFilaContactos(fila,contact);
+            fila ++;
+
+         });
+
+        //  tagName etiquetas HTML en la linea del IF entro al SELECT  si tuviera dos SELECT tendría que
+        // darle un DATA ATTRIBUTE al select y especificarlo ahi en la linea del if con un &
+        document.getElementById('contactos_table').addEventListener('change', function(e){
+            console.log(e.target.tagName);
+            if(e.target.tagName == 'SELECT'){
+            const puesto=e.target.options[e.target.selectedIndex].getAttribute('data-puesto');
+            const contact=e.target.options[e.target.selectedIndex].getAttribute('data-contact');
+            document.getElementById(`puesto${contact}`).innerText=puesto;
+            }
+
+        })
+
+
+        $(document).on("click", ".btn-remove-contactos", function () {
+            $(this).closest("tr").remove();
+            fila --;
+     });
+
+ });
+    </script>
+
+
       <script>
 
         $(document).ready(function() {
@@ -897,6 +1083,21 @@
             let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
             document.getElementById('puesto_reviso').innerHTML = puesto;
             document.getElementById('area_reviso').innerHTML = area;
+        })
+    })
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        let contacto = document.querySelector('#nombre_contacto_puesto');
+        let puesto_init = contacto.options[contacto.selectedIndex].getAttribute('data-puesto');
+
+        document.getElementById('contacto_puesto').innerHTML = puesto_init;
+        contacto.addEventListener('change', function(e) {
+            e.preventDefault();
+            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('contacto_puesto').innerHTML = puesto;
         })
     })
 

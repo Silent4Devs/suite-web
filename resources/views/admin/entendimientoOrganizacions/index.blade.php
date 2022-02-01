@@ -1,40 +1,44 @@
 @extends('layouts.admin')
 @section('content')
 
-<style>
-    .btn_cargar{
-        border-radius: 100px !important;
-        border: 1px solid #345183;
-        color: #345183;
-        text-align: center;
-        padding: 0;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-    .btn_cargar:hover{
-        color: #fff;
-        background:#345183 ;
-    }
-    .btn_cargar i{
-        font-size: 15pt;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .agregar{
-        margin-right:15px;
-    }
+    <style>
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
+
+        .btn_cargar:hover {
+            color: #fff;
+            background: #345183;
+        }
+
+        .btn_cargar i {
+            font-size: 15pt;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .agregar {
+            margin-right: 15px;
+        }
+
     </style>
 
 
-{{ Breadcrumbs::render('admin.entendimiento-organizacions.index') }}
+    {{ Breadcrumbs::render('admin.entendimiento-organizacions.index') }}
     <h5 class="col-12 titulo_general_funcion">Análisis FODA</h5>
     @can('entendimiento_organizacion_create')
         <div class="mt-5 card">
@@ -43,7 +47,8 @@
             </div> --}}
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modalentendimientoorganizacions', ['model' => 'Amenaza', 'route' => 'admin.amenazas.parseCsvImport'])
+                    @include('csvImport.modalentendimientoorganizacions', ['model' => 'Amenaza', 'route' =>
+                    'admin.amenazas.parseCsvImport'])
                 </div>
             </div>
         @endcan
@@ -54,13 +59,13 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                           ID
-                         </th>
-                        <th>
-                           Nombre del análisis
+                            ID
                         </th>
                         <th>
-                           Fecha Creación
+                            Nombre del análisis
+                        </th>
+                        <th>
+                            Fecha Creación
                         </th>
                         <th>
                             Elaboró
@@ -176,20 +181,24 @@
                 }
                 };
                 let btnExport = {
-                    text: '<i  class="fas fa-download"></i>',
-                    titleAttr: 'Descargar plantilla',
-                    className: "btn btn_cargar" ,
-                    action: function(e, dt, node, config) {
-                        $('#').modal('show');
-                    }
+                text: '<i class="fas fa-download"></i>',
+                titleAttr: 'Descargar plantilla',
+                className: "btn btn_cargar" ,
+                url:"{{ route('descarga-foda') }}",
+                action: function(e, dt, node, config) {
+                let {
+                url
+                } = config;
+                window.location.href = url;
+                }
                 };
                 let btnImport = {
-                    text: '<i  class="fas fa-file-upload"></i>',
-                    titleAttr: 'Importar datos',
-                    className: "btn btn_cargar",
-                    action: function(e, dt, node, config) {
-                        $('#xslxImportModal').modal('show');
-                    }
+                text: '<i class="fas fa-file-upload"></i>',
+                titleAttr: 'Importar datos',
+                className: "btn btn_cargar",
+                action: function(e, dt, node, config) {
+                $('#xslxImportModal').modal('show');
+                }
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnExport);
@@ -274,6 +283,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection
