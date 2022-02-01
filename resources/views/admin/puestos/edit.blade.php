@@ -383,7 +383,7 @@
 
                 <div class="row col-12">
                     <div class="col-sm-6 col-lg-6 col-md-6">
-                        <label for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre</label>
+                        <label for="nombre" class="required"><i class="fas fa-file-signature iconos-crear"></i>Nombre</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                             name="nombre" id="nombre_certificado" value="{{ old('nombre', '') }}">
                         <span class="errors nombre_error text-danger"></span>
