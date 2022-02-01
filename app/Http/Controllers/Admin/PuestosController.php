@@ -225,11 +225,11 @@ class PuestosController extends Controller
         $lenguajes = (json_decode($json));
         $areas = Area::get();
         $reportas = Empleado::get();
-        $puesto->load(['contactos'=>function($query){
-            $query->with(['empleados'=>function($query){
+        $puesto->load(['contactos'=>function ($query) {
+            $query->with(['empleados'=>function ($query) {
                 $query->with('puestoRelacionado');
             }]);
-         }]);
+        }]);
         $competencias = Competencia::all();
         $idis = Language::all();
         $responsabilidades = PuestoResponsabilidade::get();

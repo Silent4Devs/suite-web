@@ -7,7 +7,6 @@ use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TimesheetController extends Controller
@@ -24,13 +23,10 @@ class TimesheetController extends Controller
         return view('admin.timesheet.index', compact('times'));
     }
 
-    
     public function timesheetInicio()
     {
-
         return view('admin.timesheet.timesheet-inicio');
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -185,6 +181,7 @@ class TimesheetController extends Controller
     public function tareasProyecto($proyecto_id)
     {
         $proyecto_id = $proyecto_id;
+
         return view('admin.timesheet.tareas-proyecto', compact('proyecto_id'));
     }
 }

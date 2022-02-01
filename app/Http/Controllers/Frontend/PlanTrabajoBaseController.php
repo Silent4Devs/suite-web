@@ -23,7 +23,7 @@ class PlanTrabajoBaseController extends Controller
         // $write_empleados = $json_code;
         // file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
 
-        #NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
+        //NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
         $files = glob('storage/gantt/versiones/gantt_inicial*.json');
         $archivos_gantt = [];
 
@@ -36,8 +36,9 @@ class PlanTrabajoBaseController extends Controller
         $gant_readed = end($archivos_gantt);
         $file_gant = json_decode(file_get_contents($gant_readed), true);
         $name_file_gantt = 'gantt_inicial.json';
-        #FIN
+        //FIN
         $empleados = Empleado::select('name')->get();
+
         return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt'));
     }
 

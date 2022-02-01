@@ -25,7 +25,7 @@ class AddColumnRechazadaToTimesheet extends Migration
      */
     public function down()
     {
-        Schema::table('timesheet', function (Blueprint $table) {  
+        Schema::table('timesheet', function (Blueprint $table) {
             $table->dropColumn('rechazado');
         });
     }
