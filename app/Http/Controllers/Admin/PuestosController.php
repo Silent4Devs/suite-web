@@ -359,6 +359,7 @@ class PuestosController extends Controller
                 }
             }
         }
+
     }
 
     public function deleteLanguage(Request $request, $language)
