@@ -2,11 +2,10 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use Livewire\Component;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
-use App\Models\TimesheetProyecto;
 use App\Models\Area;
-
+use App\Models\TimesheetProyecto;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class TablaProyectosTimesheet extends Component
 {
@@ -29,7 +28,7 @@ class TablaProyectosTimesheet extends Component
     {
         $this->validate([
             'proyecto_name'=>'required',
-            'area_id'=>'required'
+            'area_id'=>'required',
         ]);
 
         $nuevo_proyecto = TimesheetProyecto::create([
