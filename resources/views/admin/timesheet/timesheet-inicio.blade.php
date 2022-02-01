@@ -212,6 +212,12 @@
 			                    Crear Timesheet
 			                </div>
 			            </a></li>
+                        <li><a href="{{ asset('admin/timesheet/rechazadas') }}">
+                            <div>
+                                <i class="bi bi-calendar2-x"></i><br>
+                                Horas Rechazadas
+                            </div>
+                        </a></li>
 				    </ul>
                 </div>
                 <div class="tab-pane mb-4 fade" id="nav-liderazgo" role="tabpanel" aria-labelledby="nav-liderazgo-tab">
@@ -228,7 +234,7 @@
 			                    Tareas
 			                </div>
 			            </a></li>
-			        	<li><a href="{{ asset('admin/timesheet') }}">
+			        	<li><a href="{{ asset('admin/timesheet/aprobaciones') }}">
 			                <div>
 			                    <i class="bi bi-calendar2-check"></i><br>
 			                    Aprobaciones
