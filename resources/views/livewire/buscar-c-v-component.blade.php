@@ -394,7 +394,7 @@
                                                 Del
                                                 <strong>{{ \Carbon\Carbon::parse($educacion->año_inicio)->format('d/m/Y') }}</strong>
                                                 al
-                                                @if ($eduacion->estudactuamente = true)
+                                                @if ($educacion->estudactuamente = true)
                                                 <strong>día de hoy</strong>
                                                 @else
                                                     <strong>{{ \Carbon\Carbon::parse($educacion->año_fin)->format('d/m/Y') }}</strong>
