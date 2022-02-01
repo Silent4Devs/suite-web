@@ -368,6 +368,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Timesheet
     Route::get('timesheet', 'TimesheetController@index')->name('timesheet');
+    Route::get('timesheet/rechazadas', 'TimesheetController@rechazadas')->name('timesheet-rechazadas');
+    Route::get('timesheet/aprobaciones', 'TimesheetController@aprobaciones')->name('timesheet-aprobaciones');
+    Route::post('timesheet/aprobar/{id}', 'TimesheetController@aprobar')->name('timesheet-aprobar');
     Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
     Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
 
@@ -375,7 +378,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
     Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
 
-    Route::get('timesheet/aprobar', 'TimesheetController@aprobar')->name('timesheet-aprobar');
 
     Route::resource('timesheet', 'TimesheetController')->except(['create', 'index']);
 

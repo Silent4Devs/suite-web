@@ -763,4 +763,12 @@ Breadcrumbs::for('timesheet-tareas', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
     $trail->push('Tareas');
 });
+Breadcrumbs::for('timesheet-rechazadas', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Rechazadas');
+});
+Breadcrumbs::for('timesheet-aprobaciones', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Probaciones');
+});
 
