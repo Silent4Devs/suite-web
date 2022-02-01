@@ -206,8 +206,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('inicioUsuario/aprobacion/recuperar/{id}', 'InicioUsuarioController@recuperarAprobacion')->name('inicio-Usuario.aprobacion.recuperar');
     Route::get('inicioUsuario/aprobacion/archivo', 'InicioUsuarioController@archivoAprobacion')->name('inicio-Usuario.aprobacion.archivo');
 
-    Route::post('inicioUsuario/actividades/archivar/{id}', 'InicioUsuarioController@archivarActividades')->name('inicio-Usuario.actividades.archivar');
-    Route::post('inicioUsuario/actividades/recuperar/{id}', 'InicioUsuarioController@recuperarActividades')->name('inicio-Usuario.actividades.recuperar');
+    Route::post('inicioUsuario/actividades/archivar', 'InicioUsuarioController@archivarActividades')->name('inicio-Usuario.actividades.archivar');
+    Route::post('inicioUsuario/actividades/recuperar', 'InicioUsuarioController@recuperarActividades')->name('inicio-Usuario.actividades.recuperar');
     Route::get('inicioUsuario/actividades/archivo', 'InicioUsuarioController@archivoActividades')->name('inicio-Usuario.acctividades.archivo');
 
     Route::get('inicioUsuario/perfil-puesto', 'InicioUsuarioController@perfilPuesto')->name('inicio-Usuario.perfil-puesto');
