@@ -5,7 +5,9 @@ namespace App\Http\Controllers\iso9001;
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
 use App\Models\Iso9001\PlanImplementacion;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PlanImplementacionNueveUnoController extends Controller
 {
@@ -16,13 +18,14 @@ class PlanImplementacionNueveUnoController extends Controller
      */
     public function index()
     {
-        $gantt_path = 'storage/gantt/';
-        $path = public_path($gantt_path);
-        $json_code = json_decode(file_get_contents($path . '/gantt_inicial_9001.json'), true);
-        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        $write_empleados = $json_code;
-        file_put_contents($path . '/gantt_inicial_9001.json', json_encode($write_empleados));
+        // $gantt_path = 'storage/gantt/';
+        // $path = public_path($gantt_path);
+        // $json_code = json_decode(file_get_contents($path . '/gantt_inicial_9001.json'), true);
+        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        // $write_empleados = $json_code;
+        // file_put_contents($path . '/gantt_inicial_9001.json', json_encode($write_empleados));
 
+        #NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
         $files = glob('storage/gantt/versiones/gantt_inicial_9001*.json');
         $archivos_gantt = [];
 
@@ -34,22 +37,24 @@ class PlanImplementacionNueveUnoController extends Controller
         $path_asset = asset('storage/gantt/versiones/');
         $gant_readed = end($archivos_gantt);
         $file_gant = json_decode(file_get_contents($gant_readed), true);
-        $empleados = Empleado::select('name')->get();
         $name_file_gantt = 'gantt_inicial_9001.json';
         $texto = false;
+        #FIN
 
+        $empleados = Empleado::select('name')->get();
         return view('iso9001.plantrabajobase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto'));
     }
 
     public function showTarea()
     {
-        $gantt_path = 'storage/gantt/';
-        $path = public_path($gantt_path);
-        $json_code = json_decode(file_get_contents($path . '/gantt_inicial_9001.json'), true);
-        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        $write_empleados = $json_code;
-        file_put_contents($path . '/gantt_inicial_9001.json', json_encode($write_empleados));
+        // $gantt_path = 'storage/gantt/';
+        // $path = public_path($gantt_path);
+        // $json_code = json_decode(file_get_contents($path . '/gantt_inicial_9001.json'), true);
+        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        // $write_empleados = $json_code;
+        // file_put_contents($path . '/gantt_inicial_9001.json', json_encode($write_empleados));
 
+        #NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
         $files = glob('storage/gantt/versiones/gantt_inicial_9001*.json');
         $archivos_gantt = [];
 
@@ -61,11 +66,12 @@ class PlanImplementacionNueveUnoController extends Controller
         $path_asset = asset('storage/gantt/versiones/');
         $gant_readed = end($archivos_gantt);
         $file_gant = json_decode(file_get_contents($gant_readed), true);
-        $empleados = Empleado::select('name')->get();
         $name_file_gantt = 'gantt_inicial_9001.json';
         $sinTexto = true;
         $texto = true;
+        #FIN
 
+        $empleados = Empleado::select('name')->get();
         return view('iso9001.plantrabajobase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'sinTexto', 'texto'));
     }
 
