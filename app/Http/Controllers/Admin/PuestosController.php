@@ -225,10 +225,15 @@ class PuestosController extends Controller
         $lenguajes = (json_decode($json));
         $areas = Area::get();
         $reportas = Empleado::get();
-        $puesto->load('team');
+        $puesto->load(['contactos'=>function($query){
+            $query->with(['empleados'=>function($query){
+                $query->with('puestoRelacionado');
+            }]);
+         }]);
         $competencias = Competencia::all();
         $idis = Language::all();
         $responsabilidades = PuestoResponsabilidade::get();
+        // dd($puesto);
         $certificados = PuestosCertificado::get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
@@ -349,7 +354,7 @@ class PuestosController extends Controller
                         'puesto_id' => $puesto->id,
                         'porcentaje' => $languaje['porcentaje'],
                         'nivel' =>  $languaje['nivel'],
-
+                        'id_language'=>$languaje['id_language'],
                     ]);
                 }
             }
@@ -464,13 +469,13 @@ class PuestosController extends Controller
         if (!is_null($contactos)) {
             foreach ($contactos as $contacto) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
-                if (HerramientasPuestos::find($contacto['id']) != null) {
-                    HerramientasPuestos::find($contacto['id'])->update([
+                if (PuestoContactos::find($contacto['id']) != null) {
+                    PuestoContactos::find($contacto['id'])->update([
                         'id_contacto' => $contacto['id_contacto'],
                         'descripcion_contacto' =>  $contacto['descripcion_contacto'],
                     ]);
                 } else {
-                    HerramientasPuestos::create([
+                    PuestoContactos::create([
                         'puesto_id' => $puesto->id,
                         'id_contacto' => $contacto['id_contacto'],
                         'descripcion_contacto' =>  $contacto['descripcion_contacto'],
@@ -478,12 +483,12 @@ class PuestosController extends Controller
                 }
             }
         }
-        // dd($responsabilidades);
+        // dd($contactos);
     }
 
     public function deleteContactos(Request $request, $contactos)
     {
-        $contactos = HerramientasPuestos::find($contactos);
+        $contactos = PuestoContactos::find($contactos);
         $contactos->delete();
 
         return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
