@@ -12,7 +12,7 @@ class PuestoContactos extends Model
     protected $table = 'puestos_contactos';
 
     protected $fillable = [
-        'puesto_contacto',
+
         'descripcion_contacto',
         'puesto_id',
         'id_contacto',
@@ -23,13 +23,9 @@ class PuestoContactos extends Model
         return $this->belongsTo(Puesto::class);
     }
 
-    // public function empleados()
-    // {
-    //     return $this->belongsTo(Empleado::class);
-    // }
 
     public function empleados()
     {
-        return $this->belongsTo(Empleado::class, 'id_contacto', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'id_contacto', 'id')->with('puesto', 'area');
     }
 }
