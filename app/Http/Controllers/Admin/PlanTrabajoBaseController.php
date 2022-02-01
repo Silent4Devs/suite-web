@@ -16,13 +16,14 @@ class PlanTrabajoBaseController extends Controller
     public function index()
     {
         abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gantt_path = 'storage/gantt/';
-        $path = public_path($gantt_path);
-        $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
-        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        $write_empleados = $json_code;
-        file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
+        // $gantt_path = 'storage/gantt/';
+        // $path = public_path($gantt_path);
+        // $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
+        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        // $write_empleados = $json_code;
+        // file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
 
+        //NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
         $files = glob('storage/gantt/versiones/gantt_inicial*.json');
         $archivos_gantt = [];
 
@@ -34,9 +35,10 @@ class PlanTrabajoBaseController extends Controller
         $path_asset = asset('storage/gantt/versiones/');
         $gant_readed = end($archivos_gantt);
         $file_gant = json_decode(file_get_contents($gant_readed), true);
-        $empleados = Empleado::select('name')->get();
         $name_file_gantt = 'gantt_inicial.json';
         $texto = false;
+        //FIN REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
+        $empleados = Empleado::select('name')->get();
 
         return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto'));
     }
@@ -44,13 +46,14 @@ class PlanTrabajoBaseController extends Controller
     public function showTarea($texto)
     {
         abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gantt_path = 'storage/gantt/';
-        $path = public_path($gantt_path);
-        $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
-        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        $write_empleados = $json_code;
-        file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
+        // $gantt_path = 'storage/gantt/';
+        // $path = public_path($gantt_path);
+        // $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
+        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        // $write_empleados = $json_code;
+        // file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
 
+        //NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
         $files = glob('storage/gantt/versiones/gantt_inicial*.json');
         $archivos_gantt = [];
 
@@ -62,9 +65,11 @@ class PlanTrabajoBaseController extends Controller
         $path_asset = asset('storage/gantt/versiones/');
         $gant_readed = end($archivos_gantt);
         $file_gant = json_decode(file_get_contents($gant_readed), true);
-        $empleados = Empleado::select('name')->get();
         $name_file_gantt = 'gantt_inicial.json';
         $sinTexto = true;
+        //FIN REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
+
+        $empleados = Empleado::select('name')->get();
 
         return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto', 'sinTexto'));
     }

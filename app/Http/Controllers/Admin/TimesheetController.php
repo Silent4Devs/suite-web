@@ -18,7 +18,7 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $times = timesheet::get();
+        $times = timesheet::where('empleado_id', auth()->user()->empleado->id)->where('rechazado', false)->get();
 
         return view('admin.timesheet.index', compact('times'));
     }
@@ -173,15 +173,36 @@ class TimesheetController extends Controller
         return view('admin.timesheet.tareas');
     }
 
-    public function aprobar()
-    {
-        return view('admin.timesheet.aprobar');
-    }
-
     public function tareasProyecto($proyecto_id)
     {
         $proyecto_id = $proyecto_id;
 
         return view('admin.timesheet.tareas-proyecto', compact('proyecto_id'));
     }
+
+    public function rechazadas()
+    {
+        $rechazadas = Timesheet::where('rechazado', true)->where('empleado_id', auth()->user()->empleado->id)->get();
+
+        return view('admin.timesheet.rechazadas', compact('rechazadas'));
+    }
+
+    public function aprobaciones()
+    {
+        $aprobaciones = Timesheet::where('rechazado', false)->where('aprobado', false)->where('aprobador_id', auth()->user()->empleado->id)->get();
+
+        return view('admin.timesheet.aprobaciones', compact('aprobaciones'));
+    }
+
+    public function aprobar($id)
+    {
+        $aprobar = Timesheet::find($id);
+        $aprobar->update([
+            'aprobado'=>true,
+            'rechazado'=>false, 
+        ]);
+
+        return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
+    }
+
 }

@@ -1,49 +1,82 @@
 @extends('layouts.admin')
 @section('content')
+    
+    <style type="text/css">
+        .aprobada{
+            padding: 3px;
+            background-color: #61CB5C;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .rechazada{
+            padding: 3px;
+            background-color: #EA7777;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .pendiente{
+            padding: 3px;
+            background-color: #F48C16;
+            color: #fff;
+            border-radius: 4px;
+        }
+    </style>
+
+
+     {{ Breadcrumbs::render('timesheet-aprobaciones') }}
 	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Solicitudes a Aprobar</font> </h5>
+	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Probaciones</font> </h5>
 
 	<div class="card card-body">
 		<div class="row">
 			
 	        <div class="datatable-fix w-100">
-	            <table id="datatable_timesheet_aprobar" class="table w-100">
+	            <table id="datatable_timesheet" class="table w-100">
 	                <thead class="w-100">
 	                    <tr>
-	                        <th>Finde semana </th>
-	                        <th>Billable</th>
-	                        <th>Non Billable</th>
-	                        <th>Employee</th>
-	                        <th>Manager</th>
-	                        <th>Status</th>
+	                        <th>Fin de semana </th>
+	                        <th>Empleado</th>
+	                        <th>Responsable</th>
+                            <th>Aprobación</th>
 	                        <th>opciones</th>
 	                    </tr>
 	                </thead>
 
 	                <tbody>
-	                	<tr>
-	                        <td>
-	                            Finde semana 
-	                        </td>
-	                        <td>
-	                            Billable
-	                        </td>
-	                        <td>
-	                            Non Billable
-	                        </td>
-	                        <td>
-	                        	Employee
-	                        </td>
-	                        <td>
-	                        	Manager
-	                        </td>
-	                        <td>
-	                        	Status
-	                        </td>
-	                        <td>
-	                        	opciones
-							</td>	                    
-						</tr>
+                        @foreach($aprobaciones as $aprobacion)
+    	                	<tr>
+    	                        <td>
+    	                            {{ $aprobacion->fecha_dia }} 
+    	                        </td>
+    	                        <td>
+    	                            {{ $aprobacion->empleado->name }}
+    	                        </td>
+    	                        <td>
+                                    {{ $aprobacion->aprobador->name }}
+    	                        </td>
+    	                        <td>
+                                    @if($aprobacion->aprobado)
+                                        <span class="aprobada">Aprobada</span>
+                                    @endif
+
+                                    @if($aprobacion->rechazado)
+                                        <span class="rechazada">Rechazada</span>
+                                    @endif
+
+                                    @if(($aprobacion->rechazado == false) && ($aprobacion->aprobado == false))
+                                        <span class="pendiente">Pendiente</span>
+                                    @endif
+    	                        </td>
+    	                        <td>
+                                    <form action="{{ asset('admin/timesheet/aprobar') }}/{{ $aprobacion->id }}" method="POST">
+                                        @csrf
+        	                        	<button title="Aprobar" class="btn"> 
+                                            <i class="fas fa-calendar-check" style="color:#3CA06C; font-size: 15pt;"></i>
+                                        </button>
+                                    </form>
+    							</td>                    
+    						</tr>
+                        @endforeach
 	                </tbody>
 	            </table>
 	        </div>
@@ -145,7 +178,7 @@
                             [0,'desc']
                         ]
             };
-            let table = $('#datatable_timesheet_aprobar').DataTable(dtOverrideGlobals);
+            let table = $('#datatable_timesheet').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();
@@ -160,6 +193,4 @@
             // });
         });
     </script>
-
-
 @endsection
