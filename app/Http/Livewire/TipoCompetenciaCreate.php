@@ -38,5 +38,3 @@ class TipoCompetenciaCreate extends Component
         return view('livewire.tipo-competencia-create');
     }
 }
-
-

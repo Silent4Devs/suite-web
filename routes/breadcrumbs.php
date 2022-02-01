@@ -740,7 +740,6 @@ Breadcrumbs::for('sugerencias-create-portal', function ($trail) {
     $trail->push('Sugerencias', route('admin.reportes-sugerencias'));
 });
 
-
 Breadcrumbs::for('timesheet-index', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
     $trail->push('Mi Timesheet');
@@ -763,4 +762,3 @@ Breadcrumbs::for('timesheet-tareas', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
     $trail->push('Tareas');
 });
-
