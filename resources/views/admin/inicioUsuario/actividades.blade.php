@@ -72,6 +72,86 @@
 @section('scripts')
     @parent
     <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            const tblActividades = document.getElementById('tabla_usuario_actividades');
+            const cardsActividades = document.getElementById('cards-actividades2');
+            tblActividades.addEventListener('click', async (e) => {
+                if (e.target.getAttribute('data-archivar') == 'true') {
+                    const actividadID = e.target.getAttribute('data-actividad-id');
+                    const planImplementacionID = e.target.getAttribute('data-plan-implementacion');
+                    const url = "{{ route('admin.inicio-Usuario.actividades.archivar') }}"
+                    const formData = new FormData();
+                    formData.append('taskID', actividadID);
+                    formData.append('planImplementacionID', planImplementacionID);
+                    Swal.fire({
+                        title: '¿Quieres Archivar esta Actividad?',
+                        text: "",
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Archivar',
+                        cancelButtonText: 'No',
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            const response = await fetch(url, {
+                                method: "POST",
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr(
+                                            'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.success) {
+                                window.location.reload();
+                            }
+                        }
+                    })
+                }
+            })
+            cardsActividades.addEventListener('click', async (e) => {
+                if (e.target.getAttribute('data-archivar') == 'true') {
+                    const actividadID = e.target.getAttribute('data-actividad-id');
+                    const planImplementacionID = e.target.getAttribute('data-plan-implementacion');
+                    const url = "{{ route('admin.inicio-Usuario.actividades.archivar') }}"
+                    const formData = new FormData();
+                    formData.append('taskID', actividadID);
+                    formData.append('planImplementacionID', planImplementacionID);
+                    Swal.fire({
+                        title: '¿Quieres Archivar esta Actividad?',
+                        text: "",
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Archivar',
+                        cancelButtonText: 'No',
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            const response = await fetch(url, {
+                                method: "POST",
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr(
+                                            'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.success) {
+                                window.location.reload();
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+    <script type="text/javascript">
         $(document).ready(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',

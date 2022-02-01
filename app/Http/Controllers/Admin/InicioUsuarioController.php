@@ -226,8 +226,8 @@ class InicioUsuarioController extends Controller
 
         if (auth()->user()->empleado) {
             $competencias = Empleado::with(
-                ['puestoRelacionado'=>function ($q) {
-                    $q->with(['competencias'=>function ($q) {
+                ['puestoRelacionado' => function ($q) {
+                    $q->with(['competencias' => function ($q) {
                         $q->with('competencia');
                     }]);
                 }]
@@ -964,26 +964,46 @@ class InicioUsuarioController extends Controller
         return view('admin.inicioUsuario.actividades_archivo', compact('actividades'));
     }
 
-    public function archivarActividades($id)
+    public function archivarActividades(Request $request)
     {
-        $actividad = PlanImplementacion::find($id);
+        $implementacion = PlanImplementacion::where('id', $request->planImplementacionID)->first();
+        $tasks = $implementacion->tasks;
+        $taskID = $request->taskID;
+        $updatedTasks = array_map(function ($item) use ($taskID) {
+            if ($item->id == $taskID) {
+                $item->archivado = true;
+            }
 
-        $actividad->update([
-            'archivo' => 'archivado',
+            return $item;
+        }, $tasks);
+
+        $implementacion->update([
+            'tasks' => $updatedTasks,
         ]);
 
-        return redirect()->route('admin.inicio-Usuario.acctividades.archivo');
+        return response()->json(['success' => true]);
+
+        // return redirect()->route('admin.inicio-Usuario.acctividades.archivo');
     }
 
-    public function recuperarActividades($id)
+    public function recuperarActividades(Request $request)
     {
-        $actividad = PlanImplementacion::find($id);
+        $implementacion = PlanImplementacion::where('id', $request->planImplementacionID)->first();
+        $tasks = $implementacion->tasks;
+        $taskID = $request->taskID;
+        $updatedTasks = array_map(function ($item) use ($taskID) {
+            if ($item->id == $taskID) {
+                $item->archivado = false;
+            }
 
-        $actividad->update([
-            'archivo' => 'recuperado',
+            return $item;
+        }, $tasks);
+
+        $implementacion->update([
+            'tasks' => $updatedTasks,
         ]);
 
-        return redirect()->route('admin.inicio-Usuario.index');
+        return response()->json(['success' => true]);
     }
 
     public function perfilPuesto()
