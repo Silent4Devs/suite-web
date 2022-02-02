@@ -3,14 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\SubcategoriaActivo;
-use App\Models\Tipoactivo;
 use Illuminate\Database\Seeder;
-
-
 
 class SubcategoriaActivosSeeder extends Seeder
 {
-
     public function run()
     {
         $subcategorias = [
@@ -416,10 +412,8 @@ class SubcategoriaActivosSeeder extends Seeder
                 'categoria_id' => '7',
             ],
 
-
         ];
 
         SubcategoriaActivo::insert($subcategorias);
-
     }
 }
