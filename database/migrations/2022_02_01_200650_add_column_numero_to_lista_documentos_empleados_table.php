@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnRechazadaToTimesheet extends Migration
+class AddColumnNumeroToListaDocumentosEmpleadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnRechazadaToTimesheet extends Migration
      */
     public function up()
     {
-        Schema::table('timesheet', function (Blueprint $table) {
-            $table->boolean('rechazado')->default(false);
+        Schema::table('lista_documentos_empleados', function (Blueprint $table) {
+            $table->boolean('activar_numero')->default(false);
         });
     }
 
@@ -25,8 +25,8 @@ class AddColumnRechazadaToTimesheet extends Migration
      */
     public function down()
     {
-        Schema::table('timesheet', function (Blueprint $table) {
-            $table->dropColumn('rechazado');
+        Schema::table('lista_documentos_empleados', function (Blueprint $table) {
+            $table->dropColumn('activar_numero');
         });
     }
 }

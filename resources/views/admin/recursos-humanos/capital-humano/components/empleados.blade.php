@@ -119,5 +119,12 @@
             </div>
         </a>
     </li>
-
+    <li><a href="{{ route('admin.lista-documentos-empleados') }}">
+            <div>
+                <i class="bi bi-file-earmark-zip"></i>
+                <br>
+                Lista de Documentos de Empleados
+            </div>
+        </a>
+    </li>
 </ul>

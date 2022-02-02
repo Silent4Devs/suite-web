@@ -28,9 +28,9 @@ class ActivosController extends Controller
         abort_if(Gate::denies('configuracion_activo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Activo::with(['tipoactivo'=>function($query){
+            $query = Activo::with(['tipoactivo'=>function ($query) {
                 $query->with('subcategoria_activos');
-            },'dueno','empleado', 'ubicacion', 'team'])->select(sprintf('%s.*', (new Activo)->table))->orderByDesc('id');
+            }, 'dueno', 'empleado', 'ubicacion', 'team'])->select(sprintf('%s.*', (new Activo)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -122,7 +122,6 @@ class ActivosController extends Controller
 
             return $table->make(true);
         }
-
 
         $tipoactivos = Tipoactivo::get();
         $subtipo = SubcategoriaActivo::get();

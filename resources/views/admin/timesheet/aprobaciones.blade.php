@@ -1,14 +1,85 @@
 @extends('layouts.admin')
 @section('content')
-	
-    {{ Breadcrumbs::render('timesheet-proyectos') }}
+    
+    <style type="text/css">
+        .aprobada{
+            padding: 3px;
+            background-color: #61CB5C;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .rechazada{
+            padding: 3px;
+            background-color: #EA7777;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .pendiente{
+            padding: 3px;
+            background-color: #F48C16;
+            color: #fff;
+            border-radius: 4px;
+        }
+    </style>
 
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Proyectos</font> </h5>
+
+     {{ Breadcrumbs::render('timesheet-aprobaciones') }}
+	
+	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Probaciones</font> </h5>
 
 	<div class="card card-body">
 		<div class="row">
+			
+	        <div class="datatable-fix w-100">
+	            <table id="datatable_timesheet" class="table w-100">
+	                <thead class="w-100">
+	                    <tr>
+	                        <th>Fin de semana </th>
+	                        <th>Empleado</th>
+	                        <th>Responsable</th>
+                            <th>Aprobación</th>
+	                        <th>opciones</th>
+	                    </tr>
+	                </thead>
 
-            @livewire('timesheet.tabla-proyectos-timesheet')
+	                <tbody>
+                        @foreach($aprobaciones as $aprobacion)
+    	                	<tr>
+    	                        <td>
+    	                            {{ $aprobacion->fecha_dia }} 
+    	                        </td>
+    	                        <td>
+    	                            {{ $aprobacion->empleado->name }}
+    	                        </td>
+    	                        <td>
+                                    {{ $aprobacion->aprobador->name }}
+    	                        </td>
+    	                        <td>
+                                    @if($aprobacion->aprobado)
+                                        <span class="aprobada">Aprobada</span>
+                                    @endif
+
+                                    @if($aprobacion->rechazado)
+                                        <span class="rechazada">Rechazada</span>
+                                    @endif
+
+                                    @if(($aprobacion->rechazado == false) && ($aprobacion->aprobado == false))
+                                        <span class="pendiente">Pendiente</span>
+                                    @endif
+    	                        </td>
+    	                        <td>
+                                    <form action="{{ asset('admin/timesheet/aprobar') }}/{{ $aprobacion->id }}" method="POST">
+                                        @csrf
+        	                        	<button title="Aprobar" class="btn"> 
+                                            <i class="fas fa-calendar-check" style="color:#3CA06C; font-size: 15pt;"></i>
+                                        </button>
+                                    </form>
+    							</td>                    
+    						</tr>
+                        @endforeach
+	                </tbody>
+	            </table>
+	        </div>
 
 		</div>
 	</div>
@@ -107,7 +178,7 @@
                             [0,'desc']
                         ]
             };
-            let table = $('#datatable_timesheet_proyectos').DataTable(dtOverrideGlobals);
+            let table = $('#datatable_timesheet').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();

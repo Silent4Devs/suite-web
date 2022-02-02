@@ -9,8 +9,6 @@ use App\Models\Team;
 use App\Models\Tipoactivo;
 use Gate;
 use Illuminate\Http\Request;
-use Laracasts\Flash\Flash;
-use Symfony\Component\Console\Input\Input;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -69,9 +67,8 @@ class TipoactivoController extends Controller
     }
 
     public function store(Request $request)
-
     {
-       $val = $request->validate([
+        $val = $request->validate([
             'tipo'=> 'unique:tipoactivos,tipo',
         ]);
 

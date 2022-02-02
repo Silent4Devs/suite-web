@@ -292,8 +292,8 @@
                         <label for="estudios"><i class="fas fa-graduation-cap iconos-crear"></i>Educación
                             Academica(estudios)<span class="text-danger">*</span></label>
                         <textarea class="form-control date" type="text" name="estudios" id="estudios">
-                                                {{ old('estudios', strip_tags($puesto->estudios)) }}
-                                            </textarea>
+                                                    {{ old('estudios', strip_tags($puesto->estudios)) }}
+                                                </textarea>
                         @if ($errors->has('estudios'))
                             <span class="text-danger">
                                 {{ $errors->first('estudios') }}
@@ -304,8 +304,8 @@
                         <label for="experiencia"><i class="fas fa-briefcase iconos-crear"></i>Experiencia Profesional<span
                                 class="text-danger">*</span></label>
                         <textarea class="form-control date" type="text" name="experiencia" id="experiencia">
-                                                {{ old('experiencia', strip_tags($puesto->experiencia)) }}
-                                            </textarea>
+                                                    {{ old('experiencia', strip_tags($puesto->experiencia)) }}
+                                                </textarea>
                         @if ($errors->has('experiencia'))
                             <span class="text-danger">
                                 {{ $errors->first('experiencia') }}
@@ -318,7 +318,7 @@
                         <label for="conocimientos"><i class="fas fa-chalkboard-teacher iconos-crear"></i>Conocimientos<span
                                 class="text-danger">*</span></label>
                         <textarea class="form-control" type="text" name="conocimientos" id="conocimientos">
-                                                {{ old('conocimientos', strip_tags($puesto->conocimientos)) }}</textarea>
+                                                    {{ old('conocimientos', strip_tags($puesto->conocimientos)) }}</textarea>
                         @if ($errors->has('conocimientos'))
                             <span class="text-danger">
                                 {{ $errors->first('conocimientos') }}
@@ -397,7 +397,7 @@
 
                 <div class="row col-12">
                     <div class="col-sm-6 col-lg-6 col-md-6">
-                        <label for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre</label>
+                        <label for="nombre" class="required"><i class="fas fa-file-signature iconos-crear"></i>Nombre</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                             name="nombre" id="nombre_certificado" value="{{ old('nombre', '') }}">
                         <span class="errors nombre_error text-danger"></span>
@@ -800,33 +800,79 @@
     <script>
         $(document).ready(function() {
             const idis = @json($idis);
-            const language =@json($puesto->language);
-            console.log(language);
-            var anadir = 1;
+            const lenguajes=@json($idis);
+            const language = @json($puesto->language);
+            const contador = @json($puesto->language->count());
+            if (contador > 0) {
+                console.log(language);
+                language.forEach((lengua, inx) => {
+                    // console.log(lengua);
+                    let formleng = {
+                        id: lengua.id,
+                        languajeIdioma: lengua.id_language,
+                        porcentaje: lengua.porcentaje,
+                        nivel: lengua.nivel,
+                    }
+                    AgregarFilaLenguaje(inx, formleng);
+                    anadir++;
 
-            language.forEach((lengua, inx) => {
-                // console.log(lengua);
-                let formleng = {
-                    id: lengua.id,
-                    languajeIdioma: lengua.idioma,
-                    porcentaje: lengua.porcentaje,
-                    nivel: lengua.nivel,
+                });
+
+            } else {
+                var count = 1;
+                AgregarFilaLenguajeCreate(count);
+            }
+
+            function AgregarFilaLenguajeCreate(number) {
+                html = `<tr>
+            <td class="col-4" >
+            <select  class="workingSelect form-control" name="id_language[${count}][language]" >`
+                lenguajes.forEach(lenguaje => {
+                    html += `<option value="${lenguaje.id}">${lenguaje.idioma}</option>`
+                })
+                html += `</select>
+            </td >
+            <td class="col-2" ><input type="text" name="id_language[${count}][porcentaje]"  class="form-control" />
+            </td>
+            <td class="col-4"><select class="workingSelect form-control" name="id_language[${count}][nivel]" id="working_day"><option value="">Seleccione una opción</option>
+            <option  value="Basico" >Básico</option>
+            <option  value="Intermedio" >Intermedio</option>
+            <option  value="Avanzado" >Avanzado</option>
+            </select></td>
+            `;
+
+
+                if (number > 1) {
+                    html +=
+                        '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Eliminar</button></td></tr>';
+                    $("#user_table tbody").append(html);
+                } else {
+                    html +=
+                        '<td col-2><button type="button" name="add" id="add" class="btn btn-success">Agregar</button></td></tr>';
+                    $("#user_table tbody").html(html);
                 }
-                AgregarFilaLenguaje(inx, formleng);
-                anadir++;
+            }
 
+            $(document).on("click", "#add", function() {
+                count++;
+                AgregarFilaLenguajeCreate(count);
+            });
+
+            $(document).on("click", ".remove", function() {
+                count--;
+                $(this).closest("tr").remove();
             });
 
 
-            //   AgregarFilaLenguaje(count,formleng);
-
+            var anadir = 1;
             function AgregarFilaLenguaje(habla, formleng) {
+                console.log('Datos Lengua:',formleng);
                 html = `<tr>
             <td class="col-4" id="lenguaje_lenguaje" >
             <input type="hidden" name="id_language[${habla}][id]" value="${formleng.id?formleng.id:0}">
             <select class="form-control" value="${formleng.languajeIdioma}" name="lalengua[${habla}][id_language]">`
                 idis.forEach(idi => {
-                    html += `<option value="${idi.id}">${idi.idioma}</option>`
+                    html += `<option value="${idi.id}" ${formleng.languajeIdioma ==  idi.id ? "selected":''}>${idi.idioma}</option>`
                 })
                 html += `</select>
             </td >
@@ -877,6 +923,111 @@
 
 
         });
+    </script>
+
+    {{-- <script>
+        $(document).ready(function () {
+        var habla = 1;
+        // if (habla == 0){
+        const lenguajes=@json($idis);
+        console.log(lenguajes);
+
+          AgregarFilaLenguaje(habla);
+
+          function AgregarFilaLenguaje(number) {
+
+                html = `<tr>
+                    <td class="col-4" >
+                    <select  class="workingSelect form-control" name="id_language[${habla}][language]" >`
+                    lenguajes.forEach(lenguaje=>{
+                        html+=`<option value="${lenguaje.id}">${lenguaje.idioma}</option>`
+                    })
+                    html+=`</select>
+                    </td >
+                    <td class="col-2" ><input type="text" name="id_language[${habla}][porcentaje]" class="form-control" /></td>
+                    <td class="col-4"><select class="workingSelect form-control" name="id_language[${habla}][nivel]" id="working_day"><option value="">Seleccione una opción</option>
+                    <option  value="Basico" >Básico</option>
+                    <option  value="Intermedio" >Intermedio</option>
+                    <option  value="Avanzado" >Avanzado</option>
+                    </select></td>
+                    `;
+
+
+                if (number > 1) {
+                html +=
+                    '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Eliminar</button></td></tr>';
+                $("#user_table tbody").append(html);
+                } else {
+                html +=
+                    '<td col-2><button type="button" name="add" id="add" class="btn btn-success">Agregar</button></td></tr>';
+                $("#user_table tbody").html(html);
+                }
+            }
+
+            $(document).on("click", "#add", function () {
+                habla++;
+                AgregarFilaLenguaje(habla);
+            });
+
+            $(document).on("click", ".remove", function () {
+                habla--;
+                $(this).closest("tr").remove();
+            });
+
+
+            });
+      </script>
+
+      <script>
+          $(document).ready(function () {
+          const herramientas=@json($herramientas);
+          console.log(herramientas);
+          let agregar = 0;
+
+          function agregarFilaHerramienta(cont,informacion) {
+              console.log(informacion)
+              const contenedorHerramientas=document.getElementById('contenedor_herramientas');
+              let html=`
+              <tr>
+                <td><input type="hidden" name="herramientas[${cont}][id]" value="${informacion.id?informacion.id:0}"><input class="form-control" type="text"  name="herramientas[${cont}][nombre_herramienta]" value="${informacion.nombreHerramienta}" ></td>
+                <td><textarea class="form-control" type="text"  style="min-height: 25px !important;" name="herramientas[${cont}][descripcion_herramienta]" value="">${informacion.descripcionHerramienta}</textarea></td>
+                <td><button type="button" name="btn-remove-herramientas" id="" class="btn btn-danger remove">Eliminar</button></td>
+             </tr>
+              `
+            contenedorHerramientas.innerHTML += html;
+             limpiarFormularioHerramientas();
+            }
+
+            function limpiarFormularioHerramientas(){
+            const nombreHerramienta = document.getElementById('nombre_herramienta_puesto').value=null;
+            const descripcionHerramienta = document.getElementById('descripcion_herramienta_puesto').value=null;
+          }
+
+          $(document).on("click", "#btn-suscribir-herramientas", function () {
+
+
+            const nombreHerramienta = document.getElementById('nombre_herramienta_puesto').value;
+            const descripcionHerramienta = document.getElementById('descripcion_herramienta_puesto').value;
+
+            let informacion={
+                    nombreHerramienta,
+                    descripcionHerramienta
+            }
+
+          agregarFilaHerramienta(agregar,informacion);
+                agregar ++;
+
+             });
+            $(document).on("click", ".btn-remove-herramientas", function () {
+                $(this).closest("tr").remove();
+                agregar --;
+         });
+    });
+    </script> --}}
+
+    <script>
+
+
     </script>
 
 
@@ -1097,20 +1248,20 @@
     <script>
         $(document).ready(function() {
             const empleados = @json($empleados);
-            const contactos = @json($puesto->contactos);
+            const contactos = @json($puesto);
             console.log(contactos);
             let fila = 0;
 
-            contactos.forEach((relacion, ver) => {
+            contactos.contactos.forEach((relacion, ver) => {
                 // console.log(certificado);
                 let contact = {
-                    id:relacion.id,
-                    nombreContacto:relacion.id_contacto,
-                    // puestoContacto:relacion.id_contacto,
-                    descripcionContacto:relacion.descripcion_contacto
+                    id: relacion.id,
+                    nombreContacto: relacion.id_contacto,
+                    puestoContacto:relacion.empleados.puesto_relacionado.puesto,
+                    descripcionContacto: relacion.descripcion_contacto
                 }
                 agregarFilaContactos(ver, contact);
-                fila ++;
+                fila++;
 
             });
 
@@ -1123,7 +1274,7 @@
             <td><input type="hidden" name="contactos[${contable}][id]"  value="${contact.id?contact.id:0}"><select class="form-control" value="${contact.nombreContacto}" name="contactos[${contable}][id_contacto]">`
                 empleados.forEach(empleado => {
                     html +=
-                        `<option data-puesto="${empleado.puesto}" data-contact="${contact.id}" value="${empleado.id}">${empleado.name}</option>`
+                        `<option data-puesto="${empleado.puesto}" data-contact="${contact.id}" value="${empleado.id}"  ${contact.nombreContacto ==  empleado.id ? "selected":''} >${empleado.name}</option>`
                 })
                 html += `</select>
             </td >
@@ -1214,17 +1365,16 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-        let contacto = document.querySelector('#nombre_contacto_puesto');
-        let puesto_init = contacto.options[contacto.selectedIndex].getAttribute('data-puesto');
+            let contacto = document.querySelector('#nombre_contacto_puesto');
+            let puesto_init = contacto.options[contacto.selectedIndex].getAttribute('data-puesto');
 
-        document.getElementById('contacto_puesto').innerHTML = puesto_init;
-        contacto.addEventListener('change', function(e) {
-            e.preventDefault();
-            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('contacto_puesto').innerHTML = puesto;
+            document.getElementById('contacto_puesto').innerHTML = puesto_init;
+            contacto.addEventListener('change', function(e) {
+                e.preventDefault();
+                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('contacto_puesto').innerHTML = puesto;
+            })
         })
-    })
-
     </script>
 
     <script>

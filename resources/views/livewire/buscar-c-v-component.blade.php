@@ -324,10 +324,10 @@
                                                 Del
                                                 <strong>{{ \Carbon\Carbon::parse($experiencia->inicio_mes)->format('d/m/Y') }}</strong>
                                                 al
-                                                @if ($experiencia->trabactuamente = true)
+                                                @if (!$experiencia->fin_mes)
                                                 <strong>día de hoy</strong>
                                                 @else
-                                                    <strong>{{ \Carbon\Carbon::parse($experiencia->fin_mes)->format('d/m/Y') }}</strong>
+                                                <strong>{{ \Carbon\Carbon::parse($experiencia->fin_mes)->format('d/m/Y') }}</strong>
                                                 @endif
 
                                             </span>
@@ -394,7 +394,7 @@
                                                 Del
                                                 <strong>{{ \Carbon\Carbon::parse($educacion->año_inicio)->format('d/m/Y') }}</strong>
                                                 al
-                                                @if ($eduacion->estudactuamente = true)
+                                                @if (! $educacion->año_fin)
                                                 <strong>día de hoy</strong>
                                                 @else
                                                     <strong>{{ \Carbon\Carbon::parse($educacion->año_fin)->format('d/m/Y') }}</strong>
@@ -508,20 +508,34 @@
                                                         <div class="form-group col-sm-6 col-lg-6 col-md-6">
                                                             <label for="nombre"><i
                                                                     class="fas fa-file-signature iconos-crear"></i>Nombre</label>
-                                                            <input
+                                                            {{-- <input
                                                                 class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
                                                                 type="text" name="nombre" id="nombre_documento"
-                                                                value="{{ old('nombre', '') }}">
+                                                                value="{{ old('nombre', '') }}"> --}}
+
+                                                                <select class="form-control" name="nombre" id="nombre_documento">
+                                                                    <option value="" selected disabled>Selecciones documento</option>
+                                                                    @forelse($lista_docs as $list_doc)
+                                                                        <option 
+                                                                            data-activar="{{ $list_doc->activar_numero ? 'si' : 'no'}}" 
+                                                                            value="{{ $list_doc->documento }}">
+
+                                                                                {{ $list_doc->documento }}
+                                                                        </option>
+                                                                        @empty
+                                                                        <option>sin documentos</option>
+                                                                    @endforelse
+                                                                </select>
                                                             <span
                                                                 class="errors nombre_error text-danger"></span>
                                                         </div>
-                                                        <div class="form-group col-sm-6">
+                                                        <div class="form-group col-sm-6 d-none" id="group_numero_activo">
                                                             <label for="numero"><i
-                                                                    class="fas fa-barcode iconos-crear"></i>Número</label>
+                                                                    class="fas fa-barcode iconos-crear"></i>ID</label>
                                                             <input
                                                                 class="form-control {{ $errors->has('numero') ? 'is-invalid' : '' }}"
                                                                 type="text" name="numero" id="numero"
-                                                                value="{{ old('numero', '') }}">
+                                                                value="{{ old('numero', '') }}" required>
                                                             <span
                                                                 class="errors numero_error text-danger"></span>
                                                         </div>
@@ -1290,4 +1304,20 @@
         return true;
     }
 </script>
+@section('scripts')
+    <script type="text/javascript">
+        $(document).on('change', '#nombre_documento', function(event) {
+            let op_select = $('#nombre_documento option:selected').attr('data-activar');
+            console.log(op_select);
+            if (op_select == 'si') {
+                $('#group_numero_activo').addClass('d-block');
+                $('#group_numero_activo').removeClass('d-none');
+            }
+            if (op_select == 'no'){
+                $('#group_numero_activo').addClass('d-none');
+                $('#group_numero_activo').removeClass('d-block');
+            }
+        });
+    </script>
+@endsection
 </div>

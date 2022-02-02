@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Empleado;
+use App\Models\ListaDocumentoEmpleado;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -29,6 +30,7 @@ class BuscarCVComponent extends Component
     public $curso;
     public $empleadoModel;
     public $general;
+    public $lista_docs;
 
     protected $queryString = [
         'area_id' => ['except' => ''],
@@ -97,6 +99,7 @@ class BuscarCVComponent extends Component
 
     public function render()
     {
+        $this->lista_docs = ListaDocumentoEmpleado::get();
         $empleadosCV = Empleado::with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
             ->when($this->empleado_id, function ($q3) {
                 $q3->where('id', $this->empleado_id);

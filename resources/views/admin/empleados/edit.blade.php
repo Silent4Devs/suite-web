@@ -486,6 +486,7 @@
                 templateSelection: customizeNationalitySelect
             });
 
+            window.lenguajes=@json($idiomas);
             function customizeNationalitySelect(opt) {
                 if (!opt.id) {
                     return opt.text;
@@ -697,6 +698,9 @@
             })
             window.tblExperiencia = $('#tbl-experiencia').DataTable({
                 "autoWidth": false,
+                initComplete: function(settings,json){
+                    $(".yearpicker").yearpicker()
+                },
                 buttons: [],
                 processing: true,
                 serverSide: true,
@@ -737,40 +741,40 @@
                         }
                     },
                     {
-                        data: 'inicio_mes_ymd',
-                        name: 'inicio_mes_ymd',
+                        data: 'inicio_mes',
+                        name: 'inicio_mes',
                         render: function(data, type, row, meta) {
+                            console.log(row)
                             if (data) {
-                                return `<input class="form-control" type="date" value="${data}" data-name-input="inicio_mes" data-experiencia-id="${row.id}" />
+                                return `<input class="yearpicker form-control" type="text" value="${data}" data-name-input="inicio_mes" data-experiencia-id="${row.id}" />
                                 <span class="errors inicio_mes_error text-danger"></span>`;
 
                             } else {
-                                return `<input class="form-control" type="date" value="" data-name-input="inicio_mes" data-experiencia-id="${row.id}" />
+                                return `<input class="form-control yearpicker" type="text" value="" data-name-input="inicio_mes"  data-experiencia-id="${row.id}" />
                                 <span class="errors inicio_mes_error text-danger"></span>`;
                             }
                         }
                     },
                     {
-                        data: 'fin_mes_ymd',
-                        name: 'fin_mes_ymd',
+                        data: 'fin_mes',
+                        name: 'fin_mes',
                         render: function(data, type, row, meta) {
+
                             if (row.trabactualmente) {
                                 return `Trabajo actual
                                 <input class="form-group" type="checkbox" ${row.trabactualmente ? 'checked': ''} data-name-input="trabactualmente" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>
                                 `;
-                            }
-                            if (data) {
-                                return `<input class="form-control" type="date" value="${data}" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
+                            }else if (data) {
+                                return `<input class="form-control yearpicker" type="text" value="${data}" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>`;
 
                             } else {
-                                return `<input class="form-control" type="date" value="" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
+                                return `<input class="form-control yearpicker" type="text" value="" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>`;
                             }
                         }
                     },
-
                     {
                         data: 'id',
                         render: function(data, type, route, meta) {
@@ -786,7 +790,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [4, 'asc']
                 ],
             });
 
@@ -799,8 +803,10 @@
                         const experienciaId = e.target.getAttribute('data-experiencia-id');
                         const typeInput = e.target.getAttribute('data-name-input');
                         let value = e.target.value;
+                        // Funcion del cambio de javascript
                         if (e.target.type == 'checkbox') {
                             value = e.target.checked;
+                            tblExperiencia.ajax.reload()
                         }
                         console.log(experienciaId);
                         const formData = new FormData();
@@ -1011,6 +1017,7 @@
                         let value = e.target.value;
                         if (e.target.type == 'checkbox') {
                             value = e.target.checked;
+                            tblEducacion.ajax.reload()
                         }
                         console.log(educacionId);
                         const formData = new FormData();
@@ -1674,10 +1681,15 @@
                         data: 'nombre',
                         name: 'nombre',
                         render: function(data, type, row, meta) {
-                            return `
-                            <input class="form-control" type="text" value="${data}" data-name-input="nombre" data-idioma-id="${row.id}" />
-                            <span class="errors nombre_error text-danger"></span>
+                           html= `
+                            <select class="form-control" data-idioma-id="${row.id}" data-name-input="id_language" >`
+                                lenguajes.forEach(lenguaje=>{
+                                    html += `<option value="${lenguaje.id}" ${data ==  lenguaje.id ? "selected":''}>${lenguaje.idioma}</option>`
+                         })
+                            html+=`</select>
                             `;
+
+                            return html;
                         }
                     },
                     {
@@ -2321,9 +2333,11 @@
         function limpiarCamposExperiencia() {
             $("#empresa").val('');
             $("#puesto_trabajo").val('');
-            $("#descripcion").val('');
+            $("#descripcion_exp").val('');
             $("#inicio_mes").val('');
             $("#fin_mes").val('');
+            $("#trabactualmente").val('');
+
         }
 
         function limpiarCamposDocumentos() {
@@ -2623,6 +2637,7 @@
 
         })
     </script>
+    {{-- Evento de trabactualmente habilita y deshabilita los inputs --}}
     <script>
         $(document).ready(function(){
         $('#trabactualmente').on('change',function(){
@@ -2631,6 +2646,7 @@
             } else {
             $("#fin_mes_contenedor").show();
             }
+
         })
         });
     </script>
@@ -2645,4 +2661,15 @@
         })
         });
     </script>
+
+
+        <script>
+            $(document).ready(function() {
+                $(".yearpicker").yearpicker()
+
+            });
+
+        </script>
+
+
 @endsection
