@@ -158,7 +158,7 @@ class EmpleadoController extends Controller
 
     public function getExperiencia($empleado)
     {
-        $experiencias = ExperienciaEmpleados::where('empleado_id', intval($empleado))->get();
+        $experiencias = ExperienciaEmpleados::where('empleado_id', intval($empleado))->orderByDesc('inicio_mes')->get();
         // dd($experiencias);
         return datatables()->of($experiencias)->toJson();
     }
@@ -943,6 +943,7 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
+
         abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find(intval($id));
         $empleados = Empleado::get();
@@ -968,6 +969,7 @@ class EmpleadoController extends Controller
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
         $isEditAdmin = true;
+        // dd($idiomas);
         // dd(Empleado::find(63));
         return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas'));
     }

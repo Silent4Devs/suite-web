@@ -699,7 +699,12 @@
             window.tblExperiencia = $('#tbl-experiencia').DataTable({
                 "autoWidth": false,
                 initComplete: function(settings,json){
-                    $(".yearpicker").yearpicker()
+                    $(".datepicker").datepicker({
+                        format: "yyyy",
+                        viewMode: "years",
+                        minViewMode: "years",
+                        autoclose:true //to close picker once year is selected
+                    });
                 },
                 buttons: [],
                 processing: true,
@@ -746,11 +751,11 @@
                         render: function(data, type, row, meta) {
                             console.log(row)
                             if (data) {
-                                return `<input class="yearpicker form-control" type="text" value="${data}" data-name-input="inicio_mes" data-experiencia-id="${row.id}" />
+                                return `<input class=" form-control" type="text" value="${data}" data-name-input="inicio_mes" data-experiencia-id="${row.id}" />
                                 <span class="errors inicio_mes_error text-danger"></span>`;
 
                             } else {
-                                return `<input class="form-control yearpicker" type="text" value="" data-name-input="inicio_mes"  data-experiencia-id="${row.id}" />
+                                return `<input class="form-control" type="text" value="" data-name-input="inicio_mes"  data-experiencia-id="${row.id}" />
                                 <span class="errors inicio_mes_error text-danger"></span>`;
                             }
                         }
@@ -766,11 +771,11 @@
                                 <span class="errors fin_mes_error text-danger"></span>
                                 `;
                             }else if (data) {
-                                return `<input class="form-control yearpicker" type="text" value="${data}" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
+                                return `<input class="form-control"  type="text" value="${data}" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>`;
 
                             } else {
-                                return `<input class="form-control yearpicker" type="text" value="" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
+                                return `<input class="form-control"  type="text" value="" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>`;
                             }
                         }
@@ -789,13 +794,12 @@
 
                 ],
                 orderCellsTop: true,
-                order: [
-                    [4, 'asc']
-                ],
             });
 
             //Eventos para editar registros
             document.getElementById('tbl-experiencia').addEventListener('change', async function(e) {
+                console.log(e.target);
+
                 if (e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') {
                     console.log(e.target.type)
                     if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
@@ -2663,12 +2667,21 @@
     </script>
 
 
-        <script>
+        {{-- <script>
             $(document).ready(function() {
                 $(".yearpicker").yearpicker()
 
             });
 
+        </script> --}}
+
+        <script>
+            $(".datepicker").datepicker({
+            format: "yyyy",
+            viewMode: "years",
+            minViewMode: "years",
+            autoclose:true //to close picker once year is selected
+        });
         </script>
 
 
