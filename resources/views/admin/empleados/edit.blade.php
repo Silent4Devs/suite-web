@@ -745,7 +745,7 @@
                                 <span class="errors inicio_mes_error text-danger"></span>`;
 
                             } else {
-                                return `<input class="form-control" type="date" value="" data-name-input="inicio_mes" data-experiencia-id="${row.id}" />
+                                return `<input class="form-control" type="date" value="" data-name-input="inicio_mes"  data-experiencia-id="${row.id}" />
                                 <span class="errors inicio_mes_error text-danger"></span>`;
                             }
                         }
@@ -754,13 +754,13 @@
                         data: 'fin_mes_ymd',
                         name: 'fin_mes_ymd',
                         render: function(data, type, row, meta) {
+
                             if (row.trabactualmente) {
                                 return `Trabajo actual
                                 <input class="form-group" type="checkbox" ${row.trabactualmente ? 'checked': ''} data-name-input="trabactualmente" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>
                                 `;
-                            }
-                            if (data) {
+                            }else if (data) {
                                 return `<input class="form-control" type="date" value="${data}" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>`;
 
@@ -770,7 +770,6 @@
                             }
                         }
                     },
-
                     {
                         data: 'id',
                         render: function(data, type, route, meta) {
@@ -2321,9 +2320,11 @@
         function limpiarCamposExperiencia() {
             $("#empresa").val('');
             $("#puesto_trabajo").val('');
-            $("#descripcion").val('');
+            $("#descripcion_exp").val('');
             $("#inicio_mes").val('');
             $("#fin_mes").val('');
+            $("#trabactualmente").val('');
+
         }
 
         function limpiarCamposDocumentos() {
@@ -2623,6 +2624,7 @@
 
         })
     </script>
+    {{-- Evento de trabactualmente habilita y deshabilita los inputs --}}
     <script>
         $(document).ready(function(){
         $('#trabactualmente').on('change',function(){
@@ -2631,6 +2633,7 @@
             } else {
             $("#fin_mes_contenedor").show();
             }
+
         })
         });
     </script>
@@ -2645,4 +2648,6 @@
         })
         });
     </script>
+
+
 @endsection

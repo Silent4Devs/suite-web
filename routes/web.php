@@ -206,8 +206,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('inicioUsuario/aprobacion/recuperar/{id}', 'InicioUsuarioController@recuperarAprobacion')->name('inicio-Usuario.aprobacion.recuperar');
     Route::get('inicioUsuario/aprobacion/archivo', 'InicioUsuarioController@archivoAprobacion')->name('inicio-Usuario.aprobacion.archivo');
 
-    Route::post('inicioUsuario/actividades/archivar/{id}', 'InicioUsuarioController@archivarActividades')->name('inicio-Usuario.actividades.archivar');
-    Route::post('inicioUsuario/actividades/recuperar/{id}', 'InicioUsuarioController@recuperarActividades')->name('inicio-Usuario.actividades.recuperar');
+    Route::post('inicioUsuario/actividades/archivar', 'InicioUsuarioController@archivarActividades')->name('inicio-Usuario.actividades.archivar');
+    Route::post('inicioUsuario/actividades/recuperar', 'InicioUsuarioController@recuperarActividades')->name('inicio-Usuario.actividades.recuperar');
     Route::get('inicioUsuario/actividades/archivo', 'InicioUsuarioController@archivoActividades')->name('inicio-Usuario.acctividades.archivo');
 
     Route::get('inicioUsuario/perfil-puesto', 'InicioUsuarioController@perfilPuesto')->name('inicio-Usuario.perfil-puesto');
@@ -365,17 +365,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
     Route::resource('empleados', 'EmpleadoController');
 
-
     // Timesheet
     Route::get('timesheet', 'TimesheetController@index')->name('timesheet');
+    Route::get('timesheet/rechazadas', 'TimesheetController@rechazadas')->name('timesheet-rechazadas');
+    Route::get('timesheet/aprobaciones', 'TimesheetController@aprobaciones')->name('timesheet-aprobaciones');
+    Route::post('timesheet/aprobar/{id}', 'TimesheetController@aprobar')->name('timesheet-aprobar');
     Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
     Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
 
     Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
     Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
     Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
-
-    Route::get('timesheet/aprobar', 'TimesheetController@aprobar')->name('timesheet-aprobar');
 
     Route::resource('timesheet', 'TimesheetController')->except(['create', 'index']);
 
