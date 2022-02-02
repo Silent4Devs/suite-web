@@ -880,6 +880,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('panel-inicio', 'PanelInicioRuleController');
     Route::resource('panel-organizacion', 'PanelOrganizacionController');
+
+    // lista documentos empleados
+    Route::get('lista-documentos', 'ListaDocumentosEmpleados@index')->name('lista-documentos-empleados');
+    Route::post('lista-documentos/store', 'ListaDocumentosEmpleados@store')->name('lista-documentos-empleados-store');
+    Route::get('lista-documentos/destroy/{id}', 'ListaDocumentosEmpleados@destroy')->name('lista-documentos-empleados-destroy');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {

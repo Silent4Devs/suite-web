@@ -14,6 +14,7 @@ use App\Models\CursosDiplomasEmpleados;
 use App\Models\Empleado;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\Language;
+use App\Models\ListaDocumentoEmpleado;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
@@ -202,7 +203,9 @@ class CompetenciasController extends Controller
     public function miCurriculum(Request $request, Empleado $empleado)
     {
         // dd($empleado);
-        return view('admin.competencia.mi-cv', compact('empleado'));
+
+        $lista_docs = ListaDocumentoEmpleado::get();
+        return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
     }
 
     public function editarCompetencias(Empleado $empleado)

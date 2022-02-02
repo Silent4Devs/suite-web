@@ -27,10 +27,7 @@ class PuestoResponsabilidade extends Model
         'puesto_id',
     ];
 
-    // public function puestos()
-    // {
-    // 	return $this->hasMany(Puesto::class);
-    // }
+
 
     public function puesto()
     {
