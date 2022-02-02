@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use Carbon\Carbon;
-use App\Models\Area;
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Empleado;
-use App\Models\Language;
-use Illuminate\Support\Str;
-use App\Models\Competencium;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\CursosDiplomasEmpleados;
-use Illuminate\Support\Facades\Storage;
-use App\Models\CertificacionesEmpleados;
-use Yajra\DataTables\Facades\DataTables;
-use App\Models\EvidenciasDocumentosEmpleados;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\StoreCompetenciumRequest;
-use App\Http\Requests\UpdateCompetenciumRequest;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyCompetenciumRequest;
+use App\Http\Requests\StoreCompetenciumRequest;
+use App\Http\Requests\UpdateCompetenciumRequest;
+use App\Models\Area;
+use App\Models\CertificacionesEmpleados;
+use App\Models\Competencium;
+use App\Models\CursosDiplomasEmpleados;
+use App\Models\Empleado;
+use App\Models\EvidenciasDocumentosEmpleados;
+use App\Models\Language;
+use App\Models\Team;
+use App\Models\User;
+use Carbon\Carbon;
+use Gate;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class CompetenciasController extends Controller
 {
@@ -118,13 +118,9 @@ class CompetenciasController extends Controller
     {
         abort_if(Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
-
         $nombrecolaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $competencium->load('nombrecolaborador', 'team');
-
-
 
         return view('admin.competencia.edit', compact('nombrecolaboradors', 'competencium'));
     }
@@ -214,7 +210,7 @@ class CompetenciasController extends Controller
         $isEditAdmin = false;
         $idiomas = Language::get();
 
-        return view('admin.empleados.edit', compact('isEditAdmin', 'empleado','idiomas'));
+        return view('admin.empleados.edit', compact('isEditAdmin', 'empleado', 'idiomas'));
     }
 
     public function cargarDocumentos(Request $request, Empleado $empleado)

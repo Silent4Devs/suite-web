@@ -25,7 +25,7 @@ class CategoriaSubcategoria extends Component
 
     public function render()
     {
-        return view('livewire.categoria-subcategoria',['categoriaSelect'=>$this->categoriaSelect]);
+        return view('livewire.categoria-subcategoria', ['categoriaSelect'=>$this->categoriaSelect]);
     }
 
     public function updatedCategoria($value)

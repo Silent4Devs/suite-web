@@ -51,14 +51,10 @@ class MarcaController extends Controller
             //     return response()->json(['success'=>false]);
             // }
             $marca = Marca::create($request->all());
-            if(array_key_exists('ajax',$request->all())){
-             return response()->json(['success'=>true,'activo'=>$marca]);
-         }
-
-
+            if (array_key_exists('ajax', $request->all())) {
+                return response()->json(['success'=>true, 'activo'=>$marca]);
+            }
         }
-
-
     }
 
     /**

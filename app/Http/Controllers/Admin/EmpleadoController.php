@@ -943,7 +943,6 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-
         abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find(intval($id));
         $empleados = Empleado::get();

@@ -89,7 +89,7 @@ class ModeloController extends Controller
                 'nombre'=>$nombre,
             ]);
             if ($modelo) {
-                return response()->json(['success'=>true,'modelo'=>$modelo]);
+                return response()->json(['success'=>true, 'modelo'=>$modelo]);
             } else {
                 return response()->json(['success'=>false]);
             }

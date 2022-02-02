@@ -71,8 +71,8 @@ class SubcategoriaActivoContoller extends Controller
     public function store(Request $request)
     {
         $subtipos = SubcategoriaActivo::create($request->all());
-        if(array_key_exists('ajax',$request->all())){
-            return response()->json(['success'=>true,'subtipo'=>$subtipos]);
+        if (array_key_exists('ajax', $request->all())) {
+            return response()->json(['success'=>true, 'subtipo'=>$subtipos]);
         }
 
         return redirect()->route('admin.subtipoactivos.index')->with('success', 'Guardado con éxito');
@@ -125,7 +125,7 @@ class SubcategoriaActivoContoller extends Controller
             $subtipos = SubcategoriaActivo::where('categoria_id', $request->categoria)->get();
             // dd($tipos);
             foreach ($subtipos as $subtipo) {
-                $subtipos_arr[] = ['id'=>$subtipo->id, 'text'=>$subtipo->categoria_id,'text'=>$subtipo->subcategoria];
+                $subtipos_arr[] = ['id'=>$subtipo->id, 'text'=>$subtipo->categoria_id, 'text'=>$subtipo->subcategoria];
             }
 
             $array_m = [];

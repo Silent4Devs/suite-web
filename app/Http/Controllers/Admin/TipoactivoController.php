@@ -72,11 +72,12 @@ class TipoactivoController extends Controller
             'tipo'=> 'unique:tipoactivos,tipo',
         ]);
 
-         $tipoactivo = Tipoactivo::create($request->all());
-         if(array_key_exists('ajax',$request->all())){
-             return response()->json(['success'=>true,'activo'=>$tipoactivo]);
-         }
-         return redirect()->route('admin.tipoactivos.index')->with('success', 'Guardado con éxito');
+        $tipoactivo = Tipoactivo::create($request->all());
+        if (array_key_exists('ajax', $request->all())) {
+            return response()->json(['success'=>true, 'activo'=>$tipoactivo]);
+        }
+
+        return redirect()->route('admin.tipoactivos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Tipoactivo $tipoactivo)
