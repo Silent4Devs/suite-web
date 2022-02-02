@@ -156,29 +156,43 @@
                             name="actividad" id="actividad_responsabilidades" value="{{ old('actividad', '') }}">
                         <span class="errors actividad_error text-danger"></span>
                     </div>
-                </div>
+                </div><br>
 
-                <div class="row col-12 mt-3">
+                {{-- <div class="row col-12 mt-3">
                     <div class="col-sm-4 col-lg-12 col-md-12">
                         <label for="resultado"><i class="fas fa-chart-line iconos-crear"></i>Resultado Esperado</label>
-                        <input class="form-control {{ $errors->has('resultado') ? 'is-invalid' : '' }}" type="text"
+                        <input class="form-control {{ $errors->has('resultado') ? 'is-invalid' : '' }}" type="long-text"
                             name="resultado" id="resultado_certificado_responsabilidades"
                             value="{{ old('resultado', '') }}">
                         <span class="errors resultado_error text-danger"></span>
                     </div>
+                </div> --}}
+            <div class="row col-12">
+                <div class="col-sm-12 col-lg-12 col-md-12">
+                    <label for="descripcion"><i
+                            class="fas fa-file-signature iconos-crear"></i>Resultado Esperado</label>
+                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
+                        name="resultado" id="resultado_certificado_responsabilidades">{{ old('descripcion') }}</textarea>
+                    @if ($errors->has('descripcion'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('descripcion') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.sede.fields.descripcion_helper') }}</span>
                 </div>
+            </div>
 
                 <div class="row col-12 mt-3">
 
                     <div class="col-sm-8 col-lg-8 col-md-8">
-                        <label for="indicador"><i class="fas fa-clipboard-check iconos-crear"></i>Cumplimiento</label>
+                        <label for="indicador"><i class="fas fa-clipboard-check iconos-crear"></i>Indicador de cumplimiento </label>
                         <input class="form-control {{ $errors->has('indicador') ? 'is-invalid' : '' }}" type="text"
                             name="indicador" id="indicador_responsabilidades" value="{{ old('indicador', '') }}">
                         <span class="errors indicador_error text-danger"></span>
                     </div>
 
                     <div class="col-sm-4 col-lg-4 col-md-4">
-                        <label for="tiempo_asignado"><i class="far fa-percent iconos-crear"></i> de tiempo</label>
+                        <label for="tiempo_asignado"><i class="far fa-percent iconos-crear"></i>Porcentaje de tiempo asignado</label>
                         <input class="form-control {{ $errors->has('tiempo_asignado') ? 'is-invalid' : '' }}" type="text"
                             name="tiempo_asignado" id="tiempo_asignado_responsabilidades"
                             value="{{ old('tiempo_asignado', '') }}">

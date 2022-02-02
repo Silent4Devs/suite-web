@@ -16,7 +16,7 @@
             @endif
     </div>
 
-    <div style="margin-top:10px;height: 28px !important;margin-left: -10px !important;">
+    <div style="margin-top:17px;height: 28px !important;margin-left: -10px !important;">
         <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
         data-toggle="modal" data-target="#categorialec" data-whatever="@mdo" title="Agregar Tipo"><i
             class="fas fa-plus"></i></button>
@@ -38,7 +38,7 @@
                 </div>
             @endif
     </div>
-    <div style="margin-top:10px;height:28px !important;margin-left: -10px !important;">
+    <div style="margin-top:17px;height:28px !important;margin-left: -10px !important;">
         <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
         data-toggle="modal" data-target="#subcategorialec" data-whatever="@mdo" title="Agregar Tipo"><i
             class="fas fa-plus"></i></button>
