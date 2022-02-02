@@ -131,7 +131,7 @@ class BuscarCVComponent extends Component
                 $qGeneral->where('name', 'ILIKE', "%{$this->general}%");
             })
 
-            ->paginate(20);
+            ->paginate(21);
         $this->empleado = null;
         /*   ->with([
                 'empleado_experiencia' => function ($q1) {
