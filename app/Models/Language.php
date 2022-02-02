@@ -33,12 +33,6 @@ class Language extends Model
 
     ];
 
-    public function porcentaje()
-    {
-        return $this->belongsToMany('\App\Porcentaje', 'puesto_idioma_porcentaje_pivot')
-            ->withPivot('id_porcentaje');
-    }
-
     public function puesto()
     {
         return $this->belongsToMany('\App\Puesto', 'puesto_idioma_porcentaje_pivot')

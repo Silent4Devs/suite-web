@@ -8,10 +8,12 @@ use Livewire\Component;
 
 class CategoriaSubcategoria extends Component
 {
+    // protected $listeners = ['render-Modal-subcategoria' => 'render'];
     public $categorias;
     public $subcategorias;
     public $categoria;
     public $subcategoria;
+    public $categoriaSelect = 4;
 
     public $selectedState = null;
 
@@ -23,7 +25,7 @@ class CategoriaSubcategoria extends Component
 
     public function render()
     {
-        return view('livewire.categoria-subcategoria');
+        return view('livewire.categoria-subcategoria', ['categoriaSelect'=>$this->categoriaSelect]);
     }
 
     public function updatedCategoria($value)

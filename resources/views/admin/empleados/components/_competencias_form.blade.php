@@ -245,8 +245,8 @@
         <div class="row">
             <div class="form-group col-sm-6">
                 <label for="inicio_mes"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
-                <input class="form-control {{ $errors->has('inicio_mes') ? 'is-invalid' : '' }}" type="date"
-                    name="inicio_mes" id="inicio_mes" value="{{ old('inicio_mes', '') }}">
+                <input class="datepicker form-control {{ $errors->has('inicio_mes') ? 'is-invalid' : '' }}" type="text"
+                    name="inicio_mes"  id="inicio_mes" >
                 <span class="errors inicio_mes_error text-danger"></span>
             </div>
 
@@ -254,8 +254,8 @@
 
             <div class="form-group col-sm-6" id="fin_mes_contenedor">
                 <label for="fin_mes"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
-                <input class="form-control {{ $errors->has('fin_mes') ? 'is-invalid' : '' }}" type="date"
-                    name="fin_mes" id="fin_mes" value="{{ old('fin_mes', '') }}">
+                <input class="datepicker form-control {{ $errors->has('fin_mes') ? 'is-invalid' : '' }}" type="text"
+                name="fin_mes" id="fin_mes" value="{{ old('fin_mes', '') }}">
                 <span class="errors fin_mes_error text-danger"></span>
             </div>
 
@@ -290,8 +290,8 @@
                     <th  style="min-width:150px;">Empresa</th>
                     <th  style="min-width:150px;">Puesto</th>
                     <th style="min-width:300px;">Descripción</th>
-                    <th>Inicio</th>
-                    <th>Fin</th>
+                    <th style="min-width:80px;">Inicio</th>
+                    <th style="min-width:80px;">Fin</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
@@ -400,8 +400,15 @@
         <div class="row">
             <div class="form-group col-sm-5">
                 <label for="nombre"><i class="fas fa-school iconos-crear"></i>Nombre</label>
-                <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
-                    name="nombre" id="nombre_idioma" value="{{ old('nombre', '') }}">
+                <select class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
+                    name="id_language" id="nombre_idioma" value="{{ old('id_language', '') }}">
+                <option value="">Seleccione una opción</option>
+                @foreach ($idiomas as $id => $idioma)
+                <option  value="{{ $idioma->id }}">
+                    {{ $idioma->idioma }}
+                </option>
+                @endforeach
+                </select>
                 <span class="errors nombre_error text-danger"></span>
             </div>
             <div class="form-group col-sm-5">

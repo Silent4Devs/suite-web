@@ -9,8 +9,6 @@ use App\Models\Team;
 use App\Models\Tipoactivo;
 use Gate;
 use Illuminate\Http\Request;
-use Laracasts\Flash\Flash;
-use Symfony\Component\Console\Input\Input;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -69,14 +67,17 @@ class TipoactivoController extends Controller
     }
 
     public function store(Request $request)
-
     {
-       $val = $request->validate([
+        $val = $request->validate([
             'tipo'=> 'unique:tipoactivos,tipo',
         ]);
 
-         $tipoactivo = Tipoactivo::create($request->all());
-         return redirect()->route('admin.tipoactivos.index')->with('success', 'Guardado con éxito');
+        $tipoactivo = Tipoactivo::create($request->all());
+        if (array_key_exists('ajax', $request->all())) {
+            return response()->json(['success'=>true, 'activo'=>$tipoactivo]);
+        }
+
+        return redirect()->route('admin.tipoactivos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Tipoactivo $tipoactivo)
@@ -118,5 +119,23 @@ class TipoactivoController extends Controller
         Tipoactivo::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function getTipos(Request $request)
+    {
+        if ($request->ajax()) {
+            $tipos_arr = [];
+            $tipos = Tipoactivo::get();
+            // dd($tipos);
+            foreach ($tipos as $tipo) {
+                $tipos_arr[] = ['id'=>$tipo->id, 'text'=>$tipo->tipo];
+            }
+
+            $array_m = [];
+            $array_m['results'] = $tipos_arr;
+            $array_m['pagination'] = ['more'=>false];
+
+            return $array_m;
+        }
     }
 }

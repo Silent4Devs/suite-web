@@ -663,6 +663,10 @@ Breadcrumbs::for('Mi-CV', function ($trail, $empleado = null) {
     $trail->parent('Mi-Perfil');
     $trail->push('Perfil Profesional', route('admin.miCurriculum', ['empleado' => $empleado]));
 });
+Breadcrumbs::for('mi-perfil-puesto', function ($trail, $empleado = null) {
+    $trail->parent('Mi-Perfil');
+    $trail->push('Perfil de Puesto');
+});
 Breadcrumbs::for('Editar-Curriculum', function ($trail, $empleado = null) {
     $trail->parent('Mi-CV', $empleado);
     $trail->push('Editar', route('admin.editarCompetencias', ['empleado' => $empleado]));
@@ -740,7 +744,6 @@ Breadcrumbs::for('sugerencias-create-portal', function ($trail) {
     $trail->push('Sugerencias', route('admin.reportes-sugerencias'));
 });
 
-
 Breadcrumbs::for('timesheet-index', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
     $trail->push('Mi Timesheet');
@@ -763,4 +766,11 @@ Breadcrumbs::for('timesheet-tareas', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
     $trail->push('Tareas');
 });
-
+Breadcrumbs::for('timesheet-rechazadas', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Rechazadas');
+});
+Breadcrumbs::for('timesheet-aprobaciones', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Probaciones');
+});

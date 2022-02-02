@@ -12,6 +12,7 @@ use App\Models\Empleado;
 use App\Models\EvidenciasCertificadosEmpleados;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
+use App\Models\Language;
 use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\BeneficiariosEmpleado;
@@ -150,15 +151,15 @@ class EmpleadoController extends Controller
 
     public function getEducacion($empleado)
     {
-        $educacions = EducacionEmpleados::where('empleado_id', intval($empleado))->get();
+        $educacions = EducacionEmpleados::where('empleado_id', intval($empleado))->orderBy('id')->get();
 
         return datatables()->of($educacions)->toJson();
     }
 
     public function getExperiencia($empleado)
     {
-        $experiencias = ExperienciaEmpleados::where('empleado_id', intval($empleado))->get();
-
+        $experiencias = ExperienciaEmpleados::where('empleado_id', intval($empleado))->orderByDesc('inicio_mes')->get();
+        // dd($experiencias);
         return datatables()->of($experiencias)->toJson();
     }
 
@@ -190,11 +191,11 @@ class EmpleadoController extends Controller
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'slug', 'description')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         $empleado = new Empleado;
-
+        $idiomas = Language::get();
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
 
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado'));
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'idiomas'));
     }
 
     public function onlyStore($request)
@@ -766,14 +767,14 @@ class EmpleadoController extends Controller
         $request->validate([
             'empresa' => 'required|string|max:255',
             'puesto' => 'required|string|max:255',
-            'inicio_mes' => 'required|date',
+            'inicio_mes' => 'required',
             'descripcion' => 'required',
             'empleado_id' => 'required|exists:empleados,id',
 
         ]);
         $fechaFin = null;
         if ($request->trabactualmente == 'false') {
-            $request->validate(['fin_mes' => 'required|date']);
+            $request->validate(['fin_mes' => 'required']);
             $fechaFin = $request->fin_mes;
         }
         // dd($request->all());
@@ -824,7 +825,7 @@ class EmpleadoController extends Controller
         }
         if (array_key_exists('inicio_mes', $request->all())) {
             $request->validate([
-                'inicio_mes' => 'required|date',
+                'inicio_mes' => 'required',
             ]);
         }
 
@@ -832,7 +833,7 @@ class EmpleadoController extends Controller
             if (array_key_exists('fin_mes', $request->all())) {
                 if ($request->fin_mes != 'undefided') {
                     $request->validate([
-                        'fin_mes' => 'required|date',
+                        'fin_mes' => 'required',
                     ]);
                 }
             }
@@ -962,12 +963,14 @@ class EmpleadoController extends Controller
         $perfiles = PerfilEmpleado::get();
         $perfiles_seleccionado = $empleado->perfil_empleado_id;
         $puestos_seleccionado = $empleado->puesto_id;
+        $idiomas = Language::get();
 
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
         $isEditAdmin = true;
+        // dd($idiomas);
         // dd(Empleado::find(63));
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin'));
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas'));
     }
 
     /**

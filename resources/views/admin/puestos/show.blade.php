@@ -36,13 +36,13 @@
                                     Identificación del puesto</span>
                             </div>
 
-                            <span><strong>Área:</strong> {{$puesto->area->area}}</span>
+                            <span><strong>Área:</strong> {{$puesto->area ? $puesto->area->area : 'sin registro'}}</span>
 
                             <br>
                             <span><strong>Fecha de creación:</strong>
                                 {{ \Carbon\Carbon::parse($puesto->fecha_puesto)->format('d/m/Y') }}</span>
                             <br>
-                            <span><strong>Reportará a:</strong> {{$puesto->reportara->name}}</span>
+                            <span><strong>Reportará a:</strong> {{$puesto->reportara ? $puesto->reportara->name : 'sin registro'}}</span>
                             <br>
                             <span><strong>N° de personas a su cargo:</strong> &nbsp;{{$puesto->personas_internas}} <strong>Internas</strong>
                                 &nbsp; {{$puesto->personas_externas}} <strong>Externas</strong>

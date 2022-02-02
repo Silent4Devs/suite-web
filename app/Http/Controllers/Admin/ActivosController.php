@@ -28,9 +28,9 @@ class ActivosController extends Controller
         abort_if(Gate::denies('configuracion_activo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Activo::with(['tipoactivo'=>function($query){
+            $query = Activo::with(['tipoactivo'=>function ($query) {
                 $query->with('subcategoria_activos');
-            },'dueno','empleado', 'ubicacion', 'team'])->select(sprintf('%s.*', (new Activo)->table))->orderByDesc('id');
+            }, 'dueno', 'empleado', 'ubicacion', 'team'])->select(sprintf('%s.*', (new Activo)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -63,8 +63,8 @@ class ActivosController extends Controller
                 return $row->tipoactivo ? $row->tipoactivo->tipo : '';
             });
 
-            $table->addColumn('subcategoria_activos', function ($row) {
-                return $row->tipo_activo ? $row->tipo_activo->subcategoria_activos : '';
+            $table->addColumn('subcategoria', function ($row) {
+                return $row->subcategoria ? $row->subcategoria->subcategoria : '';
             });
 
             $table->editColumn('descripcion', function ($row) {
@@ -123,14 +123,14 @@ class ActivosController extends Controller
             return $table->make(true);
         }
 
-
         $tipoactivos = Tipoactivo::get();
         $subtipo = SubcategoriaActivo::get();
         $users = User::get();
         $sedes = Sede::get();
         $teams = Team::get();
+        $activos_nuevo = Activo::get();
 
-        return view('admin.activos.index', compact('tipoactivos', 'users', 'sedes', 'teams', 'subtipo'));
+        return view('admin.activos.index', compact('tipoactivos', 'users', 'sedes', 'teams', 'subtipo', 'activos_nuevo'));
     }
 
     public function create()
@@ -152,8 +152,9 @@ class ActivosController extends Controller
         $marcas = Marca::get();
 
         $modelos = Modelo::get();
+        $tipos = Tipoactivo::get();
 
-        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos'));
+        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos'));
     }
 
     public function store(Request $request)
