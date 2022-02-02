@@ -562,7 +562,7 @@
     <h5 class="col-12 titulo_general_funcion" style="font-size:20px;">Áreas de {{ $organizacion->empresa ? $organizacion->empresa : 'La Organización' }}</h5>
     <!-- component -->
     <div class="w-full px-6 py-4 mb-16 bg-white rounded-lg shadow-lg contenido_blanco">
-        
+
         @if (!$areasTree)
             <div class="px-4 py-3 text-blue-900 bg-blue-100 border-t-4 border-blue-500 rounded-b shadow-md" role="alert">
                 <div class="row w-100">
@@ -587,16 +587,16 @@
         @else
             <div class="caja_botones_menu">
                 <div class="caja_botones_menu">
-                    <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-sitemap"
-                            style="font-size:30px;" style="text-decoration:none;"></i> Áreas por Jerarquia</a>
-                    <a href="#" data-tabs="contenido2"><i class="mr-2 fas fa-cubes" style="font-size:30px;"></i> Áreas por
+                    <a href="#" data-tabs="contenido2" class="btn_activo"><i class="mr-2 bi bi-boxes" style="font-size:30px;"></i> Áreas por
                         Grupo</a>
+                    <a href="#" data-tabs="contenido1"><i class="mr-2 bi bi-diagram-3"
+                            style="font-size:30px;" style="text-decoration:none;"></i> Áreas por Jerarquia</a>
+
                 </div>
             </div>
             <div class="caja_caja_secciones">
                 <div class="caja_secciones">
-                    <section id="contenido1" class="caja_tab_reveldada">
-
+                    <section id="contenido1">
                         <div class="row">
                             <div class="col-8">
                                 <div class="m-0 range-slider h-100">
@@ -700,7 +700,7 @@
 
                     </section>
 
-                    <section id="contenido2" class="mt-4">
+                    <section id="contenido2" class="mt-4 caja_tab_reveldada">
                         <div class="col-12 text-right">
                             <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-file-csv"
                                     style="font-size:18pt;"></i></a>

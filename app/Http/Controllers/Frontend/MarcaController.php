@@ -40,17 +40,25 @@ class MarcaController extends Controller
             $request->validate([
                 'nombre'=>'required|string|unique:marca,nombre',
             ]);
-            $nombre = $request->nombre;
-            // dd($request->all());
-            $marca = Marca::create([
-                'nombre'=>$nombre,
-            ]);
-            if ($marca) {
-                return response()->json(['success'=>true]);
-            } else {
-                return response()->json(['success'=>false]);
-            }
+            // $nombre = $request->nombre;
+            // // dd($request->all());
+            // $marca = Marca::create([
+            //     'nombre'=>$nombre,
+            // ]);
+            // if ($marca) {
+            //     return response()->json(['success'=>true]);
+            // } else {
+            //     return response()->json(['success'=>false]);
+            // }
+            $marca = Marca::create($request->all());
+            if(array_key_exists('ajax',$request->all())){
+             return response()->json(['success'=>true,'activo'=>$marca]);
+         }
+
+
         }
+
+
     }
 
     /**
