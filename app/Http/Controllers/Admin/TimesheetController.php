@@ -199,10 +199,9 @@ class TimesheetController extends Controller
         $aprobar = Timesheet::find($id);
         $aprobar->update([
             'aprobado'=>true,
-            'rechazado'=>false, 
+            'rechazado'=>false,
         ]);
 
         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
     }
-
 }

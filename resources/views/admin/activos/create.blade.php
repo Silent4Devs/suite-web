@@ -199,11 +199,6 @@
                             data-toggle="modal" data-target="#marcaslec" data-whatever="@mdo" data-whatever="@mdo" title="Agregar Tipo"><i
                                 class="fas fa-plus"></i></button>
                         </div>
-
-                        {{-- <div class="col-md-1 col-sm-1" class="btn btn-primary" data-toggle="modal" data-target="#marcaslec"
-                            data-whatever="@mdo" style="padding: 0; margin-top: 15px;">
-                            <i class="fas fa-plus-circle iconos-crear" style="font-size:25px;!important"></i>
-                        </div> --}}
                     </div>
                 </div>
 
@@ -229,11 +224,6 @@
                             data-toggle="modal" data-target="#modelolec" data-whatever="@mdo" title="Agregar Tipo"><i
                                 class="fas fa-plus"></i></button>
                         </div>
-
-                        {{-- <div class="col-md-1 col-sm-1" data-toggle="modal" data-target="#modelolec"
-                            data-whatever="@mdo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;">
-                            <i class="fas fa-plus-circle iconos-crear" style="font-size:25px;!important"></i>
-                        </div> --}}
                     </div>
                 </div>
 
@@ -331,13 +321,6 @@
                         accept="application/pdf" value="{{ old('files[]') }}"  required>
                 </div>
 
-
-
-
-                {{-- <div class="text-right form-group col-12">
-                    <input class="btn btn-danger" type="submit" value="Guardar">
-                </div> --}}
-
                 <div class="text-right form-group col-12" style="margin-left:15px;" >
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
@@ -345,11 +328,14 @@
                     </button>
                 </div>
 
+
+                {{-- Modales  --}}
+
             <div class="modal fade" id="modelolec" tabindex="-1" aria-labelledby="modelolecLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Nueva Modelo</h5>
+                      <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Nuevo Modelo</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -398,6 +384,80 @@
             </div>
 
 
+            <div class="modal fade" id="categorialec" tabindex="-1" aria-labelledby="categorialecLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Nueva Categoria</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="modelo-name" class="col-form-label">Nombre:</label>
+                          <input type="text" class="form-control" id="tipo-name">
+                          <span class="text-danger" id="nombre_error" class="nombre_error"></span>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-primary" id="guardar_categoria" data-dismiss="modal">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="subcategorialec" tabindex="-1" aria-labelledby="subcategorialecLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="marcaslec" id="exampleModalLabel">Nueva Subcategoria</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+
+                        <div class="form-group">
+                            <label for="id_asignada">Categoría</label>
+                            <select class="form-control  {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
+                                name="categoria_id" id="categoria_id">
+                                <option value="">Seleccione una opción</option>
+                                @foreach ($tipos as $tipo)
+                                    <option data-puesto="{{ $tipo->tipo }}" value="{{ $tipo->id }}">
+                                        {{ $tipo->tipo }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('tipo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('tipo') }}
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Subcategoria:</label>
+                          <input type="text" class="form-control" id="subtipo-name">
+                          <span class="text-danger" id="nombre_error" class="nombre_error"></span>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-primary" id="guardar_subcategoria">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+
+
 
 
 
@@ -440,6 +500,8 @@
                     document.getElementById('puesto_dueno').innerHTML = puesto
                     document.getElementById('area_dueno').innerHTML = area
                 })
+
+                 // Script Marca activos
                 document.getElementById('guardar_marca').addEventListener('click', function(e) {
                     e.preventDefault();
                     let nombre = document.querySelector('#recipient-name').value;
@@ -472,6 +534,126 @@
                                     '',
                                     'success'
                                 )
+                                const marca=response.marca
+                                console.log(marca);
+                                var option = new Option(marca.nombre,marca.id, true, true);
+                                $('.selecmarca').append(option).trigger('change');
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            console.log(error)
+                            $.each(request.responseJSON.errors, function(indexInArray,
+
+                                valueOfElement) {
+                                console.log(valueOfElement, indexInArray);
+                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
+                            });
+                        }
+                    });
+                    console.log('Guardando')
+                });
+
+                // Script categoria activos
+                document.getElementById('guardar_categoria').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let tipo = document.querySelector('#tipo-name').value;
+
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                        },
+                        url: "{{ route('admin.tipoactivos.store') }}",
+                        data: {
+                            tipo,ajax:true
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.success) {
+                                document.querySelector('#recipient-name').value = '';
+                                $('.selecCategoria').select2('destroy');
+                                $('.selecCategoria').select2({
+                                    ajax: {
+                                        url: "{{ route('admin.tipoactivos.getTipos') }}",
+                                        dataType: "json",
+                                    },
+                                    theme: "bootstrap4"
+                                });
+                                $('#categorialec').modal('hide')
+                                $('.modal-backdrop').hide();
+                                Swal.fire(
+                                    'Guardada con exito!',
+                                    '',
+                                    'success'
+                                )
+                                const activo=response.activo
+                                console.log(activo);
+                                var option = new Option(activo.tipo,activo.id, true, true);
+                                $('.selecCategoria').append(option).trigger('change');
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            console.log(error)
+                            $.each(request.responseJSON.errors, function(indexInArray,
+
+                                valueOfElement) {
+                                console.log(valueOfElement, indexInArray);
+                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
+                            });
+                        }
+                    });
+                    console.log('Guardando')
+                });
+
+                 // Script subcategoria activos
+
+                 document.getElementById('guardar_subcategoria').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let subcategoria = document.querySelector('#subtipo-name').value;
+                    let categoria_id = document.querySelector('#categoria_id').value;
+
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                        },
+                        url: "{{ route('admin.subtipoactivos.store') }}",
+                        data: {
+                            categoria_id,subcategoria, ajax:true
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.success) {
+                                document.querySelector('#recipient-name').value = '';
+                                $('.selecSubcategoria').select2('destroy');
+                                $('.selecSubcategoria').select2({
+                                    ajax: {
+                                        url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                                        data: {
+                                            categoria:1
+                                        },
+                                        dataType: "json",
+                                    },
+                                    theme: "bootstrap4"
+                                });
+                                $('#subcategorialec').modal('hide')
+                                $('.modal-backdrop').hide();
+                                Swal.fire(
+                                    'Guardada con exito!',
+                                    '',
+                                    'success'
+                                )
+                                const subtipo=response.subtipo
+                                // const tipo=response.tipo
+                                console.log(subtipo);
+                                var option = new Option(subtipo.subcategoria,subtipo.id, true, true);
+                                $('.selecSubcategoria').append(option).trigger('change');
+                                // var option = new Option(subtipo.categoria_id,subtipo.id, true, true);
+                                // $('.selecCategoria').append(option).trigger('change');
 
                             }
                         },
@@ -490,7 +672,7 @@
                 });
 
 
-
+                 // Script Modelo activos
                 document.getElementById('guardar_modelo').addEventListener('click', function(e) {
                     e.preventDefault();
                     let nombre = document.querySelector('#modelo-name').value;
@@ -524,6 +706,10 @@
                                     '',
                                     'success'
                                 )
+                                const modelo=response.modelo
+                                console.log(modelo);
+                                var option = new Option(modelo.nombre,modelo.id, true, true);
+                                $('.selecmodelo').append(option).trigger('change');
 
                             }
 
@@ -563,7 +749,41 @@
                     theme: "bootstrap4"
                 });
 
+
+                $('.selecCategoria').select2({
+                    ajax: {
+                        url: "{{ route('admin.tipoactivos.getTipos') }}",
+                        dataType: "json",
+                    },
+                    theme: "bootstrap4"
+                });
+                $('.selecSubcategoria').select2({
+                    ajax: {
+                        url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                        data:{categoria:1},
+                        dataType: "json",
+                    },
+                    theme: "bootstrap4"
+                });
+                $('.selecCategoria').on('select2:select', function (e) {
+                    var data = e.params.data; console.log(data);
+                    $('.selecSubcategoria').select2({
+                    ajax: {
+                        url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                        data:{categoria:data.id},
+                        dataType: "json",
+                    },
+                    theme: "bootstrap4"
+                });
+                  });
+
             });
+
+            // $('.selecCategoria').val('1');
+            // $('.selecCategoria').trigger('changue');
+
+
+
         </script>
 
 
