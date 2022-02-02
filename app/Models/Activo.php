@@ -110,8 +110,14 @@ class Activo extends Model
     //     return $this->hasMany(DocumentoActivo::class, 'activo_id', 'id');
     // }
 
-    public function subtipo()
-    {
-        return $this->hasMany(SubcategoriaActivo::class, 'subcategoria', 'id');
+    public function subtipo(){
+
+        return $this->hasMany(SubcategoriaActivo::class,'subcategoria','id');
+    }
+
+    public function subcategoria(){
+
+        return $this->belongsTo(SubcategoriaActivo::class, 'subtipo_id');
+
     }
 }

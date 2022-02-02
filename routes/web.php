@@ -651,12 +651,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('organizaciones', 'OrganizacionesController');
 
     // Tipoactivos
+    Route::get('tipoactivos/get-tipos', 'TipoactivoController@getTipos')->name('tipoactivos.getTipos');
     Route::delete('tipoactivos/destroy', 'TipoactivoController@massDestroy')->name('tipoactivos.massDestroy');
     Route::post('tipoactivos/parse-csv-import', 'TipoactivoController@parseCsvImport')->name('tipoactivos.parseCsvImport');
     Route::post('tipoactivos/process-csv-import', 'TipoactivoController@processCsvImport')->name('tipoactivos.processCsvImport');
     Route::resource('tipoactivos', 'TipoactivoController');
-    // Subtipo Activos
 
+    // Subtipo Activos
+    Route::get('subtipoactivos/get-subtipos', 'SubcategoriaActivoContoller@getSubtipos')->name('subtipoactivos.getSubtipos');
     Route::delete('subtipoactivos/destroy', 'SubcategoriaActivoContoller@massDestroy')->name('subtipoactivos.massDestroy');
     Route::post('subtipoactivos/parse-csv-import', 'SubcategoriaActivoContoller@parseCsvImport')->name('subtipoactivos.parseCsvImport');
     Route::post('subtipoactivos/process-csv-import', 'SubcategoriaActivoContoller@processCsvImport')->name('subtipoactivos.processCsvImport');

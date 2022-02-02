@@ -63,8 +63,8 @@ class ActivosController extends Controller
                 return $row->tipoactivo ? $row->tipoactivo->tipo : '';
             });
 
-            $table->addColumn('subcategoria_activos', function ($row) {
-                return $row->tipo_activo ? $row->tipo_activo->subcategoria_activos : '';
+            $table->addColumn('subcategoria', function ($row) {
+                return $row->subcategoria ? $row->subcategoria->subcategoria: '';
             });
 
             $table->editColumn('descripcion', function ($row) {
@@ -128,8 +128,9 @@ class ActivosController extends Controller
         $users = User::get();
         $sedes = Sede::get();
         $teams = Team::get();
+        $activos_nuevo =Activo::get();
 
-        return view('admin.activos.index', compact('tipoactivos', 'users', 'sedes', 'teams', 'subtipo'));
+        return view('admin.activos.index', compact('tipoactivos', 'users', 'sedes', 'teams', 'subtipo','activos_nuevo'));
     }
 
     public function create()
@@ -151,8 +152,10 @@ class ActivosController extends Controller
         $marcas = Marca::get();
 
         $modelos = Modelo::get();
+        $tipos = Tipoactivo::get();
 
-        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos'));
+
+        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos'));
     }
 
     public function store(Request $request)

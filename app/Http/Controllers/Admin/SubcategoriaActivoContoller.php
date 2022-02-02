@@ -70,7 +70,10 @@ class SubcategoriaActivoContoller extends Controller
 
     public function store(Request $request)
     {
-        $tipos = SubcategoriaActivo::create($request->all());
+        $subtipos = SubcategoriaActivo::create($request->all());
+        if(array_key_exists('ajax',$request->all())){
+            return response()->json(['success'=>true,'subtipo'=>$subtipos]);
+        }
 
         return redirect()->route('admin.subtipoactivos.index')->with('success', 'Guardado con éxito');
     }
@@ -113,5 +116,23 @@ class SubcategoriaActivoContoller extends Controller
     public function massDestroy(Request $request)
     {
         SubcategoriaActivo::whereIn('id', request('ids'))->delete();
+    }
+
+    public function getSubtipos(Request $request)
+    {
+        if ($request->ajax()) {
+            $subtipos_arr = [];
+            $subtipos = SubcategoriaActivo::where('categoria_id', $request->categoria)->get();
+            // dd($tipos);
+            foreach ($subtipos as $subtipo) {
+                $subtipos_arr[] = ['id'=>$subtipo->id, 'text'=>$subtipo->categoria_id,'text'=>$subtipo->subcategoria];
+            }
+
+            $array_m = [];
+            $array_m['results'] = $subtipos_arr;
+            $array_m['pagination'] = ['more'=>false];
+
+            return $array_m;
+        }
     }
 }
