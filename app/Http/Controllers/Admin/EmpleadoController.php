@@ -2,33 +2,34 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
+use App\Models\Area;
+use App\Models\Sede;
+use App\Models\Puesto;
+use App\Models\Empleado;
+use App\Models\Language;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\PerfilEmpleado;
+use Illuminate\Support\Carbon;
+use App\Models\EducacionEmpleados;
+use Illuminate\Support\Facades\DB;
 use App\Functions\CountriesFunction;
 use App\Http\Controllers\Controller;
-use App\Models\Area;
-use App\Models\CertificacionesEmpleados;
-use App\Models\CursosDiplomasEmpleados;
-use App\Models\EducacionEmpleados;
-use App\Models\Empleado;
-use App\Models\EvidenciasCertificadosEmpleados;
-use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
-use App\Models\PerfilEmpleado;
-use App\Models\Puesto;
-use App\Models\RH\BeneficiariosEmpleado;
-use App\Models\RH\ContactosEmergenciaEmpleado;
-use App\Models\RH\DependientesEconomicosEmpleados;
 use App\Models\RH\EntidadCrediticia;
-use App\Models\RH\TipoContratoEmpleado;
-use App\Models\Sede;
-use Gate;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-use Symfony\Component\HttpFoundation\Response;
+use App\Models\CursosDiplomasEmpleados;
+use App\Models\RH\TipoContratoEmpleado;
+use Illuminate\Support\Facades\Storage;
+use App\Models\CertificacionesEmpleados;
+use App\Models\RH\BeneficiariosEmpleado;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\EvidenciasDocumentosEmpleados;
+use App\Models\RH\ContactosEmergenciaEmpleado;
+use Symfony\Component\HttpFoundation\Response;
+use App\Models\EvidenciasCertificadosEmpleados;
+use App\Models\RH\DependientesEconomicosEmpleados;
 
 class EmpleadoController extends Controller
 {
@@ -150,7 +151,7 @@ class EmpleadoController extends Controller
 
     public function getEducacion($empleado)
     {
-        $educacions = EducacionEmpleados::where('empleado_id', intval($empleado))->get();
+        $educacions = EducacionEmpleados::where('empleado_id', intval($empleado))->orderBy('id')->get();
 
         return datatables()->of($educacions)->toJson();
     }
@@ -158,7 +159,7 @@ class EmpleadoController extends Controller
     public function getExperiencia($empleado)
     {
         $experiencias = ExperienciaEmpleados::where('empleado_id', intval($empleado))->get();
-
+        // dd($experiencias);
         return datatables()->of($experiencias)->toJson();
     }
 
@@ -190,11 +191,11 @@ class EmpleadoController extends Controller
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'slug', 'description')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         $empleado = new Empleado;
-
+        $idiomas=Language::get();
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
 
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado'));
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado','idiomas'));
     }
 
     public function onlyStore($request)
@@ -766,14 +767,14 @@ class EmpleadoController extends Controller
         $request->validate([
             'empresa' => 'required|string|max:255',
             'puesto' => 'required|string|max:255',
-            'inicio_mes' => 'required|date',
+            'inicio_mes' => 'required',
             'descripcion' => 'required',
             'empleado_id' => 'required|exists:empleados,id',
 
         ]);
         $fechaFin = null;
         if ($request->trabactualmente == 'false') {
-            $request->validate(['fin_mes' => 'required|date']);
+            $request->validate(['fin_mes' => 'required']);
             $fechaFin = $request->fin_mes;
         }
         // dd($request->all());
@@ -824,7 +825,7 @@ class EmpleadoController extends Controller
         }
         if (array_key_exists('inicio_mes', $request->all())) {
             $request->validate([
-                'inicio_mes' => 'required|date',
+                'inicio_mes' => 'required',
             ]);
         }
 
@@ -832,7 +833,7 @@ class EmpleadoController extends Controller
             if (array_key_exists('fin_mes', $request->all())) {
                 if ($request->fin_mes != 'undefided') {
                     $request->validate([
-                        'fin_mes' => 'required|date',
+                        'fin_mes' => 'required',
                     ]);
                 }
             }
@@ -962,12 +963,13 @@ class EmpleadoController extends Controller
         $perfiles = PerfilEmpleado::get();
         $perfiles_seleccionado = $empleado->perfil_empleado_id;
         $puestos_seleccionado = $empleado->puesto_id;
+        $idiomas=Language::get();
 
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
         $isEditAdmin = true;
         // dd(Empleado::find(63));
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin'));
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin','idiomas'));
     }
 
     /**

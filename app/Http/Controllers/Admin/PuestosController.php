@@ -344,10 +344,9 @@ class PuestosController extends Controller
                 // dd(PuestoResponsabilidade::exists($languaje['id']));
                 if (PuestoIdiomaPorcentajePivot::find($languaje['id']) != null) {
                     PuestoIdiomaPorcentajePivot::find($languaje['id'])->update([
+                        'id_language'=>$languaje['id_language'],
                         'porcentaje' => $languaje['porcentaje'],
                         'nivel' =>  $languaje['nivel'],
-                        'id_language'=>$languaje['id_language'],
-
                     ]);
                 } else {
                     PuestoIdiomaPorcentajePivot::create([
