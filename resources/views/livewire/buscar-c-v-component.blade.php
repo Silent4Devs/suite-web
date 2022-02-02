@@ -324,10 +324,10 @@
                                                 Del
                                                 <strong>{{ \Carbon\Carbon::parse($experiencia->inicio_mes)->format('d/m/Y') }}</strong>
                                                 al
-                                                @if ($experiencia->trabactuamente = true)
+                                                @if (!$experiencia->fin_mes)
                                                 <strong>día de hoy</strong>
                                                 @else
-                                                    <strong>{{ \Carbon\Carbon::parse($experiencia->fin_mes)->format('d/m/Y') }}</strong>
+                                                <strong>{{ \Carbon\Carbon::parse($experiencia->fin_mes)->format('d/m/Y') }}</strong>
                                                 @endif
 
                                             </span>
@@ -394,7 +394,7 @@
                                                 Del
                                                 <strong>{{ \Carbon\Carbon::parse($educacion->año_inicio)->format('d/m/Y') }}</strong>
                                                 al
-                                                @if ($eduacion->estudactuamente = true)
+                                                @if (! $educacion->año_fin)
                                                 <strong>día de hoy</strong>
                                                 @else
                                                     <strong>{{ \Carbon\Carbon::parse($educacion->año_fin)->format('d/m/Y') }}</strong>

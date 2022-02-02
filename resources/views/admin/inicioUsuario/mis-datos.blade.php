@@ -1067,8 +1067,10 @@ if (!is_null($organizacion)) {
                                                 <div class="text-right">
                                                     @if ($last_evaluacion)
                                                         @if ($esLider)
-                                                            <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
-                                                                class="btn btn-xs btn-light mt-3">Evaluaciones de mi equipo</a>
+                                                            <div class="col-12">
+                                                                <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
+                                                                    class="btn btn-xs btn-light mt-3">Evaluaciones de mi equipo</a>
+                                                            </div>
                                                         @endif
                                                     @endif
                                                 </div>
