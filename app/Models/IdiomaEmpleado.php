@@ -46,6 +46,4 @@ class IdiomaEmpleado extends Model
     {
         return $this->belongsTo(Language::class, 'id_language');
     }
-
-
 }
