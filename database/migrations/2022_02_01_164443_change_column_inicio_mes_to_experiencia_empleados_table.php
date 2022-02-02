@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnRechazadaToTimesheet extends Migration
+class ChangeColumnInicioMesToExperienciaEmpleadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddColumnRechazadaToTimesheet extends Migration
      */
     public function up()
     {
-        Schema::table('timesheet', function (Blueprint $table) {
-            $table->boolean('rechazado')->default(false);
+        Schema::table('experiencia_empleados', function (Blueprint $table) {
+            $table->string('inicio_mes')->change();
+            $table->string('fin_mes')->change();
         });
     }
 
@@ -25,8 +26,8 @@ class AddColumnRechazadaToTimesheet extends Migration
      */
     public function down()
     {
-        Schema::table('timesheet', function (Blueprint $table) {
-            $table->dropColumn('rechazado');
+        Schema::table('experiencia_empleados', function (Blueprint $table) {
+            //
         });
     }
 }

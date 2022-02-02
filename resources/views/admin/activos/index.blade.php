@@ -114,6 +114,70 @@
                         </th>
                     </tr>
                 </thead>
+                {{-- <tbody>
+                    @foreach ( $activos_nuevo as $sub )
+                <tr>
+                    <td>
+                        {{$sub->id}}
+                    </td>
+                    <td>
+                        {{$sub->nombreactivo}}
+                    </td>
+                    <td>
+                        {{$sub->tipoactivo->tipo}}
+                    </td>
+                    <td>
+                        {{$sub->subcategoria->subcategoria}}
+                    </td>
+                    <td>
+                        {{ trans('cruds.activo.fields.descripcion') }}
+                    </td>
+                    <td>
+                        {{ trans('cruds.activo.fields.dueno') }}
+                    </td>
+                    <td>
+                        Responsable
+                    </td>
+                    <td>
+                        Sede
+                    </td>
+                    <td>
+                        Ubicación
+                    </td>
+                    <td>
+                        Marca
+                    </td>
+                    <td>
+                        Modelo
+                    </td>
+                    <td>
+                        N° serie
+                    </td>
+                    <td>
+                        N° producto
+                    </td>
+                    <td>
+                        Fecha de alta
+                    </td>
+                    <td>
+                        Fecha fin de garantía
+                    </td>
+                    <td>
+                        Fecha compra
+                    </td>
+                    <td>
+                        Fecha de baja
+                    </td>
+                    <td>
+                        Observaciones
+                    </td>
+                    <td>
+                        Opciones
+                    </td>
+                </tr>
+
+                    @endforeach
+                </tbody> --}}
             </table>
         </div>
     </div>
@@ -281,15 +345,9 @@
                         name: 'tipoactivo.tipo'
                     },
                     {
-                        data: 'id',
-                        render: function(data, type, row, meta){
-                            let html= `<div> `
-                                row.tipoactivo.subcategoria_activos.forEach(element => {
-                                    html +=`${element.subcategoria}`
-                                });
-                                html +='</div>'
-                        return html;
-                        }
+                        data: 'subcategoria',
+                        name: 'subcategoria.subcategoria'
+
                     },
                     {
                         data: 'descripcion',

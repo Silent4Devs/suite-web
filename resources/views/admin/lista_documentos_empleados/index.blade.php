@@ -1,63 +1,76 @@
 @extends('layouts.admin')
 @section('content')
-	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Solicitudes a Aprobar</font> </h5>
-
+	<h5 class="col-12 titulo_general_funcion">Lista de Documentos de Empleados</h5>
+	@include('partials.flashMessages')
 	<div class="card card-body">
-		<div class="row">
-			
-	        <div class="datatable-fix w-100">
-	            <table id="datatable_timesheet_aprobar" class="table w-100">
-	                <thead class="w-100">
-	                    <tr>
-	                        <th>Finde semana </th>
-	                        <th>Billable</th>
-	                        <th>Non Billable</th>
-	                        <th>Employee</th>
-	                        <th>Manager</th>
-	                        <th>Status</th>
-	                        <th>opciones</th>
-	                    </tr>
-	                </thead>
-
-	                <tbody>
-	                	<tr>
-	                        <td>
-	                            Finde semana 
-	                        </td>
-	                        <td>
-	                            Billable
-	                        </td>
-	                        <td>
-	                            Non Billable
-	                        </td>
-	                        <td>
-	                        	Employee
-	                        </td>
-	                        <td>
-	                        	Manager
-	                        </td>
-	                        <td>
-	                        	Status
-	                        </td>
-	                        <td>
-	                        	opciones
-							</td>	                    
+		<div class="datatable-fix">
+			<div class="w-100 text-right">
+				<div class="btn btn-success" data-toggle="modal" data-target="#modal_crear_doc_e">Agregar</div>
+			</div>
+			<table class="table table-bordered w-100 datatable datatable-Perfiles" id="tabla_list_docs">
+				<thead class="thead-dark">
+					<tr>
+						<th>Documento</th>
+						<th style="max-width:100px;">ID activo</th>						
+						<th style="max-width:100px;">Opciones</th>						
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($docs as $doc)
+						<tr>
+							<td>{{ $doc->documento }}</td>
+							<td>
+								@if($doc->activar_numero == true)
+									Obligatorio
+								@endif
+								@if($doc->activar_numero == false)
+									Opcional
+								@endif
+							</td>
+							<td>
+								<a href="{{ asset('admin/lista-documentos/destroy') }}/{{ $doc->id }}"><i class="fas fa-trash-alt" style="font-size:15pt; color:#ED5A5A;"></i></a>
+							</td>
 						</tr>
-	                </tbody>
-	            </table>
-	        </div>
-
+					@endforeach
+				</tbody>
+			</table>
 		</div>
 	</div>
-	
+
+	{{-- modal crar --}}
+	<div class="modal fade" id="modal_crear_doc_e" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <form method="POST" action="{{ route('admin.lista-documentos-empleados-store') }}" class="modal-content">
+	    	@csrf
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Agregar Documento a Lista</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="form-group">
+	        	<label><i class="far fa-file-alt iconos-crear"></i>Nombre del documento</label>
+	        	<input type="" name="documento" class="form-control">
+	        </div>
+	        <div class="form-group">
+	        	<label><i class="far fa-file-alt iconos-crear"></i>ID obligatorio</label>
+	        	<input type="checkbox" name="activar_numero" class="form-control">
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <div type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</div>
+	        <button class="btn btn-primary">Guardar</button>
+	      </div>
+	    </form>
+	  </div>
+	</div>
+
 @endsection
-
-
 @section('scripts')
-    @parent
-    <script>
-        $(function() {
+	@parent
+	<script type="text/javascript">
+		$(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
@@ -125,10 +138,10 @@
                 }
 
             ];
-            let btnAgregar = {
+           	let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar empleado',
-                url: "{{asset('admin/inicioUsuario/reportes/quejas')}}",
+                url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
                 let {
@@ -145,21 +158,7 @@
                             [0,'desc']
                         ]
             };
-            let table = $('#datatable_timesheet_aprobar').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+            let table = $('#tabla_list_docs').DataTable(dtOverrideGlobals);
         });
-    </script>
-
-
+	</script>
 @endsection

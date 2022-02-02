@@ -225,11 +225,11 @@ class PuestosController extends Controller
         $lenguajes = (json_decode($json));
         $areas = Area::get();
         $reportas = Empleado::get();
-        $puesto->load(['contactos'=>function($query){
-            $query->with(['empleados'=>function($query){
+        $puesto->load(['contactos'=>function ($query) {
+            $query->with(['empleados'=>function ($query) {
                 $query->with('puestoRelacionado');
             }]);
-         }]);
+        }]);
         $competencias = Competencia::all();
         $idis = Language::all();
         $responsabilidades = PuestoResponsabilidade::get();
@@ -344,10 +344,9 @@ class PuestosController extends Controller
                 // dd(PuestoResponsabilidade::exists($languaje['id']));
                 if (PuestoIdiomaPorcentajePivot::find($languaje['id']) != null) {
                     PuestoIdiomaPorcentajePivot::find($languaje['id'])->update([
+                        'id_language'=>$languaje['id_language'],
                         'porcentaje' => $languaje['porcentaje'],
                         'nivel' =>  $languaje['nivel'],
-                        'id_language'=>$languaje['id_language'],
-
                     ]);
                 } else {
                     PuestoIdiomaPorcentajePivot::create([

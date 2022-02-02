@@ -22,7 +22,7 @@
     </form>
     
     <div class="datatable-fix w-100 mt-5">
-        <table id="" class="table w-100 tabla-animada">
+        <table id="datatable_timesheet_proyectos" class="table w-100 tabla-animada">
             <thead class="w-100">
                 <tr>
                     <th>Proyecto </th>

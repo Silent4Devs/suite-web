@@ -46,7 +46,7 @@ class MarcaController extends Controller
                 'nombre'=>$nombre,
             ]);
             if ($marca) {
-                return response()->json(['success'=>true]);
+                return response()->json(['success'=>true, 'marca'=>$marca]);
             } else {
                 return response()->json(['success'=>false]);
             }

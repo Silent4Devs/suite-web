@@ -10,105 +10,131 @@
     <div class="row mb-4" x-show="!show" x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
         <div class="col-12">
             <div class="cards-actividades row" id="cards-actividades"></div>
-            <div class="row">
-                @foreach ($actividades as $task)
-                    <div class="col-4">
-                        <div id="carouselActividad{{ $task->id }}" class="carousel slide rounded p-2 bg-white"
-                            data-ride="carousel">
-                            <div class="col-12" style="text-align: right">
-                                @php
-                                    if (intval($task->parent_id) == 1) {
-                                        $ruta = '/admin/planTrabajoBase/';
-                                    } else {
-                                        $ruta = '/admin/planes-de-accion/' . $task->parent_id;
-                                    }
-                                @endphp
-                                <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"></i></a>
-                                <a href="plantTrabajoBase/{{ $task->name }}" target="_blank"><i
-                                        class="fas fa-eye" style="font-size:12pt;"></i></a>
-                                @if ($task->status == 'STATUS_DONE' or $task->status == 'STATUS_FAILED')
-                                    <button class="btn_archivar" title="Archivar" data-toggle="modal"
-                                        data-target="#alert_activ{{ $task->id }}">
-                                        <i class="fas fa-archive"></i>
-                                    </button>
-                                @endif
-                            </div>
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="row">
-                                        <div class="deben-aprobar-card">
-                                            <div class="px-4">
-                                                <div class="row align-items-center">
-                                                    <div class="col-12">
-                                                        <h6 class="card-title d-flex align-items-center"
-                                                            style="text-transform: capitalize;">
-                                                            @if ($task->status == 'STATUS_DONE')
-                                                                <i class="far fa-check-circle mr-1 text-success"
-                                                                    style="font-size: 18px"></i>
-                                                            @elseif ($task->status == 'STATUS_ACTIVE')
-                                                                <i class="fas fa-info-circle mr-1 text-primary"
-                                                                    style="font-size: 18px"></i>
-                                                            @elseif ($task->status == 'STATUS_SUSPENDED')
-                                                                <i class="far fa-question-circle mr-1 text-muted">
-                                                                    style="font-size: 18px"></i>
-                                                            @elseif ($task->status == 'STATUS_WAITING')
-                                                                <i class="fas fa-clock mr-1 text-warning">
-                                                                    style="font-size: 18px"></i>
-                                                            @elseif ($task->status == 'STATUS_UNDEFINED')
-                                                                <i class="far fa-question-circle mr-1 text-muted"
-                                                                    style="font-size: 18px"></i>
-                                                            @elseif ($task->status == 'STATUS_FAILED')
-                                                                <i class="far fa-times-circle mr-1 text-danger"
-                                                                    style="font-size: 18px"></i>
-                                                            @endif
-                                                            {{ $task->name }}
-                                                        </h6>
+            <div class="row" id="cards-actividades2">
+                @php
+                    $allArchived = true;
+                @endphp
+                @foreach ($actividades as $index => $task)
+                    @php
+                        
+                        if (isset($task->archivado)) {
+                            $archivado = $task->archivado;
+                            if (!$task->archivado) {
+                                $allArchived = false;
+                            }
+                        } else {
+                            $archivado = false;
+                            $allArchived = false;
+                        }
+                    @endphp
+                    @if (!$archivado)
+                        <div class="col-4 mb-4">
+                            <div id="carouselActividad{{ $task->id }}" class="carousel slide rounded p-2 bg-white"
+                                data-ride="carousel">
+                                <div class="col-12" style="text-align: right">
+                                    @php
+                                        if (intval($task->parent_id) == 1) {
+                                            $ruta = '/admin/planTrabajoBase/';
+                                        } else {
+                                            $ruta = '/admin/planes-de-accion/' . $task->parent_id;
+                                        }
+                                    @endphp
+                                    <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"></i></a>
+                                    <a href="plantTrabajoBase/{{ $task->name }}" target="_blank"><i
+                                            class="fas fa-eye" style="font-size:12pt;"></i></a>
+                                    @if ($task->status == 'STATUS_DONE' or $task->status == 'STATUS_FAILED')
+                                        <button class="btn_archivar" title="Archivar">
+                                            <i class="fas fa-archive" data-archivar="true"
+                                                data-actividad-id="{{ $task->id }}"
+                                                data-plan-implementacion="{{ $task->id_implementacion }}"></i>
+                                        </button>
+                                    @endif
+                                </div>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="deben-aprobar-card">
+                                                <div class="px-4">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-12">
+                                                            <h6 class="card-title d-flex align-items-center"
+                                                                style="text-transform: capitalize;">
+                                                                @if ($task->status == 'STATUS_DONE')
+                                                                    <i class="far fa-check-circle mr-1 text-success"
+                                                                        style="font-size: 18px"></i>
+                                                                @elseif ($task->status == 'STATUS_ACTIVE')
+                                                                    <i class="fas fa-info-circle mr-1 text-primary"
+                                                                        style="font-size: 18px"></i>
+                                                                @elseif ($task->status == 'STATUS_SUSPENDED')
+                                                                    <i class="far fa-question-circle mr-1 text-muted">
+                                                                        style="font-size: 18px"></i>
+                                                                @elseif ($task->status == 'STATUS_WAITING')
+                                                                    <i class="fas fa-clock mr-1 text-warning">
+                                                                        style="font-size: 18px"></i>
+                                                                @elseif ($task->status == 'STATUS_UNDEFINED')
+                                                                    <i class="far fa-question-circle mr-1 text-muted"
+                                                                        style="font-size: 18px"></i>
+                                                                @elseif ($task->status == 'STATUS_FAILED')
+                                                                    <i class="far fa-times-circle mr-1 text-danger"
+                                                                        style="font-size: 18px"></i>
+                                                                @endif
+                                                                {{ $task->name }}
+                                                            </h6>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                @switch($task->status)
-                                                    @case('STATUS_ACTIVE')
-                                                        <p class="m-0"
-                                                            style="font-size: 12px;color:rgb(253, 171, 61)">En
-                                                            proceso</p>
-                                                    @break
-                                                    @case('STATUS_DONE')
-                                                        <p class="m-0"
-                                                            style="font-size: 12px;color:rgb(0, 200, 117)">
-                                                            Completada</p>
-                                                    @break
-                                                    @case ('STATUS_FAILED')
-                                                        <p class="m-0"
-                                                            style="font-size: 12px;color:rgb(226, 68, 92)">Con
-                                                            retraso</p>
-                                                    @break
-                                                    @case ('STATUS_SUSPENDED')
-                                                        <p class="m-0" style="font-size: 12px;color:#aaaaaa">
-                                                            Suspendida</p>
-                                                    @break
-                                                    @case ('STATUS_UNDEFINED')
-                                                        <p class="m-0" style="font-size: 12px;color:#00b1e1">Sin
-                                                            iniciar</p>
-                                                    @break
-                                                    @default
-                                                        <p class="m-0" style="font-size: 12px;color:#00b1e1">Sin
-                                                            iniciar</p>
-                                                @endswitch
-                                                <p class="m-0" style="font-size: 12px;">Origen:
-                                                    {{ $task->parent }}</p>
-                                                <p class="m-0" style="font-size: 12px;">Fecha:
-                                                    {{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTime()->format('d-m-Y') }}
-                                                    /
-                                                    {{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTime()->format('d-m-Y') }}
-                                                </p>
+                                                    @switch($task->status)
+                                                        @case('STATUS_ACTIVE')
+                                                            <p class="m-0"
+                                                                style="font-size: 12px;color:rgb(253, 171, 61)">En
+                                                                proceso</p>
+                                                        @break
+                                                        @case('STATUS_DONE')
+                                                            <p class="m-0"
+                                                                style="font-size: 12px;color:rgb(0, 200, 117)">
+                                                                Completada</p>
+                                                        @break
+                                                        @case ('STATUS_FAILED')
+                                                            <p class="m-0"
+                                                                style="font-size: 12px;color:rgb(226, 68, 92)">Con
+                                                                retraso</p>
+                                                        @break
+                                                        @case ('STATUS_SUSPENDED')
+                                                            <p class="m-0" style="font-size: 12px;color:#aaaaaa">
+                                                                Suspendida</p>
+                                                        @break
+                                                        @case ('STATUS_UNDEFINED')
+                                                            <p class="m-0" style="font-size: 12px;color:#00b1e1">
+                                                                Sin
+                                                                iniciar</p>
+                                                        @break
+                                                        @default
+                                                            <p class="m-0" style="font-size: 12px;color:#00b1e1">Sin
+                                                                iniciar</p>
+                                                    @endswitch
+                                                    <p class="m-0" style="font-size: 12px;">Origen:
+                                                        {{ $task->parent }}</p>
+                                                    <p class="m-0" style="font-size: 12px;">Fecha:
+                                                        {{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTime()->format('d-m-Y') }}
+                                                        /
+                                                        {{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTime()->format('d-m-Y') }}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 @endforeach
+                @if ($allArchived)
+                    <div class="col-12 text-center" id="sinActividades">
+                        <p><strong style="text-transform: capitalize">Sin Actividades</strong></p>
+                        <img class="img-fluid" src="{{ asset('img/empleados_no_encontrados.svg') }}"
+                            alt="Sin Actividades" width="300">
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -130,7 +156,14 @@
             </thead>
             <tbody>
                 @foreach ($actividades as $task)
-                    @if (!($task->archivo == 'archivado'))
+                    @php
+                        if (isset($task->archivado)) {
+                            $archivado = $task->archivado;
+                        } else {
+                            $archivado = false;
+                        }
+                    @endphp
+                    @if (!$archivado)
                         <tr id="{{ $task->id }}" data-parent-plan="{{ $task->slug }}">
                             <td class="td_nombre">{{ $task->name }}</td>
                             <td><span class="badge badge-primary">{{ $task->parent }}</span></td>
@@ -189,14 +222,21 @@
                                         $ruta = '/admin/planes-de-accion/' . $task->parent_id;
                                     }
                                 @endphp
-                                <a href="{{ asset($ruta) }}"><i class="far fas fa-stream" style="font-size:12pt"></i></a>
+                                <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"
+                                        style="font-size:12pt"></i></a>
                                 <a href="plantTrabajoBase/{{ $task->name }}" target="_blank"><i
                                         class="fas fa-eye" style="font-size:12pt"></i></a>
                                 @if ($task->status == 'STATUS_DONE' or $task->status == 'STATUS_SUSPENDED')
-                                    <button class="btn_archivar" title="Archivar" data-toggle="modal"
-                                        data-target="#alert_activ{{ $task->id }}">
-                                        <i class="fas fa-archive" style="font-size:12pt" ></i>
+                                    <button class="btn_archivar" title="Archivar">
+                                        <i class="fas fa-archive" data-archivar="true"
+                                            data-actividad-id="{{ $task->id }}"
+                                            data-plan-implementacion="{{ $task->id_implementacion }}"
+                                            style="font-size:12pt"></i>
                                     </button>
+                                    {{-- <button class="btn_archivar" id="btnArchivarActividad" title="Archivar"
+                                        data-toggle="modal" data-target="#alert_activ{{ $task->id }}">
+                                        <i class="fas fa-archive" style="font-size:12pt"></i>
+                                    </button> --}}
                                 @endif
                             </td>
                         </tr>
