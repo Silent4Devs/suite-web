@@ -5,6 +5,7 @@ namespace App\Models\RH;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class Competencia extends Model
@@ -15,7 +16,7 @@ class Competencia extends Model
 
     protected $table = 'ev360_competencias';
     protected $guarded = ['id'];
-    protected $appends = ['tipo_competencia', 'imagen_ruta'];
+    protected $appends = ['tipo_competencia', 'imagen_ruta', 'existe_imagen_en_servidor'];
 
     const TODA_LA_EMPRESA = 0;
     const POR_PUESTO = 1;
@@ -29,11 +30,19 @@ class Competencia extends Model
 
     public function getImagenRutaAttribute()
     {
-        if ($this->imagen) {
-            return asset('storage/competencias/img/' . $this->imagen);
+        if ($this->getExisteImagenEnServidorAttribute()) {
+            if ($this->imagen) {
+                return asset('storage/competencias/img/' . $this->imagen);
+            }
+            return asset('img/star.png');
+        } else {
+            return asset('img/page-not-found.png');
         }
+    }
 
-        return asset('img/star.png');
+    public function getExisteImagenEnServidorAttribute()
+    {
+        return Storage::exists("public/competencias/img/" . $this->imagen);
     }
 
     public function competencia_puesto()
