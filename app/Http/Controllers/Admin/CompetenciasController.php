@@ -205,6 +205,7 @@ class CompetenciasController extends Controller
         // dd($empleado);
 
         $lista_docs = ListaDocumentoEmpleado::get();
+
         return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
     }
 

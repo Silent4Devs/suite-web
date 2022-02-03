@@ -538,11 +538,14 @@
             } else if (Number(element.estatus) == 3 || Number(element.estatus) == 4) {
                 aceptada = false;
             }
-            let icono = `<i class="far fa-question-circle mr-1 text-muted" style="font-size: 18px"></i>`;
+            let icono =
+                `<i class="far fa-question-circle mr-1 text-muted" style="font-size: 18px;align-self: flex-start;"></i>`;
             if (aceptada === true) {
-                icono = `<i class="far fa-check-circle mr-1 text-success" style="font-size: 18px;"></i>`;
+                icono =
+                    `<i class="far fa-check-circle mr-1 text-success" style="font-size: 18px;align-self: flex-start;;"></i>`;
             } else if (aceptada === false) {
-                icono = `<i class="far fa-times-circle mr-1 text-danger" style="font-size: 18px"></i>`;
+                icono =
+                    `<i class="far fa-times-circle mr-1 text-danger" style="font-size: 18px;align-self: flex-start;"></i>`;
             }
             return icono;
         }

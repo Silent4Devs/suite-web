@@ -37,7 +37,7 @@
     @include('admin.inicioUsuario.actividades.index')
 </div>
 
-<div>
+{{-- <div>
     @foreach ($actividades as $task)
         @if (!($task->archivo == 'archivado'))
 
@@ -67,7 +67,7 @@
             </div>
         @endif
     @endforeach
-</div>
+</div> --}}
 
 @section('scripts')
     @parent
@@ -237,6 +237,7 @@
             dtButtons.push(btnArchivo);
             $("#tabla_usuario_actividades").DataTable({
                 buttons: dtButtons,
+                autoWidth: true
             });
         });
     </script>
