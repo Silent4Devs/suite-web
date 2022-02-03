@@ -994,13 +994,13 @@ class InicioUsuarioController extends Controller
         $estatus = $request->estatusSeleccionado;
 
         $updatedTasks = array_map(function ($item) use ($taskID, $estatus, $request) {
-            if ($estatus == "STATUS_UNDEFINED") {
+            if ($estatus == 'STATUS_UNDEFINED') {
                 $progreso = 0;
             }
-            if ($estatus == "STATUS_ACTIVE") {
+            if ($estatus == 'STATUS_ACTIVE') {
                 $progreso = array_key_exists('progreso', $request->all()) != null ? $request->progreso : 50;
             }
-            if ($estatus == "STATUS_DONE") {
+            if ($estatus == 'STATUS_DONE') {
                 $progreso = 100;
             }
 

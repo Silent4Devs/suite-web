@@ -34,6 +34,7 @@ class Competencia extends Model
             if ($this->imagen) {
                 return asset('storage/competencias/img/' . $this->imagen);
             }
+
             return asset('img/star.png');
         } else {
             return asset('img/page-not-found.png');
@@ -42,7 +43,7 @@ class Competencia extends Model
 
     public function getExisteImagenEnServidorAttribute()
     {
-        return Storage::exists("public/competencias/img/" . $this->imagen);
+        return Storage::exists('public/competencias/img/' . $this->imagen);
     }
 
     public function competencia_puesto()
