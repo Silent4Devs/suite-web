@@ -4560,26 +4560,26 @@
         },
         {
             "name": "maatwebsite/excel",
-            "version": "3.1.35",
+            "version": "3.1.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SpartnerNL/Laravel-Excel.git",
-                "reference": "6f171c8b79e1c0fb254f3ec40f7a11ac79289eaa"
+                "reference": "eb31f30d72c51c3fb11644b636945accbe50404f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SpartnerNL/Laravel-Excel/zipball/6f171c8b79e1c0fb254f3ec40f7a11ac79289eaa",
-                "reference": "6f171c8b79e1c0fb254f3ec40f7a11ac79289eaa",
+                "url": "https://api.github.com/repos/SpartnerNL/Laravel-Excel/zipball/eb31f30d72c51c3fb11644b636945accbe50404f",
+                "reference": "eb31f30d72c51c3fb11644b636945accbe50404f",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/support": "5.8.*|^6.0|^7.0|^8.0",
+                "illuminate/support": "5.8.*|^6.0|^7.0|^8.0|^9.0",
                 "php": "^7.0|^8.0",
                 "phpoffice/phpspreadsheet": "^1.18"
             },
             "require-dev": {
-                "orchestra/testbench": "^6.0",
+                "orchestra/testbench": "^6.0|^7.0",
                 "predis/predis": "^1.1"
             },
             "type": "library",
@@ -4622,7 +4622,7 @@
             ],
             "support": {
                 "issues": "https://github.com/SpartnerNL/Laravel-Excel/issues",
-                "source": "https://github.com/SpartnerNL/Laravel-Excel/tree/3.1.35"
+                "source": "https://github.com/SpartnerNL/Laravel-Excel/tree/3.1.36"
             },
             "funding": [
                 {
@@ -4634,7 +4634,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-04T15:05:43+00:00"
+            "time": "2022-01-27T18:34:20+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -5303,12 +5303,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Termwind\\": "src/"
-                },
                 "files": [
                     "src/Functions.php"
-                ]
+                ],
+                "psr-4": {
+                    "Termwind\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -5404,16 +5404,16 @@
         },
         {
             "name": "nyholm/psr7",
-            "version": "1.4.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Nyholm/psr7.git",
-                "reference": "2212385b47153ea71b1c1b1374f8cb5e4f7892ec"
+                "reference": "1461e07a0f2a975a52082ca3b769ca912b816226"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Nyholm/psr7/zipball/2212385b47153ea71b1c1b1374f8cb5e4f7892ec",
-                "reference": "2212385b47153ea71b1c1b1374f8cb5e4f7892ec",
+                "url": "https://api.github.com/repos/Nyholm/psr7/zipball/1461e07a0f2a975a52082ca3b769ca912b816226",
+                "reference": "1461e07a0f2a975a52082ca3b769ca912b816226",
                 "shasum": ""
             },
             "require": {
@@ -5465,7 +5465,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Nyholm/psr7/issues",
-                "source": "https://github.com/Nyholm/psr7/tree/1.4.1"
+                "source": "https://github.com/Nyholm/psr7/tree/1.5.0"
             },
             "funding": [
                 {
@@ -5477,7 +5477,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-07-02T08:32:20+00:00"
+            "time": "2022-02-02T18:37:57+00:00"
         },
         {
             "name": "opis/closure",
@@ -7230,16 +7230,16 @@
         },
         {
             "name": "rennokki/laravel-eloquent-query-cache",
-            "version": "3.1.5",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/renoki-co/laravel-eloquent-query-cache.git",
-                "reference": "12669e1019f5da48d4f765702abf7a66f2e4bbba"
+                "reference": "8e29612ece27094c26ef15c048f5a22cc5c7528b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/renoki-co/laravel-eloquent-query-cache/zipball/12669e1019f5da48d4f765702abf7a66f2e4bbba",
-                "reference": "12669e1019f5da48d4f765702abf7a66f2e4bbba",
+                "url": "https://api.github.com/repos/renoki-co/laravel-eloquent-query-cache/zipball/8e29612ece27094c26ef15c048f5a22cc5c7528b",
+                "reference": "8e29612ece27094c26ef15c048f5a22cc5c7528b",
                 "shasum": ""
             },
             "require": {
@@ -7248,10 +7248,10 @@
             },
             "require-dev": {
                 "chelout/laravel-relationship-events": "^1.4",
-                "laravel/legacy-factories": "^1.1",
-                "mockery/mockery": "^1.4",
+                "laravel/legacy-factories": "^1.3",
+                "mockery/mockery": "^1.5",
                 "orchestra/database": "^5.0|^6.0",
-                "orchestra/testbench": "^6.23.2"
+                "orchestra/testbench": "^6.24.0"
             },
             "type": "library",
             "autoload": {
@@ -7283,7 +7283,7 @@
             ],
             "support": {
                 "issues": "https://github.com/renoki-co/laravel-eloquent-query-cache/issues",
-                "source": "https://github.com/renoki-co/laravel-eloquent-query-cache/tree/3.1.5"
+                "source": "https://github.com/renoki-co/laravel-eloquent-query-cache/tree/3.2.0"
             },
             "funding": [
                 {
@@ -7291,7 +7291,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-14T20:09:24+00:00"
+            "time": "2022-02-03T12:03:47+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
@@ -7675,16 +7675,16 @@
         },
         {
             "name": "spatie/laravel-health",
-            "version": "1.8.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-health.git",
-                "reference": "d98510300f6dab9d7b6acbe4d2832eb42c8712de"
+                "reference": "8e9c1d44d27b74c81295a63b891d1b5bd28313fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-health/zipball/d98510300f6dab9d7b6acbe4d2832eb42c8712de",
-                "reference": "d98510300f6dab9d7b6acbe4d2832eb42c8712de",
+                "url": "https://api.github.com/repos/spatie/laravel-health/zipball/8e9c1d44d27b74c81295a63b891d1b5bd28313fb",
+                "reference": "8e9c1d44d27b74c81295a63b891d1b5bd28313fb",
                 "shasum": ""
             },
             "require": {
@@ -7756,7 +7756,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-health/issues",
-                "source": "https://github.com/spatie/laravel-health/tree/1.8.0"
+                "source": "https://github.com/spatie/laravel-health/tree/1.8.1"
             },
             "funding": [
                 {
@@ -7764,7 +7764,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-02-01T11:44:10+00:00"
+            "time": "2022-02-02T15:36:00+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
@@ -12458,12 +12458,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "DeepCopy\\": "src/DeepCopy/"
-                },
                 "files": [
                     "src/DeepCopy/deep_copy.php"
-                ]
+                ],
+                "psr-4": {
+                    "DeepCopy\\": "src/DeepCopy/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [

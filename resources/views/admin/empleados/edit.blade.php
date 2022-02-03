@@ -699,11 +699,9 @@
             window.tblExperiencia = $('#tbl-experiencia').DataTable({
                 "autoWidth": false,
                 initComplete: function(settings,json){
-                    $(".datepicker").datepicker({
-                        format: "yyyy",
-                        viewMode: "years",
-                        minViewMode: "years",
-                        autoclose:true //to close picker once year is selected
+                    $(document).ready(function() {
+                     $(".yearpicker").yearpicker()
+
                     });
                 },
                 buttons: [],
@@ -1007,9 +1005,6 @@
 
                 ],
                 orderCellsTop: true,
-                order: [
-                    [1, 'desc']
-                ],
             })
 
             document.getElementById('tbl-educacion').addEventListener('change', async function(e) {
@@ -1494,9 +1489,7 @@
 
                 ],
                 orderCellsTop: true,
-                order: [
-                    [1, 'desc']
-                ],
+
             })
             //Eventos para editar registros
             document.getElementById('tbl-certificados').addEventListener('change', async function(e) {
@@ -2409,11 +2402,11 @@
         }
 
         function limpiarCamposEducacion() {
-            $("#institucion").val('');
-            $("#año_inicio").val('');
-            $("#año_fin").val('');
-            $("#titulo_obtenido").val('');
-            $("#nivel").val('');
+            $("#institucion_inst").val('');
+            $("#titulo_obtenido_inst").val('');
+            $("#año_inicio_inst").val('');
+            $("#año_fin_inst").val('');
+            $("#nivel_inst").val('');
         }
 
         function enviarEducacion() {
@@ -2534,10 +2527,10 @@
         }
 
         function limpiarCamposIdioma() {
-            $("#nombre").val('');
-            $("#nivel").val('');
-            $("#porcentaje").val('');
-            $("#certificado").val('');
+            $("#nombre_idioma").val('');
+            $("#nivel_idioma").val('');
+            $("#porcentaje_idioma").val('');
+            $("#certificado_idioma").val('');
         }
 
         function suscribirCertificado() {
@@ -2667,13 +2660,13 @@
     </script>
 
 
-        {{-- <script>
+        <script>
             $(document).ready(function() {
                 $(".yearpicker").yearpicker()
 
             });
 
-        </script> --}}
+        </script>
 
         <script>
             $(".datepicker").datepicker({
@@ -2683,6 +2676,7 @@
             autoclose:true //to close picker once year is selected
         });
         </script>
+
 
 
 @endsection

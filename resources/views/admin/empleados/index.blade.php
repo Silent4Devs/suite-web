@@ -58,6 +58,18 @@
             margin-right: 15px;
         }
 
+        .table tr td:nth-child(9) {
+
+        text-align: left !important;
+
+        }
+
+        .table tr td:nth-child(7) {
+
+        text-align: left !important;
+
+        }
+
     </style>
 
     <h5 class="col-12 titulo_general_funcion">Empleados</h5>
