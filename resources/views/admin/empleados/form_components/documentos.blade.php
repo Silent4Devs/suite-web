@@ -41,18 +41,28 @@
         <div class="row">
             <div class="form-group col-sm-6">
                 <label for="nombre"><i class="fas fa-edit iconos-crear"></i>Nombre del documento</label>
-                <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
-                    id="nombre_doc" value="{{ old('nombre', '') }}">
-                <small id="nombre_error" class="errors text-danger"></small>
+                <select class="form-control" name="nombre" id="nombre_documento">
+                    <option value="" selected disabled>Selecciones documento</option>
+                    @forelse($lista_docs as $list_doc)
+                        <option 
+                            data-activar="{{ $list_doc->activar_numero ? 'si' : 'no'}}" 
+                            value="{{ $list_doc->documento }}">
+
+                                {{ $list_doc->documento }}
+                        </option>
+                        @empty
+                        <option>sin documentos</option>
+                    @endforelse
+                </select>
             </div>
-            <div class="form-group col-sm-6">
-                <label for="numero"><i class="fas fa-barcode iconos-crear"></i>Número</label>
+            <div class="form-group col-sm-6 d-none" id="group_numero_activo">
+                <label for="numero"><i class="fas fa-barcode iconos-crear"></i>ID</label>
                 <input class="form-control {{ $errors->has('numero') ? 'is-invalid' : '' }}" type="text" name="numero"
                     id="numero_doc" value="{{ old('numero', '') }}">
                 <small id="numero_error" class="errors text-danger"></small>
             </div>
             <div class="col-sm-12 col-md-12 col-12">
-                <label for="documentos"><i class="fas fa-folder-open iconos-crear"></i>Documentos</label><i
+                <label for="documentos"><i class="fas fa-folder-open iconos-crear"></i>Documento</label><i
                     class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>
                 <div class="input-group mb-3">
                     <div class="custom-file">
@@ -83,3 +93,21 @@
 </div>
 
 <div class="col-sm-12 col-md-12 col-12 px-0" id="documentosGrid"></div>
+
+
+@section('scripts')
+    <script type="text/javascript">
+        $(document).on('change', '#nombre_documento', function(event) {
+            let op_select = $('#nombre_documento option:selected').attr('data-activar');
+            console.log(op_select);
+            if (op_select == 'si') {
+                $('#group_numero_activo').addClass('d-block');
+                $('#group_numero_activo').removeClass('d-none');
+            }
+            if (op_select == 'no'){
+                $('#group_numero_activo').addClass('d-none');
+                $('#group_numero_activo').removeClass('d-block');
+            }
+        });
+    </script>
+@endsection

@@ -214,7 +214,7 @@
                         </a>
                         <a class="nav-link" id="nav-documentos-tab" data-toggle="tab" href="#nav-documentos"
                             role="tab" aria-controls="nav-documentos" aria-selected="false">
-                            <i class="mr-2 fas fa-folder-open" style="font-size:20px;"></i>Documentos
+                            <i class="mr-2 fas fa-folder-open" style="font-size:20px;"></i>Expediente
                         </a>
                     </div>
                 </nav>

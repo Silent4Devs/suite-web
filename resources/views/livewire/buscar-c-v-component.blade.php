@@ -471,7 +471,7 @@
                                         <div class="col-10" style="white-space: nowrap;">
                                             <span style="font-size: 17px; font-weight: bold;"><i
                                                     class="fas iconos-crear"
-                                                    x-bind:class="! open ? 'fa-folder' : 'fa-folder-open'"></i>Mis Documentos
+                                                    x-bind:class="! open ? 'fa-folder' : 'fa-folder-open'"></i>Mi Expediente
                                             </span>
                                         </div>
                                         <div class="col text-center">

@@ -377,6 +377,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
     Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
 
+    Route::get('timesheet/clientes', 'TimesheetController@clientes')->name('timesheet-clientes');
+    Route::get('timesheet/clientes/create', 'TimesheetController@clientesCreate')->name('timesheet-clientes-create');
+    Route::post('timesheet/clientes/store', 'TimesheetController@clientesStore')->name('timesheet-clientes-store');
+
     Route::resource('timesheet', 'TimesheetController')->except(['create', 'index']);
 
     //Competencia Tipo

@@ -240,6 +240,12 @@
 			                    Aprobaciones
 			                </div>
 			            </a></li>
+                        <li><a href="{{ asset('admin/timesheet/clientes') }}">
+                            <div>
+                                <i class="bi bi-bag"></i><br>
+                                Clientes
+                            </div>
+                        </a></li>
 				    </ul>
                 </div>
             </div>
