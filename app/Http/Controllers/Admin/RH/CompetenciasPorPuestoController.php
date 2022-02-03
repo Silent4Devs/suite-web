@@ -23,7 +23,7 @@ class CompetenciasPorPuestoController extends Controller
         // dd($puestos);
 
         if ($request->ajax()) {
-            $puestos = Puesto::with(['competencias' => function ($q) {
+            $puestos = Puesto::select('id', 'puesto')->with(['competencias' => function ($q) {
                 $q->with('competencia');
             }])->orderByDesc('id')->get();
 

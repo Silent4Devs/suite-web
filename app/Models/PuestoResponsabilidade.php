@@ -27,8 +27,6 @@ class PuestoResponsabilidade extends Model
         'puesto_id',
     ];
 
-
-
     public function puesto()
     {
         return $this->hasMany('App\Model\Puesto');

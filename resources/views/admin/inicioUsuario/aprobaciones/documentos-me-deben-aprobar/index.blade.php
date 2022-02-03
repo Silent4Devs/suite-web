@@ -1,6 +1,6 @@
 <div class="w-100" id="contendor-principal-me-deben-aprobar" x-data="{show:false}">
     <div class="row mb-4 align-items-center">
-        <div class="pr-0" x-bind:class="show?'col-12':'col-12'" style="text-align:right;">
+        <div class="col-12 pr-2" x-bind:class="show?'col-12':'col-12'" style="text-align:right;">
             <span class="mr-2" x-bind:class="!show?'menu-active':''" title="Visualizar Tarjetas"
                 style="font-size: 1.1rem;cursor: pointer;" x-on:click="show=false"><i class="fas fa-th"></i></span>
             <span class="mr-2" style="font-size: 1.1rem;cursor: pointer;" x-bind:class="show?'menu-active':''"
