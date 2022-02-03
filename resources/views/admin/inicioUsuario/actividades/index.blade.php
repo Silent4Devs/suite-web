@@ -1,10 +1,10 @@
 <div class="w-100" id="contendor-principal-actividades" x-data="{show:false}">
     <div class="row mb-4 align-items-center">
-        <div class="pr-0" x-bind:class="show?'col-12':'col-12'" style="text-align:right;">
+        <div class="col-12 pr-2" x-bind:class="show?'col-12':'col-12'" style="text-align:right;">
             <span class="mr-2" x-bind:class="!show?'menu-active':''" title="Visualizar Tarjetas"
                 style="font-size: 1.1rem;cursor: pointer;" x-on:click="show=false"><i class="fas fa-th"></i></span>
             <span class="mr-2" style="font-size: 1.1rem;cursor: pointer;" x-bind:class="show?'menu-active':''"
-                x-on:click="show=true" title="Visualizar Tabla"><i class="fas fa-th-list"></i></span>
+                x-on:click="handdleClick" title="Visualizar Tabla"><i class="fas fa-th-list"></i></span>
         </div>
     </div>
     <div class="row mb-4" x-show="!show" x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
@@ -30,60 +30,84 @@
                     @if (!$archivado)
                         <div class="col-4 mb-4">
                             <div id="carouselActividad{{ $task->id }}" class="carousel slide rounded p-2 bg-white"
-                                data-ride="carousel">
-                                <div class="col-12" style="text-align: right">
-                                    @php
-                                        if (intval($task->parent_id) == 1) {
-                                            $ruta = '/admin/planTrabajoBase/';
-                                        } else {
-                                            $ruta = '/admin/planes-de-accion/' . $task->parent_id;
-                                        }
-                                    @endphp
-                                    <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"></i></a>
-                                    <a href="plantTrabajoBase/{{ $task->name }}" target="_blank"><i
-                                            class="fas fa-eye" style="font-size:12pt;"></i></a>
-                                    @if ($task->status == 'STATUS_DONE' or $task->status == 'STATUS_FAILED')
-                                        <button class="btn_archivar" title="Archivar">
-                                            <i class="fas fa-archive" data-archivar="true"
-                                                data-actividad-id="{{ $task->id }}"
-                                                data-plan-implementacion="{{ $task->id_implementacion }}"></i>
-                                        </button>
-                                    @endif
-                                </div>
+                                style="height: 100%;" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
                                         <div class="row">
-                                            <div class="deben-aprobar-card">
+                                            <div class="col-12" style="text-align: right">
+                                                @php
+                                                    if (intval($task->parent_id) == 1) {
+                                                        $ruta = '/admin/planTrabajoBase/';
+                                                    } else {
+                                                        $ruta = '/admin/planes-de-accion/' . $task->parent_id;
+                                                    }
+                                                @endphp
+                                                <a title="Abrir Plan de Implementación" href="{{ asset($ruta) }}"><i
+                                                        class="far fas fa-stream"></i></a>
+                                                <a title="Visualizar Actividad"
+                                                    href="plantTrabajoBase/{{ $task->name }}" target="_blank"><i
+                                                        class="fas fa-eye" style="font-size:12pt;"></i></a>
+                                                @if ($task->status == 'STATUS_DONE' or $task->status == 'STATUS_FAILED')
+                                                    <button title="Archivar" class="btn_archivar" title="Archivar">
+                                                        <i class="fas fa-archive" data-archivar="true"
+                                                            style="cursor: pointer"
+                                                            data-actividad-id="{{ $task->id }}"
+                                                            data-plan-implementacion="{{ $task->id_implementacion }}"></i>
+                                                    </button>
+                                                @endif
+                                            </div>
+                                            <div class="deben-aprobar-card w-100">
                                                 <div class="px-4">
                                                     <div class="row align-items-center">
                                                         <div class="col-12">
-                                                            <h6 class="card-title d-flex align-items-center"
+                                                            <h6 class="card-title text-center"
                                                                 style="text-transform: capitalize;">
                                                                 @if ($task->status == 'STATUS_DONE')
                                                                     <i class="far fa-check-circle mr-1 text-success"
-                                                                        style="font-size: 18px"></i>
+                                                                        style="font-size: 18px;position: absolute;top: -22px;left: 15px;"></i>
                                                                 @elseif ($task->status == 'STATUS_ACTIVE')
                                                                     <i class="fas fa-info-circle mr-1 text-primary"
-                                                                        style="font-size: 18px"></i>
+                                                                        style="font-size: 18px;position: absolute;top: -22px;left: 15px;"></i>
                                                                 @elseif ($task->status == 'STATUS_SUSPENDED')
-                                                                    <i class="far fa-question-circle mr-1 text-muted">
-                                                                        style="font-size: 18px"></i>
+                                                                    <i class="far fa-question-circle mr-1 text-muted"
+                                                                        style="font-size: 18px;position: absolute;top: -22px;left: 15px;"></i>
                                                                 @elseif ($task->status == 'STATUS_WAITING')
-                                                                    <i class="fas fa-clock mr-1 text-warning">
-                                                                        style="font-size: 18px"></i>
+                                                                    <i class="fas fa-clock mr-1 text-warning"
+                                                                        style="font-size: 18px;position: absolute;top: -22px;left: 15px;"></i>
                                                                 @elseif ($task->status == 'STATUS_UNDEFINED')
                                                                     <i class="far fa-question-circle mr-1 text-muted"
-                                                                        style="font-size: 18px"></i>
+                                                                        style="font-size: 18px;position: absolute;top: -22px;left: 15px;"></i>
                                                                 @elseif ($task->status == 'STATUS_FAILED')
                                                                     <i class="far fa-times-circle mr-1 text-danger"
-                                                                        style="font-size: 18px"></i>
+                                                                        style="font-size: 18px;position: absolute;top: -22px;left: 15px;"></i>
                                                                 @endif
-                                                                {{ $task->name }}
+                                                                {{ Str::limit($task->name, 52, '...') }}
                                                             </h6>
                                                         </div>
                                                     </div>
-
-                                                    @switch($task->status)
+                                                    <select class="form-control" data-status="on"
+                                                        data-actividad-id="{{ $task->id }}"
+                                                        data-last-selection="{{ $task->status }}"
+                                                        data-plan-implementacion="{{ $task->id_implementacion }}">
+                                                        <option value="STATUS_SUSPENDED"
+                                                            {{ $task->status == 'STATUS_SUSPENDED' ? 'selected' : '' }}>
+                                                            Suspendida
+                                                        </option>
+                                                        <option value="STATUS_FAILED"
+                                                            {{ $task->status == 'STATUS_FAILED' ? 'selected' : '' }}>
+                                                            Con retraso</option>
+                                                        <option value="STATUS_UNDEFINED"
+                                                            {{ $task->status == 'STATUS_UNDEFINED' ? 'selected' : '' }}>
+                                                            Sin iniciar
+                                                        </option>
+                                                        <option value="STATUS_ACTIVE"
+                                                            {{ $task->status == 'STATUS_ACTIVE' ? 'selected' : '' }}>
+                                                            En proceso</option>
+                                                        <option value="STATUS_DONE"
+                                                            {{ $task->status == 'STATUS_DONE' ? 'selected' : '' }}>
+                                                            Completada</option>
+                                                    </select>
+                                                    {{-- @switch($task->status)
                                                         @case('STATUS_ACTIVE')
                                                             <p class="m-0"
                                                                 style="font-size: 12px;color:rgb(253, 171, 61)">En
@@ -111,7 +135,8 @@
                                                         @default
                                                             <p class="m-0" style="font-size: 12px;color:#00b1e1">Sin
                                                                 iniciar</p>
-                                                    @endswitch
+                                                    @endswitch --}}
+                                                    <br>
                                                     <p class="m-0" style="font-size: 12px;">Origen:
                                                         {{ $task->parent }}</p>
                                                     <p class="m-0" style="font-size: 12px;">Fecha:
@@ -138,20 +163,18 @@
             </div>
         </div>
     </div>
-    <div x-show="show" x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
-        <table id="tabla_usuario_actividades" class="table">
+    <div x-show="show" x-transition:enter.duration.500ms x-transition:leave.duration.400ms class="w-100">
+        <table id="tabla_usuario_actividades" class="table w-100">
             <thead>
                 <tr>
-                    <th style="min-width:100px;">Actividad</th>
-                    <th style="min-width:100px;">Origen</th>
-                    {{-- <th>Categoria</th> --}}
-                    {{-- <th>Urgencia</th> --}}
-                    <th style="min-width:200px;">Fecha&nbsp;inicio</th>
-                    <th style="min-width:200px;">Fecha&nbsp;fin</th>
-                    <th style="min-width:200px;">Compartida&nbsp;con</th>
-                    {{-- <th>Asignada por</th> --}}
-                    <th style="min-width:200px;">Estatus</th>
-                    <th style="min-width:100px;">Opciones</th>
+                    <th>Actividad</th>
+                    <th>Origen</th>
+                    <th>Fecha&nbsp;inicio</th>
+                    <th>Fecha&nbsp;fin</th>
+                    <th>Compartida&nbsp;con</th>
+                    <th>Estatus&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>Opciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -191,7 +214,24 @@
                             </td>
                             {{-- <td>Asignada por</td> --}}
                             <td>
-                                @switch($task->status)
+                                <select class="form-control" data-status="on" data-actividad-id="{{ $task->id }}"
+                                    data-last-selection="{{ $task->status }}"
+                                    data-plan-implementacion="{{ $task->id_implementacion }}">
+                                    <option value="STATUS_SUSPENDED"
+                                        {{ $task->status == 'STATUS_SUSPENDED' ? 'selected' : '' }}>Suspendida
+                                    </option>
+                                    <option value="STATUS_FAILED"
+                                        {{ $task->status == 'STATUS_FAILED' ? 'selected' : '' }}>Con retraso</option>
+                                    <option value="STATUS_UNDEFINED"
+                                        {{ $task->status == 'STATUS_UNDEFINED' ? 'selected' : '' }}>Sin iniciar
+                                    </option>
+                                    <option value="STATUS_ACTIVE"
+                                        {{ $task->status == 'STATUS_ACTIVE' ? 'selected' : '' }}>En proceso</option>
+                                    <option value="STATUS_DONE"
+                                        {{ $task->status == 'STATUS_DONE' ? 'selected' : '' }}>
+                                        Completada</option>
+                                </select>
+                                {{-- @switch($task->status)
                                     @case('STATUS_ACTIVE')
                                         <span class="badge" style="background-color:rgb(253, 171, 61)">En
                                             proceso</span>
@@ -212,7 +252,7 @@
                                     @break
                                     @default
                                         <span class="badge" style="background-color:#00b1e1">Sin iniciar</span>
-                                @endswitch
+                                @endswitch --}}
                             </td>
                             <td class="d-flex">
                                 @php
@@ -222,12 +262,13 @@
                                         $ruta = '/admin/planes-de-accion/' . $task->parent_id;
                                     }
                                 @endphp
-                                <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"
-                                        style="font-size:12pt"></i></a>
+                                <a href="{{ asset($ruta) }}"><i class="far fas fa-stream" style="font-size:12pt"
+                                        title="Abrir Plan de Implementación"></i></a>
                                 <a href="plantTrabajoBase/{{ $task->name }}" target="_blank"><i
-                                        class="fas fa-eye" style="font-size:12pt"></i></a>
+                                        class="fas fa-eye" style="font-size:12pt"
+                                        title="Visualizar Actividad"></i></a>
                                 @if ($task->status == 'STATUS_DONE' or $task->status == 'STATUS_SUSPENDED')
-                                    <button class="btn_archivar" title="Archivar">
+                                    <button class="btn_archivar" title="Archivar" title="Archivar Actividad">
                                         <i class="fas fa-archive" data-archivar="true"
                                             data-actividad-id="{{ $task->id }}"
                                             data-plan-implementacion="{{ $task->id_implementacion }}"
@@ -246,3 +287,185 @@
         </table>
     </div>
 </div>
+<script>
+    function handdleClick(e) {
+        this.show = true;
+        setTimeout(() => {
+            $.fn.dataTable.tables({
+                visible: true,
+                api: true
+            }).columns.adjust();
+        }, 400);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const tblActivudadesEmpleado = document.getElementById('tabla_usuario_actividades');
+        const cardActividades = document.getElementById('cards-actividades2');
+        tblActivudadesEmpleado.addEventListener('change', async (e) => {
+            if (e.target.tagName == 'SELECT') {
+                if (e.target.getAttribute('data-status') == 'on') {
+                    const estatusSeleccionado = e.target.value;
+                    const actividadID = e.target.getAttribute('data-actividad-id');
+                    const planImplementacionID = e.target.getAttribute('data-plan-implementacion');
+                    const seleccionAnterior = e.target.getAttribute('data-last-selection');
+                    const formData = new FormData();
+                    formData.append('taskID', actividadID);
+                    formData.append('planImplementacionID', planImplementacionID);
+                    formData.append('estatusSeleccionado', estatusSeleccionado);
+                    if (estatusSeleccionado == 'STATUS_ACTIVE') {
+                        const {
+                            value: progreso
+                        } = await Swal.fire({
+                            title: 'Progreso Alcanzado',
+                            showCancelButton: true,
+                            confirmButtonText: "Cambiar Estatus",
+                            cancelButtonText: "Cancelar",
+                            input: 'number',
+                            inputLabel: 'Ingresa el progreso, en un rango de 1-99',
+                            inputPlaceholder: 'Progreso',
+                            inputAttributes: {
+                                min: 1,
+                                max: 99,
+                            },
+                            inputValidator: (value) => {
+                                if (value > 99) {
+                                    return 'Debes de ingresar un número en el rango de 1 a 99'
+                                }
+                                if (value < 1) {
+                                    return 'Debes de ingresar un número en el rango de 1 a 99'
+                                }
+                            },
+                        })
+                        if (progreso) {
+                            formData.append('progreso', progreso);
+                            toastr.info('Actualizando el estatus');
+                            const url =
+                                "{{ route('admin.inicio-Usuario.actividades.cambiarEstatusActividad') }}"
+                            const response = await fetch(url, {
+                                method: "POST",
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr(
+                                            'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.success) {
+                                toastr.success('Estatus Actualizado');
+                                window.location.reload();
+                            }
+                        } else {
+                            e.target.value = seleccionAnterior;
+                        }
+                    } else {
+                        toastr.info('Actualizando el estatus');
+                        const url =
+                            "{{ route('admin.inicio-Usuario.actividades.cambiarEstatusActividad') }}"
+                        const response = await fetch(url, {
+                            method: "POST",
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                    .attr(
+                                        'content'),
+                            },
+                        })
+                        const data = await response.json();
+                        if (data.success) {
+                            toastr.success('Estatus Actualizado');
+                            window.location.reload();
+                        }
+                    }
+
+                }
+            }
+        })
+        cardActividades.addEventListener('change', async (e) => {
+            if (e.target.tagName == 'SELECT') {
+                if (e.target.getAttribute('data-status') == 'on') {
+                    const estatusSeleccionado = e.target.value;
+                    const actividadID = e.target.getAttribute('data-actividad-id');
+                    const planImplementacionID = e.target.getAttribute('data-plan-implementacion');
+                    const seleccionAnterior = e.target.getAttribute('data-last-selection');
+                    console.log(seleccionAnterior);
+                    const formData = new FormData();
+                    formData.append('taskID', actividadID);
+                    formData.append('planImplementacionID', planImplementacionID);
+                    formData.append('estatusSeleccionado', estatusSeleccionado);
+                    if (estatusSeleccionado == 'STATUS_ACTIVE') {
+                        const {
+                            value: progreso
+                        } = await Swal.fire({
+                            title: 'Progreso Alcanzado',
+                            showCancelButton: true,
+                            confirmButtonText: "Cambiar Estatus",
+                            cancelButtonText: "Cancelar",
+                            input: 'number',
+                            inputLabel: 'Ingresa el progreso, en un rango de 1-99',
+                            inputPlaceholder: 'Progreso',
+                            inputAttributes: {
+                                min: 1,
+                                max: 99,
+                            },
+                            inputValidator: (value) => {
+                                if (value > 99) {
+                                    return 'Debes de ingresar un número en el rango de 1 a 99'
+                                }
+                                if (value < 1) {
+                                    return 'Debes de ingresar un número en el rango de 1 a 99'
+                                }
+                            },
+                        })
+                        console.log(progreso);
+                        if (progreso) {
+                            formData.append('progreso', progreso);
+                            toastr.info('Actualizando el estatus');
+                            const url =
+                                "{{ route('admin.inicio-Usuario.actividades.cambiarEstatusActividad') }}"
+                            const response = await fetch(url, {
+                                method: "POST",
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr(
+                                            'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.success) {
+                                toastr.success('Estatus Actualizado');
+                                window.location.reload();
+                            }
+                        } else {
+                            e.target.value = seleccionAnterior;
+                        }
+
+                    } else {
+                        toastr.info('Actualizando el estatus');
+                        const url =
+                            "{{ route('admin.inicio-Usuario.actividades.cambiarEstatusActividad') }}"
+                        const response = await fetch(url, {
+                            method: "POST",
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                    .attr(
+                                        'content'),
+                            },
+                        })
+                        const data = await response.json();
+                        if (data.success) {
+                            toastr.success('Estatus Actualizado');
+                            window.location.reload();
+                        }
+                    }
+
+                }
+            }
+        })
+    })
+</script>
