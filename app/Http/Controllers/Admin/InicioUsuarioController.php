@@ -986,6 +986,43 @@ class InicioUsuarioController extends Controller
         // return redirect()->route('admin.inicio-Usuario.acctividades.archivo');
     }
 
+    public function cambiarEstatusActividad(Request $request)
+    {
+        $implementacion = PlanImplementacion::where('id', $request->planImplementacionID)->first();
+        $tasks = $implementacion->tasks;
+        $taskID = $request->taskID;
+        $estatus = $request->estatusSeleccionado;
+
+        $updatedTasks = array_map(function ($item) use ($taskID, $estatus, $request) {
+            if ($estatus == 'STATUS_UNDEFINED') {
+                $progreso = 0;
+            }
+            if ($estatus == 'STATUS_ACTIVE') {
+                $progreso = array_key_exists('progreso', $request->all()) != null ? $request->progreso : 50;
+            }
+            if ($estatus == 'STATUS_DONE') {
+                $progreso = 100;
+            }
+
+            if ($item->id == $taskID) {
+                $item->status = $estatus;
+                if (isset($progreso)) {
+                    $item->progress = $progreso;
+                }
+            }
+
+            return $item;
+        }, $tasks);
+
+        $implementacion->update([
+            'tasks' => $updatedTasks,
+        ]);
+
+        return response()->json(['success' => true]);
+
+        // return redirect()->route('admin.inicio-Usuario.acctividades.archivo');
+    }
+
     public function recuperarActividades(Request $request)
     {
         $implementacion = PlanImplementacion::where('id', $request->planImplementacionID)->first();
