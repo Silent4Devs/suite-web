@@ -164,7 +164,7 @@ class PuestosController extends Controller
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
         $puesto = Puesto::get();
-        $empleados= Empleado::get();
+        $empleados = Empleado::get();
         // $perfiles_seleccionado = $puesto->perfil_empleado_id;
         // dd($idis);
 
@@ -242,7 +242,6 @@ class PuestosController extends Controller
         $empleados = Empleado::get();
         $language = PuestoIdiomaPorcentajePivot::get();
         // $perfiles_seleccionado = $puesto->perfil_empleado_id;
-
 
         return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language'));
     }
@@ -343,7 +342,6 @@ class PuestosController extends Controller
 
     public function saveOrUpdateLanguage($languajes, $puesto)
     {
-
         if (!is_null($languajes)) {
             foreach ($languajes as $languaje) {
                 // dd($languaje);
@@ -365,8 +363,6 @@ class PuestosController extends Controller
                 }
             }
         }
-
-
     }
 
     public function deleteLanguage(Request $request, $language)
