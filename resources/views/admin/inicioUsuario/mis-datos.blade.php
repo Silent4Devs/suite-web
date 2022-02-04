@@ -439,7 +439,7 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                         </div> --}}
-                        <div class="p-34 card" x-data="{show:false}">
+                        <div class="card" x-data="{show:false}" style="padding:20px;">
                             <h5 class="mb-0"><i class="bi bi-people mr-2"
                                     style="transform:scale(1.15);"></i>Mi Equipo
 
@@ -546,7 +546,7 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                         </div>
-                        <div class="p-34 card card_margin_b_n" x-data="{show:false}">
+                        <div class="card card_margin_b_n" x-data="{show:false}" style="padding:20px;">
                             <h5 class="mb-0"><i class="bi bi-laptop mr-2"></i>Mis Activos
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -625,7 +625,7 @@ if (!is_null($organizacion)) {
 
 
 
-                        <div class="p-34 card card_margin_b_n" x-data="{show:false}">
+                        <div class=" card card_margin_b_n" x-data="{show:false}" style="padding:20px;">
                             <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -899,8 +899,8 @@ if (!is_null($organizacion)) {
                         </div>
                         <div class="row gutters-sm">
                             <div class="card_data_mis_datos col-sm-12">
-                                <div class="mb-0 card h-100">
-                                    <div class="pb-personzalizado card-body" x-data="{show:false}">
+                                <div class="mb-0 card h-100" >
+                                    <div class="pb-personzalizado card-body" x-data="{show:false}" style="padding:26px;">
                                         <div class="row">
                                             <div class="col-4">
                                                 <h5 class="mb-0"><i class="bi bi-bullseye mr-2"></i>Mis
@@ -991,8 +991,8 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                             <div class="card_data_mis_datos col-sm-12">
-                                <div class="mb-0 card h-100">
-                                    <div class="pb-personzalizado card-body" x-data="{show:false}">
+                                <div class="mb-0 card h-100 mt-1">
+                                    <div class="pb-personzalizado card-body" x-data="{show:false}" style="padding:13px;">
                                         <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge mr-2"></i>Mi
                                             Autoevaluación
                                         </h5>
@@ -1048,8 +1048,8 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                             <div class="card_data_mis_datos col-sm-12">
-                                <div class="mb-0 card h-100">
-                                    <div class="pb-personzalizado mb-0 card-body" x-data="{show:false}">
+                                <div class="mb-0 card h-100 mt-1">
+                                    <div class="pb-personzalizado mb-0 card-body" x-data="{show:false}" style="padding:14px;">
                                         <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge-fill mr-2"></i>Evaluaciones a
                                             Realizar
                                             <div class="circle-total-evaluaciones" style="top:-5px !important;">

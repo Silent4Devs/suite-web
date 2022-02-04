@@ -86,7 +86,7 @@
 </div>
 <div class="row">
     @if ($ceo_exists)
-        <div class="form-group col-sm-6">
+        <div class="form-group col-sm-3">
             <label class="required" for="jefe"><i class="fas fa-user iconos-crear"></i>Jefe
                 Inmediato</label>
             <div class="mb-3 input-group">
@@ -111,7 +111,41 @@
             @endif
         </div>
     @endif
-
+        <div class="form-group col-sm-3">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-12">
+                            <label class="required" for="perfil_empleado_id"><i class="fas fa-sitemap iconos-crear"></i>
+                                Nivel Jerárquico</label>
+                        </div>
+                        <div class="col-sm-9 col-md-9 col-9 pr-0">
+                            <select class="form-control {{ $errors->has('perfil_empleado_id') ? 'is-invalid' : '' }}"
+                                name="perfil_empleado_id" id="perfil_empleado_id" value="{{ old('perfil_empleado_id', '') }}"
+                                required>
+                                <option value="" selected disabled>
+                                    -- Selecciona un perfil --
+                                </option>
+                                @foreach ($perfiles as $perfil)
+                                    <option value="{{ $perfil->id }}"
+                                        {{ old('perfil_empleado_id', $empleado->perfil_empleado_id) == $perfil->id ? ' selected="selected"' : '' }}>
+                                        {{ $perfil->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <small id="error_perfil_empleado_id" class="text-danger errores"></small>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-3">
+                            <button id="btnAgregarPerfil" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
+                                data-toggle="modal" data-target="#PerfilModal" title="Agregar Perfil"><i
+                                    class="fas fa-plus"></i></button>
+                            @livewire('perfil-create')
+                        </div>
+                        @if ($errors->has('perfil_empleado_id'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('perfil_empleado_id') }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
     <div class="form-group col-sm-6">
         <label class="required" for="genero"><i class="fas fa-venus-mars iconos-crear"></i>Género</label>
         <div class="mb-3 input-group">
