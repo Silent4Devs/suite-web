@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Area;
-use App\Models\Team;
-use App\Models\Puesto;
-use App\Models\Empleado;
-use App\Models\Language;
-use Illuminate\Http\Request;
-use App\Models\PerfilEmpleado;
-use App\Models\RH\Competencia;
-use App\Models\PuestoContactos;
-use App\Models\PuestosCertificado;
-use App\Models\HerramientasPuestos;
 use App\Http\Controllers\Controller;
-use App\Models\PuestoResponsabilidade;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\StorePuestoRequest;
-use App\Http\Requests\UpdatePuestoRequest;
-use App\Models\PuestoIdiomaPorcentajePivot;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyPuestoRequest;
+use App\Http\Requests\StorePuestoRequest;
+use App\Http\Requests\UpdatePuestoRequest;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\HerramientasPuestos;
+use App\Models\Language;
+use App\Models\PerfilEmpleado;
+use App\Models\Puesto;
+use App\Models\PuestoContactos;
+use App\Models\PuestoIdiomaPorcentajePivot;
+use App\Models\PuestoResponsabilidade;
+use App\Models\PuestosCertificado;
+use App\Models\RH\Competencia;
+use App\Models\Team;
+use Gate;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class PuestosController extends Controller
 {
@@ -169,7 +169,7 @@ class PuestosController extends Controller
         $perfiles = PerfilEmpleado::all();
         // dd($idis);
 
-        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puesto', 'herramientas', 'contactos', 'empleados','perfiles'));
+        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puesto', 'herramientas', 'contactos', 'empleados', 'perfiles'));
     }
 
     public function store(StorePuestoRequest $request)

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin\RH;
 
+use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Puesto;
-use Illuminate\Http\Request;
 use App\Models\RH\Competencia;
-use App\Http\Controllers\Controller;
 use App\Models\RH\CompetenciaPuesto;
+use Illuminate\Http\Request;
 
 class CompetenciasPorPuestoController extends Controller
 {
@@ -24,16 +24,16 @@ class CompetenciasPorPuestoController extends Controller
         // dd($puestos);
 
         if ($request->ajax()) {
-            $puestos = Puesto::select('id', 'puesto','id_area')->with(['areaRelacionada'=>function($q){
-                $q->select('id','area');
-            },'competencias' => function ($q) {
+            $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['areaRelacionada'=>function ($q) {
+                $q->select('id', 'area');
+            }, 'competencias' => function ($q) {
                 $q->with('competencia');
             }])->orderByDesc('id')->get();
 
             return datatables()->of($puestos)->toJson();
         }
 
-        $areas=Area::get();
+        $areas = Area::get();
 
         return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.index', compact('areas'));
     }
