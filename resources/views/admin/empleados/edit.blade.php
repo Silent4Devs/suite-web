@@ -210,7 +210,7 @@
                         </a>
                         <a class="nav-link" id="nav-competencias-tab" data-toggle="tab" href="#nav-competencias"
                             role="tab" aria-controls="nav-competencias" aria-selected="false">
-                            <i class="mr-2 fas fa-award" style="font-size:20px;"></i>Competencias
+                            <i class="mr-2 fas fa-award" style="font-size:20px;"></i>Perfil Profesional
                         </a>
                         <a class="nav-link" id="nav-documentos-tab" data-toggle="tab" href="#nav-documentos"
                             role="tab" aria-controls="nav-documentos" aria-selected="false">

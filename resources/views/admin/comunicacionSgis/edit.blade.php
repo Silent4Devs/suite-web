@@ -42,15 +42,20 @@
                     <div class="custom-file">
                         <input type="file" name="files[]" multiple class="form-control" id="documento"
                             accept="application/pdf">
+                        @if (count($comunicacionSgi->documentos_comunicacion)>0)
                         <small>Documento actual:{{ $comunicacionSgi->documentos_comunicacion[0]->documento }} </small><br>
+                        @endif
+
                     </div>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
                     <input type="file" name="imagen" class="form-control" accept="image/*" value="{{ old('imagen') }}">
+                    @if (count($comunicacionSgi->imagenes_comunicacion)>0)
                     <small>Imagen actual:{{ $comunicacionSgi->imagenes_comunicacion[0]->imagen }} </small><br>
                     <small>Tamaño recomendado de la imagen 500px por 300px</small>
+                    @endif
                     @if ($errors->has('imagen'))
                         <div class="invalid-feedback">
                             {{ $errors->first('imagen') }}

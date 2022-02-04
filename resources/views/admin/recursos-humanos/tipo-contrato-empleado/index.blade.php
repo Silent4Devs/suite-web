@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     @can('control_documento_create')
+    {{ Breadcrumbs::render('EV360-Tipo-Contrato-Empleados') }}
         <h5 class="col-12 titulo_general_funcion">Tipos de contrato para empleados</h5>
         <div class="mt-5 card">
         @endcan

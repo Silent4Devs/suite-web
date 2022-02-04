@@ -138,7 +138,7 @@
 
 
                 <div class="form-group col-md-6 sm-12">
-                    <label for="ubicacion_id"><i
+                    <label for="ubicacion_id" class="required"><i
                             class="fas fa-map-marker-alt iconos-crear"></i>Sede</label>
                     <select class="form-control select2 {{ $errors->has('ubicacion') ? 'is-invalid' : '' }}"
                         name="ubicacion_id" id="ubicacion_id">
@@ -156,7 +156,7 @@
                 </div>
 
                 <div class="form-group col-sm-6">
-                    <label class="required" for="sede"><i class="fas fa-map iconos-crear"></i>Ubicación</label>
+                    <label for="sede"><i class="fas fa-map iconos-crear"></i>Ubicación</label>
                     <input class="form-control {{ $errors->has('sede') ? 'is-invalid' : '' }}" type="text"
                         name="sede" id="sede" value="{{ old('sede', '') }}">
                     @if ($errors->has('sede'))
@@ -231,7 +231,7 @@
                 <div class="form-group col-md-6">
                     <label for="n_serie"><i class="fas fa-barcode iconos-crear"></i>No de serie</label>
                     <input class="form-control {{ $errors->has('n_serie') ? 'is-invalid' : '' }}" name="n_serie"
-                        id="n_serie" required>
+                        id="n_serie" >
                     @if ($errors->has('n_serie'))
                         <div class="invalid-feedback">
                             {{ $errors->first('n_serie') }}
@@ -243,7 +243,7 @@
                 <div class="form-group col-md-6">
                     <label for="n_producto"><i class="fas fa-barcode iconos-crear"></i>No de producto</label>
                     <input class="form-control {{ $errors->has('n_producto') ? 'is-invalid' : '' }}" name="n_producto"
-                        id="n_producto" required>
+                        id="n_producto">
                     @if ($errors->has('n_producto'))
                         <div class="invalid-feedback">
                             {{ $errors->first('n_producto') }}
@@ -315,10 +315,10 @@
                 </div>
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label  class="required" for="documento"><i class="fas fa-folder-open iconos-crear"></i>Cargar Documento</label>
+                    <label  for="documento"><i class="fas fa-folder-open iconos-crear"></i>Cargar Responsiva</label>
                     <form method="POST" action="{{ route('admin.activos.store') }}" accept-charset="UTF-8" enctype="multipart/form-data">
                     <input type="file" name="documento" multiple class="form-control" id="documento"
-                        accept="application/pdf" value="{{ old('files[]') }}"  required>
+                        accept="application/pdf" value="{{ old('files[]') }}" >
                 </div>
 
                 <div class="text-right form-group col-12" style="margin-left:15px;" >

@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+{{ Breadcrumbs::render('EV360-ListaDocumentosEmpleados') }}
 	<h5 class="col-12 titulo_general_funcion">Lista de Documentos de Empleados</h5>
 	@include('partials.flashMessages')
 	<div class="card card-body">
@@ -11,8 +12,8 @@
 				<thead class="thead-dark">
 					<tr>
 						<th>Documento</th>
-						<th style="max-width:100px;">ID activo</th>						
-						<th style="max-width:100px;">Opciones</th>						
+						<th style="max-width:100px;">ID activo</th>
+						<th style="max-width:100px;">Opciones</th>
 					</tr>
 				</thead>
 				<tbody>
