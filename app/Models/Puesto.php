@@ -72,9 +72,9 @@ class Puesto extends Model
         return $this->hasMany('App\Models\RH\CompetenciaPuesto', 'puesto_id', 'id');
     }
 
-    public function area()
+    public function areaRelacionada()
     {
-        return $this->belongsTo(Area::class, 'id_area');
+        return $this->belongsTo('App\Models\Area', 'id_area', 'id');
     }
 
     public function reportara()
@@ -98,10 +98,10 @@ class Puesto extends Model
         return $this->hasMany('App\Models\PuestoIdiomaPorcentajePivot', 'id_puesto')->orderBy('id');
     }
 
-    public function perfil()
-    {
-        return $this->belongsTo('App\Models\PerfilEmpleado', 'perfil_empleado_id', 'id');
-    }
+    // public function perfil()
+    // {
+    //     return $this->belongsTo('App\Models\PerfilEmpleado', 'perfil_empleado_id', 'id');
+    // }
 
     // public function idioma()
     // {

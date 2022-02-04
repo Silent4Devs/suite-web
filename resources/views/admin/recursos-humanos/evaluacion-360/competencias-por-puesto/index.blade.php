@@ -32,11 +32,26 @@
                     </div>
                 </div>
             </div>
+            <div class="mb-2 row">
+                <div class="col-4">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
+                    <select class="form-control" id="lista_areas">
+                        <option value="" disabled selected>-- Selecciona un área --</option>
+                        @foreach ($areas as $area)
+                            <option value="{{ $area->area }}">{{ $area->area }}</option>
+                        @endforeach
+                        <option value="">Todas</option>
+                    </select>
+                </div>
+            </div>
             <table class="table table-bordered w-100 tblCompetenciasPorPuesto">
                 <thead class="thead-dark">
                     <tr>
                         <th style="vertical-align: top">
                             Puesto
+                        </th>
+                        <th>
+                            Área
                         </th>
                         <th style="vertical-align: top">
                             Competencias
@@ -138,6 +153,12 @@
                     data: 'puesto',
                     width: '30%',
                 }, {
+                    data: 'id',
+                    render: function(data, type, row, meta) {
+                        console.log(row)
+                        return row.area_relacionada.area
+                    }
+                },{
                     data: 'competencias',
                     render: function(data, type, row, meta) {
                         console.log(data);

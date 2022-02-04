@@ -48,19 +48,19 @@
                         @endif
                     </div>
 
-                    {{-- <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="fecha_puesto"><i
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                        <label for="fecha_puesto"><i
                                 class="fas fa-calendar-alt iconos-crear"></i>Fecha de creación</label>
                         <input class="form-control {{ $errors->has('fecha_puesto') ? 'is-invalid' : '' }}" type="date" name="fecha_puesto"
-                            id="puesto" value="{{ old('fecha_puesto', '') }}" required>
+                            id="puesto" value="{{ old('fecha_puesto', '') }}" >
                         @if ($errors->has('fecha_puesto'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_puesto') }}
                             </div>
                         @endif
-                    </div> --}}
+                    </div>
 
-                    <div class="form-group col-sm-4">
+                    {{-- <div class="form-group col-sm-4">
                         <div class="row">
                             <div class="col-sm-12 col-md-12 col-12">
                                 <label class="required" for="perfil_empleado_id"><i class="fas fa-sitemap iconos-crear"></i>
@@ -73,12 +73,12 @@
                                     <option value="" selected disabled>
                                         -- Selecciona un perfil --
                                     </option>
-                                    {{-- @foreach ($perfiles as $perfil)
+                                    @foreach ($perfiles as $perfil)
                                         <option value="{{ $perfil->id }}"
                                             {{ old('perfil_empleado_id', $empleado->perfil_empleado_id) == $perfil->id ? ' selected="selected"' : '' }}>
                                             {{ $perfil->nombre }}
                                         </option>
-                                    @endforeach --}}
+                                    @endforeach
                                 </select>
                                 <small id="error_perfil_empleado_id" class="text-danger errores"></small>
                             </div>
@@ -94,7 +94,7 @@
                                 </div>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
 
@@ -170,9 +170,8 @@
 
                 <div class="row col-12">
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <label for="descripcion"><i class="fas fa-clipboard-list iconos-crear"></i>Objetivo general del puesto<span
-                                class="text-danger">*</span></label>
-                        <textarea class="form-control date" type="text" name="descripcion" id="descripcion">
+                        <label for="descripcion" class="required"><i class="fas fa-clipboard-list iconos-crear"></i>Objetivo general del puesto</label>
+                        <textarea class="form-control date" type="text" name="descripcion" id="descripcion" required>
                                             {{ old('descripcion') }}
                                         </textarea>
                         @if ($errors->has('descripcion'))
@@ -317,8 +316,7 @@
 
                 <div class="row col-12 mt-4">
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="estudios"><i class="fas fa-graduation-cap iconos-crear"></i>Educación Academica (Estudios)<span
-                                class="text-danger">*</span></label>
+                        <label for="estudios"><i class="fas fa-graduation-cap iconos-crear"></i>Educación Academica (Estudios)</label>
                         <textarea class="form-control date" type="text" name="estudios" id="estudios">
                                             {{ old('estudios') }}
                                         </textarea>
@@ -330,8 +328,7 @@
                     </div>
 
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="experiencia"><i class="fas fa-briefcase iconos-crear"></i>Experiencia Profesional<span
-                                class="text-danger">*</span></label>
+                        <label for="experiencia"><i class="fas fa-briefcase iconos-crear"></i>Experiencia Profesional</label>
                         <textarea class="form-control date" type="text" name="experiencia" id="experiencia">
                                             {{ old('experiencia') }}
                                         </textarea>
@@ -344,8 +341,7 @@
                 </div>
                 <div class="row col-12">
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="conocimientos"><i class="fas fa-chalkboard-teacher iconos-crear"></i>Conocimientos<span
-                                class="text-danger">*</span></label>
+                        <label for="conocimientos"><i class="fas fa-chalkboard-teacher iconos-crear"></i>Conocimientos</label>
                         <textarea class="form-control date" type="text" name="conocimientos" id="conocimientos">
                                             {{ old('conocimientos') }}
                                         </textarea>
@@ -460,9 +456,9 @@
                     </div>
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="sueldo"><i class="fas fa-dollar-sign iconos-crear"></i>Sueldo</label>
+                        <label  for="sueldo"><i class="fas fa-dollar-sign iconos-crear"></i>Sueldo</label>
                         <input class="form-control {{ $errors->has('sueldo') ? 'is-invalid' : '' }}" type="text" name="sueldo"
-                            id="teste" value="{{ old('sueldo', '') }}" data-type='currency' required>
+                            id="teste" value="{{ old('sueldo', '') }}" data-type='currency' >
                         @if ($errors->has('sueldo'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('sueldo') }}
@@ -472,9 +468,9 @@
 
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="horario"><i class="fas fa-business-time iconos-crear"></i>Horario laboral</label>
+                        <label for="horario"><i class="fas fa-business-time iconos-crear"></i>Horario laboral</label>
                                <input  class="form-control {{ $errors->has('horario') ? 'is-invalid' : '' }}" type="type" name="horario"
-                                    id="horario" value="{{ old('horario', '') }}" required>
+                                    id="horario" value="{{ old('horario', '') }}">
                                 @if ($errors->has('horario'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('horario') }}
@@ -490,7 +486,7 @@
                 <div class="row col-12">
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="edad"><i class="fas fa-user iconos-crear"></i>Edad</label>
+                        <label for="edad"><i class="fas fa-user iconos-crear"></i>Edad</label>
                         <select class="form-control {{ $errors->has('edad') ? 'is-invalid' : '' }}" name="edad" id="edad_rango">
                             <option value="" selected>Selecciona</option>
                             <option value="Indistinto">Indistinto</option>
@@ -501,7 +497,7 @@
 
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="genero"><i class="fas fa-restroom iconos-crear"></i>Género</label>
+                        <label for="genero"><i class="fas fa-restroom iconos-crear"></i>Género</label>
                         <select class="form-control {{ $errors->has('genero') ? 'is-invalid' : '' }}" name="genero" id="genero">
                             <option value="" selected>Selecciona</option>
                             <option value="Hombre">Hombre</option>
@@ -511,7 +507,7 @@
                     </div>
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="estado_civil"><i class=" fas fa-heart iconos-crear"></i>Estado Civil</label>
+                        <label  for="estado_civil"><i class=" fas fa-heart iconos-crear"></i>Estado Civil</label>
                         <select class="form-control {{ $errors->has('estado_civil') ? 'is-invalid' : '' }}" name="estado_civil" id="estado_civil">
                             <option value="" selected>Selecciona</option>
                             <option value="Soltero">Soltero(a)</option>
@@ -525,7 +521,7 @@
                 <div class="row col-sm-6 col-md-6 col-lg-6 d-none" id="campos_edad">
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="edad_de">De</label>
+                        <label  for="edad_de">De</label>
                             <input  class="form-control {{ $errors->has('edad_de') ? 'is-invalid' : '' }}" type="text" name="edad_de"
                                 value="{{ old('edad_de', '') }}">
                             @if ($errors->has('edad_de'))
@@ -536,7 +532,7 @@
                     </div>
 
                     <div class="form-group col-sm-5 col-md-5 col-lg-5">
-                        <label class="required" for="edad_a">A</label>
+                        <label  for="edad_a">A</label>
                            <div style="display:flex;"><input  class="form-control {{ $errors->has('edad_a') ? 'is-invalid' : '' }}" type="text" name="edad_a"
                               value="{{ old('edad_a', '') }}"><strong class="mt-2">&nbsp;&nbsp;&nbsp;Años</strong></div>
                             @if ($errors->has('edad_a'))

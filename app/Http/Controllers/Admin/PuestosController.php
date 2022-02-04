@@ -11,6 +11,7 @@ use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\HerramientasPuestos;
 use App\Models\Language;
+use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\PuestoContactos;
 use App\Models\PuestoIdiomaPorcentajePivot;
@@ -165,10 +166,10 @@ class PuestosController extends Controller
         $contactos = PuestoContactos::get();
         $puesto = Puesto::get();
         $empleados = Empleado::get();
-        // $perfiles_seleccionado = $puesto->perfil_empleado_id;
+        $perfiles = PerfilEmpleado::all();
         // dd($idis);
 
-        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puesto', 'herramientas', 'contactos', 'empleados'));
+        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puesto', 'herramientas', 'contactos', 'empleados', 'perfiles'));
     }
 
     public function store(StorePuestoRequest $request)
@@ -241,7 +242,6 @@ class PuestosController extends Controller
         $contactos = PuestoContactos::get();
         $empleados = Empleado::get();
         $language = PuestoIdiomaPorcentajePivot::get();
-        // $perfiles_seleccionado = $puesto->perfil_empleado_id;
 
         return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language'));
     }

@@ -2,11 +2,21 @@
 
 @section('content')
 
-{{ Breadcrumbs::render('EV360-CalendarioEventos') }}
-    <h5 class="col-12 titulo_general_funcion">Calendario</h5>
+    <ol class="breadcrumb">
+        {{-- <li class="breadcrumb-item">
+            <a href="{!! route('admin.tabla-calendario.index') !!}">Inicio</a>
+        </li>
+        <li class="breadcrumb-item active">Calendario</li> --}}
+    </ol>
+    @php
+    use App\Models\Organizacion;
+    $organizacion = Organizacion::first();
+    $empresa = $organizacion->empresa;
+    @endphp
+    <h5 class="col-12 titulo_general_funcion">Eventos de {{$empresa}}</h5>
     <div class="mt-4 card">
             <div class="card-body">
-                <div class="py-1 text-center form-group col-12" style="background-color:#345183; border-radius:100px; color: white;">Control de Eventos</div>
+                <div class="py-1 text-center form-group col-12" style="background-color:#345183; border-radius:100px; color: white;">Eventos</div>
                     @include('partials.flashMessages')
                     <div class="card-body datatable-fix">
                     @include('admin.tabla-calendario.table')
@@ -114,10 +124,6 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.tabla-calendario.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
                         data: 'nombre',
                         name: 'nombre'
                     },
