@@ -9,7 +9,7 @@
 
         .img-profile-lg {
             width: 95px;
-            height: 95px;
+            /* height: 95px; */
             clip-path: circle(100px at 50% 50%);
         }
 

@@ -2,12 +2,7 @@
 
 @section('content')
 
-    <ol class="breadcrumb">
-        {{-- <li class="breadcrumb-item">
-            <a href="{!! route('admin.tabla-calendario.index') !!}">Inicio</a>
-        </li>
-        <li class="breadcrumb-item active">Calendario</li> --}}
-    </ol>
+{{ Breadcrumbs::render('EV360-CalendarioEventos') }}
     <h5 class="col-12 titulo_general_funcion">Calendario</h5>
     <div class="mt-4 card">
             <div class="card-body">
