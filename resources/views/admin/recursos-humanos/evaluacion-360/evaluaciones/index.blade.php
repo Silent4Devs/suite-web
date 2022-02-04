@@ -330,7 +330,7 @@
             if (target.getAttribute('data-action') == 'Eliminar') {
                 const url = target.getAttribute('data-url');
                 Swal.fire({
-                    title: '¿Desea eliminar esta competencia?',
+                    title: '¿Desea eliminar esta Evaluación?',
                     html: '',
                     icon: 'warning',
                     showCancelButton: true,
@@ -381,8 +381,8 @@
                             success: function(response) {
                                 if (response.deleted) {
                                     Swal.fire(
-                                        '¡Registro Eliminado!',
-                                        // 'Las áreas relacionadas quedarán sin grupo asignado',
+                                        '¡Evaluación Eliminada!',
+                                            '',
                                         'success'
                                     )
                                     table.ajax.reload();

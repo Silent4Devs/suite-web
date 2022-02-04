@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     {{ Breadcrumbs::render('niveles-jerarquicos-edit', $perfil) }}
-    <h5 class="col-12 titulo_general_funcion">Editar: Perfil</h5>
+    <h5 class="col-12 titulo_general_funcion">Editar: Nivel</h5>
     <div class="mt-4 card">
         <div class="card-body">
             <form method="POST" action="{{ route("admin.perfiles.update",$perfil) }}"
@@ -9,7 +9,7 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group">
-                    <label class="required" for="nombre">Perfil</label>
+                    <label class="required" for="nombre">Nombre del Nivel</label>
                     <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
                         id="nombre" value="{{ old('nombre', $perfil->nombre) }}" required>
                     @if ($errors->has('nombre'))

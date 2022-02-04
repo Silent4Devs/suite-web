@@ -31,7 +31,7 @@
         </div>
     <li><a href="{{ route('admin.perfiles.index') }}">
             <div>
-                <i class="bi bi-bookshelf"></i>
+                <i class="bi bi-triangle"></i>
                 <br>
                 Niveles Jerárquicos
             </div>
@@ -47,7 +47,7 @@
             <div>
                 <i class="bi bi-person-rolodex"></i>
                 <br>
-                Expedientes Profesionales
+                Perfiles Profesionales
             </div>
         </a></li>
     <li><a href="{{ route('admin.organigrama.index') }}">
@@ -121,7 +121,7 @@
     </li>
     <li><a href="{{ route('admin.lista-documentos-empleados') }}">
             <div>
-                <i class="bi bi-file-earmark-zip"></i>
+                <i class="far fa-address-book"></i>
                 <br>
                 Lista de Documentos de Empleados
             </div>
