@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
             Clausula9001Seeder::class,
             NormasSeeder::class,
             ConfigurarSoporteSeeder::class,
+            CategoriaActivosSeeder::class,
             SubcategoriaActivosSeeder::class,
             //PlanBaseSeeder::class,
         ]);

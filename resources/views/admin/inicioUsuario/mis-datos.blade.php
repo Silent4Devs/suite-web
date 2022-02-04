@@ -555,8 +555,9 @@ if (!is_null($organizacion)) {
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container" style="padding-top: 10px;">
-                                    @if (is_null($activos))
-                                        No cuenta con activos a su cargo
+                                    {{-- @if (is_null($activos)) --}}
+                                    @if (count($activos) === 0)
+                                    Sin activos asignados actualmente
                                     @else
                                     <div class="row" style="margin-top: 1px;">
                                         <div class="col-12 text-muted scroll_estilo" style="overflow:auto;">
@@ -570,7 +571,7 @@ if (!is_null($organizacion)) {
                                                     </thead>
                                                     <tbody>
                                                         @foreach ( $activos as $activo )
-                                                        <tr data-toggle="modal" data-target="#modal_competencia{{ $activo->id }}" style="cursor: pointer;">
+                                                        <tr>
                                                             <td style="vertical-align: middle;">{{$activo->id}}</td>
                                                             <td style="vertical-align: middle; text-align: left !important;">{{$activo->nombreactivo}}</td>
                                                             <td style="text-align: center !important; vertical-align: middle;">{{$activo->descripcion}}</td>

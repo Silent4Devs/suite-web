@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('content')
     {{ Breadcrumbs::render('niveles-jerarquicos-create') }}
-    <h5 class="col-12 titulo_general_funcion">Registrar: Perfil</h5>
+    <h5 class="col-12 titulo_general_funcion">Registrar: Nivel</h5>
     <div class="mt-4 card">
         <div class="card-body">
             <form method="POST" action="{{ route('admin.perfiles.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <label class="required" for="nombre"><i class="fas fa-briefcase iconos-crear"></i>Perfil</label>
+                    <label class="required" for="nombre"><i class="fas fa-briefcase iconos-crear"></i>Nombre del Nivel</label>
                     <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
                         id="nombre" value="{{ old('nombre', '') }}" required>
                     @if ($errors->has('nombre'))

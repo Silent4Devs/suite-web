@@ -1215,8 +1215,9 @@ class EV360EvaluacionesController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.mis-evaluaciones', compact('evaluacion', 'evaluador', 'equipo', 'evaluado'));
     }
 
-    public function destroy(Evaluacion $evaluacion)
+    public function destroy($evaluacion)
     {
+        $evaluacion= Evaluacion::find($evaluacion);
         $evaluacion->delete();
 
         return response()->json(['deleted'=> true]);
