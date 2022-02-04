@@ -1147,7 +1147,7 @@ class EmpleadoController extends Controller
             }
         }
 
-        return response()->json(['status' => 'success', 'message' => 'Curriculum Actualizado', 'from' => 'curriculum'], 200);
+        return response()->json(['status' => 'success', 'message' => 'Curriculum Actualizado', 'from' => 'curriculum'], 200, $request->all());
     }
 
     /**
