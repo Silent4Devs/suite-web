@@ -62,8 +62,8 @@
 
         function cardInformacionHTML(modelo, icono) {
             return `
-            <div class="col-4">
-                <div id="carouselCapacitaciones${modelo.id}" class="carousel slide rounded p-2 bg-white" data-ride="carousel">
+            <div class="col-4 mb-2">
+                <div id="carouselCapacitaciones${modelo.id}" class="carousel slide rounded p-2 bg-white" data-ride="carousel" style="height: 100%;">
                     <div class="col-12" style="text-align: right">
                      ${headerAuxCardHTML(modelo)}
                     </div>

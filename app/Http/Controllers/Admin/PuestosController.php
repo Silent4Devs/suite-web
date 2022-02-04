@@ -163,10 +163,12 @@ class PuestosController extends Controller
         $puestos = Puesto::get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
+        $puesto = Puesto::get();
         $empleados = Empleado::get();
+        // $perfiles_seleccionado = $puesto->perfil_empleado_id;
         // dd($idis);
 
-        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puestos', 'herramientas', 'contactos', 'empleados'));
+        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puesto', 'herramientas', 'contactos', 'empleados'));
     }
 
     public function store(StorePuestoRequest $request)
@@ -180,7 +182,7 @@ class PuestosController extends Controller
         $this->saveUpdateCertificados($request->certificados, $puesto);
         $this->saveUpdateHerramientas($request->herramientas, $puesto);
         $this->saveUpdateContactos($request->contactos, $puesto);
-        $this->saveOrUpdateLanguage($request->languajes, $puesto);
+        $this->saveOrUpdateLanguage($request->id_language, $puesto);
 
         return redirect()->route('admin.puestos.index');
     }
@@ -239,12 +241,14 @@ class PuestosController extends Controller
         $contactos = PuestoContactos::get();
         $empleados = Empleado::get();
         $language = PuestoIdiomaPorcentajePivot::get();
+        // $perfiles_seleccionado = $puesto->perfil_empleado_id;
 
         return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)
     {
+        // dd($request->all());
         $puesto->update($request->all());
 
         // $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
@@ -254,7 +258,7 @@ class PuestosController extends Controller
         $this->saveUpdateCertificados($request->certificados, $puesto);
         $this->saveUpdateHerramientas($request->herramientas, $puesto);
         $this->saveUpdateContactos($request->contactos, $puesto);
-        $this->saveOrUpdateLanguage($request->languajes, $puesto);
+        $this->saveOrUpdateLanguage($request->id_language, $puesto);
 
         return redirect()->route('admin.puestos.index');
     }
@@ -344,16 +348,17 @@ class PuestosController extends Controller
                 // dd(PuestoResponsabilidade::exists($languaje['id']));
                 if (PuestoIdiomaPorcentajePivot::find($languaje['id']) != null) {
                     PuestoIdiomaPorcentajePivot::find($languaje['id'])->update([
-                        'id_language'=>$languaje['id_language'],
+                        'id_language'=>$languaje['language'],
                         'porcentaje' => $languaje['porcentaje'],
                         'nivel' =>  $languaje['nivel'],
+                        'id_puesto' => $puesto->id,
                     ]);
                 } else {
                     PuestoIdiomaPorcentajePivot::create([
-                        'puesto_id' => $puesto->id,
+                        'id_puesto' => $puesto->id,
                         'porcentaje' => $languaje['porcentaje'],
                         'nivel' =>  $languaje['nivel'],
-                        'id_language'=>$languaje['id_language'],
+                        'id_language'=>$languaje['language'],
                     ]);
                 }
             }

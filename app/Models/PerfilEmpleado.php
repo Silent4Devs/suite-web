@@ -33,4 +33,9 @@ class PerfilEmpleado extends Model
     {
         return $this->hasMany('App\Models\Empleado', 'perfil_empleado_id', 'id');
     }
+
+    public function puestos()
+    {
+        return $this->hasMany('App\Models\Empleado', 'perfil_empleado_id', 'id');
+    }
 }

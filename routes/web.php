@@ -210,6 +210,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('inicioUsuario/aprobacion/archivo', 'InicioUsuarioController@archivoAprobacion')->name('inicio-Usuario.aprobacion.archivo');
 
     Route::post('inicioUsuario/actividades/archivar', 'InicioUsuarioController@archivarActividades')->name('inicio-Usuario.actividades.archivar');
+    Route::post('inicioUsuario/actividades/cambiar-estatus', 'InicioUsuarioController@cambiarEstatusActividad')->name('inicio-Usuario.actividades.cambiarEstatusActividad');
     Route::post('inicioUsuario/actividades/recuperar', 'InicioUsuarioController@recuperarActividades')->name('inicio-Usuario.actividades.recuperar');
     Route::get('inicioUsuario/actividades/archivo', 'InicioUsuarioController@archivoActividades')->name('inicio-Usuario.acctividades.archivo');
 

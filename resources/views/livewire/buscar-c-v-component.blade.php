@@ -322,12 +322,12 @@
                                             <br>
                                             <span>
                                                 Del
-                                                <strong>{{ \Carbon\Carbon::parse($experiencia->inicio_mes)->format('d/m/Y') }}</strong>
+                                                <strong>{{$experiencia->inicio_mes}}</strong>
                                                 al
                                                 @if (!$experiencia->fin_mes)
                                                 <strong>día de hoy</strong>
                                                 @else
-                                                <strong>{{ \Carbon\Carbon::parse($experiencia->fin_mes)->format('d/m/Y') }}</strong>
+                                                <strong>{{ $experiencia->fin_mes}}</strong>
                                                 @endif
 
                                             </span>
@@ -516,8 +516,8 @@
                                                                 <select class="form-control" name="nombre" id="nombre_documento">
                                                                     <option value="" selected disabled>Selecciones documento</option>
                                                                     @forelse($lista_docs as $list_doc)
-                                                                        <option 
-                                                                            data-activar="{{ $list_doc->activar_numero ? 'si' : 'no'}}" 
+                                                                        <option
+                                                                            data-activar="{{ $list_doc->activar_numero ? 'si' : 'no'}}"
                                                                             value="{{ $list_doc->documento }}">
 
                                                                                 {{ $list_doc->documento }}
