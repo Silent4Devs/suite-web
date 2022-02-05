@@ -223,7 +223,7 @@ class EmpleadoController extends Controller
             'estatus' => 'required',
             'email' => 'required|email',
             // 'sede_id' => 'required|exists:sedes,id',
-            'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
+            // 'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
 
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
@@ -1007,7 +1007,7 @@ class EmpleadoController extends Controller
             'estatus' => 'required',
             'email' => 'required|email',
             // 'sede_id' => 'required|exists:sedes,id',
-            'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
+            // 'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
 
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
@@ -1151,7 +1151,7 @@ class EmpleadoController extends Controller
             }
         }
 
-        return response()->json(['status' => 'success', 'message' => 'Curriculum Actualizado', 'from' => 'curriculum'], 200);
+        return response()->json(['status' => 'success', 'message' => 'Curriculum Actualizado', 'from' => 'curriculum'], 200, $request->all());
     }
 
     /**

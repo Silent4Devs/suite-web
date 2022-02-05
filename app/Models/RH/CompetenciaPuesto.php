@@ -26,6 +26,6 @@ class CompetenciaPuesto extends Model
 
     public function puesto()
     {
-        return $this->belongsTo('App\Models\Puesto', 'puesto_id', 'id');
+        return $this->belongsTo('App\Models\Puesto', 'puesto_id', 'id')->with('area');
     }
 }

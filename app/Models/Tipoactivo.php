@@ -44,6 +44,7 @@ class Tipoactivo extends Model
         return $this->hasMany(SubcategoriaActivo::class, 'categoria_id');
     }
 
+
     public function marcas()
     {
         return $this->hasMany(Marca::class, 'activo_id');
@@ -53,4 +54,5 @@ class Tipoactivo extends Model
     {
         return $this->hasMany(Activo::class, 'subtipo_id');
     }
+
 }

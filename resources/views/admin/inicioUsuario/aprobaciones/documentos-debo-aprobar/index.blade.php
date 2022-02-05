@@ -1,6 +1,6 @@
 <div class="w-100" id="contendor-principal-debo-aprobar" x-data="{show:false}">
     <div class="row mb-4 align-items-center">
-        <div class="pr-0" x-bind:class="show?'col-12':'col-12'" style="text-align:right;">
+        <div class="col-12 pr-2" x-bind:class="show?'col-12':'col-12'" style="text-align:right;">
             <span class="mr-2" x-bind:class="!show?'menu-active':''" title="Visualizar Tarjetas"
                 style="font-size: 1.1rem;cursor: pointer;" x-on:click="show=false"><i class="fas fa-th"></i></span>
             <span class="mr-2" style="font-size: 1.1rem;cursor: pointer;" x-bind:class="show?'menu-active':''"
@@ -27,7 +27,7 @@
     </div>
     <div class="row mb-4" x-show="!show" x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
         <div class="col-12">
-            <div class="cards-debo-aprobar row" id="cards-debo-aprobar"></div>
+            <div class="cards-debo-aprobar row" id="cards-debo-aprobar" style="height: 100%;"></div>
             <div class="row">
                 <div class="col-12" id="contenedor-info-card-debo-aprobar"></div>
             </div>

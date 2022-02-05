@@ -322,12 +322,12 @@
                                             <br>
                                             <span>
                                                 Del
-                                                <strong>{{ \Carbon\Carbon::parse($experiencia->inicio_mes)->format('d/m/Y') }}</strong>
+                                                <strong>{{$experiencia->inicio_mes}}</strong>
                                                 al
                                                 @if (!$experiencia->fin_mes)
                                                 <strong>día de hoy</strong>
                                                 @else
-                                                <strong>{{ \Carbon\Carbon::parse($experiencia->fin_mes)->format('d/m/Y') }}</strong>
+                                                <strong>{{ $experiencia->fin_mes}}</strong>
                                                 @endif
 
                                             </span>
@@ -519,6 +519,7 @@
                                                                         <option 
                                                                             data-activar="{{ $list_doc->activar_numero ? 'si' : 'no'}}" 
                                                                             data-tipo="{{ $list_doc->tipo }}"
+
                                                                             value="{{ $list_doc->documento }}">
 
                                                                                 {{ $list_doc->documento }}

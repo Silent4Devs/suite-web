@@ -104,23 +104,26 @@
                                         <img class="" src="{{ url($logotipo) }}" alt="Card image"
                                             style="width:100%;">
                                         <div class="caja-redes">
+                                            @if ($panel_rules->pagina_web)
+                                            <a class="redes" target="_blank" href='{{ $organizacion->pagina_web}}'><i class="fas fa-globe"></i></a>
+                                            @endif
                                             @if ($panel_rules->linkedln)
-                                                    <a class="redes" href='{{ $organizacion->linkedln }}'><i
-                                                            class="fab fa-linkedin-in"></i></a>
+                                                    <a class="redes" target="_blank" href='{{ $organizacion->linkedln }}'><i
+                                                            class="fab fa-linkedin-in" ></i></a>
                                             @endif
                                             @if ($panel_rules->youtube)
 
-                                                    <a class="redes" href='{{ $organizacion->youtube }}'><i
+                                                    <a class="redes" target="_blank" href='{{ $organizacion->youtube }}'><i
                                                             class="fab fa-youtube"></i></a>
 
                                             @endif
                                             @if ($panel_rules->facebook)
-                                                    <a class="redes" href='{{ $organizacion->facebook }}'><i
+                                                    <a class="redes" target="_blank" href='{{ $organizacion->facebook }}'><i
                                                             class="fab fa-facebook-f"></i></a>
 
                                             @endif
                                             @if ($panel_rules->twitter)
-                                                    <a class="redes" href='{{ $organizacion->twitter }}'><i
+                                                    <a class="redes" target="_blank" href='{{ $organizacion->twitter }}'><i
                                                             class="fab fa-twitter"></i></a>
                                             @endif
                                         </div>
@@ -212,7 +215,7 @@
                                 @endif
                                 @if ($panel_rules->telefono)
                                     @if (!is_null($organizacion->telefono))
-                                        <div class="form-group col-sm-12 col-md-4">
+                                        <div class="form-group col-sm-12 col-md-6">
                                             <label for="telefono"> <i class="fas fa-phone iconos-crear"></i>Teléfono
                                             </label>
                                             <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}"
@@ -230,7 +233,7 @@
                                 @endif
                                 @if ($panel_rules->correo)
                                     @if (!is_null($organizacion->correo))
-                                        <div class="form-group col-sm-12 col-md-4">
+                                        <div class="form-group col-sm-12 col-md-6">
                                             <label for="correo"> <i class="far fa-envelope iconos-crear"></i>
                                                 {{ trans('cruds.organizacion.fields.correo') }}
                                             </label>
@@ -247,7 +250,7 @@
                                     @endif
                                 @endif
 
-                                @if ($panel_rules->pagina_web)
+                                {{-- @if ($panel_rules->pagina_web)
                                     @if (!is_null($organizacion->pagina_web))
                                         <div class="form-group col-sm-12 col-md-4">
                                             <label for="pagina_web"> <i class="fas fa-pager iconos-crear"></i> Página Web
@@ -264,7 +267,7 @@
                                                 class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span>
                                         </div>
                                     @endif
-                                @endif
+                                @endif --}}
                                 @if ($panel_rules->schedule)
                                     @if (!is_null($organizacion->schedule))
                                         <div class="form-group col-12">

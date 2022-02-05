@@ -21,6 +21,7 @@
         }
     </style>
 
+{{ Breadcrumbs::render('EV360-ListaDocumentosEmpleados') }}
 	<h5 class="col-12 titulo_general_funcion">Lista de Documentos de Empleados</h5>
 	@include('partials.flashMessages')
 	<div class="card card-body">
@@ -34,7 +35,7 @@
 						<th>Documento</th>
 						<th style="max-width:100px;">Tipo</th>						
 						<th style="max-width:100px;">ID</th>						
-						<th style="max-width:100px;">Opciones</th>						
+						<th style="max-width:100px;">Opciones</th>
 					</tr>
 				</thead>
 				<tbody>

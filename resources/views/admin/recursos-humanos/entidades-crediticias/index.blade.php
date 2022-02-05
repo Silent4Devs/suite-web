@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 @section('content')
     @can('control_documento_create')
+    <div class="mt-3">
+        {{ Breadcrumbs::render('EV360-EntidadesCrediticeas') }}
+    </div>
     <h5 class="col-12 titulo_general_funcion">Entidades crediticias</h5>
         <div class="mt-5 card">
         @endcan
