@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\Empleado;
 use App\Models\FelicitarCumpleaños;
+use App\Models\PoliticaSgsi;
+use App\Models\Comiteseguridad;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -23,6 +25,9 @@ class EventosPortal extends Component
     public $nuevos_contador_circulo;
     public $cumpleaños_contador_circulo;
     public $aniversarios_contador_circulo;
+    
+    public $politica_existe;
+    public $comite_existe;
 
     public function mount()
     {
@@ -42,6 +47,9 @@ class EventosPortal extends Component
 
         $this->aniversarios = Empleado::whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->get();
         $this->aniversarios_contador_circulo = Empleado::whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->count();
+
+        $this->politica_existe = PoliticaSgsi::count();
+        $this->comite_existe = Comiteseguridad::count();
 
         // dd($nuevos);
 
