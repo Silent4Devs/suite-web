@@ -1,5 +1,36 @@
 @extends('layouts.admin')
 @section('content')
+
+<style>
+
+        .table tr td:nth-child(1) {
+
+        text-align: left !important;
+
+        }
+
+
+        .table tr td:nth-child(4) {
+
+        min-width:150px;
+        text-align: left !important;
+
+        }
+
+        .table tr td:nth-child(5) {
+
+        min-width:400px;
+        text-align: justify !important;
+
+        }
+
+
+        .table tr td:nth-child(1) {
+
+        min-width:150px;
+
+        }
+</style>
     <h5 class="col-12 titulo_general_funcion">Registro de Áreas</h5>
     <div class="mt-5 card">
         @can('configuracion_area_create')
@@ -18,12 +49,10 @@
                     </div>
                 </div>
                 <div class="col-11">
-                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Paso 2</p>
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
                     <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue las áreas de la organización comenzando
-                        por la de más alta jerarquía y dé
-                        clic en finalizar
-                        <a href="{{ route('admin.areas.renderJerarquia') }}" class="item-right col-2 btn text-light"
-                            style="background-color:rgb(85, 217, 226); float:right">Finalizar</a>
+                        por la de más alta jerarquía
+
                     </p>
 
                 </div>
@@ -35,9 +64,6 @@
             <table class="table table-bordered w-100 datatable-Area">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
-                            ID
-                        </th>
                         <th>
                             Nombre de Área
                         </th>
@@ -194,10 +220,6 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.areas.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
                         data: 'area',
                         name: 'area'
                     },

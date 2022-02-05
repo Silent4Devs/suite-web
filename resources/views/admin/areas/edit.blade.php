@@ -24,7 +24,10 @@
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
                         <label for="empleados_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del área</label>
-                        <select class="form-control {{ $errors->has('empleados_id') ? 'is-invalid' : '' }}" name="empleados_id" id="empleados_id">
+                        <select class="form-control {{ $errors->has('empleados_id') ? 'is-invalid' : '' }}" name="empleados_id" id="nombre_contacto_puesto">
+                            <option selected value="" disabled>
+                                -- Selecciona el responsable --
+                            </option>
                             @foreach ($reportas as $reporta)
                             <option data-puesto="{{ $reporta->puesto }}" value="{{ $reporta->id }}" data-area="{{ $reporta->area->area }}"
                                 {{ $area->empleados_id == $reporta->id  ? 'selected' : '' }}>
@@ -39,13 +42,20 @@
                         @endif
                     </div>
 
+                    <div class="form-group col-md-4">
+                        <label for="puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                        <div class="form-control" id="contacto_puesto"></div>
+                    </div>
+
+                </div>
+
+                <div class="row col-12">
+
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
                         <label for="id_grupo"><i class="fas fa-users iconos-crear"></i>Grupo </label>
                         <select class="form-control select2 {{ $errors->has('id_grupo') ? 'is-invalid' : '' }}"
                             name="id_grupo" id="id_grupo" required>
-                            <option value="">
-                                Escoja un grupo
-                            </option>
+                            <option selected value="" disabled>-- Selecciona area --</option>
                             @if ($grupoareas)
                                 @foreach ($grupoareas as $grupo)
                                     <option value="{{ $grupo->id }}"
@@ -64,13 +74,7 @@
                         <span class="help-block"></span>
                     </div>
 
-
-
-                </div>
-
-                <div class="row col-12">
-
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-4">
                         <label class="required" for="id_reporta"><i class="fas fa-user iconos-crear"></i>Reporta
                             a</label>
                         <div class="mb-3 input-group">
@@ -97,7 +101,7 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-4">
                         <label for="foto_area"><i class="fas fa-images iconos-crear"></i>Fotografía del área</label>
                         <div class="mb-3 input-group">
                             <div class="custom-file">
@@ -141,3 +145,20 @@
 
 
 @endsection
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    let contacto = document.querySelector('#nombre_contacto_puesto');
+    let puesto_init = contacto.options[contacto.selectedIndex].getAttribute('data-puesto');
+
+    document.getElementById('contacto_puesto').innerHTML = puesto_init;
+    contacto.addEventListener('change', function(e) {
+        e.preventDefault();
+        let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+        document.getElementById('contacto_puesto').innerHTML = puesto;
+    })
+})
+
+</script>
