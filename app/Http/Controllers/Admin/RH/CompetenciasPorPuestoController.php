@@ -18,7 +18,6 @@ class CompetenciasPorPuestoController extends Controller
      */
     public function index(Request $request)
     {
-
         if ($request->ajax()) {
             $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['areaRelacionada'=>function ($q) {
                 $q->select('id', 'area');
@@ -50,13 +49,7 @@ class CompetenciasPorPuestoController extends Controller
         //             ->make(true);
         //     }
 
-
-
-
-
-
         // $areas = Area::get();
-
 
         $areas = Area::select('id', 'area')->get();
 

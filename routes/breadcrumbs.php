@@ -200,7 +200,6 @@ Breadcrumbs::for('EV360-CalendarioEventos', function ($trail) {
     $trail->push('Eventos', route('admin.recursos.index'));
 });
 
-
 Breadcrumbs::for('EV360-Tipo-Contrato-Empleados', function ($trail) {
     $trail->parent('capital-humano');
     $trail->push('Empleados');

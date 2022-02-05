@@ -15,7 +15,6 @@ class ChangeColumnDescripcionToGruposTable extends Migration
     {
         Schema::table('grupos', function (Blueprint $table) {
             $table->longText('descripcion')->nullable()->change();
-
         });
     }
 

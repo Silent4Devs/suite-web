@@ -7,8 +7,8 @@ use App\Models\Empleado;
 use App\Models\Marca;
 use App\Models\Modelo;
 use App\Models\Sede;
-use App\Models\Tipoactivo;
 use App\Models\SubcategoriaActivo;
+use App\Models\Tipoactivo;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class ActivoImport implements ToModel
@@ -51,20 +51,19 @@ class ActivoImport implements ToModel
 
     public function obtenerCategoriaPorNombre($nombre)
     {
-
-        $tipoactivos_bd = Tipoactivo::select('id','tipo')->where('tipo', $nombre)->first();
-        if($tipoactivos_bd){
+        $tipoactivos_bd = Tipoactivo::select('id', 'tipo')->where('tipo', $nombre)->first();
+        if ($tipoactivos_bd) {
             return $tipoactivos_bd->id;
         }
 
         return null;
-
     }
+
     public function obtenerSubcategoriaPorNombre($nombre)
     {
-        $subcategoria_activos_bd =SubcategoriaActivo::select('id','subcategoria')->where('subcategoria', $nombre)->first();
+        $subcategoria_activos_bd = SubcategoriaActivo::select('id', 'subcategoria')->where('subcategoria', $nombre)->first();
 
-        if($subcategoria_activos_bd){
+        if ($subcategoria_activos_bd) {
             return $subcategoria_activos_bd->id;
         }
 
@@ -81,23 +80,21 @@ class ActivoImport implements ToModel
     public function obtenerDuenoPorId($dueno)
     {
         $dueno_bd = Empleado::select('id', 'name')->where('id', $dueno)->first();
-        if($dueno_bd){
-        return $dueno_bd->id;
-    }
+        if ($dueno_bd) {
+            return $dueno_bd->id;
+        }
 
-    return null;
-
+        return null;
     }
 
     public function obtenerResponsablePorId($responsable)
     {
         $responsable_bd = Empleado::select('id', 'name')->where('id', $responsable)->first();
-        if($responsable_bd){
-        return $responsable_bd->id;
-    }
+        if ($responsable_bd) {
+            return $responsable_bd->id;
+        }
 
-    return null;
-
+        return null;
     }
 
     public function obtenerUbicacionPorId($ubicacion)

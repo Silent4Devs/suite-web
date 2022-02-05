@@ -1217,7 +1217,7 @@ class EV360EvaluacionesController extends Controller
 
     public function destroy($evaluacion)
     {
-        $evaluacion= Evaluacion::find($evaluacion);
+        $evaluacion = Evaluacion::find($evaluacion);
         $evaluacion->delete();
 
         return response()->json(['deleted'=> true]);
