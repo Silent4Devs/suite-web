@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ComunicacionSgi;
 use App\Models\Documento;
+use App\Models\Comiteseguridad;
+use App\Models\PoliticaSgsi;
 use App\Models\Empleado;
 use App\Models\FelicitarCumpleaños;
 use App\Models\Organizacione;
@@ -41,7 +43,10 @@ class PortalComunicacionController extends Controller
 
         $empleado_asignado = auth()->user()->n_empleado;
 
-        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'nuevos', 'cumpleaños', 'aniversarios', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'nuevos_contador_circulo', 'cumpleaños_contador_circulo', 'aniversarios_contador_circulo'));
+        $politica_existe = PoliticaSgsi::count();
+        $comite_existe = Comiteseguridad::count();
+
+        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'nuevos', 'cumpleaños', 'aniversarios', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'nuevos_contador_circulo', 'cumpleaños_contador_circulo', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe'));
     }
 
     /**

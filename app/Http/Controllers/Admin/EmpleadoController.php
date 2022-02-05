@@ -13,6 +13,7 @@ use App\Models\EvidenciasCertificadosEmpleados;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
 use App\Models\Language;
+use App\Models\ListaDocumentoEmpleado;
 use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\BeneficiariosEmpleado;
@@ -970,7 +971,10 @@ class EmpleadoController extends Controller
         $isEditAdmin = true;
         // dd($idiomas);
         // dd(Empleado::find(63));
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas'));
+
+        $lista_docs = ListaDocumentoEmpleado::get();
+
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs'));
     }
 
     /**
@@ -1337,12 +1341,20 @@ class EmpleadoController extends Controller
 
     public function storeDocumentos(Request $request, Empleado $empleado)
     {
+        $doc_viejo = EvidenciasDocumentosEmpleados::where('nombre', $request->nombre)->where('archivado', false)->first();
+        if ($doc_viejo) {
+
+            $doc_viejo->update([
+                'archivado'=>true,
+            ]);
+        }
+
         $request->merge([
             'empleado_id' => $empleado->id,
         ]);
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'numero' => 'required|string|max:255',
+            // 'numero' => 'string|max:255',
             'documentos' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
             'empleado_id' => 'required|exists:empleados,id',
         ]);

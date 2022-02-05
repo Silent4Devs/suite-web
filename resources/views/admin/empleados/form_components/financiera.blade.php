@@ -153,4 +153,47 @@
         ])
     </div>
     {{-- Fin Componente Beneficiarios --}}
+    <div class="form-group col-sm-6">
+        <label for="entidad_crediticias_id"><i class="fas fa-landmark iconos-crear"></i>Entidad
+            crediticia</label>
+        <select class="form-control select-search {{ $errors->has('entidad_crediticias_id') ? 'is-invalid' : '' }}"
+            name="entidad_crediticias_id" id="entidad_crediticias_id"
+            value="{{ old('entidad_crediticias_id', $empleado->entidad_crediticias_id) }}">
+            <option value="" selected disabled>
+                -- Selecciona una entidad crediticia --
+            </option>
+            @foreach ($entidadesCrediticias as $entidad)
+                <option value="{{ $entidad->id }}">{{ $entidad->entidad }}</option>
+            @endforeach
+        </select>
+        <small id="error_entidad_crediticias_id" class="text-danger"></small>
+        @if ($errors->has('entidad_crediticias_id'))
+            <div class="invalid-feedback">
+                {{ $errors->first('entidad_crediticias_id') }}
+            </div>
+        @endif
+    </div>
+    <div class="form-group col-sm-6">
+        <label for="numero_credito"><i class="fas fa-barcode iconos-crear"></i>Número de crédito</label>
+        <input class="form-control {{ $errors->has('numero_credito') ? 'is-invalid' : '' }}" type="text"
+            name="numero_credito" id="numero_credito" value="{{ old('numero_credito', $empleado->numero_credito) }}">
+        <small id="error_numero_credito" class="text-danger"></small>
+        @if ($errors->has('numero_credito'))
+            <div class="invalid-feedback">
+                {{ $errors->first('numero_credito') }}
+            </div>
+        @endif
+    </div>
+    <div class="form-group col-sm-12">
+        <label for="descuento"><i class="fas fa-percentage iconos-crear"></i>Descuento</label>
+        <input placeholder="$1,000,000.00" data-type='currency'
+            class="form-control {{ $errors->has('descuento') ? 'is-invalid' : '' }}" type="text" name="descuento"
+            id="descuento" value="{{ old('descuento', $empleado->descuento) }}">
+        <small id="error_descuento" class="text-danger"></small>
+        @if ($errors->has('descuento'))
+            <div class="invalid-feedback">
+                {{ $errors->first('descuento') }}
+            </div>
+        @endif
+    </div>
 </div>

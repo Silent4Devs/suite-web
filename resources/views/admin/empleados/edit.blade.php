@@ -214,7 +214,7 @@
                         </a>
                         <a class="nav-link" id="nav-documentos-tab" data-toggle="tab" href="#nav-documentos"
                             role="tab" aria-controls="nav-documentos" aria-selected="false">
-                            <i class="mr-2 fas fa-folder-open" style="font-size:20px;"></i>Documentos
+                            <i class="mr-2 fas fa-folder-open" style="font-size:20px;"></i>Expediente
                         </a>
                     </div>
                 </nav>
@@ -2023,6 +2023,14 @@
                         }
                     },
                     {
+                        data: 'archivado',
+                        name: 'archivado',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <font class="archivo_${data}"></font>`;
+                        }
+                    },
+                    {
                         data: 'id',
                         render: function(data, type, row, meta) {
                             let urlEliminar =
@@ -2676,6 +2684,29 @@
             autoclose:true //to close picker once year is selected
         });
         </script>
+
+    <script type="text/javascript">
+        $(document).on('change', '#nombre_doc', function(event) {
+            let op_select = $('#nombre_doc option:selected').attr('data-activar');
+            console.log(op_select);
+            if (op_select == 'si') {
+                $('#group_numero_activo').addClass('d-block');
+                $('#group_numero_activo').removeClass('d-none');
+            }
+            if (op_select == 'no'){
+                $('#group_numero_activo').addClass('d-none');
+                $('#group_numero_activo').removeClass('d-block');
+            }
+
+            let tipo_doc = $('#nombre_doc option:selected').attr('data-tipo');
+
+            document.querySelector('#tipo_doc').innerHTML = tipo_doc;
+            $('#tipo_doc').removeClass('opcional');
+            $('#tipo_doc').removeClass('obligatorio');
+            $('#tipo_doc').removeClass('aplica');
+            $('#tipo_doc').addClass(tipo_doc);
+        });
+    </script>
 
 
 

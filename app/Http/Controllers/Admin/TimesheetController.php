@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
+use App\Models\TimesheetCliente;
 use App\Models\TimesheetTarea;
 use Illuminate\Http\Request;
 
@@ -203,5 +204,23 @@ class TimesheetController extends Controller
         ]);
 
         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
+    }
+
+    public function clientes()
+    {
+        $clientes = TimesheetCliente::get();
+        return view('admin.timesheet.clientes.index', compact('clientes'));
+    }
+
+    public function clientesCreate()
+    {
+        return view('admin.timesheet.clientes.create');
+    }
+
+    public function clientesStore(Request $request)
+    {
+        $cliente_nuevo = TimesheetCliente::create($request->all());
+
+        return redirect()->route('admin.timesheet-clientes')->with('success', 'Guardado con éxito');
     }
 }
