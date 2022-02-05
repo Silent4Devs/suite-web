@@ -880,7 +880,7 @@
 
                                 </div>
 
-                                <p class="mb-5 text-center" style="margin-top:20px;" >${descripcion}</p>
+                                <p class="mb-5 text-justify ml-4 mr-4" style="margin-top:20px;" >${descripcion}</p>
                                 `;
             let btnCerrar = document.querySelector(".btnCerrar");
             btnCerrar.addEventListener("click", function(e) {

@@ -33,6 +33,7 @@ class EvidenciasDocumentosEmpleados extends Model
         'documentos',
         'nombre',
         'numero',
+        'archivado',
     ];
 
     protected $appends = ['ruta_documento', 'ruta_absoluta_documento'];

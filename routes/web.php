@@ -114,6 +114,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'destroy' => 'ev360-competencias-por-puesto.destroy',
     ])->except('create', 'store');
 
+    // Route::get('recursos-humanos/evaluacion-360/competencias/{id}', 'RH\EV360CompetenciasController@show')->name('ev360-competencias.show');
+
     Route::post('recursos-humanos/evaluacion-360/competencias/obtener-niveles', 'RH\EV360CompetenciasController@obtenerNiveles')->name('ev360-competencias.obtenerNiveles');
 
     Route::post('recursos-humanos/evaluacion-360/competencias/store-redirect', 'RH\EV360CompetenciasController@storeAndRedirect')->name('ev360-competencias.conductas');
@@ -377,6 +379,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
     Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
     Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
+
+    Route::get('timesheet/clientes', 'TimesheetController@clientes')->name('timesheet-clientes');
+    Route::get('timesheet/clientes/create', 'TimesheetController@clientesCreate')->name('timesheet-clientes-create');
+    Route::post('timesheet/clientes/store', 'TimesheetController@clientesStore')->name('timesheet-clientes-store');
 
     Route::resource('timesheet', 'TimesheetController')->except(['create', 'index']);
 

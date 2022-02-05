@@ -616,7 +616,7 @@
                                                                             </h5>
                                                                             <blockquote class="mb-0 blockquote">
                                                                                 <p style="font-size: 13px">Descripción</p>
-                                                                                <footer class="blockquote-footer">
+                                                                                <footer class=" blockquote-footer">
                                                                                     {{ $area->descripcion }}
                                                                                 </footer>
                                                                             </blockquote>
@@ -738,7 +738,7 @@
                 });
 
                 function renderOrganigrama(OrgChart, orientacion, id = null, area_filter = false, area_id = null) {
-                    let areasTree = @json($areasTree);                    
+                    let areasTree = @json($areasTree);
                     let repositorioImagenes = @json($rutaImagenes);
                     let organizacion = @json($organizacion);
                     let chartContainer = document.querySelector('#chart-container');
@@ -819,7 +819,7 @@
 
                                 </div>
 
-                                <p class="mb-5 text-center" style="margin-top:20px;" >${descripcion}</p>
+                                <p class="mb-5 text-justify" style="margin-top:20px;" >${descripcion}</p>
                                 `;
                 let btnCerrar = document.querySelector(".btnCerrar");
                 btnCerrar.addEventListener("click", function(e) {

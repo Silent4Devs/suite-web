@@ -35,6 +35,18 @@
             margin-right: 15px;
         }
 
+        .table tr td:nth-child(2) {
+
+        min-width:150px;
+
+        }
+
+        .table tr td:nth-child(5) {
+
+        min-width:80px;
+
+        }
+
     </style>
     <h5 class="col-12 titulo_general_funcion">Grupos de Áreas</h5>
     <div class="mt-5 card">
@@ -55,13 +67,9 @@
                     </div>
                 </div>
                 <div class="col-11">
-                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Paso 1</p>
-                    <span class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue los grupos de las áreas, al
-                        finalizar
-                        dé
-                        clic en siguiente </span>
-                    <a href="{{ route('admin.areas.index') }}" class="item-right col-2 btn text-light"
-                        style="background-color:rgb(85, 217, 226); float:right">Siguiente</a>
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                    <span class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue los grupos de las áreas</span>
+
                 </div>
             </div>
         </div>
@@ -267,9 +275,7 @@
                             @can('configuracion_grupoarea_edit')
                                 <a href="/admin/grupoarea/${data}/edit" class="btn btn-sm"><i class="fas fa-edit" title="Editar"></i></a>
                             @endcan
-                            @can('configuracion_grupoarea_show')
-                                <a href="/admin/grupoarea/${data}/show" class="btn btn-sm"><i class="fas fa-eye" title="Visualizar"></i></a>
-                            @endcan
+
                             @can('configuracion_grupoarea_delete')
                                 <button onclick="Eliminar('/admin/grupoarea/${data}','${data}')" class="btn btn-sm text-danger"><i class="fas fa-trash"
                                         title="Eliminar"></i></button>

@@ -140,11 +140,7 @@
                             <option value="">Ver todas</option>
                         </select>
                     </div>
-
-
-
                 </div>
-
             </div>
         @endif
 
@@ -272,8 +268,8 @@
                                 }
 
                             </style>
-                            <div class="caja_img_logo">
-                                <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 20%;">
+                            <div class="caja_img_logo mt-4">
+                                <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width:100px;">
                             </div>
                             <div class="row medidas">
                                 <div class="mt-4 ml-4 col-md-7 datos_iz_cv">
@@ -301,7 +297,7 @@
                                             Descripción</span>
                                     </div>
                                     <p style="text-align:justify">
-                                        {{ html_entity_decode(strip_tags($puestoModel->descripcion), ENT_QUOTES, 'UTF-8') }}
+                                        {!! $puestoModel->descripcion !!}
                                     <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Responsabilidades</span>
@@ -338,18 +334,13 @@
                                         @endforeach
 
 
-                                    <strong>
-
-                                        <span style="text-transform:capitalize; font-weight:bold"></span>
-                                        <p style="text-align:justify"></p>
-
                                         <div class="mt-4 mb-3 w-100 dato_mairg"
                                             style="border-bottom: solid 2px #0CA193;">
                                             <span style="font-size: 17px; font-weight: bold;">
                                                 Experiencia Profesional</span>
                                         </div>
                                         <span style="text-align:justify;font-weight:normal !important">
-                                            {{ html_entity_decode(strip_tags($puestoModel->experiencia), ENT_QUOTES, 'UTF-8') }}
+                                            {!!$puestoModel->experiencia !!}
                                         </span>
                                         <div class="mt-4 mb-3 w-100 dato_mairg"
                                             style="border-bottom: solid 2px #0CA193;">
@@ -357,7 +348,7 @@
                                                 Educación Académica</span>
                                         </div>
                                         <p style="text-align:justify; font-weight:normal !important">
-                                            {{ html_entity_decode(strip_tags($puestoModel->estudios), ENT_QUOTES, 'UTF-8') }}
+                                            {!!$puestoModel->estudios !!}
                                         </p>
                                         <div class="mt-4 mb-3 w-100 dato_mairg"
                                             style="border-bottom: solid 2px #0CA193;">
@@ -365,7 +356,7 @@
                                                 Conocimientos</span>
                                         </div>
                                         <p style="text-align:justify; font-weight:normal !important">
-                                            {{ html_entity_decode(strip_tags($puestoModel->conocimientos), ENT_QUOTES, 'UTF-8') }}
+                                            {!!$puestoModel->conocimientos !!}
                                         </p>
                                         <div class="mt-4 mb-3 w-100 dato_mairg"
                                             style="border-bottom: solid 2px #0CA193;">
@@ -419,10 +410,9 @@
                                                 <span style="font-weight:normal !important">{{$contacto->descripcion_contacto}}</span>
                                             </div>
                                         @endforeach
-
-                                        </ul>
+                                    </ul>
                                 </div>
-                                <div class="mt-4 col-12 datos_der_cv">
+                                <div class="mt-4 col-md-4 datos_der_cv">
                                     <div
                                         style="background: linear-gradient(0deg, rgba(69,125,182,1) 0%, rgba(8,170,157,1) 60%); height:100%; padding:10px;">
                                         {{-- <div class="text-center w-100"><img class="mt-3"
@@ -504,9 +494,6 @@
                                                 <li>{{ $competencia->competencia->nombre }}</li>
                                             @endforeach
                                         </div>
-
-
-
                                     </div>
                                 </div>
                             </div>
@@ -517,6 +504,7 @@
         </div>
         @endif
     </div>
+</div>
 
 
 <script src="https://unpkg.com/@yaireo/tagify"></script>

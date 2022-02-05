@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use App\Models\Puesto;
 use App\Models\RH\Competencia;
 use App\Models\RH\CompetenciaPuesto;
@@ -17,20 +18,42 @@ class CompetenciasPorPuestoController extends Controller
      */
     public function index(Request $request)
     {
-        // $puestos = Puesto::with(['competencias' => function ($q) {
-        //     $q->with('competencia');
-        // }])->orderByDesc('id')->get();
-        // dd($puestos);
-
         if ($request->ajax()) {
-            $puestos = Puesto::select('id', 'puesto')->with(['competencias' => function ($q) {
+            $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['areaRelacionada'=>function ($q) {
+                $q->select('id', 'area');
+            }, 'competencias' => function ($q) {
                 $q->with('competencia');
             }])->orderByDesc('id')->get();
 
             return datatables()->of($puestos)->toJson();
         }
 
-        return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.index');
+        //Para Jon
+
+        // if ($request->ajax()) {
+        //     $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['areaRelacionada'=>function ($q) {
+        //         $q->select('id', 'area');
+        //     }, 'competencias' => function ($q) {
+        //         $q->with('competencia');}])->orderByDesc('id')->get();
+        //         return datatables()->of($puestos)->toJson()
+        //             ->addIndexColumn()
+        //             ->filter(function ($instance) use ($request) {
+        //                 if (!empty($request->get('area'))) {
+        //                      $instance->where(function($w) use($request){
+        //                         $search = $request->get('area');
+        //                         $w->orWhere('area', 'LIKE', "%$search%");
+        //                     });
+        //                 }
+        //             })
+        //             ->rawColumns(['area'])
+        //             ->make(true);
+        //     }
+
+        // $areas = Area::get();
+
+        $areas = Area::select('id', 'area')->get();
+
+        return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.index', compact('areas'));
     }
 
     public function indexCompetenciasPorPuesto(Request $request, $puesto)

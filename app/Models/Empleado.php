@@ -348,7 +348,7 @@ class Empleado extends Model
 
     public function empleado_experiencia()
     {
-        return $this->hasMany(ExperienciaEmpleados::class);
+        return $this->hasMany(ExperienciaEmpleados::class)->orderByDesc('inicio_mes');
     }
 
     public function empleado_certificaciones()
@@ -363,12 +363,12 @@ class Empleado extends Model
 
     public function empleado_cursos()
     {
-        return $this->hasMany(CursosDiplomasEmpleados::class);
+        return $this->hasMany(CursosDiplomasEmpleados::class)->orderByDesc('año');
     }
 
     public function empleado_educacion()
     {
-        return $this->hasMany(EducacionEmpleados::class);
+        return $this->hasMany(EducacionEmpleados::class)->orderByDesc('año_inicio');
     }
 
     public function empleado_documentos()
