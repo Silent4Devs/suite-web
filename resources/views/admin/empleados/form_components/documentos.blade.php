@@ -36,30 +36,81 @@
         }
 
     </style>
+    <style type="text/css">
+        #tipo_doc{
+            color:#fff; padding:5px; border-radius: 4px;
+        }
+        #tipo_doc.opcional{
+            background-color:#25B82B;
+            text-transform: capitalize;
+        }
+        #tipo_doc.obligatorio{
+            background-color:#DD3939;
+            text-transform: capitalize;
+        }
+        #tipo_doc.aplica{
+            background-color:#FA8E1C;
+        }
+        #tipo_doc.aplica::before{
+            content: "Solo si ";
+        }
+
+
+        .archivo_false{
+            background-color: green;
+            padding: 5px;
+            border-radius: 4px;
+            color: #fff;
+        }
+        .archivo_false::before{
+            content: "Actual";
+        }
+        .archivo_true{
+            background-color: red;
+            padding: 5px;
+            border-radius: 4px;
+            color: #fff;
+        }
+        .archivo_true::before{
+            content: "Archivado";
+        }
+    </style>
     {{-- @livewire('expediente-empleado-component', ['empleado' => $empleado]) --}}
     <div action="{{ route('admin.empleado.storeDocumentos', $empleado) }}" method="POST" id="formDocumentos">
         <div class="row">
             <div class="form-group col-sm-6">
                 <label for="nombre"><i class="fas fa-edit iconos-crear"></i>Nombre del documento</label>
-                <select class="form-control" name="nombre" id="nombre_documento">
+                <select class="form-control" name="nombre" id="nombre_doc">
                     <option value="" selected disabled>Selecciones documento</option>
                     @forelse($lista_docs as $list_doc)
                         <option 
                             data-activar="{{ $list_doc->activar_numero ? 'si' : 'no'}}" 
+                            data-tipo="{{ $list_doc->tipo }}"
                             value="{{ $list_doc->documento }}">
 
                                 {{ $list_doc->documento }}
                         </option>
-                        @empty
+                     @empty
                         <option>sin documentos</option>
                     @endforelse
                 </select>
             </div>
+
+            {{-- <div class="form-group col-sm-6">
+                <label for="nombre"><i class="fas fa-edit iconos-crear"></i>Nombre del documento</label>
+                <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
+                    id="nombre_doc" value="{{ old('nombre', '') }}">
+                <small id="nombre_error" class="errors text-danger"></small>
+            </div> --}}
+
             <div class="form-group col-sm-6 d-none" id="group_numero_activo">
                 <label for="numero"><i class="fas fa-barcode iconos-crear"></i>ID</label>
                 <input class="form-control {{ $errors->has('numero') ? 'is-invalid' : '' }}" type="text" name="numero"
                     id="numero_doc" value="{{ old('numero', '') }}">
                 <small id="numero_error" class="errors text-danger"></small>
+            </div>
+            <div class="form-group col-12 ml-1" id="group_tipo_doc">
+                 <strong>Tipo: </strong><font id="tipo_doc" class=""></font>
             </div>
             <div class="col-sm-12 col-md-12 col-12">
                 <label for="documentos"><i class="fas fa-folder-open iconos-crear"></i>Documento</label><i
@@ -84,6 +135,7 @@
                     <th>Nombre</th>
                     <th>Número</th>
                     <th>Documento</th>
+                    <th>Estatus</th>
                     <th>Opciones</th>
                 </tr>
             </thead>
@@ -95,19 +147,4 @@
 <div class="col-sm-12 col-md-12 col-12 px-0" id="documentosGrid"></div>
 
 
-@section('scripts')
-    <script type="text/javascript">
-        $(document).on('change', '#nombre_documento', function(event) {
-            let op_select = $('#nombre_documento option:selected').attr('data-activar');
-            console.log(op_select);
-            if (op_select == 'si') {
-                $('#group_numero_activo').addClass('d-block');
-                $('#group_numero_activo').removeClass('d-none');
-            }
-            if (op_select == 'no'){
-                $('#group_numero_activo').addClass('d-none');
-                $('#group_numero_activo').removeClass('d-block');
-            }
-        });
-    </script>
-@endsection
+

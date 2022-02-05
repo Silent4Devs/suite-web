@@ -14,5 +14,6 @@ class ListaDocumentoEmpleado extends Model
     protected $fillable = [
         'documento',
         'activar_numero',
+        'tipo',
     ];
 }

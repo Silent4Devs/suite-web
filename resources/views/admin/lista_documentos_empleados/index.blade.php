@@ -1,5 +1,26 @@
 @extends('layouts.admin')
 @section('content')
+	
+	<style type="text/css">
+        #tipo_doc{
+            color:#fff; padding:5px; border-radius: 4px;
+        }
+        #tipo_doc.opcional{
+            background-color:#25B82B;
+            text-transform: capitalize;
+        }
+        #tipo_doc.obligatorio{
+            background-color:#DD3939;
+            text-transform: capitalize;
+        }
+        #tipo_doc.aplica{
+            background-color:#FA8E1C;
+        }
+        #tipo_doc.aplica::before{
+            content: "Solo si ";
+        }
+    </style>
+
 	<h5 class="col-12 titulo_general_funcion">Lista de Documentos de Empleados</h5>
 	@include('partials.flashMessages')
 	<div class="card card-body">
@@ -11,7 +32,8 @@
 				<thead class="thead-dark">
 					<tr>
 						<th>Documento</th>
-						<th style="max-width:100px;">ID activo</th>						
+						<th style="max-width:100px;">Tipo</th>						
+						<th style="max-width:100px;">ID</th>						
 						<th style="max-width:100px;">Opciones</th>						
 					</tr>
 				</thead>
@@ -19,12 +41,15 @@
 					@foreach($docs as $doc)
 						<tr>
 							<td>{{ $doc->documento }}</td>
+							<td style="text-transform:capitalize;">
+								<font id="tipo_doc" class="{{ $doc->tipo }}">{{ $doc->tipo }}</font>
+							</td>
 							<td>
 								@if($doc->activar_numero == true)
-									Obligatorio
+									Requerido
 								@endif
 								@if($doc->activar_numero == false)
-									Opcional
+									No requerido
 								@endif
 							</td>
 							<td>
@@ -54,7 +79,15 @@
 	        	<input type="" name="documento" class="form-control">
 	        </div>
 	        <div class="form-group">
-	        	<label><i class="far fa-file-alt iconos-crear"></i>ID obligatorio</label>
+	        	<label><i class="far fa-file-alt iconos-crear"></i>Tipo</label>
+	        	<select class="form-control" name="tipo">
+	        		<option value="opcional" selected>Opcional</option>
+	        		<option value="obligatorio">Obligatorio</option>
+	        		<option value="aplica">Solo si aplica</option>
+	        	</select>
+	        </div>
+	        <div class="form-group">
+	        	<label><i class="far fa-file-alt iconos-crear"></i>ID Requerido</label>
 	        	<input type="checkbox" name="activar_numero" class="form-control">
 	        </div>
 	      </div>
@@ -138,19 +171,20 @@
                 }
 
             ];
-           	let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar empleado',
-                url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
-            };
+           	// let btnAgregar = {
+            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            //     titleAttr: 'Agregar',
+            //     url: "#",
+            //     className: 'btn-xs btn-outline-success rounded ml-2 pr-3',
+            //     action: function(e, dt, node, config) {
+            //     let {
+            //     url
+            //     } = config;
+            //     window.location.href = url;
+            //     }
+            // };
 
+            // dtButtons.push(btnAgregar);
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

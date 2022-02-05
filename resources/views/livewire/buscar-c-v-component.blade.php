@@ -518,12 +518,13 @@
                                                                     @forelse($lista_docs as $list_doc)
                                                                         <option 
                                                                             data-activar="{{ $list_doc->activar_numero ? 'si' : 'no'}}" 
+                                                                            data-tipo="{{ $list_doc->tipo }}"
                                                                             value="{{ $list_doc->documento }}">
 
                                                                                 {{ $list_doc->documento }}
                                                                         </option>
-                                                                        @empty
-                                                                        <option>sin documentos</option>
+                                                                     @empty
+                                                                        <option value="">sin documentos</option>
                                                                     @endforelse
                                                                 </select>
                                                             <span
@@ -538,6 +539,28 @@
                                                                 value="{{ old('numero', '') }}" required>
                                                             <span
                                                                 class="errors numero_error text-danger"></span>
+                                                        </div>
+                                                        <style type="text/css">
+                                                            #tipo_doc{
+                                                                color:#fff; padding:5px; border-radius: 4px;
+                                                            }
+                                                            #tipo_doc.opcional{
+                                                                background-color:#25B82B;
+                                                                text-transform: capitalize;
+                                                            }
+                                                            #tipo_doc.obligatorio{
+                                                                background-color:#DD3939;
+                                                                text-transform: capitalize;
+                                                            }
+                                                            #tipo_doc.aplica{
+                                                                background-color:#FA8E1C;
+                                                            }
+                                                            #tipo_doc.aplica::before{
+                                                                content: "Solo si ";
+                                                            }
+                                                        </style>
+                                                        <div class="form-group col-12 ml-1" id="group_tipo_doc">
+                                                             <strong>Tipo: </strong><font id="tipo_doc" class=""></font>
                                                         </div>
                                                     </div>
                                                     <input type="file" name="documentos" id="cargarDocumento"
@@ -585,17 +608,19 @@
 
                                     @endif
                                     @foreach ($empleadoModel->empleado_documentos as $documentos)
-                                        <div class="list-group list-border-y list-group-flush">
-                                            <a href="{{$documentos->ruta_documento}}"
-                                                target="_blank" class="list-group-item list-group-item-action">
-                                                <div class="d-flex w-100 justify-content-between">
-                                                    <h6 class="mb-1">{{ $documentos->nombre }}</h6>
-                                                    <small>{{ $documentos->created_at->diffForHumans() }}</small>
-                                                </div>
-                                                <small class="mb-1"><strong>ID:
-                                                        {{ $documentos->numero ? $documentos->numero : '' }}</strong></small>
-                                            </a>
-                                        </div>
+                                        @if($documentos->archivado == false)
+                                            <div class="list-group list-border-y list-group-flush">
+                                                <a href="{{$documentos->ruta_documento}}"
+                                                    target="_blank" class="list-group-item list-group-item-action">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <h6 class="mb-1">{{ $documentos->nombre }}</h6>
+                                                        <small>{{ $documentos->created_at->diffForHumans() }}</small>
+                                                    </div>
+                                                    <small class="mb-1"><strong>ID:
+                                                            {{ $documentos->numero ? $documentos->numero : '' }}</strong></small>
+                                                </a>
+                                            </div>
+                                        @endif
                                     @endforeach
 
                                 </div>
@@ -1317,6 +1342,14 @@
                 $('#group_numero_activo').addClass('d-none');
                 $('#group_numero_activo').removeClass('d-block');
             }
+
+            let tipo_doc = $('#nombre_documento option:selected').attr('data-tipo');
+
+            document.querySelector('#tipo_doc').innerHTML = tipo_doc;
+            $('#tipo_doc').removeClass('opcional');
+            $('#tipo_doc').removeClass('obligatorio');
+            $('#tipo_doc').removeClass('aplica');
+            $('#tipo_doc').addClass(tipo_doc);
         });
     </script>
 @endsection
