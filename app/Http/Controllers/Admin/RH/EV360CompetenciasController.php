@@ -150,6 +150,13 @@ class EV360CompetenciasController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        $competencia = Competencia::find($id);
+
+        return view('admin.recursos-humanos.evaluacion-360.competencias.show', compact('competencia'));
+    }
+
     public function informacionCompetencia(Request $request, $competencia)
     {
         if ($request->ajax()) {

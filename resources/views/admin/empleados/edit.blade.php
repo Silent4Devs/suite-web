@@ -210,11 +210,11 @@
                         </a>
                         <a class="nav-link" id="nav-competencias-tab" data-toggle="tab" href="#nav-competencias"
                             role="tab" aria-controls="nav-competencias" aria-selected="false">
-                            <i class="mr-2 fas fa-award" style="font-size:20px;"></i>Competencias
+                            <i class="mr-2 fas fa-award" style="font-size:20px;"></i>Perfil Profesional
                         </a>
                         <a class="nav-link" id="nav-documentos-tab" data-toggle="tab" href="#nav-documentos"
                             role="tab" aria-controls="nav-documentos" aria-selected="false">
-                            <i class="mr-2 fas fa-folder-open" style="font-size:20px;"></i>Documentos
+                            <i class="mr-2 fas fa-folder-open" style="font-size:20px;"></i>Expediente
                         </a>
                     </div>
                 </nav>
@@ -699,11 +699,9 @@
             window.tblExperiencia = $('#tbl-experiencia').DataTable({
                 "autoWidth": false,
                 initComplete: function(settings,json){
-                    $(".datepicker").datepicker({
-                        format: "yyyy",
-                        viewMode: "years",
-                        minViewMode: "years",
-                        autoclose:true //to close picker once year is selected
+                    $(document).ready(function() {
+                     $(".yearpicker").yearpicker()
+
                     });
                 },
                 buttons: [],
@@ -1007,9 +1005,6 @@
 
                 ],
                 orderCellsTop: true,
-                order: [
-                    [1, 'desc']
-                ],
             })
 
             document.getElementById('tbl-educacion').addEventListener('change', async function(e) {
@@ -1494,9 +1489,7 @@
 
                 ],
                 orderCellsTop: true,
-                order: [
-                    [1, 'desc']
-                ],
+
             })
             //Eventos para editar registros
             document.getElementById('tbl-certificados').addEventListener('change', async function(e) {
@@ -2030,6 +2023,14 @@
                         }
                     },
                     {
+                        data: 'archivado',
+                        name: 'archivado',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <font class="archivo_${data}"></font>`;
+                        }
+                    },
+                    {
                         data: 'id',
                         render: function(data, type, row, meta) {
                             let urlEliminar =
@@ -2409,11 +2410,11 @@
         }
 
         function limpiarCamposEducacion() {
-            $("#institucion").val('');
-            $("#año_inicio").val('');
-            $("#año_fin").val('');
-            $("#titulo_obtenido").val('');
-            $("#nivel").val('');
+            $("#institucion_inst").val('');
+            $("#titulo_obtenido_inst").val('');
+            $("#año_inicio_inst").val('');
+            $("#año_fin_inst").val('');
+            $("#nivel_inst").val('');
         }
 
         function enviarEducacion() {
@@ -2534,10 +2535,10 @@
         }
 
         function limpiarCamposIdioma() {
-            $("#nombre").val('');
-            $("#nivel").val('');
-            $("#porcentaje").val('');
-            $("#certificado").val('');
+            $("#nombre_idioma").val('');
+            $("#nivel_idioma").val('');
+            $("#porcentaje_idioma").val('');
+            $("#certificado_idioma").val('');
         }
 
         function suscribirCertificado() {
@@ -2667,13 +2668,13 @@
     </script>
 
 
-        {{-- <script>
+        <script>
             $(document).ready(function() {
                 $(".yearpicker").yearpicker()
 
             });
 
-        </script> --}}
+        </script>
 
         <script>
             $(".datepicker").datepicker({
@@ -2683,6 +2684,30 @@
             autoclose:true //to close picker once year is selected
         });
         </script>
+
+    <script type="text/javascript">
+        $(document).on('change', '#nombre_doc', function(event) {
+            let op_select = $('#nombre_doc option:selected').attr('data-activar');
+            console.log(op_select);
+            if (op_select == 'si') {
+                $('#group_numero_activo').addClass('d-block');
+                $('#group_numero_activo').removeClass('d-none');
+            }
+            if (op_select == 'no'){
+                $('#group_numero_activo').addClass('d-none');
+                $('#group_numero_activo').removeClass('d-block');
+            }
+
+            let tipo_doc = $('#nombre_doc option:selected').attr('data-tipo');
+
+            document.querySelector('#tipo_doc').innerHTML = tipo_doc;
+            $('#tipo_doc').removeClass('opcional');
+            $('#tipo_doc').removeClass('obligatorio');
+            $('#tipo_doc').removeClass('aplica');
+            $('#tipo_doc').addClass(tipo_doc);
+        });
+    </script>
+
 
 
 @endsection

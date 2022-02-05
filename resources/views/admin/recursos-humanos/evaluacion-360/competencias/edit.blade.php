@@ -85,7 +85,7 @@
     <div class="mt-4 card">
         <div class="card-body">
             <form id="formGrupo" method="POST" action="{{ route('admin.ev360-competencias.update', $competencia) }}"
-                class="mt-3 row">
+                class="mt-3 row" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 @include('admin.recursos-humanos.evaluacion-360.competencias._formEdit')
@@ -207,7 +207,7 @@
                 }],
                 order: [
                     [0, 'asc']
-                ], 
+                ],
                 dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",

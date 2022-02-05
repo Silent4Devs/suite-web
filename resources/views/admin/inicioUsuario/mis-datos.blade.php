@@ -439,7 +439,7 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                         </div> --}}
-                        <div class="p-34 card" x-data="{show:false}">
+                        <div class="card" x-data="{show:false}" style="padding:20px;">
                             <h5 class="mb-0"><i class="bi bi-people mr-2"
                                     style="transform:scale(1.15);"></i>Mi Equipo
 
@@ -546,7 +546,7 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                         </div>
-                        <div class="p-34 card card_margin_b_n" x-data="{show:false}">
+                        <div class="card card_margin_b_n" x-data="{show:false}" style="padding:20px;">
                             <h5 class="mb-0"><i class="bi bi-laptop mr-2"></i>Mis Activos
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -555,8 +555,9 @@ if (!is_null($organizacion)) {
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container" style="padding-top: 10px;">
-                                    @if (is_null($activos))
-                                        No cuenta con activos a su cargo
+                                    {{-- @if (is_null($activos)) --}}
+                                    @if (count($activos) === 0)
+                                    Sin activos asignados actualmente
                                     @else
                                     <div class="row" style="margin-top: 1px;">
                                         <div class="col-12 text-muted scroll_estilo" style="overflow:auto;">
@@ -570,7 +571,7 @@ if (!is_null($organizacion)) {
                                                     </thead>
                                                     <tbody>
                                                         @foreach ( $activos as $activo )
-                                                        <tr data-toggle="modal" data-target="#modal_competencia{{ $activo->id }}" style="cursor: pointer;">
+                                                        <tr>
                                                             <td style="vertical-align: middle;">{{$activo->id}}</td>
                                                             <td style="vertical-align: middle; text-align: left !important;">{{$activo->nombreactivo}}</td>
                                                             <td style="text-align: center !important; vertical-align: middle;">{{$activo->descripcion}}</td>
@@ -625,7 +626,7 @@ if (!is_null($organizacion)) {
 
 
 
-                        <div class="p-34 card card_margin_b_n" x-data="{show:false}">
+                        <div class=" card card_margin_b_n" x-data="{show:false}" style="padding:20px;">
                             <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -899,8 +900,8 @@ if (!is_null($organizacion)) {
                         </div>
                         <div class="row gutters-sm">
                             <div class="card_data_mis_datos col-sm-12">
-                                <div class="mb-0 card h-100">
-                                    <div class="pb-personzalizado card-body" x-data="{show:false}">
+                                <div class="mb-0 card h-100" >
+                                    <div class="pb-personzalizado card-body" x-data="{show:false}" style="padding:26px;">
                                         <div class="row">
                                             <div class="col-4">
                                                 <h5 class="mb-0"><i class="bi bi-bullseye mr-2"></i>Mis
@@ -991,8 +992,8 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                             <div class="card_data_mis_datos col-sm-12">
-                                <div class="mb-0 card h-100">
-                                    <div class="pb-personzalizado card-body" x-data="{show:false}">
+                                <div class="mb-0 card h-100 mt-1">
+                                    <div class="pb-personzalizado card-body" x-data="{show:false}" style="padding:13px;">
                                         <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge mr-2"></i>Mi
                                             Autoevaluación
                                         </h5>
@@ -1048,13 +1049,15 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                             <div class="card_data_mis_datos col-sm-12">
-                                <div class="mb-0 card h-100">
-                                    <div class="pb-personzalizado mb-0 card-body" x-data="{show:false}">
+                                <div class="mb-0 card h-100 mt-1">
+                                    <div class="pb-personzalizado mb-0 card-body" x-data="{show:false}" style="padding:14px;">
                                         <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge-fill mr-2"></i>Evaluaciones a
                                             Realizar
-                                            <div class="circle-total-evaluaciones" style="top:-5px !important;">
-                                                <span style="position: absolute;top: 3px;">{{ $evaluaciones->count() }}</span>
-                                            </div>
+                                             @if($evaluaciones->count() > 0)
+                                                <div class="circle-total-evaluaciones" style="top:-5px !important;">
+                                                    <span style="position: absolute;top: 3px;">{{ $evaluaciones->count() }}</span>
+                                                </div>
+                                            @endif
                                         </h5>
                                         @if ($last_evaluacion)
                                             @include('admin.inicioUsuario.info_card_evaluacion')

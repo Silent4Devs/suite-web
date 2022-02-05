@@ -41,7 +41,7 @@
                     <select class="form-control select2 {{ $errors->has('id_grupo') ? 'is-invalid' : '' }}"
                         name="id_grupo" id="id_grupo" required>
                         <option value="">
-                            Escoja un grupo
+                            --Selecciona un grupo--
                         </option>
                         @if ($grupos)
                             @foreach ($grupos as $grupo)

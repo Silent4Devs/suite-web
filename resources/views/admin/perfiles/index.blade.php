@@ -11,10 +11,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                            ID
-                        </th>
-                        <th>
-                            Perfil
+                            Nivel
                         </th>
                         <th>
                             Descripción
@@ -167,10 +164,7 @@
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 ajax: "{{ route('admin.perfiles.index') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
+                columns: [
                     {
                         data: 'perfil',
                         name: 'perfil'

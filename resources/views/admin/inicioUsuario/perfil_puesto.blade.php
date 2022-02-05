@@ -55,7 +55,7 @@
                                     Descripción</span>
                             </div>
                             <p style="text-align:justify">
-                                {{ html_entity_decode(strip_tags( $puesto->descripcion  ), ENT_QUOTES, 'UTF-8')}}
+                                {!!$puesto->descripcion!!}
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Responsabilidades</span>
@@ -94,14 +94,14 @@
                                 Experiencia Profesional</span>
                             </div>
                             <p style="text-align:justify">
-                                {{ html_entity_decode(strip_tags( $puesto->experiencia  ), ENT_QUOTES, 'UTF-8')}}
+                                {!!$puesto->experiencia!!}
                             </p>
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Educación Académica</span>
                             </div>
                             <p style="text-align:justify">
-                                {{ html_entity_decode(strip_tags( $puesto->estudios  ), ENT_QUOTES, 'UTF-8')}}
+                                {!!$puesto->estudios!!}
 
                             </p>
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
@@ -109,7 +109,7 @@
                                     Conocimientos</span>
                             </div>
                             <p style="text-align:justify">
-                                {{ html_entity_decode(strip_tags( $puesto->conocimientos  ), ENT_QUOTES, 'UTF-8')}}
+                                {!!$puesto->conocimientos!!}
                             </p>
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
@@ -186,47 +186,6 @@
                                     <span class="text-white " style="font-size: 14px; font-weight: bold;">
                                        Datos Generales</span>
                                 </div>
-
-                                <strong><i class="ml-2 mr-2 text-white fas fa-user-tie"></i>Edad</strong>
-                                <br>
-                                @if(is_null($puesto->edad_de) && is_null($puesto->edad_a))
-                                <label class="ml-4">{{ $puesto->edad}}</label>
-                                @else
-                                <div style="margin-left:28px;">
-                                    <span>{{ $puesto->edad_de}}</span>-<span>{{ $puesto->edad_a}}&nbsp;años</span>
-                                </div>
-                                @endif
-                                <br>
-                                <strong><i class="ml-2 mr-2 text-white fas fa-restroom"></i>Género</strong>
-                                <br>
-                                @if (is_null($puesto->genero))
-                                <label class="ml-4">Sin registro</label>
-                                @else
-                                <div style="margin-left:28px;">
-                                    <span>{{ $puesto->genero}}</span>
-                                </div>
-                                @endif
-                                <br>
-                                <strong><i class="ml-2 mr-2 fas fa-heart text-white"></i>Estado Civil</strong>
-                                <br>
-                                @if (is_null($puesto->estado_civil))
-                                <label class="ml-4">Sin registro</label>
-                                @else
-                                <div style="margin-left:28px;">
-                                    <span>{{ $puesto->estado_civil}}</span>
-                                </div>
-                                @endif
-                                <br>
-                                <strong><i class="ml-2 mr-2 fas fa-dollar-sign text-white"></i>Sueldo</strong>
-                                <br>
-                                @if (is_null($puesto->sueldo))
-                                <label class="ml-4">Sin registro</label>
-                                @else
-                                <div style="margin-left:28px;">
-                                    <span>{{ $puesto->sueldo}}</span>
-                                </div>
-                                @endif
-                                <br>
                                 <strong><i class="ml-2 mr-2 far fa-building text-white"></i>Lugar de Trabajo</strong>
                                 <br>
                                 @if (is_null($puesto->lugar_trabajo))

@@ -81,7 +81,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width:50px;">ID</th>
-                        <th style="min-width:150px;">Métrica</th>
+                        <th style="min-width:150px;">Nombre</th>
                         <th style="min-width:150px;">Descripción</th>
                         <th style="min-width:100px;">Opción</th>
                     </tr>

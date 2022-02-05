@@ -180,10 +180,37 @@ Breadcrumbs::for('admin.objetivosseguridads.create', function ($trail) {
 });
 
 Breadcrumbs::for('admin.recursos.index', function ($trail) {
-    $trail->parent('admin.iso27001.index');
-    $trail->push('Soporte', route('admin.iso27001.index') . '#soporte');
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
     $trail->push('Capacitaciones', route('admin.recursos.index'));
 });
+Breadcrumbs::for('EV360-ListaDocumentosEmpleados', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
+    $trail->push('Lista de Documentos de Empleados', route('admin.recursos.index'));
+});
+Breadcrumbs::for('EV360-CalendarioFestivo', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Calendario y Comunicación');
+    $trail->push('Días Festivos', route('admin.recursos.index'));
+});
+Breadcrumbs::for('EV360-CalendarioEventos', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Calendario y Comunicación');
+    $trail->push('Eventos', route('admin.recursos.index'));
+});
+
+Breadcrumbs::for('EV360-Tipo-Contrato-Empleados', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
+    $trail->push('Tipos de contrato para empleados', route('admin.recursos.index'));
+});
+Breadcrumbs::for('EV360-EntidadesCrediticeas', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
+    $trail->push('Entidades crediticias', route('admin.recursos.index'));
+});
+
 Breadcrumbs::for('admin.recursos.create', function ($trail) {
     $trail->parent('admin.recursos.index');
     $trail->push('Formulario', route('admin.recursos.create'));

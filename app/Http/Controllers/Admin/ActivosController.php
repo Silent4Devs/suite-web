@@ -159,6 +159,8 @@ class ActivosController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
+
         $data = [];
 
         if ($request->hasfile('documentos_relacionados')) {
@@ -198,33 +200,33 @@ class ActivosController extends Controller
 
         ]);
 
-        $file = $request->file('documento');
+        if ($request->file('documento')) {
+            $file = $request->file('documento');
 
-        //obtenemos el nombre del archivo
-        $nombre = $file->getClientOriginalName();
-        //    dd($nombre);
+            //obtenemos el nombre del archivo
+            $nombre = $file->getClientOriginalName();
+            //    dd($nombre);
 
-        //indicamos que queremos guardar un nuevo archivo en el disco local
-        //    Storage::disk(('app\public\responsivasActivos'))->put($nombre,$file);
-        $file->storeAs('public\responsivasActivos', $nombre);
-        $activo->update(['documento' =>$nombre]);
+            //indicamos que queremos guardar un nuevo archivo en el disco local
+            //    Storage::disk(('app\public\responsivasActivos'))->put($nombre,$file);
+            $file->storeAs('public\responsivasActivos', $nombre);
+            $activo->update(['documento' =>$nombre]);
+        }
 
         return redirect()->route('admin.activos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Activo $activo)
     {
-        abort_if(Gate::denies('configuracion_activo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configuracion_activo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $subtipos = Tipoactivo::all()->pluck('subtipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $subtipos = SubcategoriaActivo::all()->pluck('subcategoria', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $ubicacions = Sede::all()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $activo->load('tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team');
 
         $empleados = Empleado::with('area')->get();
 
@@ -233,12 +235,9 @@ class ActivosController extends Controller
         $marcas = Marca::get();
 
         $modelos = Modelo::get();
+        $tipos = Tipoactivo::get();
 
-        $marca_seleccionada = Marca::select('id', 'nombre')->find($activo->marca);
-
-        $modelo_seleccionado = Modelo::select('id', 'nombre')->find($activo->modelo);
-
-        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'activo', 'empleados', 'area', 'marcas', 'modelos', 'marca_seleccionada', 'modelo_seleccionado'));
+        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'activo'));
     }
 
     public function update(UpdateActivoRequest $request, Activo $activo)

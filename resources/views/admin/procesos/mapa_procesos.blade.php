@@ -366,12 +366,13 @@
                 style="font-size:18pt;"></i></a>
         <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-camera"
                 style="font-size:18pt;"></i></a>
+        <i class="fas fa-compress-arrows-alt icono_contraer" style="font-size:18pt;"></i>
     </div>
     <div id="caja_mapa_procesos" style="margin-top:30px;">
         <div class="caja2">
             <p>Necesidades del cliente</p>
         </div>
-        {{-- <i class="fas fa-compress-arrows-alt icono_contraer"></i> --}}
+        
 
         <div class="caja_central">
             @foreach ($grupos_mapa as $grupo_map)
@@ -401,9 +402,7 @@
                                     </a>
                                 </div>
                             @empty
-                                <a href="{{ asset('admin/procesos') }}" class="registre">
-                                    Registrar procesos
-                                </a>
+                                Procesos no registrados
                             @endforelse
                         </div>
                     @endforeach
@@ -434,19 +433,16 @@
 
 @section('scripts')
     <script type="text/javascript">
-        $(".caja_central p").click(function() {
+        $(".caja_central p:not(.activo)").click(function() {
             $("span p").removeClass("activo");
             $("span:hover p").addClass("activo");
         });
-    </script>
 
-
-    <script type="text/javascript">
         @foreach ($grupos_mapa as $grupo_map)
             @foreach ($grupo_map->macroprocesos as $macro_map)
                 $("#span_caja_macro{{ $macro_map->id }}").click(function(){
-                $(".caja_revelada").removeClass("caja_revelada");
-                $("#div_caja_macro{{ $macro_map->id }}").addClass("caja_revelada");
+                    $(".caja_revelada").removeClass("caja_revelada");
+                    $("#div_caja_macro{{ $macro_map->id }}").addClass("caja_revelada");
                 });
             @endforeach
         @endforeach

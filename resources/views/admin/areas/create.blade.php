@@ -42,13 +42,15 @@
                     </div>
 
 
-
-                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label for="empleados_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del área</label>
-                        <select class="form-control {{ $errors->has('empleados_id') ? 'is-invalid' : '' }}" name="empleados_id" id="empleados_id">
-                            @foreach ($reportas as $reporta)
-                            <option data-puesto="{{ $reporta->puesto }}" value="{{ $reporta->id }}" data-area="{{ $reporta->area->area }}">
-                                {{ $reporta->name }}
+                    <div  class="form-group col-sm-4 col-md-4 col-lg-4">
+                        <label for="empleados_id"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                        <select class="form-control {{ $errors->has('empleados_id') ? 'is-invalid' : '' }}" name="empleados_id" id="nombre_contacto_puesto">
+                            <option value="">
+                                -- Selecciona el responsable --
+                            </option>
+                            @foreach ($empleados as $empleado)
+                            <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
+                                {{ $empleado->name }}
                             </option>
                             @endforeach
                         </select>
@@ -61,38 +63,47 @@
 
 
 
+                    <div class="form-group col-md-4">
+                        <label for="puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                        <div class="form-control" id="contacto_puesto"></div>
+                    </div>
 
-                    @if ($direccion_exists)
-                        <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                            <label class="required" for="jefe"><i class="fas fa-user iconos-crear"></i>Área a la que reporta</label>
-                            <div class="mb-3 input-group">
-                                <select class="custom-select supervisor" id="inputGroupSelect01" name="id_reporta">
-                                    <option selected value="" disabled>-- Selecciona area --</option>
-
-                                    @forelse ($areas as $area)
-                                        <option value="{{ $area->id }}">{{ $area->area }}</option>
-                                    @empty
-                                        <option value="" disabled>Sin Datos</option>
-                                    @endforelse
-                                </select>
-                            </div>
-                            {{-- <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
-                        name="jefe" id="jefe" value="{{ old('jefe', '') }}" required> --}}
-                            @if ($errors->has('id_reporta'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('id_reporta') }}
-                                </div>
-                            @endif
-                        </div>
-                    @endif
 
                 </div>
 
                 <div class="row col-12">
-                    <div class="form-group col-sm-6">
+
+
+                    @if ($direccion_exists)
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                        <label class="required" for="jefe"><i class="fas fa-user iconos-crear"></i>Área a la que reporta</label>
+                        <div class="mb-3 input-group">
+                            <select class="custom-select supervisor" id="inputGroupSelect01" name="id_reporta">
+                                <option selected value="" disabled>-- Selecciona area --</option>
+
+                                @forelse ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->area }}</option>
+                                @empty
+                                    <option value="" disabled>Sin Datos</option>
+                                @endforelse
+                            </select>
+                        </div>
+                        {{-- <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
+                    name="jefe" id="jefe" value="{{ old('jefe', '') }}" required> --}}
+                        @if ($errors->has('id_reporta'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('id_reporta') }}
+                            </div>
+                        @endif
+                    </div>
+                @endif
+
+
+                    <div class="form-group col-sm-4">
                         <label for="grupo_id"><i class="fas fa-users iconos-crear"></i>Grupo</label>
                         <select class="form-control select2 {{ $errors->has('grupo') ? 'is-invalid' : '' }}"
                             name="id_grupo" id="id_grupo">
+                            <option selected value="" disabled>-- Selecciona el grupo --</option>
                             @foreach ($grupoareas as $grupo)
                                 <option value="{{ $grupo->id }}">
                                     {{ $grupo->nombre }}
@@ -108,7 +119,7 @@
                         <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
                     </div>
 
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-4">
                         <label for="foto_area"> <i class="fas fa-images iconos-crear"></i>Fotografía del área</label>
                                 <input type="file"name="foto_area"
                                     class="form-control {{ $errors->has('foto_area') ? 'is-invalid' : '' }}"
@@ -148,3 +159,18 @@
 
 
 @endsection
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        let contacto = document.querySelector('#nombre_contacto_puesto');
+        let puesto_init = contacto.options[contacto.selectedIndex].getAttribute('data-puesto');
+
+        document.getElementById('contacto_puesto').innerHTML = puesto_init;
+        contacto.addEventListener('change', function(e) {
+            e.preventDefault();
+            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('contacto_puesto').innerHTML = puesto;
+        })
+    })
+
+    </script>
