@@ -1053,9 +1053,11 @@ if (!is_null($organizacion)) {
                                     <div class="pb-personzalizado mb-0 card-body" x-data="{show:false}" style="padding:14px;">
                                         <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge-fill mr-2"></i>Evaluaciones a
                                             Realizar
-                                            <div class="circle-total-evaluaciones" style="top:-5px !important;">
-                                                <span style="position: absolute;top: 3px;">{{ $evaluaciones->count() }}</span>
-                                            </div>
+                                             @if($evaluaciones->count() > 0)
+                                                <div class="circle-total-evaluaciones" style="top:-5px !important;">
+                                                    <span style="position: absolute;top: 3px;">{{ $evaluaciones->count() }}</span>
+                                                </div>
+                                            @endif
                                         </h5>
                                         @if ($last_evaluacion)
                                             @include('admin.inicioUsuario.info_card_evaluacion')

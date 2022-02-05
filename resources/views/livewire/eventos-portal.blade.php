@@ -79,15 +79,18 @@
                 <i class="bi bi-folder2 mr-2"></i>
                 <span>Documentos</span>
             </a>
-            <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}">
-                <i class="bi bi-collection mr-2"></i>
-                <span>Políticas</span>
-            </a>
-            <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}">
-                <i class="bi bi-person-bounding-box mr-2"></i> 
-                <span>Comités</span>
-            </a>
-
+            @if($politica_existe != 0)
+                <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}">
+                    <i class="bi bi-collection mr-2"></i>
+                    <span>Políticas</span>
+                </a>
+            @endif
+            @if($comite_existe != 0)
+                <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}">
+                    <i class="bi bi-person-bounding-box mr-2"></i> 
+                    <span>Comités</span>
+                </a>
+            @endif
             @if ($empleado_asignado)
                 <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}">
                     <i class="bi bi-flag mr-2"></i>

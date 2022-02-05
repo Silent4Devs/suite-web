@@ -219,6 +219,14 @@ class CompetenciasController extends Controller
 
     public function cargarDocumentos(Request $request, Empleado $empleado)
     {
+        $doc_viejo = EvidenciasDocumentosEmpleados::where('nombre', $request->nombre)->where('archivado', false)->first();
+        if ($doc_viejo) {
+
+            $doc_viejo->update([
+                'archivado'=>true,
+            ]);
+        }
+
         $request->merge([
             'empleado_id' => $empleado->id,
         ]);
