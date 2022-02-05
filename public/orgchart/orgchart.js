@@ -448,7 +448,7 @@ export default class OrgChart {
     c_more.classList.add('c_more');
     let content_more = `
         <h4>Descripción</h4>
-        <p>${dataSourceJSON.descripcion}</p>
+        <p class="text-justify mr-3" style="text-align: justify !important">${dataSourceJSON.descripcion}</p>
         `;
     if (dataSourceJSON.supervisor != null) {
       let photo_s;

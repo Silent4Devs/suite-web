@@ -114,7 +114,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'destroy' => 'ev360-competencias-por-puesto.destroy',
     ])->except('create', 'store');
 
-
     // Route::get('recursos-humanos/evaluacion-360/competencias/{id}', 'RH\EV360CompetenciasController@show')->name('ev360-competencias.show');
 
     Route::post('recursos-humanos/evaluacion-360/competencias/obtener-niveles', 'RH\EV360CompetenciasController@obtenerNiveles')->name('ev360-competencias.obtenerNiveles');

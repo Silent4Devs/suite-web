@@ -200,20 +200,18 @@ class ActivosController extends Controller
 
         ]);
 
-        if($request->file('documento')){
+        if ($request->file('documento')) {
             $file = $request->file('documento');
 
-        //obtenemos el nombre del archivo
-        $nombre = $file->getClientOriginalName();
-        //    dd($nombre);
+            //obtenemos el nombre del archivo
+            $nombre = $file->getClientOriginalName();
+            //    dd($nombre);
 
-        //indicamos que queremos guardar un nuevo archivo en el disco local
-        //    Storage::disk(('app\public\responsivasActivos'))->put($nombre,$file);
-        $file->storeAs('public\responsivasActivos', $nombre);
-        $activo->update(['documento' =>$nombre]);
-
+            //indicamos que queremos guardar un nuevo archivo en el disco local
+            //    Storage::disk(('app\public\responsivasActivos'))->put($nombre,$file);
+            $file->storeAs('public\responsivasActivos', $nombre);
+            $activo->update(['documento' =>$nombre]);
         }
-
 
         return redirect()->route('admin.activos.index')->with('success', 'Guardado con éxito');
     }
@@ -239,7 +237,7 @@ class ActivosController extends Controller
         $modelos = Modelo::get();
         $tipos = Tipoactivo::get();
 
-        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos','activo'));
+        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'activo'));
     }
 
     public function update(UpdateActivoRequest $request, Activo $activo)

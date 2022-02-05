@@ -32,19 +32,21 @@
                     </div>
                 </div>
             </div>
-            <div class="mb-2 row">
-                <div class="col-4">
-                    <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
-                    <select class="form-control" id="lista_areas">
-                        <option value="" disabled selected>-- Selecciona un área --</option>
-                        @foreach ($areas as $area)
-                            <option value="{{ $area->area }}">{{ $area->area }}</option>
-                        @endforeach
-                        <option value="">Todas</option>
-                    </select>
-                </div>
-            </div>
+
             <table class="table table-bordered w-100 tblCompetenciasPorPuesto">
+
+                <div class="mb-2 row">
+                    <div class="col-4">
+                        <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
+                        <select class="form-control" id="lista_areas">
+                            <option value="" disabled selected>-- Selecciona un área --</option>
+                            @foreach ($areas as $area)
+                                <option value="{{ $area->area }}">{{ $area->area }}</option>
+                            @endforeach
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                </div>
                 <thead class="thead-dark">
                     <tr>
                         <th style="vertical-align: top">
@@ -63,7 +65,22 @@
                             Opciones
                         </th>
                     </tr>
+                    {{-- <tbody>
 
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>
+                                <select data-column="1" class="form-control filter-select" id="lista_areas">
+                                    <option value="" disabled selected>-- Selecciona un área --</option>
+                                    @foreach ($areas as $area)
+                                        <option value="{{ $area->area }}">{{ $area->area }}</option>
+                                    @endforeach
+                                    <option value="">Todas</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tfoot> --}}
                 </thead>
             </table>
         </div>
@@ -206,6 +223,33 @@
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
             };
             let table = $('.tblCompetenciasPorPuesto').DataTable(dtOverrideGlobals);
+            // $('#lista_areas').on('change', function() {
+            //     console.log(this.value != "");
+            //     if (this.value != null && this.value != "") {
+            //         this.style.border = "2px solid #20a4a1";
+            //         table.columns(2).search("(^" + this.value + "$)", true, false).draw();
+            //     } else {
+            //         this.style.border = "none";
+            //         table.columns(2).search(this.value).draw();
+            //     }
+            // });
+            // $('.filter-select').change(function(){
+            // table.column( $(this).data('column') )
+            //     .search( $(this).val() )
+            //     .draw();
+            // });
+            $('#lista_areas').change(function(){
+                table.draw();
+            });
+
+
         });
     </script>
+
+        {{-- <script src="{{ asset('js/datatablefilter.js') }}"></script>
+       <script>
+        $('#myTable').ddTableFilter();
+        </script> --}}
+
+
 @endsection
