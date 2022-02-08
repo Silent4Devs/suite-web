@@ -103,7 +103,7 @@ return [
     'starts_with'                    => 'El :attribute debe comenzar con uno de los siguientes: :values.',
     'string'                         => 'El :attribute debe ser una cadena.',
     'timezone'                       => 'El :attribute debe ser una zona valida.',
-    'unique'                         => 'El nombre de la categoria de activo ya esta registrado',
+    'unique'                         => 'El nombre ya esta registrado',
     'uploaded'                       => 'El :attribute no se pudo cargar.',
     'url'                            => 'El formato de :attribute es invalido.',
     'uuid'                           => 'El :attribute debe ser un UUID válido.',
