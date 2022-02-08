@@ -172,10 +172,12 @@
                 }, {
                     data: 'id',
                     render: function(data, type, row, meta) {
-                        console.log(row)
-                        return row.area_relacionada.area
+                        if (row.area) {
+                            return row.area.area;
+                        }
+                        return 'No se ha asignado a un área';
                     }
-                },{
+                }, {
                     data: 'competencias',
                     render: function(data, type, row, meta) {
                         console.log(data);
@@ -238,7 +240,7 @@
             //     .search( $(this).val() )
             //     .draw();
             // });
-            $('#lista_areas').change(function(){
+            $('#lista_areas').change(function() {
                 table.draw();
             });
 
@@ -246,7 +248,7 @@
         });
     </script>
 
-        {{-- <script src="{{ asset('js/datatablefilter.js') }}"></script>
+    {{-- <script src="{{ asset('js/datatablefilter.js') }}"></script>
        <script>
         $('#myTable').ddTableFilter();
         </script> --}}

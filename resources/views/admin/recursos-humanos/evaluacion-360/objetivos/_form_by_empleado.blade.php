@@ -79,7 +79,8 @@
                             class="fas fa-plus"></i></button>
                     {{-- <button type="button" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></button> --}}
                     {{-- <a href="{{ route('admin.glosarios.edit',$perspectiva->id )}}"><i class="fas fa-edit"></i></a> --}}
-                     <a href="{{ route('admin.Perspectiva.index')}}" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
+                    <a href="{{ route('admin.Perspectiva.index') }}" class="text-white btn btn-sm"
+                        style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
                 </div>
             @endif
         </div>
@@ -147,7 +148,8 @@
                     <button id="btnAgregarMetrica" class="text-white btn btn-sm"
                         style="background:#3eb2ad;height: 32px;" data-toggle="modal" data-target="#metricaObjetivoModal"
                         title="Agregar unidad"><i class="fas fa-plus"></i></button>
-                    <a href="{{ route('admin.Metrica.index')}}" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
+                    <a href="{{ route('admin.Metrica.index') }}" class="text-white btn btn-sm"
+                        style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
                 </div>
             @endif
         </div>
@@ -163,9 +165,8 @@
         {{-- <input class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" type="text"
             name="descripcion_meta" value="{{ old('descripcion_meta', $objetivo->descripcion_meta) }}"> --}}
         <textarea class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}"
-            name="descripcion_meta" id="" cols="30" rows="1">
-                {{ old('descripcion_meta', $objetivo->descripcion_meta) }}
-            </textarea>
+            name="descripcion_meta" id="" cols="30"
+            rows="1">{{ old('descripcion_meta', $objetivo->descripcion_meta) }}</textarea>
         <small id="descripcion_metaHelp" class="form-text text-muted">Ingresa una breve descripción del objetivo
             estratégico</small>
         @if ($errors->has('descripcion_meta'))

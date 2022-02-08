@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Comiteseguridad;
 use App\Models\Empleado;
 use App\Models\FelicitarCumpleaños;
 use App\Models\PoliticaSgsi;
-use App\Models\Comiteseguridad;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -25,7 +25,7 @@ class EventosPortal extends Component
     public $nuevos_contador_circulo;
     public $cumpleaños_contador_circulo;
     public $aniversarios_contador_circulo;
-    
+
     public $politica_existe;
     public $comite_existe;
 
