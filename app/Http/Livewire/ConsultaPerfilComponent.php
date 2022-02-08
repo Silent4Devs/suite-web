@@ -114,8 +114,8 @@ class ConsultaPerfilComponent extends Component
         $perfilesInfo = Puesto::with(['area', 'competencias' => function ($q) {
             $q->with('competencia');
         }])->when($this->puesto_id, function ($q3) {
-                $q3->where('id', $this->puesto_id);
-            })
+            $q3->where('id', $this->puesto_id);
+        })
             ->when($this->area_id, function ($q4) {
                 $q4->where('id_area', $this->area_id);
             })
@@ -132,6 +132,7 @@ class ConsultaPerfilComponent extends Component
             ->paginate(21);
 
         $this->puesto = null;
+
         return view('livewire.consulta-perfil-component', [
             'perfilesInfo' => $perfilesInfo,
         ]);
