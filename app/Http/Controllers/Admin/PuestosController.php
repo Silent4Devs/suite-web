@@ -72,9 +72,9 @@ class PuestosController extends Controller
         }
 
         $teams = Team::get();
-        $areas=Area::get();
+        $areas = Area::get();
 
-        return view('admin.puestos.index', compact('teams','areas'));
+        return view('admin.puestos.index', compact('teams', 'areas'));
     }
 
     public function create()
@@ -115,8 +115,6 @@ class PuestosController extends Controller
                 }]
         ';
 
-
-
         $lenguajes = (json_decode($json));
         $areas = Area::get();
         $reportas = Empleado::get();
@@ -152,9 +150,6 @@ class PuestosController extends Controller
         $this->saveUpdateHerramientas($request->herramientas, $puesto);
         $this->saveUpdateContactos($request->contactos, $puesto);
         $this->saveOrUpdateLanguage($request->id_language, $puesto);
-
-
-
 
         return redirect()->route('admin.puestos.index');
     }
