@@ -48,7 +48,7 @@ class AnalisisDeRiesgo extends Model
         'tipo',
         'fecha',
         'porcentaje_implementacion',
-        'id_empleado',
+        'id_elaboro',
         'estatus',
     ];
 
