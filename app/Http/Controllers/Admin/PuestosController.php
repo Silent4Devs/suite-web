@@ -33,7 +33,7 @@ class PuestosController extends Controller
         abort_if(Gate::denies('puesto_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Puesto::with(['team'])->select(sprintf('%s.*', (new Puesto)->table))->orderByDesc('id');
+            $query = Puesto::with(['area'])->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -55,23 +55,26 @@ class PuestosController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
+                return $row->id ? $row->id : 'n/a';
             });
             $table->editColumn('puesto', function ($row) {
-                return $row->puesto ? $row->puesto : '';
+                return $row->puesto ? $row->puesto : 'n/a';
             });
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? html_entity_decode(strip_tags($row->descripcion), ENT_QUOTES, 'UTF-8') : '';
+                return $row->descripcion ? html_entity_decode(strip_tags($row->descripcion), ENT_QUOTES, 'UTF-8') : 'n/a';
             });
-
+            $table->editColumn('area', function ($row) {
+                return $row->area ? $row->area->area : 'n/a';
+            });
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
         }
 
         $teams = Team::get();
+        $areas=Area::get();
 
-        return view('admin.puestos.index', compact('teams'));
+        return view('admin.puestos.index', compact('teams','areas'));
     }
 
     public function create()
@@ -112,6 +115,8 @@ class PuestosController extends Controller
                 }]
         ';
 
+
+
         $lenguajes = (json_decode($json));
         $areas = Area::get();
         $reportas = Empleado::get();
@@ -133,8 +138,13 @@ class PuestosController extends Controller
     public function store(StorePuestoRequest $request)
     {
         // dd($request->all());
+        $val = $request->validate([
+            'puesto'=> 'unique:puestos,puesto',
+        ]);
         $puesto = Puesto::create($request->all());
-
+        if (array_key_exists('ajax', $request->all())) {
+            return response()->json(['success'=>true, 'puesto'=>$puesto]);
+        }
         // $this->saveOrUpdateLanguage($request->idiomas, $puesto);
         // $this->saveOrUpdateLanguage($request, $puesto);
         $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
@@ -142,6 +152,9 @@ class PuestosController extends Controller
         $this->saveUpdateHerramientas($request->herramientas, $puesto);
         $this->saveUpdateContactos($request->contactos, $puesto);
         $this->saveOrUpdateLanguage($request->id_language, $puesto);
+
+
+
 
         return redirect()->route('admin.puestos.index');
     }

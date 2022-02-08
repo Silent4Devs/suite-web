@@ -56,15 +56,28 @@
                 </div>
             </div> --}}
         @endcan
+
         <div class="card-body datatable-fix">
+            <div class="mb-2 row">
+                <div class="col-4">
+                    <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
+                    <select class="form-control" id="lista_areas">
+                        <option value="" disabled selected>-- Selecciona un área --</option>
+                        @foreach ($areas as $area)
+                            <option value="{{ $area->area }}">{{ $area->area }}</option>
+                        @endforeach
+                        <option value="">Todas</option>
+                    </select>
+                </div>
+            </div>
             <table class="table table-bordered w-100 datatable-Puesto">
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                            {{ trans('cruds.puesto.fields.id') }}
+                            {{ trans('cruds.puesto.fields.puesto') }}
                         </th>
                         <th>
-                            {{ trans('cruds.puesto.fields.puesto') }}
+                            Área
                         </th>
                         <th style="min-width: 500px;">
                             {{ trans('cruds.puesto.fields.descripcion') }}
@@ -239,13 +252,13 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.puestos.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
                         data: 'puesto',
                         name: 'puesto'
 
+                    },
+                    {
+                        data: 'area',
+                        name: 'area'
                     },
                     {
                         data: 'descripcion',
@@ -262,18 +275,16 @@
                 ]
             };
             let table = $('.datatable-Puesto').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+            $('#lista_areas').on('change', function() {
+                console.log(this.value);
+                if (this.value != null && this.value != "") {
+                    this.style.border = "2px solid #20a4a1";
+                    table.columns(1).search("(^" + this.value + "$)", true, false).draw();
+                } else {
+                    this.style.border = "none";
+                    table.columns(1).search(this.value).draw();
+                }
+            });
         });
     </script>
 

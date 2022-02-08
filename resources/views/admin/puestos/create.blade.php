@@ -197,11 +197,19 @@
                 </div>
 
                 <div class="row col-12 mt-3">
-                    <div class="col-sm-12 col-lg-12 col-md-12">
+                    {{-- <div class="col-sm-12 col-lg-12 col-md-12">
                             <label for="resultado"><i class="fas fa-chart-line iconos-crear"></i>Resultado Esperado</label>
                             <input class="form-control {{ $errors->has('resultado') ? 'is-invalid' : '' }}" type="text" name="resultado"
                                 id="resultado_certificado_responsabilidades" value="{{ old('resultado', '') }}">
                                 <small class="text-danger errores resultado_responsabilidad_error"></small>
+                    </div> --}}
+
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        <label for="resultado"><i class="fas fa-chart-line iconos-crear"></i>Resultado Esperado</label>
+                        <textarea class="form-control date" type="text" name="resultado" id="resultado_certificado_responsabilidades" required>
+                        {{ old('resultado') }}
+                        </textarea>
+                        <small class="text-danger errores resultado_responsabilidad_error"></small>
                     </div>
                 </div>
 
@@ -237,7 +245,7 @@
                             <thead>
                                 <tr>
                                     <th>Actividad</th>
-                                    <th>Resultado Esperado</th>
+                                    <th style="min-width:300px;">Resultado Esperado</th>
                                     <th>Cumplimiento</th>
                                     <th>% de tiempo</th>
                                     <th>Opciones</th>
@@ -901,10 +909,10 @@
           const contenedorResponsabilidades=document.getElementById('contenedor_responsabilidades');
           let html=`
           <tr>
-            <td><input type="hidden" name="responsabilidades[${contador}][id]" value="${formulario.id?formulario.id:0}"><input class="form-control" type="text"  name="responsabilidades[${contador}][actividad]" value="${formulario.actividad}" style="border:none;" ></td>
-            <td><input class="form-control" type="text"  name="responsabilidades[${contador}][resultado]" value="${formulario.resultado}" style="border:none;"></td>
-            <td><input class="form-control" type="text"  name="responsabilidades[${contador}][indicador]" value="${formulario.indicador}" style="border:none;"></td>
-            <td><input class="form-control" type="text"  name="responsabilidades[${contador}][tiempo_asignado]" value="${formulario.tiempoAsignado}" style="border:none;"></td>
+            <td><input type="hidden" name="responsabilidades[${contador}][id]" value="${formulario.id?formulario.id:0}"><input class="form-control" type="text"  name="responsabilidades[${contador}][actividad]" value="${formulario.actividad}"></td>
+            <td><textarea class="form-control" style="min-height: 25px !important;" type="text" name="responsabilidades[${contador}][resultado]" value="" >${formulario.resultado}</textarea></td>
+            <td><input class="form-control" type="text"  name="responsabilidades[${contador}][indicador]" value="${formulario.indicador}" ></td>
+            <td><input class="form-control" type="text"  name="responsabilidades[${contador}][tiempo_asignado]" value="${formulario.tiempoAsignado}"></td>
             <td><button type="button" name="btn-remove-responsabilidades" id="" class="btn btn-danger remove">Eliminar</button></td>
          </tr>
           `
@@ -1253,6 +1261,20 @@
             }, ]
         });
         CKEDITOR.replace('conocimientos_esp', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('resultado', {
             toolbar: [{
                 name: 'paragraph',
                 groups: ['list', 'indent', 'blocks', 'align'],
