@@ -203,7 +203,6 @@
                         data: 'name',
                         width: '25%',
                         render: function(data, type, row, meta) {
-                            console.log(row);
                             let html = `<img src="{{ asset('storage/empleados/imagenes') }}/${row.avatar}" style="clip-path:circle(20px at 50% 50%);height:40px;">
                             <span>${data}</span>`;
                             return html;
@@ -215,6 +214,12 @@
                         data: 'area.area',
                     }, {
                         data: 'perfil.nombre',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return data;
+                            }
+                            return "Sin perfil vinculado";
+                        },
                         width: '10%'
                     },
                     {

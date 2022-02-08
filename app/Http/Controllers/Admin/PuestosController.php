@@ -113,48 +113,6 @@ class PuestosController extends Controller
         ';
 
         $lenguajes = (json_decode($json));
-
-        // dd($lenguajes);
-
-        /*
-        $lenguajes = [
-            1=>{
-                "abr" => "zh",
-                "idioma"=>"Chinese",
-            },
-            2=>[
-                "abr" => "en",
-                "idioma"=>"English",
-            ],
-            3=>[
-                "abr" => "fr",
-                "idioma"=>"French",
-
-            ],
-            4=>[
-                "abr" => "id",
-                "idioma"=>"Indonesian",
-            ],
-            5=>[
-                "abr" => "it",
-                "idioma"=>"Italian",
-            ],
-            6=>[
-                "abr" => "ja",
-                "idioma"=>"Japanese",
-            ],
-            7=>[
-                "abr" => "pt",
-                "idioma"=>"Portuguese",
-            ],
-
-            8=>[
-                "abr" => "es",
-                "idioma"=>"Spanish; Castilian",
-            ],
-        ];
-        */
-        // dd($lenguajes);
         $areas = Area::get();
         $reportas = Empleado::get();
         $idis = Language::all();
@@ -228,8 +186,8 @@ class PuestosController extends Controller
         $lenguajes = (json_decode($json));
         $areas = Area::get();
         $reportas = Empleado::get();
-        $puesto->load(['contactos'=>function ($query) {
-            $query->with(['empleados'=>function ($query) {
+        $puesto->load(['contactos' => function ($query) {
+            $query->with(['empleados' => function ($query) {
                 $query->with('puestoRelacionado');
             }]);
         }]);
@@ -300,45 +258,8 @@ class PuestosController extends Controller
 
     public function consultaPuestos(Request $request)
     {
-        // $areas = Area::get();
-
         return view('admin.puestos.consultapuestos');
     }
-
-    // public function saveOrUpdateLanguage(Request $request, $puesto)
-    // {
-    //     $id = $puesto->id;
-    //     // dd($id);
-    //     $i = 0;
-    //     if (isset($request->id_language)) {
-    //         if (count($request->id_language)) {
-    //             foreach ($request->id_language as $w) {
-    //                 if (isset($w['id'])) {
-    //                     $model = PuestoIdiomaPorcentajePivot::where('id', $w['id']);
-    //                     $registerAlreadyExists = $model->exists();
-
-    //                     if ($registerAlreadyExists) {
-    //                         $dataModel = $model->first();
-
-    //                         $dataModel->update([
-    //                             'id_language'  => $w['language'],
-    //                             'porcentaje' =>  $w['porcentaje'],
-    //                             'nivel' =>  $w['nivel'],
-    //                         ]);
-    //                     }
-    //                 } else {
-    //                     PuestoIdiomaPorcentajePivot::create([
-
-    //                         'id_language' => $w['language'],
-    //                         'porcentaje' => $w['porcentaje'],
-    //                         'nivel' => $w['nivel'],
-    //                         'id_puesto' => $id,
-    //                     ]);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 
     public function saveOrUpdateLanguage($languajes, $puesto)
     {
@@ -348,7 +269,7 @@ class PuestosController extends Controller
                 // dd(PuestoResponsabilidade::exists($languaje['id']));
                 if (PuestoIdiomaPorcentajePivot::find($languaje['id']) != null) {
                     PuestoIdiomaPorcentajePivot::find($languaje['id'])->update([
-                        'id_language'=>$languaje['language'],
+                        'id_language' => $languaje['language'],
                         'porcentaje' => $languaje['porcentaje'],
                         'nivel' =>  $languaje['nivel'],
                         'id_puesto' => $puesto->id,
@@ -358,7 +279,7 @@ class PuestosController extends Controller
                         'id_puesto' => $puesto->id,
                         'porcentaje' => $languaje['porcentaje'],
                         'nivel' =>  $languaje['nivel'],
-                        'id_language'=>$languaje['language'],
+                        'id_language' => $languaje['language'],
                     ]);
                 }
             }
