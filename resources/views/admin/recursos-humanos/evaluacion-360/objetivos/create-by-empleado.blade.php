@@ -262,15 +262,16 @@
                             'Recuperando información de la conducta, espere unos instantes...');
                     },
                     success: function(response) {
+                        console.log(response);
                         document.querySelector('#formObjetivoEdit input[name="nombre"]').value =
                             response.nombre;
                         document.querySelector('#formObjetivoEdit input[name="KPI"]').value =
                             response.KPI;
                         document.querySelector('#formObjetivoEdit input[name="meta"]').value =
                             response.meta;
-                        document.querySelector(
-                                '#formObjetivoEdit input[name="descripcion_meta"]').value = response
-                            .descripcion_meta;
+                        document.querySelector('#formObjetivoEdit [name="descripcion_meta"]')
+                            .value =
+                            response.descripcion_meta;
                         document.querySelector('#formObjetivoEdit .imagen-preview').src =
                             response.imagen_ruta;
 
@@ -308,7 +309,7 @@
                 let kpi = document.querySelector('#formObjetivoEdit input[name="KPI"]').value;
                 let meta = document.querySelector('#formObjetivoEdit input[name="meta"]').value;
                 let descripcion = document.querySelector(
-                    '#formObjetivoEdit input[name="descripcion_meta"]').value;
+                    '#formObjetivoEdit [name="descripcion_meta"]').value;
                 let tipo_id = $('#formObjetivoEdit #tipo_id').val();
                 let metrica_id = $('#formObjetivoEdit #metrica_id').val();
                 let formDataEdit = new FormData();

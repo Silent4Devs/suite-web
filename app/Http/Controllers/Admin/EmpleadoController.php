@@ -1343,7 +1343,6 @@ class EmpleadoController extends Controller
     {
         $doc_viejo = EvidenciasDocumentosEmpleados::where('nombre', $request->nombre)->where('archivado', false)->first();
         if ($doc_viejo) {
-
             $doc_viejo->update([
                 'archivado'=>true,
             ]);
