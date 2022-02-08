@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Timesheet;
+use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
-use App\Models\TimesheetCliente;
 use App\Models\TimesheetTarea;
 use Illuminate\Http\Request;
 
@@ -209,6 +209,7 @@ class TimesheetController extends Controller
     public function clientes()
     {
         $clientes = TimesheetCliente::get();
+
         return view('admin.timesheet.clientes.index', compact('clientes'));
     }
 
