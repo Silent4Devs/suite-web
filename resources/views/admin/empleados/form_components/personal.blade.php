@@ -1,6 +1,7 @@
 <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
     Datos Personales
 </div>
+
 <div class="row mt-4">
     <div class="form-group col-sm-6">
         <label for="calle"><i class="fas fa-home iconos-crear"></i>Calle</label>

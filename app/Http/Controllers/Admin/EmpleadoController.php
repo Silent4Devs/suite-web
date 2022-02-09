@@ -1466,13 +1466,20 @@ class EmpleadoController extends Controller
         return $empleados;
     }
 
-    // public function datosEmpleado($id){
-    //     // dd($request);
-    //     $visualizarEmpleados = Empleado::all();
-    //     // dd($visualizarEmpleados);
+    public function datosEmpleado($id){
+        // dd('funciona');
+        $visualizarEmpleados = Empleado::find(intval($id));
+        $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
+        $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
+        $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
+        $certificados = CertificacionesEmpleados::where('empleado_id', $id)->get();
+        // dd($certificados);
+        $empleado = Empleado::get();
 
-    //     return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados'));
-    // }
+        // dd($visualizarEmpleados);
+
+        return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos','dependientes','beneficiarios','certificados'));
+    }
 
     // public function createPDF(){
     //     $visualizarEmpleados = Empleado::all();
