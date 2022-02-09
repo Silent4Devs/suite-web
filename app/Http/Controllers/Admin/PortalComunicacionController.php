@@ -12,6 +12,8 @@ use App\Models\Organizacione;
 use App\Models\PoliticaSgsi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Gate;
+use Illuminate\Http\Response;
 
 class PortalComunicacionController extends Controller
 {
@@ -22,6 +24,7 @@ class PortalComunicacionController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('portal_de_comunicacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $hoy = Carbon::now();
         $hoy->toDateString();
 
@@ -117,6 +120,7 @@ class PortalComunicacionController extends Controller
 
     public function reportes()
     {
+        abort_if(Gate::denies('generar_reportes_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacions = Organizacione::first();
 
         return view('admin.portal-comunicacion.reportes', compact('organizacions'));

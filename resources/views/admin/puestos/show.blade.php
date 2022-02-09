@@ -2,12 +2,12 @@
 @section('content')
 
 
-<style type="text/css">
-    .datos_der_cv{
+    <style type="text/css">
+        .datos_der_cv {
             color: #fff;
         }
 
-</style>
+    </style>
 
     {{ Breadcrumbs::render('perfil-puesto-show', $puesto) }}
 
@@ -36,16 +36,18 @@
                                     Identificación del puesto</span>
                             </div>
 
-                            <span><strong>Área:</strong> {{$puesto->area ? $puesto->area->area : 'sin registro'}}</span>
+                            <span><strong>Área:</strong> {{ $puesto->area ? $puesto->area->area : 'sin registro' }}</span>
 
                             <br>
                             <span><strong>Fecha de creación:</strong>
                                 {{ \Carbon\Carbon::parse($puesto->fecha_puesto)->format('d/m/Y') }}</span>
                             <br>
-                            <span><strong>Reportará a:</strong> {{$puesto->reportara ? $puesto->reportara->name : 'sin registro'}}</span>
+                            <span><strong>Reportará a:</strong>
+                                {{ $puesto->reportara ? $puesto->reportara->name : 'sin registro' }}</span>
                             <br>
-                            <span><strong>N° de personas a su cargo:</strong> &nbsp;{{$puesto->personas_internas}} <strong>Internas</strong>
-                                &nbsp; {{$puesto->personas_externas}} <strong>Externas</strong>
+                            <span><strong>N° de personas a su cargo:</strong> &nbsp;{{ $puesto->personas_internas }}
+                                <strong>Internas</strong>
+                                &nbsp; {{ $puesto->personas_externas }} <strong>Externas</strong>
                             </span>
                             <br>
 
@@ -54,53 +56,53 @@
                                     Descripción</span>
                             </div>
                             <p style="text-align:justify">
-                                {{ html_entity_decode(strip_tags( $puesto->descripcion  ), ENT_QUOTES, 'UTF-8')}}
+                                {{ html_entity_decode(strip_tags($puesto->descripcion), ENT_QUOTES, 'UTF-8') }}
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Responsabilidades</span>
                             </div>
 
-                            @foreach($puesto->responsabilidades as $responsabilidad)
-                            <div>
-                                <span>{{$responsabilidad->actividad}}</span>
+                            @foreach ($puesto->responsabilidades as $responsabilidad)
+                                <div>
+                                    <span>{{ $responsabilidad->actividad }}</span>
+                                    <br>
+                                    <span><strong>Resultado:&nbsp;</strong>{{ $responsabilidad->resultado }}</span>
+                                    <br>
+                                    <span><strong>Indicador:&nbsp;</strong>{{ $responsabilidad->indicador }}</span>
+                                    <br>
+                                    <span><strong>Tiempo:&nbsp;</strong>{{ $responsabilidad->tiempo_asignado }}</span>
+                                </div>
                                 <br>
-                                <span><strong>Resultado:&nbsp;</strong>{{$responsabilidad->resultado}}</span>
-                                <br>
-                                <span><strong>Indicador:&nbsp;</strong>{{$responsabilidad->indicador}}</span>
-                                <br>
-                                <span><strong>Tiempo:&nbsp;</strong>{{$responsabilidad->tiempo_asignado}}</span>
-                             </div>
-                             <br>
                             @endforeach
 
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Herramientas para desempeñar puesto</span>
                             </div>
-                            @foreach($puesto->herramientas as $herramienta)
-                            <div>
-                                <strong style="color:#00A57E;text-transform: uppercase">
-                                    {{$herramienta->nombre_herramienta}}
-                                </strong>
+                            @foreach ($puesto->herramientas as $herramienta)
+                                <div>
+                                    <strong style="color:#00A57E;text-transform: uppercase">
+                                        {{ $herramienta->nombre_herramienta }}
+                                    </strong>
+                                    <br>
+                                    <span>{{ $herramienta->descripcion_herramienta }}</span>
+                                </div>
                                 <br>
-                                <span>{{$herramienta->descripcion_herramienta}}</span>
-                            </div>
-                            <br>
-                           @endforeach
+                            @endforeach
 
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
-                            <span style="font-size: 17px; font-weight: bold;">
-                                Experiencia Profesional</span>
+                                <span style="font-size: 17px; font-weight: bold;">
+                                    Experiencia Profesional</span>
                             </div>
                             <p style="text-align:justify">
-                                {{ html_entity_decode(strip_tags( $puesto->experiencia  ), ENT_QUOTES, 'UTF-8')}}
+                                {{ html_entity_decode(strip_tags($puesto->experiencia), ENT_QUOTES, 'UTF-8') }}
                             </p>
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Educación Académica</span>
                             </div>
                             <p style="text-align:justify">
-                                {{ html_entity_decode(strip_tags( $puesto->estudios  ), ENT_QUOTES, 'UTF-8')}}
+                                {{ html_entity_decode(strip_tags($puesto->estudios), ENT_QUOTES, 'UTF-8') }}
 
                             </p>
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
@@ -108,53 +110,53 @@
                                     Conocimientos</span>
                             </div>
                             <p style="text-align:justify">
-                                {{ html_entity_decode(strip_tags( $puesto->conocimientos  ), ENT_QUOTES, 'UTF-8')}}
+                                {{ html_entity_decode(strip_tags($puesto->conocimientos), ENT_QUOTES, 'UTF-8') }}
                             </p>
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Certificaciones</span>
                             </div>
-                            @foreach($puesto->certificados as $certificado)
-                            <div>
-                                <strong style="color:#00A57E;text-transform: uppercase">
-                                    {{ $certificado->nombre }}</strong>
+                            @foreach ($puesto->certificados as $certificado)
+                                <div>
+                                    <strong style="color:#00A57E;text-transform: uppercase">
+                                        {{ $certificado->nombre }}</strong>
 
-                            <br>
-                                <span>
-                                    {{ $certificado->requisito }}
-                                </span>
-                            </div>
+                                    <br>
+                                    <span>
+                                        {{ $certificado->requisito }}
+                                    </span>
+                                </div>
                             @endforeach
                             <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Idiomas</span>
                             </div>
                             @foreach ($puesto->language as $id_language)
-                            <div>
-                                <strong class="font-weight-bold" style="color:#00A57E;text-transform: uppercase">
-                                    {{ $id_language->language->idioma }}
-                                </strong>
+                                <div>
+                                    <strong class="font-weight-bold" style="color:#00A57E;text-transform: uppercase">
+                                        {{ $id_language->language->idioma }}
+                                    </strong>
+                                    <br>
+                                    <span>
+                                        <strong>Nivel:</strong> {{ $id_language->nivel }}
+                                    </span>
+                                    <br>
+                                    <span><strong>Porcentaje:</strong> {{ $id_language->porcentaje }}</span>
+                                </div>
                                 <br>
-                                <span>
-                                    <strong>Nivel:</strong> {{ $id_language->nivel }}
-                                </span>
-                                <br>
-                                <span><strong>Porcentaje:</strong> {{ $id_language->porcentaje }}</span>
-                            </div>
-                            <br>
                             @endforeach
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Contactos del puesto</span>
                             </div>
 
-                            @foreach($puesto->contactos as $contacto)
+                            @foreach ($puesto->contactos as $contacto)
                                 <div>
-                                    <strong>{{$contacto->empleados->name}}</strong>
+                                    <strong>{{ $contacto->empleados->name }}</strong>
                                     <br>
-                                    <span><strong>Area:</strong> {{$contacto->empleados->area->area}}</span>
+                                    <span><strong>Area:</strong> {{ $contacto->empleados->area->area }}</span>
                                     <br>
-                                    <span>{{$contacto->descripcion_contacto}}</span>
+                                    <span>{{ $contacto->descripcion_contacto }}</span>
                                 </div>
                             @endforeach
 
@@ -164,13 +166,13 @@
 
                             {{-- <strong class="font-weight-bold"style="color:#00A57E;text-transform: uppercase">
                                 {{ $language->requisito }}</strong>
-                                <br>--}}
-                                {{-- @foreach($idiomas as $idioma)
+                                <br> --}}
+                            {{-- @foreach ($idiomas as $idioma)
                                 <span style="text-transform:capitalize">{{ $language->porcentaje}}%</span>
                                 <br>
                                 <p>{{ $language->nivel }}</p> --}}
 
-                        </ul>
+                            </ul>
                         </div>
 
 
@@ -183,77 +185,78 @@
                                         alt=""></div> --}}
                                 <div class="mt-3 mb-4 w-100" style="border-bottom: solid 2px #fff;">
                                     <span class="text-white " style="font-size: 14px; font-weight: bold;">
-                                       Datos Generales</span>
+                                        Datos Generales</span>
                                 </div>
 
                                 <strong><i class="ml-2 mr-2 text-white fas fa-user-tie"></i>Edad</strong>
                                 <br>
-                                @if(is_null($puesto->edad_de) && is_null($puesto->edad_a))
-                                <label class="ml-4">{{ $puesto->edad}}</label>
+                                @if (is_null($puesto->edad_de) && is_null($puesto->edad_a))
+                                    <label class="ml-4">{{ $puesto->edad }}</label>
                                 @else
-                                <div style="margin-left:28px;">
-                                    <span>{{ $puesto->edad_de}}</span>-<span>{{ $puesto->edad_a}}&nbsp;años</span>
-                                </div>
+                                    <div style="margin-left:28px;">
+                                        <span>{{ $puesto->edad_de }}</span>-<span>{{ $puesto->edad_a }}&nbsp;años</span>
+                                    </div>
                                 @endif
                                 <br>
                                 <strong><i class="ml-2 mr-2 text-white fas fa-restroom"></i>Género</strong>
                                 <br>
                                 @if (is_null($puesto->genero))
-                                <label class="ml-4">Sin registro</label>
+                                    <label class="ml-4">Sin registro</label>
                                 @else
-                                <div style="margin-left:28px;">
-                                    <span>{{ $puesto->genero}}</span>
-                                </div>
+                                    <div style="margin-left:28px;">
+                                        <span>{{ $puesto->genero }}</span>
+                                    </div>
                                 @endif
                                 <br>
                                 <strong><i class="ml-2 mr-2 fas fa-heart text-white"></i>Estado Civil</strong>
                                 <br>
                                 @if (is_null($puesto->estado_civil))
-                                <label class="ml-4">Sin registro</label>
+                                    <label class="ml-4">Sin registro</label>
                                 @else
-                                <div style="margin-left:28px;">
-                                    <span>{{ $puesto->estado_civil}}</span>
-                                </div>
+                                    <div style="margin-left:28px;">
+                                        <span>{{ $puesto->estado_civil }}</span>
+                                    </div>
                                 @endif
                                 <br>
                                 <strong><i class="ml-2 mr-2 fas fa-dollar-sign text-white"></i>Sueldo</strong>
                                 <br>
                                 @if (is_null($puesto->sueldo))
-                                <label class="ml-4">Sin registro</label>
+                                    <label class="ml-4">Sin registro</label>
                                 @else
-                                <div style="margin-left:28px;">
-                                    <span>{{ $puesto->sueldo}}</span>
-                                </div>
+                                    <div style="margin-left:28px;">
+                                        <span>{{ $puesto->sueldo }}</span>
+                                    </div>
                                 @endif
                                 <br>
                                 <strong><i class="ml-2 mr-2 far fa-building text-white"></i>Lugar de Trabajo</strong>
                                 <br>
                                 @if (is_null($puesto->lugar_trabajo))
-                                <label class="ml-4">Sin registro</label>
+                                    <label class="ml-4">Sin registro</label>
                                 @else
-                                <div style="margin-left:28px;">
-                                    <span>{{ $puesto->lugar_trabajo}}</span>
-                                </div>
+                                    <div style="margin-left:28px;">
+                                        <span>{{ $puesto->lugar_trabajo }}</span>
+                                    </div>
                                 @endif
                                 <br>
                                 <strong><i class="ml-2 mr-2 fas fa-clock text-white"></i>Horario</strong>
                                 <br>
                                 @if (is_null($puesto->horario))
-                                <label class="ml-4">Sin registro</label>
+                                    <label class="ml-4">Sin registro</label>
                                 @else
-                                <div style="margin-left:28px;">
-                                    <span>{{ $puesto->horario}}</span>
-                                </div>
-                                 @endif
+                                    <div style="margin-left:28px;">
+                                        <span>{{ $puesto->horario }}</span>
+                                    </div>
+                                @endif
                                 <br>
                                 <div class="mt-3 mb-4 w-100" style="border-bottom: solid 2px #fff;">
                                     <span class="text-white " style="font-size: 14px; font-weight: bold;">
-                                       Competencias</span>
+                                        Competencias</span>
                                 </div>
                                 <div style="margin-left:28px; margin-top: 13px;">
-                                   @foreach($puesto->competencias as $competencia)
-                                    <li><strong>{{$competencia->competencia->nombre}}</strong><br>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nivel esperado: {{$competencia->nivel_esperado}}</li>
+                                    @foreach ($puesto->competencias as $competencia)
+                                        <li><strong>{{ $competencia->competencia->nombre }}</strong><br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nivel esperado:
+                                            {{ $competencia->nivel_esperado }}</li>
                                     @endforeach
                                 </div>
 

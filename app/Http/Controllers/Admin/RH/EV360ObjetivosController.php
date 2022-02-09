@@ -12,6 +12,8 @@ use App\Models\RH\ObjetivoEmpleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Gate;
+use Illuminate\Http\Response;
 
 class EV360ObjetivosController extends Controller
 {
@@ -183,6 +185,7 @@ class EV360ObjetivosController extends Controller
 
     public function show($empleado)
     {
+        abort_if(Gate::denies('objetivos_estrategicos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = new Objetivo;
         $empleado = Empleado::find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
