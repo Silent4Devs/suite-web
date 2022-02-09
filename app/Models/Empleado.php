@@ -111,7 +111,6 @@ class Empleado extends Model
         'renovacion_contrato',
         'esquema_contratacion',
         'proyecto_asignado',
-        'domicilio_personal',
         'telefono_casa',
         'correo_personal',
         'estado_civil',
@@ -134,6 +133,14 @@ class Empleado extends Model
         'pagadora_actual',
         'periodicidad_nomina',
         'mostrar_telefono',
+        'calle',
+        'num_exterior',
+        'num_interior',
+        'colonia',
+        'delegacion',
+        'estado',
+        'pais',
+        'cp',
     ];
 
     public function getActualBirdthdayAttribute()
@@ -461,13 +468,13 @@ class Empleado extends Model
         $mensaje = '';
         // dd($antiguedad->format('%d'));
         if ($antiguedad->format('%Y') != '00') {
-            $mensaje .= "{$antiguedad->format('%Y')} años  ";
+            $mensaje .= "{$antiguedad->format('%Y')} año(s)  ";
         }
         if ($antiguedad->format('%m') != '0') {
-            $mensaje .= "{$antiguedad->format('%m')} meses  ";
+            $mensaje .= "{$antiguedad->format('%m')} mes(es)  ";
         }
         if ($antiguedad->format('%d') != '0') {
-            $mensaje .= "{$antiguedad->format('%d')} días";
+            $mensaje .= "{$antiguedad->format('%d')} día(s)";
         }
 
         return $mensaje;

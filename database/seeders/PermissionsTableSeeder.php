@@ -9,11 +9,86 @@ class PermissionsTableSeeder extends Seeder
 {
     public function run()
     {
+        Permission::truncate();
         $permissions = [
             // MI PERFIL
             [
                 'name' => 'Acceder a Mi Perfil',
                 'title' => 'mi_perfil_access',
+            ],
+            [
+                'name' => 'Acceder a Mis Datos',
+                'title' => 'mis_datos_access',
+            ],
+            [
+                'name' => 'Acceder a Mi Calendario',
+                'title' => 'mi_calendario_access',
+            ],
+            [
+                'name' => 'Acceder a Mis Actividades',
+                'title' => 'mis_actividades_access',
+            ],
+            [
+                'name' => 'Acceder a Mis Aprobaciones',
+                'title' => 'mis_aprobaciones_access',
+            ],
+            [
+                'name' => 'Acceder a Mis Capacitaciones',
+                'title' => 'mis_capacitaciones_access',
+            ],
+            [
+                'name' => 'Realizar Reportes',
+                'title' => 'realizar_reportes_access',
+            ],
+            [
+                'name' => 'Subir Documentación Empleado',
+                'title' => 'subir_documentacion_empleados',
+            ],
+            [
+                'name' => 'Subir Certificaciones Empleado',
+                'title' => 'subir_certificaciones_empleados',
+            ],
+            [
+                'name' => 'Subir Capacitaciones Empleado',
+                'title' => 'subir_capacitaciones_empleados',
+            ],
+            // PORTAL DE COMUNICACION
+            [
+                'name' => 'Acceder al Portal de Comunicación',
+                'title' => 'portal_de_comunicacion_access',
+            ],
+            [
+                'name' => 'Acceder a Generar Reportes',
+                'title' => 'generar_reportes_access',
+            ],
+            //DIRECTORIO
+            [
+                'name' => 'Acceder al Directorio de la Empresa',
+                'title' => 'directorio_access',
+            ],
+            //COMPETENCIAS
+            [
+                'name' => 'Visualizar Perfil(es) Profesional(es)',
+                'title' => 'visualizar_perfil_profesional',
+            ],
+            [
+                'name' => 'Editar Perfil Profesional',
+                'title' => 'perfil_profesional_edit',
+            ],
+            //PERFIL DE PUESTO
+            [
+                'name' => 'Visualizar Perfil De Puesto',
+                'title' => 'perfil_de_puesto_access',
+            ],
+            //OBJETIVOS ESTRATÉGICOS
+            [
+                'name' => 'Visualizar Objetivos Estratégicos',
+                'title' => 'objetivos_estrategicos_access',
+            ],
+            // TIMESHEET
+            [
+                'name' => 'Acceder a TimeSheet',
+                'title' => 'timesheet_access',
             ],
             // MI ORGANIZACION
             [
