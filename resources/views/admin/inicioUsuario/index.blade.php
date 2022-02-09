@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style type="text/css">
         body {
             background-color: #fff;
@@ -132,123 +131,98 @@
         }
 
     </style>
-
     @include('partials.flashMessages')
-
     <div id="inicio_usuario" class="mb-5 row" style="">
-
         <h5 class="col-12 titulo_general_funcion">Mi Perfil</h5>
-        {{-- <div class="col-lg-3 info-personal">
-            <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
-                <div style="width: 100%; height: 85px; background-color: #345183;"></div>
-                <div class="caja_img_perfil">
-                    <img
-                        src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->foto : 'user.png' }}">
-                </div>
-                <h5>{{ $usuario->empleado ? $usuario->empleado->name : $usuario->name }}</h5>
-                <p>{{ $usuario->empleado ? ($usuario->empleado->puesto != null ? $usuario->puesto : 'Puesto no asignado') : '' }}
-                </p>
-
-            </div>
-            <h4 class="mt-3" style="font-size:15pt">Avisos de publicaciones </h4>
-            <hr>
-            <h6>Documentos Publicados ({{ count($documentos_publicados) }})</h6>
-            <ul class="list-group">
-                @foreach ($documentos_publicados as $documento)
-                    <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}"
-                        class="list-group-item cards text-dark">
-                        <i class="mr-1 fas fa-file-pdf text-danger"></i>
-                        {{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
-                        <div>
-                            <span class="badge badge-dark" style="text-transform: capitalize">{{ $documento->tipo }}</span>
-                            @if ($documento->macroproceso_id)
-                                <span class="badge badge-primary"
-                                    style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
-                            @endif
-                            @if ($documento->proceso_id)
-                                <span class="badge badge-success"
-                                    style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
-                            @endif
-                        </div>
-                    </a>
-                @endforeach
-            </ul>
-        </div> --}}
         <div class="col-lg-12 row caja_botones_secciones">
             @if ($usuario->empleado)
                 <div class="col-12 caja_botones_menu" style="justify-content: center !important;">
-                    <a href="#" id="b_misDatos" onclick="almacenarMenuEnLocalStorage('misDatos')" data-tabs="s_misDatos"
-                        class=""><i class="bi bi-file-person"></i>
-                        Mis Datos</a>
-                    <a href="#" id="b_calendario" onclick="almacenarMenuEnLocalStorage('calendario')"
-                        data-tabs="s_calendario"><i class="bi bi-calendar3"></i>
-                        Calendario</a>
-                    <a href="#" id="b_actividades" onclick="almacenarMenuEnLocalStorage('actividades')"
-                        data-tabs="s_actividades">
-                        @if ($contador_actividades)
-                            <span class="indicador_numero">{{ $contador_actividades }}</span>
-                        @endif
-                        <i class="bi bi-stopwatch"></i>Actividades
-                    </a>
-                    <a href="#" id="b_aprobaciones" onclick="almacenarMenuEnLocalStorage('aprobaciones')"
-                        data-tabs="s_aprobaciones">
-                        @if ($contador_revisiones)
-                            <span class="indicador_numero">{{ $contador_revisiones }}</span>
-                        @endif
-                        <i class="bi bi-check2"></i>Aprobaciones
-                    </a>
-                    {{-- <a href="#" data-tabs="evaluaciones">
-                        @if ($contador_revisiones)
-                            <span>{{ $contador_revisiones }}</span>
-                        @endif
-                        <i class="fas fa-check"></i>Evaluaciones
-                    </a> --}}
-
-                    <a href="#" id="b_capacitaciones" onclick="almacenarMenuEnLocalStorage('capacitaciones')"
-                        data-tabs="s_capacitaciones">
-                        @if ($contador_recursos >=1)
-                            <span class="indicador_numero" id="contadorDeCapacitaciones"></span>
-                        @endif
-                        <i class="bi bi-mortarboard"></i>Capacitaciones
-                    </a>
-                    <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')" data-tabs="s_reportes">
-                        <i class="bi bi-clipboard-check"></i>
-                        Reportes</a>
+                    @can('mis_datos_access')
+                        <a href="#" id="b_misDatos" onclick="almacenarMenuEnLocalStorage('misDatos')" data-tabs="s_misDatos"
+                            class=""><i class="bi bi-file-person"></i>
+                            Mis Datos</a>
+                    @endcan
+                    @can('mi_calendario_access')
+                        <a href="#" id="b_calendario" onclick="almacenarMenuEnLocalStorage('calendario')"
+                            data-tabs="s_calendario"><i class="bi bi-calendar3"></i>
+                            Calendario</a>
+                    @endcan
+                    @can('mis_actividades_access')
+                        <a href="#" id="b_actividades" onclick="almacenarMenuEnLocalStorage('actividades')"
+                            data-tabs="s_actividades">
+                            @if ($contador_actividades)
+                                <span class="indicador_numero">{{ $contador_actividades }}</span>
+                            @endif
+                            <i class="bi bi-stopwatch"></i>Actividades
+                        </a>
+                    @endcan
+                    @can('mis_aprobaciones_access')
+                        <a href="#" id="b_aprobaciones" onclick="almacenarMenuEnLocalStorage('aprobaciones')"
+                            data-tabs="s_aprobaciones">
+                            @if ($contador_revisiones)
+                                <span class="indicador_numero">{{ $contador_revisiones }}</span>
+                            @endif
+                            <i class="bi bi-check2"></i>Aprobaciones
+                        </a>
+                    @endcan
+                    @can('mis_capacitaciones_access')
+                        <a href="#" id="b_capacitaciones" onclick="almacenarMenuEnLocalStorage('capacitaciones')"
+                            data-tabs="s_capacitaciones">
+                            @if ($contador_recursos >= 1)
+                                <span class="indicador_numero" id="contadorDeCapacitaciones"></span>
+                            @endif
+                            <i class="bi bi-mortarboard"></i>Capacitaciones
+                        </a>
+                    @endcan
+                    @can('realizar_reportes_access')
+                        <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')" data-tabs="s_reportes">
+                            <i class="bi bi-clipboard-check"></i>
+                            Reportes</a>
+                    @endcan
                 </div>
             @endif
             <div class="caja_caja_secciones">
                 @if ($usuario->empleado)
                     <div class="caja_secciones">
-                        <section id="s_misDatos" data-id="datos" class="">
-                            @include('admin.inicioUsuario.mis-datos')
-                        </section>
-                        <section id="s_calendario" data-id="calendario">
-                            <div class="container">
-                                @include('admin.inicioUsuario.calendario')
-                            </div>
-                        </section>
-                        <section id="s_actividades" data-id="actividades">
-                            <div class="container">
-                                @include('admin.inicioUsuario.actividades')
-                        </section>
-                        <section id="s_aprobaciones" data-id="aprobaciones">
-                            <div class="container">
-                                @include('admin.inicioUsuario.aprobaciones')
-                            </div>
-                        </section>
-                        {{-- <section id="evaluaciones">
-                            @include('admin.inicioUsuario.evaluaciones')
-                        </section> --}}
-                        <section id="s_capacitaciones" data-id="capacitaciones">
-                            <div class="container">
-                                @include('admin.inicioUsuario.capacitaciones')
-                            </div>
-                        </section>
-                        <section id="s_reportes" data-id="reportes">
-                            <div class="container">
-                                @include('admin.inicioUsuario.reportes')
-                            </div>
-                        </section>
+                        @can('mis_datos_access')
+                            <section id="s_misDatos" data-id="datos" class="">
+                                @include('admin.inicioUsuario.mis-datos')
+                            </section>
+                        @endcan
+                        @can('mi_calendario_access')
+                            <section id="s_calendario" data-id="calendario">
+                                <div class="container">
+                                    @include('admin.inicioUsuario.calendario')
+                                </div>
+                            </section>
+                        @endcan
+                        @can('mis_actividades_access')
+                            <section id="s_actividades" data-id="actividades">
+                                <div class="container">
+                                    @include('admin.inicioUsuario.actividades')
+                            </section>
+                        @endcan
+                        @can('mis_aprobaciones_access')
+                            <section id="s_aprobaciones" data-id="aprobaciones">
+                                <div class="container">
+                                    @include('admin.inicioUsuario.aprobaciones')
+                                </div>
+                            </section>
+                        @endcan
+                        @can('mis_capacitaciones_access')
+                            <section id="s_capacitaciones" data-id="capacitaciones">
+                                <div class="container">
+                                    @include('admin.inicioUsuario.capacitaciones')
+                                </div>
+                            </section>
+                        @endcan
+                        @can('realizar_reportes_access')
+                            <section id="s_reportes" data-id="reportes">
+                                <div class="container">
+                                    @include('admin.inicioUsuario.reportes')
+                                </div>
+                            </section>
+                        @endcan
                     </div>
                 @else
                     @include('admin.inicioUsuario.agenda')
