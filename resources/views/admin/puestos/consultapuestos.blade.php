@@ -6,7 +6,7 @@
     <h5 class="col-12 titulo_general_funcion">Perfiles de Puestos </h5>
     <div class="mt-5 card">
         <div class="card-body">
-            @livewire('consulta-perfil-component' )
+            @livewire('consulta-perfil-component')
         </div>
     </div>
 @endsection

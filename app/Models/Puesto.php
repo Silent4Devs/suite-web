@@ -72,7 +72,7 @@ class Puesto extends Model
         return $this->hasMany('App\Models\RH\CompetenciaPuesto', 'puesto_id', 'id');
     }
 
-    public function areaRelacionada()
+    public function area()
     {
         return $this->belongsTo('App\Models\Area', 'id_area', 'id');
     }

@@ -150,8 +150,16 @@ class EV360ObjetivosController extends Controller
             'tipo_id' => 'required|exists:ev360_tipo_objetivos,id',
             'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
         ]);
+
         $objetivo = Objetivo::find($objetivo);
-        $u_objetivo = $objetivo->update($request->all());
+        $u_objetivo = $objetivo->update([
+            'nombre' => $request->nombre,
+            'KPI' => $request->KPI,
+            'meta' => $request->meta,
+            'descripcion_meta' => $request->descripcion,
+            'tipo_id' => $request->tipo_id,
+            'metrica_id' => $request->metrica_id,
+        ]);
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
