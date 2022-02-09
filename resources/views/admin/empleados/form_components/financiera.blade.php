@@ -1,3 +1,6 @@
+<div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+    Datos Financieros
+</div>
 <div class="row mt-4">
     <div class="form-group col-sm-6">
         <label for="banco"><i class="fas fa-landmark iconos-crear"></i>Banco</label>

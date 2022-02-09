@@ -1,4 +1,8 @@
+<div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+    Datos Personales
+</div>
 <div class="row mt-4">
+
     <div class="form-group col-sm-12">
         <label for="domicilio_personal"><i class="fas fa-home iconos-crear"></i>Domicilio
             Personal</label>
@@ -35,14 +39,7 @@
             </div>
         @endif
     </div>
-    {{-- Componente dependientes economicos --}}
-    <div class="col-sm-12">
-        <label for=""><i class="fas fa-users iconos-crear"></i>Dependientes Económicos</label>
-        @include('admin.empleados.components.dependientes-economicos',[
-        'empleado'=>$empleado
-        ])
-    </div>
-    {{-- Fin componente dependientes economicos --}}
+
     <div class="form-group col-sm-6">
         <label for="estado_civil"><i class="fas fa-book iconos-crear"></i>Estado
             civil</label>
@@ -122,7 +119,7 @@
         @endif
     </div>
     <div class="form-group col-sm-12">
-        <label for="nacionalidad"><i class="fas fa-globe-americas iconos-crear"></i>Nacionalidad</label>
+        <label for="nacionalidad"><i class="fas fa-globe-americas iconos-crear"></i>País de nacimiento</label>
         <select class="form-control {{ $errors->has('nacionalidad') ? 'is-invalid' : '' }}" name="nacionalidad"
             id="nacionalidad">
             <option value="" selected disabled>-- Selecciona la nacionalidad --</option>
@@ -148,5 +145,13 @@
         ])
     </div>
     {{-- Fin Componente contacto(s) de emergencia --}}
+      {{-- Componente dependientes economicos --}}
+      <div class="col-sm-12">
+        <label for=""><i class="fas fa-users iconos-crear"></i>Dependientes Económicos</label>
+        @include('admin.empleados.components.dependientes-economicos',[
+        'empleado'=>$empleado
+        ])
+    </div>
+    {{-- Fin componente dependientes economicos --}}
 
 </div>
