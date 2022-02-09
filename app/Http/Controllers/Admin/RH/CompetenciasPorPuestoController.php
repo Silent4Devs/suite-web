@@ -19,7 +19,7 @@ class CompetenciasPorPuestoController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['areaRelacionada'=>function ($q) {
+            $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['area' => function ($q) {
                 $q->select('id', 'area');
             }, 'competencias' => function ($q) {
                 $q->with('competencia');
@@ -31,7 +31,7 @@ class CompetenciasPorPuestoController extends Controller
         //Para Jon
 
         // if ($request->ajax()) {
-        //     $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['areaRelacionada'=>function ($q) {
+        //     $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['area'=>function ($q) {
         //         $q->select('id', 'area');
         //     }, 'competencias' => function ($q) {
         //         $q->with('competencia');}])->orderByDesc('id')->get();

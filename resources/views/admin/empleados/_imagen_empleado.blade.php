@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <input name="foto" type="file" accept="image/png, image/jpeg" class="imageCrop form-control-file"
-                    id="foto" hidden="">
+                    id="foto" hidden=""   enctype="multipart/form-data">
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
                     class="fas fa-image"></i></button>
         </div>
     </div>
-    <input type="hidden" id="snapshoot" readonly autocomplete="off" name="snap_foto" class="imageCrop">
+    <input type="hidden" id="snapshoot" readonly autocomplete="off" name="snap_foto" class="imageCrop"   enctype="multipart/form-data">
 </div>
 
 <script>
