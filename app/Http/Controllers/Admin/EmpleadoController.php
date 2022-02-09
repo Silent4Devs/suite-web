@@ -201,6 +201,7 @@ class EmpleadoController extends Controller
 
     public function onlyStore($request)
     {
+
         $experiencias = json_decode($request->experiencia);
         $educacions = json_decode($request->educacion);
         $cursos = json_decode($request->curso);
@@ -461,6 +462,7 @@ class EmpleadoController extends Controller
                             $dataModel = $model->first();
                             $dataModel->update([
                                 'nombre' => $beneficiario['nombre'],
+                                'edad' => $beneficiario['edad'],
                                 'parentesco' => $beneficiario['parentesco'],
                                 'porcentaje' => $beneficiario['porcentaje'],
                             ]);
@@ -468,6 +470,7 @@ class EmpleadoController extends Controller
                             BeneficiariosEmpleado::create([
                                 'empleado_id' => $empleado->id,
                                 'nombre' => $beneficiario['nombre'],
+                                'edad' => $beneficiario['edad'],
                                 'parentesco' => $beneficiario['parentesco'],
                                 'porcentaje' => $beneficiario['porcentaje'],
                             ]);
@@ -986,6 +989,7 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $ceo = Empleado::select('id')->whereNull('supervisor_id')->first();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $validateSupervisor = 'nullable|exists:empleados,id';
@@ -1049,9 +1053,8 @@ class EmpleadoController extends Controller
                 }
             }
         } else {
-            if (
-                $request->file('foto') != null or !empty($request->file('foto'))
-            ) {
+            if ($request->file('foto')) {
+
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
                 $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
                 $new_name_image = 'UID_' . $empleado->id . '_' . $request->name . '.' . $extension;
@@ -1125,6 +1128,7 @@ class EmpleadoController extends Controller
             'salario_base_mensual' => $request->salario_base_mensual ? preg_replace('/([^0-9\.])/i', '', $request->salario_base_mensual) : null,
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
+            'foto'=> $image,
         ]);
 
         $this->assignDependenciesModel($request, $empleado);

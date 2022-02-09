@@ -186,7 +186,7 @@
         }
 
     </style>
-    <h5 class="col-12 titulo_general_funcion">Editar: Empleado</h5>
+    <h5 class="col-12 titulo_general_funcion">Editar: Empleado - {{ $empleado->name }}</h5>
     <div class="mt-4 card">
         @if ($isEditAdmin)
 
