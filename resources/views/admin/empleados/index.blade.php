@@ -322,7 +322,9 @@
                         data: 'avatar',
                         name: 'avatar',
                         render: function(data, type, row, meta) {
-                            return `<div class="text-center"><img style="width: 50px;height: 50px;border-radius: 50%;" src="{{ asset('storage/empleados/imagenes/') }}/${data !=""?data:"user.png"}"></div>`;
+                            const ids = row.id.toString();
+                            console.log(ids);
+                            return `<div class="text-center"><a href="empleados/${ids}/edit"><img style="width: 50px;height: 50px;border-radius: 50%;" src="{{ asset('storage/empleados/imagenes/') }}/${data !=""?data:"user.png"}"></a></div>`;
 
                         }
                     },
