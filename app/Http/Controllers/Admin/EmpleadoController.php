@@ -68,6 +68,8 @@ class EmpleadoController extends Controller
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
             $table->addIndexColumn();
+            $table->addColumn('checkbox', '<input type="checkbox" id="check-{{$id}}" name="empleado_checkbox[]" value="{{$id}}" class="form-control" />')
+            ->rowColumns(['checkbox', 'action']);
 
             $table->editColumn('actions', function ($row) {
                 $viewGate = 'configuracion_empleados_show';

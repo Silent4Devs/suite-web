@@ -113,6 +113,9 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="vertical-align: top">
+                            Eliminar todos
+                        </th>
+                        <th style="vertical-align: top">
                             Foto
                         </th>
                         <th style="vertical-align: top">
@@ -318,6 +321,9 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.empleados.index') }}",
                 columns: [
+                    {
+                        data: 'checkbox',
+                    },
                     {
                         data: 'avatar',
                         name: 'avatar',
