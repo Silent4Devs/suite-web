@@ -11,7 +11,7 @@
         "php": "^8.0",
         "alexusmai/laravel-file-manager": "^2.5",
         "barryvdh/laravel-cors": "^2.0",
-        "barryvdh/laravel-dompdf": "^0.9",
+        "barryvdh/laravel-dompdf": "^1.0",
         "bugsnag/bugsnag-laravel": "^2.20",
         "chelout/laravel-relationship-events": "^1.4",
         "davejamesmiller/laravel-breadcrumbs": "5.x",

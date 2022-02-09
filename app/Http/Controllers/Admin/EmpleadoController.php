@@ -31,6 +31,8 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
+
 
 class EmpleadoController extends Controller
 {
@@ -346,6 +348,7 @@ class EmpleadoController extends Controller
 
     public function createEmpleado($request)
     {
+        // dd($request);
         $empleado = Empleado::create([
             'name' => $request->name,
             'area_id' =>  $request->area_id,
@@ -371,7 +374,16 @@ class EmpleadoController extends Controller
             'renovacion_contrato' => $request->renovacion_contrato,
             'esquema_contratacion' => $request->esquema_contratacion,
             'proyecto_asignado' => $request->proyecto_asignado,
+            // 'domicilio_personal' => $request->domicilio_personal,
+            'calle' => $request->calle,
+            'num_exterior' => $request->num_exterior,
             'domicilio_personal' => $request->domicilio_personal,
+            'num_interior' => $request->num_interior,
+            'colonia' => $request->colonia,
+            'delegacion' => $request->delegacion,
+            'estado' => $request->estado,
+            'pais' => $request->pais,
+            'cp' => $request->cp,
             'telefono_casa' => $request->telefono_casa,
             'correo_personal' => $request->correo_personal,
             'estado_civil' => $request->estado_civil,
@@ -1106,7 +1118,16 @@ class EmpleadoController extends Controller
             'renovacion_contrato' => $request->renovacion_contrato,
             'esquema_contratacion' => $request->esquema_contratacion,
             'proyecto_asignado' => $request->proyecto_asignado,
+            // 'domicilio_personal' => $request->domicilio_personal,
+            'calle' => $request->calle,
+            'num_exterior' => $request->num_exterior,
             'domicilio_personal' => $request->domicilio_personal,
+            'num_interior' => $request->num_interior,
+            'colonia' => $request->colonia,
+            'delegacion' => $request->delegacion,
+            'estado' => $request->estado,
+            'pais' => $request->pais,
+            'cp' => $request->cp,
             'telefono_casa' => $request->telefono_casa,
             'correo_personal' => $request->correo_personal,
             'estado_civil' => $request->estado_civil,
@@ -1446,4 +1467,31 @@ class EmpleadoController extends Controller
 
         return $empleados;
     }
+
+    // public function datosEmpleado($id){
+    //     // dd($request);
+    //     $visualizarEmpleados = Empleado::all();
+    //     // dd($visualizarEmpleados);
+
+    //     return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados'));
+    // }
+
+
+    // public function createPDF(){
+    //     $visualizarEmpleados = Empleado::all();
+    //     $datos = Empleado::get();
+    //     $data = compact('datos', 'visualizarEmpleados');
+    //     // $imprimir = PDF::loadView('admin.empleados.datosEmpleado', $data);
+    //     // return $imprimir->stream();
+
+    //     $imprimir = PDF::loadView('admin.empleados.datosEmpleado', $data)->setOptions(['defaultFont' => 'sans-serif']);
+    //     return $imprimir->stream();
+
+    //     // return $imprimir->download('archivo.pdf');
+    //     // return $imprimir->download('archivo-pdf.pdf');
+
+    // }
+
+
+
 }

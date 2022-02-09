@@ -111,7 +111,6 @@ class Empleado extends Model
         'renovacion_contrato',
         'esquema_contratacion',
         'proyecto_asignado',
-        'domicilio_personal',
         'telefono_casa',
         'correo_personal',
         'estado_civil',
@@ -134,6 +133,14 @@ class Empleado extends Model
         'pagadora_actual',
         'periodicidad_nomina',
         'mostrar_telefono',
+        'calle',
+        'num_exterior',
+        'num_interior',
+        'colonia',
+        'delegacion',
+        'estado',
+        'pais',
+        'cp',
     ];
 
     public function getActualBirdthdayAttribute()
