@@ -55,21 +55,21 @@ class PermissionsTableSeeder extends Seeder
             // PORTAL DE COMUNICACION
             [
                 'name' => 'Acceder al Portal de Comunicación',
-                'title' => 'portal_de_comunicacion_access'
+                'title' => 'portal_de_comunicacion_access',
             ],
             [
                 'name' => 'Acceder a Generar Reportes',
-                'title' => 'generar_reportes_access'
+                'title' => 'generar_reportes_access',
             ],
             //DIRECTORIO
             [
                 'name' => 'Acceder al Directorio de la Empresa',
-                'title' => 'directorio_access'
+                'title' => 'directorio_access',
             ],
             //COMPETENCIAS
             [
                 'name' => 'Visualizar Perfil(es) Profesional(es)',
-                'title' => 'visualizar_perfil_profesional'
+                'title' => 'visualizar_perfil_profesional',
             ],
             [
                 'name' => 'Editar Perfil Profesional',

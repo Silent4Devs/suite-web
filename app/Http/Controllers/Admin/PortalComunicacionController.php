@@ -11,8 +11,8 @@ use App\Models\FelicitarCumpleaños;
 use App\Models\Organizacione;
 use App\Models\PoliticaSgsi;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class PortalComunicacionController extends Controller

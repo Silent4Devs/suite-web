@@ -29,10 +29,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use PDF;
-
 
 class EmpleadoController extends Controller
 {
@@ -203,7 +202,6 @@ class EmpleadoController extends Controller
 
     public function onlyStore($request)
     {
-
         $experiencias = json_decode($request->experiencia);
         $educacions = json_decode($request->educacion);
         $cursos = json_decode($request->curso);
@@ -1001,7 +999,6 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $ceo = Empleado::select('id')->whereNull('supervisor_id')->first();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $validateSupervisor = 'nullable|exists:empleados,id';
@@ -1066,7 +1063,6 @@ class EmpleadoController extends Controller
             }
         } else {
             if ($request->file('foto')) {
-
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
                 $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
                 $new_name_image = 'UID_' . $empleado->id . '_' . $request->name . '.' . $extension;
@@ -1476,7 +1472,6 @@ class EmpleadoController extends Controller
     //     return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados'));
     // }
 
-
     // public function createPDF(){
     //     $visualizarEmpleados = Empleado::all();
     //     $datos = Empleado::get();
@@ -1491,7 +1486,4 @@ class EmpleadoController extends Controller
     //     // return $imprimir->download('archivo-pdf.pdf');
 
     // }
-
-
-
 }
