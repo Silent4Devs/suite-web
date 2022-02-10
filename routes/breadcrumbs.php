@@ -694,6 +694,10 @@ Breadcrumbs::for('mi-perfil-puesto', function ($trail, $empleado = null) {
     $trail->parent('Mi-Perfil');
     $trail->push('Perfil de Puesto');
 });
+Breadcrumbs::for('mi-expediente', function ($trail, $empleado = null) {
+    $trail->parent('Mi-Perfil');
+    $trail->push('Expediente Profesional');
+});
 Breadcrumbs::for('Editar-Curriculum', function ($trail, $empleado = null) {
     $trail->parent('Mi-CV', $empleado);
     $trail->push('Editar', route('admin.editarCompetencias', ['empleado' => $empleado]));

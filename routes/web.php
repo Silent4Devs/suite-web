@@ -215,6 +215,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('inicioUsuario/perfil-puesto', 'InicioUsuarioController@perfilPuesto')->name('inicio-Usuario.perfil-puesto');
 
+    Route::get('inicioUsuario/expediente/{id_empleado}', 'InicioUsuarioController@expediente')->name('inicio-Usuario.expediente');
+
+    Route::post('inicioUsuario/expediente/update', 'InicioUsuarioController@expedienteUpdate')->name('inicio-Usuario.expediente-update');
+
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
     Route::post('desk/{seguridad}/analisis_seguridad-update', 'DeskController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');
@@ -370,6 +374,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Route::get('empleados/imprimir', 'EmpleadoController@createPDF')->name('imprimir');
 
     Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
+
+    Route::post('empleado/expediente/update', 'EmpleadoController@expedienteUpdate')->name('empleado.edit.expediente-update');
+    Route::post('empleado/expediente/Restaurar', 'EmpleadoController@expedienteRestaurar')->name('empleado.edit.expediente-restaurar');
+
     Route::resource('empleados', 'EmpleadoController');
 
     // Timesheet
