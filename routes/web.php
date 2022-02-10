@@ -216,6 +216,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('inicioUsuario/perfil-puesto', 'InicioUsuarioController@perfilPuesto')->name('inicio-Usuario.perfil-puesto');
 
+    Route::get('inicioUsuario/expediente/{id_empleado}', 'InicioUsuarioController@expediente')->name('inicio-Usuario.expediente');
+
+    Route::post('inicioUsuario/expediente/update', 'InicioUsuarioController@expedienteUpdate')->name('inicio-Usuario.expediente-update');
+
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
     Route::post('desk/{seguridad}/analisis_seguridad-update', 'DeskController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');
@@ -343,6 +347,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleado/update-related-info-profile', 'EmpleadoController@updateInformacionRelacionadaProfile')->name('empleado.update-related-info-profile');
     Route::post('empleados/store/{empleado}/competencias-resumen', 'EmpleadoController@storeResumen')->name('empleados.storeResumen');
 
+    Route::post('empleado-deletemultiple', 'EmpleadoController@borradoMultiple')->name('empleado.deleteMultiple');
     Route::post('empleados/update/{certificacion}/competencias-certificaciones', 'EmpleadoController@updateCertificaciones')->name('empleados.updateCertificaciones');
     Route::delete('empleados/{certificacion}/delete-file-certificacion', 'EmpleadoController@deleteFileCertificacion')->name('empleados.deleteFileCertificacion');
     Route::delete('empleados/{documento}/delete', 'EmpleadoController@deleteDocumento')->name('empleados.deleteDocumento');
@@ -371,6 +376,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Route::get('empleados/imprimir', 'EmpleadoController@createPDF')->name('imprimir');
 
     Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
+
+    Route::post('empleado/expediente/update', 'EmpleadoController@expedienteUpdate')->name('empleado.edit.expediente-update');
+    Route::post('empleado/expediente/Restaurar', 'EmpleadoController@expedienteRestaurar')->name('empleado.edit.expediente-restaurar');
+
     Route::resource('empleados', 'EmpleadoController');
 
     // Timesheet

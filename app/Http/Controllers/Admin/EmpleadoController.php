@@ -13,6 +13,7 @@ use App\Models\EvidenciasCertificadosEmpleados;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
 use App\Models\Language;
+use App\Models\EvidenciaDocumentoEmpleadoArchivo;
 use App\Models\ListaDocumentoEmpleado;
 use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
@@ -84,6 +85,9 @@ class EmpleadoController extends Controller
                 ));
             });
 
+            $table->editColumn('checkbox', function ($row) {
+                return $row->id ? $row->id : '';
+            });
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
@@ -985,9 +989,100 @@ class EmpleadoController extends Controller
         // dd($idiomas);
         // dd(Empleado::find(63));
 
-        $lista_docs = ListaDocumentoEmpleado::get();
 
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs'));
+
+
+        // expediente ------------------------------------------------------------
+        $id_empleado = $id;
+        $empleado = Empleado::find($id_empleado);
+
+        $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('archivado', false)->get();
+
+        $lista_docs_model = ListaDocumentoEmpleado::get();
+        $lista_docs = collect();
+        foreach($lista_docs_model as $doc){
+            $documentos_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
+            if ($documentos_empleado) {
+                $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', false)->first();
+                $documento_versiones = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', true)->get();
+                if($documento){
+                    $doc_viejo = $documento->ruta_documento;
+                    $nombre_doc = $documento->documento;
+                }else{
+                    $doc_viejo = null;    
+                    $nombre_doc = null;    
+                }
+            }else{
+                $doc_viejo = null;
+                $nombre_doc = null;
+            }
+            
+            $lista_docs->push((Object)[
+                'id'=>$doc->id,
+                'documento'=>$doc->documento,
+                'tipo'=>$doc->tipo,
+                'empleado'=>$documentos_empleado,
+                'ruta_documento'=>$doc_viejo,
+                'nombre_doc'=>$nombre_doc,
+                'documento_versiones'=>$documento_versiones,
+                'evidencia_viejo_id'=>$documentos_empleado->id,
+            ]);            
+        }
+
+        // dd($lista_docs);
+
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado'));
+    }
+
+
+    public function expedienteUpdate(Request $request)
+    {   
+        // dd($request->all());
+        if ($request->name == 'file') {
+            $fileName = time().$request->file('value')->getClientOriginalName();
+            // dd($request->file('value'));
+            $empleado = Empleado::find($request->empleadoId);
+            $request->file('value')->storeAs('public/expedientes/'.Str::slug($empleado->name), $fileName);  
+            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id'=>$request->empleadoId, 'lista_documentos_empleados_id'=>$request->documentoId], [$request->name => $request->value]);
+
+            $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();
+            if ($doc_viejo) {
+                $doc_viejo->update([
+                    'archivado'=>true,
+                ]);
+            }
+
+            $archivo = EvidenciaDocumentoEmpleadoArchivo::create([
+                'evidencias_documentos_empleados_id'=>$expediente->id,
+                'documento'=>$fileName,
+                'archivado'=>false
+            ]);
+            return response()->json(['status'=>201, 'message'=>'Registro Actualizado']); 
+
+        }else{
+            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id'=>$request->empleadoId, 'lista_documentos_empleados_id'=>$request->documentoId], [$request->name => $request->value]);
+        }
+
+        // $expediente->update([
+        //     $request->name => $request->value,
+        // ]);
+
+        return response()->json(['status'=>200, 'message'=>'Registro Actualizado']); 
+    }
+
+    public function expedienteRestaurar(Request $request)
+    {   
+        $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $request->expediente_id)->where('archivado', false)->first();
+        if ($doc_viejo) {
+            $doc_viejo->update([
+                'archivado'=>true,
+            ]);
+        }
+        $evidencia_doc_archivo = EvidenciaDocumentoEmpleadoArchivo::find($request->id);
+        $evidencia_doc_archivo->update([
+            'archivado'=>false,
+        ]);
+        return response()->json(['status'=>200, 'message'=>'Registro Actualizado']); 
     }
 
     /**
@@ -1145,7 +1240,7 @@ class EmpleadoController extends Controller
             'salario_base_mensual' => $request->salario_base_mensual ? preg_replace('/([^0-9\.])/i', '', $request->salario_base_mensual) : null,
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
-            'foto'=> $image,
+            'foto' => $image,
         ]);
 
         $this->assignDependenciesModel($request, $empleado);
@@ -1365,7 +1460,7 @@ class EmpleadoController extends Controller
         $doc_viejo = EvidenciasDocumentosEmpleados::where('nombre', $request->nombre)->where('archivado', false)->first();
         if ($doc_viejo) {
             $doc_viejo->update([
-                'archivado'=>true,
+                'archivado' => true,
             ]);
         }
 
@@ -1505,4 +1600,18 @@ class EmpleadoController extends Controller
     //     // return $imprimir->download('archivo-pdf.pdf');
 
     // }
+
+    public function borradoMultiple(Request $request)
+    {
+        if ($request->ajax()) {
+            if (count($request->all()) >= 1) {
+                foreach ($request->all() as $key => $value) {
+
+                    $empleado = Empleado::find($value);
+                    $empleado->each->delete();
+                    return response()->json(['success' => 'deleted successfully!', $request->all()]);
+                }
+            }
+        }
+    }
 }
