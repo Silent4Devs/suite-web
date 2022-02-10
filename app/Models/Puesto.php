@@ -54,7 +54,11 @@ class Puesto extends Model
         'personas_internas',
         'personas_externas',
         'perfil_empleado_id',
-
+        'entrenamiento',
+        'elaboro_id',
+        'reviso_id',
+        'autoriza_id',
+        'reporta_puesto_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -77,19 +81,40 @@ class Puesto extends Model
         return $this->belongsTo('App\Models\Area', 'id_area', 'id');
     }
 
-    public function reportara()
-    {
-        return $this->belongsTo(Empleado::class, 'id_reporta', 'id')->with('area');
-    }
+    // public function reportara()
+    // {
+    //     return $this->belongsTo(Empleado::class, 'id_reporta', 'id')->with('area');
+    // }
 
     // public function empleado()
     // {
     //     return $this->belongsTo(Empleado::class, 'id_contacto')->with('area');
     // }
 
-    public function reporto()
+    // public function reporto()
+    // {
+    //     return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->with('area');
+    // }
+
+    public function empleados()
     {
-        return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'elaboro_id', 'reviso_id', 'autoriza_id','id')->with('area');
+    }
+
+    public function elaboro(){
+
+        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->with('area');
+    }
+
+
+    public function reviso(){
+
+        return $this->belongsTo(Empleado::class, 'reviso_id', 'id')->with('area');
+    }
+
+    public function autoriza(){
+
+        return $this->belongsTo(Empleado::class, 'autoriza_id', 'id')->with('area');
     }
 
     public function language()
@@ -108,6 +133,19 @@ class Puesto extends Model
     //     // return $this->belongsToMany(Language::class, 'puesto_idioma_porcentaje_pivot','id_puesto', 'id_language');
     //     return $this->hasMany('App\Models\Language')->orderBy('id');
     // }
+
+    public function puesto()
+    {
+        return $this->belongsTo(self::class, 'reporta_puesto_id')->with('area');
+    }
+
+
+    public function reportara()
+    {
+
+        return $this->belongsTo('App\Models\Puesto', 'reporta_puesto_id', 'id');
+
+    }
 
     public function competencia()
     {
@@ -131,6 +169,11 @@ class Puesto extends Model
 
     public function contactos()
     {
-        return $this->hasMany('App\Models\PuestoContactos', 'puesto_id')->orderBy('id');
+        return $this->hasMany('App\Models\PuestoContactos', 'puesto_id','id')->orderBy('id');
+    }
+
+    public function externos()
+    {
+        return $this->hasMany('App\Models\ContactosExternosPuestos', 'puesto_id','id')->orderBy('id');
     }
 }

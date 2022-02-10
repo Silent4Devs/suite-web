@@ -1675,8 +1675,8 @@
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 ajax: "{{ route('admin.idiomas-empleados.index', $empleado->id) }}",
                 columns: [{
-                        data: 'nombre',
-                        name: 'nombre',
+                        data: 'id_language',
+                        name: 'id_language',
                         render: function(data, type, row, meta) {
                            html= `
                             <select class="form-control" data-idioma-id="${row.id}" data-name-input="id_language" >`
@@ -2504,7 +2504,7 @@
 
             let url = $("#formIdiomas").attr("action");
             let formData = new FormData();
-            formData.append('nombre', document.getElementById('nombre_idioma').value)
+            formData.append('id_language', document.getElementById('nombre_idioma').value)
             formData.append('nivel', document.getElementById('nivel_idioma').value)
             formData.append('porcentaje', document.getElementById('porcentaje_idioma').value)
             // formData.append('duracion', document.getElementById('duracion').value)

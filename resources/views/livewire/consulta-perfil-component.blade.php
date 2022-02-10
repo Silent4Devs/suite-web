@@ -269,7 +269,16 @@
 
                             </style>
                             <div class="caja_img_logo mt-4">
-                                <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width:100px;">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width:100px;">
+
+                                    </div>
+                                    <div class="col-8 mt-5">
+                                        <h5  class="col-12 titulo_general_funcion">Perfil de Puesto</h5>
+
+                                    </div>
+                                </div>
                             </div>
                             <div class="row medidas">
                                 <div class="mt-4 ml-4 col-md-7 datos_iz_cv">
@@ -281,15 +290,22 @@
                                             <span style="font-size: 17px; font-weight: bold;">
                                                 Identificación del puesto</span>
                                         </div>
-                                        <span><strong>Área:</strong> {{$puestoModel->area ? $puestoModel->area->area : ''}}</span>
+                                        <strong style="color:#00A57E;text-transform: uppercase">
+                                            Área</strong>
                                         <br>
-                                        <span><strong>Fecha de creación:</strong>{{ \Carbon\Carbon::parse($puestoModel->fecha_puesto)->format('d/m/Y') }}</span>
+                                        <span>{{$puestoModel->puesto ? $puestoModel->area->area : 'Sin definir'}}</span>
                                         <br>
-                                        <span><strong>Reportará a:</strong>{{$puestoModel->reportara ? $puestoModel->reportara->name : ''}}</span>
+                                        <strong style="color:#00A57E;text-transform: uppercase">
+                                            Reportará a </strong>
                                         <br>
-                                        <span><strong>N° de personas a su cargo:</strong> &nbsp;{{$puestoModel->personas_internas}} <strong>Internas</strong>
-                                            &nbsp; {{$puestoModel->personas_externas}} <strong>Externas</strong>
-                                        </span>
+                                        <span>{{$puestoModel->reportara ? $puestoModel->reportara->puesto : 'Sin definir'}}</span>
+                                        <br>
+                                        <strong style="color:#00A57E;text-transform: uppercase">
+                                            N° de personas a su cargo</strong>
+                                        <br>
+                                        <span><strong>Internas</strong>&nbsp;{{$puestoModel->personas_internas}}</span>
+                                        <br>
+                                        <span> <strong>Externas</strong>&nbsp; {{$puestoModel->personas_externas}}</span>
                                         <br>
 
                                     <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
@@ -305,15 +321,19 @@
 
                                     @foreach ($puestoModel->responsabilidades as $responsabilidad)
                                     <div>
-                                        <span>{{$responsabilidad->actividad}}</span>
+                                        <strong style="color:#00A57E;text-transform: uppercase">
+                                            {{$responsabilidad->actividad}}</strong>
                                         <br>
-                                        <span><strong>Resultado:&nbsp;</strong>{{$responsabilidad->resultado}}</span>
-                                        <br>
-                                        <span><strong>Indicador:&nbsp;</strong>{{$responsabilidad->indicador}}</span>
-                                        <br>
-                                        <span><strong>Tiempo:&nbsp;</strong>{{$responsabilidad->tiempo_asignado}}</span>
+                                        <p style=" text-align: justify !important;"><strong>
+                                            Resultado Esperado:</strong>
+                                        {{$responsabilidad->resultado}}</p>
+                                       <p style="margin-top:-13px; text-align: justify !important;">
+                                            <strong>Indicador de cumplimiento</strong>
+                                        {{$responsabilidad->indicador}}</p>
+                                         <p style="margin-top:-13px; text-align: justify !important;">
+                                         <strong>% de tiempo asignado</strong>
+                                        {{$responsabilidad->tiempo_asignado}}</p>
                                      </div>
-                                     <br>
                                     @endforeach
 
                                     <div class="mt-1 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
@@ -358,6 +378,13 @@
                                         <p style="text-align:justify; font-weight:normal !important">
                                             {!!$puestoModel->conocimientos !!}
                                         </p>
+                                        <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
+                                            <span style="font-size: 17px; font-weight: bold;">
+                                                Entrenamiento recomendado para este rol</span>
+                                        </div>
+                                        <p style="text-align:justify">
+                                            {!!$puestoModel->entrenamiento !!}
+                                        </p>
                                         <div class="mt-4 mb-3 w-100 dato_mairg"
                                             style="border-bottom: solid 2px #0CA193;">
                                             <span style="font-size: 17px; font-weight: bold;">
@@ -399,17 +426,88 @@
 
                                         <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                             <span style="font-size: 17px; font-weight: bold;">
-                                                Contactos del puesto</span>
+                                                Contactos Internos del puesto</span>
                                         </div>
                                         @foreach($puestoModel->contactos as $contacto)
                                             <div>
-                                                <strong>{{$contacto->empleados->name}}</strong>
+                                                <strong class="font-weight-bold" style="color:#00A57E;text-transform: uppercase">
+                                                    {{$contacto->puesto->puesto}}</strong>
                                                 <br>
-                                                <span style="font-weight:normal !important"><strong>Area:</strong> {{$contacto->empleados->area->area}}</span>
+                                                <strong> {{$contacto->puesto->area->area}}</strong>
                                                 <br>
-                                                <span style="font-weight:normal !important">{{$contacto->descripcion_contacto}}</span>
+                                                <span style="text-align:justify; font-weight:normal !important">{{$contacto->descripcion_contacto}}</span>
                                             </div>
                                         @endforeach
+
+                                        <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
+                                            <span style="font-size: 17px; font-weight: bold;">
+                                                Contactos Externos del puesto</span>
+                                        </div>
+                                        @foreach($puestoModel->externos as $externo)
+                                        <div>
+                                            <strong class="font-weight-bold" style="color:#00A57E;text-transform: uppercase">
+                                                {{$externo->nombre_contacto_int}}</strong>
+                                            <p style="margin-top:-5px; text-align:justify; font-weight:normal !important"> {{$externo->proposito}}</p>
+                                        </div>
+                                        @endforeach
+
+
+                                        <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
+                                            <span style="font-size: 17px; font-weight: bold;">
+                                                Responsiva del colaborador</span>
+                                        </div>
+                                        <p style="text-align:justify">
+                                              Manifiesto que leí la descripción de mi puesto, y acepto cumplir con lo establecido y estar en el entendido en que las aquí relacionadas son enunciativas más no limitativas.
+                                              Me comprometo en cumplir y participar activamente en la normatividad del Sistema de Gestión Integral, así como, de las políticas de seguridad de información en donde tenga
+                                              responsabilidad directa o indirectamente, así como conducirme bajo la misión, visión, valores de Silent4business.
+                                        </p>
+                                        <table class="w-100 mb-5">
+                                            <thead style="background-color:#0CA193;color:#fff;text-align:center">
+                                                <tr>
+                                                    <th>
+                                                        Elaboró
+                                                    </th>
+                                                    <th>
+                                                        Revisó
+                                                    </th>
+                                                    <th>
+                                                        Autoriza
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="text-align:center">
+                                                    <img src="{{ asset('storage/empleados/imagenes') }}/{{ $puestoModel->elaboro ? $puestoModel->elaboro->avatar : "user.png" }}"
+                                                    class="img_empleado text-center mt-1">
+                                                    <br>
+                                                       <span>{{ $puestoModel->elaboro ? $puestoModel->elaboro->name : 'Sin definir'}}</span>
+                                                       <br>
+                                                       <span style="color:#0CA193">{{ $puestoModel->elaboro ? $puestoModel->elaboro->area->area : 'Sin definir'}}</span>
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $puestoModel->reviso ? $puestoModel->reviso->avatar : "user.png" }}"
+                                                         class="img_empleado text-center mt-1">
+                                                    <br>
+                                                         <span>{{$puestoModel->reviso ? $puestoModel->reviso->name : 'Sin definir'}}</span>
+                                                         <br>
+                                                            <span style="color:#0CA193">{{$puestoModel->reviso ? $puestoModel->reviso->area->area : 'Sin definir'}}</span>
+
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $puestoModel->autoriza ? $puestoModel->autoriza->avatar : "user.png" }}"
+                                                        class="img_empleado text-center mt-1">
+                                                    <br>
+                                                          <span>{{$puestoModel->autoriza ? $puestoModel->autoriza->name : 'Sin definir'}}</span>
+                                                          <br>
+                                                            <span style="color:#0CA193">{{$puestoModel->autoriza ? $puestoModel->autoriza->area->area : 'Sin definir'}}</span>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                        <br>
                                     </ul>
                                 </div>
                                 <div class="mt-4 col-md-4 datos_der_cv">
@@ -426,11 +524,11 @@
 
                                         <strong style="color:#fff"><i class="ml-2 mr-2 text-white fas fa-user-tie"></i>Edad</strong>
                                         <br>
-                                        @if (is_null($puestoModel->edad_de) && is_null($puestoModel->edad_a))
+                                        @if (is_null($puestoModel->edad))
                                             <label style="color:#fff;font-weight:normal !important" class="ml-4">Sin registro</label>
                                         @else
                                             <div style="margin-left:28px;">
-                                                <span style="color:#fff;font-weight:normal !important">{{ $puestoModel->edad_de }}</span>-<span>{{ $puestoModel->edad_a }}</span>
+                                                <span style="color:#fff;font-weight:normal !important">{{ $puestoModel->edad}}</span>
                                             </div>
                                         @endif
                                         <br>
@@ -447,7 +545,7 @@
                                         <strong style="color:#fff;"><i class="ml-2 mr-2 fas fa-heart text-white" style="color:#fff;"></i>Estado Civil</strong>
                                         <br>
                                         @if (is_null($puestoModel->estado_civil))
-                                            <label class="ml-4;" style="font-weight:normal; color:#fff;">Sin registro</label>
+                                              <label class="ml-4" style="color:#fff;font-weight:normal !important">Sin registro</label>
                                         @else
                                             <div style="margin-left:28px;">
                                                 <span style="font-weight:normal; color:#fff;">{{ $puestoModel->estado_civil }}</span>
@@ -477,11 +575,11 @@
                                         <br>
                                         <strong style=" color:#fff;"><i class="ml-2 mr-2 fas fa-clock text-white" style="color:#fff;"></i>Horario</strong>
                                         <br>
-                                        @if (is_null($puestoModel->horario_inicio) && is_null($puestoModel->horario_termino))
+                                        @if (is_null($puestoModel->horario))
                                             <label class="ml-4"style="color:#fff; font-weight:normal">Sin registro</label>
                                         @else
                                             <div style="margin-left:28px;" >
-                                                <span style="color:#fff; font-weight:normal">{{ $puestoModel->horario_inicio }}-{{ $puestoModel->horario_termino }}</span>
+                                                <span style="color:#fff; font-weight:normal">{{ $puestoModel->horario}}</span>
                                             </div>
                                         @endif
                                         <br>
