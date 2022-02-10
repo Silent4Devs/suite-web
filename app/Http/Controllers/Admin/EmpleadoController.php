@@ -1464,19 +1464,31 @@ class EmpleadoController extends Controller
         return $empleados;
     }
 
+    public function obtenerEmpleadoPorNombre($nombre)
+    {
+        $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+
+        return $empleado_bd->id;
+    }
+    
     public function datosEmpleado($id){
         // dd('funciona');
-        $visualizarEmpleados = Empleado::find(intval($id));
+        // $visualizarEmpleados = Empleado::with('supervisor')->get();
+        // dd($prueba);
+        $visualizarEmpleados = Empleado::with('supervisor','sede','perfil')->find(intval($id));
+        // dd($visualizarEmpleados);
         $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
         $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
         $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
         $certificados = CertificacionesEmpleados::where('empleado_id', $id)->get();
-        // dd($certificados);
+        $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
+        $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
+        // dd($expediente);
         $empleado = Empleado::get();
 
         // dd($visualizarEmpleados);
 
-        return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos','dependientes','beneficiarios','certificados'));
+        return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos','dependientes','beneficiarios','certificados','capacitaciones','expedientes'));
     }
 
     // public function createPDF(){
