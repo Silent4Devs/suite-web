@@ -85,6 +85,9 @@ class EmpleadoController extends Controller
                 ));
             });
 
+            $table->editColumn('checkbox', function ($row) {
+                return $row->id ? $row->id : '';
+            });
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
@@ -1237,7 +1240,7 @@ class EmpleadoController extends Controller
             'salario_base_mensual' => $request->salario_base_mensual ? preg_replace('/([^0-9\.])/i', '', $request->salario_base_mensual) : null,
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
-            'foto'=> $image,
+            'foto' => $image,
         ]);
 
         $this->assignDependenciesModel($request, $empleado);
@@ -1457,7 +1460,7 @@ class EmpleadoController extends Controller
         $doc_viejo = EvidenciasDocumentosEmpleados::where('nombre', $request->nombre)->where('archivado', false)->first();
         if ($doc_viejo) {
             $doc_viejo->update([
-                'archivado'=>true,
+                'archivado' => true,
             ]);
         }
 
@@ -1556,7 +1559,8 @@ class EmpleadoController extends Controller
         return $empleados;
     }
 
-    public function datosEmpleado($id){
+    public function datosEmpleado($id)
+    {
         // dd('funciona');
         $visualizarEmpleados = Empleado::find(intval($id));
         $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
@@ -1568,7 +1572,7 @@ class EmpleadoController extends Controller
 
         // dd($visualizarEmpleados);
 
-        return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos','dependientes','beneficiarios','certificados'));
+        return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados'));
     }
 
     // public function createPDF(){
@@ -1585,4 +1589,18 @@ class EmpleadoController extends Controller
     //     // return $imprimir->download('archivo-pdf.pdf');
 
     // }
+
+    public function borradoMultiple(Request $request)
+    {
+        if ($request->ajax()) {
+            if (count($request->all()) >= 1) {
+                foreach ($request->all() as $key => $value) {
+
+                    $empleado = Empleado::find($value);
+                    $empleado->each->delete();
+                    return response()->json(['success' => 'deleted successfully!', $request->all()]);
+                }
+            }
+        }
+    }
 }
