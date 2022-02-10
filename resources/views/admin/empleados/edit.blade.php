@@ -142,7 +142,7 @@
         .btn i,
         .btn .c-icon {
             margin: auto;
-            color: white;
+            /*color: white;*/
             font-size: 18px;
             margin-top: 5px;
             margin-right: 2px;
@@ -1991,6 +1991,14 @@
                         }
                     },
                     {
+                        data: 'tipo',
+                        name: 'tipo',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <font class="${data}">${data}</font>`;
+                        }
+                    },
+                    {
                         data: 'documentos',
                         name: 'documentos',
                         render: function(data, type, row, meta) {
@@ -2708,6 +2716,164 @@
         });
     </script>
 
+    <script type="text/javascript">
+        $(function() {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar PDF',
+                    orientation: 'portrait',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    customize: function(doc) {
+                        doc.pageMargins = [5, 20, 5, 20];
+                        doc.styles.tableHeader.fontSize = 10;
+                        doc.defaultStyle.fontSize = 10; //<-- set fontsize to 16 instead of 10
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
 
+            ];
+            // let btnAgregar = {
+            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            //     titleAttr: 'Agregar',
+            //     url: "#",
+            //     className: 'btn-xs btn-outline-success rounded ml-2 pr-3',
+            //     action: function(e, dt, node, config) {
+            //     let {
+            //     url
+            //     } = config;
+            //     window.location.href = url;
+            //     }
+            // };
+
+            // dtButtons.push(btnAgregar);
+
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                order:[
+                            [0,'desc']
+                        ]
+            };
+            let table = $('#tabla_docs').DataTable(dtOverrideGlobals);
+
+            document.getElementById('tabla_docs').addEventListener('keyup', async function(e){
+                if (e.target.tagName == 'INPUT') {
+                    try{
+                        let formData = new FormData();
+                        formData.append('name', e.target.getAttribute('name'));
+                        formData.append('value', e.target.value);
+                        formData.append('documentoId', e.target.getAttribute('data-id'));
+                        formData.append('empleadoId', e.target.getAttribute('data-empleado'));
+                        const url = '{{ route("admin.inicio-Usuario.expediente-update") }}';
+                        formData.forEach(item=>console.log(item));
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+
+                        const data = await response.json()
+                        console.log(data);
+                    } catch(error){
+                        toastr.error(error);
+                    }
+                }
+            });
+
+            // file
+            document.getElementById('tabla_docs').addEventListener('change', async function(e){
+                if (e.target.tagName == 'INPUT') {
+                    try{
+                        console.log(e.target.files);
+                        let formData = new FormData();
+                        formData.append('name', e.target.getAttribute('name'));
+                        if (e.target.getAttribute('name') == 'file') {
+                            formData.append('value', e.target.files[0]);
+                        }else{
+                            formData.append('value', e.target.value);
+                        }
+                        formData.append('documentoId', e.target.getAttribute('data-id'));
+                        formData.append('empleadoId', e.target.getAttribute('data-empleado'));
+                        const url = '{{ route("admin.empleado.edit.expediente-update") }}';
+                        formData.forEach(item=>console.log(item));
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                Accept: "application/json",
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            },
+                        })
+
+                        const data = await response.json()
+                        console.log(data);
+                        if (data.status == 201) {
+                            toastr.success(data.message);
+                            setTimeout(()=>{
+                                window.location.reload();
+                            },800);
+                        }
+                    } catch(error){
+                        toastr.error(error);
+                    }
+                }
+            });
+        });
+    </script>
 
 @endsection
