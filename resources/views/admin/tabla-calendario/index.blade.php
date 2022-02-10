@@ -2,12 +2,8 @@
 
 @section('content')
 
-    <ol class="breadcrumb">
-        {{-- <li class="breadcrumb-item">
-            <a href="{!! route('admin.tabla-calendario.index') !!}">Inicio</a>
-        </li>
-        <li class="breadcrumb-item active">Calendario</li> --}}
-    </ol>
+{{ Breadcrumbs::render('admin.CalendarioEventos.index') }}
+
     @php
     use App\Models\Organizacion;
     $organizacion = Organizacion::first();

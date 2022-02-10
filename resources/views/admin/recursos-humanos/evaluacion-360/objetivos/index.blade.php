@@ -251,12 +251,12 @@
                             let html = `
                             <div class="d-flex">
                                 <a href="${urlAsignar}" title="Editar" class="btn btn-sm btn-primary">
-                                <i class="fas fa-user-tag"></i> Agregar    
+                                <i class="fas fa-user-tag"></i> Agregar
                                 </a>
                                 <button onclick="CopiarObjetivos('${urlVistaCopiarObjetivos}','${row.name}','${data}')" title="Copiar Objetivos" class="ml-2 text-white btn btn-sm" style="background:#11bb55">
                                 <i class="fas fa-copy"></i>Copiar</button>
                                 <a href="${urlShow}" title="Visualizar" class="ml-2 text-white btn btn-sm" style="background:#1da79f">
-                                <i class="fas fa-eye"></i> Ver    
+                                <i class="fas fa-eye"></i> Ver
                                 </a>
                             </div>
                             `;
@@ -355,14 +355,14 @@
                                 <div class="col-12">
                                     <input type="hidden" value="${empleado_id}" name="empleado_destinatario">
                                     <label><i class="mr-2 fas fa-user"></i>Selecciona al empleado</label>
-                                    <select class="form-control empleados-select" name="empleado_destino">
+                                    <select class="empleados-select" name="empleado_destino">
                                         <option value="">-- Selecciona un empleado --</option>
                                         ${empleados.map(empleado => {
-                                            return `<option data-avatar="${empleado.avatar}" value="${empleado.id}">${empleado.name}</option>`;
+                                            return `<option data-avatar="${empleado.avatar_ruta}" value="${empleado.id}">${empleado.name}</option>`;
                                         }).join(',')}
                                     </select>
                                 </div>
-                            </div>    
+                            </div>
                         </form>
                         `;
                             modalContent.innerHTML = contenidoHTMLGenerado;
@@ -372,7 +372,8 @@
                             $('.empleados-select').select2({
                                 theme: 'bootstrap4',
                                 templateResult: stateSelection,
-                                templateSelection: stateSelection
+                                templateSelection: stateSelection,
+
                             });
 
                             function stateSelection(opt) {
@@ -382,7 +383,7 @@
 
                                 var optimage = $(opt.element).attr('data-avatar');
                                 var $opt = $(
-                                    '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' +
+                                    '<span><img src="' +
                                     optimage +
                                     '" class="img-fluid rounded-circle" width="30" height="30"/>' +
                                     opt.text + '</span>'
