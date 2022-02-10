@@ -70,12 +70,10 @@
             @livewire('puesto-select',['puestos_seleccionado'=>$puestos_seleccionado])
             <small id="error_puesto_id" class="text-danger errores"></small>
         </div>
-        <div class="col-1 col-md-1 col-sm-1">
             <button id="btnAgregarPuesto" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
                 data-toggle="modal" data-target="#PuestoModal" title="Agregar Puesto"><i
                     class="fas fa-plus"></i></button>
-
-        </div>
+                    @livewire('puesto-create')
 
         @if ($errors->has('puesto_id'))
             <div class="invalid-feedback">

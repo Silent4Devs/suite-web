@@ -151,10 +151,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@storeByEmpleado')->name('ev360-objetivos-empleado.store');
 
     Route::get('recursos-humanos/evaluacion-360/objetivos/{objetivo}/edit', 'RH\EV360ObjetivosController@edit')->name('ev360-objetivos-empleado.edit');
+    Route::post('recursos-humanos/evaluacion-360/objetivos/{objetivo}', 'RH\EV360ObjetivosController@destroyByEmpleado')->name('ev360-objetivos-empleado.destroyByEmpleado');
     Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos/{objetivo}/editByEmpleado', 'RH\EV360ObjetivosController@editByEmpleado')->name('ev360-objetivos-empleado.editByEmpleado');
     Route::post('recursos-humanos/evaluacion-360/objetivos/{objetivo}/empleado', 'RH\EV360ObjetivosController@updateByEmpleado')->name('ev360-objetivos-empleado.updateByEmpleado');
     Route::resource('recursos-humanos/evaluacion-360/objetivos', 'RH\EV360ObjetivosController')->names([
         'index' => 'ev360-objetivos.index',
+        'destroy' => 'ev360-objetivos.destroy',
     ])->except(['create', 'show']);
 
     Route::get('Perspectiva/edit/{perspectivas}', 'RH\ObejetivoPerspectivaController@edit')->name('perspectivas.edit');
@@ -214,6 +216,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('inicioUsuario/actividades/archivo', 'InicioUsuarioController@archivoActividades')->name('inicio-Usuario.acctividades.archivo');
 
     Route::get('inicioUsuario/perfil-puesto', 'InicioUsuarioController@perfilPuesto')->name('inicio-Usuario.perfil-puesto');
+
+    Route::get('inicioUsuario/expediente/{id_empleado}', 'InicioUsuarioController@expediente')->name('inicio-Usuario.expediente');
+
+    Route::post('inicioUsuario/expediente/update', 'InicioUsuarioController@expedienteUpdate')->name('inicio-Usuario.expediente-update');
 
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
@@ -342,6 +348,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleado/update-related-info-profile', 'EmpleadoController@updateInformacionRelacionadaProfile')->name('empleado.update-related-info-profile');
     Route::post('empleados/store/{empleado}/competencias-resumen', 'EmpleadoController@storeResumen')->name('empleados.storeResumen');
 
+    Route::post('empleado-deletemultiple', 'EmpleadoController@borradoMultiple')->name('empleado.deleteMultiple');
     Route::post('empleados/update/{certificacion}/competencias-certificaciones', 'EmpleadoController@updateCertificaciones')->name('empleados.updateCertificaciones');
     Route::delete('empleados/{certificacion}/delete-file-certificacion', 'EmpleadoController@deleteFileCertificacion')->name('empleados.deleteFileCertificacion');
     Route::delete('empleados/{documento}/delete', 'EmpleadoController@deleteDocumento')->name('empleados.deleteDocumento');
@@ -365,7 +372,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
     Route::post('empleados/get-lista', 'EmpleadoController@getListaEmpleados')->name('empleados.lista');
     Route::get('empleados/get-all', 'EmpleadoController@getAllEmpleados')->name('empleados.getAll');
+
+    Route::get('empleados/datosEmpleado/{id}', 'EmpleadoController@datosEmpleado');
+    // Route::get('empleados/imprimir', 'EmpleadoController@createPDF')->name('imprimir');
+
     Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
+
+    Route::post('empleado/expediente/update', 'EmpleadoController@expedienteUpdate')->name('empleado.edit.expediente-update');
+    Route::post('empleado/expediente/Restaurar', 'EmpleadoController@expedienteRestaurar')->name('empleado.edit.expediente-restaurar');
+
     Route::resource('empleados', 'EmpleadoController');
 
     // Timesheet

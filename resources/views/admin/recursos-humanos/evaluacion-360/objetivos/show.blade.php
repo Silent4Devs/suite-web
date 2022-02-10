@@ -67,7 +67,7 @@
                 <br>
             </div>
             <div class="col-12 datatable-fix">
-                <table class="table table-bordered w-100 tblObjetivos">
+                <table class="table table-bordered w-100 tblObjetivos ">
                     <thead class="thead-dark">
                         <tr>
                             <th style="vertical-align: top">
@@ -108,6 +108,7 @@
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
+                pageLength: 10,
                 processing: true,
                 serverSide: true,
                 retrieve: true,
