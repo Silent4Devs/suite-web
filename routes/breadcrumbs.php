@@ -178,6 +178,21 @@ Breadcrumbs::for('admin.objetivosseguridads.create', function ($trail) {
     $trail->parent('admin.objetivosseguridads.index');
     $trail->push('Formulario', route('admin.objetivosseguridads.create'));
 });
+Breadcrumbs::for('admin.CalendarioFestivo.index', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Calendario y Comunicación');
+    $trail->push('Calendario Festivo');
+});
+Breadcrumbs::for('admin.CalendarioEventos.index', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Calendario y Comunicación');
+    $trail->push('Eventos');
+});
+Breadcrumbs::for('admin.CategoriaCapacitacion.index', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
+    $trail->push('Capacitaciones / Categorias', route('admin.recursos.index'));
+});
 
 Breadcrumbs::for('admin.recursos.index', function ($trail) {
     $trail->parent('capital-humano');
@@ -522,7 +537,7 @@ Breadcrumbs::for('EV360-Evaluaciones-Evaluacion', function ($trail, $evaluacion)
 
 Breadcrumbs::for('EV360-Competencias', function ($trail) {
     $trail->parent('capital-humano');
-    $trail->push('Evaluación 360');
+    $trail->push('Empleados');
     $trail->push('Competencias', route('admin.ev360-competencias.index'));
 });
 Breadcrumbs::for('EV360-Competencias-Create', function ($trail) {
@@ -536,7 +551,7 @@ Breadcrumbs::for('EV360-Competencias-Edit', function ($trail) {
 
 Breadcrumbs::for('EV360-Competencias-Por-Puesto', function ($trail) {
     $trail->parent('capital-humano');
-    $trail->push('Evaluación 360');
+    $trail->push('Empleados');
     $trail->push('Competencias por puesto', route('admin.ev360-competencias-por-puesto.index'));
 });
 Breadcrumbs::for('EV360-Competencias-Por-Puesto-Create', function ($trail) {
@@ -546,8 +561,8 @@ Breadcrumbs::for('EV360-Competencias-Por-Puesto-Create', function ($trail) {
 
 Breadcrumbs::for('EV360-Objetivos', function ($trail) {
     $trail->parent('capital-humano');
-    $trail->push('Evaluación 360');
-    $trail->push('Objetivos', route('admin.ev360-objetivos.index'));
+    $trail->push('Empleados');
+    $trail->push('Objetivos Estrategicos', route('admin.ev360-objetivos.index'));
 });
 Breadcrumbs::for('EV360-Objetivos-Create', function ($trail, $empleado) {
     $trail->parent('EV360-Objetivos');
@@ -576,7 +591,6 @@ Breadcrumbs::for('EV360-Evaluacion-Cuestionario', function ($trail, $evaluacion)
 });
 
 Breadcrumbs::for('centro-atencion', function ($trail) {
-    $trail->parent('capital-humano');
     $trail->push('Calendario y Comunicación');
     $trail->push('Centro de atención', route('admin.desk.index'));
 });

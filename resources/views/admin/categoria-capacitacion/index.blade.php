@@ -39,7 +39,7 @@
 
         </style>
 
-        {{ Breadcrumbs::render('admin.recursos.index') }}
+        {{ Breadcrumbs::render('admin.CategoriaCapacitacion.index') }}
         <h5 class="col-12 titulo_general_funcion">Categorías de capacitaciones</h5>
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">

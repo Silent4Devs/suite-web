@@ -2,12 +2,7 @@
 
 @section('content')
 
-    <ol class="breadcrumb">
-        {{-- <li class="breadcrumb-item">
-            <a href="{!! route('admin.calendario-oficial.index') !!}">Inicio</a>
-        </li>
-        <li class="breadcrumb-item active">Calendario</li> --}}
-    </ol>
+{{ Breadcrumbs::render('admin.CalendarioFestivo.index') }}
 
     @php
     use App\Models\Organizacion;

@@ -189,18 +189,19 @@
                         let urlBtnActualizar =
                             `/admin/recursos-humanos/evaluacion-360/objetivos/${row.objetivo_id}/empleado`;
                         let urlBtnEliminar =
-                            `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/${row.objetivo_id}`;
+                            `/admin/recursos-humanos/evaluacion-360/objetivos/${row.id}`;
                         let urlShow =
                             `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/lista`;
                         let botones = `
                             <div class="btn-group">
-                                <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button> 
+                                <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
                             </div>
                             <div class="btn-group">
                                 <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button> 
                             </div>
                                 `;
-                        // <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
+
                         return botones;
                     }
                 }],
@@ -236,7 +237,8 @@
                             tblObjetivos.ajax.reload();
                             toastr.success('Objetivo asignado');
                             document.getElementById('formObjetivoCreate').reset();
-
+                            $("#tipo_id").val('').trigger('change');
+                            $("#metrica_id").val('').trigger('change');
                             document.getElementById('foto').value = "";
                             document.getElementById('texto-imagen').innerHTML =
                                 'Subir imágen <small class="text-danger" style="font-size: 10px">(Opcional)</small>';
@@ -366,7 +368,7 @@
 
             window.Eliminar = function(urlEliminar) {
                 Swal.fire({
-                    title: '¿Se ha compleatado este objetivo?',
+                    title: '¿Deseas eliminar este objetivo?',
                     text: "No podrás revertir esto",
                     icon: 'question',
                     showCancelButton: true,
@@ -380,15 +382,15 @@
                             headers: {
                                 "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
                             },
-                            type: "DELETE",
+                            type: "POST",
                             url: urlEliminar,
                             beforeSend: function() {
                                 toastr.info(
-                                    'Eliminando la conducta, espere unos instantes...');
+                                    'Eliminando el objetivo, espere unos instantes...');
                             },
                             success: function(response) {
-                                toastr.success('Conducta eliminada');
-                                table.ajax.reload();
+                                toastr.success('Objetivo eliminado');
+                                tblObjetivos.ajax.reload();
                             },
                             error: function(request, status, error) {
                                 toastr.error(

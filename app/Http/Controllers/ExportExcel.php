@@ -12,7 +12,7 @@ class ExportExcel extends Controller
 {
     public function Amenaza()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/Amenaza.xlsx');
 
         return response()->download($path);
         // return Excel::download(new ExportsAmenazaExport, 'Amenaza.xlsx');
@@ -20,7 +20,7 @@ class ExportExcel extends Controller
 
     public function Vulnerabilidad()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/Vulnerabilidad.xlsx');
 
         return response()->download($path);
     }
@@ -125,7 +125,7 @@ class ExportExcel extends Controller
 
     public function Activos()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/Activos.xlsx');
 
         return response()->download($path);
     }
