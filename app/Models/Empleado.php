@@ -356,9 +356,15 @@ class Empleado extends Model
         return $this->hasMany(CertificacionesEmpleados::class);
     }
 
+    // public function idiomas()
+    // {
+    //     return $this->hasMany(IdiomaEmpleado::class, 'empleado_id', 'id');
+    // }
+
     public function idiomas()
     {
-        return $this->hasMany(IdiomaEmpleado::class, 'empleado_id', 'id');
+        // return $this->belongsToMany(Language::class, 'puesto_idioma_porcentaje_pivot','id_puesto', 'id_language');
+        return $this->hasMany('App\Models\IdiomaEmpleado', 'empleado_id')->orderBy('id');
     }
 
     public function empleado_cursos()
