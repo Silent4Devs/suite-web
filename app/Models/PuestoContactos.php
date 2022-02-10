@@ -16,6 +16,7 @@ class PuestoContactos extends Model
         'descripcion_contacto',
         'puesto_id',
         'id_contacto',
+        'contacto_puesto_id',
     ];
 
     public function puesto()

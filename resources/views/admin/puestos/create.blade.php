@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="row col-12">
-                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
                         <label class="required" for="puesto"><i
                                 class="fas fa-briefcase iconos-crear"></i>Nombre del puesto</label>
                         <input class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}" type="text" name="puesto"
@@ -32,7 +32,7 @@
                         <span class="help-block">{{ trans('cruds.puesto.fields.puesto_helper') }}</span>
                     </div>
 
-                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
                         <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                         <select class="form-control {{ $errors->has('id_area') ? 'is-invalid' : '' }}" name="id_area" id="id_area">
                             @foreach ($areas as $area)
@@ -48,86 +48,33 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label for="fecha_puesto"><i
-                                class="fas fa-calendar-alt iconos-crear"></i>Fecha de creación</label>
-                        <input class="form-control {{ $errors->has('fecha_puesto') ? 'is-invalid' : '' }}" type="date" name="fecha_puesto"
-                            id="puesto" value="{{ old('fecha_puesto', '') }}" >
-                        @if ($errors->has('fecha_puesto'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fecha_puesto') }}
-                            </div>
-                        @endif
-                    </div>
-
-                    {{-- <div class="form-group col-sm-4">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 col-12">
-                                <label class="required" for="perfil_empleado_id"><i class="fas fa-sitemap iconos-crear"></i>
-                                    Nivel Jerárquico</label>
-                            </div>
-                            <div class="col-sm-9 col-md-9 col-9 pr-0">
-                                <select class="form-control {{ $errors->has('perfil_empleado_id') ? 'is-invalid' : '' }}"
-                                    name="perfil_empleado_id" id="perfil_empleado_id" value="{{ old('perfil_empleado_id', '') }}"
-                                    required>
-                                    <option value="" selected disabled>
-                                        -- Selecciona un perfil --
-                                    </option>
-                                    @foreach ($perfiles as $perfil)
-                                        <option value="{{ $perfil->id }}"
-                                            {{ old('perfil_empleado_id', $empleado->perfil_empleado_id) == $perfil->id ? ' selected="selected"' : '' }}>
-                                            {{ $perfil->nombre }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <small id="error_perfil_empleado_id" class="text-danger errores"></small>
-                            </div>
-                            <div class="col-sm-3 col-md-3 col-3">
-                                <button id="btnAgregarPerfil" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
-                                    data-toggle="modal" data-target="#PerfilModal" title="Agregar Perfil"><i
-                                        class="fas fa-plus"></i></button>
-                                @livewire('perfil-create')
-                            </div>
-                            @if ($errors->has('perfil_empleado_id'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('perfil_empleado_id') }}
-                                </div>
-                            @endif
-                        </div>
-                    </div> --}}
 
                 </div>
 
                 <div class="row col-12">
-                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label for="id_reporta"><i class="fas fa-user-tie iconos-crear"></i>Reportará a</label>
-                        <select class="form-control {{ $errors->has('id_reporta') ? 'is-invalid' : '' }}" name="id_reporta" id="id_reporta">
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                        <label for="reporta_puesto_id"><i class="fas fa-user-tie iconos-crear"></i>Reportará a</label>
+                        <select class="form-control {{ $errors->has('reporta_puesto_id') ? 'is-invalid' : '' }}" name="reporta_puesto_id" id="reporta_puesto_id">
                             <option value="" selected disabled>
-                                -- Selecciona el nombre del empleado --
+                                -- Selecciona el puesto--
                             </option>
-                            @foreach ($reportas as $reporta)
-                            <option data-puesto="{{ $reporta->puesto }}" value="{{ $reporta->id }}" data-area="{{ $reporta->area->area }}">
-                                {{ $reporta->name }}
+                            @foreach ($puesto as $pues)
+                            <option value="{{ $pues->id }}" data-area="{{ $pues->area ? $pues->area->area  :'Sin definir' }}">
+                                {{ $pues->puesto }}
                             </option>
                             @endforeach
                         </select>
-                        @if ($errors->has('reporta'))
+                        @if ($errors->has('puesto'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('id_reporta') }}
+                            {{ $errors->first('reporta_puesto_id') }}
                         </div>
                         @endif
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="id_puesto_reviso"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                        <div class="form-control" id="puesto_reviso"></div>
 
-                    </div>
-
-
-                    <div class="form-group col-md-4">
-                        <label for="id_area_reviso"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                        <div class="form-control" id="area_reviso"></div>
+                    <div class="form-group col-md-6">
+                        <label><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                        <div class="form-control" id="area_puesto_reporta"></div>
 
                     </div>
 
@@ -197,20 +144,14 @@
                 </div>
 
                 <div class="row col-12 mt-3">
-                    {{-- <div class="col-sm-12 col-lg-12 col-md-12">
-                            <label for="resultado"><i class="fas fa-chart-line iconos-crear"></i>Resultado Esperado</label>
-                            <input class="form-control {{ $errors->has('resultado') ? 'is-invalid' : '' }}" type="text" name="resultado"
-                                id="resultado_certificado_responsabilidades" value="{{ old('resultado', '') }}">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label for="resultado"><i class="fas fa-chart-line iconos-crear"></i>Resultado Esperado </label>
+                            <textarea class="form-control {{ $errors->has('resultado') ? 'is-invalid' : '' }}" type="text" name="resultado"
+                                id="resultado_certificado_responsabilidades" >{{ old('resultado', '') }}</textarea>
                                 <small class="text-danger errores resultado_responsabilidad_error"></small>
-                    </div> --}}
-
-                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <label for="resultado"><i class="fas fa-chart-line iconos-crear"></i>Resultado Esperado</label>
-                        <textarea class="form-control date" type="text" name="resultado" id="resultado_certificado_responsabilidades" required>
-                        {{ old('resultado') }}
-                        </textarea>
-                        <small class="text-danger errores resultado_responsabilidad_error"></small>
                     </div>
+
+
                 </div>
 
                 <div class="row col-12 mt-3">
@@ -356,6 +297,18 @@
                         @if ($errors->has('conocimientos'))
                             <span class="text-danger">
                                 {{ $errors->first('conocimientos') }}
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                        <label for="entrenamiento"><i class="fa-solid fa-person-running iconos-crear"></i>Entrenamiento recomendado para este rol</label>
+                        <textarea class="form-control date" type="text" name="entrenamiento" id="entrenamiento">
+                                            {{ old('entrenamiento') }}
+                                        </textarea>
+                        @if ($errors->has('entrenamiento'))
+                            <span class="text-danger">
+                                {{ $errors->first('entrenamiento') }}
                             </span>
                         @endif
                     </div>
@@ -559,38 +512,32 @@
 
 
                 <div class="row col-12 mt-4">
-
-
-
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="id_contacto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                        <select class="form-control {{ $errors->has('id_contacto') ? 'is-invalid' : '' }}" name="id_contacto" id="nombre_contacto_puesto">
+                        <label for="contacto_puesto_id"><i class="fas fa-user-tie iconos-crear"></i>Puesto</label>
+                        <select class="form-control {{ $errors->has('contacto_puesto_id') ? 'is-invalid' : '' }}" name="contacto_puesto_id" id="nombre_contacto_puesto">
                             <option value="">
-                                -- Selecciona el tipo de contacto asignado --
+                                -- Selecciona el contacto asignado --
                             </option>
-                            @foreach ($empleados as $empleado)
-                            <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
-                                {{ $empleado->name }}
+                            @foreach ($puesto as $pues)
+                            <option value="{{ $pues->id }}" data-area="{{ $pues->area ? $pues->area->area  :'Sin definir' }}">
+                                {{ $pues->puesto }}
                             </option>
                             @endforeach
                         </select>
-                        <small class="text-danger errores id_contacto_error"></small>
-                    </div>
-
-
-                    <div class="form-group col-md-6">
-                        <label for="puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                        <div class="form-control" id="contacto_puesto"></div>
                         <small class="text-danger errores contacto_puesto_error"></small>
                     </div>
 
+                    <div class="form-group col-md-6">
+                        <label><i class="fas fa-briefcase iconos-crear"></i>Area</label>
+                        <div class="form-control" id="area_contacto"></div>
+                        <small class="text-danger errores contacto_area_error"></small>
+                    </div>
                 </div>
 
                 <div class="row col-12 ">
                     <div class="col-sm-12 col-lg-12 col-md-12 mt-2">
                         <label for="contacto"><i class="fas fa-clipboard-list iconos-crear"></i>Propósito del contacto</label>
-                        <input class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" type="text" name="contacto"
-                            id="descripcion_contacto_puesto" value="{{ old('contacto', '') }}">
+                        <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" name="contacto" id="descripcion_contacto_puesto">{{ old('contacto') }}</textarea>
                             <small class="text-danger errores descripcion_contacto_error"></small>
                     </div>
                 </div>
@@ -608,8 +555,8 @@
                         <table class="table w-100" id="contactos_table" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
                                     <th>Puesto</th>
+                                    <th>Área</th>
                                     <th style="min-width:300px;">Propósito</th>
                                     <th>Opciones</th>
                                 </tr>
@@ -621,6 +568,163 @@
                     </div>
                 </div>
 
+
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <span style="font-size: 17px; font-weight: bold;">
+                       Contactos Externos del puesto</span>
+                </div>
+
+                <div class="row col-12 ">
+                    <div class="col-sm-12 col-lg-12 col-md-12 mt-2">
+                        <label for="nombre_contacto_int"><i class="fas fa-clipboard-list iconos-crear"></i>Nombre del contacto</label>
+                        <input class="form-control {{ $errors->has('nombre_contacto_int') ? 'is-invalid' : '' }}" name="nombre_contacto_int" id="nombre_contacto_int" value="{{ old('nombre_contacto_int') }}">
+                            <small class="text-danger errores nombre_contacto_int_error"></small>
+                    </div>
+                </div>
+
+                <div class="row col-12 ">
+                    <div class="col-sm-12 col-lg-12 col-md-12 mt-2">
+                        <label for="proposito"><i class="fas fa-clipboard-list iconos-crear"></i>Propósito del contacto</label>
+                        <textarea class="form-control {{ $errors->has('proposito') ? 'is-invalid' : '' }}" name="proposito" id="proposito_contacto_int">{{ old('proposito') }}</textarea>
+                            <small class="text-danger errores proposito_contacto_int_error"></small>
+                    </div>
+                </div>
+
+                <div class="row col-12">
+                    <div class="mb-3 col-12 mt-4 " style="text-align: end">
+                        <button type="button" name="btn-suscribir-contactos-externos" id="btn-suscribir-contactos-externos"
+                        class="btn btn-success">Agregar</button>
+                    </div>
+                </div>
+
+                <div class="row col-12">
+                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
+                        <table class="table w-100" id="contactos_externos_table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Contacto</th>
+                                    <th style="min-width:300px;">Propósito</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contenedor_contactos_externos">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <span style="font-size: 17px; font-weight: bold;">
+                       Responsiva</span>
+                </div>
+
+                <div class="row col-12">
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                        <label for="elaboro_id"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
+                        <select class="form-control {{ $errors->has('elaboro_id') ? 'is-invalid' : '' }}" name="elaboro_id" id="elaboro_id">
+                            <option value="" selected disabled>
+                                -- Selecciona el nombre del empleado --
+                            </option>
+                            @foreach ($empleados as $empleado)
+                            <option data-image="{{ $empleado->foto}}" data-id-empleado="{{ $empleado->id }}"
+                                data-gender="{{ $empleado->genero }}" data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
+                                {{ $empleado->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('elaboro'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('elaboro_id') }}
+                        </div>
+                        @endif
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                        <div class="form-control" id="puesto_elaboro"></div>
+
+                    </div>
+
+
+                    <div class="form-group col-md-4">
+                        <label><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                        <div class="form-control" id="area_elaboro"></div>
+
+                    </div>
+                </div>
+
+
+                <div class="row col-12">
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                        <label for="autoriza_id"><i class="fas fa-user-tie iconos-crear"></i>Autoriza</label>
+                        <select class="form-control {{ $errors->has('autoriza_id') ? 'is-invalid' : '' }}" name="autoriza_id" id="autoriza_id">
+                            <option value="" selected disabled>
+                                -- Selecciona el nombre del empleado --
+                            </option>
+                            @foreach ($empleados as $empleado)
+                            <option data-image="{{ $empleado->foto }}" data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
+                                {{ $empleado->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('autoriza'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('autoriza_id') }}
+                        </div>
+                        @endif
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                        <div class="form-control" id="puesto_autoriza"></div>
+
+                    </div>
+
+
+                    <div class="form-group col-md-4">
+                        <label><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                        <div class="form-control" id="area_autoriza"></div>
+
+                    </div>
+                </div>
+
+
+                <div class="row col-12">
+                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                        <label for="reviso_id"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
+                        <select class="form-control {{ $errors->has('reviso_id') ? 'is-invalid' : '' }}" name="reviso_id" id="reviso_id">
+                            <option value="" selected disabled>
+                                -- Selecciona el nombre del empleado --
+                            </option>
+                            @foreach ($empleados as $empleado)
+                            <option data-image="{{ $empleado->foto }}" data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
+                                {{ $empleado->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('reviso'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('reviso_id') }}
+                        </div>
+                        @endif
+                    </div>
+
+
+
+                    <div class="form-group col-md-4">
+                        <label><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                        <div class="form-control" id="puesto_reviso"></div>
+
+                    </div>
+
+
+                    <div class="form-group col-md-4">
+                        <label ><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                        <div class="form-control" id="area_reviso"></div>
+
+                    </div>
+                </div>
 
 
 
@@ -756,7 +860,7 @@
 
             if (number > 1) {
               html +=
-                '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Eliminar</button></td></tr>';
+                '<td><button type="button" name="remove" id="remove" class="btn btn-danger remove">Eliminar</button></td></tr>';
               $("#user_table tbody").append(html);
             } else {
               html +=
@@ -808,7 +912,7 @@
 
         if (number > 1) {
           html +=
-            '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Eliminar</button></td></tr>';
+            '<td><button type="button" name="remove" id="remove" class="btn btn-danger remove">Eliminar</button></td></tr>';
           $("#user_table tbody").append(html);
         } else {
           html +=
@@ -1062,7 +1166,7 @@
     <script>
 
     $(document).ready(function () {
-        const empleados=@json($empleados);
+        const puesto=@json($puesto);
         const contactos=@json($contactos);
         console.log(contactos);
         let fila = 0;
@@ -1073,13 +1177,13 @@
           const contenedorContactos=document.getElementById('contenedor_contactos');
           let html=`
           <tr>
-            <td><input type="hidden" name="contactos[${contable}][id]"  value="${contact.id?contact.id:0}"><select class="form-control" value="${contact.nombreContacto}" name="contactos[${contable}][id_contacto]">`
-                empleados.forEach(empleado=>{
-                html+=`<option data-puesto="${empleado.puesto}" data-contact="${contact.id}" value="${empleado.id}" ${contact.nombreContacto ==  empleado.id ? "selected":''} >${empleado.name}</option>`
+            <td><input type="hidden" name="contactos[${contable}][id]"  value="${contact.id?contact.id:0}"><select class="form-control" value="${contact.puestoContacto}" name="contactos[${contable}][contacto_puesto_id]">`
+                puesto.forEach(pues=>{
+                html+=`<option data-puesto="${pues.puesto}" data-contact="${contact.id}" value="${pues.id}" ${contact.puestoContacto ==  pues.id ? "selected":''} >${pues.puesto}</option>`
             })
             html+=`</select>
             </td >
-            <td><div class="form-control" style="white-space:nowrap" id="puesto${contact.id}">${contact.puestoContacto}</div>
+            <td><div class="form-control" style="white-space:nowrap" id="puesto${contact.id}">${contact.areaContacto}</div>
             <td><textarea class="form-control" style="min-height: 25px !important;" type="text" name="contactos[${contable}][descripcion_contacto]" value="" >${contact.descripcionContacto }</textarea></td>
             <td><button type="button"  name="btn-remove-contactos" id="" class="btn btn-danger remove">Eliminar</button></td>
          </tr>
@@ -1091,8 +1195,8 @@
 
         function limpiarFormularioContactos(){
         //   const puestoContacto = document.getElementById('puesto_contacto_puesto').value=null;
-          const nombreContacto = document.getElementById('nombre_contacto_puesto').value=null;
-          const puestoContacto = document.getElementById('contacto_puesto').innerText=null;
+          const puestoContacto = document.getElementById('nombre_contacto_puesto').value=null;
+          const areaContacto = document.getElementById('area_contacto').innerText=null;
           const descripcionContacto = document.getElementById('descripcion_contacto_puesto').value=null;
       }
 
@@ -1105,18 +1209,18 @@
       $(document).on("click", "#btn-suscribir-contactos", function () {
         limpiarErrores()
         // const puestoContacto = document.getElementById('puesto_contacto_puesto').value;
-        const nombreContacto = document.getElementById('nombre_contacto_puesto').value;
-        const puestoContacto = document.getElementById('contacto_puesto').innerText;
+        const puestoContacto = document.getElementById('nombre_contacto_puesto').value;
+        const areaContacto = document.getElementById('area_contacto').innerText;
         const descripcionContacto = document.getElementById('descripcion_contacto_puesto').value;
 
-        if (nombreContacto == "" || puestoContacto == "" || descripcionContacto == "") {
-            if (nombreContacto == "") {
-                document.querySelector('.id_contacto_error').innerText =
-                    "Debes seleccionar un empleado";
-            }
+        if (puestoContacto == "" || puestoContacto == "" || descripcionContacto == "") {
             if (puestoContacto == "") {
                 document.querySelector('.contacto_puesto_error').innerText =
-                    "Debes seleccionar un empleado";
+                    "Debes seleccionar un puesto";
+            }
+            if (areaContacto == "") {
+                document.querySelector('.contacto_area_error').innerText =
+                    "Debes seleccionar un puesto";
             }
             if (descripcionContacto == "") {
                 document.querySelector('.descripcion_contacto_error').innerText =
@@ -1125,8 +1229,8 @@
         } else {
             let contact = {
                 // puestoContacto,
-                nombreContacto,
                 puestoContacto,
+                areaContacto,
                 descripcionContacto
             }
 
@@ -1141,9 +1245,9 @@
         document.getElementById('contactos_table').addEventListener('change', function(e){
             console.log(e.target.tagName);
             if(e.target.tagName == 'SELECT'){
-            const puesto=e.target.options[e.target.selectedIndex].getAttribute('data-puesto');
+            const area=e.target.options[e.target.selectedIndex].getAttribute('data-area');
             const contact=e.target.options[e.target.selectedIndex].getAttribute('data-contact');
-            document.getElementById(`puesto${contact}`).innerText=puesto;
+            document.getElementById(`puesto${contact}`).innerText=area;
             }
 
         })
@@ -1155,6 +1259,76 @@
      });
 
  });
+    </script>
+
+    <script>
+
+            $(document).ready(function () {
+            const externos=@json($externos);
+            let sumar = 0;
+
+
+            function agregarFilaContactosExternos(contable,contactosexternos) {
+                console.log(contactosexternos)
+                const contenedorContactosExternos=document.getElementById('contenedor_contactos_externos');
+                let html=`
+                <tr>
+                  <td><input type="hidden" name="externos[${contable}][id]" value="${contactosexternos.id?contactosexternos.id:0}"><input class="form-control" type="text" name="externos[${contable}][nombre_contacto_int]" value="${contactosexternos.nombreContactoExterno}"></td>
+                  <td><textarea class="form-control" style="min-height: 25px !important;" type="text" name="externos[${contable}][proposito]" value="" >${contactosexternos.propositoContactoExterno}</textarea></td>
+                  <td><button type="button" name="btn-remove-contactos-externos" id="" class="btn btn-danger remove">Eliminar</button></td>
+               </tr>
+                `
+
+              contenedorContactosExternos.innerHTML += html;
+              limpiarFormularioContactosExternos();
+
+            }
+
+            function limpiarFormularioContactosExternos(){
+                const nombreContactoExterno= document.getElementById('nombre_contacto_int').value=null;
+                const propositoContactoExterno = document.getElementById('proposito_contacto_int').value=null;
+            }
+
+            function limpiarErroresContactosExternos() {
+                document.querySelectorAll('.errores').forEach(item => {
+                    item.innerText = null
+                })
+            }
+
+            $(document).on("click", "#btn-suscribir-contactos-externos", function () {
+                limpiarErroresContactosExternos()
+                const nombreContactoExterno = document.getElementById('nombre_contacto_int').value;
+                const propositoContactoExterno = document.getElementById('proposito_contacto_int').value;
+
+
+                if (nombreContactoExterno == "" || propositoContactoExterno == "") {
+                        if (nombreContactoExterno == "") {
+                            document.querySelector('.nombre_contacto_int_error').innerText =
+                                "Debes agregar un contacto";
+                        }
+                        if (propositoContactoExterno == "") {
+                            document.querySelector('.proposito_contacto_int_error').innerText =
+                                "Debes agregar un propósito";
+                        }
+
+                    }else {
+                        let contactosexternos = {
+                        nombreContactoExterno,
+                        propositoContactoExterno
+                    }
+
+                    agregarFilaContactosExternos(sumar, contactosexternos);
+                    sumar++;
+                    }
+
+
+                });
+            $(document).on("click", ".btn-remove-contactos-externos", function () {
+                $(this).closest("tr").remove();
+                sumar --;
+         });
+    });
+
     </script>
 
 
@@ -1171,7 +1345,7 @@
 
 
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
         let responsable = document.querySelector('#id_reporta');
         let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
@@ -1188,18 +1362,91 @@
         })
     })
 
+    </script> --}}
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        let elaboro = document.querySelector('#elaboro_id');
+        let area_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-area');
+        let puesto_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-puesto');
+
+        document.getElementById('puesto_elaboro').innerHTML = puesto_init;
+        document.getElementById('area_elaboro').innerHTML = area_init;
+        elaboro.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('puesto_elaboro').innerHTML = puesto;
+            document.getElementById('area_elaboro').innerHTML = area;
+        })
+    })
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        let autoriza = document.querySelector('#autoriza_id');
+        let area_init = autoriza.options[autoriza.selectedIndex].getAttribute('data-area');
+        let puesto_init = autoriza.options[autoriza.selectedIndex].getAttribute('data-puesto');
+
+        document.getElementById('puesto_autoriza').innerHTML = puesto_init;
+        document.getElementById('area_autoriza').innerHTML = area_init;
+        autoriza.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('puesto_autoriza').innerHTML = puesto;
+            document.getElementById('area_autoriza').innerHTML = area;
+        })
+    })
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        let reviso = document.querySelector('#reviso_id');
+        let area_init = reviso.options[reviso.selectedIndex].getAttribute('data-area');
+        let puesto_init = reviso.options[reviso.selectedIndex].getAttribute('data-puesto');
+
+        document.getElementById('puesto_reviso').innerHTML = puesto_init;
+        document.getElementById('area_reviso').innerHTML = area_init;
+        reviso.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('puesto_reviso').innerHTML = puesto;
+            document.getElementById('area_reviso').innerHTML = area;
+        })
+    })
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        let reportapuesto = document.querySelector('#reporta_puesto_id');
+        let area_init = reportapuesto.options[reportapuesto.selectedIndex].getAttribute('data-area');
+
+        document.getElementById('area_puesto_reporta').innerHTML = area_init;
+        reportapuesto.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            document.getElementById('area_puesto_reporta').innerHTML = area;
+        })
+    })
+
     </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
         let contacto = document.querySelector('#nombre_contacto_puesto');
-        let puesto_init = contacto.options[contacto.selectedIndex].getAttribute('data-puesto');
+        let area_init = contacto.options[contacto.selectedIndex].getAttribute('data-area');
 
-        document.getElementById('contacto_puesto').innerHTML = puesto_init;
+        document.getElementById('area_contacto').innerHTML = area_init;
         contacto.addEventListener('change', function(e) {
             e.preventDefault();
-            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('contacto_puesto').innerHTML = puesto;
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            document.getElementById('area_contacto').innerHTML = area;
         })
     })
 
@@ -1274,7 +1521,8 @@
             }, ]
         });
 
-        CKEDITOR.replace('resultado', {
+
+        CKEDITOR.replace('entrenamiento', {
             toolbar: [{
                 name: 'paragraph',
                 groups: ['list', 'indent', 'blocks', 'align'],
@@ -1337,6 +1585,12 @@
       });
 
 </script> --}}
+
+
+<script>
+
+
+</script>
 
 
 

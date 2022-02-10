@@ -38,4 +38,10 @@ class Language extends Model
         return $this->belongsToMany('\App\Puesto', 'puesto_idioma_porcentaje_pivot')
             ->withPivot('id_puesto');
     }
+
+    public function idiomaEmpleado()
+    {
+        return $this->belongsToMany('\App\Empleado', 'idioma_empleado')
+            ->withPivot('empleado_id');
+    }
 }

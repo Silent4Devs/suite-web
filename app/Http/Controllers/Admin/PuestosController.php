@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyPuestoRequest;
 use App\Http\Requests\StorePuestoRequest;
 use App\Http\Requests\UpdatePuestoRequest;
 use App\Models\Area;
+use App\Models\ContactosExternosPuestos;
 use App\Models\Empleado;
 use App\Models\HerramientasPuestos;
 use App\Models\Language;
@@ -122,15 +123,16 @@ class PuestosController extends Controller
         $competencias = Competencia::all();
         $responsabilidades = PuestoResponsabilidade::get();
         $certificados = PuestosCertificado::get();
-        $puestos = Puesto::get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
         $puesto = Puesto::get();
         $empleados = Empleado::get();
         $perfiles = PerfilEmpleado::all();
+        $puestos = Puesto::all();
+        $externos = ContactosExternosPuestos::all();
         // dd($idis);
 
-        return view('admin.puestos.create', compact('areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puesto', 'herramientas', 'contactos', 'empleados', 'perfiles'));
+        return view('admin.puestos.create', compact('externos', 'areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puesto', 'herramientas', 'contactos', 'empleados', 'perfiles'));
     }
 
     public function store(StorePuestoRequest $request)
@@ -149,6 +151,7 @@ class PuestosController extends Controller
         $this->saveUpdateCertificados($request->certificados, $puesto);
         $this->saveUpdateHerramientas($request->herramientas, $puesto);
         $this->saveUpdateContactos($request->contactos, $puesto);
+        $this->saveUpdateContactosExternos($request->externos, $puesto);
         $this->saveOrUpdateLanguage($request->id_language, $puesto);
 
         return redirect()->route('admin.puestos.index');
@@ -195,10 +198,12 @@ class PuestosController extends Controller
         $areas = Area::get();
         $reportas = Empleado::get();
         $puesto->load(['contactos' => function ($query) {
-            $query->with(['empleados' => function ($query) {
-                $query->with('puestoRelacionado');
+            $query->with(['puesto' => function ($query) {
+                $query->with('area');
             }]);
         }]);
+        $contactosEdit = $puesto->contactos;
+        // dd($puesto);
         $competencias = Competencia::all();
         $idis = Language::all();
         $responsabilidades = PuestoResponsabilidade::get();
@@ -208,8 +213,10 @@ class PuestosController extends Controller
         $contactos = PuestoContactos::get();
         $empleados = Empleado::get();
         $language = PuestoIdiomaPorcentajePivot::get();
+        $puestos = Puesto::get();
+        $externos = ContactosExternosPuestos::all();
 
-        return view('admin.puestos.edit', compact('puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language'));
+        return view('admin.puestos.edit', compact('externos', 'contactosEdit', 'puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language', 'puestos'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)
@@ -224,6 +231,7 @@ class PuestosController extends Controller
         $this->saveUpdateCertificados($request->certificados, $puesto);
         $this->saveUpdateHerramientas($request->herramientas, $puesto);
         $this->saveUpdateContactos($request->contactos, $puesto);
+        $this->saveUpdateContactosExternos($request->externos, $puesto);
         $this->saveOrUpdateLanguage($request->id_language, $puesto);
 
         return redirect()->route('admin.puestos.index');
@@ -294,10 +302,13 @@ class PuestosController extends Controller
         }
     }
 
-    public function deleteLanguage(Request $request, $language)
+    public function deleteLanguage(Request $request)
     {
-        $language = PuestoIdiomaPorcentajePivot::find($language);
-        $language->delete();
+        $language = $request->lenguajeId;
+        // dd($language);
+        $languageModel = PuestoIdiomaPorcentajePivot::find($language);
+        // dd($languageModel);
+        $languageModel->delete();
 
         return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
     }
@@ -404,13 +415,13 @@ class PuestosController extends Controller
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (PuestoContactos::find($contacto['id']) != null) {
                     PuestoContactos::find($contacto['id'])->update([
-                        'id_contacto' => $contacto['id_contacto'],
+                        'contacto_puesto_id' => $contacto['contacto_puesto_id'],
                         'descripcion_contacto' =>  $contacto['descripcion_contacto'],
                     ]);
                 } else {
                     PuestoContactos::create([
                         'puesto_id' => $puesto->id,
-                        'id_contacto' => $contacto['id_contacto'],
+                        'contacto_puesto_id' => $contacto['contacto_puesto_id'],
                         'descripcion_contacto' =>  $contacto['descripcion_contacto'],
                     ]);
                 }
@@ -425,5 +436,27 @@ class PuestosController extends Controller
         $contactos->delete();
 
         return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
+    }
+
+    public function saveUpdateContactosExternos($externos, $puesto)
+    {
+        if (!is_null($externos)) {
+            foreach ($externos as $externo) {
+                // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
+                if (ContactosExternosPuestos::find($externo['id']) != null) {
+                    ContactosExternosPuestos::find($externo['id'])->update([
+                        'nombre_contacto_int' => $externo['nombre_contacto_int'],
+                        'proposito' =>  $externo['proposito'],
+                    ]);
+                } else {
+                    ContactosExternosPuestos::create([
+                        'puesto_id' => $puesto->id,
+                        'nombre_contacto_int' => $externo['nombre_contacto_int'],
+                        'proposito' =>  $externo['proposito'],
+                    ]);
+                }
+            }
+        }
+        // dd($responsabilidades);
     }
 }
