@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DropFkSubtipo2474601ToActivosTable extends Migration
+class AddEdadToBeneficiariosEmpleadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class DropFkSubtipo2474601ToActivosTable extends Migration
      */
     public function up()
     {
-        Schema::table('activos', function (Blueprint $table) {
-            $table->dropForeign('subtipo_fk_2474601');
+        Schema::table('beneficiarios_empleados', function (Blueprint $table) {
+            $table->integer('edad')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class DropFkSubtipo2474601ToActivosTable extends Migration
      */
     public function down()
     {
-        Schema::table('activos', function (Blueprint $table) {
+        Schema::table('beneficiarios_empleados', function (Blueprint $table) {
             //
         });
     }

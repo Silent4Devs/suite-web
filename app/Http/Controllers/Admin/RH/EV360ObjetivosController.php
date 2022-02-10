@@ -9,7 +9,9 @@ use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoEmpleado;
+use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -131,6 +133,19 @@ class EV360ObjetivosController extends Controller
         return $objetivo;
     }
 
+    public function destroyByEmpleado(Request $request,ObjetivoEmpleado $objetivo)
+    {
+
+            // $objetivo = ObjetivoEmpleado::find($request->all());
+            $objetivo->delete();
+            return response()->json(['success' => 'deleted successfully!', $request->all()]);
+            // $objetivo->delete();
+            // return response()->json(['success'=> 'Eliminado exitosamente']);
+
+
+    }
+
+
     public function edit($objetivo)
     {
         $objetivo = Objetivo::find($objetivo);
@@ -183,6 +198,7 @@ class EV360ObjetivosController extends Controller
 
     public function show($empleado)
     {
+        abort_if(Gate::denies('objetivos_estrategicos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = new Objetivo;
         $empleado = Empleado::find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
@@ -198,12 +214,12 @@ class EV360ObjetivosController extends Controller
 
     public function indexCopiar($empleado)
     {
-        $empleado = Empleado::select('id', 'name')->with(['objetivos' => function ($query) {
+        $empleado = Empleado::select('id', 'name','foto','genero')->with(['objetivos' => function ($query) {
             return $query->with('objetivo');
         }])->find(intval($empleado));
         $objetivos_empleado = $empleado->objetivos;
         if (count($objetivos_empleado)) {
-            $empleados = Empleado::select('id', 'name', 'genero')->get()->except($empleado->id);
+            $empleados = Empleado::select('id', 'name', 'genero','foto')->get()->except($empleado->id);
 
             return response()->json(['empleados' => $empleados, 'hasObjetivos' => true, 'objetivos' => $objetivos_empleado]);
         } else {
@@ -228,5 +244,13 @@ class EV360ObjetivosController extends Controller
         }
 
         return response()->json(['success' => true]);
+    }
+
+    public function destroy(ObjetivoEmpleado $objetivoEmpleado)
+    {
+    
+        $objetivoEmpleado->delete();
+
+        return response()->json(['deleted'=> true]);
     }
 }

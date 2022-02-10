@@ -13,6 +13,7 @@ class BeneficiariosEmpleado extends Model
     protected $fillable = [
         'empleado_id',
         'nombre',
+        'edad',
         'parentesco',
         'porcentaje',
     ];

@@ -90,14 +90,21 @@
         </div>
     @else
         <div class="d-flex justify-content-end">
-            <button data-toggle="modal" data-target="#modalDocumentos" data-backdrop="static" data-keyboard="false"
-                class="btn btn-danger btn-md"><i class="fas fa-plus mr-1"></i>Documento</button>
-            <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-danger btn-md"><i
-                    class="fas fa-plus mr-1"></i>Certificación</button>
-            <button onclick="event.preventDefault();return false;" data-toggle="modal" data-target="#modalcursoIt" class="btn btn-danger btn-md"><i
-                    class="fas fa-plus mr-1"></i>Capacitación</button>
-            <a class="btn btn-danger btn-md " href="{{ route('admin.editarCompetencias', $empleadoModel) }}">Editar</a>
-
+            @can('subir_documentacion_empleados')
+                <button data-toggle="modal" data-target="#modalDocumentos" data-backdrop="static" data-keyboard="false"
+                    class="btn btn-danger btn-md"><i class="fas fa-plus mr-1"></i>Documento</button>
+            @endcan
+            @can('subir_certificaciones_empleados')
+                <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-danger btn-md"><i
+                        class="fas fa-plus mr-1"></i>Certificación</button>
+            @endcan
+            @can('subir_capacitaciones_empleados')
+                <button onclick="event.preventDefault();return false;" data-toggle="modal" data-target="#modalcursoIt"
+                    class="btn btn-danger btn-md"><i class="fas fa-plus mr-1"></i>Capacitación</button>
+            @endcan
+            @can('perfil_profesional_edit')
+                <a class="btn btn-danger btn-md " href="{{ route('admin.editarCompetencias', $empleadoModel) }}">Editar</a>
+            @endcan
         </div>
     @endif
 
@@ -185,17 +192,19 @@
                     </div>
                     <div class="row col-12 align-items-center mx-md-m5" x-show="open">
                         @foreach ($empleadosCV as $item)
-                          <div class="col-md-4 col-sm-4 col-lg-4">
-                                <div style="cursor: pointer; border:1px solid #ccc!important;  border-radius: 5px; height: 80px;" class="p-2 shadow-sm mb-3"
-                                    x-on:click="open = false" wire:click="mostrarCurriculum({{ $item->id }})">
-                                    <div class="row" >
+                            <div class="col-md-4 col-sm-4 col-lg-4">
+                                <div style="cursor: pointer; border:1px solid #ccc!important;  border-radius: 5px; height: 80px;"
+                                    class="p-2 shadow-sm mb-3" x-on:click="open = false"
+                                    wire:click="mostrarCurriculum({{ $item->id }})">
+                                    <div class="row">
                                         <div class="col-sm-3 col-md-3 col-lg-3 mt-2">
                                             <img src="{{ asset("storage/empleados/imagenes/{$item->avatar}") }}"
-                                            style="max-width:40px;clip-path:circle(50% at 50% 50%)">
+                                                style="max-width:40px;clip-path:circle(50% at 50% 50%)">
                                         </div>
                                         <div class="col-sm-8 col-md-8 col-lg-8 mt-2">
-                                            <p class="m-0" style="font-size:10px; font-weight:bold; "><span
-                                                    >{{ $item->area->area }}</span></p>
+                                            <p class="m-0" style="font-size:10px; font-weight:bold; ">
+                                                <span>{{ $item->area->area }}</span>
+                                            </p>
                                             <p class="m-0 text-muted" style="font-size:10px"
                                                 title="{{ $item->name }}">
                                                 {{ Str::limit($item->name, 20, '...') }}
@@ -322,12 +331,12 @@
                                             <br>
                                             <span>
                                                 Del
-                                                <strong>{{$experiencia->inicio_mes}}</strong>
+                                                <strong>{{ $experiencia->inicio_mes }}</strong>
                                                 al
                                                 @if (!$experiencia->fin_mes)
-                                                <strong>día de hoy</strong>
+                                                    <strong>día de hoy</strong>
                                                 @else
-                                                <strong>{{ $experiencia->fin_mes}}</strong>
+                                                    <strong>{{ $experiencia->fin_mes }}</strong>
                                                 @endif
 
                                             </span>
@@ -394,8 +403,8 @@
                                                 Del
                                                 <strong>{{ \Carbon\Carbon::parse($educacion->año_inicio)->format('d/m/Y') }}</strong>
                                                 al
-                                                @if (! $educacion->año_fin)
-                                                <strong>día de hoy</strong>
+                                                @if (!$educacion->año_fin)
+                                                    <strong>día de hoy</strong>
                                                 @else
                                                     <strong>{{ \Carbon\Carbon::parse($educacion->año_fin)->format('d/m/Y') }}</strong>
                                                 @endif
@@ -471,7 +480,8 @@
                                         <div class="col-10" style="white-space: nowrap;">
                                             <span style="font-size: 17px; font-weight: bold;"><i
                                                     class="fas iconos-crear"
-                                                    x-bind:class="! open ? 'fa-folder' : 'fa-folder-open'"></i>Mi Expediente
+                                                    x-bind:class="! open ? 'fa-folder' : 'fa-folder-open'"></i>Mi
+                                                Expediente
                                             </span>
                                         </div>
                                         <div class="col text-center">
@@ -493,17 +503,14 @@
                                                 <h5 class="modal-title" id="modalDocumentosLabel">
                                                     <i class="fas fa-award mr-2"></i> Cargar Documentos
                                                 </h5>
-                                                <button onclick="limpiarForm();event.preventDefault()"
-                                                    type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
+                                                <button onclick="limpiarForm();event.preventDefault()" type="button"
+                                                    class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form
-                                                    action="{{ route('admin.cargarDocumentos', $empleadoModel) }}"
-                                                    method="POST" id="formCargarDocumento"
-                                                    class="form-group m-0">
+                                                <form action="{{ route('admin.cargarDocumentos', $empleadoModel) }}"
+                                                    method="POST" id="formCargarDocumento" class="form-group m-0">
                                                     <div class="row">
                                                         <div class="form-group col-sm-6 col-lg-6 col-md-6">
                                                             <label for="nombre"><i
@@ -520,48 +527,53 @@
                                                                             data-activar="{{ $list_doc->activar_numero ? 'si' : 'no'}}"
                                                                             data-tipo="{{ $list_doc->tipo }}"
 
-                                                                            value="{{ $list_doc->documento }}">
-
-                                                                                {{ $list_doc->documento }}
-                                                                        </option>
-                                                                     @empty
-                                                                        <option value="">sin documentos</option>
-                                                                    @endforelse
-                                                                </select>
-                                                            <span
-                                                                class="errors nombre_error text-danger"></span>
+                                                                        {{ $list_doc->documento }}
+                                                                    </option>
+                                                                @empty
+                                                                    <option value="">sin documentos</option>
+                                                                @endforelse
+                                                            </select>
+                                                            <span class="errors nombre_error text-danger"></span>
                                                         </div>
-                                                        <div class="form-group col-sm-6 d-none" id="group_numero_activo">
+                                                        <div class="form-group col-sm-6 d-none"
+                                                            id="group_numero_activo">
                                                             <label for="numero"><i
                                                                     class="fas fa-barcode iconos-crear"></i>ID</label>
                                                             <input
                                                                 class="form-control {{ $errors->has('numero') ? 'is-invalid' : '' }}"
                                                                 type="text" name="numero" id="numero"
                                                                 value="{{ old('numero', '') }}" required>
-                                                            <span
-                                                                class="errors numero_error text-danger"></span>
+                                                            <span class="errors numero_error text-danger"></span>
                                                         </div>
                                                         <style type="text/css">
-                                                            #tipo_doc{
-                                                                color:#fff; padding:5px; border-radius: 4px;
+                                                            #tipo_doc {
+                                                                color: #fff;
+                                                                padding: 5px;
+                                                                border-radius: 4px;
                                                             }
-                                                            #tipo_doc.opcional{
-                                                                background-color:#25B82B;
+
+                                                            #tipo_doc.opcional {
+                                                                background-color: #25B82B;
                                                                 text-transform: capitalize;
                                                             }
-                                                            #tipo_doc.obligatorio{
-                                                                background-color:#DD3939;
+
+                                                            #tipo_doc.obligatorio {
+                                                                background-color: #DD3939;
                                                                 text-transform: capitalize;
                                                             }
-                                                            #tipo_doc.aplica{
-                                                                background-color:#FA8E1C;
+
+                                                            #tipo_doc.aplica {
+                                                                background-color: #FA8E1C;
                                                             }
-                                                            #tipo_doc.aplica::before{
+
+                                                            #tipo_doc.aplica::before {
                                                                 content: "Solo si ";
                                                             }
+
                                                         </style>
                                                         <div class="form-group col-12 ml-1" id="group_tipo_doc">
-                                                             <strong>Tipo: </strong><font id="tipo_doc" class=""></font>
+                                                            <strong>Tipo: </strong>
+                                                            <font id="tipo_doc" class=""></font>
                                                         </div>
                                                     </div>
                                                     <input type="file" name="documentos" id="cargarDocumento"
@@ -571,18 +583,15 @@
                                                             class="text-center m-0"><i
                                                                 class="fas fa-upload text-success"
                                                                 style="font-size: 15px"></i> Subir
-                                                            Documento <small
-                                                                id="infoSelectedDocumento"></small></label>
+                                                            Documento <small id="infoSelectedDocumento"></small></label>
                                                     </div>
                                                     <div class="text-center">
-                                                        <span
-                                                            class="errors documentos_error text-danger"></span>
+                                                        <span class="errors documentos_error text-danger"></span>
                                                     </div>
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal"
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                                     onclick="limpiarForm();event.preventDefault()">Cancelar</button>
                                                 <button id="btnCargarDocumento" type="button"
                                                     class="btn btn-primary"><i
@@ -596,23 +605,23 @@
 
                                 <div x-show="open" x-transition>
                                     @if ($isPersonal)
-                                        <div class="text-center">
-                                            <label type="button" onclick="event.preventDefault();return false;"
-                                                data-toggle="modal" data-target="#modalDocumentos"
-                                                style="cursor: pointer;" class="text-center">
-                                                <i class="fas fa-upload text-success" style="font-size: 15px"></i>
-                                                Subir
-                                                Documento
-                                            </label>
-                                        </div>
-
-
+                                        @can('subir_documentacion_empleados')
+                                            <div class="text-center">
+                                                <label type="button" onclick="event.preventDefault();return false;"
+                                                    data-toggle="modal" data-target="#modalDocumentos"
+                                                    style="cursor: pointer;" class="text-center">
+                                                    <i class="fas fa-upload text-success" style="font-size: 15px"></i>
+                                                    Subir
+                                                    Documento
+                                                </label>
+                                            </div>
+                                        @endcan
                                     @endif
                                     @foreach ($empleadoModel->empleado_documentos as $documentos)
-                                        @if($documentos->archivado == false)
+                                        @if ($documentos->archivado == false)
                                             <div class="list-group list-border-y list-group-flush">
-                                                <a href="{{$documentos->ruta_documento}}"
-                                                    target="_blank" class="list-group-item list-group-item-action">
+                                                <a href="{{ $documentos->ruta_documento }}" target="_blank"
+                                                    class="list-group-item list-group-item-action">
                                                     <div class="d-flex w-100 justify-content-between">
                                                         <h6 class="mb-1">{{ $documentos->nombre }}</h6>
                                                         <small>{{ $documentos->created_at->diffForHumans() }}</small>
@@ -623,7 +632,6 @@
                                             </div>
                                         @endif
                                     @endforeach
-
                                 </div>
                             </div>
                         </div>
@@ -652,11 +660,9 @@
                                             x-on:click="open = ! open"></i>
                                     </span> --}}
                                 </div>
-
-
-                                <div class="modal fade" id="modalCertificaciones"
-                                    data-backdrop="static" data-keyboard="false" tabindex="-1"
-                                    aria-labelledby="modalCertificacionesLabel" aria-hidden="true">
+                                <div class="modal fade" id="modalCertificaciones" data-backdrop="static"
+                                    data-keyboard="false" tabindex="-1" aria-labelledby="modalCertificacionesLabel"
+                                    aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -664,74 +670,60 @@
                                                     <i class="fas fa-award mr-2"></i> Cargar Certificación
                                                 </h5>
                                                 <button x-on:click="open = false"
-                                                    onclick="limpiarForm();event.preventDefault()"
-                                                    type="button" class="close"
-                                                    data-dismiss="modal" aria-label="Close">
+                                                    onclick="limpiarForm();event.preventDefault()" type="button"
+                                                    class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
                                                 <form
                                                     action="{{ route('admin.cargarCertificacion', $empleadoModel) }}"
-                                                    method="POST" id="formCargarCertificacion"
-                                                    class="form-group m-0">
+                                                    method="POST" id="formCargarCertificacion" class="form-group m-0">
                                                     <div class="row">
-                                                        <div
-                                                            class="form-group col-sm-12 col-lg-12 col-md-12">
+                                                        <div class="form-group col-sm-12 col-lg-12 col-md-12">
                                                             <label for="nombre"><i
                                                                     class="fas fa-file-signature iconos-crear"></i>Nombre</label>
                                                             <input
                                                                 class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                                                type="text" name="nombre"
-                                                                id="nombre_certificado"
+                                                                type="text" name="nombre" id="nombre_certificado"
                                                                 value="{{ old('nombre', '') }}">
-                                                            <span
-                                                                class="errors nombre_error text-danger"></span>
+                                                            <span class="errors nombre_error text-danger"></span>
                                                         </div>
                                                         <div class="col-12 form-group">
                                                             <div class="form-check">
-                                                                <input class="form-check-input"
-                                                                    name="aplicaVigencia" type="checkbox"
-                                                                    id="aplicaVigencia"
+                                                                <input class="form-check-input" name="aplicaVigencia"
+                                                                    type="checkbox" id="aplicaVigencia"
                                                                     x-on:change="open = !open">
-                                                                <label class="form-check-label"
-                                                                    for="aplicaVigencia">
+                                                                <label class="form-check-label" for="aplicaVigencia">
                                                                     ¿Aplica Vigencia?
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        <div x-show="open" class="col-md-12 row"
-                                                            x-transition>
+                                                        <div x-show="open" class="col-md-12 row" x-transition>
                                                             <div class="form-group col-sm-6">
                                                                 <label for="vigencia"><i
                                                                         class="far fa-calendar-alt iconos-crear"></i>Vigencia</label>
                                                                 <input
                                                                     class="form-control {{ $errors->has('vigencia') ? 'is-invalid' : '' }}"
-                                                                    type="date" name="vigencia"
-                                                                    id="vigencia"
+                                                                    type="date" name="vigencia" id="vigencia"
                                                                     value="{{ old('vigencia', '') }}">
-                                                                <span
-                                                                    class="errors vigencia_error text-danger"></span>
+                                                                <span class="errors vigencia_error text-danger"></span>
                                                             </div>
                                                             <div class="form-group col-sm-6">
                                                                 <label for="estatus"><i
                                                                         class="fas fa-street-view iconos-crear"></i>Estatus</label>
                                                                 <input
                                                                     class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}"
-                                                                    type="text" name="estatus"
-                                                                    id="vencio_alta"
-                                                                    value="{{ old('estatus', '') }}"
-                                                                    readonly>
-                                                                <span
-                                                                    class="errors estatus_error text-danger"></span>
+                                                                    type="text" name="estatus" id="vencio_alta"
+                                                                    value="{{ old('estatus', '') }}" readonly>
+                                                                <span class="errors estatus_error text-danger"></span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="documento"
-                                                        id="cargarCertificacion" class="d-none">
+                                                    <input type="file" name="documento" id="cargarCertificacion"
+                                                        class="d-none">
                                                     <div class="text-center">
-                                                        <label for="cargarCertificacion"
-                                                            style="cursor: pointer;"
+                                                        <label for="cargarCertificacion" style="cursor: pointer;"
                                                             class="text-center m-0"><i
                                                                 class="fas fa-upload text-success"
                                                                 style="font-size: 15px"></i> Subir
@@ -739,14 +731,12 @@
                                                                 id="infoSelectedCertificacion"></small></label>
                                                     </div>
                                                     <div class="text-center">
-                                                        <span
-                                                            class="errors documento_error text-danger"></span>
+                                                        <span class="errors documento_error text-danger"></span>
                                                     </div>
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal"
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                                     onclick="limpiarForm();event.preventDefault()"
                                                     x-on:click="open = false">Cancelar</button>
                                                 <button id="btnCargarCertificado" type="button"
@@ -760,35 +750,36 @@
 
                                 <div x-show="open" x-transition>
                                     @if ($isPersonal)
-                                        <div x-data="{open:false}">
-                                            <div class="text-center">
-                                                <label type="button" onclick="event.preventDefault();return false;"
-                                                    data-toggle="modal" data-target="#modalCertificaciones"
-                                                    style="cursor: pointer;" class="text-center">
-                                                    <i class="fas fa-upload text-success" style="font-size: 15px"></i>
-                                                    Subir
-                                                    Certificación
-                                                </label>
+                                        @can('subir_certificaciones_empleados')
+                                            <div x-data="{open:false}">
+                                                <div class="text-center">
+                                                    <label type="button" onclick="event.preventDefault();return false;"
+                                                        data-toggle="modal" data-target="#modalCertificaciones"
+                                                        style="cursor: pointer;" class="text-center">
+                                                        <i class="fas fa-upload text-success" style="font-size: 15px"></i>
+                                                        Subir
+                                                        Certificación
+                                                    </label>
+                                                </div>
                                             </div>
-
-                                        </div>
+                                        @endcan
                                     @endif
                                     @foreach ($empleadoModel->empleado_certificaciones as $certificaciones)
                                         <div class="list-group list-border-y list-group-flush">
-                                            <a href="{{$certificaciones->ruta_documento}}"
-                                                target="_blank" class="list-group-item list-group-item-action">
+                                            <a href="{{ $certificaciones->ruta_documento }}" target="_blank"
+                                                class="list-group-item list-group-item-action">
                                                 <div class="d-flex w-100 justify-content-between">
                                                     <h6 class="mb-1">{{ $certificaciones->nombre }}</h6>
                                                     <small>{{ $certificaciones->created_at->diffForHumans() }}</small>
                                                 </div>
                                                 <small class="mb-1"><strong
                                                         style="text-transform: capitalize">
-                                                        {{ $certificaciones->vigencia ? \Carbon\Carbon::parse($certificaciones->vigencia_string_formated)->format('F d, Y') : '' }}</strong></small>
+                                                        {{ $certificaciones->vigencia? \Carbon\Carbon::parse($certificaciones->vigencia_string_formated)->format('F d, Y'): '' }}</strong></small>
                                                 <p class="my-1">
                                                     @if (Str::lower($certificaciones->estatus) == 'vencida')
                                                         <strong
                                                             class="badge badge-danger">{{ $certificaciones->estatus ? $certificaciones->estatus : 'Sin vigencia' }}</strong>
-                                                    @elseif (Str::lower($certificaciones->estatus)=='vigente')
+                                                    @elseif (Str::lower($certificaciones->estatus) == 'vigente')
                                                         <strong
                                                             class="badge badge-success">{{ $certificaciones->estatus ? $certificaciones->estatus : 'Sin vigencia' }}</strong>
                                                     @else
@@ -837,9 +828,8 @@
                                                     <i class="fas fa-award mr-2"></i> Cargar Capacitación
                                                 </h5>
                                                 <button x-on:click="open = false"
-                                                    onclick="limpiarFormCurso();event.preventDefault()"
-                                                    type="button" class="close"
-                                                    data-dismiss="modal" aria-label="Close">
+                                                    onclick="limpiarFormCurso();event.preventDefault()" type="button"
+                                                    class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -856,8 +846,7 @@
                                                                     class="fas fa-certificate iconos-crear"></i>Nombre</label>
                                                             <input
                                                                 class="form-control {{ $errors->has('curso_diplomado') ? 'is-invalid' : '' }}"
-                                                                type="text" name="curso_diploma"
-                                                                id="curso_diplomado"
+                                                                type="text" name="curso_diploma" id="curso_diplomado"
                                                                 value="{{ old('curso_diplomado', '') }}">
                                                             <span
                                                                 class="errors curso_diploma_error text-danger"></span>
@@ -880,8 +869,7 @@
                                                                     </option>
                                                                 @endforeach
                                                             </select>
-                                                            <span
-                                                                class="errors tipo_error text-danger"></span>
+                                                            <span class="errors tipo_error text-danger"></span>
                                                         </div>
                                                         <div class="form-group col-sm-3">
                                                             <label for="año"><i
@@ -890,8 +878,7 @@
                                                                 class="form-control {{ $errors->has('año') ? 'is-invalid' : '' }}"
                                                                 type="date" name="año" id="año"
                                                                 value="{{ old('año', '') }}">
-                                                            <span
-                                                                class="errors año_error text-danger"></span>
+                                                            <span class="errors año_error text-danger"></span>
                                                         </div>
                                                         <div class="form-group col-sm-3">
                                                             <label for="fecha_fin"><i
@@ -900,8 +887,7 @@
                                                                 class="form-control {{ $errors->has('fecha_fin') ? 'is-invalid' : '' }}"
                                                                 type="date" name="fecha_fin" id="fecha_fin"
                                                                 value="{{ old('fecha_fin', '') }}">
-                                                            <span
-                                                                class="errors fecha_fin_error text-danger"></span>
+                                                            <span class="errors fecha_fin_error text-danger"></span>
                                                         </div>
 
                                                         <div class="mt-3 col-sm-12 form-group">
@@ -909,12 +895,11 @@
                                                                     class="fas fa-folder-open iconos-crear"></i>Adjuntar
                                                                 Archivo</label>
                                                             <div class="custom-file">
-                                                                <input type="file" name="file"
-                                                                    id="cargarCurso" class="d-none"
+                                                                <input type="file" name="file" id="cargarCurso"
+                                                                    class="d-none"
                                                                     aria-describedby="inputGroupFileAddon01">
                                                                 <div class="text-center">
-                                                                    <label for="cargarCurso"
-                                                                        style="cursor: pointer;"
+                                                                    <label for="cargarCurso" style="cursor: pointer;"
                                                                         class="text-center m-0"><i
                                                                             class="fas fa-upload text-success"
                                                                             style="font-size: 15px"></i>
@@ -922,20 +907,17 @@
                                                                         Certificado <small
                                                                             id="infoSelectedCurso"></small></label>
                                                                 </div>
-                                                                <span
-                                                                    class="errors file_error text-danger"></span>
+                                                                <span class="errors file_error text-danger"></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal"
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                                     onclick="limpiarForm();event.preventDefault()"
                                                     x-on:click="open = false">Cancelar</button>
-                                                <button id="btnCargarCurso" type="button"
-                                                    class="btn btn-primary"><i
+                                                <button id="btnCargarCurso" type="button" class="btn btn-primary"><i
                                                         class="fas fa-upload mr-2"></i>Cargar</button>
                                             </div>
                                         </div>
@@ -945,22 +927,24 @@
 
                                 <div x-show="open" x-transition>
                                     @if ($isPersonal)
-                                        <div x-data="{open:false}">
-                                            <div class="text-center">
-                                                <label type="button" onclick="event.preventDefault();return false;"
-                                                    data-toggle="modal" data-target="#modalcursoIt"
-                                                    style="cursor: pointer;" class="text-center">
-                                                    <i class="fas fa-upload text-success" style="font-size: 15px"></i>
-                                                    Subir Capacitación
-                                                </label>
+                                        @can('subir_capacitaciones_empleados')
+                                            <div x-data="{open:false}">
+                                                <div class="text-center">
+                                                    <label type="button" onclick="event.preventDefault();return false;"
+                                                        data-toggle="modal" data-target="#modalcursoIt"
+                                                        style="cursor: pointer;" class="text-center">
+                                                        <i class="fas fa-upload text-success" style="font-size: 15px"></i>
+                                                        Subir Capacitación
+                                                    </label>
+                                                </div>
                                             </div>
-
-                                        </div>
+                                        @endcan
                                     @endif
                                     @foreach ($empleadoModel->empleado_cursos as $cursoIt)
                                         <div class="list-group list-border-y list-group-flush">
 
-                                            <a href="{{$cursoIt->ruta_documento}}"target="_blank" class="list-group-item list-group-item-action">
+                                            <a href="{{ $cursoIt->ruta_documento }}" target="_blank"
+                                                class="list-group-item list-group-item-action">
                                                 <div class="d-flex w-100 justify-content-between">
                                                     <h6 class="mb-1">{{ $cursoIt->curso_diploma }}</h6>
                                                     <small>{{ $cursoIt->created_at->diffForHumans() }}</small>
@@ -1339,7 +1323,7 @@
                 $('#group_numero_activo').addClass('d-block');
                 $('#group_numero_activo').removeClass('d-none');
             }
-            if (op_select == 'no'){
+            if (op_select == 'no') {
                 $('#group_numero_activo').addClass('d-none');
                 $('#group_numero_activo').removeClass('d-block');
             }
