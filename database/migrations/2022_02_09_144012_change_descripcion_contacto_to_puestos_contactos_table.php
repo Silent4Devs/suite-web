@@ -15,7 +15,6 @@ class ChangeDescripcionContactoToPuestosContactosTable extends Migration
     {
         Schema::table('puestos_contactos', function (Blueprint $table) {
             $table->longText('descripcion_contacto')->nullable()->change();
-
         });
     }
 

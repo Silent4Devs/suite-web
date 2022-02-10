@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Area;
-use App\Models\Team;
-use App\Models\Puesto;
-use App\Models\Empleado;
-use App\Models\Language;
-use Illuminate\Http\Request;
-use App\Models\PerfilEmpleado;
-use App\Models\RH\Competencia;
-use App\Models\PuestoContactos;
-use App\Models\PuestosCertificado;
-use App\Models\HerramientasPuestos;
 use App\Http\Controllers\Controller;
-use App\Models\PuestoResponsabilidade;
-use App\Models\ContactosExternosPuestos;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\StorePuestoRequest;
-use App\Http\Requests\UpdatePuestoRequest;
-use App\Models\PuestoIdiomaPorcentajePivot;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyPuestoRequest;
+use App\Http\Requests\StorePuestoRequest;
+use App\Http\Requests\UpdatePuestoRequest;
+use App\Models\Area;
+use App\Models\ContactosExternosPuestos;
+use App\Models\Empleado;
+use App\Models\HerramientasPuestos;
+use App\Models\Language;
+use App\Models\PerfilEmpleado;
+use App\Models\Puesto;
+use App\Models\PuestoContactos;
+use App\Models\PuestoIdiomaPorcentajePivot;
+use App\Models\PuestoResponsabilidade;
+use App\Models\PuestosCertificado;
+use App\Models\RH\Competencia;
+use App\Models\Team;
+use Gate;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class PuestosController extends Controller
 {
@@ -128,11 +128,11 @@ class PuestosController extends Controller
         $puesto = Puesto::get();
         $empleados = Empleado::get();
         $perfiles = PerfilEmpleado::all();
-        $puestos=Puesto::all();
-        $externos= ContactosExternosPuestos::all();
+        $puestos = Puesto::all();
+        $externos = ContactosExternosPuestos::all();
         // dd($idis);
 
-        return view('admin.puestos.create', compact('externos','areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puesto', 'herramientas', 'contactos', 'empleados', 'perfiles'));
+        return view('admin.puestos.create', compact('externos', 'areas', 'reportas', 'lenguajes', 'idis', 'competencias', 'responsabilidades', 'certificados', 'puesto', 'herramientas', 'contactos', 'empleados', 'perfiles'));
     }
 
     public function store(StorePuestoRequest $request)
@@ -202,7 +202,7 @@ class PuestosController extends Controller
                 $query->with('area');
             }]);
         }]);
-        $contactosEdit=$puesto->contactos;
+        $contactosEdit = $puesto->contactos;
         // dd($puesto);
         $competencias = Competencia::all();
         $idis = Language::all();
@@ -213,10 +213,10 @@ class PuestosController extends Controller
         $contactos = PuestoContactos::get();
         $empleados = Empleado::get();
         $language = PuestoIdiomaPorcentajePivot::get();
-        $puestos=Puesto::get();
-        $externos= ContactosExternosPuestos::all();
+        $puestos = Puesto::get();
+        $externos = ContactosExternosPuestos::all();
 
-        return view('admin.puestos.edit', compact('externos','contactosEdit','puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language','puestos'));
+        return view('admin.puestos.edit', compact('externos', 'contactosEdit', 'puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language', 'puestos'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)
