@@ -6,7 +6,16 @@
         .datos_der_cv{
             color: #fff;
         }
+        .tabla_verde{
+            color: #fff !important;
+        }
 
+        .tabla_verde.table-striped tbody tr:nth-of-type(odd), table.table tbody tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0);
+        }
+        .tabla_verde th{
+            background-color:rgb(0, 0, 0, 0) !important;
+        }
     </style>
 
     {{-- {{ Breadcrumbs::render('mi-perfil-puesto') }} --}}
@@ -18,7 +27,11 @@
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
 
-
+                    {{-- <div class="col-md-4"> --}}
+                        <div class="mb-4 d-flex" style="margin-left: 80%;position: absolute;top: 4%;">
+                            <a class="btn btn-primary" href="{{ URL::to('#') }}">Imprimir</a>
+                        </div>
+                    {{-- </div> --}}
                     @php
                         use App\Models\Organizacion;
                         $organizacion = Organizacion::first();
@@ -27,6 +40,7 @@
                     <div class="caja_img_logo">
                         <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 100px;">
                     </div>
+
                     <div class="row medidas">
                         <div class="mt-4 ml-4 col-md-7 datos_iz_cv">
                             <h5 class="py-2 pl-2"
@@ -53,11 +67,11 @@
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <span><strong>Jefe inmediato</strong>
-                                    <div>{{$visualizarEmpleados->supervisor_id}}</div>
+                                    <div>{{$visualizarEmpleados->supervisor->name}}</div>
                                 </div>  
                                 <div class="col-4">
                                     <span><strong>Nivel Jerárquico</strong>
-                                    <div>{{$visualizarEmpleados->perfil_empleado_id}}</div>
+                                    <div>{{$visualizarEmpleados->perfil->nombre}}</div>
                                 </div>  
                                 <div class="col-4">
                                     <span><strong>Género</strong>
@@ -95,7 +109,7 @@
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <span><strong>Sede</strong>
-                                    <div>{{$visualizarEmpleados->sede_id}}</div>
+                                    <div>{{$visualizarEmpleados->sede->sede}}</div>
                                 </div>  
                                 <div class="col-4">
                                     <span><strong>Fecha de ingreso</strong>
@@ -172,10 +186,12 @@
                                     <span><strong>Periodicidad de nómina</strong>
                                     <div>{{$visualizarEmpleados->periodicidad_nomina}}</div>
                                 </div>  
-                                <div class="col-8">
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12">
                                     <span><strong>Beneficiarios</strong>
                                     {{-- <div>{{$visualizarEmpleados->salario_base_mensual}}</div> --}}
-                                    <table>
+                                    <table class="table">
                                         <thead>
                                             <tr>
                                                 <th>Nombre</th>
@@ -190,14 +206,15 @@
                                                 <tr>
                                                     <td>{{ $beneficiario->nombre}}</td>
                                                     <td>{{ $beneficiario->parentesco}}</td>
+                                                    <td>{{ $beneficiario->porcentaje}}</td>
                                                     <td>{{ $beneficiario->edad}}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                </div> 
-  
-                             </div>
+                                </div>
+                            </div>
+
                              <div class="row mb-3">
                                 <div class="col-4">
                                     <span><strong>Entidad crediticia</strong>
@@ -219,98 +236,103 @@
                                     Perfil Profesional</span>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <span><strong>Resumen</strong>
                                     <div>{{$visualizarEmpleados->resumen}}</div>
                                 </div> 
-                                <div class="col-6">
-                                    <span><strong>Certificaciones</strong>
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Nombre</th>
-                                                    <th>Vigencia</th>
-                                                    <th>Estatus</th>
-                                                    <th>Documento</th>
-                        
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($certificados as $certificado)
-                                                    <tr>
-                                                        <td>{{ $certificado->nombre}}</td>
-                                                        <td>{{ $beneficiario->vigencia}}</td>
-                                                        <td>{{ $beneficiario->estatus}}</td>
-                                                        <td>{{ $beneficiario->documento}}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        {{-- <ul>
-                                            @foreach($certificados as $certificado)
-                                                <li>
-                                                    <div>{{$certificado->nombre}}</div>
-                                                </li>
-                                            @endforeach
-                                        </ul> --}}
-                                </div>
-                               
-                                {{-- <div class="col-4">
-                                    <span><strong>Descuento</strong>
-                                    <div>{{$visualizarEmpleados->descuento}}</div>
-                                </div>   --}}
                             </div>
 
-                            {{-- @foreach($puesto->responsabilidades as $responsabilidad)
-                            <div>
-                                <span>{{$responsabilidad->actividad}}</span>
-                                <br>
-                                <span><strong>Resultado:&nbsp;</strong>{{$responsabilidad->resultado}}</span>
-                                <br>
-                                <span><strong>Indicador:&nbsp;</strong>{{$responsabilidad->indicador}}</span>
-                                <br>
-                                <span><strong>Tiempo:&nbsp;</strong>{{$responsabilidad->tiempo_asignado}}</span>
-                             </div>
-                             <br>
-                            @endforeach --}}
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <span><strong>Certificaciones</strong>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Vigencia</th>
+                                                <th>Estatus</th>
+                                                <th>Documento</th>
+                    
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($certificados as $certificado)
+                                                <tr>
+                                                    <td>{{ $certificado->nombre}}</td>
+                                                    <td>{{ $beneficiario->vigencia}}</td>
+                                                    <td>{{ $beneficiario->estatus}}</td>
+                                                    <td>{{ $beneficiario->documento}}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>                            
+                                </div>
+                            </div>
+                            
+
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <span><strong>Capacitaciones</strong>
+                                    <div>{{$visualizarEmpleados->resumen}}</div>
+                                </div> 
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <span><strong>Experiencia Profesional</strong>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Vigencia</th>
+                                                <th>Estatus</th>
+                                                <th>Documento</th>
+                    
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($certificados as $certificado)
+                                                <tr>
+                                                    <td>{{ $certificado->nombre}}</td>
+                                                    <td>{{ $beneficiario->vigencia}}</td>
+                                                    <td>{{ $beneficiario->estatus}}</td>
+                                                    <td>{{ $beneficiario->documento}}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>                            
+                                </div>
+                            </div>
 
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Expediente</span>
                             </div>
-                            {{-- @foreach($puesto->herramientas as $herramienta)
-                            <div>
-                                <strong style="color:#00A57E;text-transform: uppercase">
-                                    {{$herramienta->nombre_herramienta}}
-                                </strong>
-                                <br>
-                                <span>{{$herramienta->descripcion_herramienta}}</span>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    {{-- <span><strong>Experiencia Profesional</strong> --}}
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Número</th>
+                                                <th>Documento</th>
+                                                {{-- <th>Estatus</th> --}}
+                    
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($expedientes as $expediente)
+                                                <tr>
+                                                    <td>{{ $expediente->nombre}}</td>
+                                                    <td>{{ $expediente->numero}}</td>
+                                                    <td>{{ $expediente->documentos}}</td>
+                                                    {{-- <td>{{ $expediente->estatus}}</td> --}}
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>                            
+                                </div>
                             </div>
-                            <br>
-                           @endforeach --}}
-
-                            {{-- <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
-                            <span style="font-size: 17px; font-weight: bold;">
-                                Experiencia Profesional</span>
-                            </div> --}}
-                            <p style="text-align:justify">
-                                {{-- {!!$puesto->experiencia!!} --}}
-                            </p>
-                            {{-- <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold;">
-                                    Educación Académica</span>
-                            </div> --}}
-                            <p style="text-align:justify">
-                                {{-- {!!$puesto->estudios!!} --}}
-
-                            </p>
-                            {{-- <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold;">
-                                    Conocimientos</span>
-                            </div> --}}
-                            <p style="text-align:justify">
-                                {{-- {!!$puesto->conocimientos!!} --}}
-                            </p>
                         
                         </div>
 
@@ -318,16 +340,11 @@
                         <div class="mt-4 col-md-4 datos_der_cv">
                             <div
                                 style="background: linear-gradient(0deg, rgba(69,125,182,1) 0%, rgba(8,170,157,1) 60%); height:100%; padding:10px;">
-                                {{-- <div class="text-center w-100"><img class="mt-3"
-                                        style="height: 100px; clip-path: circle(50px at 50% 50%); margin:auto"
-                                        src="{{ asset('storage/empleados/imagenes/') . '/' . $empleadoModel->Avatar }}"
-                                        alt=""></div> --}}
                                 <div class="mt-3 mb-4 w-100" style="border-bottom: solid 2px #fff;">
                                     <span class="text-white " style="font-size: 14px; font-weight: bold;">
                                        Datos Personales</span>
                                 </div>
                                 <strong><i class="ml-2 mr-2 far fa-building text-white"></i>Domicilio</strong>
-                                {{-- <h5><i class="ml-2 mr-2 far fa-building text-white" ></i>Domicilio</h5> --}}
 
                                 @if (is_null($visualizarEmpleados->calle))
                                 <label class="ml-4">Sin registro</label>
@@ -402,7 +419,6 @@
                                 @endif
                                 <br>
                                 <strong><i class="ml-2 mr-2 far fa-building text-white"></i>Teléfono de casa</strong>
-                                {{-- <h5><i class="ml-2 mr-2 far fa-building text-white" ></i>Teléfono de casa</h5> --}}
 
                                 @if (is_null($visualizarEmpleados->telefono_casa))
                                 <label class="ml-4">Sin registro</label>
@@ -414,7 +430,6 @@
                                 @endif
                                 <br>
                                 <strong><i class="ml-2 mr-2 far fa-building text-white"></i>Correo Personal</strong>
-                                {{-- <h5><i class="ml-2 mr-2 far fa-building text-white" ></i>Correo Personal</h5> --}}
 
                                 @if (is_null($visualizarEmpleados->correo_personal))
                                 <label class="ml-4">Sin registro</label>
@@ -501,19 +516,7 @@
                                 <br>
                                 {{-- {{$contactos}} --}}
                                 <strong><i class="ml-2 mr-2 fas fa-birthday-cake text-white"></i>Contáctos de emergencia</strong>
-                                {{-- <ul class="small-block-grid-1 medium-block-grid-3 large-block-grid-4">
-                                    @foreach($contactos as $contacto)
-                                        <li>
-                                            <div class="thumb">
-                                                <h3 class="thumbTitle">Nombre: {{$contacto->nombre}}</h3>
-                                                <h3 class="thumbTitle">Teléfono: {{$contacto['telefono']}}</h3>
-                                                <h3 class="thumbTitle">Parentesco: {{$contacto['parentesco']}}</h3>
-                                               
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul> --}}
-                                <table>
+                                <table class="table tabla_verde">
                                     <thead>
                                         <tr>
                                             <th>Nombre</th>
@@ -534,7 +537,7 @@
                                 </table>
                                 <br>
                                 <strong><i class="ml-2 mr-2 fas fa-birthday-cake text-white"></i>Dependientes económicos</strong>
-                                <table>
+                                <table class="table tabla_verde">
                                     <thead>
                                         <tr>
                                             <th>Nombre</th>

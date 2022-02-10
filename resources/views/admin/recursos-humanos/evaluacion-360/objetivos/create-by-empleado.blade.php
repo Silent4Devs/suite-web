@@ -177,7 +177,7 @@
                 }, {
                     data: 'objetivo',
                     render: function(data, type, row, meta) {
-                        return data.meta + ' ' + data.metrica.definicion;
+                        return data.meta;
                     }
                 }, {
                     data: 'objetivo.descripcion_meta',
@@ -196,14 +196,16 @@
                             <div class="btn-group">
                                 <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button> 
                             </div>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button> 
+                            </div>
                                 `;
                         // <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
                         return botones;
                     }
                 }],
-                order: [
-                    [1, 'asc']
-                ],
+                order: [[1, 'asc']],
+                pageLength: 10,
                 dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",

@@ -232,4 +232,12 @@ class EV360ObjetivosController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function destroy(ObjetivoEmpleado $objetivoEmpleado)
+    {
+    
+        $objetivoEmpleado->delete();
+
+        return response()->json(['deleted'=> true]);
+    }
 }
