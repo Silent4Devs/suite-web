@@ -399,8 +399,8 @@
         <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" id="empleado_id_idioma" />
         <div class="row">
             <div class="form-group col-sm-5">
-                <label for="nombre"><i class="fas fa-school iconos-crear"></i>Nombre</label>
-                <select class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
+                <label for="id_language"><i class="fas fa-school iconos-crear"></i>Nombre</label>
+                <select class="form-control {{ $errors->has('id_language') ? 'is-invalid' : '' }}"
                     name="id_language" id="nombre_idioma" value="{{ old('id_language', '') }}">
                 <option value="">Seleccione una opción</option>
                 @foreach ($idiomas as $id => $idioma)

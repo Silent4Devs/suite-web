@@ -23,6 +23,7 @@ class IdiomaEmpleado extends Model
         'porcentaje',
         'certificado',
         'empleado_id',
+        'id_language',
     ];
 
     protected $appends = ['ruta_documento', 'ruta_absoluta_documento'];
@@ -39,7 +40,7 @@ class IdiomaEmpleado extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_id');
     }
 
     public function language()

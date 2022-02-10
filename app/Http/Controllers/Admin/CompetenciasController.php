@@ -233,7 +233,7 @@ class CompetenciasController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             // 'numero' => 'required|string|max:255',
-            'documentos' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
+            // 'documentos' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
             'empleado_id' => 'required|exists:empleados,id',
         ]);
 
@@ -247,6 +247,12 @@ class CompetenciasController extends Controller
                     'documentos' => $file->getClientOriginalName(),
                 ]);
             }
+        }
+
+        dd(back());
+
+        if (back() == route('inicio-Usuario.expediente')) {
+            return redirect()->route('inicio-Usuario.expediente');
         }
 
         return response()->json(['status' => 'success', 'message' => 'Documentos cargados con éxito']);

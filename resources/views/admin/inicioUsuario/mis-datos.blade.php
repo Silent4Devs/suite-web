@@ -244,7 +244,7 @@
 
     .pb-personzalizado,
     .card_margin_b_n {
-        padding-bottom: 14px !important;
+        padding: 20px !important;
     }
 
     hr {
@@ -421,8 +421,12 @@ if (!is_null($organizacion)) {
                                         </a>
                                     @endif
 
-
-
+                                    @if ($usuario->empleado)
+                                        <a href="{{ route('admin.inicio-Usuario.expediente', auth()->user()->empleado->id) }}"
+                                            class="mt-2">
+                                            Mi Expediente
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -901,7 +905,7 @@ if (!is_null($organizacion)) {
                         <div class="row gutters-sm">
                             <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100" >
-                                    <div class="pb-personzalizado card-body" x-data="{show:false}" style="padding:26px;">
+                                    <div class="pb-personzalizado card-body" x-data="{show:false}">
                                         <div class="row">
                                             <div class="col-4">
                                                 <h5 class="mb-0"><i class="bi bi-bullseye mr-2"></i>Mis
@@ -993,7 +997,7 @@ if (!is_null($organizacion)) {
                             </div>
                             <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100 mt-1">
-                                    <div class="pb-personzalizado card-body" x-data="{show:false}" style="padding:13px;">
+                                    <div class="pb-personzalizado card-body" x-data="{show:false}" style="padding-top:17px !important; padding-bottom:17px !important;">
                                         <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge mr-2"></i>Mi
                                             Autoevaluación
                                         </h5>
@@ -1050,7 +1054,7 @@ if (!is_null($organizacion)) {
                             </div>
                             <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100 mt-1">
-                                    <div class="pb-personzalizado mb-0 card-body" x-data="{show:false}" style="padding:14px;">
+                                    <div class="pb-personzalizado mb-0 card-body" x-data="{show:false}" style="padding-top:17px !important; padding-bottom:17px !important;">
                                         <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge-fill mr-2"></i>Evaluaciones a
                                             Realizar
                                              @if($evaluaciones->count() > 0)

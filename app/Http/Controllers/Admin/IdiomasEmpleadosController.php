@@ -40,7 +40,8 @@ class IdiomasEmpleadosController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string',
+            // 'nombre' => 'required|string',
+            'id_language' =>'required',
             'nivel' => 'required|string',
             'porcentaje' => 'nullable|numeric|min:1|max:100',
             'certificado' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf',
@@ -75,9 +76,16 @@ class IdiomasEmpleadosController extends Controller
      */
     public function update(Request $request, IdiomaEmpleado $idiomaEmpleado)
     {
-        if (array_key_exists('nombre', $request->all())) {
+        // if (array_key_exists('nombre', $request->all())) {
+        //     $request->validate([
+        //         'nombre' => 'required|string|max:255',
+        //     ]);
+        //     $idiomaEmpleado->update($request->all());
+        // }
+
+        if (array_key_exists('id_language', $request->all())) {
             $request->validate([
-                'nombre' => 'required|string|max:255',
+                'id_language' => 'required',
             ]);
             $idiomaEmpleado->update($request->all());
         }
