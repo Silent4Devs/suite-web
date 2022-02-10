@@ -29,7 +29,7 @@
             </div>
             <table class="table table-bordered w-100 tblObjetivos">
                 <div class="mb-2 row">
-                    <div class="col-4">
+                    <div class="col-4" >
                         <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
                         <select class="form-control" id="lista_areas">
                             <option value="" disabled selected>-- Selecciona un área --</option>
@@ -39,7 +39,8 @@
                             <option value="">Todas</option>
                         </select>
                     </div>
-                    <div class="col-4">
+                    {{-- {{$puestos}} --}}
+                    <div class="col-4" id="puesto">
                         <label for=""><i class="fas fa-filter"></i> Filtrar por puesto</label>
                         <select class="form-control" id="lista_puestos">
                             <option value="" disabled selected>-- Selecciona un puesto --</option>
@@ -60,7 +61,7 @@
                         </select>
                     </div>
                 </div>
-                <thead class="thead-dark">
+                <thead class="thead-dark" id="max">
                     <tr>
                         <th style="vertical-align: top">
                             N° Empleado
@@ -266,9 +267,7 @@
                     }
                 ],
                 orderCellsTop: true,
-                order: [
-                    [1, 'desc']
-                ],
+                order: [[1, 'desc']],
                 dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
@@ -434,5 +433,16 @@
         function ocultarValidando() {
             document.getElementById('displayAlmacenandoUniversal').style.display = 'none';
         }
+
+
+        let areas = document.querySelector("#puesto");
+            areas.addEventListener('change', function(event) {
+                if ($("#puesto option:selected").attr("id") != "ver_todos_option") {
+                    let area_id = event.target.value;
+                    orientacion = localStorage.getItem('orientationOrgChart');
+                    renderOrganigrama(OrgChart, orientacion, null, true, area_id);
+                }
+            });
     </script>
+
 @endsection

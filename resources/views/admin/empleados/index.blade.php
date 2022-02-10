@@ -12,7 +12,7 @@
             margin-right: -20px !important;
             position: absolute;
             z-index: 2;
-            padding-right:18px !important;
+            padding-right: 18px !important;
             margin-top: 5px !important;
         }
 
@@ -60,13 +60,13 @@
 
         .table tr td:nth-child(9) {
 
-        text-align: left !important;
+            text-align: left !important;
 
         }
 
         .table tr td:nth-child(7) {
 
-        text-align: left !important;
+            text-align: left !important;
 
         }
 
@@ -82,8 +82,21 @@
                 </div>
             </div>
         @endcan
-        <div class="col-12" style="text-align: right;">
-                    <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;" class="btn btn-primary btn-sm active" role="button" aria-pressed="true"><i class="pl-2 pr-3 fas fa-plus"></i> Configurar vista datos</a>
+        <div class="d-flex justify-content-between">
+            <div class="p-10">
+                <button id="eliminar_todo" class="btn btn-danger btn-sm"
+                    style="text-align: right;padding-right: 20px; background-color: red !important;"><i
+                        class="fa-solid fa-trash"></i> seleccionados</button>
+                <div class="spinner-grow hide" role="status" id="loaderDiv">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="p-2">
+                <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"
+                    class="btn btn-primary btn-sm active" role="button" aria-pressed="true"><i
+                        class="pl-2 pr-3 fas fa-plus"></i> Configurar vista datos</a>
+            </div>
         </div>
 
         {{-- <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"><button
@@ -112,6 +125,9 @@
             <table class="table table-bordered w-100 datatable-Empleado">
                 <thead class="thead-dark">
                     <tr>
+                        <th>
+
+                        </th>
                         <th style="vertical-align: top">
                             Foto
                         </th>
@@ -241,17 +257,17 @@
                 }
                 };
                 let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
+                text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
                 url:"{{ route('descarga-empleado') }}",
                 action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
+                let {
+                url
+                } = config;
+                window.location.href = url;
                 }
-            };
+                };
                 let btnImport = {
                 text: '<i class="fas fa-file-upload"></i>',
                 titleAttr: 'Importar datos',
@@ -317,13 +333,21 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.empleados.index') }}",
-                columns: [
+                columns: [{
+                        data: 'checkbox',
+                        name: 'checkbox',
+                        render: function(data, type, row, meta) {
+                            return '<input type="checkbox" class="select_one" name="checkbox[]" id="checkbox' +
+                                row.id + '" value="' + row.id + '">';
+                        }
+                    },
                     {
                         data: 'avatar',
                         name: 'avatar',
                         render: function(data, type, row, meta) {
-                            return `<div class="text-center"><img style="width: 50px;height: 50px;border-radius: 50%;" src="${row.avatar_ruta}"></div>`;
-
+                            const ids = row.id.toString();
+                            console.log(ids);
+                            return `<div class="text-center"><a href="empleados/${ids}/edit"><img style="width: 50px;height: 50px;border-radius: 50%;" src="${row.avatar_ruta}"></a></div>`;
                         }
                     },
                     {
@@ -374,9 +398,62 @@
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
-                ]
+                ],
+                columnDefs: [{
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0
+                }],
+                select: {
+                    style: "multi",
+                    selector: "td:first-child"
+                }
             };
             let table = $('.datatable-Empleado').DataTable(dtOverrideGlobals);
+
+            $('#eliminar_todo').click(function() {
+                let ArregloIds = [];
+                let arregloEliminar = table.rows({
+                    selected: true
+                }).data().toArray();
+                arregloEliminar.forEach(item => {
+                    ArregloIds.push(item.id) // Segunda columna
+                });
+                console.log(ArregloIds);
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: '{{ route('admin.empleado.deleteMultiple') }}',
+                    data: {
+                        data: ArregloIds
+                    },
+                    dataType: "JSON",
+                    beforeSend: function() {
+                        $("#loaderDiv").show();
+                        $('#eliminar_todo').hide();
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire(
+                                'Bien Hecho',
+                                'Registros eliminados ',
+                                'success'
+                            )
+                        }
+                        $("#loaderDiv").hide();
+                        $('#eliminar_todo').show();
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            });
         });
     </script>
+
 @endsection
