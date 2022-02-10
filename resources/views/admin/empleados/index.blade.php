@@ -323,6 +323,7 @@
                 columns: [
                     {
                         data: 'checkbox',
+                        name: 'checkbox',
                     },
                     {
                         data: 'avatar',
