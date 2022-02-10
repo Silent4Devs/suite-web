@@ -19,6 +19,9 @@ use App\Models\EvidenciasRiesgo;
 use App\Models\EvidenciasSeguridad;
 use App\Models\FelicitarCumpleaños;
 use App\Models\IncidentesSeguridad;
+use App\Models\EvidenciaDocumentoEmpleadoArchivo;
+use App\Models\EvidenciasDocumentosEmpleados;
+use App\Models\ListaDocumentoEmpleado;
 use App\Models\Mejoras;
 use App\Models\Organizacion;
 use App\Models\PanelInicioRule;
@@ -41,6 +44,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 class InicioUsuarioController extends Controller
 {
@@ -1051,5 +1055,79 @@ class InicioUsuarioController extends Controller
         $idiomas = PuestoIdiomaPorcentajePivot::where('id_puesto', '=', $puesto->id)->get();
 
         return view('admin.inicioUsuario.perfil_puesto', compact('puesto', 'idiomas'));
+    }
+
+    public function expediente($id_empleado)
+    {   
+        $empleado = Empleado::find($id_empleado);
+
+        $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->get();
+
+        $lista_docs_model = ListaDocumentoEmpleado::get();
+        $lista_docs = collect();
+        foreach($lista_docs_model as $doc){
+            $documentos_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
+            if ($documentos_empleado) {
+                $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', false)->first();
+                if($documento){
+                    $doc_viejo = $documento->ruta_documento;
+                    $nombre_doc = $documento->documento;
+                }else{
+                    $doc_viejo = null;    
+                    $nombre_doc = null;    
+                }
+            }else{
+                $doc_viejo = null;
+                $nombre_doc = null;
+            }
+            
+            $lista_docs->push((Object)[
+                'id'=>$doc->id,
+                'documento'=>$doc->documento,
+                'tipo'=>$doc->tipo,
+                'empleado'=>$documentos_empleado,
+                'ruta_documento'=>$doc_viejo,
+                'nombre_doc'=>$nombre_doc
+            ]);
+        }
+
+        // dd($lista_docs);
+
+        return view('admin.inicioUsuario.expediente', compact('empleado', 'docs_empleado', 'lista_docs'));
+    }
+
+    public function expedienteUpdate(Request $request)
+    {   
+        // dd($request->all());
+        if ($request->name == 'file') {
+            $fileName = time().$request->file('value')->getClientOriginalName();
+            // dd($request->file('value'));
+            $empleado = Empleado::find($request->empleadoId);
+            $request->file('value')->storeAs('public/expedientes/'.Str::slug($empleado->name), $fileName);  
+            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id'=>$request->empleadoId, 'lista_documentos_empleados_id'=>$request->documentoId], [$request->name => $request->value]);
+
+            $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();
+            if ($doc_viejo) {
+                $doc_viejo->update([
+                    'archivado'=>true,
+                ]);
+            }
+
+            $archivo = EvidenciaDocumentoEmpleadoArchivo::create([
+                'evidencias_documentos_empleados_id'=>$expediente->id,
+                'documento'=>$fileName,
+                'archivado'=>false
+            ]);
+            return response()->json(['status'=>201, 'message'=>'Registro Actualizado']); 
+
+        }else{
+            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id'=>$request->empleadoId, 'lista_documentos_empleados_id'=>$request->documentoId], [$request->name => $request->value]);
+        }
+
+        // $expediente->update([
+        //     $request->name => $request->value,
+        // ]);
+
+        return response()->json(['status'=>200, 'message'=>'Registro Actualizado']); 
     }
 }
