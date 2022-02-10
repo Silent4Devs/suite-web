@@ -13,7 +13,6 @@ class AddColumnTipoEvidenciasDocumentosEmpleadosTable extends Migration
      */
     public function up()
     {
-
         Schema::table('evidencias_documentos_empleados', function (Blueprint $table) {
             $table->string('tipo')->default('opcional');
         });
