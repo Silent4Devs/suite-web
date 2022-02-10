@@ -98,22 +98,21 @@ class Puesto extends Model
 
     public function empleados()
     {
-        return $this->belongsTo(Empleado::class, 'elaboro_id', 'reviso_id', 'autoriza_id','id')->with('area');
+        return $this->belongsTo(Empleado::class, 'elaboro_id', 'reviso_id', 'autoriza_id', 'id')->with('area');
     }
 
-    public function elaboro(){
-
+    public function elaboro()
+    {
         return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->with('area');
     }
 
-
-    public function reviso(){
-
+    public function reviso()
+    {
         return $this->belongsTo(Empleado::class, 'reviso_id', 'id')->with('area');
     }
 
-    public function autoriza(){
-
+    public function autoriza()
+    {
         return $this->belongsTo(Empleado::class, 'autoriza_id', 'id')->with('area');
     }
 
@@ -139,12 +138,9 @@ class Puesto extends Model
         return $this->belongsTo(self::class, 'reporta_puesto_id')->with('area');
     }
 
-
     public function reportara()
     {
-
         return $this->belongsTo('App\Models\Puesto', 'reporta_puesto_id', 'id');
-
     }
 
     public function competencia()
@@ -169,11 +165,11 @@ class Puesto extends Model
 
     public function contactos()
     {
-        return $this->hasMany('App\Models\PuestoContactos', 'puesto_id','id')->orderBy('id');
+        return $this->hasMany('App\Models\PuestoContactos', 'puesto_id', 'id')->orderBy('id');
     }
 
     public function externos()
     {
-        return $this->hasMany('App\Models\ContactosExternosPuestos', 'puesto_id','id')->orderBy('id');
+        return $this->hasMany('App\Models\ContactosExternosPuestos', 'puesto_id', 'id')->orderBy('id');
     }
 }

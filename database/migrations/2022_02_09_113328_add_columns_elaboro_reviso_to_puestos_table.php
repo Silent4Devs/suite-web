@@ -22,7 +22,6 @@ class AddColumnsElaboroRevisoToPuestosTable extends Migration
             $table->foreign('reviso_id')->references('id')->on('empleados')->onDelete('SET NULL')->onUpdate('cascade');
             $table->foreign('elaboro_id')->references('id')->on('empleados')->onDelete('SET NULL')->onUpdate('cascade');
             $table->foreign('reporta_puesto_id')->references('id')->on('puestos')->onDelete('SET NULL')->onUpdate('cascade');
-
         });
     }
 

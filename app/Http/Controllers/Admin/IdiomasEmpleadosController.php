@@ -90,7 +90,6 @@ class IdiomasEmpleadosController extends Controller
             $idiomaEmpleado->update($request->all());
         }
 
-
         if (array_key_exists('nivel', $request->all())) {
             $request->validate([
                 'nivel' => 'required|string|max:255',
