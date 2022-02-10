@@ -29,7 +29,7 @@
             </div>
             <table class="table table-bordered w-100 tblObjetivos">
                 <div class="mb-2 row">
-                    <div class="col-4">
+                    <div class="col-4" >
                         <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
                         <select class="form-control" id="lista_areas">
                             <option value="" disabled selected>-- Selecciona un área --</option>
@@ -39,7 +39,8 @@
                             <option value="">Todas</option>
                         </select>
                     </div>
-                    <div class="col-4">
+                    {{-- {{$puestos}} --}}
+                    <div class="col-4" id="puesto">
                         <label for=""><i class="fas fa-filter"></i> Filtrar por puesto</label>
                         <select class="form-control" id="lista_puestos">
                             <option value="" disabled selected>-- Selecciona un puesto --</option>
@@ -60,7 +61,7 @@
                         </select>
                     </div>
                 </div>
-                <thead class="thead-dark">
+                <thead class="thead-dark" id="max">
                     <tr>
                         <th style="vertical-align: top">
                             N° Empleado
@@ -251,12 +252,12 @@
                             let html = `
                             <div class="d-flex">
                                 <a href="${urlAsignar}" title="Editar" class="btn btn-sm btn-primary">
-                                <i class="fas fa-user-tag"></i> Agregar    
+                                <i class="fas fa-user-tag"></i> Agregar
                                 </a>
                                 <button onclick="CopiarObjetivos('${urlVistaCopiarObjetivos}','${row.name}','${data}')" title="Copiar Objetivos" class="ml-2 text-white btn btn-sm" style="background:#11bb55">
                                 <i class="fas fa-copy"></i>Copiar</button>
                                 <a href="${urlShow}" title="Visualizar" class="ml-2 text-white btn btn-sm" style="background:#1da79f">
-                                <i class="fas fa-eye"></i> Ver    
+                                <i class="fas fa-eye"></i> Ver
                                 </a>
                             </div>
                             `;
@@ -266,9 +267,7 @@
                     }
                 ],
                 orderCellsTop: true,
-                order: [
-                    [1, 'desc']
-                ],
+                order: [[1, 'desc']],
                 dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
@@ -355,14 +354,14 @@
                                 <div class="col-12">
                                     <input type="hidden" value="${empleado_id}" name="empleado_destinatario">
                                     <label><i class="mr-2 fas fa-user"></i>Selecciona al empleado</label>
-                                    <select class="form-control empleados-select" name="empleado_destino">
+                                    <select class="empleados-select" name="empleado_destino">
                                         <option value="">-- Selecciona un empleado --</option>
                                         ${empleados.map(empleado => {
-                                            return `<option data-avatar="${empleado.avatar}" value="${empleado.id}">${empleado.name}</option>`;
+                                            return `<option data-avatar="${empleado.avatar_ruta}" value="${empleado.id}">${empleado.name}</option>`;
                                         }).join(',')}
                                     </select>
                                 </div>
-                            </div>    
+                            </div>
                         </form>
                         `;
                             modalContent.innerHTML = contenidoHTMLGenerado;
@@ -372,7 +371,8 @@
                             $('.empleados-select').select2({
                                 theme: 'bootstrap4',
                                 templateResult: stateSelection,
-                                templateSelection: stateSelection
+                                templateSelection: stateSelection,
+
                             });
 
                             function stateSelection(opt) {
@@ -382,7 +382,7 @@
 
                                 var optimage = $(opt.element).attr('data-avatar');
                                 var $opt = $(
-                                    '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' +
+                                    '<span><img src="' +
                                     optimage +
                                     '" class="img-fluid rounded-circle" width="30" height="30"/>' +
                                     opt.text + '</span>'
@@ -433,5 +433,16 @@
         function ocultarValidando() {
             document.getElementById('displayAlmacenandoUniversal').style.display = 'none';
         }
+
+
+        let areas = document.querySelector("#puesto");
+            areas.addEventListener('change', function(event) {
+                if ($("#puesto option:selected").attr("id") != "ver_todos_option") {
+                    let area_id = event.target.value;
+                    orientacion = localStorage.getItem('orientationOrgChart');
+                    renderOrganigrama(OrgChart, orientacion, null, true, area_id);
+                }
+            });
     </script>
+
 @endsection

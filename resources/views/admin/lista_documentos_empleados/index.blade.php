@@ -34,7 +34,7 @@
 					<tr>
 						<th>Documento</th>
 						<th style="max-width:100px;">Tipo</th>						
-						<th style="max-width:100px;">ID</th>						
+						{{-- <th style="max-width:100px;">ID</th>						 --}}
 						<th style="max-width:100px;">Opciones</th>
 					</tr>
 				</thead>
@@ -45,14 +45,14 @@
 							<td style="text-transform:capitalize;">
 								<font id="tipo_doc" class="{{ $doc->tipo }}">{{ $doc->tipo }}</font>
 							</td>
-							<td>
+							{{-- <td>
 								@if($doc->activar_numero == true)
 									Requerido
 								@endif
 								@if($doc->activar_numero == false)
 									No requerido
 								@endif
-							</td>
+							</td> --}}
 							<td>
 								<a href="{{ asset('admin/lista-documentos/destroy') }}/{{ $doc->id }}"><i class="fas fa-trash-alt" style="font-size:15pt; color:#ED5A5A;"></i></a>
 							</td>
@@ -87,10 +87,10 @@
 	        		<option value="aplica">Solo si aplica</option>
 	        	</select>
 	        </div>
-	        <div class="form-group">
+	        {{-- <div class="form-group">
 	        	<label><i class="far fa-file-alt iconos-crear"></i>ID Requerido</label>
 	        	<input type="checkbox" name="activar_numero" class="form-control">
-	        </div>
+	        </div> --}}
 	      </div>
 	      <div class="modal-footer">
 	        <div type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</div>

@@ -421,7 +421,7 @@
                                         <div>
                                             <strong class="font-weight-bold"
                                                 style="color:#00A57E;text-transform: uppercase">
-                                                {{ $idioma->nombre }}</strong>
+                                                {{$idioma->idiomas ? $idioma->idiomas->language : 'Sin definir' }}</strong>
                                             <br>
                                             <span style="text-transform:capitalize">
                                                 <strong>Nivel:</strong> {{ $idioma->nivel }}
@@ -520,15 +520,12 @@
                                                                 type="text" name="nombre" id="nombre_documento"
                                                                 value="{{ old('nombre', '') }}"> --}}
 
-                                                            <select class="form-control" name="nombre"
-                                                                id="nombre_documento">
-                                                                <option value="" selected disabled>Selecciones documento
-                                                                </option>
-                                                                @forelse($lista_docs as $list_doc)
-                                                                    <option
-                                                                        data-activar="{{ $list_doc->activar_numero ? 'si' : 'no' }}"
-                                                                        data-tipo="{{ $list_doc->tipo }}"
-                                                                        value="{{ $list_doc->documento }}">
+                                                                <select class="form-control" name="nombre" id="nombre_documento">
+                                                                    <option value="" selected disabled>Selecciones documento</option>
+                                                                    @forelse($lista_docs as $list_doc)
+                                                                        <option
+                                                                            data-activar="{{ $list_doc->activar_numero ? 'si' : 'no'}}"
+                                                                            data-tipo="{{ $list_doc->tipo }}"
 
                                                                         {{ $list_doc->documento }}
                                                                     </option>
