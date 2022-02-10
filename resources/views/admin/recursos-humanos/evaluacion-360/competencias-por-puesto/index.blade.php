@@ -170,13 +170,7 @@
                     data: 'puesto',
                     width: '30%',
                 }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        if (row.area) {
-                            return row.area.area;
-                        }
-                        return 'No se ha asignado a un área';
-                    }
+                    data: 'area.area',
                 }, {
                     data: 'competencias',
                     render: function(data, type, row, meta) {
@@ -225,23 +219,15 @@
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
             };
             let table = $('.tblCompetenciasPorPuesto').DataTable(dtOverrideGlobals);
-            // $('#lista_areas').on('change', function() {
-            //     console.log(this.value != "");
-            //     if (this.value != null && this.value != "") {
-            //         this.style.border = "2px solid #20a4a1";
-            //         table.columns(2).search("(^" + this.value + "$)", true, false).draw();
-            //     } else {
-            //         this.style.border = "none";
-            //         table.columns(2).search(this.value).draw();
-            //     }
-            // });
-            // $('.filter-select').change(function(){
-            // table.column( $(this).data('column') )
-            //     .search( $(this).val() )
-            //     .draw();
-            // });
-            $('#lista_areas').change(function() {
-                table.draw();
+            $('#lista_areas').on('change', function() {
+                console.log(this.value);
+                if (this.value != null && this.value != "") {
+                    this.style.border = "2px solid #20a4a1";
+                    table.columns(1).search("(^" + this.value + "$)", true, false).draw();
+                } else {
+                    this.style.border = "none";
+                    table.columns(1).search(this.value).draw();
+                }
             });
 
 

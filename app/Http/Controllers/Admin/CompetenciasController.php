@@ -203,7 +203,7 @@ class CompetenciasController extends Controller
     public function miCurriculum(Request $request, Empleado $empleado)
     {
         // dd($empleado);
-
+        abort_if(Gate::denies('visualizar_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $lista_docs = ListaDocumentoEmpleado::get();
 
         return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
@@ -211,6 +211,7 @@ class CompetenciasController extends Controller
 
     public function editarCompetencias(Empleado $empleado)
     {
+        abort_if(Gate::denies('perfil_profesional_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $isEditAdmin = false;
         $idiomas = Language::get();
 
@@ -222,7 +223,7 @@ class CompetenciasController extends Controller
         $doc_viejo = EvidenciasDocumentosEmpleados::where('nombre', $request->nombre)->where('archivado', false)->first();
         if ($doc_viejo) {
             $doc_viejo->update([
-                'archivado'=>true,
+                'archivado' => true,
             ]);
         }
 

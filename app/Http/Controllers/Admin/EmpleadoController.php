@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -346,6 +347,7 @@ class EmpleadoController extends Controller
 
     public function createEmpleado($request)
     {
+        // dd($request);
         $empleado = Empleado::create([
             'name' => $request->name,
             'area_id' =>  $request->area_id,
@@ -371,7 +373,16 @@ class EmpleadoController extends Controller
             'renovacion_contrato' => $request->renovacion_contrato,
             'esquema_contratacion' => $request->esquema_contratacion,
             'proyecto_asignado' => $request->proyecto_asignado,
+            // 'domicilio_personal' => $request->domicilio_personal,
+            'calle' => $request->calle,
+            'num_exterior' => $request->num_exterior,
             'domicilio_personal' => $request->domicilio_personal,
+            'num_interior' => $request->num_interior,
+            'colonia' => $request->colonia,
+            'delegacion' => $request->delegacion,
+            'estado' => $request->estado,
+            'pais' => $request->pais,
+            'cp' => $request->cp,
             'telefono_casa' => $request->telefono_casa,
             'correo_personal' => $request->correo_personal,
             'estado_civil' => $request->estado_civil,
@@ -462,6 +473,7 @@ class EmpleadoController extends Controller
                             $dataModel = $model->first();
                             $dataModel->update([
                                 'nombre' => $beneficiario['nombre'],
+                                'edad' => $beneficiario['edad'],
                                 'parentesco' => $beneficiario['parentesco'],
                                 'porcentaje' => $beneficiario['porcentaje'],
                             ]);
@@ -469,6 +481,7 @@ class EmpleadoController extends Controller
                             BeneficiariosEmpleado::create([
                                 'empleado_id' => $empleado->id,
                                 'nombre' => $beneficiario['nombre'],
+                                'edad' => $beneficiario['edad'],
                                 'parentesco' => $beneficiario['parentesco'],
                                 'porcentaje' => $beneficiario['porcentaje'],
                             ]);
@@ -1141,9 +1154,7 @@ class EmpleadoController extends Controller
                 }
             }
         } else {
-            if (
-                $request->file('foto') != null or !empty($request->file('foto'))
-            ) {
+            if ($request->file('foto')) {
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
                 $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
                 $new_name_image = 'UID_' . $empleado->id . '_' . $request->name . '.' . $extension;
@@ -1195,7 +1206,16 @@ class EmpleadoController extends Controller
             'renovacion_contrato' => $request->renovacion_contrato,
             'esquema_contratacion' => $request->esquema_contratacion,
             'proyecto_asignado' => $request->proyecto_asignado,
+            // 'domicilio_personal' => $request->domicilio_personal,
+            'calle' => $request->calle,
+            'num_exterior' => $request->num_exterior,
             'domicilio_personal' => $request->domicilio_personal,
+            'num_interior' => $request->num_interior,
+            'colonia' => $request->colonia,
+            'delegacion' => $request->delegacion,
+            'estado' => $request->estado,
+            'pais' => $request->pais,
+            'cp' => $request->cp,
             'telefono_casa' => $request->telefono_casa,
             'correo_personal' => $request->correo_personal,
             'estado_civil' => $request->estado_civil,
@@ -1217,6 +1237,7 @@ class EmpleadoController extends Controller
             'salario_base_mensual' => $request->salario_base_mensual ? preg_replace('/([^0-9\.])/i', '', $request->salario_base_mensual) : null,
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
+            'foto'=> $image,
         ]);
 
         $this->assignDependenciesModel($request, $empleado);
@@ -1534,4 +1555,34 @@ class EmpleadoController extends Controller
 
         return $empleados;
     }
+
+    public function datosEmpleado($id){
+        // dd('funciona');
+        $visualizarEmpleados = Empleado::find(intval($id));
+        $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
+        $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
+        $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
+        $certificados = CertificacionesEmpleados::where('empleado_id', $id)->get();
+        // dd($certificados);
+        $empleado = Empleado::get();
+
+        // dd($visualizarEmpleados);
+
+        return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos','dependientes','beneficiarios','certificados'));
+    }
+
+    // public function createPDF(){
+    //     $visualizarEmpleados = Empleado::all();
+    //     $datos = Empleado::get();
+    //     $data = compact('datos', 'visualizarEmpleados');
+    //     // $imprimir = PDF::loadView('admin.empleados.datosEmpleado', $data);
+    //     // return $imprimir->stream();
+
+    //     $imprimir = PDF::loadView('admin.empleados.datosEmpleado', $data)->setOptions(['defaultFont' => 'sans-serif']);
+    //     return $imprimir->stream();
+
+    //     // return $imprimir->download('archivo.pdf');
+    //     // return $imprimir->download('archivo-pdf.pdf');
+
+    // }
 }

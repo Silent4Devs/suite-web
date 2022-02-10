@@ -57,19 +57,19 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_empleado"><i class="fas fa-user-tie iconos-crear"></i>Elaboró </label>
-                        <select class="form-control {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
-                            name="id_empleado" id="id_empleado">
-                            <option value disabled {{ old('id_empleado', null) === null ? 'selected' : '' }}>
+                        <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró </label>
+                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
+                            name="id_elaboro" id="id_elaboro">
+                            <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach ($empleados as $key => $label)
                                 <option value="{{ $label->id }}">{{ $label->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @if ($errors->has('id_empleado'))
+                        @if ($errors->has('id_elaboro'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('id_empleado') }}
+                                {{ $errors->first('id_elaboro') }}
                             </div>
                         @endif
                     </div>
@@ -102,7 +102,7 @@
                         <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>%
                             Implementacion</label>
                         <input class="form-control {{ $errors->has('porcentaje_implementacion') ? 'is-invalid' : '' }}"
-                            type="text" name="porcentaje_implementacion" id="porcentaje_implementacion"
+                            type="number" step=".1" name="porcentaje_implementacion" id="porcentaje_implementacion"
                             value="{{ old('porcentaje_implementacion', '') }}">
                         @if ($errors->has('porcentaje_implementacion'))
                             <div class="invalid-feedback">
@@ -144,7 +144,7 @@
 
 @section('scripts')
     <script type=text/javascript>
-        $('#id_empleado').change(function() {
+        $('#id_elaboro').change(function() {
             var elaboroID = $(this).val();
             if (elaboroID) {
                 $.ajax({
