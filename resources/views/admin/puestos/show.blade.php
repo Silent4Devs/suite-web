@@ -47,7 +47,7 @@
                             <strong style="color:#00A57E;text-transform: uppercase">
                                 Área</strong>
                             <br>
-                            <span>{{ $puesto->puesto ? $puesto->area->area : 'Sin definir' }}</span>
+                            <span>{{ $puesto->area ? $puesto->area->area : 'Sin definir' }}</span>
                             <br>
                             <strong style="color:#00A57E;text-transform: uppercase">
                                 Reportará a </strong>
