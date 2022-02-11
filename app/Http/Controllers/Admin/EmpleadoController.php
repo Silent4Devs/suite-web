@@ -1614,7 +1614,7 @@ class EmpleadoController extends Controller
 
 
 
-    }
+    // }
 
     public function borradoMultiple(Request $request)
     {
