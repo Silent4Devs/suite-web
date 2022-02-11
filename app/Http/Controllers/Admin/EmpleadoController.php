@@ -1605,16 +1605,13 @@ class EmpleadoController extends Controller
     //     $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
     //     $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
     //     $empleado = Empleado::get();
-   
+
     //     $pdf = PDF::loadView('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'contactos','dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes', 'empleado'))->setOptions(['defaultFont' => 'sans-serif'])->render();;
     //     $dompdf->loadHtml($pdf);
     //     $dompdf->render();
     //     return $pdf->download('empleado.pdf');
 
 
-
-
-    }
 
     public function borradoMultiple(Request $request)
     {
