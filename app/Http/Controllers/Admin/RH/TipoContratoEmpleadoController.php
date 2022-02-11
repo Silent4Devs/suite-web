@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\RH;
 use App\Http\Controllers\Controller;
 use App\Models\RH\TipoContratoEmpleado;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class TipoContratoEmpleadoController extends Controller
@@ -16,6 +18,7 @@ class TipoContratoEmpleadoController extends Controller
      */
     public function index(Request $request)
     {
+        abort_if(Gate::denies('tipos_de_contratos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description')->get();
         if ($request->ajax()) {
             return datatables()->of($tipoContratoEmpleado)->toJson();
@@ -31,6 +34,7 @@ class TipoContratoEmpleadoController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('tipos_de_contratos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tipoContratoEmpleado = new TipoContratoEmpleado;
 
         return view('admin.recursos-humanos.tipo-contrato-empleado.create', compact('tipoContratoEmpleado'));
@@ -44,6 +48,7 @@ class TipoContratoEmpleadoController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('tipos_de_contratos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:4000',
@@ -69,7 +74,7 @@ class TipoContratoEmpleadoController extends Controller
      */
     public function show(TipoContratoEmpleado $tipoContratoEmpleado)
     {
-        //
+        abort_if(Gate::denies('tipos_de_contratos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
     }
 
     /**
@@ -80,6 +85,7 @@ class TipoContratoEmpleadoController extends Controller
      */
     public function edit($tipoContratoEmpleado)
     {
+        abort_if(Gate::denies('tipos_de_contratos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tipoContratoEmpleado = TipoContratoEmpleado::find($tipoContratoEmpleado);
 
         return view('admin.recursos-humanos.tipo-contrato-empleado.edit', compact('tipoContratoEmpleado'));
@@ -94,6 +100,7 @@ class TipoContratoEmpleadoController extends Controller
      */
     public function update(Request $request, $tipoContratoEmpleado)
     {
+        abort_if(Gate::denies('tipos_de_contratos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tipoContratoEmpleado = TipoContratoEmpleado::find($tipoContratoEmpleado);
         $request->validate([
             'name' => 'required|string|max:255',
@@ -119,6 +126,7 @@ class TipoContratoEmpleadoController extends Controller
      */
     public function destroy($tipoContratoEmpleado)
     {
+        abort_if(Gate::denies('tipos_de_contratos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tipoContratoEmpleado = TipoContratoEmpleado::find($tipoContratoEmpleado);
         $deleted = $tipoContratoEmpleado->delete();
         if ($deleted) {

@@ -33,7 +33,7 @@
                 text-align: center !important;
             }
 
-            .btn_cargar{
+            .btn_cargar {
                 border-radius: 100px !important;
                 border: 1px solid #345183;
                 color: #345183;
@@ -47,11 +47,13 @@
                 margin: 0 !important;
                 margin-right: 10px !important;
             }
-            .btn_cargar:hover{
+
+            .btn_cargar:hover {
                 color: #fff;
-                background:#345183 ;
+                background: #345183;
             }
-            .btn_cargar i{
+
+            .btn_cargar i {
                 font-size: 15pt;
                 width: 100%;
                 height: 100%;
@@ -63,6 +65,9 @@
                 margin-right:15px;
             }
 
+            .agregar {
+                margin-right: 15px;
+            }
 
             .table tr td:nth-child(5) {
 
@@ -260,8 +265,8 @@
             let btnExport = {
                 text: '<i  class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-analisis_riego') }}",
+                className: "btn btn_cargar",
+                url: "{{ route('descarga-analisis_riego') }}",
                 action: function(e, dt, node, config) {
                     let {
                         url
@@ -278,7 +283,10 @@
                 }
             };
 
-            dtButtons.push(btnAgregar);
+            @can('analisis_de_riesgos_matriz_riesgo_create')
+                dtButtons.push(btnAgregar);
+            @endcan
+
             dtButtons.push(btnExport);
             dtButtons.push(btnImport);
 
@@ -325,7 +333,13 @@
                         data: 'enlace',
                         name: 'enlace',
                         render: function(data, type, row, meta) {
-                            return `<div class="text-center w-100"><a href="matriz-seguridad/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a></div>`;
+                            return `
+                            <div class="text-center w-100">
+                            @can('analisis_de_riesgos_matriz_riesgo_config')
+                                <a href="matriz-seguridad/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                            @endcan
+                            </div>
+                            `;
                         }
                     },
                     {

@@ -7,6 +7,8 @@ use App\Models\AnalisisDeRiesgo;
 use App\Models\Area;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Laracasts\Flash\Flash;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -24,6 +26,7 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function index(Request $request)
     {
+        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             //Esta es el error , activo_id no lo encuentra, hay que modificar la relacion en el modelo de matrizriesgo
             $query = AnalisisDeRiesgo::orderByDesc('id')->get();
@@ -33,9 +36,9 @@ class AnalisisdeRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'user_show';
-                $editGate = 'user_edit';
-                $deleteGate = 'user_delete';
+                $viewGate = 'analisis_de_riesgos_matriz_riesgo_show';
+                $editGate = 'analisis_de_riesgos_matriz_riesgo_edit';
+                $deleteGate = 'analisis_de_riesgos_matriz_riesgo_delete';
                 $crudRoutePart = 'analisis-riesgos';
 
                 return view('partials.datatablesActions', compact(
@@ -98,6 +101,7 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::get();
 
         //$tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -113,6 +117,7 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $analisis = AnalisisDeRiesgo::create($request->all());
         switch ($request->tipo) {
             case 'Seguridad de la información':
@@ -135,6 +140,7 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function show(Request $request, $id)
     {
+        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $analisis = AnalisisDeRiesgo::find($id);
 
         return view('admin.analisis-riesgos.show', compact('analisis'));
@@ -148,6 +154,7 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function edit($id)
     {
+        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::get();
         $analisis = AnalisisDeRiesgo::find($id);
 
@@ -163,6 +170,7 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $analisis = AnalisisDeRiesgo::find($id);
 
         $analisis->update([
@@ -185,6 +193,7 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function destroy($id)
     {
+        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_destroy'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $analisis = AnalisisDeRiesgo::find($id);
         $analisis->delete();
 

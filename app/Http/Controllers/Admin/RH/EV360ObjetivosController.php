@@ -9,9 +9,9 @@ use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoEmpleado;
-use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -19,11 +19,14 @@ class EV360ObjetivosController extends Controller
 {
     public function index(Request $request)
     {
+        abort_if(Gate::denies('objetivos_estrategicos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->ajax()) {
             $empleados = Empleado::with(['objetivos', 'area', 'perfil'])->get();
 
             return datatables()->of($empleados)->toJson();
         }
+
         $areas = Area::select('id', 'area')->get();
         $puestos = Puesto::select('id', 'puesto')->get();
         $perfiles = PerfilEmpleado::select('id', 'nombre')->get();
@@ -42,6 +45,7 @@ class EV360ObjetivosController extends Controller
 
     public function createByEmpleado(Request $request, $empleado)
     {
+        abort_if(Gate::denies('objetivos_estrategicos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = new Objetivo;
         $empleado = Empleado::find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
@@ -65,6 +69,7 @@ class EV360ObjetivosController extends Controller
 
     public function storeByEmpleado(Request $request, $empleado)
     {
+        abort_if(Gate::denies('objetivos_estrategicos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',
@@ -104,6 +109,7 @@ class EV360ObjetivosController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('objetivos_estrategicos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',
@@ -122,6 +128,7 @@ class EV360ObjetivosController extends Controller
 
     public function editByEmpleado(Request $request, $empleado, $objetivo)
     {
+        abort_if(Gate::denies('objetivos_estrategicos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = Objetivo::find(intval($objetivo))->load(['tipo', 'metrica']);
         $empleado = Empleado::find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
@@ -146,6 +153,7 @@ class EV360ObjetivosController extends Controller
 
     public function edit($objetivo)
     {
+        abort_if(Gate::denies('objetivos_estrategicos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = Objetivo::find($objetivo);
         $tipo_seleccionado = $objetivo->tipo_id;
         $metrica_seleccionada = $objetivo->metrica_id;
@@ -155,6 +163,7 @@ class EV360ObjetivosController extends Controller
 
     public function updateByEmpleado(Request $request, $objetivo)
     {
+        abort_if(Gate::denies('objetivos_estrategicos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',
@@ -196,7 +205,7 @@ class EV360ObjetivosController extends Controller
 
     public function show($empleado)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('objetivos_estrategicos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = new Objetivo;
         $empleado = Empleado::find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
@@ -248,6 +257,6 @@ class EV360ObjetivosController extends Controller
     {
         $objetivoEmpleado->delete();
 
-        return response()->json(['deleted'=> true]);
+        return response()->json(['deleted' => true]);
     }
 }

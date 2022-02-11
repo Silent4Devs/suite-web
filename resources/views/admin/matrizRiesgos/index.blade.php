@@ -22,8 +22,10 @@
                         </div>
                     </div>
                     <div class="col-11">
-                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre cada una de las matrices
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
+                        </p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre cada una de las
+                            matrices
                             de riesgo</p>
                     </div>
                 </div>
@@ -31,16 +33,21 @@
             @include('partials.flashMessages')
             <div class="card-body datatable-fix">
                 <div class="d-flex justify-content-between">
-                    <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                        href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}" type="submit"
-                        name="action">Agregar nuevo</a>
-                    <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                        href="{{ route('admin.matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
+                    @can('analisis_de_riesgos_matriz_riesgo_analisis_create')
+                        <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
+                            href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}" type="submit"
+                            name="action">Agregar nuevo</a>
+                    @endcan
+                    @can('analisis_de_riesgos_matriz_riesgo_analisis_grafica_show')
+                        <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
+                            href="{{ route('admin.matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
+                    @endcan
                 </div>
                 <table class="table table-bordered w-100 datatable datatable-Matriz">
                     <thead class="thead-dark">
                         <tr class="negras">
-                            <th class="text-center" style="background-color:#3490DC;" colspan="8">Descripción General </th>
+                            <th class="text-center" style="background-color:#3490DC;" colspan="8">Descripción General
+                            </th>
                             <th class="text-center" style="background-color:#1168af;" colspan="4">CID</th>
                             <th class="text-center" style="background-color:#217bc5;" colspan="3">Riesgo Inicial
                             <th class="text-center" style="background-color:#1168af;" colspan="2">Acciones</th>
@@ -95,8 +102,8 @@
                                 Nivel riesgo
                             </th>
                             <!--<th>
-                                                                                                            Riesgo total
-                                                                                                        </th>-->
+                                                                                                                    Riesgo total
+                                                                                                                </th>-->
                             <th>
                                 Control
                             </th>
@@ -122,8 +129,8 @@
                                 Nivel riesgo
                             </th>
                             <!--<th>
-                                                                                                        Riesgo total
-                                                                                                    </th>-->
+                                                                                                                Riesgo total
+                                                                                                            </th>-->
                             <th>
                                 Opciones
                             </th>
@@ -260,13 +267,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -388,8 +395,9 @@
                         render: function(data) {
                             let returnData = "<ol>";
                             let controles = JSON.parse(data);
-                            controles.forEach (control => {
-                                returnData += `<li>${control.declaracion_aplicabilidad.anexo_politica}</li>`;
+                            controles.forEach(control => {
+                                returnData +=
+                                    `<li>${control.declaracion_aplicabilidad.anexo_politica}</li>`;
                             });
                             return returnData + `</ol>`;
                         }

@@ -39,12 +39,12 @@ class ExportExcel extends Controller
         return response()->download($path);
     }
 
-    public function MatrizRequisitosLegales()
-    {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+    // public function MatrizRequisitosLegales()
+    // {
+    //     $path = storage_path('app/public/exportExcel/users.xlsx');
 
-        return response()->download($path);
-    }
+    //     return response()->download($path);
+    // }
 
     public function Foda()
     {
