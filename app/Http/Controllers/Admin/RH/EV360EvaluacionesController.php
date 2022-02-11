@@ -18,6 +18,8 @@ use App\Models\RH\ObjetivoRespuesta;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Spatie\CalendarLinks\Link;
@@ -26,6 +28,7 @@ class EV360EvaluacionesController extends Controller
 {
     public function index(Request $request)
     {
+        abort_if(Gate::denies('evaluacion_360_seguimiento_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($this->obtenerCantidadMaximaDeObjetivos(20));
         $areas = Area::all();
         $empleados = Empleado::all();
@@ -41,6 +44,7 @@ class EV360EvaluacionesController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('evaluacion_360_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion = Evaluacion::all();
         $areas = Area::all();
         $empleados = Empleado::all();
@@ -50,6 +54,7 @@ class EV360EvaluacionesController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('evaluacion_360_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:255',
@@ -357,6 +362,7 @@ class EV360EvaluacionesController extends Controller
 
     public function evaluacion(Evaluacion $evaluacion)
     {
+        abort_if(Gate::denies('evaluacion_360_configuracion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion->load('autor');
         $competencias = Competencia::select('id', 'nombre')->get();
         $objetivos = Objetivo::select('id', 'nombre')->get();
@@ -688,6 +694,7 @@ class EV360EvaluacionesController extends Controller
 
     public function consultaPorEvaluado($evaluacion, $evaluado)
     {
+        abort_if(Gate::denies('evaluacion_360_resumen_individual_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $informacion_obtenida = $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
         $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
         $calificaciones_autoevaluacion_competencias = $calificaciones['calificaciones_autoevaluacion_competencias'];
@@ -1038,6 +1045,7 @@ class EV360EvaluacionesController extends Controller
 
     public function resumen($evaluacion)
     {
+        abort_if(Gate::denies('evaluacion_360_resumen_general_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion = Evaluacion::with('evaluados')->find(intval($evaluacion));
         $evaluados = $evaluacion->evaluados;
         $lista_evaluados = collect();
@@ -1220,6 +1228,6 @@ class EV360EvaluacionesController extends Controller
         $evaluacion = Evaluacion::find($evaluacion);
         $evaluacion->delete();
 
-        return response()->json(['deleted'=> true]);
+        return response()->json(['deleted' => true]);
     }
 }
