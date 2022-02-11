@@ -203,6 +203,7 @@ class CompetenciasController extends Controller
 
     public function miCurriculum(Request $request, Empleado $empleado)
     {
+        $empleado->load('idiomas');
         // dd($empleado);
         abort_if(Gate::denies('visualizar_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $lista_docs = ListaDocumentoEmpleado::get();
