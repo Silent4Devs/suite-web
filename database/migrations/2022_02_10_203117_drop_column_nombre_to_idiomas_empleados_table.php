@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnTipoEvidenciasDocumentosEmpleadosTable extends Migration
+class DropColumnNombreToIdiomasEmpleadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnTipoEvidenciasDocumentosEmpleadosTable extends Migration
      */
     public function up()
     {
-        Schema::table('evidencias_documentos_empleados', function (Blueprint $table) {
-            $table->string('tipo')->default('opcional');
+        Schema::table('idioma_empleados', function (Blueprint $table) {
+            $table->dropColumn('nombre');
         });
     }
 
@@ -25,8 +25,8 @@ class AddColumnTipoEvidenciasDocumentosEmpleadosTable extends Migration
      */
     public function down()
     {
-        Schema::table('evidencias_documentos_empleados', function (Blueprint $table) {
-            $table->dropColumn('tipo');
+        Schema::table('idiomas_empleados', function (Blueprint $table) {
+            //
         });
     }
 }

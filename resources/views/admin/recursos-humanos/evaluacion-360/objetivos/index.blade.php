@@ -29,7 +29,7 @@
             </div>
             <table class="table table-bordered w-100 tblObjetivos">
                 <div class="mb-2 row">
-                    <div class="col-4" >
+                    <div class="col-4">
                         <label for=""><i class="fas fa-filter"></i> Filtrar por área</label>
                         <select class="form-control" id="lista_areas">
                             <option value="" disabled selected>-- Selecciona un área --</option>
@@ -251,14 +251,21 @@
                                 `/admin/recursos-humanos/evaluacion-360/objetivos/${data}/copiar`;
                             let html = `
                             <div class="d-flex">
+                            @can('objetivos_estrategicos_create')
                                 <a href="${urlAsignar}" title="Editar" class="btn btn-sm btn-primary">
-                                <i class="fas fa-user-tag"></i> Agregar
+                                    <i class="fas fa-user-tag"></i> Agregar
                                 </a>
-                                <button onclick="CopiarObjetivos('${urlVistaCopiarObjetivos}','${row.name}','${data}')" title="Copiar Objetivos" class="ml-2 text-white btn btn-sm" style="background:#11bb55">
-                                <i class="fas fa-copy"></i>Copiar</button>
+                            @endcan
+                            @can('objetivos_estrategicos_copy')
+                                <button onclick="CopiarObjetivos('${urlVistaCopiarObjetivos}','${row.name}','${data}')" title="Copiar Objetivos"
+                                    class="ml-2 text-white btn btn-sm" style="background:#11bb55">
+                                    <i class="fas fa-copy"></i>Copiar</button>
+                            @endcan
+                            @can('objetivos_estrategicos_show')
                                 <a href="${urlShow}" title="Visualizar" class="ml-2 text-white btn btn-sm" style="background:#1da79f">
-                                <i class="fas fa-eye"></i> Ver
+                                    <i class="fas fa-eye"></i> Ver
                                 </a>
+                            @endcan
                             </div>
                             `;
                             return html;
@@ -267,7 +274,9 @@
                     }
                 ],
                 orderCellsTop: true,
-                order: [[1, 'desc']],
+                order: [
+                    [1, 'desc']
+                ],
                 dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
@@ -436,13 +445,13 @@
 
 
         let areas = document.querySelector("#puesto");
-            areas.addEventListener('change', function(event) {
-                if ($("#puesto option:selected").attr("id") != "ver_todos_option") {
-                    let area_id = event.target.value;
-                    orientacion = localStorage.getItem('orientationOrgChart');
-                    renderOrganigrama(OrgChart, orientacion, null, true, area_id);
-                }
-            });
+        areas.addEventListener('change', function(event) {
+            if ($("#puesto option:selected").attr("id") != "ver_todos_option") {
+                let area_id = event.target.value;
+                orientacion = localStorage.getItem('orientationOrgChart');
+                renderOrganigrama(OrgChart, orientacion, null, true, area_id);
+            }
+        });
     </script>
 
 @endsection

@@ -296,9 +296,16 @@
                             // <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
                             let html = `
                                 <div class="btn-group" style="background: white;">
+                                @can('evaluacion_360_configuracion_access')
                                     <a href="${urlEvaluacion}" class="btn btn-sm" title="Evaluación"><i class="fas fa-cogs"></i></a>
+                                @endcan
+                                @can('evaluacion_360_resumen_general_show')
                                     <a href="${urlResumen}" class="btn btn-sm" title="Gráfica"><i class="fas fa-chart-bar"></i></a>
-                                    <button class="btn btn-sm text-danger" title="Eliminar" data-action="Eliminar" data-url="${urlBtnEliminar}"><i class="fas fa-trash-alt"></i></button>
+                                @endcan
+                                @can('evaluacion_360_delete')
+                                    <button class="btn btn-sm text-danger" title="Eliminar" data-action="Eliminar" data-url="${urlBtnEliminar}"><i
+                                            class="fas fa-trash-alt"></i></button>
+                                @endcan
                                 </div>
                             `;
 
@@ -382,7 +389,7 @@
                                 if (response.deleted) {
                                     Swal.fire(
                                         '¡Evaluación Eliminada!',
-                                            '',
+                                        '',
                                         'success'
                                     )
                                     table.ajax.reload();

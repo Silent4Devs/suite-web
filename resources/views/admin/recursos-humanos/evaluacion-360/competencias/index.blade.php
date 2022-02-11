@@ -147,8 +147,8 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.ev360-competencias.index') }}",
-                columns: [ {
-                        data:'imagen',
+                columns: [{
+                        data: 'imagen',
                         render: function(data, type, row, meta) {
                             // console.log(row.imagen_ruta)
                             let html = '<div>';
@@ -182,10 +182,18 @@
                                 `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
 
                             let botones = `
-                            <a class="mr-2 btn btn-sm btn-editar" title="Agregar Conductas" href="${urlBtnEditarConductas}"><i class="fas fa-chalkboard-teacher"></i></a>
+                            @can('capital_humano_competencias_edit')
+                                <a class="mr-2 btn btn-sm btn-editar" title="Agregar Conductas" href="${urlBtnEditarConductas}"><i
+                                        class="fas fa-chalkboard-teacher"></i></a>
                                 <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
+                            @endcan                               
+                            @can('capital_humano_competencias_show')
                                 <a class="btn btn-sm btn-editar" title="Visualizar" href="${urlBtnVisualizar}"><i class="fas fa-eye"></i></a>
-                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" data-action="Eliminar" data-url="${urlBtnEliminar}"><i class="fas fa-trash-alt"></i></button>
+                            @endcan
+                            @can('capital_humano_competencias_delete')
+                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" data-action="Eliminar"
+                                    data-url="${urlBtnEliminar}"><i class="fas fa-trash-alt"></i></button>
+                            @endcan
                             `;
                             return botones;
                         }
@@ -234,7 +242,7 @@
                                         didOpen: () => {
                                             Swal.showLoading()
                                             timerInterval = setInterval(
-                                            () => {
+                                                () => {
                                                     const content = Swal
                                                         .getHtmlContainer()
                                                     if (content) {

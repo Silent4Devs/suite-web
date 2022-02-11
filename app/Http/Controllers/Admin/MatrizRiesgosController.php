@@ -209,6 +209,7 @@ class MatrizRiesgosController extends Controller
         //     return $query->with('declaracion_aplicabilidad');
         // }])->where('id_analisis', '=', $request['id'])->get();
         // dd($query);
+        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots' => function ($query) {
                 return $query->with('declaracion_aplicabilidad');
@@ -219,9 +220,9 @@ class MatrizRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'configuracion_sede_show';
-                $editGate = 'configuracion_sede_edit';
-                $deleteGate = 'configuracion_sede_delete';
+                $viewGate = 'analisis_de_riesgos_matriz_riesgo_config_show';
+                $editGate = 'analisis_de_riesgos_matriz_riesgo_config_edit';
+                $deleteGate = 'analisis_de_riesgos_matriz_riesgo_config_delete';
                 $crudRoutePart = 'matriz-riesgos';
 
                 return view('partials.datatablesActions', compact(

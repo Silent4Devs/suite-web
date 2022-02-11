@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\PanelOrganizacion;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class PanelOrganizacionController extends Controller
 {
@@ -16,6 +18,8 @@ class PanelOrganizacionController extends Controller
     public function index()
     {
         // dd("aqui");
+        abort_if(Gate::denies('configurar_vista_mi_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.panel-organizacion.index');
     }
 
