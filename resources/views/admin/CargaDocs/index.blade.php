@@ -153,7 +153,7 @@
                 </div>
 
                 <!-- Categoria Field -->
-                <div class="form-group col-sm-6">
+                {{-- <div class="form-group col-sm-6">
                     <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('matriz_requisitos_legales', 'Matriz de Requisitos Legales') !!}
                     <div class="caja_btn_input">
                         {!! Form::open(['route' => 'carga-matriz_requisitos_legales', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
@@ -162,10 +162,10 @@
                         {!! Form::close() !!}
                         {!! Form::open(['route' => 'descarga-matriz_requisitos_legales', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
                         <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i class="fas fa-download"></i></button>
-                        {{-- {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!} --}}
+                        {!! Form::button('<i class="fas fa-download"></i>', ['class' => 'btn btn_cargar', 'title' => 'Descargar documento']) !!}
                         {!! Form::close() !!}
                     </div>
-                </div>
+                </div> --}}
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
                     <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('foda', 'Foda') !!}
