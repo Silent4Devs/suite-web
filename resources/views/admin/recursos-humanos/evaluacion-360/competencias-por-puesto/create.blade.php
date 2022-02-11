@@ -11,14 +11,16 @@
     <h5 class="col-12 titulo_general_funcion">Competencias para: {{ $puesto->puesto }}</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
-                Asignar Competencias
-            </div>
-            <form id="formCompetenciaCreate" method="POST"
-                action="{{ route('admin.ev360-competencias-por-puesto.store', $puesto) }}" class="mt-3 row">
-                @csrf
-                @include('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.competencias.form')
-            </form>
+            @can('capital_humano_competencias_por_puestos_create')
+                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                    Asignar Competencias
+                </div>
+                <form id="formCompetenciaCreate" method="POST"
+                    action="{{ route('admin.ev360-competencias-por-puesto.store', $puesto) }}" class="mt-3 row">
+                    @csrf
+                    @include('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.competencias.form')
+                </form>
+            @endcan
             {{-- <div class="d-flex justify-content-end">
                 <button id="asignarBtn" class="mb-2 btn btn-sm btn-outline-success"><i
                         class="mr-2 fas fa-sync"></i>Asignar</button>
@@ -114,8 +116,15 @@
                             `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}`;
                         let botones = `
                             <div class="btn-group">
-                                <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlActualizar}','${urlEditar}','${row.competencia.id}','${row.competencia.nombre}','${row.nivel_esperado}')"><i class="fas fa-edit"></i></button>
-                                <button class="text-danger btn btn-sm btn-eliminar" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                            @can('capital_humano_competencias_por_puestos_edit')
+                                <button class="btn btn-sm btn-editar" title="Editar"
+                                    onclick="event.preventDefault();Editar('${urlActualizar}','${urlEditar}','${row.competencia.id}','${row.competencia.nombre}','${row.nivel_esperado}')"><i
+                                        class="fas fa-edit"></i></button>
+                            @endcan
+                            @can('capital_humano_competencias_por_puestos_delete')
+                                <button class="text-danger btn btn-sm btn-eliminar" title="Eliminar"
+                                    onclick="event.preventDefault();Eliminar('${urlEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                            @endcan
                             </div>
                         `;
                         return botones;
@@ -309,7 +318,7 @@
                         document.getElementById('titulo_competencia').innerHTML =
                             competencia_nombre;
                         document.getElementById('descripcion_competencia').innerHTML =
-                        competencia_descripcion;
+                            competencia_descripcion;
                         document.getElementById('competenciaInformacion').innerHTML = html;
 
                     }

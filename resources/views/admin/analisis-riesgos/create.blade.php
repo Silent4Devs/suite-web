@@ -14,9 +14,9 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="nombre"><i class="fas fa-table iconos-crear"></i>Nombre</label>
+                        <label for="nombre" class="required"><i class="fas fa-table iconos-crear"></i>Nombre</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
-                            name="nombre" id="nombre" value="{{ old('nombre', '') }}">
+                            name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre') }}
@@ -25,8 +25,8 @@
                     </div>
 
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="tipo"><i class="fab fa-elementor iconos-crear"></i>Tipo </label>
-                        <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo">
+                        <label for="tipo" class="required"><i class="fab fa-elementor iconos-crear"></i>Tipo </label>
+                        <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo" required>
                             <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\AnalisisDeRiesgo::TipoSelect as $key => $label)
@@ -99,7 +99,7 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>%
+                        <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>
                             Implementacion</label>
                         <input class="form-control {{ $errors->has('porcentaje_implementacion') ? 'is-invalid' : '' }}"
                             type="number" step=".1" name="porcentaje_implementacion" id="porcentaje_implementacion"

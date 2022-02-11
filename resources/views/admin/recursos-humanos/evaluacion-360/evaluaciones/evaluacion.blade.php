@@ -87,26 +87,34 @@
                                 INFORMACIÓN GENERAL
                             </div>
                             <div style="float: right">
-                                <button id="btnEnviarRecordatorio" class="btn btn-sm"
-                                    style="background: #99faa6;color: rgb(54, 54, 54);"><i
-                                        class="mr-2 fas fa-envelope-open-text"></i>Enviar
-                                    recordatorio a evaluadores</button>
+                                @can('evaluacion_360_recordatorio_send')
+                                    <button id="btnEnviarRecordatorio" class="btn btn-sm"
+                                        style="background: #99faa6;color: rgb(54, 54, 54);"><i
+                                            class="mr-2 fas fa-envelope-open-text"></i>Enviar
+                                        recordatorio a evaluadores</button>
+                                @endcan
                                 @if ($evaluacion->estatus == App\Models\RH\Evaluacion::DRAFT)
-                                    <button id="btnIniciarEvaluacion" class="btn btn-sm"
-                                        style="background: #3ddf58;color: #fff;"><i
-                                            class="mr-2 fas fa-calendar-check"></i>Iniciar
-                                        Evaluación</button>
+                                    @can('evaluacion_360_start')
+                                        <button id="btnIniciarEvaluacion" class="btn btn-sm"
+                                            style="background: #3ddf58;color: #fff;"><i
+                                                class="mr-2 fas fa-calendar-check"></i>Iniciar
+                                            Evaluación</button>
+                                    @endcan
                                 @elseif ($evaluacion->estatus == App\Models\RH\Evaluacion::CLOSED)
-                                    <button id="btnPostergarEvaluacion" class="btn btn-sm"
-                                        style="background: #4e59d4;color: #fff;"><i
-                                            class="mr-2 fas fa-calendar-plus"></i>Reiniciar evaluación con
-                                        nueva fecha de finalización</button>
+                                    @can('evaluacion_360_reset')
+                                        <button id="btnPostergarEvaluacion" class="btn btn-sm"
+                                            style="background: #4e59d4;color: #fff;"><i
+                                                class="mr-2 fas fa-calendar-plus"></i>Reiniciar evaluación con
+                                            nueva fecha de finalización</button>
+                                    @endcan
                                 @else
-                                    <button id="btnCerrarEvaluacion"
-                                        onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('admin.ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
-                                        class="btn btn-sm" style="background: #eb4a4a;color: #fff;"><i
-                                            class="mr-2 fas fa-calendar-times"></i>Cerrar
-                                        Evaluación</button>
+                                    @can('evaluacion_360_close')
+                                        <button id="btnCerrarEvaluacion"
+                                            onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('admin.ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
+                                            class="btn btn-sm" style="background: #eb4a4a;color: #fff;"><i
+                                                class="mr-2 fas fa-calendar-times"></i>Cerrar
+                                            Evaluación</button>
+                                    @endcan
                                 @endif
                             </div>
                         </div>
@@ -130,7 +138,7 @@
                         <li class="px-0 text-center list-group-item w-100" style="border:none;">
                             <p class="m-0 text-center text-muted">Comienza el</p>
                             <p class="m-0"><i class="mr-1 fas fa-calendar-check"></i>
-                                {{ $evaluacion->fecha_inicio ? \Carbon\Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y') : 'Sin definir' }}
+                                {{ $evaluacion->fecha_inicio? \Carbon\Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y'): 'Sin definir' }}
                             </p>
                         </li>
                         <li class="px-0 text-center list-group-item w-100" style="border:none;">
@@ -590,7 +598,9 @@
                             let urlShow =
                                 `/admin/recursos-humanos/evaluacion-360/evaluacion/${@json($evaluacion->id)}/consulta/${data}`;
                             let html = `
+                            @can('evaluacion_360_resumen_individual_show')
                                 <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-arrow-right"></i></a>
+                            @endcan
                             `;
 
                             return html;
