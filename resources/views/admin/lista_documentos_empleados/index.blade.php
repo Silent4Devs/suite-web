@@ -1,110 +1,123 @@
 @extends('layouts.admin')
 @section('content')
-	
-	<style type="text/css">
-        #tipo_doc{
-            color:#fff; padding:5px; border-radius: 4px;
+
+    <style type="text/css">
+        #tipo_doc {
+            color: #fff;
+            padding: 5px;
+            border-radius: 4px;
         }
-        #tipo_doc.opcional{
-            background-color:#25B82B;
+
+        #tipo_doc.opcional {
+            background-color: #25B82B;
             text-transform: capitalize;
         }
-        #tipo_doc.obligatorio{
-            background-color:#DD3939;
+
+        #tipo_doc.obligatorio {
+            background-color: #DD3939;
             text-transform: capitalize;
         }
-        #tipo_doc.aplica{
-            background-color:#FA8E1C;
+
+        #tipo_doc.aplica {
+            background-color: #FA8E1C;
         }
-        #tipo_doc.aplica::before{
+
+        #tipo_doc.aplica::before {
             content: "Solo si ";
         }
+
     </style>
 
-{{ Breadcrumbs::render('EV360-ListaDocumentosEmpleados') }}
-	<h5 class="col-12 titulo_general_funcion">Lista de Documentos de Empleados</h5>
-	@include('partials.flashMessages')
-	<div class="card card-body">
-		<div class="datatable-fix">
-			<div class="w-100 text-right">
-				<div class="btn btn-success" data-toggle="modal" data-target="#modal_crear_doc_e">Agregar</div>
-			</div>
-			<table class="table table-bordered w-100 datatable datatable-Perfiles" id="tabla_list_docs">
-				<thead class="thead-dark">
-					<tr>
-						<th>Documento</th>
-						<th style="max-width:100px;">Tipo</th>						
-						{{-- <th style="max-width:100px;">ID</th>						 --}}
-						<th style="max-width:100px;">Opciones</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($docs as $doc)
-						<tr>
-							<td>{{ $doc->documento }}</td>
-							<td style="text-transform:capitalize;">
-								<font id="tipo_doc" class="{{ $doc->tipo }}">{{ $doc->tipo }}</font>
-							</td>
-							{{-- <td>
-								@if($doc->activar_numero == true)
-									Requerido
-								@endif
-								@if($doc->activar_numero == false)
-									No requerido
-								@endif
-							</td> --}}
-							<td>
-								<a href="{{ asset('admin/lista-documentos/destroy') }}/{{ $doc->id }}"><i class="fas fa-trash-alt" style="font-size:15pt; color:#ED5A5A;"></i></a>
-							</td>
-						</tr>
-					@endforeach
-				</tbody>
-			</table>
-		</div>
-	</div>
+    {{ Breadcrumbs::render('EV360-ListaDocumentosEmpleados') }}
+    <h5 class="col-12 titulo_general_funcion">Lista de Documentos de Empleados</h5>
+    @include('partials.flashMessages')
+    <div class="card card-body">
+        <div class="datatable-fix">
+            @can('lista_documentos_empleados_create')
+                <div class="w-100 text-right">
+                    <div class="btn btn-success" data-toggle="modal" data-target="#modal_crear_doc_e">Agregar</div>
+                </div>
+            @endcan
+            <table class="table table-bordered w-100 datatable datatable-Perfiles" id="tabla_list_docs">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Documento</th>
+                        <th style="max-width:100px;">Tipo</th>
+                        <th style="max-width:100px;">ID</th>
+                        <th style="max-width:100px;">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($docs as $doc)
+                        <tr>
+                            <td>{{ $doc->documento }}</td>
+                            <td style="text-transform:capitalize;">
+                                <font id="tipo_doc" class="{{ $doc->tipo }}">{{ $doc->tipo }}</font>
+                            </td>
+                            <td>
+                                @if ($doc->activar_numero == true)
+                                    Requerido
+                                @endif
+                                @if ($doc->activar_numero == false)
+                                    No requerido
+                                @endif
+                            </td>
+                            <td>
+                                @can('lista_documentos_empleados_create')
+                                    <a href="{{ asset('admin/lista-documentos/destroy') }}/{{ $doc->id }}"><i
+                                            class="fas fa-trash-alt" style="font-size:15pt; color:#ED5A5A;"></i></a>
+                                @endcan
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-	{{-- modal crar --}}
-	<div class="modal fade" id="modal_crear_doc_e" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <form method="POST" action="{{ route('admin.lista-documentos-empleados-store') }}" class="modal-content">
-	    	@csrf
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Agregar Documento a Lista</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <div class="form-group">
-	        	<label><i class="far fa-file-alt iconos-crear"></i>Nombre del documento</label>
-	        	<input type="" name="documento" class="form-control">
-	        </div>
-	        <div class="form-group">
-	        	<label><i class="far fa-file-alt iconos-crear"></i>Tipo</label>
-	        	<select class="form-control" name="tipo">
-	        		<option value="opcional" selected>Opcional</option>
-	        		<option value="obligatorio">Obligatorio</option>
-	        		<option value="aplica">Solo si aplica</option>
-	        	</select>
-	        </div>
-	        {{-- <div class="form-group">
-	        	<label><i class="far fa-file-alt iconos-crear"></i>ID Requerido</label>
-	        	<input type="checkbox" name="activar_numero" class="form-control">
-	        </div> --}}
-	      </div>
-	      <div class="modal-footer">
-	        <div type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</div>
-	        <button class="btn btn-primary">Guardar</button>
-	      </div>
-	    </form>
-	  </div>
-	</div>
+    {{-- modal crar --}}
+    <div class="modal fade" id="modal_crear_doc_e" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="POST" action="{{ route('admin.lista-documentos-empleados-store') }}" class="modal-content">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar Documento a Lista</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><i class="far fa-file-alt iconos-crear"></i>Nombre del documento</label>
+                        <input type="" name="documento" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="far fa-file-alt iconos-crear"></i>Tipo</label>
+                        <select class="form-control" name="tipo">
+                            <option value="opcional" selected>Opcional</option>
+                            <option value="obligatorio">Obligatorio</option>
+                            <option value="aplica">Solo si aplica</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="far fa-file-alt iconos-crear"></i>ID Requerido</label>
+                        <input type="checkbox" name="activar_numero" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</div>
+                    <button class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 @endsection
 @section('scripts')
-	@parent
-	<script type="text/javascript">
-		$(function() {
+    @parent
+    <script type="text/javascript">
+        $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
@@ -172,7 +185,7 @@
                 }
 
             ];
-           	// let btnAgregar = {
+            // let btnAgregar = {
             //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
             //     titleAttr: 'Agregar',
             //     url: "#",
@@ -189,11 +202,11 @@
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
-                order:[
-                            [0,'desc']
-                        ]
+                order: [
+                    [0, 'desc']
+                ]
             };
             let table = $('#tabla_list_docs').DataTable(dtOverrideGlobals);
         });
-	</script>
+    </script>
 @endsection

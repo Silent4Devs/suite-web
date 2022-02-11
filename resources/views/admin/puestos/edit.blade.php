@@ -48,14 +48,14 @@
                 <div class="row col-12">
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                         <label for="reporta_puesto_id"><i class="fas fa-user-tie iconos-crear"></i>Reportará a</label>
-                        <select class="form-control {{ $errors->has('reporta_puesto_id') ? 'is-invalid' : '' }}" name="reporta_puesto_id" id="reporta_puesto_id">
+                        <select class="form-control {{ $errors->has('reporta_puesto_id') ? 'is-invalid' : '' }}" name="reporta_puesto_id" id="reportapuesto_id">
                             <option value="" selected disabled>
                                 -- Selecciona el puesto--
                             </option>
-                            @foreach ($puestos as $puesto)
-                            <option value="{{ $puesto->id }}" data-area="{{ $puesto->area ? $puesto->area->area  :'Sin definir' }}"
-                                {{ old('reporta_puesto_id', $puesto->reporta_puesto_id) == $puesto->id ? 'selected' : '' }}>
-                                {{ $puesto->puesto }}
+                            @foreach ($reportaras as $reportara)
+                            <option value="{{ $reportara->id }}" data-area="{{ $reportara->area ? $reportara->area->area  :'Sin definir' }}"
+                                {{ $puesto->reporta_puesto_id == $reportara->id ? 'selected' : '' }}>
+                                {{ $reportara->puesto }}
                             </option>
                             @endforeach
                         </select>
@@ -70,7 +70,6 @@
                     <div class="form-group col-md-6">
                         <label><i class="fas fa-street-view iconos-crear"></i>Área</label>
                         <div class="form-control" id="area_puesto_reporta"></div>
-
                     </div>
 
                     <div class="form-group col-md-4 mt-3">
@@ -538,9 +537,9 @@
                             <option value="">
                                 -- Selecciona el contacto asignado --
                             </option>
-                            @foreach ($puestos as $puesto)
-                            <option value="{{ $puesto->id }}" data-area="{{ $puesto->area ? $puesto->area->area  :'Sin definir' }}">
-                                {{ $puesto->puesto }}
+                            @foreach ($reportaras as $reportara)
+                            <option value="{{ $reportara->id }}" data-area="{{ $reportara->area ? $reportara->area->area  :'Sin definir' }}">
+                                {{ $reportara->puesto }}
                             </option>
                             @endforeach
                         </select>
@@ -1515,20 +1514,7 @@
 
     </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        let reportapuesto = document.querySelector('#reporta_puesto_id');
-        let area_init = reportapuesto.options[reportapuesto.selectedIndex].getAttribute('data-area');
 
-        document.getElementById('area_puesto_reporta').innerHTML = area_init;
-        reportapuesto.addEventListener('change', function(e) {
-            e.preventDefault();
-            let area = this.options[this.selectedIndex].getAttribute('data-area');
-            document.getElementById('area_puesto_reporta').innerHTML = area;
-        })
-    })
-
-    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1628,6 +1614,22 @@
             });
         });
     </script>
+
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        let reportapuesto = document.querySelector('#reportapuesto_id');
+        let area_init = reportapuesto.options[reportapuesto.selectedIndex].getAttribute('data-area');
+
+        document.getElementById('area_puesto_reporta').innerHTML = area_init;
+        reportapuesto.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            document.getElementById('area_puesto_reporta').innerHTML = area;
+        })
+    })
+
+    </script>
+
 
     <script>
         $(document).ready(function() {
