@@ -5,6 +5,7 @@
 
         .datos_der_cv{
             color: #fff;
+
         }
         .tabla_verde{
             color: #fff !important;
@@ -15,6 +16,34 @@
         }
         .tabla_verde th{
             background-color:rgb(0, 0, 0, 0) !important;
+        }
+        @media print{
+            header{
+                display:none !important;
+            }
+            .ps__rail-y{
+                display:none !important;
+            }
+            .ps__thumb-y{
+                display:none !important;
+            }
+            .titulo_general_funcion{
+                display:none !important;
+            }
+            #sidebar{
+                display:none !important;
+            }
+            body{
+                background-color: #fff !important;
+            }
+            #but{
+                display:none !important;
+            }
+            .datos_der_cv{
+                margin-right: -50px !important;
+
+                
+            }
         }
     </style>
 
@@ -31,8 +60,8 @@
                 <div class="card-body" id="imp1">
 
                     {{-- <div class="col-md-4"> --}}
-                        <div class="mb-4 d-flex" style="margin-left: 80%;position: absolute;top: 4%;" >
-                            <a class="btn btn-primary" href="" onclick="javascript:imprim1(imp1);">Imprimir</a>
+                        <div class="mb-4 d-flex" style="margin-left: 70%;position: absolute;top: 4%;" >
+                            <a class="btn btn-danger" href="javascript:window.print()" id="but" >Imprimir</a>
                         </div>
                     {{-- </div> --}}
                     @php
@@ -44,8 +73,8 @@
                         <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 100px;">
                     </div>
 
-                    <div class="row medidas">
-                        <div class="mt-4 ml-4 col-md-7 datos_iz_cv">
+                    <div class="row medidas d-flex" style="justify-content: space-between;">
+                        <div class="mt-4 ml-4 col-sm-7 datos_iz_cv">
                             <h5 class="py-2 pl-2"
                                 style="color:#fff; font-weight:bold; background-color:#7F7F7F; width:100%">
                                 {{ $visualizarEmpleados->puesto }}</h5>
@@ -495,7 +524,7 @@
                         </div>
 
 
-                        <div class="mt-4 col-md-4 datos_der_cv">
+                        <div class="mt-4 col-sm-4 datos_der_cv">
                             <div
                                 style="background: linear-gradient(0deg, rgba(69,125,182,1) 0%, rgba(8,170,157,1) 60%); height:100%; padding:10px;">
                                 <div class="mt-3 mb-4 w-100" style="border-bottom: solid 2px #fff;">
