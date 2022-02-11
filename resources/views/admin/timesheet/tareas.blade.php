@@ -1,18 +1,14 @@
 @extends('layouts.admin')
 @section('content')
-
-	{{ Breadcrumbs::render('timesheet-tareas') }}
-
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Tareas</font></h5>
-
-	<div class="card card-body">
-		<div class="row">
-
+    {{ Breadcrumbs::render('timesheet-tareas') }}
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Tareas</font>
+    </h5>
+    <div class="card card-body">
+        <div class="row">
             @livewire('timesheet.tabla-tareas-timesheet', ['proyecto_id'=>null, 'origen'=>'tareas'])
+        </div>
+    </div>
 
-		</div>
-	</div>
-	
 @endsection
 
 
@@ -90,22 +86,22 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar empleado',
-                url: "{{asset('admin/inicioUsuario/reportes/quejas')}}",
+                url: "{{ asset('admin/inicioUsuario/reportes/quejas') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
             };
 
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
-                order:[
-                            [0,'desc']
-                        ]
+                order: [
+                    [0, 'desc']
+                ]
             };
             let table = $('#datatable_timesheet_tareas').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
@@ -125,7 +121,7 @@
 
     <script type="text/javascript">
         $('.select2').select2({
-            'theme' : 'bootstrap4',
+            'theme': 'bootstrap4',
         });
     </script>
 @endsection
