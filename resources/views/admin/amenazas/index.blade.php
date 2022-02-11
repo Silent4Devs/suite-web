@@ -1,41 +1,43 @@
 @extends('layouts.admin')
 @section('content')
 
-{{ Breadcrumbs::render('admin.amenazas.index') }}
+    {{ Breadcrumbs::render('admin.amenazas.index') }}
 
-<style>
+    <style>
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
 
-    .btn_cargar{
-        border-radius: 100px !important;
-        border: 1px solid #345183;
-        color: #345183;
-        text-align: center;
-        padding: 0;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-    .btn_cargar:hover{
-        color: #fff;
-        background:#345183 ;
-    }
-    .btn_cargar i{
-        font-size: 15pt;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .agregar{
-        margin-right:15px;
-    }
+        .btn_cargar:hover {
+            color: #fff;
+            background: #345183;
+        }
 
-</style>
+        .btn_cargar i {
+            font-size: 15pt;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .agregar {
+            margin-right: 15px;
+        }
+
+    </style>
 
     <h5 class="col-12 titulo_general_funcion">Amenazas</h5>
 
@@ -129,7 +131,7 @@
 
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar Amenaza' ,
+                titleAttr: 'Agregar Amenaza',
                 url: "{{ route('admin.amenazas.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config) {
@@ -142,8 +144,8 @@
             let btnExport = {
                 text: '<i  class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-amenaza') }}",
+                className: "btn btn_cargar",
+                url: "{{ route('descarga-amenaza') }}",
                 action: function(e, dt, node, config) {
                     let {
                         url
@@ -160,8 +162,10 @@
                 }
             };
 
+            @can('analisis_de_riesgos_amenazas_create')
+                dtButtons.push(btnAgregar);
+            @endcan
 
-            dtButtons.push(btnAgregar);
             dtButtons.push(btnExport);
             dtButtons.push(btnImport);
 

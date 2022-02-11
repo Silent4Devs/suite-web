@@ -10,8 +10,9 @@ use App\Models\Amenaza;
 use App\Repositories\AmenazaRepository;
 use Flash;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Response;
 
 class AmenazaController extends AppBaseController
 {
@@ -26,6 +27,7 @@ class AmenazaController extends AppBaseController
 
     public function index(Request $request)
     {
+        abort_if(Gate::denies('analisis_de_riesgos_amenazas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Amenaza::orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -34,9 +36,9 @@ class AmenazaController extends AppBaseController
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'user_show';
-                $editGate = 'user_edit';
-                $deleteGate = 'user_delete';
+                $viewGate = 'analisis_de_riesgos_amenazas_show';
+                $editGate = 'analisis_de_riesgos_amenazas_edit';
+                $deleteGate = 'analisis_de_riesgos_amenazas_delete';
                 $crudRoutePart = 'amenazas';
 
                 return view('partials.datatablesActions', compact(
@@ -76,6 +78,7 @@ class AmenazaController extends AppBaseController
      */
     public function create()
     {
+        abort_if(Gate::denies('analisis_de_riesgos_amenazas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.amenazas.create');
     }
 
@@ -88,6 +91,7 @@ class AmenazaController extends AppBaseController
      */
     public function store(CreateAmenazaRequest $request)
     {
+        abort_if(Gate::denies('analisis_de_riesgos_amenazas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $input = $request->all();
 
         $amenaza = $this->amenazaRepository->create($input);
@@ -106,6 +110,7 @@ class AmenazaController extends AppBaseController
      */
     public function show(Amenaza $amenaza)
     {
+        abort_if(Gate::denies('analisis_de_riesgos_amenazas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.amenazas.show')->with('amenaza', $amenaza);
     }
 
@@ -118,6 +123,7 @@ class AmenazaController extends AppBaseController
      */
     public function edit($id)
     {
+        abort_if(Gate::denies('analisis_de_riesgos_amenazas_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $amenaza = $this->amenazaRepository->find($id);
 
         if (empty($amenaza)) {
@@ -139,6 +145,7 @@ class AmenazaController extends AppBaseController
      */
     public function update($id, UpdateAmenazaRequest $request)
     {
+        abort_if(Gate::denies('analisis_de_riesgos_amenazas_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $amenaza = $this->amenazaRepository->find($id);
 
         if (empty($amenaza)) {
@@ -163,6 +170,7 @@ class AmenazaController extends AppBaseController
      */
     public function destroy($id)
     {
+        abort_if(Gate::denies('analisis_de_riesgos_amenazas_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $amenaza = $this->amenazaRepository->find($id);
 
         if (empty($amenaza)) {

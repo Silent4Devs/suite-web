@@ -7,9 +7,10 @@ use App\Http\Requests\MassDestroyConfiguracionSoporteRequest;
 use App\Models\ConfigurarSoporteModel;
 use App\Models\Empleado;
 use App\Models\Puesto;
-use Composer\Util\Http\Response;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Response;
 
 class ConfigurarSoporteController extends Controller
 {
@@ -17,6 +18,7 @@ class ConfigurarSoporteController extends Controller
     {
         // $query = ConfigurarSoporteModel::with(['empleado'])->select('*')->orderByDesc('id')->get();
         // dd($query);
+        abort_if(Gate::denies('configurar_soporte_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = ConfigurarSoporteModel::with(['empleado'])->select('*')->orderByDesc('id')->get();
             // dd($query);
@@ -26,9 +28,9 @@ class ConfigurarSoporteController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'partes_interesada_show';
-                $editGate = 'partes_interesada_edit';
-                $deleteGate = 'partes_interesada_delete';
+                $viewGate = 'configurar_soporte_show';
+                $editGate = 'configurar_soporte_edit';
+                $deleteGate = 'configurar_soporte_delete';
                 $crudRoutePart = 'configurar-soporte';
 
                 return view('partials.datatablesActions', compact(
@@ -73,8 +75,8 @@ class ConfigurarSoporteController extends Controller
         // dd($ConfigurarSoporteModel);
 
         $ConfigurarSoporteModel = ConfigurarSoporteModel::join('empleados', 'empleados.id', '=', 'configuracion_soporte.id_elaboro')
-        ->join('puestos', 'puestos.id', '=', 'empleados.puesto_id')
-        ->get();
+            ->join('puestos', 'puestos.id', '=', 'empleados.puesto_id')
+            ->get();
 
         // dd($ConfigurarSoporteModel);
         // $ConfigurarSoporteModel = ConfigurarSoporteModel::join('empleados', 'empleados.id', '=', 'configuracion_soporte.puesto')->get();
@@ -84,6 +86,7 @@ class ConfigurarSoporteController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('configurar_soporte_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ConfigurarSoporteModel = ConfigurarSoporteModel::all();
         $empleados = Empleado::get();
         $puestos = Puesto::get();
@@ -94,8 +97,8 @@ class ConfigurarSoporteController extends Controller
     // StorePartesInteresadaRequest
     public function store(Request $request)
     {
-        // dd($request->all());
-        // $ConfigurarSoporteModel = ConfigurarSoporteModel::create($request->all());
+        abort_if(Gate::denies('configurar_soporte_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $ConfigurarSoporteModel = ConfigurarSoporteModel::create([
             'rol' => $request->rol,
             'puesto' => $request->puesto,
@@ -114,7 +117,7 @@ class ConfigurarSoporteController extends Controller
 
     public function edit($ConfigurarSoporteModel)
     {
-        // dd($ConfigurarSoporteModel);
+        abort_if(Gate::denies('configurar_soporte_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ConfigurarSoporteModel = ConfigurarSoporteModel::find($ConfigurarSoporteModel);
         // dd($ConfigurarSoporteModel);
         $empleados = Empleado::get();
@@ -125,7 +128,8 @@ class ConfigurarSoporteController extends Controller
 
     // public function show(ConfigurarSoporteModel $ConfigurarSoporteModel)
     // {
-    //     // abort_if(Gate::denies('partes_interesada_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+    //     abort_if(Gate::denies('configurar_soporte_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
     //     $ConfigurarSoporteModel->load('ConfigurarSoporteModel');
 
@@ -135,6 +139,7 @@ class ConfigurarSoporteController extends Controller
     // UpdatePartesInteresadaRequest
     public function update(Request $request, ConfigurarSoporteModel $ConfigurarSoporteModel)
     {
+        abort_if(Gate::denies('configurar_soporte_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($request);
         $ConfigurarSoporteModel->update($request->all());
 
@@ -145,7 +150,7 @@ class ConfigurarSoporteController extends Controller
     {
 
         // abort_if(Gate::denies('partes_interesada_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        abort_if(Gate::denies('configurar_soporte_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ConfigurarSoporteModel = ConfigurarSoporteModel::find($ConfigurarSoporteModel);
         // dd($ConfigurarSoporteModel);
 
@@ -163,9 +168,10 @@ class ConfigurarSoporteController extends Controller
 
     public function visualizarSoporte(Request $request)
     {
+        abort_if(Gate::denies('listados_soporte_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ConfigurarSoporteModel = ConfigurarSoporteModel::join('empleados', 'empleados.id', '=', 'configuracion_soporte.id_elaboro')
-        ->join('puestos', 'puestos.id', '=', 'empleados.puesto_id')
-        ->get();
+            ->join('puestos', 'puestos.id', '=', 'empleados.puesto_id')
+            ->get();
 
         return view('admin.soporte.index', compact('ConfigurarSoporteModel'));
     }

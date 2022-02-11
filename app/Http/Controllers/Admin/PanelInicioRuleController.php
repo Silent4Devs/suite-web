@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\PanelInicioRule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Response;
 
 class PanelInicioRuleController extends Controller
 {
@@ -15,6 +17,7 @@ class PanelInicioRuleController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('configurar_vista_mis_datos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.panel-inicio.index');
     }
 
