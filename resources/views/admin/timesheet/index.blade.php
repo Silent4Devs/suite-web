@@ -2,6 +2,14 @@
 @section('content')
     
     <style type="text/css">
+        .btn_op{
+            opacity: 1 !important;
+        }
+        .btn-primary{
+            opacity: 0.6;
+        }
+
+
         .aprobada{
             padding: 3px;
             background-color: #61CB5C;
@@ -29,8 +37,13 @@
 
 	<div class="card card-body">
 		<div class="row">
+            <div class="w-100 text-right">
+                <button class="btn btn-primary" style="background-color: #61CB5C; border:none !important;" id="btn_aprobado">Aprobadas</button>
+                <button class="btn btn-primary" style="background-color: #EA7777; border:none !important;" id="btn_rechazado">Rechazadas</button>
+                <button class="btn btn-primary" style="background-color: #F48C16; border:none !important;" id="btn_pendiente">Pendientes</button>
+            </div>
 			
-	        <div class="datatable-fix w-100">
+	        <div class="datatable-fix w-100 mt-4">
 	            <table id="datatable_timesheet" class="table w-100">
 	                <thead class="w-100">
 	                    <tr>
@@ -44,7 +57,18 @@
 
 	                <tbody>
                         @foreach($times as $time)
-    	                	<tr>
+                            @php
+                                if($time->aprobado){
+                                    $class_tr = 'aprobado';
+                                }
+                                if($time->rechazado){
+                                    $class_tr = 'rechazado';
+                                }
+                                if(($time->rechazado == false) && ($time->aprobado == false)){
+                                    $class_tr = 'pendiente';
+                                }
+                            @endphp
+    	                	<tr class="tr_{{ $class_tr }}">
     	                        <td>
     	                            {{ $time->fecha_dia }} 
     	                        </td>
@@ -186,6 +210,32 @@
             //         .search(value, strict)
             //         .draw()
             // });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('#btn_aprobado').click(function(){
+            $('tbody tr').addClass('d-none');
+            $('.tr_aprobado').removeClass('d-none');
+
+            $('.btn-primary').removeClass('btn_op');
+            $('#btn_aprobado').addClass('btn_op');
+        });
+
+        $('#btn_rechazado').click(function(){
+            $('tbody tr').addClass('d-none');
+            $('.tr_rechazado').removeClass('d-none');
+
+            $('.btn-primary').removeClass('btn_op');
+            $('#btn_rechazado').addClass('btn_op');
+        });
+
+        $('#btn_pendiente').click(function(){
+            $('tbody tr').addClass('d-none');
+            $('.tr_pendiente').removeClass('d-none');
+
+            $('.btn-primary').removeClass('btn_op');
+            $('#btn_pendiente').addClass('btn_op');
         });
     </script>
 @endsection
