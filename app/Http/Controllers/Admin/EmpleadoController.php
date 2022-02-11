@@ -23,6 +23,7 @@ use App\Models\RH\DependientesEconomicosEmpleados;
 use App\Models\RH\EntidadCrediticia;
 use App\Models\RH\TipoContratoEmpleado;
 use App\Models\Sede;
+use Barryvdh\DomPDF\Facade as PDF;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -32,11 +33,8 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Barryvdh\DomPDF\Facade as PDF;
-
 
 //use Barryvdh\DomPDF\PDF as DomPDFPDF;
-
 
 class EmpleadoController extends Controller
 {
@@ -1582,12 +1580,10 @@ class EmpleadoController extends Controller
         $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
         $empleado = Empleado::get();
 
-
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
 
     // public function imprimir($id){
-
 
     //     // PDF::setOptions(['isRemoteEnabled' => TRUE, 'enable_javascript' => TRUE]);
     //     // $dompdf = new Dompdf();
@@ -1610,8 +1606,6 @@ class EmpleadoController extends Controller
     //     $dompdf->loadHtml($pdf);
     //     $dompdf->render();
     //     return $pdf->download('empleado.pdf');
-
-
 
     public function borradoMultiple(Request $request)
     {
