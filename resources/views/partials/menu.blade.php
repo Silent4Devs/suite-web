@@ -33,26 +33,30 @@
         @can('mi_perfil_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.inicio-Usuario.index') }}#datos"
-                    class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') || request()->is('admin/competencias/*/cv') ? 'active' : '' }}">
+                    class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') ||request()->is('admin/inicioUsuario/*') ||request()->is('admin/competencias/*/cv')? 'active': '' }}">
                     <i class="bi bi-file-person iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Mi perfil</font>
                 </a>
             </li>
         @endcan
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('admin.portal-comunicacion.index') }}"
-                class="c-sidebar-nav-link {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'active' : '' }}">
-                <i class="bi bi-newspaper iconos_menu letra_blanca"></i>
-                <font class="letra_blanca"> Portal de Comunicación </font>
-            </a>
-        </li>
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('admin.timesheet-inicio') }}"
-                class="c-sidebar-nav-link {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'active' : '' }}">
-                <i class="bi bi-calendar3-range letra_blanca iconos_menu"></i>
-                <font class="letra_blanca"> Timesheet </font>
-            </a>
-        </li>
+        @can('portal_de_comunicacion_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.portal-comunicacion.index') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'active' : '' }}">
+                    <i class="bi bi-newspaper iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca"> Portal de Comunicación </font>
+                </a>
+            </li>
+        @endcan
+        @can('timesheet_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.timesheet-inicio') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'active' : '' }}">
+                    <i class="bi bi-calendar3-range letra_blanca iconos_menu"></i>
+                    <font class="letra_blanca"> Timesheet </font>
+                </a>
+            </li>
+        @endcan
         @can('agenda_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.systemCalendar') }}"
@@ -158,17 +162,19 @@
                 <a href="{{ route('admin.documentos.publicados') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/publicados') || request()->is('admin/publicados*') ? 'active' : '' }}">
                     <i class="bi bi-folder iconos_menu letra_blanca"></i>
-                    <font class="letra_blanca">  Documentos </font>
+                    <font class="letra_blanca"> Documentos </font>
                 </a>
             </li>
         @endcan
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('admin.planes-de-accion.index') }}"
-                class="c-sidebar-nav-link {{ request()->is('admin/planes-de-accion') || request()->is('admin/planes-de-accion/*/edit') || request()->is('admin/planes-de-accion/create') || request()->is('admin/planes-de-accion/*') ? 'active' : '' }}">
-                <i class="bi bi-file-check iconos_menu letra_blanca"></i>
-                <font class="letra_blanca">Planes de Acción</font>
-            </a>
-        </li>
+        @can('planes_accion_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.planes-de-accion.index') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/planes-de-accion') ||request()->is('admin/planes-de-accion/*/edit') ||request()->is('admin/planes-de-accion/create') ||request()->is('admin/planes-de-accion/*')? 'active': '' }}">
+                    <i class="bi bi-file-check iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca">Planes de Acción</font>
+                </a>
+            </li>
+        @endcan
         @can('centro_atencion_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.desk.index') }}"
@@ -234,14 +240,15 @@
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
         </li>
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('admin.capital-humano.index') }}"
-                class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*') ? 'active' : '' }}">
-                <i class="bi bi-people iconos_menu letra_blanca"></i>
-                <font class="letra_blanca"> Capital Humano </font>
-            </a>
-            <ul class="c-sidebar-nav-dropdown-items">
-                {{-- @can('configuracion_empleados_access')
+        @can('capital_humano_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.capital-humano.index') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*') ? 'active' : '' }}">
+                    <i class="bi bi-people iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca"> Capital Humano </font>
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    {{-- @can('configuracion_empleados_access')
                     <li class="c-sidebar-nav-item">
                         <a href="{{ route('admin.empleados.index') }}"
                             class="c-sidebar-nav-link {{ request()->is('admin/empleados') || request()->is('admin/empleados/*') ? 'active' : '' }}">
@@ -252,120 +259,123 @@
                         </a>
                     </li>
                 @endcan --}}
-                <li class="c-sidebar-nav-item">
-                    <a href="{{ route('admin.capital-humano.index') }}"
-                        class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*') || request()->is('admin/expedientes-profesionales/*') ? 'active' : '' }}">
-                        <i class="fa-fw fas fa-file iconos_menu letra_blanca"></i>
-                        <font class="letra_blanca" style="margin-left:10px;"> Capital Humano Menú </font>
-                    </a>
-                </li>
-                @can('configuracion_empleados_access')
                     <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.tipos-contratos-empleados.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/tipos-contratos-empleados') || request()->is('admin/tipos-contratos-empleados/*') ? 'active' : '' }}">
-                            <i class="fa-fw fas fa-file iconos_menu letra_blanca">
-
-                            </i>
-                            <font class="letra_blanca" style="margin-left:10px;"> Tipos de contratos </font>
-                        </a>
-                    </li>
-                @endcan
-                @can('configuracion_empleados_access')
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.entidades-crediticias.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/entidades-crediticias') || request()->is('admin/entidades-crediticias/*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.capital-humano.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') ||request()->is('admin/capital-humano/*') ||request()->is('admin/expedientes-profesionales/*')? 'active': '' }}">
                             <i class="fa-fw fas fa-file iconos_menu letra_blanca"></i>
-                            <font class="letra_blanca" style="margin-left:10px;"> Entidades crediticias </font>
+                            <font class="letra_blanca" style="margin-left:10px;"> Capital Humano Menú </font>
                         </a>
                     </li>
-                @endcan
-                @can('organigrama_organizacion_access')
+                    @can('configuracion_empleados_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.tipos-contratos-empleados.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/tipos-contratos-empleados') || request()->is('admin/tipos-contratos-empleados/*')? 'active': '' }}">
+                                <i class="fa-fw fas fa-file iconos_menu letra_blanca">
+
+                                </i>
+                                <font class="letra_blanca" style="margin-left:10px;"> Tipos de contratos </font>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('configuracion_empleados_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.entidades-crediticias.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/entidades-crediticias') || request()->is('admin/entidades-crediticias/*')? 'active': '' }}">
+                                <i class="fa-fw fas fa-file iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca" style="margin-left:10px;"> Entidades crediticias </font>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('organigrama_organizacion_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.organigrama.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/organigrama') || request()->is('admin/organigrama/*') ? 'c-active' : '' }}">
+                                <i class="fas fa-sitemap iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca" style="margin-left:10px;"> Organigrama </font>
+                            </a>
+                        </li>
+                    @endcan
+                    <li class="c-sidebar-nav-dropdown">
+                        <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                            <i class="fas fa-chalkboard-teacher iconos_menu letra_blanca"></i>
+                            <font class="letra_blanca " style="margin-left:10px;"> Capacitaciones </font>
+                        </a>
+                        <ul class="c-sidebar-nav-dropdown-items">
+                            @can('configuracion_macroproceso_access')
+                                <li class="c-sidebar-nav-item">
+                                    <a href="{{ asset('admin/categoria-capacitacion') }}"
+                                        class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*')? 'active': '' }}">
+                                        <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                        <font class="letra_blanca" style="margin-left:10px;"> Crear categorías</font>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('configuracion_procesos_access')
+                                <li class="c-sidebar-nav-item">
+                                    <a href="{{ asset('admin/recursos') }}"
+                                        class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
+                                        <i class="ml-2 fas fa-graduation-cap iconos_menu letra_blanca"
+                                            style="font-size:12pt;"></i>
+                                        <font class="letra_blanca" style="margin-left:10px;"> Crear capacitaciones</font>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
                     <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.organigrama.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/organigrama') || request()->is('admin/organigrama/*') ? 'c-active' : '' }}">
-                            <i class="fas fa-sitemap iconos_menu letra_blanca"></i>
-                            <font class="letra_blanca" style="margin-left:10px;"> Organigrama </font>
+                        <a class="c-sidebar-nav-link {{ request()->is('admin/recursos-humanos/evaluacion-360/*') ? 'active' : '' }}"
+                            href="{{ route('admin.rh-evaluacion360.index') }}">
+                            <img src="{{ asset('img/360-degrees1.png') }}" alt="icono360"
+                                style="width: 26px;margin-right: 14px;margin-left: 3px;">
+                            <font class="letra_blanca" style="margin-left:10px;"> Evaluación 360° </font>
                         </a>
                     </li>
-                @endcan
-                <li class="c-sidebar-nav-dropdown">
-                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                        <i class="fas fa-chalkboard-teacher iconos_menu letra_blanca"></i>
-                        <font class="letra_blanca " style="margin-left:10px;"> Capacitaciones </font>
-                    </a>
-                    <ul class="c-sidebar-nav-dropdown-items">
-                        @can('configuracion_macroproceso_access')
-                            <li class="c-sidebar-nav-item">
-                                <a href="{{ asset('admin/categoria-capacitacion') }}"
-                                    class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
-                                    <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca" style="font-size:12pt;"></i>
-                                    <font class="letra_blanca" style="margin-left:10px;"> Crear categorías</font>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('configuracion_procesos_access')
-                            <li class="c-sidebar-nav-item">
-                                <a href="{{ asset('admin/recursos') }}"
-                                    class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
-                                    <i class="ml-2 fas fa-graduation-cap iconos_menu letra_blanca"
-                                        style="font-size:12pt;"></i>
-                                    <font class="letra_blanca" style="margin-left:10px;"> Crear capacitaciones</font>
-                                </a>
-                            </li>
-                        @endcan
-                    </ul>
-                </li>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link {{ request()->is('admin/recursos-humanos/evaluacion-360/*') ? 'active' : '' }}"
-                        href="{{ route('admin.rh-evaluacion360.index') }}">
-                        <img src="{{ asset('img/360-degrees1.png') }}" alt="icono360"
-                            style="width: 26px;margin-right: 14px;margin-left: 3px;">
-                        <font class="letra_blanca" style="margin-left:10px;"> Evaluación 360° </font>
-                    </a>
-                </li>
-                {{-- <li class="c-sidebar-nav-item">
+                    {{-- <li class="c-sidebar-nav-item">
                     <a href="{{ route('admin.tabla-calendario.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('tabla-calendario') || request()->is('tabla-calendario/*') ? 'active' : '' }}">
                         <i class="fas fa-calendar-check iconos_menu letra_blanca"></i>
                         <font class="letra_blanca">Calendario</font>
                     </a>
                 </li> --}}
-                <li class="c-sidebar-nav-dropdown">
-                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                        <i class="fas fa-calendar-alt iconos_menu letra_blanca"></i>
-                        <font class="letra_blanca " style="margin-left:10px;"> Calendario </font>
-                    </a>
-                    <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-dropdown">
+                        <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                            <i class="fas fa-calendar-alt iconos_menu letra_blanca"></i>
+                            <font class="letra_blanca " style="margin-left:10px;"> Calendario </font>
+                        </a>
+                        <ul class="c-sidebar-nav-dropdown-items">
 
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.calendario-oficial.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('calendario-oficial') || request()->is('calendario-oficial/*') ? 'active' : '' }}">
-                                <i class="ml-2 fas fa-drum iconos_menu letra_blanca" style="font-size:12pt;"></i>
-                                <font class="letra_blanca" style="margin-left:10px;">Dias Festivos</font>
-                            </a>
-                        </li>
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route('admin.calendario-oficial.index') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('calendario-oficial') || request()->is('calendario-oficial/*') ? 'active' : '' }}">
+                                    <i class="ml-2 fas fa-drum iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                    <font class="letra_blanca" style="margin-left:10px;">Dias Festivos</font>
+                                </a>
+                            </li>
 
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.tabla-calendario.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('tabla-calendario') || request()->is('tabla-calendario/*') ? 'active' : '' }}">
-                                <i class="ml-2 fas fa-gifts iconos_menu letra_blanca" style="font-size:12pt;"></i>
-                                <font class="letra_blanca" style="margin-left:10px;">Eventos</font>
-                            </a>
-                        </li>
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route('admin.tabla-calendario.index') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('tabla-calendario') || request()->is('tabla-calendario/*') ? 'active' : '' }}">
+                                    <i class="ml-2 fas fa-gifts iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                    <font class="letra_blanca" style="margin-left:10px;">Eventos</font>
+                                </a>
+                            </li>
 
 
 
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('admin.analisis-riesgos.menu') }}"
-                class="c-sidebar-nav-link {{ request()->is('admin/matriz-riesgos') || request()->is('admin/matriz-riesgos*') ? 'active' : '' }}">
-                <i class="bi bi-exclamation-triangle iconos_menu letra_blanca"></i>
-                <font class="letra_blanca"> Análisis de Riesgos </font>
-            </a>
-        </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        @endcan
+        @can('analisis_de_riesgos_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.analisis-riesgos.menu') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/matriz-riesgos') || request()->is('admin/matriz-riesgos*') ? 'active' : '' }}">
+                    <i class="bi bi-exclamation-triangle iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca"> Análisis de Riesgos </font>
+                </a>
+            </li>
+        @endcan
         {{-- <li
             class="c-sidebar-nav-dropdown {{ request()->is('admin/matriz-riesgos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-unos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-dos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-tres*') ? 'c-show' : '' }}">
             <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -407,42 +417,43 @@
 
             </ul>
         </li> --}}
-        <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') ||
-            request()->is('admin/analisisdebrechas') ||
-            request()->is('admin/planTrabajoBase') ||
-            request()->is('admin/partes-interesadas') ||
-            request()->is('admin/matriz-requisito-legales') ||
-            request()->is('admin/entendimiento-organizacions') ||
-            request()->is('admin/alcance-sgsis') ||
-            request()->is('admin/comiteseguridads') ||
-            request()->is('admin/minutasaltadireccions') ||
-            request()->is('admin/evidencias-sgsis') ||
-            request()->is('admin/politica-sgsis') ||
-            request()->is('admin/paneldeclaracion') ||
-            request()->is('admin/objetivosseguridads') ||
-            request()->is('admin/concientizacion-sgis') ||
-            request()->is('admin/material-sgsis') ||
-            request()->is('admin/comunicacion-sgis') ||
-            request()->is('admin/control-accesos') ||
-            request()->is('admin/declaracion-aplicabilidad') ||
-            request()->is('admin/planificacion-controls') ||
-            request()->is('admin/tratamiento-riesgos') ||
-            request()->is('admin/indicadores-sgsis') ||
-            request()->is('admin/auditoria-anuals') ||
-            request()->is('admin/plan-auditoria') ||
-            request()->is('admin/revision-direccions') ||
-            request()->is('admin/auditoria-internas') ||
-            request()->is('admin/accion-correctivas') ||
-            request()->is('admin/inicioUsuario/reportes/mejoras')
-                ? 'active'
-                : '' }}"
-                href="{{ route('admin.iso27001.index') }}#contexto">
-                <i class="bi bi-globe2 iconos_menu letra_blanca"></i>
-                <font class="letra_blanca"> ISO 27001 </font>
-            </a>
-        </li>
-
+        @can('isoveinticieteuno_access')
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') ||
+                request()->is('admin/analisisdebrechas') ||
+                request()->is('admin/planTrabajoBase') ||
+                request()->is('admin/partes-interesadas') ||
+                request()->is('admin/matriz-requisito-legales') ||
+                request()->is('admin/entendimiento-organizacions') ||
+                request()->is('admin/alcance-sgsis') ||
+                request()->is('admin/comiteseguridads') ||
+                request()->is('admin/minutasaltadireccions') ||
+                request()->is('admin/evidencias-sgsis') ||
+                request()->is('admin/politica-sgsis') ||
+                request()->is('admin/paneldeclaracion') ||
+                request()->is('admin/objetivosseguridads') ||
+                request()->is('admin/concientizacion-sgis') ||
+                request()->is('admin/material-sgsis') ||
+                request()->is('admin/comunicacion-sgis') ||
+                request()->is('admin/control-accesos') ||
+                request()->is('admin/declaracion-aplicabilidad') ||
+                request()->is('admin/planificacion-controls') ||
+                request()->is('admin/tratamiento-riesgos') ||
+                request()->is('admin/indicadores-sgsis') ||
+                request()->is('admin/auditoria-anuals') ||
+                request()->is('admin/plan-auditoria') ||
+                request()->is('admin/revision-direccions') ||
+                request()->is('admin/auditoria-internas') ||
+                request()->is('admin/accion-correctivas') ||
+                request()->is('admin/inicioUsuario/reportes/mejoras')
+                    ? 'active'
+                    : '' }}"
+                    href="{{ route('admin.iso27001.index') }}#contexto">
+                    <i class="bi bi-globe2 iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca"> ISO 27001 </font>
+                </a>
+            </li>
+        @endcan
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->is('admin/iso9001') ? 'active' : '' }}"
                 href="{{ route('admin.iso9001.index') }}#contexto">
@@ -461,7 +472,7 @@
 
         {{-- @endcan --}}
         @can('configuracion_datos_access')
-            @can('configuracion_procesos_access') {{-- este acceso no corresponde --}}
+            @can('carga_masiva_de_datos_access') {{-- este acceso no corresponde --}}
                 <li class="c-sidebar-nav-item">
                     <a href="{{ route('cargadocs') }}"
                         class="c-sidebar-nav-link {{ request()->is('CargaDocs') || request()->is('CargaDocs/*') ? 'active' : '' }}">
@@ -481,7 +492,7 @@
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route('admin.organizacions.index') }}"
                                     class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
-                                    <i class="bi bi-building iconos_menu letra_blanca"></i> 
+                                    <i class="bi bi-building iconos_menu letra_blanca"></i>
 
                                     <font class="letra_blanca">Organización</font>
                                 </a>
@@ -490,8 +501,8 @@
                         @can('configuracion_sede_access')
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route('admin.sedes.index') }}"
-                                    class="c-sidebar-nav-link {{ request()->is('admin/sedes') || request()->is('admin/sedes/*/edit') || request()->is('admin/sedes/create') ? 'active' : '' }}">
-                                    <i class="bi bi-geo-alt iconos_menu letra_blanca"></i> 
+                                    class="c-sidebar-nav-link {{ request()->is('admin/sedes') || request()->is('admin/sedes/*/edit') || request()->is('admin/sedes/create')? 'active': '' }}">
+                                    <i class="bi bi-geo-alt iconos_menu letra_blanca"></i>
                                     <font class="letra_blanca">Sedes</font>
                                 </a>
                             </li>
@@ -499,7 +510,7 @@
                         @can('configuracion_area_access')
                             <li class="c-sidebar-nav-dropdown">
                                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                    <i class="bi bi-geo iconos_menu letra_blanca"></i> 
+                                    <i class="bi bi-geo iconos_menu letra_blanca"></i>
                                     <font class="letra_blanca "> Áreas </font>
                                 </a>
                                 <ul class="c-sidebar-nav-dropdown-items">
@@ -507,7 +518,7 @@
                                         <li class="c-sidebar-nav-item">
                                             <a href="{{ route('admin.grupoarea.index') }}"
                                                 class="c-sidebar-nav-link {{ request()->is('admin/grupoarea') || request()->is('admin/grupoarea/*') ? 'active' : '' }}">
-                                                <i class="bi bi-boxes iconos_menu letra_blanca"></i> 
+                                                <i class="bi bi-boxes iconos_menu letra_blanca"></i>
                                                 <font class="letra_blanca"> Crear Grupo </font>
                                             </a>
                                         </li>
@@ -515,9 +526,9 @@
                                     @can('configuracion_area_create')
                                         <li class="c-sidebar-nav-item">
                                             <a href="{{ route('admin.areas.index') }}"
-                                                class="c-sidebar-nav-link {{ request()->is('admin/areas') || request()->is('admin/areas/*/edit') || request()->is('admin/areas/create') ? 'active' : '' }}">
+                                                class="c-sidebar-nav-link {{ request()->is('admin/areas') || request()->is('admin/areas/*/edit') || request()->is('admin/areas/create')? 'active': '' }}">
 
-                                                <i class="bi bi-geo iconos_menu letra_blanca"></i> 
+                                                <i class="bi bi-geo iconos_menu letra_blanca"></i>
                                                 <font class="letra_blanca"> Crear Áreas </font>
                                             </a>
                                         </li>
@@ -528,7 +539,7 @@
                         @can('configuracion_procesos_access')
                             <li class="c-sidebar-nav-dropdown">
                                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                    <i class="bi bi-file-earmark-post iconos_menu letra_blanca"></i> 
+                                    <i class="bi bi-file-earmark-post iconos_menu letra_blanca"></i>
                                     <font class="letra_blanca "> Procesos </font>
                                 </a>
                                 <ul class="c-sidebar-nav-dropdown-items">
@@ -536,7 +547,7 @@
                                         <li class="c-sidebar-nav-item">
                                             <a href="{{ route('admin.macroprocesos.index') }}"
                                                 class="c-sidebar-nav-link {{ request()->is('admin/tipoactivos') || request()->is('admin/tipoactivos/*') ? 'active' : '' }}">
-                                                <i class="bi bi-file-earmark-post-fill iconos_menu letra_blanca"></i> 
+                                                <i class="bi bi-file-earmark-post-fill iconos_menu letra_blanca"></i>
                                                 <font class="letra_blanca"> Macroprocesos</font>
                                             </a>
                                         </li>
@@ -545,7 +556,7 @@
                                         <li class="c-sidebar-nav-item">
                                             <a href="{{ route('admin.procesos.index') }}"
                                                 class="c-sidebar-nav-link {{ request()->is('admin/procesos') || request()->is('admin/procesos/*') ? 'active' : '' }}">
-                                                <i class="bi bi-file-earmark-post iconos_menu letra_blanca"></i> 
+                                                <i class="bi bi-file-earmark-post iconos_menu letra_blanca"></i>
                                                 <font class="letra_blanca"> Procesos</font>
                                             </a>
                                         </li>
@@ -555,7 +566,7 @@
                         @endcan
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="bi bi-pc-display-horizontal iconos_menu letra_blanca"></i> 
+                                <i class="bi bi-pc-display-horizontal iconos_menu letra_blanca"></i>
                                 <font class="letra_blanca "> Activos </font>
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
@@ -563,14 +574,14 @@
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route('admin.tipoactivos.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/tipoactivos') || request()->is('admin/tipoactivos/*') ? 'active' : '' }}">
-                                            <i class="bi bi-layers iconos_menu letra_blanca"></i> 
+                                            <i class="bi bi-layers iconos_menu letra_blanca"></i>
                                             <font class="letra_blanca"> Categorias</font>
                                         </a>
                                     </li>
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route('admin.subtipoactivos.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/tipoactivos') || request()->is('admin/tipoactivos/*') ? 'active' : '' }}">
-                                            <i class="bi bi-layers-half iconos_menu letra_blanca"></i> 
+                                            <i class="bi bi-layers-half iconos_menu letra_blanca"></i>
                                             <font class="letra_blanca"> Subcategorias</font>
                                         </a>
                                     </li>
@@ -579,7 +590,7 @@
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route('admin.activos.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/activos') || request()->is('admin/activos/*') ? 'active' : '' }}">
-                                            <i class="bi bi-list-task iconos_menu letra_blanca"></i> 
+                                            <i class="bi bi-list-task iconos_menu letra_blanca"></i>
                                             <font class="letra_blanca"> Inventario</font>
                                         </a>
                                     </li>
@@ -591,7 +602,7 @@
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route('admin.glosarios.index') }}"
                                     class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
-                                    <i class="bi bi-list-columns-reverse iconos_menu letra_blanca"></i> 
+                                    <i class="bi bi-list-columns-reverse iconos_menu letra_blanca"></i>
                                     <font class="letra_blanca" style="margin-left:10px;">Glosario</font>
                                 </a>
                             </li>
@@ -614,42 +625,42 @@
         @endcan
 
 
-        
-            <li class="c-sidebar-nav-dropdown">
-                <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
-                    <i class="bi bi-folder iconos_menu letra_blanca"></i> 
-                    <font class="letra_blanca"> Documentos </font>
-                </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    
+
+        <li class="c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
+                <i class="bi bi-folder iconos_menu letra_blanca"></i>
+                <font class="letra_blanca"> Documentos </font>
+            </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route('admin.documentos.create') }}"
+                        class="c-sidebar-nav-link {{ request()->is('admin/create') || request()->is('admin/create*') ? 'active' : '' }}">
+                        <i class="bi bi-folder-plus iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca"> Agregar Documento </font>
+                    </a>
+                </li>
+                @can('documentos_create')
                     <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.documentos.create') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/create') || request()->is('admin/create*') ? 'active' : '' }}">
-                            <i class="bi bi-folder-plus iconos_menu letra_blanca"></i> 
-                            <font class="letra_blanca"> Agregar Documento </font>
+                        <a href="{{ route('admin.documentos.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/crear-documentos') || request()->is('admin/crear-documentos*') ? 'active' : '' }}">
+                            <i class="bi bi-card-checklist letra_blanca iconos_menu"></i>
+                            <font class="letra_blanca"> Control Documental </font>
                         </a>
                     </li>
-                     @can('documentos_create')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.documentos.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/crear-documentos') || request()->is('admin/crear-documentos*') ? 'active' : '' }}">
-                                <i class="bi bi-card-checklist letra_blanca iconos_menu"></i> 
-                                <font class="letra_blanca"> Control Documental </font>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('carpetum_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.carpeta.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/carpeta') || request()->is('admin/carpeta/*') ? 'active' : '' }}">
-                                <i class="bi bi-folder2-open iconos_menu letra_blanca"></i> 
-                                <font class="letra_blanca"> Repositorio Documental </font>
-                            </a>
-                        </li>
-                    @endcan
-                    
-                </ul>
-            </li>
+                @endcan
+                @can('carpetum_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.carpeta.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/carpeta') || request()->is('admin/carpeta/*') ? 'active' : '' }}">
+                            <i class="bi bi-folder2-open iconos_menu letra_blanca"></i>
+                            <font class="letra_blanca"> Repositorio Documental </font>
+                        </a>
+                    </li>
+                @endcan
+
+            </ul>
+        </li>
 
 
 
@@ -673,7 +684,7 @@
                     @can('configuracion_sede_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.perfiles.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/perfiles') || request()->is('admin/perfiles/*') || request()->is('admin/perfiles/create') ? 'active' : '' }}">
+                                class="c-sidebar-nav-link {{ request()->is('admin/perfiles') ||request()->is('admin/perfiles/*') ||request()->is('admin/perfiles/create')? 'active': '' }}">
                                 <i class="bi bi-diagram-2 iconos_menu letra_blanca"></i>
 
                                 <font class="letra_blanca">Niveles Jerárquicos</font>
@@ -700,9 +711,8 @@
                             @can('configuracion_macroproceso_access')
                                 <li class="c-sidebar-nav-item">
                                     <a href="{{ asset('admin/categoria-capacitacion') }}"
-                                        class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
-                                        <i class="ml-2 bi bi-mortarboard iconos_menu letra_blanca"
-                                            style="font-size:12pt;"></i>
+                                        class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*')? 'active': '' }}">
+                                        <i class="ml-2 bi bi-mortarboard iconos_menu letra_blanca" style="font-size:12pt;"></i>
                                         <font class="letra_blanca"> Crear Categorías</font>
                                     </a>
                                 </li>
@@ -734,27 +744,32 @@
                 </ul>
             </li>
         @endcan
-        @can('user_management_access')
+        @can('configurar_vistas_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                     <i class="bi bi-pc-display-horizontal iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Configurar Vistas </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.panel-inicio.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/panel-inicio') || request()->is('admin/panel-inicio/*') ? 'active' : '' }}">
-                            <i class="bi bi-person-badge iconos_menu letra_blanca"></i>
-                            <span class="letra_blanca"> Mis Datos </span>
-                        </a>
-                    </li>
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.panel-organizacion.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/panel-organizacion') || request()->is('admin/panel-organizacion/*') ? 'active' : '' }}">
-                            <i class="bi bi-building iconos_menu letra_blanca"></i>
-                            <span class="letra_blanca"> Mi Organización </span>
-                        </a>
-                    </li>
+                    @can('configurar_vista_mis_datos_access')
+
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.panel-inicio.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/panel-inicio') || request()->is('admin/panel-inicio/*') ? 'active' : '' }}">
+                                <i class="bi bi-person-badge iconos_menu letra_blanca"></i>
+                                <span class="letra_blanca"> Mis Datos </span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('configurar_vista_mi_organizacion_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.panel-organizacion.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/panel-organizacion') || request()->is('admin/panel-organizacion/*') ? 'active' : '' }}">
+                                <i class="bi bi-building iconos_menu letra_blanca"></i>
+                                <span class="letra_blanca"> Mi Organización </span>
+                            </a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
         @endcan
@@ -904,13 +919,16 @@
             </li>
         @endcan
         {{-- @can('') este acceso no corresponde --}}
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('admin.configurar-soporte.index') }}"
-                class="c-sidebar-nav-link {{ request()->is('admin/configurar-soporte') || request()->is('admin/configurar-soporte/*') ? 'active' : '' }}">
-                <i class="bi bi-gear iconos_menu letra_blanca"></i>
-                <font class="letra_blanca">Configurar Soporte</font>
-            </a>
-        </li>
+        @can('configurar_soporte_access')
+
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.configurar-soporte.index') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/configurar-soporte') || request()->is('admin/configurar-soporte/*') ? 'active' : '' }}">
+                    <i class="bi bi-gear iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca">Configurar Soporte</font>
+                </a>
+            </li>
+        @endcan
         {{-- @endcan --}}
 
         {{-- este acceso no corresponde --}}
@@ -1007,9 +1025,13 @@
 
         </style>
         <div class="text-center botones_g_s" style="margin-top: 80px;">
-            <a href="{{ route('admin.soporte') }}" title="Soporte" style="margin-right:14px;"><i
-                    class="bi bi-headset"></i></a>
-            <a href="{{ route('admin.glosarios.render') }}" title="Glosario"><i class="bi bi-book"></i></a>
+            @can('listados_soporte_access')
+                <a href="{{ route('admin.soporte') }}" title="Soporte" style="margin-right:14px;"><i
+                        class="bi bi-headset"></i></a>
+            @endcan
+            @can('glosario_access')
+                <a href="{{ route('admin.glosarios.render') }}" title="Glosario"><i class="bi bi-book"></i></a>
+            @endcan
         </div>
 
         <div class="row lemnt_row_menu" style="padding-bottom:300px;">

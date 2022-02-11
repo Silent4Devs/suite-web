@@ -86,11 +86,6 @@ class Puesto extends Model
     //     return $this->belongsTo(Empleado::class, 'id_reporta', 'id')->with('area');
     // }
 
-    // public function empleado()
-    // {
-    //     return $this->belongsTo(Empleado::class, 'id_contacto')->with('area');
-    // }
-
     // public function reporto()
     // {
     //     return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->with('area');
@@ -132,11 +127,6 @@ class Puesto extends Model
     //     // return $this->belongsToMany(Language::class, 'puesto_idioma_porcentaje_pivot','id_puesto', 'id_language');
     //     return $this->hasMany('App\Models\Language')->orderBy('id');
     // }
-
-    public function puesto()
-    {
-        return $this->belongsTo(self::class, 'reporta_puesto_id')->with('area');
-    }
 
     public function reportara()
     {

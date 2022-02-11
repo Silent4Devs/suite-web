@@ -171,8 +171,12 @@
         }
 
 
-        .btn_modal_video{
-            width: 160px !important; transform: scale(0.7); position:absolute; right: 0; margin-top:-35px;
+        .btn_modal_video {
+            width: 160px !important;
+            transform: scale(0.7);
+            position: absolute;
+            right: 0;
+            margin-top: -35px;
         }
 
     </style>
@@ -200,53 +204,81 @@
                 <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
                     aria-labelledby="nav-contexto-tab">
                     <ul class="mt-4">
-				        <li><a href="{{ url('/admin/timesheet') }}">
-			                <div>
-			                    <i class="bi bi-calendar4"></i><br>
-			                    Mis Horas
-			                </div>
-			            </a></li>
-			       		 <li><a href="{{ asset('admin/timesheet/create') }}">
-			                <div>
-			                    <i class="bi bi-calendar-plus"></i><br>
-			                    Crear Timesheet
-			                </div>
-			            </a></li>
-                        <li><a href="{{ asset('admin/timesheet/rechazadas') }}">
-                            <div>
-                                <i class="bi bi-calendar2-x"></i><br>
-                                Horas Rechazadas
-                            </div>
-                        </a></li>
-				    </ul>
+                        @can('mi_timesheet_horas_aceptadas_show')
+                            <li>
+                                <a href="{{ route('admin.timesheet') }}">
+                                    <div>
+                                        <i class="bi bi-calendar4"></i><br>
+                                        Mis Horas
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('timesheet_create')
+                            <li>
+                                <a href="{{ route('admin.timesheet-create') }}">
+                                    <div>
+                                        <i class="bi bi-calendar-plus"></i><br>
+                                        Crear Timesheet
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('mi_timesheet_horas_rechazadas_show')
+                            <li>
+                                <a href="{{ route('admin.timesheet-rechazadas') }}">
+                                    <div>
+                                        <i class="bi bi-calendar2-x"></i><br>
+                                        Horas Rechazadas
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
                 </div>
                 <div class="tab-pane mb-4 fade" id="nav-liderazgo" role="tabpanel" aria-labelledby="nav-liderazgo-tab">
                     <ul class="mt-4">
-				        <li><a href="{{ url('/admin/timesheet/proyectos') }}">
-			                <div>
-			                    <i class="bi bi-list-task"></i><br>
-			                    Proyectos
-			                </div>
-			            </a></li>
-			       		 <li><a href="{{ asset('admin/timesheet/tareas') }}">
-			                <div>
-			                    <i class="bi bi-card-list"></i><br>
-			                    Tareas
-			                </div>
-			            </a></li>
-			        	<li><a href="{{ asset('admin/timesheet/aprobaciones') }}">
-			                <div>
-			                    <i class="bi bi-calendar2-check"></i><br>
-			                    Aprobaciones
-			                </div>
-			            </a></li>
-                        <li><a href="{{ asset('admin/timesheet/clientes') }}">
-                            <div>
-                                <i class="bi bi-bag"></i><br>
-                                Clientes
-                            </div>
-                        </a></li>
-				    </ul>
+                        @can('timesheet_administrador_proyectos_access')
+                            <li>
+                                <a href="{{ route('admin.timesheet-proyectos') }}">
+                                    <div>
+                                        <i class="bi bi-list-task"></i><br>
+                                        Proyectos
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('timesheet_administrador_tareas_proyectos_access')
+                            <li>
+                                <a href="{{ route('admin.timesheet-tareas') }}">
+                                    <div>
+                                        <i class="bi bi-card-list"></i><br>
+                                        Tareas
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('timesheet_administrador_aprobar_rechazar_horas_access')
+                            <li>
+                                <a href="{{ route('admin.timesheet-aprobaciones') }}">
+                                    <div>
+                                        <i class="bi bi-calendar2-check"></i><br>
+                                        Aprobaciones
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('timesheet_administrador_clientes_access')
+                            <li>
+                                <a href="{{ route('admin.timesheet-clientes') }}">
+                                    <div>
+                                        <i class="bi bi-bag"></i><br>
+                                        Clientes
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
                 </div>
             </div>
         </div>
@@ -255,5 +287,5 @@
 
 
 @section('scripts')
-    
+
 @endsection

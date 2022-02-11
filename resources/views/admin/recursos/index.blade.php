@@ -326,15 +326,26 @@
                             const urlEditar = `recursos/${data}/edit`
                             const urlEliminar = `recursos/${data}`
                             let html =
-                                `<div class="btn-group">
-                                <a href="${urlSeguimiento }" class="btn btn-sm" title="Seguimiento de la capacitación"><i class="fas fa-cogs mr-2"></i></a>`;
+                                `                                    
+                                <div class="btn-group">
+                                    @can('recurso_show')
+                                        <a href="${urlSeguimiento }" class="btn btn-sm" title="Seguimiento de la capacitación"><i
+                                                class="fas fa-cogs mr-2"></i></a>
+                                    @endcan
+                                `;
                             if (row.estatus == 'Borrador' || row.estatus == 'Cancelado') {
                                 html += `
-                                        <a href="${urlEditar}" class="btn btn-sm" title="Editar la capacitación"><i class="fas fa-edit mr-2"></i></a>
+                                @can('recurso_edit')
+                                    <a href="${urlEditar}" class="btn btn-sm" title="Editar la capacitación"><i class="fas fa-edit mr-2"></i></a>
+                                @endcan
                                         `;
                             }
-                            html += `<button data-url="${urlEliminar}" class="btn btn-sm btn-eliminar" title="Eliminar la capacitación"><i class="fas fa-trash mr-2 text-danger"></i>
+                            html += `
+                            @can('recurso_delete')
+                                <button data-url="${urlEliminar}" class="btn btn-sm btn-eliminar" title="Eliminar la capacitación"><i
+                                        class="fas fa-trash mr-2 text-danger"></i>
                                 </button>
+                            @endcan
                             </div>
                             `;
                             return html;

@@ -11,6 +11,43 @@ class PermissionsTableSeeder extends Seeder
     {
         Permission::truncate();
         $permissions = [
+            // CONFIGURAR VISTAS
+            [
+                'name' => 'Acceder a Configurar Vistas',
+                'title' => 'configurar_vistas_access',
+            ],
+            [
+                'name' => 'Acceder a Configurar Vista Mis Datos',
+                'title' => 'configurar_vista_mis_datos_access',
+            ],
+            [
+                'name' => 'Acceder a Configurar Vista Mis Organización',
+                'title' => 'configurar_vista_mi_organizacion_access',
+            ],
+            [
+                'name' => 'Acceder a Configurar Soporte',
+                'title' => 'configurar_soporte_access',
+            ],
+            [
+                'name' => 'Agregar Colaborador de Soporte',
+                'title' => 'configurar_soporte_create',
+            ],
+            [
+                'name' => 'Visualizar Colaborador de Soporte',
+                'title' => 'configurar_soporte_show',
+            ],
+            [
+                'name' => 'Editar Colaborador de Soporte',
+                'title' => 'configurar_soporte_edit',
+            ],
+            [
+                'name' => 'Eliminar Colaborador de Soporte',
+                'title' => 'configurar_soporte_delete',
+            ],
+            [
+                'name' => 'Acceder a Listados de Soporte',
+                'title' => 'listados_soporte_access',
+            ],
             // MI PERFIL
             [
                 'name' => 'Acceder a Mi Perfil',
@@ -80,15 +117,446 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Visualizar Perfil De Puesto',
                 'title' => 'perfil_de_puesto_access',
             ],
-            //OBJETIVOS ESTRATÉGICOS
-            [
-                'name' => 'Visualizar Objetivos Estratégicos',
-                'title' => 'objetivos_estrategicos_access',
-            ],
             // TIMESHEET
             [
                 'name' => 'Acceder a TimeSheet',
                 'title' => 'timesheet_access',
+            ],
+            [
+                'name' => 'Visualizar Mi TimeSheet (Horas Aceptadas)',
+                'title' => 'mi_timesheet_horas_aceptadas_show',
+            ],
+            [
+                'name' => 'Visualizar Mi TimeSheet (Horas Rechazadas)',
+                'title' => 'mi_timesheet_horas_rechazadas_show',
+            ],
+            [
+                'name' => 'Crear TimeSheet',
+                'title' => 'timesheet_create',
+            ],
+            [
+                'name' => 'Acceder a Proyectos Para TimeSheet',
+                'title' => 'timesheet_administrador_proyectos_access',
+            ],
+            [
+                'name' => 'Agregar Proyectos Para TimeSheet',
+                'title' => 'timesheet_administrador_proyectos_create',
+            ],
+            [
+                'name' => 'Eliminar Proyectos de TimeSheet',
+                'title' => 'timesheet_administrador_proyectos_delete',
+            ],
+            [
+                'name' => 'Acceder a Tareas a Proyectos de TimeSheet',
+                'title' => 'timesheet_administrador_tareas_proyectos_access',
+            ],
+            [
+                'name' => 'Agregar Tareas a Proyectos de TimeSheet',
+                'title' => 'timesheet_administrador_tareas_proyectos_create',
+            ],
+            [
+                'name' => 'Eliminar Tareas de Proyectos de TimeSheet',
+                'title' => 'timesheet_administrador_tareas_proyectos_delete',
+            ],
+            [
+                'name' => 'Acceder a Aprobar/Rechazar Horas TimeSheet',
+                'title' => 'timesheet_administrador_aprobar_rechazar_horas_access',
+            ],
+            [
+                'name' => 'Aprobar Horas TimeSheet',
+                'title' => 'timesheet_administrador_aprobar_horas',
+            ],
+            [
+                'name' => 'Rechazar Horas TimeSheet',
+                'title' => 'timesheet_administrador_rechazar_horas',
+            ],
+            [
+                'name' => 'Acceder a TimeSheet Clientes',
+                'title' => 'timesheet_administrador_clientes_access',
+            ],
+            [
+                'name' => 'Agregar Clientes TimeSheet',
+                'title' => 'timesheet_administrador_clientes_create',
+            ],
+            [
+                'name' => 'Editar Clientes TimeSheet',
+                'title' => 'timesheet_administrador_clientes_edit',
+            ],
+            [
+                'name' => 'Visualizar Clientes TimeSheet',
+                'title' => 'timesheet_administrador_clientes_show',
+            ],
+            [
+                'name' => 'Eliminar Clientes TimeSheet',
+                'title' => 'timesheet_administrador_clientes_delete',
+            ],
+            // CAPITAL HUMANO
+            [
+                'name' => 'Acceder a Capital Humano',
+                'title' => 'capital_humano_access',
+            ],
+            [
+                'name' => 'Acceder a Competencias - Capital Humano',
+                'title' => 'capital_humano_competencias_access',
+            ],
+            [
+                'name' => 'Agregar Competencias - Capital Humano',
+                'title' => 'capital_humano_competencias_create',
+            ],
+            [
+                'name' => 'Editar Competencias - Capital Humano',
+                'title' => 'capital_humano_competencias_edit',
+            ],
+            [
+                'name' => 'Visualizar Competencias - Capital Humano',
+                'title' => 'capital_humano_competencias_show',
+            ],
+            [
+                'name' => 'Eliminar Competencias - Capital Humano',
+                'title' => 'capital_humano_competencias_delete',
+            ],
+            [
+                'name' => 'Acceder a Consulta de Competencias Por Puestos - Capital Humano',
+                'title' => 'capital_humano_competencias_por_puestos_consulta_access',
+            ],
+            [
+                'name' => 'Acceder a Competencias Por Puestos - Capital Humano',
+                'title' => 'capital_humano_competencias_por_puestos_access',
+            ],
+            [
+                'name' => 'Agregar Competencias Por Puestos - Capital Humano',
+                'title' => 'capital_humano_competencias_por_puestos_create',
+            ],
+            [
+                'name' => 'Editar Competencias Por Puestos - Capital Humano',
+                'title' => 'capital_humano_competencias_por_puestos_edit',
+            ],
+            [
+                'name' => 'Eliminar Competencias Por Puestos - Capital Humano',
+                'title' => 'capital_humano_competencias_por_puestos_delete',
+            ],
+            [
+                'name' => 'Acceder Lista de Documentos',
+                'title' => 'lista_documentos_empleados_access',
+            ],
+            [
+                'name' => 'Crear Registro para Lista de Documentos',
+                'title' => 'lista_documentos_empleados_create',
+            ],
+            [
+                'name' => 'Editar Registro de Lista de Documentos',
+                'title' => 'lista_documentos_empleados_edit',
+            ],
+            [
+                'name' => 'Eliminar Registro de Lista de Documentos',
+                'title' => 'lista_documentos_empleados_delete',
+            ],
+            [
+                'name' => 'Acceder a Niveles Jerárquicos',
+                'title' => 'niveles_jerarquicos_access',
+            ],
+            [
+                'name' => 'Agregar Nivel Jerárquico',
+                'title' => 'niveles_jerarquicos_create',
+            ],
+            [
+                'name' => 'Editar Nivel Jerárquico',
+                'title' => 'niveles_jerarquicos_edit',
+            ],
+            [
+                'name' => 'Eliminar Nivel Jerárquico',
+                'title' => 'niveles_jerarquicos_delete',
+            ],
+            [
+                'name' => 'Visualizar Nivel Jerárquico',
+                'title' => 'niveles_jerarquicos_show',
+            ],
+            [
+                'name' => 'Acceder a Tipos de Contratos',
+                'title' => 'tipos_de_contratos_access',
+            ],
+            [
+                'name' => 'Agregar Tipo de Contrato',
+                'title' => 'tipos_de_contratos_create',
+            ],
+            [
+                'name' => 'Editar Tipo de Contrato',
+                'title' => 'tipos_de_contratos_edit',
+            ],
+            [
+                'name' => 'Visualizar Tipo de Contrato',
+                'title' => 'tipos_de_contratos_show',
+            ],
+            [
+                'name' => 'Eliminar Tipo de Contrato',
+                'title' => 'tipos_de_contratos_delete',
+            ],
+            [
+                'name' => 'Acceder a Entidades Crediticias',
+                'title' => 'entidades_crediticias_access',
+            ],
+            [
+                'name' => 'Agregar Entidad Crediticia',
+                'title' => 'entidades_crediticias_create',
+            ],
+            [
+                'name' => 'Editar Entidad Crediticia',
+                'title' => 'entidades_crediticias_edit',
+            ],
+            [
+                'name' => 'Visualizar Entidad Crediticia',
+                'title' => 'entidades_crediticias_show',
+            ],
+            [
+                'name' => 'Eliminar Entidad Crediticia',
+                'title' => 'entidades_crediticias_delete',
+            ],
+            [
+                'name' => 'Acceder a Objetivos Estratégicos',
+                'title' => 'objetivos_estrategicos_access',
+            ],
+            [
+                'name' => 'Crear Objetivo Estratégico',
+                'title' => 'objetivos_estrategicos_create',
+            ],
+            [
+                'name' => 'Editar Objetivo Estratégico',
+                'title' => 'objetivos_estrategicos_edit',
+            ],
+            [
+                'name' => 'Eliminar Objetivo Estratégico',
+                'title' => 'objetivos_estrategicos_delete',
+            ],
+            [
+                'name' => 'Visualizar Objetivos Estratégicos',
+                'title' => 'objetivos_estrategicos_show',
+            ],
+            [
+                'name' => 'Copiar Objetivos Estratégicos',
+                'title' => 'objetivos_estrategicos_copy',
+            ],
+            [
+                'name' => 'Acceder a Perfiles Profesionales',
+                'title' => 'perfiles_profesionales_access',
+            ],
+            [
+                'name' => 'Acceder a Categorias de Capacitaciones',
+                'title' => 'categorias_capacitaciones_access',
+            ],
+            [
+                'name' => 'Agregar Categoria de Capacitación',
+                'title' => 'categorias_capacitaciones_create',
+            ],
+            [
+                'name' => 'Editar Categoria de Capacitación',
+                'title' => 'categorias_capacitaciones_edit',
+            ],
+            [
+                'name' => 'Visualizar Categoria de Capacitación',
+                'title' => 'categorias_capacitaciones_show',
+            ],
+            [
+                'name' => 'Eliminar Categoria de Capacitación',
+                'title' => 'categorias_capacitaciones_delete',
+            ],
+            [
+                'name' => 'Acceder a Lista de Días Festivos',
+                'title' => 'dias_festivos_access',
+            ],
+            [
+                'name' => 'Agregar Día Festivo',
+                'title' => 'dias_festivos_create',
+            ],
+            [
+                'name' => 'Visualizar Día Festivo',
+                'title' => 'dias_festivos_show',
+            ],
+            [
+                'name' => 'Editar Día Festivo',
+                'title' => 'dias_festivos_edit',
+            ],
+            [
+                'name' => 'Eliminar Día Festivo',
+                'title' => 'dias_festivos_delete',
+            ],
+            [
+                'name' => 'Acceder a Lista de Eventos de la Organización',
+                'title' => 'eventos_organizacion_access',
+            ],
+            [
+                'name' => 'Agregar Evento de la Organización',
+                'title' => 'eventos_organizacion_create',
+            ],
+            [
+                'name' => 'Visualizar Evento de la Organización',
+                'title' => 'eventos_organizacion_show',
+            ],
+            [
+                'name' => 'Editar Evento de la Organización',
+                'title' => 'eventos_organizacion_edit',
+            ],
+            [
+                'name' => 'Eliminar Evento de la Organización',
+                'title' => 'eventos_organizacion_delete',
+            ],
+            // [
+            //     'name' => 'Acceder a Lista de Comunicados de la Organización',
+            //     'title' => 'comunicados_organizacion_access',
+            // ],
+            // [
+            //     'name' => 'Agregar Comunicado de la Organización',
+            //     'title' => 'comunicados_organizacion_create',
+            // ],
+            // [
+            //     'name' => 'Visualizar Comunicado de la Organización',
+            //     'title' => 'comunicados_organizacion_show',
+            // ],
+            // [
+            //     'name' => 'Editar Comunicado de la Organización',
+            //     'title' => 'comunicados_organizacion_edit',
+            // ],
+            // [
+            //     'name' => 'Eliminar Comunicado de la Organización',
+            //     'title' => 'comunicados_organizacion_delete',
+            // ],
+            //EV360
+            [
+                'name' => 'Acceder a Evaluación 360 grados',
+                'title' => 'evaluacion_360_access',
+            ],
+            [
+                'name' => 'Crear a Evaluación 360 grados',
+                'title' => 'evaluacion_360_create',
+            ],
+            [
+                'name' => 'Eliminar Evaluación 360 grados',
+                'title' => 'evaluacion_360_delete',
+            ],
+            [
+                'name' => 'Acceder a Seguimiento a Evaluación 360 grados',
+                'title' => 'evaluacion_360_seguimiento_access',
+            ],
+            [
+                'name' => 'Acceder a Configuración de la Evaluación 360 grados',
+                'title' => 'evaluacion_360_configuracion_access',
+            ],
+            [
+                'name' => 'Enviar Recordatorio sobre la Evaluación 360 grados',
+                'title' => 'evaluacion_360_recordatorio_send',
+            ],
+            [
+                'name' => 'Cerrar Evaluación 360 grados',
+                'title' => 'evaluacion_360_close',
+            ],
+            [
+                'name' => 'Reiniciar Evaluación 360 grados',
+                'title' => 'evaluacion_360_reset',
+            ],
+            [
+                'name' => 'Iniciar Evaluación 360 grados',
+                'title' => 'evaluacion_360_start',
+            ],
+            [
+                'name' => 'Visualizar Resúmen/Individual de la Evaluación 360 grados',
+                'title' => 'evaluacion_360_resumen_individual_show',
+            ],
+            [
+                'name' => 'Visualizar Resúmen/General de Evaluación 360 grados',
+                'title' => 'evaluacion_360_resumen_general_show',
+            ],
+            // ANALISIS DE RIESGOS
+            [
+                'name' => 'Acceder a Análisis de Riesgos',
+                'title' => 'analisis_de_riesgos_access',
+            ],
+            [
+                'name' => 'Acceder a Amenazas - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_amenazas_access',
+            ],
+            [
+                'name' => 'Agregar Amenaza - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_amenazas_create',
+            ],
+            [
+                'name' => 'Editar Amenaza - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_amenazas_edit',
+            ],
+            [
+                'name' => 'Visualizar Amenaza - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_amenazas_show',
+            ],
+            [
+                'name' => 'Eliminar Amenaza - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_amenazas_delete',
+            ],
+            [
+                'name' => 'Acceder a Vulnerabilidades - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_vulnerabilidades_access',
+            ],
+            [
+                'name' => 'Agregar Vulnerabilidad - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_vulnerabilidades_create',
+            ],
+            [
+                'name' => 'Editar Vulnerabilidad - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_vulnerabilidades_edit',
+            ],
+            [
+                'name' => 'Visualizar Vulnerabilidad - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_vulnerabilidades_show',
+            ],
+            [
+                'name' => 'Eliminar Vulnerabilidad - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_vulnerabilidades_delete',
+            ],
+            [
+                'name' => 'Acceder a Matríz de Riesgos - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_matriz_riesgo_access',
+            ],
+            [
+                'name' => 'Agregar Matríz de Riesgo - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_matriz_riesgo_create',
+            ],
+            [
+                'name' => 'Editar Matríz de Riesgo - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_matriz_riesgo_edit',
+            ],
+            [
+                'name' => 'Visualizar Matríz de Riesgo - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_matriz_riesgo_show',
+            ],
+            [
+                'name' => 'Eliminar Matríz de Riesgo - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_matriz_riesgo_delete',
+            ],
+            [
+                'name' => 'Configurar Matríz de Riesgo - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_matriz_riesgo_config',
+            ],
+            [
+                'name' => 'Agregar Análisis de Matríz de Riesgo - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_matriz_riesgo_analisis_create',
+            ],
+            [
+                'name' => 'Visualizar Análisis de Matríz de Riesgo - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_matriz_riesgo_config_show',
+            ],
+            [
+                'name' => 'Editar Análisis de Matríz de Riesgo - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_matriz_riesgo_config_edit',
+            ],
+            [
+                'name' => 'Eliminar Análisis de Matríz de Riesgo - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_matriz_riesgo_config_delete',
+            ],
+            [
+                'name' => 'Visualizar Gráfica de Análisis de Matríz de Riesgo - Análisis de Riegos',
+                'title' => 'analisis_de_riesgos_matriz_riesgo_analisis_grafica_show',
+            ],
+            //CARGA MASIVA DE DATOS
+            [
+                'name' => 'Cargar Datos Masivamente',
+                'title' => 'carga_masiva_de_datos_access',
             ],
             // MI ORGANIZACION
             [
@@ -1700,31 +2168,9 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'puede crear, editar y eliminar archivos en las carpetas del repositorio documental',
                 'title' => 'documentador',
             ],
-
-            //Vistas generdas no asignadas
-            [
-                'name' => 'Acceder a portal de comunicación',
-                'title' => 'portal_comunicacion_acces',
-            ],
-            [
-                'name' => 'Acceder a Evaluación 360 grados',
-                'title' => 'evaluacion_360_grados_acces',
-            ],
             [
                 'name' => 'Acceder a Planes de accion',
-                'title' => 'planes_accion_acces',
-            ],
-            [
-                'name' => 'Acceder a Análisis de Riesgos',
-                'title' => 'analisi_riesgos_acces',
-            ],
-            [
-                'name' => 'Acceder a Capacitaciones',
-                'title' => 'capacitaciones_acces',
-            ],
-            [
-                'name' => 'Acceder a Capacitaciones',
-                'title' => 'capacitaciones_acces',
+                'title' => 'planes_accion_access',
             ],
         ];
 
