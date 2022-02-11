@@ -30,9 +30,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-use PDF;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Barryvdh\DomPDF\Facade as PDF;
+
+
+//use Barryvdh\DomPDF\PDF as DomPDFPDF;
+
 
 class EmpleadoController extends Controller
 {
@@ -948,10 +952,10 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+    // public function show($id)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -1005,7 +1009,7 @@ class EmpleadoController extends Controller
                 if ($documento) {
                     $doc_viejo = $documento->ruta_documento;
                     $nombre_doc = $documento->documento;
-                } else {
+                }else{
                     $doc_viejo = null;
                     $nombre_doc = null;
                 }
@@ -1014,7 +1018,7 @@ class EmpleadoController extends Controller
                 $nombre_doc = null;
             }
 
-            $lista_docs->push((object) [
+            $lista_docs->push((Object)[
                 'id'=>$doc->id,
                 'documento'=>$doc->documento,
                 'tipo'=>$doc->tipo,
@@ -1038,7 +1042,7 @@ class EmpleadoController extends Controller
             $fileName = time() . $request->file('value')->getClientOriginalName();
             // dd($request->file('value'));
             $empleado = Empleado::find($request->empleadoId);
-            $request->file('value')->storeAs('public/expedientes/' . Str::slug($empleado->name), $fileName);
+            $request->file('value')->storeAs('public/expedientes/'.Str::slug($empleado->name), $fileName);
             $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id'=>$request->empleadoId, 'lista_documentos_empleados_id'=>$request->documentoId], [$request->name => $request->value]);
 
             $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();
@@ -1053,6 +1057,7 @@ class EmpleadoController extends Controller
                 'documento'=>$fileName,
                 'archivado'=>false,
             ]);
+            return response()->json(['status'=>201, 'message'=>'Registro Actualizado']);
 
             return response()->json(['status'=>201, 'message'=>'Registro Actualizado']);
         } else {
@@ -1078,7 +1083,6 @@ class EmpleadoController extends Controller
         $evidencia_doc_archivo->update([
             'archivado'=>false,
         ]);
-
         return response()->json(['status'=>200, 'message'=>'Registro Actualizado']);
     }
 
@@ -1563,41 +1567,50 @@ class EmpleadoController extends Controller
         return $empleado_bd->id;
     }
 
-    public function datosEmpleado($id)
-    {
-        // dd('funciona');
-        // $visualizarEmpleados = Empleado::with('supervisor')->get();
-        // dd($prueba);
-        $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($id));
-        // dd($visualizarEmpleados);
+    public function show($id){
+
+        $visualizarEmpleados = Empleado::with('supervisor','sede','perfil')->find(intval($id));
         $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
         $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
         $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
-        $certificados = CertificacionesEmpleados::where('empleado_id', $id)->get();
+        $certificados = CertificacionesEmpleados::where('empleado_id', intval($id))->get();
         $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
         $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
-        // dd($expediente);
         $empleado = Empleado::get();
 
-        // dd($visualizarEmpleados);
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
 
-    // public function createPDF(){
-    //     $visualizarEmpleados = Empleado::all();
-    //     $datos = Empleado::get();
-    //     $data = compact('datos', 'visualizarEmpleados');
-    //     // $imprimir = PDF::loadView('admin.empleados.datosEmpleado', $data);
-    //     // return $imprimir->stream();
+    // public function imprimir($id){
 
-    //     $imprimir = PDF::loadView('admin.empleados.datosEmpleado', $data)->setOptions(['defaultFont' => 'sans-serif']);
-    //     return $imprimir->stream();
 
-    //     // return $imprimir->download('archivo.pdf');
-    //     // return $imprimir->download('archivo-pdf.pdf');
+    //     // PDF::setOptions(['isRemoteEnabled' => TRUE, 'enable_javascript' => TRUE]);
+    //     // $dompdf = new Dompdf();
+    //     // $html = view('empleados.datosEmpleado')->render();
+    //     // $dompdf->loadHtml($html);
+    //     // $dompdf->render();
+    //     // return $dompdf->download('empleado.pdf');
 
-    // }
+    //     // $fun = $this->show('');
+    //     $visualizarEmpleados = Empleado::with('supervisor','sede','perfil')->find(intval($id));
+    //     $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
+    //     $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
+    //     $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
+    //     $certificados = CertificacionesEmpleados::where('empleado_id', $id)->get();
+    //     $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
+    //     $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
+    //     $empleado = Empleado::get();
+   
+    //     $pdf = PDF::loadView('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'contactos','dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes', 'empleado'))->setOptions(['defaultFont' => 'sans-serif'])->render();;
+    //     $dompdf->loadHtml($pdf);
+    //     $dompdf->render();
+    //     return $pdf->download('empleado.pdf');
+
+
+
+
+    }
 
     public function borradoMultiple(Request $request)
     {
