@@ -61,7 +61,14 @@
             }
             .agregar{
                 margin-right:15px;
-    }
+            }
+
+
+            .table tr td:nth-child(5) {
+
+            text-align: center !important;
+
+            }
 
 
         </style>

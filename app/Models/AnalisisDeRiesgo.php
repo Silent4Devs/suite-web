@@ -58,13 +58,14 @@ class AnalisisDeRiesgo extends Model
     ];
 
     const EstatusSelect = [
-        '1' => 'Vigente',
-        '2' => 'Obsoleto',
+        '1' => 'En proceso',
+        '2' => 'En revisión',
+        '3' => 'Aprobado',
     ];
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_empleado');
+        return $this->belongsTo(Empleado::class, 'id_elaboro');
     }
 
     public function matriz_riesgos()

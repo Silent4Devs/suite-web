@@ -72,10 +72,13 @@ class AnalisisdeRiesgosController extends Controller
 
             $table->editColumn('estatus', function ($row) {
                 if ($row->estatus == 1) {
-                    return $row->estatus ? 'Válido' : '';
-                } else {
-                    return $row->estatus ? 'Obsoleto' : '';
+                    return $row->estatus ? 'En proceso' : '';
+                } elseif($row->estatus ==2){
+                    return $row->estatus ? 'En revisión' : '';
+                }else{
+                    return $row->estatus ? 'Aprobado' : '';
                 }
+
             });
             $table->editColumn('enlace', function ($row) {
                 return $row->id ? $row->id : '';

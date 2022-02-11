@@ -107,10 +107,10 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>%
+                        <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>
                             Implementacion</label>
                         <input class="form-control {{ $errors->has('porcentaje_implementacion') ? 'is-invalid' : '' }}"
-                            type="text" name="porcentaje_implementacion" id="porcentaje_implementacion"
+                        type="number" step=".1" name="porcentaje_implementacion" id="porcentaje_implementacion"
                             value="{{ old('porcentaje_implementacion', $analisis->porcentaje_implementacion) }}">
                         @if ($errors->has('porcentaje_implementacion'))
                             <div class="invalid-feedback">
