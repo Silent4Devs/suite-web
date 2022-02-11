@@ -170,6 +170,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-left: -4.5%;
     }
 
     .cuadro_verde_con_before img {
