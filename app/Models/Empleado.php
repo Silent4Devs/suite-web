@@ -371,7 +371,7 @@ class Empleado extends Model
     public function idiomas()
     {
         // return $this->belongsToMany(Language::class, 'puesto_idioma_porcentaje_pivot','id_puesto', 'id_language');
-        return $this->hasMany('App\Models\IdiomaEmpleado', 'empleado_id')->orderBy('id');
+        return $this->hasMany('App\Models\IdiomaEmpleado', 'empleado_id')->with('language')->orderBy('id');
     }
 
     public function empleado_cursos()
