@@ -8,6 +8,8 @@ use App\Models\Puesto;
 use App\Models\RH\Competencia;
 use App\Models\RH\CompetenciaPuesto;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class CompetenciasPorPuestoController extends Controller
 {
@@ -18,6 +20,7 @@ class CompetenciasPorPuestoController extends Controller
      */
     public function index(Request $request)
     {
+        abort_if(Gate::denies('capital_humano_competencias_por_puestos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['area' => function ($q) {
                 $q->select('id', 'area');
@@ -72,6 +75,7 @@ class CompetenciasPorPuestoController extends Controller
      */
     public function create($puesto)
     {
+        abort_if(Gate::denies('capital_humano_competencias_por_puestos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $puesto = Puesto::find(intval($puesto));
         $competencias = Competencia::all();
 
@@ -86,6 +90,7 @@ class CompetenciasPorPuestoController extends Controller
      */
     public function store(Request $request, $puesto)
     {
+        abort_if(Gate::denies('capital_humano_competencias_por_puestos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'competencia_id' => 'required|exists:ev360_competencias,id',
             'nivel_esperado' => 'required|numeric',
@@ -138,6 +143,7 @@ class CompetenciasPorPuestoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        abort_if(Gate::denies('capital_humano_competencias_por_puestos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nivel_esperado' => 'required|numeric',
         ]);
@@ -159,6 +165,7 @@ class CompetenciasPorPuestoController extends Controller
      */
     public function destroy($id)
     {
+        abort_if(Gate::denies('capital_humano_competencias_por_puestos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $competenciaPorPuesto = CompetenciaPuesto::find($id);
         $delete = $competenciaPorPuesto->delete();
         if ($delete) {

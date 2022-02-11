@@ -1,20 +1,14 @@
 @extends('layouts.admin')
 @section('content')
-	
     {{ Breadcrumbs::render('timesheet-proyectos') }}
-
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Proyectos</font> </h5>
-
-	<div class="card card-body">
-		<div class="row">
-
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Proyectos</font>
+    </h5>
+    <div class="card card-body">
+        <div class="row">
             @livewire('timesheet.tabla-proyectos-timesheet')
-
-		</div>
-	</div>
-	
+        </div>
+    </div>
 @endsection
-
 
 @section('scripts')
     @parent
@@ -90,22 +84,22 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar empleado',
-                url: "{{asset('admin/inicioUsuario/reportes/quejas')}}",
+                url: "{{ asset('admin/inicioUsuario/reportes/quejas') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
             };
 
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
-                order:[
-                            [0,'desc']
-                        ]
+                order: [
+                    [0, 'desc']
+                ]
             };
             let table = $('#datatable_timesheet_proyectos').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {

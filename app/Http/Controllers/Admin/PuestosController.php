@@ -139,11 +139,11 @@ class PuestosController extends Controller
     {
         // dd($request->all());
         $val = $request->validate([
-            'puesto'=> 'unique:puestos,puesto',
+            'puesto' => 'unique:puestos,puesto',
         ]);
         $puesto = Puesto::create($request->all());
         if (array_key_exists('ajax', $request->all())) {
-            return response()->json(['success'=>true, 'puesto'=>$puesto]);
+            return response()->json(['success' => true, 'puesto' => $puesto]);
         }
         // $this->saveOrUpdateLanguage($request->idiomas, $puesto);
         // $this->saveOrUpdateLanguage($request, $puesto);
@@ -275,6 +275,8 @@ class PuestosController extends Controller
 
     public function consultaPuestos(Request $request)
     {
+        abort_if(Gate::denies('capital_humano_competencias_por_puestos_consulta_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.puestos.consultapuestos');
     }
 
