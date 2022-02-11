@@ -21,8 +21,7 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('mi_timesheet_horas_aceptadas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $times = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('rechazado', false)->get();
+        $times = timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
 
         return view('admin.timesheet.index', compact('times'));
     }
@@ -174,10 +173,9 @@ class TimesheetController extends Controller
     }
 
     public function proyectos()
-    {
-        abort_if(Gate::denies('timesheet_administrador_proyectos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return view('admin.timesheet.proyectos');
+    {   
+        $clientes = TimesheetCliente::get();
+        return view('admin.timesheet.proyectos', compact('clientes'));
     }
 
     public function tareas()
