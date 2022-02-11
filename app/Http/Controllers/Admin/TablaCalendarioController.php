@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Calendario;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\Facades\DataTables;
 
 class TablaCalendarioController extends Controller
 {
@@ -86,6 +86,7 @@ class TablaCalendarioController extends Controller
     public function edit(Calendario $calendario)
     {
         abort_if(Gate::denies('eventos_organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.tabla-calendario.edit', compact('calendario'));
     }
 

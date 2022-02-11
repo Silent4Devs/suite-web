@@ -8,8 +8,8 @@ use App\Models\Puesto;
 use App\Models\RH\Competencia;
 use App\Models\RH\CompetenciaPuesto;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class CompetenciasPorPuestoController extends Controller
 {

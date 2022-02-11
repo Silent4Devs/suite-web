@@ -11,8 +11,8 @@ use App\Repositories\VulnerabilidadRepository;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\Facades\DataTables;
 
 class VulnerabilidadController extends AppBaseController
 {

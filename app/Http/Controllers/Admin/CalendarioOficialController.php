@@ -5,8 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\CalendarioOficial;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class CalendarioOficialController extends Controller
 {
@@ -79,6 +79,7 @@ class CalendarioOficialController extends Controller
     {
         // abort_if(Gate::denies('enlaces_ejecutar_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         abort_if(Gate::denies('dias_festivos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.calendario-oficial.show', compact('calendario-oficial'));
     }
 

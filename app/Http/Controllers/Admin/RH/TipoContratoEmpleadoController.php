@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin\RH;
 use App\Http\Controllers\Controller;
 use App\Models\RH\TipoContratoEmpleado;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 class TipoContratoEmpleadoController extends Controller
 {

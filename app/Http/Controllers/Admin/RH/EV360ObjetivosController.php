@@ -9,9 +9,9 @@ use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoEmpleado;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -23,6 +23,7 @@ class EV360ObjetivosController extends Controller
 
         if ($request->ajax()) {
             $empleados = Empleado::with(['objetivos', 'area', 'perfil'])->get();
+
             return datatables()->of($empleados)->toJson();
         }
 
@@ -144,13 +145,11 @@ class EV360ObjetivosController extends Controller
 
         // $objetivo = ObjetivoEmpleado::find($request->all());
         $objetivo->delete();
+
         return response()->json(['success' => 'deleted successfully!', $request->all()]);
         // $objetivo->delete();
         // return response()->json(['success'=> 'Eliminado exitosamente']);
-
-
     }
-
 
     public function edit($objetivo)
     {
@@ -256,7 +255,6 @@ class EV360ObjetivosController extends Controller
 
     public function destroy(ObjetivoEmpleado $objetivoEmpleado)
     {
-
         $objetivoEmpleado->delete();
 
         return response()->json(['deleted' => true]);

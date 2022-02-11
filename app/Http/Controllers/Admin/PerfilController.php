@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Empleado;
 use App\Models\PerfilEmpleado;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class PerfilController extends Controller
 {

@@ -7,10 +7,10 @@ use App\Models\AnalisisDeRiesgo;
 use App\Models\Area;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
-use Laracasts\Flash\Flash;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Laracasts\Flash\Flash;
+use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisdeRiesgosController extends Controller
 {

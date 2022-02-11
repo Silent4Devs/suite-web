@@ -204,7 +204,7 @@ class PuestosController extends Controller
         }]);
         $contactosEdit = $puesto->contactos;
         // dd($puesto);
-        $reportaras=Puesto::get();
+        $reportaras = Puesto::get();
         $competencias = Competencia::all();
         $idis = Language::all();
         $responsabilidades = PuestoResponsabilidade::get();
@@ -216,7 +216,8 @@ class PuestosController extends Controller
         $language = PuestoIdiomaPorcentajePivot::get();
         $puestos = Puesto::get();
         $externos = ContactosExternosPuestos::all();
-        return view('admin.puestos.edit', compact('reportaras','externos', 'contactosEdit', 'puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language', 'puestos'));
+
+        return view('admin.puestos.edit', compact('reportaras', 'externos', 'contactosEdit', 'puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language', 'puestos'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)
@@ -275,6 +276,7 @@ class PuestosController extends Controller
     public function consultaPuestos(Request $request)
     {
         abort_if(Gate::denies('capital_humano_competencias_por_puestos_consulta_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.puestos.consultapuestos');
     }
 

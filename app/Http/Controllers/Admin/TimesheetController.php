@@ -30,6 +30,7 @@ class TimesheetController extends Controller
     public function timesheetInicio()
     {
         abort_if(Gate::denies('timesheet_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.timesheet.timesheet-inicio');
     }
 
@@ -175,12 +176,14 @@ class TimesheetController extends Controller
     public function proyectos()
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.timesheet.proyectos');
     }
 
     public function tareas()
     {
         abort_if(Gate::denies('timesheet_administrador_tareas_proyectos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.timesheet.tareas');
     }
 
@@ -206,6 +209,7 @@ class TimesheetController extends Controller
             ->where('aprobado', false)
             ->where('aprobador_id', auth()->user()->empleado->id)
             ->get();
+
         return view('admin.timesheet.aprobaciones', compact('aprobaciones'));
     }
 
@@ -225,6 +229,7 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_clientes_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $clientes = TimesheetCliente::get();
+
         return view('admin.timesheet.clientes.index', compact('clientes'));
     }
 

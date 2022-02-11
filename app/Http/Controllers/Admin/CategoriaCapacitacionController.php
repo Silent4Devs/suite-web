@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\CategoriaCapacitacion;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\Facades\DataTables;
 
 class CategoriaCapacitacionController extends Controller
 {
@@ -63,6 +63,7 @@ class CategoriaCapacitacionController extends Controller
     public function create()
     {
         abort_if(Gate::denies('categorias_capacitaciones_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.categoria-capacitacion.create');
     }
 
@@ -92,6 +93,7 @@ class CategoriaCapacitacionController extends Controller
     public function show(CategoriaCapacitacion $categoriaCapacitacion)
     {
         abort_if(Gate::denies('categorias_capacitaciones_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.categoria-capacitacion.show', compact('categoriaCapacitacion'));
     }
 
@@ -104,6 +106,7 @@ class CategoriaCapacitacionController extends Controller
     public function edit(CategoriaCapacitacion $categoriaCapacitacion)
     {
         abort_if(Gate::denies('categorias_capacitaciones_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.categoria-capacitacion.edit', compact('categoriaCapacitacion'));
     }
 

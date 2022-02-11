@@ -10,9 +10,9 @@ use App\Models\Amenaza;
 use App\Repositories\AmenazaRepository;
 use Flash;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\Facades\DataTables;
 
 class AmenazaController extends AppBaseController
 {
@@ -79,6 +79,7 @@ class AmenazaController extends AppBaseController
     public function create()
     {
         abort_if(Gate::denies('analisis_de_riesgos_amenazas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.amenazas.create');
     }
 
@@ -111,6 +112,7 @@ class AmenazaController extends AppBaseController
     public function show(Amenaza $amenaza)
     {
         abort_if(Gate::denies('analisis_de_riesgos_amenazas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.amenazas.show')->with('amenaza', $amenaza);
     }
 

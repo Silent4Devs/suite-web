@@ -11,9 +11,9 @@ use App\Models\RH\Conducta;
 use App\Models\RH\EvaluacionRepuesta;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Gate;
 
 class EV360CompetenciasController extends Controller
 {
@@ -72,7 +72,6 @@ class EV360CompetenciasController extends Controller
 
     public function storeAndRedirect(Request $request)
     {
-
         abort_if(Gate::denies('capital_humano_competencias_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
@@ -89,7 +88,6 @@ class EV360CompetenciasController extends Controller
 
     public function edit($competencia, $onlyConductas = null)
     {
-
         abort_if(Gate::denies('capital_humano_competencias_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $competencia = Competencia::find(intval($competencia));
         $tipo_seleccionado = $competencia->tipo_id;
@@ -103,7 +101,6 @@ class EV360CompetenciasController extends Controller
 
     public function update(Request $request, $competencia)
     {
-
         abort_if(Gate::denies('capital_humano_competencias_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
@@ -153,7 +150,6 @@ class EV360CompetenciasController extends Controller
 
     public function conductas(Request $request, $competencia)
     {
-
         abort_if(Gate::denies('capital_humano_competencias_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             // $conductas = Conducta::where('competencia_id', intval($competencia))->get()->sortBy('ponderacion');
@@ -165,7 +161,6 @@ class EV360CompetenciasController extends Controller
 
     public function show($id)
     {
-
         abort_if(Gate::denies('capital_humano_competencias_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $competencia = Competencia::find($id);
 
@@ -238,7 +233,6 @@ class EV360CompetenciasController extends Controller
 
     public function destroy(Competencia $competencia)
     {
-
         abort_if(Gate::denies('capital_humano_competencias_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $competencia = Competencia::find($competencia);
         $competencia->delete();

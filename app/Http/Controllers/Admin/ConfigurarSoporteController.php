@@ -8,9 +8,9 @@ use App\Models\ConfigurarSoporteModel;
 use App\Models\Empleado;
 use App\Models\Puesto;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\Facades\DataTables;
 
 class ConfigurarSoporteController extends Controller
 {
