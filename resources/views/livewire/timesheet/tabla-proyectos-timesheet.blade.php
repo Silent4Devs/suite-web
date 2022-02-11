@@ -12,6 +12,15 @@
                 </select>
             </div>
             <div class="form-group w-100 mr-4">
+                <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
+                <select name="area_id" wire:model="cliente_id" class="form-control">
+                    <option selected value="">Seleccione cliente</option>
+                    @foreach($clientes as $cliente)
+                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group w-100 mr-4">
                 <label><i class="fas fa-list iconos-crear"></i> Proyecto Nuevo</label>
                 <input name="proyecto" wire:model="proyecto_name" class="form-control" required>
             </div>
@@ -27,6 +36,7 @@
                 <tr>
                     <th>Proyecto </th>
                     <th>Área a la que pertenece</th>
+                    <th>Cliente</th>
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
             </thead>
@@ -36,6 +46,7 @@
                     <tr>
                         <td>{{ $proyecto->proyecto }} </td>
                         <td>{{ $proyecto->area_id ? $proyecto->area->area : '' }} </td>
+                        <td>{{ $proyecto->cliente_id ? $cliente->nombre : '' }} </td>
                         <td>
                             <i class="fas fa-trash-alt btn" wire:click="destroy({{ $proyecto->id }})" style="color: red; font-size: 15pt;" title="Eliminar"></i>
                             <a href="{{ route('admin.timesheet-tareas-proyecto', $proyecto->id) }}"><i class="fas fa-list-alt btn" style="color:#888; font-size: 15pt;" title="Tareas de {{ $proyecto->proyecto }}"></i></a>

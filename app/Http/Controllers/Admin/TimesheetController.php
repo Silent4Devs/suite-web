@@ -19,7 +19,7 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $times = timesheet::where('empleado_id', auth()->user()->empleado->id)->where('rechazado', false)->get();
+        $times = timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
 
         return view('admin.timesheet.index', compact('times'));
     }
@@ -165,8 +165,9 @@ class TimesheetController extends Controller
     }
 
     public function proyectos()
-    {
-        return view('admin.timesheet.proyectos');
+    {   
+        $clientes = TimesheetCliente::get();
+        return view('admin.timesheet.proyectos', compact('clientes'));
     }
 
     public function tareas()

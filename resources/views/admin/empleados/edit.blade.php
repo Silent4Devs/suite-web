@@ -2804,7 +2804,8 @@
                 buttons: dtButtons,
                 order:[
                             [0,'desc']
-                        ]
+                        ],
+                pageLength: 20,
             };
             let table = $('#tabla_docs').DataTable(dtOverrideGlobals);
 

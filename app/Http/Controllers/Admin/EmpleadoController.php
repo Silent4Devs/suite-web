@@ -1000,9 +1000,11 @@ class EmpleadoController extends Controller
 
         $lista_docs_model = ListaDocumentoEmpleado::get();
         $lista_docs = collect();
+        $documento_versiones = '';
         foreach($lista_docs_model as $doc){
             $documentos_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
             if ($documentos_empleado) {
+                $doc_empleado_id = $documentos_empleado->id;
                 $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', false)->first();
                 $documento_versiones = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', true)->get();
                 if($documento){
@@ -1015,8 +1017,8 @@ class EmpleadoController extends Controller
             }else{
                 $doc_viejo = null;
                 $nombre_doc = null;
+                $doc_empleado_id = null;
             }
-            
             $lista_docs->push((Object)[
                 'id'=>$doc->id,
                 'documento'=>$doc->documento,
@@ -1025,7 +1027,7 @@ class EmpleadoController extends Controller
                 'ruta_documento'=>$doc_viejo,
                 'nombre_doc'=>$nombre_doc,
                 'documento_versiones'=>$documento_versiones,
-                'evidencia_viejo_id'=>$documentos_empleado->id,
+                'evidencia_viejo_id'=>$doc_empleado_id,
             ]);            
         }
 
