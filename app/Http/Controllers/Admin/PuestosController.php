@@ -204,6 +204,7 @@ class PuestosController extends Controller
         }]);
         $contactosEdit = $puesto->contactos;
         // dd($puesto);
+        $reportaras = Puesto::get();
         $competencias = Competencia::all();
         $idis = Language::all();
         $responsabilidades = PuestoResponsabilidade::get();
@@ -216,7 +217,7 @@ class PuestosController extends Controller
         $puestos = Puesto::get();
         $externos = ContactosExternosPuestos::all();
 
-        return view('admin.puestos.edit', compact('externos', 'contactosEdit', 'puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language', 'puestos'));
+        return view('admin.puestos.edit', compact('reportaras', 'externos', 'contactosEdit', 'puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language', 'puestos'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)

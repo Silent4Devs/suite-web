@@ -9,11 +9,11 @@ use App\Models\CertificacionesEmpleados;
 use App\Models\CursosDiplomasEmpleados;
 use App\Models\EducacionEmpleados;
 use App\Models\Empleado;
+use App\Models\EvidenciaDocumentoEmpleadoArchivo;
 use App\Models\EvidenciasCertificadosEmpleados;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
 use App\Models\Language;
-use App\Models\EvidenciaDocumentoEmpleadoArchivo;
 use App\Models\ListaDocumentoEmpleado;
 use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
@@ -993,9 +993,6 @@ class EmpleadoController extends Controller
         // dd($idiomas);
         // dd(Empleado::find(63));
 
-
-
-
         // expediente ------------------------------------------------------------
         $id_empleado = $id;
         $empleado = Empleado::find($id_empleado);
@@ -1004,19 +1001,19 @@ class EmpleadoController extends Controller
 
         $lista_docs_model = ListaDocumentoEmpleado::get();
         $lista_docs = collect();
-        foreach($lista_docs_model as $doc){
+        foreach ($lista_docs_model as $doc) {
             $documentos_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
             if ($documentos_empleado) {
                 $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', false)->first();
                 $documento_versiones = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', true)->get();
-                if($documento){
+                if ($documento) {
                     $doc_viejo = $documento->ruta_documento;
                     $nombre_doc = $documento->documento;
                 }else{
                     $doc_viejo = null;
                     $nombre_doc = null;
                 }
-            }else{
+            } else {
                 $doc_viejo = null;
                 $nombre_doc = null;
             }
@@ -1038,12 +1035,11 @@ class EmpleadoController extends Controller
         return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado'));
     }
 
-
     public function expedienteUpdate(Request $request)
     {
         // dd($request->all());
         if ($request->name == 'file') {
-            $fileName = time().$request->file('value')->getClientOriginalName();
+            $fileName = time() . $request->file('value')->getClientOriginalName();
             // dd($request->file('value'));
             $empleado = Empleado::find($request->empleadoId);
             $request->file('value')->storeAs('public/expedientes/'.Str::slug($empleado->name), $fileName);
@@ -1059,11 +1055,12 @@ class EmpleadoController extends Controller
             $archivo = EvidenciaDocumentoEmpleadoArchivo::create([
                 'evidencias_documentos_empleados_id'=>$expediente->id,
                 'documento'=>$fileName,
-                'archivado'=>false
+                'archivado'=>false,
             ]);
             return response()->json(['status'=>201, 'message'=>'Registro Actualizado']);
 
-        }else{
+            return response()->json(['status'=>201, 'message'=>'Registro Actualizado']);
+        } else {
             $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id'=>$request->empleadoId, 'lista_documentos_empleados_id'=>$request->documentoId], [$request->name => $request->value]);
         }
 
@@ -1582,7 +1579,7 @@ class EmpleadoController extends Controller
         $empleado = Empleado::get();
 
 
-        return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos','dependientes','beneficiarios','certificados','capacitaciones','expedientes'));
+        return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
 
     // public function imprimir($id){
@@ -1620,9 +1617,9 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             if (count($request->all()) >= 1) {
                 foreach ($request->all() as $key => $value) {
-
                     $empleado = Empleado::find($value);
                     $empleado->each->delete();
+
                     return response()->json(['success' => 'deleted successfully!', $request->all()]);
                 }
             }
