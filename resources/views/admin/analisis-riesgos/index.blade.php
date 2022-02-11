@@ -61,10 +61,20 @@
                 justify-content: center;
                 align-items: center;
             }
+            .agregar{
+                margin-right:15px;
+            }
 
             .agregar {
                 margin-right: 15px;
             }
+
+            .table tr td:nth-child(5) {
+
+            text-align: center !important;
+
+            }
+
 
         </style>
 
