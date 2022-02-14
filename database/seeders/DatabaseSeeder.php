@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
 
             PermissionsTableSeeder::class,
-            RolesTableSeeder::class,
+            // RolesTableSeeder::class,
             // UsersTableSeeder::class,
             // GapunoTableSeeder::class,
             // GaptresTableSeeder::class,
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             PermissionRoleTableSeeder::class,
             // LanguageSeeder::class,
             // GlosarioSeeder::class,
-            RoleUserTableSeeder::class,
+            // RoleUserTableSeeder::class,
             // Clausula9001Seeder::class,
             // NormasSeeder::class,
             // ConfigurarSoporteSeeder::class,

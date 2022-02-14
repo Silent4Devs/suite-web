@@ -1080,6 +1080,7 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Visualizar Empleados',
                 'title' => 'configuracion_empleados_access',
             ],
+
             //ACTIVOS CONFIG DATOS
             [
                 'name' => 'Crear Tipo de Activo',
