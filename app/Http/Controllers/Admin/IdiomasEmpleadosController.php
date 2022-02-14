@@ -39,6 +39,7 @@ class IdiomasEmpleadosController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             // 'nombre' => 'required|string',
             'id_language' =>'required',

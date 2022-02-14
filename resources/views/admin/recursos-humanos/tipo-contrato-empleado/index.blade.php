@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     @can('control_documento_create')
-    {{ Breadcrumbs::render('EV360-Tipo-Contrato-Empleados') }}
+        {{ Breadcrumbs::render('EV360-Tipo-Contrato-Empleados') }}
         <h5 class="col-12 titulo_general_funcion">Tipos de contrato para empleados</h5>
         <div class="mt-5 card">
         @endcan
@@ -116,7 +116,9 @@
                 }
             };
 
-            dtButtons.push(btnAgregar);
+            @can('tipos_de_contratos_create')
+                dtButtons.push(btnAgregar);
+            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -153,19 +155,22 @@
                             const urlShowDelete =
                                 `/admin/recursos-humanos/tipos-contratos-empleados/${data}`;
                             const html = `
-                            <a class="btn btn-sm " title="Editar"
-                                    href="${urlEdit}">
+                            @can('tipos_de_contratos_edit')
+                                <a class="btn btn-sm " title="Editar" href="${urlEdit}">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a class="btn btn-sm " title="Visualizar"
-                                    href="${urlShowDelete}">
+                            @endcan
+                            @can('tipos_de_contratos_show')
+                                <a class="btn btn-sm " title="Visualizar" href="${urlShowDelete}">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <button title="Eliminar"
-                                    onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.name}');return false;"
+                            @endcan
+                            @can('tipos_de_contratos_delete')
+                                <button title="Eliminar" onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.name}');return false;"
                                     class="btn btn-sm text-danger">
                                     <i class="fas fa-trash-alt"></i>
-                                </button>`;
+                                </button>
+                            @endcan`;
                             return html;
                         }
                     }

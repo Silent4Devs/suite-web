@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('content')
     @can('control_documento_create')
-    <div class="mt-3">
-        {{ Breadcrumbs::render('EV360-EntidadesCrediticeas') }}
-    </div>
-    <h5 class="col-12 titulo_general_funcion">Entidades crediticias</h5>
+        <div class="mt-3">
+            {{ Breadcrumbs::render('EV360-EntidadesCrediticeas') }}
+        </div>
+        <h5 class="col-12 titulo_general_funcion">Entidades crediticias</h5>
         <div class="mt-5 card">
         @endcan
         <div class="card-body datatable-fix">
@@ -118,7 +118,9 @@
                 }
             };
 
-            dtButtons.push(btnAgregar);
+            @can('entidades_crediticias_create')
+                dtButtons.push(btnAgregar);
+            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -155,19 +157,22 @@
                             const urlShowDelete =
                                 `/admin/recursos-humanos/entidades-crediticias/${data}`;
                             const html = `
-                            <a class="btn btn-sm " title="Editar"
-                                    href="${urlEdit}">
+                            @can('entidades_crediticias_edit')
+                                <a class="btn btn-sm " title="Editar" href="${urlEdit}">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a class="btn btn-sm " title="Visualizar"
-                                    href="${urlShowDelete}">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <button title="Eliminar"
-                                    onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.entidad}');return false;"
+                            @endcan
+                                @can('entidades_crediticias_show')
+                                    <a class="btn btn-sm " title="Visualizar" href="${urlShowDelete}">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                @endcan
+                            @can('entidades_crediticias_delete')
+                                <button title="Eliminar" onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.entidad}');return false;"
                                     class="btn btn-sm text-danger">
                                     <i class="fas fa-trash-alt"></i>
-                                </button>`;
+                                </button>
+                            @endcan`;
                             return html;
                         }
                     }

@@ -418,10 +418,11 @@
                                             Idiomas</span>
                                     </div>
                                     @foreach ($empleadoModel->idiomas as $idioma)
+
                                         <div>
                                             <strong class="font-weight-bold"
                                                 style="color:#00A57E;text-transform: uppercase">
-                                                {{$idioma->idiomas ? $idioma->idiomas->language : 'Sin definir' }}</strong>
+                                                {{$idioma->language ? $idioma->language->idioma : 'Sin definir' }}</strong>
                                             <br>
                                             <span style="text-transform:capitalize">
                                                 <strong>Nivel:</strong> {{ $idioma->nivel }}
