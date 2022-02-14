@@ -170,7 +170,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: -4.5%;
     }
 
     .cuadro_verde_con_before img {
@@ -377,7 +376,7 @@ if (!is_null($organizacion)) {
             <div class="main-body">
                 <div class="row gutters-sm">
                     <div class="col-md-4 card_data_mis_datos">
-                        <div class="card card_margin_b_n" style="position:relative; height: 480px !important;">
+                        <div class="card card_margin_b_n" style="position:relative; height: 480px !important; padding: 0 !important;">
                             @if ($cumpleaños_usuario != null && $cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m'))
                                 <img src="https://images.vexels.com/media/users/3/143347/isolated/preview/c418aa571078b11dcb69704acf1077c4-icono-de-sombrero-de-cumpleanos-3d.png"
                                     class="gorro">
