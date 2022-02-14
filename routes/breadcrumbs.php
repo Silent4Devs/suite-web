@@ -543,7 +543,6 @@ Breadcrumbs::for('EV360-Competencias', function ($trail) {
 Breadcrumbs::for('EV360-Empleados', function ($trail) {
     $trail->parent('capital-humano');
     $trail->push('Empleados');
-
 });
 Breadcrumbs::for('EV360-Competencias-Create', function ($trail) {
     $trail->parent('EV360-Competencias');

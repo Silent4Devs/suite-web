@@ -151,7 +151,6 @@ class DeskController extends Controller
         $categorias = CategoriaIncidente::get();
 
         return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis'));
-
     }
 
     public function updateSeguridad(Request $request, $id_incidente)
