@@ -243,7 +243,24 @@
         @can('capital_humano_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.capital-humano.index') }}"
-                    class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*') ? 'active' : '' }}">
+                    class="c-sidebar-nav-link
+                    {{request()->is('admin/empleados') ||
+                    request()->is('admin/recursos-humanos/evaluacion-360/competencias')||
+                    request()->is('admin/lista-documentos')||
+                    request()->is('admin/perfiles')||
+                    request()->is('admin/recursos-humanos/tipos-contratos-empleados')||
+                    request()->is('admin/lista-documentos')||
+                    request()->is('admin/recursos-humanos/entidades-crediticias') ||
+                    request()->is('admin/recursos-humanos/evaluacion-360/objetivos') ||
+                    request()->is('admin/expedientes-profesionales') ||
+                    request()->is('admin/categoria-capacitacion') ||
+                    request()->is('admin/recursos-humanos/calendario-oficial') ||
+                    request()->is('admin/recursos') ||
+                    request()->is('admin/recursos-humanos/evaluacion-360/evaluaciones/create') ||
+                    request()->is('admin/recursos-humanos/evaluacion-360/evaluaciones') ||
+                    request()->is('admin/tabla-calendario/index') ||
+                    request()->is('admin/capital-humano#') ||
+                    request()->is('admin/capital-humano/*') ? 'active' : '' }}">
                     <i class="bi bi-people iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Capital Humano </font>
                 </a>
@@ -261,7 +278,8 @@
                 @endcan --}}
                     <li class="c-sidebar-nav-item">
                         <a href="{{ route('admin.capital-humano.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') ||request()->is('admin/capital-humano/*') ||request()->is('admin/expedientes-profesionales/*')? 'active': '' }}">
+                            class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*')||  request()->is('admin/empleados/*') ||request()->is('admin/expedientes-profesionales/*')? 'active': '' }}">
+                            {{--  ? 'active' : '' --}}
                             <i class="fa-fw fas fa-file iconos_menu letra_blanca"></i>
                             <font class="letra_blanca" style="margin-left:10px;"> Capital Humano Menú </font>
                         </a>
@@ -303,8 +321,7 @@
                         <ul class="c-sidebar-nav-dropdown-items">
                             @can('configuracion_macroproceso_access')
                                 <li class="c-sidebar-nav-item">
-                                    <a href="{{ asset('admin/categoria-capacitacion') }}"
-                                        class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*')? 'active': '' }}">
+                                    <a href="{{ asset('admin/categoria-capacitacion') }}">
                                         <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca" style="font-size:12pt;"></i>
                                         <font class="letra_blanca" style="margin-left:10px;"> Crear categorías</font>
                                     </a>
@@ -312,8 +329,7 @@
                             @endcan
                             @can('configuracion_procesos_access')
                                 <li class="c-sidebar-nav-item">
-                                    <a href="{{ asset('admin/recursos') }}"
-                                        class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
+                                    <a href="{{ asset('admin/recursos') }}">
                                         <i class="ml-2 fas fa-graduation-cap iconos_menu letra_blanca"
                                             style="font-size:12pt;"></i>
                                         <font class="letra_blanca" style="margin-left:10px;"> Crear capacitaciones</font>
@@ -323,8 +339,7 @@
                         </ul>
                     </li>
                     <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link {{ request()->is('admin/recursos-humanos/evaluacion-360/*') ? 'active' : '' }}"
-                            href="{{ route('admin.rh-evaluacion360.index') }}">
+                        <a href="{{ route('admin.rh-evaluacion360.index') }}">
                             <img src="{{ asset('img/360-degrees1.png') }}" alt="icono360"
                                 style="width: 26px;margin-right: 14px;margin-left: 3px;">
                             <font class="letra_blanca" style="margin-left:10px;"> Evaluación 360° </font>
@@ -694,7 +709,7 @@
                     @can('configuracion_empleados_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.empleados.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/empleados') || request()->is('admin/empleados/*') ? 'active' : '' }}">
+                                >
                                 <i class="bi bi-person iconos_menu letra_blanca">
 
                                 </i>
@@ -710,8 +725,7 @@
                         <ul class="c-sidebar-nav-dropdown-items">
                             @can('configuracion_macroproceso_access')
                                 <li class="c-sidebar-nav-item">
-                                    <a href="{{ asset('admin/categoria-capacitacion') }}"
-                                        class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*')? 'active': '' }}">
+                                    <a href="{{ asset('admin/categoria-capacitacion') }}">
                                         <i class="ml-2 bi bi-mortarboard iconos_menu letra_blanca" style="font-size:12pt;"></i>
                                         <font class="letra_blanca"> Crear Categorías</font>
                                     </a>
@@ -719,8 +733,7 @@
                             @endcan
                             @can('configuracion_procesos_access')
                                 <li class="c-sidebar-nav-item">
-                                    <a href="{{ asset('admin/recursos') }}"
-                                        class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
+                                    <a href="{{ asset('admin/recursos') }}">
                                         <i class="ml-2 bi bi-person-video3 iconos_menu letra_blanca"
                                             style="font-size:12pt;"></i>
                                         <font class="letra_blanca"> Crear Capacitación</font>

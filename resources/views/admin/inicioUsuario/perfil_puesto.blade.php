@@ -11,7 +11,7 @@
     {{ Breadcrumbs::render('mi-perfil-puesto') }}
 
 
-    <h5 class="col-12 titulo_general_funcion">Perfil de Puesto</h5>
+    <h5 class="col-12 titulo_general_funcion">Perfil de Puesto de  {{ $puesto->puesto }}</h5>
     <div>
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
@@ -188,8 +188,8 @@
                             @foreach ($puesto->externos as $externo)
                                 <div>
                                     <strong class="font-weight-bold" style="color:#00A57E;text-transform: uppercase">
-                                        {{ $externo->nombre_contacto_int }}</strong>
-                                    <p style="margin-top:-13px; text-align:justify; font-weight:normal !important">
+                                        {{ $externo->nombre_contacto_int }}</strong><br>
+                                    <p style="margin-top:-1px; text-align:justify; font-weight:normal !important">
                                         {{ $externo->proposito }}</p>
                                 </div>
                             @endforeach

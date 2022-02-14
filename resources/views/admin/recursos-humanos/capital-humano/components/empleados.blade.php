@@ -178,6 +178,7 @@
                         </div>
                     </a></li>
             @endcan
+
         </ul>
     </div>
     <li>
@@ -198,4 +199,14 @@
             </div>
         </a>
     </li>
+
+    <li>
+        <a href="#">
+            <div>
+                <i class="bi bi-file-spreadsheet"></i><br>
+                TimeSheet
+            </div>
+        </a>
+    </li>
+
 </ul>

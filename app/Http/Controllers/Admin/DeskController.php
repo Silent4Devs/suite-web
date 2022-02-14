@@ -151,6 +151,7 @@ class DeskController extends Controller
         $categorias = CategoriaIncidente::get();
 
         return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis'));
+
     }
 
     public function updateSeguridad(Request $request, $id_incidente)
@@ -179,7 +180,7 @@ class DeskController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        return redirect()->route('admin.desk.seguridad-edit', $id_incidente)->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.index', $id_incidente)->with('success', 'Reporte actualizado');
     }
 
     public function updateAnalisisSeguridad(Request $request, $id_incidente)

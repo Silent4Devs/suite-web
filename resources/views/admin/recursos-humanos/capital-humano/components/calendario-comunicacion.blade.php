@@ -41,17 +41,8 @@
             </a>
         </li>
     @endcan
-    @can('centro_atencion_access')
-        <li>
-            <a href="#">
-                <div>
-                    <i class="bi bi-file-spreadsheet"></i><br>
-                    TimeSheet
-                </div>
-            </a>
-        </li>
-    @endcan
-    @can('minutasaltadireccion_create')
+
+    {{-- @can('minutasaltadireccion_create')
         <li>
             <a href="#">
                 <div>
@@ -60,5 +51,5 @@
                 </div>
             </a>
         </li>
-    @endcan
+    @endcan --}}
 </ul>
