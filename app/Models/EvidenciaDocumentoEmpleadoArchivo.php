@@ -10,12 +10,12 @@ class EvidenciaDocumentoEmpleadoArchivo extends Model
 {
     use HasFactory;
 
-    protected $table='evidencias_documentos_empleados_archivos';
+    protected $table = 'evidencias_documentos_empleados_archivos';
 
-    protected $fillable=[
+    protected $fillable = [
         'evidencias_documentos_empleados_id',
         'documento',
-        'archivado'
+        'archivado',
     ];
 
     protected $appends = ['ruta_documento', 'ruta_absoluta_documento'];
