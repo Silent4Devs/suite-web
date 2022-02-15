@@ -512,7 +512,7 @@ Breadcrumbs::for('empleados-show', function ($trail, $empleado) {
 Breadcrumbs::for('expedientes-profesionales', function ($trail) {
     $trail->parent('capital-humano');
     $trail->push('Empleados');
-    $trail->push('Expedientes Profesionales', route('admin.capital.expedientes-profesionales'));
+    $trail->push('Perfiles Profesionales', route('admin.capital.expedientes-profesionales'));
 });
 
 Breadcrumbs::for('Evaluacion360', function ($trail) {
@@ -539,6 +539,10 @@ Breadcrumbs::for('EV360-Competencias', function ($trail) {
     $trail->parent('capital-humano');
     $trail->push('Empleados');
     $trail->push('Competencias', route('admin.ev360-competencias.index'));
+});
+Breadcrumbs::for('EV360-Empleados', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados');
 });
 Breadcrumbs::for('EV360-Competencias-Create', function ($trail) {
     $trail->parent('EV360-Competencias');

@@ -330,8 +330,8 @@
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
-                                    html += `<button class="btn archivar" onclick='Archivar("/admin/desk/${data}/archivar"); return false;' >
-				       						<i class="fas fa-archive"></i></a>
+                                    html += `<button class="btn archivar" onclick='Archivar("/admin/desk/${data}/archivar"); return false;' style="margin-top:-10px">
+				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 				       					</div>`;
                                 }
