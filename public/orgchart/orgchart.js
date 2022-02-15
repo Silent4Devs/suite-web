@@ -40,7 +40,7 @@ export default class OrgChart {
     chart.dataset.options = JSON.stringify(opts);
     chart.setAttribute('class', 'orgchart' + (opts.chartClass !== '' ? ' ' + opts.chartClass : '') +
       (opts.direction !== 't2b' ? ' ' + opts.direction : ''));
-    console.log("type" + typeof data);
+    // console.log("type" + typeof data);
     if (typeof data === 'object') { // local json datasource
       this.buildHierarchy(chart, opts.ajaxURL ? data : this._attachRel(data, '00'), 0);
     } else if (typeof data === 'string' && data.startsWith('#')) { // ul datasource
@@ -82,7 +82,7 @@ export default class OrgChart {
         exportBtn.style.fontSize = "14pt";
         exportCSV.title = "Exportar Organigrama a Excel/CSV";
         exportCSV.innerHTML = '<i class="fas fa-file-csv" title="Exportar"></i>';
-        console.log(this);
+        // console.log(this);
         exportCSV.addEventListener('click', this._clickExportCSVButton.bind(this));
       }
       downloadBtn.setAttribute('class', 'oc-download-btn' + (opts.chartClass !== '' ? ' ' + opts.chartClass : ''));
@@ -430,7 +430,7 @@ export default class OrgChart {
     else {
       photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
     }
-    console.log(dataSourceJSON);
+    // console.log(dataSourceJSON);
     photo_info.classList.add('side');
     photo_info.classList.add('img-nav');
     photo_info.style.clipPath = "circle()"
@@ -450,20 +450,8 @@ export default class OrgChart {
         <h4>Descripción</h4>
         <p class="text-justify mr-3" style="text-align: justify !important">${dataSourceJSON.descripcion}</p>
         `;
-    if (dataSourceJSON.supervisor != null) {
-      let photo_s;
-      if (dataSourceJSON.supervisor.foto == null) {
-        if (dataSourceJSON.supervisor.genero == 'H') {
-          photo_s = `${this.options.nodeRepositoryImages}/man.png`;
-        } else if (dataSourceJSON.supervisor.genero == 'M') {
-          photo_s = `${this.options.nodeRepositoryImages}/woman.png`;
-        } else {
-          photo_s = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
-        }
-      }
-      else {
-        photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;
-      }
+    // console.log(dataSourceJSON.lider);
+    if (dataSourceJSON.lider != null) {
       content_more += `
                 <div class="supervisor justify-content-center" style="text-align:center !important" >
                 <h4 class="supervisor-title">Responsable del área:</h4>
@@ -1873,7 +1861,7 @@ export default class OrgChart {
       mask = chartContainer.querySelector(':scope > .mask'),
       sourceChart = chartContainer.querySelector('.charContainerAll:not(.hidden)'),
       flag = opts.direction === 'l2r' || opts.direction === 'r2l' || opts.direction === 'b2t';
-    console.log()
+   
     let tableAll = document.querySelector('.charContainerAll');
     if (!mask) {
       mask = document.createElement('div');

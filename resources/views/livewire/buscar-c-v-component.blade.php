@@ -677,7 +677,7 @@
                                                 <form
                                                     action="{{ route('admin.cargarCertificacion', $empleadoModel) }}"
                                                     method="POST" id="formCargarCertificacion" class="form-group m-0">
-                                                    <div class="row">
+                                                    <div class="row" x-data = "{open:false}">
                                                         <div class="form-group col-sm-12 col-lg-12 col-md-12">
                                                             <label for="nombre"><i
                                                                     class="fas fa-file-signature iconos-crear"></i>Nombre</label>
