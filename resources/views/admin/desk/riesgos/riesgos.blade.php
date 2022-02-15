@@ -47,7 +47,7 @@
             <tr>
        			<th>Folio</th>
        			<th style="min-width:200px;">Título</th>
-                <th style="min-width:200px;">Fecha del indetificación</th>
+                <th style="min-width:200px;">Fecha de identificación</th>
                 <th style="min-width:200px;">Fecha de recepción del reporte</th>
                 <th style="min-width:200px;">Fecha de cierre</th>
        			<th style="min-width: 500px;">Descripción</th>
