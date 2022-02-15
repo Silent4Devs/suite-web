@@ -83,6 +83,10 @@
 </div>
 
 <div class="datatable-fix" style="width: 100%;">
+    <div class="mb-3 text-right">
+        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/seguridad')}}">Crear reporte</a>
+    </div>
+
     <table class="table tabla_incidentes_seguridad">
         <thead>
             <tr>
@@ -92,11 +96,11 @@
                 <th style="min-width: 250px;">Sede</th>
                 <th style="min-width: 250px;">Ubicación</th>
                 <th style="min-width: 500px;">Descripción</th>
-                <th style="min-width: 250px;">Areas, Afectadas</th>
-                <th style="min-width: 250px;">Procesos, Afectados</th>
-                <th style="min-width: 250px;">Activos, Afectados</th>
+                <th style="min-width: 250px;">Areas Afectadas</th>
+                <th style="min-width: 250px;">Procesos Afectados</th>
+                <th style="min-width: 250px;">Activos Afectados</th>
                 <th style="min-width: 150px;">Fecha</th>
-                <th style="min-width: 250px;">Quién reporto</th>
+                <th style="min-width: 250px;">Quién reportó</th>
                 <th style="min-width: 250px;">Correo</th>
                 <th style="min-width: 250px;">Teléfono</th>
                 <th>Urgencia</th>
@@ -224,19 +228,19 @@
                 }
 
             ];
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar empleado',
-                url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
-            };
-                dtButtons.push(btnAgregar)
+            // let btnAgregar = {
+            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            //     titleAttr: 'Agregar empleado',
+            //     url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
+            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+            //     action: function(e, dt, node, config) {
+            //     let {
+            //     url
+            //     } = config;
+            //     window.location.href = url;
+            //     }
+            // };
+            //     dtButtons.push(btnAgregar)
             if (!$.fn.dataTable.isDataTable('.tabla_incidentes_seguridad')) {
                 let tabla_incidentes = $(".tabla_incidentes_seguridad").DataTable({
                     ajax: '/admin/desk/seguridad',

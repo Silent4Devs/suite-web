@@ -1582,6 +1582,8 @@ class EmpleadoController extends Controller
         $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
         $empleado = Empleado::get();
 
+        // dd($visualizarEmpleados);
+
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
 

@@ -12,7 +12,7 @@
             </a>
         </li>
     @endcan
-    @can('capital_humano_perfiles_de_puestos_access')
+    @can('puesto_access')
         <li><a href="#" data-ventana="puestos" data-ruta="Capacitaciones" class="btn_ventana_menu">
                 <div>
                     <i class="bi bi-briefcase"></i>
@@ -25,7 +25,7 @@
                 style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
             <h3 class="text-center"><strong>Perfil de Puesto</strong></h3>
             <ul>
-                @can('capital_humano_perfiles_de_puestos_access')
+                @can('puesto_access')
                     <li><a href="{{ route('admin.puestos.index') }}">
                             <div>
                                 <i class="bi bi-briefcase"></i>

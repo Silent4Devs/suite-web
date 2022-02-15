@@ -90,10 +90,10 @@
         </div>
     @else
         <div class="d-flex justify-content-end">
-            @can('subir_documentacion_empleados')
+            {{-- @can('subir_documentacion_empleados')
                 <button data-toggle="modal" data-target="#modalDocumentos" data-backdrop="static" data-keyboard="false"
                     class="btn btn-danger btn-md"><i class="fas fa-plus mr-1"></i>Documento</button>
-            @endcan
+            @endcan --}}
             @can('subir_certificaciones_empleados')
                 <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-danger btn-md"><i
                         class="fas fa-plus mr-1"></i>Certificación</button>
@@ -446,24 +446,24 @@
                                             <span class="text-white " style="font-size: 14px; font-weight: bold;">
                                                 Datos Generales</span>
                                         </div>
-                                        <strong><i
+                                        <strong class="text-white"><i
                                                 class="ml-2 mr-2 text-white fas fa-map-marker-alt"></i>Dirección</strong>
                                         <br>
-                                        <div style="margin-left:28px;">
+                                        <div class="text-white" style="margin-left:28px;">
                                             <span>{{ $empleadoModel->sede ? $empleadoModel->sede->direccion : 'Dato no definido' }}</span>
                                         </div>
                                         <br>
-                                        <strong><i class="ml-2 mr-2 text-white fas fa-phone-alt"></i>Número de
+                                        <strong class="text-white"><i class="ml-2 mr-2 text-white fas fa-phone-alt"></i>Número de
                                             Teléfono</strong>
                                         <br>
-                                        <div style="margin-left:28px;">
+                                        <div class="text-white" style="margin-left:28px;">
                                             <span>{{ $empleadoModel->telefono }}</span>
                                         </div>
                                         <br>
-                                        <strong><i class="ml-2 mr-2 text-white fas fa-envelope"></i>Correo
+                                        <strong class="text-white"><i class="ml-2 mr-2 text-white fas fa-envelope"></i>Correo
                                             Electrónico</strong>
                                         <br>
-                                        <div style="margin-left:28px;">
+                                        <div class="text-white" style="margin-left:28px;">
                                             <span>{{ $empleadoModel->email }}</span>
                                         </div>
                                     </div>
@@ -473,7 +473,7 @@
                     </div>
                 </div>
                 <div class="mt-3 row">
-                    <div class="col-sm-12 col-md-4 col-sm-4 pt-3" x-data="{open:false}">
+                    {{-- <div class="col-sm-12 col-md-4 col-sm-4 pt-3" x-data="{open:false}">
                         <div class="row justify-content-center">
                             <div class="col-11 border rounded shadow-sm p-4">
                                 <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
@@ -494,7 +494,7 @@
                                 </div>
 
 
-                                {{-- modal subir doc --}}
+                                
                                 <div class="modal fade" id="modalDocumentos" data-backdrop="static"
                                     data-keyboard="false" tabindex="-1" aria-labelledby="modalDocumentosLabel"
                                     aria-hidden="true">
@@ -516,10 +516,7 @@
                                                         <div class="form-group col-sm-6 col-lg-6 col-md-6">
                                                             <label for="nombre"><i
                                                                     class="fas fa-file-signature iconos-crear"></i>Nombre</label>
-                                                            {{-- <input
-                                                                class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                                                type="text" name="nombre" id="nombre_documento"
-                                                                value="{{ old('nombre', '') }}"> --}}
+                   
 
                                                                 <select class="form-control" name="nombre" id="nombre_documento">
                                                                     <option value="" selected disabled>Selecciones documento</option>
@@ -636,8 +633,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4 col-sm-4 pt-3" x-data="{open:false}">
+                    </div> --}}
+                    <div class="col-sm-12 col-md-6 col-sm-6 pt-3" x-data="{open:false}">
                         <div class="row justify-content-center">
                             <div class="col-11 shadow-sm rounded border p-4">
                                 <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
@@ -680,7 +677,7 @@
                                                 <form
                                                     action="{{ route('admin.cargarCertificacion', $empleadoModel) }}"
                                                     method="POST" id="formCargarCertificacion" class="form-group m-0">
-                                                    <div class="row">
+                                                    <div class="row" x-data = "{open:false}">
                                                         <div class="form-group col-sm-12 col-lg-12 col-md-12">
                                                             <label for="nombre"><i
                                                                     class="fas fa-file-signature iconos-crear"></i>Nombre</label>
@@ -799,7 +796,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-4 col-sm-4 pt-3" x-data="{open:false}">
+                    <div class="col-sm-12 col-md-6 col-sm-6 pt-3" x-data="{open:false}">
                         <div class="row justify-content-center">
                             <div class="col-11 shadow-sm rounded border p-4">
                                 <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
@@ -899,14 +896,9 @@
                                                                 <input type="file" name="file" id="cargarCurso"
                                                                     class="d-none"
                                                                     aria-describedby="inputGroupFileAddon01">
-                                                                <div class="text-center">
+                                                                <div class="">
                                                                     <label for="cargarCurso" style="cursor: pointer;"
-                                                                        class="text-center m-0"><i
-                                                                            class="fas fa-upload text-success"
-                                                                            style="font-size: 15px"></i>
-                                                                        Subir
-                                                                        Certificado <small
-                                                                            id="infoSelectedCurso"></small></label>
+                                                                        class="text-center m-0"><i class="fas fa-upload text-success" style="font-size: 15px"></i>Subir Certificado <small id="infoSelectedCurso"></small></label>
                                                                 </div>
                                                                 <span class="errors file_error text-danger"></span>
                                                             </div>

@@ -21,7 +21,7 @@
             url =
             "{{ route('admin.revisiones.obtenerDocumentosMeDebenAprobar') }}") {
             const cardsMisCapacitaciones = document.getElementById('cards-me-deben-aprobar');
-
+            const cardsDeboAprobar = document.getElementById('cards-debo-aprobar');
             // cardsMisCapacitaciones.innerHTML = null; // limpiar el conenedor
             const formData = new FormData();
             formData.append('filtro', filtro)
@@ -49,8 +49,10 @@
                 htmlMezcladas += "</div></div>";
                 html += htmlMezcladas;
                 cardsMisCapacitaciones.innerHTML = html;
+                cardsDeboAprobar.innerHTML = html;
             } else {
                 cardsMisCapacitaciones.innerHTML = sinCapacitaciones(mensaje);
+                cardsDeboAprobar.innerHTML = sinCapacitaciones(mensaje);
             }
         }
         document.getElementById('cards-me-deben-aprobar').addEventListener('click', function(e) {
