@@ -145,6 +145,43 @@
             border-bottom: solid 2px #345183 !important;
             width: 100% !important;
         }
+        #dom_info{
+                color: #ffffff;
+            }
+        #dom_previous{
+                position: relative !important;
+                color: rgba(0, 0, 0, 0) !important;
+            }
+        #dom_previous::before {
+                position: absolute;
+                top: 0%;
+                left: 0%;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+               content: "Anterior";
+               color: black !important;
+            }
+            #dom_next{
+            position: relative !important;
+            color: rgba(0, 0, 0, 0) !important;
+            padding: 5px 20px !important;
+            display: inline !important;
+            }
+            #dom_next::after {
+                position: absolute;
+                top: 0%;
+                left: 0%;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+               content: "Siguiente";
+               color: black !important;
+            }
 
 
     </style>

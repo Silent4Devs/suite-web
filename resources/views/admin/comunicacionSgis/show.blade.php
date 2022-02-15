@@ -7,8 +7,9 @@
 
          <style type="text/css">
             .img_comunicado{
-                width: 100%;
-                height: 300px;
+                width: 400px;
+                height: 290px;
+                margin:auto;
 
                 background-size: cover;
                 background-position: center;
@@ -32,8 +33,8 @@
 
             @media print {
                 .img_comunicado{
-                    width: 100%;
-                    height: 300px;
+                    width: 400px;
+                    height: 290px;
 
                     background-size: cover;
                     background-position: center;
@@ -80,7 +81,7 @@
                 <div class="col-12">
                     <h1 style="color:#345183;">{{ $comunicacionSgi->titulo }}</h1>
                 </div>
-                <div class="mt-3 col-md-5">
+                <div class="mt-3 col-lg-12" >
                     @php
                     if(($comunicacionSgi->first()->count())){
                         $imagen= 'storage/imagen_comunicado_SGI/'.$comunicacionSgi->imagenes_comunicacion->first()->imagen;
@@ -89,11 +90,11 @@
                         $imagen= 'img/portal_404.png';
                     }
 
-                @endphp
+                    @endphp
 
                     <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');"></div>
                 </div>
-                <div class="mt-3 col-md-7" style="display: flex; align-items:center;">
+                <div class="mt-3 col-lg-12" style="display: flex; align-items:center;">
                     <div>
                         {!! $comunicacionSgi->descripcion !!}
 

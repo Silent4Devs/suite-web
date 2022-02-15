@@ -179,7 +179,7 @@ class DeskController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        return redirect()->route('admin.desk.seguridad-edit', $id_incidente)->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.index', $id_incidente)->with('success', 'Reporte actualizado');
     }
 
     public function updateAnalisisSeguridad(Request $request, $id_incidente)
