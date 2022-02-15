@@ -8,7 +8,7 @@
     <div class="col-6 col-md-2 ">
         <div class="tarjetas_seguridad_indicadores cdr-amarillo">
             <div class="numero"><i class="far fa-arrow-alt-circle-right"></i> {{ $nuevos_sugerencias }}</div>
-            <div>Nuevos</div>
+            <div>Sin atender</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
