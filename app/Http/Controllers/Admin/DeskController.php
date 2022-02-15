@@ -566,4 +566,14 @@ class DeskController extends Controller
 
         return redirect()->route('admin.desk.sugerencias-edit', $analisis_seguridad->sugerencias_id)->with('success', 'Reporte actualizado');
     }
+    public function recuperarArchivadoSeguridad($id)
+    {
+        $recurso = IncidentesSeguridad::find($id);
+        // dd($recurso);
+        $recurso->update([
+            'archivado' =>IncidentesSeguridad::NO_ARCHIVADO
+        ]);
+
+        return redirect()->route('admin.desk.index');
+    }
 }

@@ -276,9 +276,9 @@
             // };
 
             // dtButtons.push(btnArchivo);
-            // $("#tabla_usuario_capacitaciones").DataTable({
-            //     buttons: dtButtons,
-            // });
+            $("#tabla_usuario_capacitaciones").DataTable({
+                buttons: dtButtons,
+            });
 
 
             // window.archivarCapacitacion = function(id_empleado, recurso_id, url){
