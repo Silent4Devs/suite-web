@@ -86,9 +86,9 @@
                     </div>
 
                     <div class="mt-2 form-group col-md-4">
-                        <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i> Fecha y hora de
-                            ocurrencia<sup>*</sup></label>
-                        <input type="datetime-local" name="fecha" class="form-control" required>
+                        <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i> Fecha y hora aproximada de
+                            ocurrencia</label>
+                        <input type="datetime-local" name="fecha" class="form-control">
                     </div>
 
                     <div class="mt-2 form-group col-md-4">
@@ -122,7 +122,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <textarea name="areas_afectados" class="form-control" id="texto_activos" required></textarea>
+                        <textarea name="areas_afectados" class="form-control" id="texto_activos"></textarea>
                     </div>
 
                     <div class="mt-2 form-group col-4 procesos_multiselect">
@@ -134,7 +134,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <textarea name="procesos_afectados" class="form-control" id="texto_activos" required></textarea>
+                        <textarea name="procesos_afectados" class="form-control" id="texto_activos"></textarea>
                     </div>
 
                     <div class="mt-2 form-group col-4 activos_multiselect">
@@ -146,7 +146,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <textarea name="activos_afectados" class="form-control" id="texto_activos" required></textarea>
+                        <textarea name="activos_afectados" class="form-control" id="texto_activos"></textarea>
                     </div>
 
 

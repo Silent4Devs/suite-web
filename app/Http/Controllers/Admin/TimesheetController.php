@@ -173,8 +173,9 @@ class TimesheetController extends Controller
     }
 
     public function proyectos()
-    {   
+    {
         $clientes = TimesheetCliente::get();
+
         return view('admin.timesheet.proyectos', compact('clientes'));
     }
 

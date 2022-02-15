@@ -15,16 +15,16 @@
                         <th>Folio</th>
                         <th>Título</th>
                         <th>Descripción</th>
-                        <th>Activos, Afectados</th>
+                        <th>Activos Afectados</th>
                         <th>Fecha</th>
-                        <th>Quién reporto</th>
+                        <th>Quién reportó</th>
                         <th>Correo</th>
                         <th>Teléfono</th>
                         <th>Categoría</th>
                         <th>Calificación</th>
                         <th>Prioridad</th>
                         <th>Estatus</th>
-                        <th>Asigando a</th>
+                        <th>Asignado a</th>
                         <th>Comentarios</th>
                         <th>Opciones</th>
                     </tr>

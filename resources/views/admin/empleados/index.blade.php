@@ -71,6 +71,7 @@
         }
 
     </style>
+      {{ Breadcrumbs::render('EV360-Empleados') }}
 
     <h5 class="col-12 titulo_general_funcion">Empleados</h5>
     <div class="mt-5 card">
