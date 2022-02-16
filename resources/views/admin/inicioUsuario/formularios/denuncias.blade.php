@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 
-    <style type="text/css">
-        .d-none {
-            display: none;
-        }
+        <style type="text/css">
+            sup {
+                color: red;
+            }
 
-        ol.breadcrumb {
-            margin-bottom: 0px;
-        }
+            ol.breadcrumb {
+                margin-bottom: 0px;
+            }
 
-    </style>
+        </style>
 
     @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('denuncias-create-perfil') }}
@@ -21,7 +21,7 @@
     @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('denuncias-create') }}
     @endif
-    
+
     <h5 class="col-12 titulo_general_funcion">Denuncias</h5>
     <div class="container">
         <div class="card card_formulario">
@@ -110,7 +110,7 @@
 
                     <div class="mt-2 form-group col-12 select_tipo">
                         <label class="form-label"><i class="fas fa-hand-paper iconos-crear"></i>Indique el tipo de denuncia
-                            de que se trata</label>
+                            de que se trata<sup>*</sup></label>
                         <select name="tipo" class="form-control">
                             <option>Abuso de autoridad</option>
                             <option>Acoso sexual</option>
@@ -152,8 +152,8 @@
 
                     <div class="mt-4 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Describa detalladamente su
-                            denuncia</label><br>
-                        <textarea name="descripcion" class="form-control"></textarea>
+                            denuncia<sup>*</sup></label><br>
+                        <textarea name="descripcion" class="form-control"required></textarea>
                         <small style="color: #555;">
                             Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos
                             evitando juicios de percepción o

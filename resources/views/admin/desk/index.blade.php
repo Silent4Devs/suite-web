@@ -225,9 +225,6 @@
 
     @section('scripts')
 
-
-
-
     <script>
         document.addEventListener('DOMContentLoaded',function(){
             const menu=localStorage.getItem('menu-desk');
