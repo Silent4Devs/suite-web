@@ -3,7 +3,11 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
-    <style>
+    <style type="text/css">
+        sup {
+            color: red;
+        }
+
         ol.breadcrumb {
             margin-bottom: 0px;
         }
@@ -179,7 +183,7 @@
 
                             <div class="mt-4 form-group col-12">
                                 <label class="form-label"><i class="fas fa-hand-paper iconos-crear"></i>Tipo de
-                                    denuncia</label>
+                                    denuncia<sup>*</sup></label>
                                 <input type="" name="tipo" class="form-control" value="{{ $denuncias->tipo }}">
                             </div>
 
@@ -190,9 +194,9 @@
 
                             <div class="mt-4 form-group col-12">
                                 <label class="form-label"><i
-                                        class="fas fa-file-alt iconos-crear"></i>Descripción</label><br>
+                                        class="fas fa-file-alt iconos-crear"></i>Descripción<sup>*</sup></label><br>
                                 <textarea type="" name="descripcion"
-                                    class="form-control">{{ $denuncias->descripcion }}</textarea>
+                                    class="form-control" required>{{ $denuncias->descripcion }}</textarea>
                             </div>
 
                             <div class="mt-4 text-center form-group col-12">
