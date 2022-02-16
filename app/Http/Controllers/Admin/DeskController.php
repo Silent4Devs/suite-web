@@ -339,7 +339,8 @@ class DeskController extends Controller
             'fecha_cierre'=>$request->fecha_cierre,
         ]);
 
-        return redirect()->route('admin.desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
+        // return redirect()->route('admin.desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
     public function updateAnalisisQuejas(Request $request, $id_quejas)
@@ -432,7 +433,8 @@ class DeskController extends Controller
             'ambiente_b' => $request->ambiente_b,
         ]);
 
-        return redirect()->route('admin.desk.denuncias-edit', $analisis_seguridad->denuncias_id)->with('success', 'Reporte actualizado');
+        // return redirect()->route('admin.desk.denuncias-edit', $analisis_seguridad->denuncias_id)->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
     public function editMejoras(Request $request, $id_mejoras)
@@ -467,7 +469,8 @@ class DeskController extends Controller
             'otro' => $request->otro,
         ]);
 
-        return redirect()->route('admin.desk.mejoras-edit', $id_mejoras)->with('success', 'Reporte actualizado');
+        // return redirect()->route('admin.desk.mejoras-edit', $id_mejoras)->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
     public function updateAnalisisMejoras(Request $request, $id_mejoras)
@@ -533,7 +536,8 @@ class DeskController extends Controller
             'fecha_cierre' => $request->fecha_cierre,
         ]);
 
-        return redirect()->route('admin.desk.sugerencias-edit', $id_sugerencias)->with('success', 'Reporte actualizado');
+        // return redirect()->route('admin.desk.sugerencias-edit', $id_sugerencias)->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
     public function updateAnalisisSugerencias(Request $request, $id_sugerencias)
