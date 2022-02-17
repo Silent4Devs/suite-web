@@ -31,27 +31,52 @@
                 </thead>
                 <tbody>
                     @foreach ($incidentes_seguridad_archivados as $incidentes)
-                        <tr>
-                            <td>{{ $incidentes->id }}</td>
-                            <td>{{ $incidentes->folio }}</td>
-                            <td>{{ $incidentes->titulo }}</td>
-                            <td>{{ $incidentes->descripción }}</td>
-                            <td>{{ $incidentes->activos_afectados }}</td>
-                            <td>{{ $incidentes->fecha }}</td>
-                            <td>{{ $incidentes->reporto->name }}</td>
-                            <td>{{ $incidentes->reporto->email }}</td> {{-- correo --}}
-                            <td>{{ $incidentes->reporto->telefono }}</td> {{-- telefono --}}
-                            <td>{{ $incidentes->categoria }}</td>
-                            <td>{{ $incidentes->clacificacion }}</td>
-                            <td>{{ $incidentes->prioridad }}</td>
-                            <td>{{ $incidentes->estatus }}</td>
-                            <td>{{ $incidentes->asignado ? $incidentes->asignado->name : 'sin asignar' }}</td>
-                            <td>{{ $incidentes->comentarios }}</td>
-                            <td>
-                                <a href="{{ route('admin.desk.seguridad-edit', $incidentes->id) }}"><i
-                                        class="fas fa-edit"></i></a>
-                            </td>
-                        </tr>
+                        {{-- @if($incidentes->archivar == 'false') --}}
+                            <tr>
+                                <td>{{ $incidentes->id }}</td>
+                                <td>{{ $incidentes->folio }}</td>
+                                <td>{{ $incidentes->titulo }}</td>
+                                <td>{{ $incidentes->descripción }}</td>
+                                <td>{{ $incidentes->activos_afectados }}</td>
+                                <td>{{ $incidentes->fecha }}</td>
+                                <td>{{ $incidentes->reporto->name }}</td>
+                                <td>{{ $incidentes->reporto->email }}</td> {{-- correo --}}
+                                <td>{{ $incidentes->reporto->telefono }}</td> {{-- telefono --}}
+                                <td>{{ $incidentes->categoria }}</td>
+                                <td>{{ $incidentes->clacificacion }}</td>
+                                <td>{{ $incidentes->prioridad }}</td>
+                                <td>{{ $incidentes->estatus }}</td>
+                                <td>{{ $incidentes->asignado ? $incidentes->asignado->name : 'sin asignar' }}</td>
+                                <td>{{ $incidentes->comentarios }}</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <a href="{{ route('admin.desk.seguridad-edit', $incidentes->id) }}"><i
+                                                class="fas fa-edit"></i></a>
+                                        </div>
+                                        <div class="col-6">
+                                            <form action="{{route('admin.desk.seguridad-archivo.recuperar', $incidentes->id)}}" method="POST">
+                                                @csrf
+                                                <button class="btn" title="Recuperar" style="all: unset !important;">
+                                                    <i class="fas fa-sign-in-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+                                {{-- <td class="opciones_iconos">
+                                    <form action="{{route('admin.inicio-Usuario.capacitaciones.recuperar', $incidentes->id)}}" method="POST">
+                                        @csrf
+                                        <button class="btn" title="Recuperar" style="all: unset !important;">
+                                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#345183;"></i>
+                                        </button>
+                                    </form>
+                                </td> --}}
+                            </tr>
+			   			{{-- @endif --}}
+
                     @endforeach
                 </tbody>
             </table>

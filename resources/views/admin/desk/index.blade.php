@@ -58,31 +58,31 @@
 
     </style>
 
-    @include('partials.flashMessages')
+
     {{ Breadcrumbs::render('centro-atencion') }}
     <h5 class="col-12 titulo_general_funcion">Centro de Atención</h5>
     <div id="desk" class="mt-5 card" style="">
 
-
+        @include('partials.flashMessages')
         <div class="caja_botones_secciones">
 
             <div class="caja_botones_menu">
-                <a href="#" data-tabs="incidentes" class="btn_activo">
+                <a  href="#" data-tabs="incidentes" class="btn_activo">
                     <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
                 </a>
-                <a href="#" data-tabs="riesgos">
+                <a  href="#" data-tabs="riesgos">
                     <i class="fas fa-shield-alt"></i> Riesgos
                 </a>
-                <a href="#" data-tabs="quejas">
+                <a  href="#" data-tabs="quejas">
                     <i class="fas fa-frown"></i> Quejas
                 </a>
-                <a href="#" data-tabs="denuncias">
+                <a  href="#" data-tabs="denuncias">
                     <i class="fas fa-hand-paper"></i> Denuncias
                 </a>
-                <a href="#" data-tabs="mejoras">
+                <a  href="#" data-tabs="mejoras">
                     <i class="fas fa-rocket"></i> Mejoras
                 </a>
-                <a href="#" data-tabs="sugerencias">
+                <a  href="#" data-tabs="sugerencias">
                     <i class="fas fa-lightbulb"></i> Sugerencias
                 </a>
 
@@ -223,8 +223,27 @@
         </div>
     @endsection
 
-
-
     @section('scripts')
 
+    <script>
+        document.addEventListener('DOMContentLoaded',function(){
+            const menu=localStorage.getItem('menu-desk');
+            document.querySelector('.caja_tab_reveldada').classList.remove('caja_tab_reveldada');
+            document.querySelector('.btn_activo').classList.remove('btn_activo');
+            document.getElementById(menu).classList.add('caja_tab_reveldada');
+            document.querySelector(`[data-tabs=${menu}]`).classList.add('btn_activo');
+            document.querySelector('.caja_botones_menu').addEventListener('click',function(e){
+
+                if(e.target.getAttribute('data-tabs')){
+                    localStorage.setItem('menu-desk',e.target.getAttribute('data-tabs'))
+                }
+            })
+            window.menuActive=function(item){
+                localStorage.setItem('menu-desk',item)
+            }
+        })
+
+    </script>
     @endsection
+
+

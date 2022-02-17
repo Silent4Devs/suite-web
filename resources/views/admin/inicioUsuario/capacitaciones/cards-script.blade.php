@@ -14,10 +14,10 @@
             const url = this.getAttribute('data-url');
             inicializarCapacitacionesGeneralesCards('Sin Capacitaciones Archivadas', 'todo', url);
         })
-        btnPrincipales.addEventListener('click', function(e) {
-            const url = this.getAttribute('data-url');
-            inicializarCapacitacionesGeneralesCards('Sin Capacitaciones', 'todo', url);
-        })
+        // btnPrincipales.addEventListener('click', function(e) {
+        //     const url = this.getAttribute('data-url');
+        //     inicializarCapacitacionesGeneralesCards('Sin Capacitaciones', 'todo', url);
+        // })
 
         selectTipoCapacitacion.addEventListener('change', function(e) {
             inicializarCapacitacionesGeneralesCards(`Sin Capacitaciones ${this.value}`, this.value);

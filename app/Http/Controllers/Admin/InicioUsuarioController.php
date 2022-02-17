@@ -163,6 +163,7 @@ class InicioUsuarioController extends Controller
         $equipo_trabajo = collect();
         $supervisor = null;
         $mis_objetivos = collect();
+
         if ($usuario->empleado) {
             $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
 
@@ -180,7 +181,6 @@ class InicioUsuarioController extends Controller
                     ->where('evaluado_id', '!=', auth()->user()->empleado->id)
                     ->where('evaluado', false)
                     ->get();
-
                 $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
                     $q->where('estatus', Evaluacion::ACTIVE)
                         ->where('fecha_inicio', '<=', Carbon::now())
@@ -583,7 +583,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
     public function denuncias()
@@ -639,7 +639,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
     public function mejoras()
@@ -672,7 +672,7 @@ class InicioUsuarioController extends Controller
             'formulario' => 'mejora',
         ]);
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
     public function sugerencias()
@@ -706,7 +706,7 @@ class InicioUsuarioController extends Controller
             'formulario' => 'sugerencia',
         ]);
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
     public function seguridad()
@@ -771,7 +771,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
     public function evidenciaSeguridad()
@@ -838,7 +838,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
     public function archivarCapacitacion($id)
@@ -1083,12 +1083,12 @@ class InicioUsuarioController extends Controller
             }
 
             $lista_docs->push((object) [
-                'id'=>$doc->id,
-                'documento'=>$doc->documento,
-                'tipo'=>$doc->tipo,
-                'empleado'=>$documentos_empleado,
-                'ruta_documento'=>$doc_viejo,
-                'nombre_doc'=>$nombre_doc,
+                'id' => $doc->id,
+                'documento' => $doc->documento,
+                'tipo' => $doc->tipo,
+                'empleado' => $documentos_empleado,
+                'ruta_documento' => $doc_viejo,
+                'nombre_doc' => $nombre_doc,
             ]);
         }
 
@@ -1105,30 +1105,30 @@ class InicioUsuarioController extends Controller
             // dd($request->file('value'));
             $empleado = Empleado::find($request->empleadoId);
             $request->file('value')->storeAs('public/expedientes/' . Str::slug($empleado->name), $fileName);
-            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id'=>$request->empleadoId, 'lista_documentos_empleados_id'=>$request->documentoId], [$request->name => $request->value]);
+            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
 
             $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();
             if ($doc_viejo) {
                 $doc_viejo->update([
-                    'archivado'=>true,
+                    'archivado' => true,
                 ]);
             }
 
             $archivo = EvidenciaDocumentoEmpleadoArchivo::create([
-                'evidencias_documentos_empleados_id'=>$expediente->id,
-                'documento'=>$fileName,
-                'archivado'=>false,
+                'evidencias_documentos_empleados_id' => $expediente->id,
+                'documento' => $fileName,
+                'archivado' => false,
             ]);
 
-            return response()->json(['status'=>201, 'message'=>'Registro Actualizado']);
+            return response()->json(['status' => 201, 'message' => 'Registro Actualizado']);
         } else {
-            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id'=>$request->empleadoId, 'lista_documentos_empleados_id'=>$request->documentoId], [$request->name => $request->value]);
+            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
         }
 
         // $expediente->update([
         //     $request->name => $request->value,
         // ]);
 
-        return response()->json(['status'=>200, 'message'=>'Registro Actualizado']);
+        return response()->json(['status' => 200, 'message' => 'Registro Actualizado']);
     }
 }

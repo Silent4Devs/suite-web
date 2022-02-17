@@ -1,12 +1,16 @@
 @extends('layouts.admin')
 @section('content')
-    <style>
-        ol.breadcrumb {
-            margin-bottom: 0px;
-        }
+        <style type="text/css">
+            sup {
+                color: red;
+            }
 
-    </style>
-     
+            ol.breadcrumb {
+                margin-bottom: 0px;
+            }
+
+        </style>
+
     @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('sugerencias-create-perfil') }}
     @endif
@@ -16,12 +20,12 @@
     @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('sugerencias-create') }}
     @endif
-    
+
     <h5 class="col-12 titulo_general_funcion">Sugerencias</h5>
-    
+
     <div class="container">
         <div class="card card_formulario">
-            
+
             <div class="card-body">
 
                 <div class="titulo-formulario">
@@ -102,14 +106,14 @@
 
                     <div class="mt-2 form-group col-12">
                         <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título corto de la
-                            sugerencia</label>
-                        <input name="titulo" class="form-control">
+                            sugerencia<sup>*</sup></label>
+                        <input name="titulo" class="form-control" required>
                     </div>
 
                     <div class="mt-2 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> Describa detalladamente su
-                            sugerencia</label>
-                        <textarea name="descripcion" class="form-control"></textarea>
+                            sugerencia<sup>*</sup></label>
+                        <textarea name="descripcion" class="form-control" required></textarea>
                     </div>
 
                     <div class="mt-2 text-right form-group col-12">

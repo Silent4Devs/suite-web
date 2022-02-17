@@ -232,6 +232,13 @@ class DeskController extends Controller
         return view('admin.desk.seguridad.archivo', compact('incidentes_seguridad_archivados'));
     }
 
+    public function indexRiesgo()
+    {
+        $riesgo = RiesgoIdentificado::with('reporto')->where('archivado', false)->get();
+
+        return datatables()->of($riesgo)->toJson();
+    }
+
     public function editRiesgos(Request $request, $id_riesgos)
     {
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos))->load('evidencias_riesgos');
@@ -302,6 +309,43 @@ class DeskController extends Controller
         return redirect()->route('admin.desk.riesgos-edit', $analisis_seguridad->riesgos_id)->with('success', 'Reporte actualizado');
     }
 
+    public function archivadoRiesgo(Request $request, $incidente)
+    {
+        if ($request->ajax()) {
+            $riesgo = RiesgoIdentificado::findOrfail(intval($incidente));
+            $riesgo->update([
+                'archivado' => true,
+            ]);
+
+            return response()->json(['success' => true]);
+        }
+    }
+
+    public function archivoRiesgo()
+    {
+        $riesgos = RiesgoIdentificado::where('archivado', true)->get();
+
+        return view('admin.desk.riesgos.archivo', compact('riesgos'));
+    }
+
+    public function recuperarArchivadoRiesgo($id)
+    {
+        $riesgo = RiesgoIdentificado::find($id);
+        // dd($recurso);
+        $riesgo->update([
+            'archivado' =>false,
+        ]);
+
+        return redirect()->route('admin.desk.index');
+    }
+
+    public function indexQueja()
+    {
+        $quejas = Quejas::with('quejo')->where('archivado', false)->get();
+
+        return datatables()->of($quejas)->toJson();
+    }
+
     public function editQuejas(Request $request, $id_quejas)
     {
         $quejas = Quejas::findOrfail(intval($id_quejas))->load('evidencias_quejas');
@@ -331,15 +375,16 @@ class DeskController extends Controller
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
-            'areas_quejado' => $request->areas_afectados,
+            'area_quejado' => $request->area_quejado,
             'colaborador_quejado' => $request->colaborador_quejado,
-            'procesos_quejado' => $request->procesos_quejado,
+            'proceso_quejado' => $request->proceso_quejado,
             'externo_quejado' => $request->externo_quejado,
             'comentarios' => $request->comentarios,
             'fecha_cierre'=>$request->fecha_cierre,
         ]);
 
-        return redirect()->route('admin.desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
+        // return redirect()->route('admin.desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
     public function updateAnalisisQuejas(Request $request, $id_quejas)
@@ -372,6 +417,37 @@ class DeskController extends Controller
         ]);
 
         return redirect()->route('admin.desk.quejas-edit', $analisis_seguridad->quejas_id)->with('success', 'Reporte actualizado');
+    }
+
+    public function archivadoQueja(Request $request, $incidente)
+    {
+        // dd($request);
+        if ($request->ajax()) {
+            $queja = Quejas::findOrfail(intval($incidente));
+            $queja->update([
+                'archivado' => true,
+            ]);
+
+            return response()->json(['success' => true]);
+        }
+    }
+
+    public function archivoQueja()
+    {
+        $quejas = Quejas::where('archivado', true)->get();
+
+        return view('admin.desk.quejas.archivo', compact('quejas'));
+    }
+
+    public function recuperarArchivadoQueja($id)
+    {
+        $queja = Quejas::find($id);
+        // dd($recurso);
+        $queja->update([
+            'archivado' =>false,
+        ]);
+
+        return redirect()->route('admin.desk.index');
     }
 
     public function editDenuncias(Request $request, $id_denuncias)
@@ -432,7 +508,8 @@ class DeskController extends Controller
             'ambiente_b' => $request->ambiente_b,
         ]);
 
-        return redirect()->route('admin.desk.denuncias-edit', $analisis_seguridad->denuncias_id)->with('success', 'Reporte actualizado');
+        // return redirect()->route('admin.desk.denuncias-edit', $analisis_seguridad->denuncias_id)->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
     public function editMejoras(Request $request, $id_mejoras)
@@ -467,7 +544,8 @@ class DeskController extends Controller
             'otro' => $request->otro,
         ]);
 
-        return redirect()->route('admin.desk.mejoras-edit', $id_mejoras)->with('success', 'Reporte actualizado');
+        // return redirect()->route('admin.desk.mejoras-edit', $id_mejoras)->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
     public function updateAnalisisMejoras(Request $request, $id_mejoras)
@@ -533,7 +611,8 @@ class DeskController extends Controller
             'fecha_cierre' => $request->fecha_cierre,
         ]);
 
-        return redirect()->route('admin.desk.sugerencias-edit', $id_sugerencias)->with('success', 'Reporte actualizado');
+        // return redirect()->route('admin.desk.sugerencias-edit', $id_sugerencias)->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
     public function updateAnalisisSugerencias(Request $request, $id_sugerencias)
@@ -565,5 +644,16 @@ class DeskController extends Controller
         ]);
 
         return redirect()->route('admin.desk.sugerencias-edit', $analisis_seguridad->sugerencias_id)->with('success', 'Reporte actualizado');
+    }
+
+    public function recuperarArchivadoSeguridad($id)
+    {
+        $recurso = IncidentesSeguridad::find($id);
+        // dd($recurso);
+        $recurso->update([
+            'archivado' =>IncidentesSeguridad::NO_ARCHIVADO,
+        ]);
+
+        return redirect()->route('admin.desk.index');
     }
 }

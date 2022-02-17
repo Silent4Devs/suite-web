@@ -172,7 +172,6 @@ class MultiStepForm extends Component
         }
         // if ($this->currentStep == 4) {
         //     dd($this->listaEvaluados);
-
         // }
 
         if ($this->currentStep > $this->totalSteps) {
@@ -285,6 +284,10 @@ class MultiStepForm extends Component
 
     public function validateStepThree()
     {
+        // $this->validate([
+        //     'listaEvaluados.*.evaluadores.*.id' => 'required|numeric|gt:0'
+        // ]);
+        // dd($this->listaEvaluados);
         $this->sumaTotalPeso = 0;
         if ($this->evaluado_por_jefe == false && $this->evaluado_por_misma_area == false && $this->evaluado_por_equipo_a_cargo == false && $this->autoevaluacion == false) {
             $this->validate([
