@@ -1,11 +1,15 @@
 @extends('layouts.admin')
 @section('content')
-    <style>
-        ol.breadcrumb {
-            margin-bottom: 0px;
-        }
+        <style type="text/css">
+            sup {
+                color: red;
+            }
 
-    </style>
+            ol.breadcrumb {
+                margin-bottom: 0px;
+            }
+
+        </style>
 
     @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('quejas-create-perfil') }}
@@ -130,7 +134,7 @@
 
                     <div class="mt-2 form-group col-md-8">
                         <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título corto de la
-                            queja</label>
+                            queja<sup>*</sup></label>
                         <input type="" name="titulo" class="form-control" required>
                     </div>
 
@@ -157,9 +161,9 @@
 
                     <div class="mt-4 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción detallada de la
-                            queja</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                            queja<sup>*</sup></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                             title="Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,¿Cuándo?, ¿Dónde?."></i>
-                        <textarea type="text" name="descripcion" class="form-control"></textarea>
+                        <textarea type="text" name="descripcion" class="form-control" required></textarea>
                     </div>
 
                     <div class="mt-4 form-group col-12">

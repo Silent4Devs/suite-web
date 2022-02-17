@@ -3,7 +3,11 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
-    <style>
+    <style type="text/css">
+        sup {
+            color: red;
+        }
+
         ol.breadcrumb {
             margin-bottom: 0px;
         }
@@ -63,8 +67,8 @@
                             <div class="mt-2 form-group col-6">
                                 <label class="form-label"><i class="fas fa-text-width iconos-crear"></i>Título corto
                                     de
-                                    la queja</label>
-                                <input class="form-control" name="titulo" value="{{ $quejas->titulo }}">
+                                    la queja<sup>*</sup></label>
+                                <input class="form-control" name="titulo" value="{{ $quejas->titulo }}" required>
                             </div>
                             <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i
@@ -129,9 +133,9 @@
                             <div class="mt-2 form-group col-12">
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción
                                     del
-                                    riesgo identificado</label>
+                                    riesgo identificado<sup>*</sup></label>
                                 <textarea name="descripcion"
-                                    class="form-control">{{ $quejas->descripcion }}</textarea>
+                                    class="form-control" required>{{ $quejas->descripcion }}</textarea>
                             </div>
                             <div class="mt-4 text-center form-group col-12">
                                 <div class="container">
