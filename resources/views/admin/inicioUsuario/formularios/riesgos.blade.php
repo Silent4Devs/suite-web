@@ -1,12 +1,16 @@
 @extends('layouts.admin')
 @section('content')
-    <style>
-        ol.breadcrumb {
-            margin-bottom: 0px;
-        }
+<style type="text/css">
+    sup {
+        color: red;
+    }
 
-    </style>
-    
+    ol.breadcrumb {
+        margin-bottom: 0px;
+    }
+
+</style>>
+
     @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('riesgos-create-perfil') }}
     @endif
@@ -16,7 +20,7 @@
     @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('riesgos-create') }}
     @endif
-    
+
     <h5 class="col-12 titulo_general_funcion">Riesgo identificado</h5>
     <div class="container">
         <div class="card card_formulario">
@@ -79,8 +83,8 @@
 
                     <div class="mt-2 form-group col-md-6">
                         <label class="form-label"><i class="fas fa-text-width iconos-crear"></i>Título corto del
-                            riesgo</label>
-                        <input class="form-control" name="titulo">
+                            riesgo<sup>*</sup></label>
+                        <input class="form-control" name="titulo" required>
                     </div>
 
                     <div class="mt-2 form-group col-md-6">
@@ -106,8 +110,8 @@
 
                     <div class="mt-2 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Describa detalladamente el
-                            riesgo identificado</label>
-                        <textarea name="descripcion" class="form-control"></textarea>
+                            riesgo identificado<sup>*</sup></label>
+                        <textarea name="descripcion" class="form-control" required></textarea>
                     </div>
 
                     <div class="mt-2 form-group col-4 areas_multiselect">
@@ -119,7 +123,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <textarea name="areas_afectados" class="form-control" id="texto_activos" required></textarea>
+                        <textarea name="areas_afectados" class="form-control" id="texto_activos"></textarea>
                     </div>
 
                     <div class="mt-2 form-group col-4 procesos_multiselect">
@@ -131,7 +135,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <textarea name="procesos_afectados" class="form-control" id="texto_activos" required></textarea>
+                        <textarea name="procesos_afectados" class="form-control" id="texto_activos"></textarea>
                     </div>
 
                     <div class="mt-2 form-group col-4 activos_multiselect">
@@ -143,7 +147,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <textarea name="activos_afectados" class="form-control" id="texto_activos" required></textarea>
+                        <textarea name="activos_afectados" class="form-control" id="texto_activos"></textarea>
                     </div>
 
                     <div class="mt-4 form-group col-12">

@@ -6,7 +6,11 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
-    <style>
+    <style type="text/css">
+        sup {
+            color: red;
+        }
+
         ol.breadcrumb {
             margin-bottom: 0px;
         }
@@ -71,8 +75,8 @@
                             <div class="mt-2 form-group col-6">
                                 <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título
                                     corto de
-                                    la sugerencia</label>
-                                <input name="titulo" value="{{ $sugerencias->titulo }}" class="form-control">
+                                    la sugerencia <sup>*</sup></label>
+                                <input name="titulo" value="{{ $sugerencias->titulo }}" class="form-control" required>
                             </div>
 
                             <div class="mt-2 form-group col-lg-4 col-sm-12 col-md-4">
@@ -185,9 +189,9 @@
 
                             <div class="mt-2 form-group col-12">
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> Describa
-                                    detalladamente su sugerencia</label>
+                                    detalladamente su sugerencia<sup>*</sup></label>
                                 <textarea name="descripcion"
-                                    class="form-control">{{ $sugerencias->descripcion }}</textarea>
+                                    class="form-control" required>{{ $sugerencias->descripcion }}</textarea>
                             </div>
 
                             <div class="mt-2 text-right form-group col-12">
