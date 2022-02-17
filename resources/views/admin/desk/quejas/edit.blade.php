@@ -738,4 +738,39 @@
         $(document.getElementById(metodo_v)).addClass("d-block");
     });
 </script>
+
+
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+
+        document.querySelector('.multiselect_areas select').addEventListener('change', function(e) {
+            e.preventDefault();
+
+            (document.querySelector('.multiselect_areas textarea')).value += `${this.value}, `;
+
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+        document.querySelector('.multiselect_empleados select').addEventListener('change', function(e) {
+            e.preventDefault();
+
+            (document.querySelector('.multiselect_empleados textarea')).value += `${this.value}, `;
+
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+        document.querySelector('.multiselect_procesos select').addEventListener('change', function(e) {
+            e.preventDefault();
+
+            (document.querySelector('.multiselect_procesos textarea')).value += `${this.value}, `;
+
+        });
+    });
+</script>
+
 @endsection
