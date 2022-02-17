@@ -255,8 +255,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('desk/quejas-archivo/recuperar/{id}', 'DeskController@recuperarArchivadoQueja')->name('desk.queja-archivo.recuperar');
     Route::get('desk/quejas', 'DeskController@indexQueja')->name('desk.queja-index');
 
-
-
     Route::get('desk/{denuncias}/denuncias-edit', 'DeskController@editDenuncias')->name('desk.denuncias-edit');
     Route::post('desk/{denuncias}/denuncias-update', 'DeskController@updateDenuncias')->name('desk.denuncias-update');
 

@@ -727,7 +727,7 @@ class MultiStepForm extends Component
                 }
                 if (count($lista_empleados_misma_area)) {
                     $evaluadores->push($lista_empleados_misma_area->random());
-                    // while (count($lista_empleados_misma_area)) {
+                // while (count($lista_empleados_misma_area)) {
                     //     if (!$evaluadores->contains('id', $lista_empleados_misma_area->random()['id'])) {
 
                     //         break;
