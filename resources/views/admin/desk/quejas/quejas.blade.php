@@ -37,7 +37,6 @@
     </div>
 </div>
 
-
 <div class="datatable-fix" style="width: 100%;">
     <div class="mb-3 text-right">
         <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/quejas')}}">Crear reporte</a>
@@ -45,11 +44,11 @@
 
    <table class="table tabla_quejas">
    		<thead>
-            <tr style="border: none !important">
-                <th colspan="6"></th>
-                <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reporto</th>
-                <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reportado</th>
-            </tr>
+            {{-- <tr style="border: none !important"> --}}
+                {{-- <th colspan="6">folio</th> --}}
+                {{-- <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reporto</th>
+                <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reportado</th> --}}
+            {{-- </tr> --}}
             <tr>
        			<th>Folio</th>
                 <th style="min-width:200px;">Anónimo</th>
@@ -71,7 +70,7 @@
             </tr>
    		</thead>
    		<tbody>
-   			@foreach($quejas as $queja)
+   			{{-- @foreach($quejas as $queja)
 	   			<tr>
 	       			<td>{{ $queja->folio }}</td>
 	       			<td>{{ $queja->anonimo }}</td>
@@ -101,7 +100,7 @@
 	       				<a href="{{ route('admin.desk.quejas-edit', $queja->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>
 	   			</tr>
-   			@endforeach
+   			@endforeach --}}
    		</tbody>
    </table>
 </div>
@@ -109,8 +108,9 @@
 
 @section('scripts')
     @parent
-    <script>
-        $(function() {
+    <script type="text/javascript">
+        $(document).ready(function() {
+
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
@@ -142,9 +142,9 @@
                         columns: ['th:not(:last-child):visible']
                     },
                     customize: function(doc) {
-                        doc.pageMargins = [5, 20, 5, 20];
-                        doc.styles.tableHeader.fontSize = 10;
-                        doc.defaultStyle.fontSize = 10; //<-- set fontsize to 16 instead of 10
+                        doc.pageMargins = [20, 60, 20, 30];
+                        // doc.styles.tableHeader.fontSize = 7.5;
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -175,43 +175,185 @@
                     text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Restaurar a estado anterior',
+                },
+                {
+
+                    text: '<i class="fas fa-archive" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Archivo',
+                    action: function(e, dt, node, config) {
+                        window.location.href = '/admin/desk/quejas-archivo';
+                    }
                 }
 
             ];
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar empleado',
-                url: "{{asset('admin/inicioUsuario/reportes/quejas')}}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
-            };
+            // let btnAgregar = {
+            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            //     titleAttr: 'Agregar empleado',
+            //     url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
+            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+            //     action: function(e, dt, node, config) {
+            //     let {
+            //     url
+            //     } = config;
+            //     window.location.href = url;
+            //     }
+            // };
+            //     dtButtons.push(btnAgregar)
+            if (!$.fn.dataTable.isDataTable('.tabla_quejas')) {
+                window.tabla_quejas_desk = $(".tabla_quejas").DataTable({
+                    ajax: '/admin/desk/quejas',
+                    buttons: dtButtons,
+                    columns: [
+                        // {data: 'id'},
+                        {
+                            data: 'folio'
+                        },
+                        {
+                            data: 'anonimo'
+                        },
+                        {
+                            data: 'estatus'
+                        },
+                        {
+                            data: 'fecha_creacion'
+                        },
+                        {
+                            data: 'fecha_reporte'
+                        },
+                        {
+                            data: 'fecha_de_cierre'
+                        },
+                        {
+                            data: 'id',
+                            render: function(data, type, row, meta) {
+                                let html = "";
+                                if (row.anonimo == 'no') {
+                                    html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.quejo?.avatar}" title="${row.quejo?.name}"></img>`;
+                                }
+                                return `${row.quejo ? html: 'sin asignar'}`;
+                            }
+
+                        },
+                        {
+                            data: 'id',
+                            render: function(data, type, row, meta) {
+                                let html = "";
+                                if (row.anonimo == 'no') {
+                                    html =`${row.quejo?.puesto}`;
+                                }
+                                return `${row.quejo ? html: 'sin asignar'}`;
+                            }
+                        },
+                        {
+                            data: 'id',
+                            render: function(data, type, row, meta) {
+                                let html = "";
+                                if (row.anonimo == 'no') {
+                                    html = `${row.quejo?.area}`;
+                                }
+                                return `${row.quejo ? html: 'sin asignar'}`;
+                            }
+                        },
+                        {
+                            data: 'colaborador_quejado'
+                        },
+                        {
+                            data: 'area_quejado'
+                        },
+                        {
+                            data: 'proceso_quejado'
+                        },
+                        {
+                            data: 'sede'
+                        },
+                        {
+                            data: 'ubicacion'
+                        },
+                        {
+                            data: 'externo_quejado'
+                        },
+                        {
+                            data: 'descripcion'
+                        },
+                        {
+                            data: 'id',
+                            render: function(data, type, row, meta) {
+                                let html =
+                                    `
+                			<div class="botones_tabla">
+                				<a href="/admin/desk/${data}/quejas-edit/"><i class="fas fa-edit"></i></a>`;
 
 
-            let dtOverrideGlobals = {
-                buttons: dtButtons,
-                order:[
+                                if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
+
+                                    html += `<button class="btn archivar" onclick='Archivar("/admin/desk/${data}/archivarQuejas"); return false;' style="margin-top:-10px">
+				       						<i class="fas fa-archive" ></i></a>
+				       					</button>
+				       					</div>`;
+                                }
+                                return html;
+                            }
+                        },
+                    ],
+                        order:[
                             [0,'desc']
                         ]
-            };
-            let table = $('.tabla_quejas').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
-        });
+                });
+            }
 
+            window.Archivar = function(url) {
+                Swal.fire({
+                    title: '¿Archivar incidente?',
+                    text: "",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Archivar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+
+                            type: "post",
+
+                            url: url,
+
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+
+                            dataType: "json",
+
+                            success: function(response) {
+
+                                if (response.success) {
+                                    tabla_quejas_desk.ajax.reload();
+                                    Swal.fire(
+                                        'Archivado',
+                                        '',
+                                        'success'
+                                    )
+                                }
+
+                            }
+
+                        });
+
+                    }
+                })
+            }
+
+            let botones_archivar = document.querySelectorAll('.archivar');
+            botones_archivar.forEach(boton => {
+                boton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let incidente_id = this.getAttribute('data-id');
+                    // console.log(incidente_id);
+                    let url = `/admin/desk/${incidente_id}/archivarQuejas`;
+                });
+            });
+        });
     </script>
 @endsection

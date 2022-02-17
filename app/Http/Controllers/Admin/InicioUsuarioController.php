@@ -583,7 +583,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
     public function denuncias()
@@ -639,7 +639,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
     public function mejoras()
@@ -672,7 +672,7 @@ class InicioUsuarioController extends Controller
             'formulario' => 'mejora',
         ]);
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
     public function sugerencias()
@@ -706,7 +706,7 @@ class InicioUsuarioController extends Controller
             'formulario' => 'sugerencia',
         ]);
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
     public function seguridad()
@@ -771,7 +771,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
     public function evidenciaSeguridad()
@@ -838,7 +838,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
     public function archivarCapacitacion($id)
