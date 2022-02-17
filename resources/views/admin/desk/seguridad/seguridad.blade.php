@@ -53,7 +53,7 @@
     <div class="col-6 col-md-2 ">
         <div class="tarjetas_seguridad_indicadores cdr-amarillo">
             <div class="numero"><i class="far fa-arrow-alt-circle-right"></i> {{ $nuevos_seguridad }}</div>
-            <div>Nuevos</div>
+            <div>Sin atender</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
@@ -242,7 +242,7 @@
             // };
             //     dtButtons.push(btnAgregar)
             if (!$.fn.dataTable.isDataTable('.tabla_incidentes_seguridad')) {
-                let tabla_incidentes = $(".tabla_incidentes_seguridad").DataTable({
+                window.tabla_incidentes = $(".tabla_incidentes_seguridad").DataTable({
                     ajax: '/admin/desk/seguridad',
                     buttons: dtButtons,
                     columns: [
@@ -395,25 +395,6 @@
                     let incidente_id = this.getAttribute('data-id');
                     console.log(incidente_id);
                     let url = `/admin/desk/${incidente_id}/archivar`;
-                    // $.ajax({
-
-                    //     type: "post",
-
-                    //     url: url,
-
-                    //     data: {
-                    //     	_token: '{{ csrf_token() }}'
-                    //     },
-
-                    //     dataType: "json",
-
-                    //     success: function (response) {
-
-                    //         console.log(response);
-
-                    //     }
-
-                    // });
                 });
             });
 

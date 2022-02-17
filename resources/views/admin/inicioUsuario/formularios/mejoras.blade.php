@@ -1,11 +1,17 @@
 @extends('layouts.admin')
 @section('content')
-    <style>
-        ol.breadcrumb {
-            margin-bottom: 0px;
-        }
+        <style type="text/css">
+            sup {
+                color: red;
+            }
 
-    </style>
+            ol.breadcrumb {
+                margin-bottom: 0px;
+            }
+
+        </style>
+
+
     @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('mejoras-create-perfil') }}
     @endif
@@ -97,8 +103,8 @@
 
                     <div class="mt-1 form-group col-12">
                         <label class="form-label"><i class="fas fa-text-width iconos-crear"></i>Título corto de la
-                            mejora</label>
-                        <input type="" name="titulo" class="form-control">
+                            mejora<sup>*</sup></label>
+                        <input type="" name="titulo" class="form-control" required>
                     </div>
 
                     <div class="mt-2 form-group col-12 select_tipo">
@@ -120,14 +126,14 @@
 
                     <div class="mt-4 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Describa detalladamente la
-                            mejora propuesta</label>
-                        <textarea name="descripcion" class="form-control"></textarea>
+                            mejora propuesta<sup>*</sup></label>
+                        <textarea name="descripcion" class="form-control" required></textarea>
                     </div>
 
                     <div class="mt-4 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Beneficios de la
-                            mejora</label>
-                        <textarea name="beneficios" class="form-control"></textarea>
+                            mejora<sup>*</sup></label>
+                        <textarea name="beneficios" class="form-control" required></textarea>
                     </div>
 
                     <div class="mt-4 text-right form-group col-12">

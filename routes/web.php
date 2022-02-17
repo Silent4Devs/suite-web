@@ -232,15 +232,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('desk/{seguridad}/seguridad-edit', 'DeskController@editSeguridad')->name('desk.seguridad-edit');
     Route::post('desk/{seguridad}/seguridad-update', 'DeskController@updateSeguridad')->name('desk.seguridad-update');
+    //flujo de archivado seguridad
     Route::post('desk/{incidente}/archivar', 'DeskController@archivadoSeguridad')->name('desk.seguridad-archivar');
     Route::get('desk/seguridad-archivo', 'DeskController@archivoSeguridad')->name('desk.seguridad-archivo');
+    Route::post('desk/seguridad-archivo/recuperar/{id}', 'DeskController@recuperarArchivadoSeguridad')->name('desk.seguridad-archivo.recuperar');
     Route::get('desk/seguridad', 'DeskController@indexSeguridad')->name('desk.seguridad-index');
-
+    //
     Route::get('desk/{riesgos}/riesgos-edit', 'DeskController@editRiesgos')->name('desk.riesgos-edit');
     Route::post('desk/{riesgos}/riesgos-update', 'DeskController@updateRiesgos')->name('desk.riesgos-update');
+    //flujo de archivado riesgos
+    Route::post('desk/{incidente}/archivarRiesgos', 'DeskController@archivadoRiesgo')->name('desk.riesgo-archivar');
+    Route::get('desk/riesgos-archivo', 'DeskController@archivoRiesgo')->name('desk.riesgo-archivo');
+    Route::post('desk/riesgos-archivo/recuperar/{id}', 'DeskController@recuperarArchivadoRiesgo')->name('desk.riesgo-archivo.recuperar');
+    Route::get('desk/riesgos', 'DeskController@indexRiesgo')->name('desk.riesgo-index');
+    //
 
     Route::get('desk/{quejas}/quejas-edit', 'DeskController@editQuejas')->name('desk.quejas-edit');
     Route::post('desk/{quejas}/quejas-update', 'DeskController@updateQuejas')->name('desk.quejas-update');
+    //flujo de archivado quejas
+    Route::post('desk/{incidente}/archivarQuejas', 'DeskController@archivadoQueja')->name('desk.queja-archivar');
+    Route::get('desk/quejas-archivo', 'DeskController@archivoQueja')->name('desk.queja-archivo');
+    Route::post('desk/quejas-archivo/recuperar/{id}', 'DeskController@recuperarArchivadoQueja')->name('desk.queja-archivo.recuperar');
+    Route::get('desk/quejas', 'DeskController@indexQueja')->name('desk.queja-index');
 
     Route::get('desk/{denuncias}/denuncias-edit', 'DeskController@editDenuncias')->name('desk.denuncias-edit');
     Route::post('desk/{denuncias}/denuncias-update', 'DeskController@updateDenuncias')->name('desk.denuncias-update');

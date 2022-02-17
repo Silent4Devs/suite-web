@@ -3,7 +3,11 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
-    <style>
+    <style type="text/css">
+        sup {
+            color: red;
+        }
+
         ol.breadcrumb {
             margin-bottom: 0px;
         }
@@ -60,8 +64,8 @@
                             <div class="mt-2 form-group col-6">
                                 <label class="form-label"><i class="fas fa-text-width iconos-crear"></i>Título corto
                                     del
-                                    riesgo identificado</label>
-                                <input class="form-control" name="titulo" value="{{ $riesgos->titulo }}">
+                                    riesgo identificado<sup>*</sup></label>
+                                <input class="form-control" name="titulo" value="{{ $riesgos->titulo }}" required>
                             </div>
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i
@@ -123,9 +127,9 @@
                             <div class="mt-2 form-group col-12">
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción
                                     del
-                                    riesgo identificado</label>
+                                    riesgo identificado<sup>*</sup></label>
                                 <textarea name="descripcion"
-                                    class="form-control">{{ $riesgos->descripcion }}</textarea>
+                                    class="form-control" required>{{ $riesgos->descripcion }}</textarea>
                             </div>
 
                             <div class="mt-4 text-center form-group col-12">
@@ -207,7 +211,7 @@
                                     @endforeach
                                 </select>
                                 <textarea name="areas_afectados" class="form-control" id="texto_activos"
-                                    required>{{ $riesgos->areas_afectados }}</textarea>
+                                    >{{ $riesgos->areas_afectados }}</textarea>
                             </div>
 
                             <div class="mt-2 form-group col-4 procesos_multiselect">
@@ -221,7 +225,7 @@
                                     @endforeach
                                 </select>
                                 <textarea name="procesos_afectados" class="form-control" id="texto_activos"
-                                    required>{{ $riesgos->procesos_afectados }}</textarea>
+                                    >{{ $riesgos->procesos_afectados }}</textarea>
                             </div>
 
                             <div class="mt-2 form-group col-4 activos_multiselect">
@@ -235,7 +239,7 @@
                                     @endforeach
                                 </select>
                                 <textarea name="activos_afectados" class="form-control" id="texto_activos"
-                                    required>{{ $riesgos->activos_afectados }}</textarea>
+                                    >{{ $riesgos->activos_afectados }}</textarea>
                             </div>
 
                             <div class="mt-2 form-group col-12">

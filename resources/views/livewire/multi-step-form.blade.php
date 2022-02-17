@@ -992,6 +992,7 @@
                                                 @isset($listaEvaluado['evaluadores'][0])
                                                 <td style="text-align: left !important;">
                                                     <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.0.id" style="pointer-events: none; -webkit-appearance: none;">
+                                                        <option value="" selected>Selecciona un evaluador</option>
                                                         @foreach ($empleados as $empleado)
                                                             <option value="{{$empleado->id}}">{{$empleado->name}}</option>
                                                         @endforeach
@@ -1010,6 +1011,7 @@
                                                 @isset($listaEvaluado['evaluadores'][1])
                                                 <td style="text-align: left !important;">
                                                     <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.1.id">
+                                                        <option value="" selected>Selecciona un evaluador</option>
                                                         @foreach ($empleados as $empleado)
                                                             <option value="{{$empleado->id}}">{{$empleado->name}}</option>
                                                         @endforeach
@@ -1028,6 +1030,7 @@
                                                 @isset($listaEvaluado['evaluadores'][2])
                                                 <td style="text-align: left !important;">
                                                     <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.2.id">
+                                                        <option value="" selected>Selecciona un evaluador</option>
                                                         @foreach ($empleados as $empleado)
                                                             <option value="{{$empleado->id}}">{{$empleado->name}}</option>
                                                         @endforeach
@@ -1046,6 +1049,7 @@
                                                 @isset($listaEvaluado['evaluadores'][3])
                                                 <td style="text-align: left !important;">
                                                     <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.3.id">
+                                                        <option value="" selected>Selecciona un evaluador</option>
                                                         @foreach ($empleados as $empleado)
                                                             <option value="{{$empleado->id}}">{{$empleado->name}}</option>
                                                         @endforeach

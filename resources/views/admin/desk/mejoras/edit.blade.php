@@ -6,7 +6,11 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
-    <style>
+    <style type="text/css">
+        sup {
+            color: red;
+        }
+
         ol.breadcrumb {
             margin-bottom: 0px;
         }
@@ -68,8 +72,8 @@
                             <div class="mt-2 form-group col-6">
                                 <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título
                                     corto de
-                                    la mejora</label>
-                                <input type="" name="titulo" value="{{ $mejoras->titulo }}" class="form-control">
+                                    la mejora<sup>*</sup></label>
+                                <input type="" name="titulo" value="{{ $mejoras->titulo }}" class="form-control" required>
                             </div>
 
                             <div class="mt-2 form-group col-4">
@@ -201,17 +205,17 @@
                             <div class="mt-4 form-group col-12">
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción de
                                     la
-                                    mejora</label>
+                                    mejora<sup>*</sup></label>
                                 <textarea name="descripcion"
-                                    class="form-control">{{ $mejoras->descripcion }}</textarea>
+                                    class="form-control" required>{{ $mejoras->descripcion }}</textarea>
                             </div>
 
                             <div class="mt-4 form-group col-12">
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Beneficios de
                                     la
-                                    mejora</label>
+                                    mejora<sup>*</sup></label>
                                 <textarea name="beneficios"
-                                    class="form-control">{{ $mejoras->beneficios }}</textarea>
+                                    class="form-control" required>{{ $mejoras->beneficios }}</textarea>
                             </div>
 
                             <div class="mt-4 text-right form-group col-12">
