@@ -1026,8 +1026,8 @@ class EV360EvaluacionesController extends Controller
 
     public function obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias)
     {
-
         $esSupervisor = intval($evaluador->tipo) == EvaluadoEvaluador::JEFE_INMEDIATO;
+
         return [
             'id' => $evaluador_empleado->id, 'nombre' => $evaluador_empleado->name,
             'esSupervisor' => $esSupervisor,

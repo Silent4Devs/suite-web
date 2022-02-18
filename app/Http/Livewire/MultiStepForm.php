@@ -532,7 +532,6 @@ class MultiStepForm extends Component
         // }
         foreach ($listaEvaluado['evaluadores'] as $evaluador) {
             if ($evaluador['id'] != 0) {
-
                 EvaluadoEvaluador::create([
                     'evaluado_id' => $listaEvaluado['evaluado']['id'],
                     'evaluador_id' => $evaluador['id'],
@@ -752,7 +751,7 @@ class MultiStepForm extends Component
             foreach ($evaluadores as $key => $evaluador) {
                 if ($evaluador['id'] == 0) {
                     $base = $evaluadores[$key];
-                    $reemplazo = array('id' => 1);
+                    $reemplazo = ['id' => 1];
                     $evaluadores[$key] = array_replace($base, $reemplazo);
                 }
             }
