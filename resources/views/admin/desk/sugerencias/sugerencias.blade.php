@@ -60,7 +60,7 @@
    			</tr>
    		</thead>
    		<tbody>
-   			@foreach($sugerencias as $sugerencia)
+   			{{-- @foreach($sugerencias as $sugerencia)
 	   			<tr>
 	       			<td>{{ $sugerencia->folio }}</td>
                     <td>{{ $sugerencia->estatus }}</td>
@@ -79,7 +79,7 @@
 	       				<a href="{{ route('admin.desk.sugerencias-edit', $sugerencia->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>
 	   			</tr>
-   			@endforeach
+   			@endforeach --}}
    		</tbody>
    </table>
 </div>
@@ -87,8 +87,10 @@
 
 @section('scripts')
     @parent
-    <script>
-        $(function() {
+
+       <script type="text/javascript">
+        $(document).ready(function() {
+
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
@@ -153,30 +155,38 @@
                     text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Restaurar a estado anterior',
+                },
+                {
+                    text: '<i class="fas fa-archive" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Archivo',
+                    action: function(e, dt, node, config) {
+                        window.location.href = '/admin/desk/sugerencia-archivo';
+                    }
                 }
 
             ];
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar empleado',
-                url: "{{asset('admin/inicioUsuario/reportes/sugerencias')}}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
-            };
+            // let btnAgregar = {
+            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            //     titleAttr: 'Agregar empleado',
+            //     url: "{{asset('admin/inicioUsuario/reportes/sugerencias')}}",
+            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+            //     action: function(e, dt, node, config) {
+            //     let {
+            //     url
+            //     } = config;
+            //     window.location.href = url;
+            //     }
+            // };
 
 
-            let dtOverrideGlobals = {
-                buttons: dtButtons,
-                order:[
-                            [0,'desc']
-                        ]
-            };
-            let table = $('.tabla_sugerencias').DataTable(dtOverrideGlobals);
+            // let dtOverrideGlobals = {
+            //     buttons: dtButtons,
+            //     order:[
+            //                 [0,'desc']
+            //             ]
+            // };
+            // let table = $('.tabla_sugerencias').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();
@@ -189,6 +199,134 @@
             //         .search(value, strict)
             //         .draw()
             // });
+            if (!$.fn.dataTable.isDataTable('.tabla_sugerencias')) {
+                window.tabla_sugerencias_desk = $(".tabla_sugerencias").DataTable({
+                    ajax: '/admin/desk/sugerencias',
+                    buttons: dtButtons,
+                    columns: [
+                        // {data: 'id'},
+                        {
+                            data: 'folio'
+                        },
+                        {
+                            data: 'estatus'
+                        },
+                        {
+                            data: 'fecha_reporte'
+                        },
+                        {
+                            data: 'fecha_cierre'
+                        },
+                        {
+                            data: 'id',
+                            render: function(data, type, row, meta) {
+                                let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.sugirio?.avatar}" title="${row.sugirio?.name}"></img>`;
+
+                                return html;
+                            }
+                        },
+                        {
+                            data: 'id',
+                            render: function(data, type, row, meta) {
+                                return `${row.sugirio.email}`;
+                            }
+                        },
+                        {
+                            data: 'id',
+                            render: function(data, type, row, meta) {
+                                return `${row.sugirio.telefono}`;
+                            }
+                        },
+                        {
+                            data: 'titulo'
+                        },
+                        {
+                            data: 'area_sugerencias'
+                        },
+                        {
+                            data: 'proceso_sugerencias'
+                        },
+                        {
+                            data: 'descripcion'
+                        },
+                        {
+                            data: 'id',
+                            render: function(data, type, row, meta) {
+                                let html =
+                                    `
+                			<div class="botones_tabla">
+                				<a href="/admin/desk/${data}/sugerencias-edit/"><i class="fas fa-edit"></i></a>`;
+
+
+                                if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
+
+                                    html += `<button class="btn archivar" onclick='Archivar("/admin/desk/${data}/archivarSugerencia"); return false;' style="margin-top:-10px">
+				       						<i class="fas fa-archive" ></i></a>
+				       					</button>
+				       					</div>`;
+                                }
+                                return html;
+                            }
+                        },
+                    ],
+                        order:[
+                            [0,'desc']
+                        ]
+                });
+            }
+
+            window.Archivar = function(url) {
+                Swal.fire({
+                    title: '¿Archivar incidente?',
+                    text: "",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Archivar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+
+                            type: "post",
+
+                            url: url,
+
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+
+                            dataType: "json",
+
+                            success: function(response) {
+
+                                if (response.success) {
+                                    tabla_sugerencias_desk.ajax.reload();
+                                    Swal.fire(
+                                        'Archivado',
+                                        '',
+                                        'success'
+                                    )
+                                }
+
+                            }
+
+                        });
+
+                    }
+                })
+            }
+
+            let botones_archivar = document.querySelectorAll('.archivar');
+            botones_archivar.forEach(boton => {
+                boton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let incidente_id = this.getAttribute('data-id');
+                    // console.log(incidente_id);
+                    let url = `/admin/desk/${incidente_id}/archivarSugerencia`;
+                });
+            });
         });
     </script>
 @endsection
