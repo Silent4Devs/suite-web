@@ -154,8 +154,8 @@ class InicioUsuarioController extends Controller
         $revisiones = [];
         $mis_documentos = [];
         $contador_revisiones = 0;
-        $evaluaciones = new EvaluadoEvaluador;
-        $mis_evaluaciones = new EvaluadoEvaluador;
+        $evaluaciones = collect();
+        $mis_evaluaciones = collect();
         $lista_evaluaciones = collect();
         $last_evaluacion = collect();
         $esLider = false;
