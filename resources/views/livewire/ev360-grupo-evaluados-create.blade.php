@@ -40,6 +40,7 @@
                                     <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
                                 @endforeach
                             </select>
+                            <small>Manten presionada la tecla ctrl y selecciona a los empleados que formarán el grupo</small>
                             @if ($errors->has('empleados'))
                                 <small class="text-danger">{{ $errors->first('empleados') }}</small>
                             @endif

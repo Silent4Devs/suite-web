@@ -450,6 +450,13 @@ class DeskController extends Controller
         return redirect()->route('admin.desk.index');
     }
 
+    public function indexDenuncia()
+    {
+        $denuncias = Denuncias::with('denuncio','denunciado')->where('archivado', false)->get();
+
+        return datatables()->of($denuncias)->toJson();
+    }
+
     public function editDenuncias(Request $request, $id_denuncias)
     {
         $analisis = AnalisisSeguridad::where('formulario', '=', 'denuncia')->where('denuncias_id', intval($id_denuncias))->first();
@@ -512,6 +519,43 @@ class DeskController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
+    public function archivadoDenuncia(Request $request, $incidente)
+    {
+        if ($request->ajax()) {
+            $denuncia = Denuncias::findOrfail(intval($incidente));
+            $denuncia->update([
+                'archivado' => true,
+            ]);
+
+            return response()->json(['success' => true]);
+        }
+    }
+
+    public function archivoDenuncia()
+    {
+        $denuncias = Denuncias::where('archivado', true)->get();
+
+        return view('admin.desk.denuncias.archivo', compact('denuncias'));
+    }
+
+    public function recuperarArchivadoDenuncia($id)
+    {
+        $queja = Denuncias::find($id);
+        // dd($recurso);
+        $queja->update([
+            'archivado' =>false,
+        ]);
+
+        return redirect()->route('admin.desk.index');
+    }
+
+    public function indexMejora()
+    {
+        $mejoras = Mejoras::with('mejoro')->where('archivado', false)->get();
+
+        return datatables()->of($mejoras)->toJson();
+    }
+
     public function editMejoras(Request $request, $id_mejoras)
     {
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
@@ -548,6 +592,7 @@ class DeskController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
+    
     public function updateAnalisisMejoras(Request $request, $id_mejoras)
     {
         $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_mejoras));
@@ -577,6 +622,37 @@ class DeskController extends Controller
         ]);
 
         return redirect()->route('admin.desk.mejoras-edit', $analisis_seguridad->mejoras_id)->with('success', 'Reporte actualizado');
+    }
+
+
+    public function archivadoMejora(Request $request, $incidente)
+    {
+        if ($request->ajax()) {
+            $mejora = Mejoras::findOrfail(intval($incidente));
+            $mejora->update([
+                'archivado' => true,
+            ]);
+
+            return response()->json(['success' => true]);
+        }
+    }
+
+    public function archivoMejora()
+    {
+        $mejoras = Mejoras::where('archivado', true)->get();
+
+        return view('admin.desk.mejoras.archivo', compact('mejoras'));
+    }
+
+    public function recuperarArchivadoMejora($id)
+    {
+        $mejora = Mejoras::find($id);
+        // dd($recurso);
+        $mejora->update([
+            'archivado' =>false,
+        ]);
+
+        return redirect()->route('admin.desk.index');
     }
 
     public function editSugerencias(Request $request, $id_sugerencias)
