@@ -283,6 +283,11 @@ class EV360EvaluacionesController extends Controller
         }, 'objetivos'])->find(intval($evaluado));
 
         $evaluador = Empleado::find(intval($evaluador));
+        $isJefeInmediato = EvaluadoEvaluador::select('tipo')
+            ->where('evaluado_id', $evaluado->id)
+            ->where('evaluador_id', $evaluador->id)
+            ->where('evaluacion_id', $evaluacion->id)
+            ->first()->tipo == EvaluadoEvaluador::JEFE_INMEDIATO;
         $preguntas = collect();
         $total_preguntas = 0;
         $preguntas_contestadas = 0;
@@ -325,6 +330,7 @@ class EV360EvaluacionesController extends Controller
                 ->where('evaluador_id', $evaluador->id)
                 ->where('evaluacion_id', $evaluacion->id)
                 ->get();
+            // dd($objetivos);
             $objetivos_evaluados = ObjetivoRespuesta::where('evaluado_id', $evaluado->id)
                 ->where('evaluador_id', $evaluador->id)
                 ->where('evaluacion_id', $evaluacion->id)
@@ -357,7 +363,7 @@ class EV360EvaluacionesController extends Controller
             }
         }); //Filtro para obtener solo las competencias evaluadas al momento de la creación de la evaluacion
 
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.cuestionario', compact('evaluacion', 'preguntas', 'evaluado', 'evaluador', 'total_preguntas', 'preguntas_contestadas', 'preguntas_no_contestadas', 'progreso', 'finalizo_tiempo', 'objetivos', 'progreso_objetivos', 'objetivos_evaluados', 'objetivos_no_evaluados', 'esta_evaluado', 'competencias_por_puesto_nivel_esperado'));
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.cuestionario', compact('evaluacion', 'preguntas', 'evaluado', 'evaluador', 'total_preguntas', 'preguntas_contestadas', 'preguntas_no_contestadas', 'progreso', 'finalizo_tiempo', 'objetivos', 'progreso_objetivos', 'objetivos_evaluados', 'objetivos_no_evaluados', 'esta_evaluado', 'competencias_por_puesto_nivel_esperado', 'isJefeInmediato'));
     }
 
     public function evaluacion(Evaluacion $evaluacion)
@@ -717,9 +723,11 @@ class EV360EvaluacionesController extends Controller
         $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
             $q->with('competencias');
         }])->find(intval($evaluado));
-
+        $nivelesEsperadosCompetencias = $evaluado->puestoRelacionado->competencias->map(function ($item) {
+            return $item->nivel_esperado;
+        })->toArray();
         // dd($evaluadores_objetivos);
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final', 'competencias_lista_nombre', 'calificaciones_autoevaluacion_competencias', 'calificaciones_jefe_competencias', 'calificaciones_equipo_competencias', 'calificaciones_area_competencias'));
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final', 'competencias_lista_nombre', 'calificaciones_autoevaluacion_competencias', 'calificaciones_jefe_competencias', 'calificaciones_equipo_competencias', 'calificaciones_area_competencias', 'nivelesEsperadosCompetencias'));
     }
 
     public function desglosarCalificaciones($informacion_obtenida)
@@ -793,6 +801,7 @@ class EV360EvaluacionesController extends Controller
             $filtro_jefe_inmediato = $evaluadores->filter(function ($evaluador) {
                 return intval($evaluador->tipo) == EvaluadoEvaluador::JEFE_INMEDIATO;
             });
+
             $filtro_equipo_a_cargo = $evaluadores->filter(function ($evaluador) {
                 return intval($evaluador->tipo) == EvaluadoEvaluador::EQUIPO;
             });
@@ -925,16 +934,20 @@ class EV360EvaluacionesController extends Controller
         $promedio_objetivos = 0;
         $promedio_general_objetivos = 0;
         $evaluadores_objetivos = collect();
+        $supervisorObjetivos = $evaluadores->filter(function ($item) {
+            return intval($item->tipo) == EvaluadoEvaluador::JEFE_INMEDIATO;
+        })->first();
         if ($evaluacion->include_objetivos) {
-            if ($evaluado->supervisor) {
+            if ($supervisorObjetivos) {
                 $objetivos_calificaciones = ObjetivoRespuesta::with(['objetivo' => function ($q) {
                     return $q->with('metrica');
                 }])->where('evaluacion_id', $evaluacion->id)
                     ->where('evaluado_id', $evaluado->id)
-                    ->where('evaluador_id', $evaluado->supervisor->id)
+                    ->where('evaluador_id', $supervisorObjetivos->evaluador_id)
                     ->get();
                 $evaluadores_objetivos->push([
-                    'id' => $evaluado->supervisor->id, 'nombre' => $evaluado->supervisor->name,
+                    'id' => $supervisorObjetivos->evaluador_id,
+                    'nombre' => Empleado::select('name')->find($supervisorObjetivos->evaluador_id)->name,
                     'esSupervisor' => true,
                     'esAutoevaluacion' => false,
                     'objetivos' => $objetivos_calificaciones->map(function ($objetivo) {
@@ -1013,9 +1026,11 @@ class EV360EvaluacionesController extends Controller
 
     public function obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias)
     {
+        $esSupervisor = intval($evaluador->tipo) == EvaluadoEvaluador::JEFE_INMEDIATO;
+
         return [
             'id' => $evaluador_empleado->id, 'nombre' => $evaluador_empleado->name,
-            'esSupervisor' => $evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->evaluador_id ? true : false) : false,
+            'esSupervisor' => $esSupervisor,
             'esAutoevaluacion' => $evaluado->id == $evaluador->evaluador_id ? true : false,
             'tipo' => $evaluador->tipo_formateado,
             'competencias' => $evaluaciones_competencias->map(function ($competencia) use ($evaluador, $evaluado) {

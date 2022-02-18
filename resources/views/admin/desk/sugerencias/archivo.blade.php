@@ -1,81 +1,76 @@
 @extends('layouts.admin')
 @section('content')
-    {{-- {{ Breadcrumbs::render('riesgo-archivo') }} --}}
+    {{-- {{ Breadcrumbs::render('sugerencia-archivo') }} --}}
     <div class="pl-4 pr-4 mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Archivo Quejas</strong></h3>
+            <h3 class="mb-2 text-center text-white"><strong>Archivo sugerencias</strong></h3>
         </div>
 
         <div class="datatable-fix" style="width: 100%;">
 
-            <table class="table tabla_quejas">
+            <table class="table tabla_sugerencias">
                 <thead>
                     <tr>
                         <th>Folio</th>
-                        <th style="min-width:200px;">Anónimo</th>
                         <th style="min-width:200px;">Estatus</th>
-                        <th style="min-width:200px;">Fecha de identificación</th>
-                        <th style="min-width:200px;">Fecha de recepción</th>
+                        <th style="min-width:200px;">Fecha de recepcion</th>
                         <th style="min-width:200px;">Fecha de cierre</th>
                         <th style="min-width:200px;">Nombre</th>
-                        <th style="min-width:200px;">Puesto</th>
-                        <th style="min-width:200px;">Área</th>
-                        <th style="min-width:200px;">Nombre</th>
+                        <th style="min-width: 500px;">Correo</th>
+                        <th style="min-width: 500px;">Teléfono</th>
+                        <th style="min-width:200px;">Sugerencia</th>
                         <th style="min-width:200px;">Área</th>
                         <th style="min-width:200px;">Proceso</th>
-                        <th style="min-width:200px;">Sede</th>
-                        <th style="min-width:200px;">Ubicación</th>
-                        <th style="min-width:200px;">Externos</th>
-                        <th style="min-width: 500px;">Descripción</th>
+                        <th style="min-width:200px;">Descripción</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($quejas as $queja)
-                        <tr>
-                            <td>{{ $queja->folio }}</td>
-                            <td>{{ $queja->anonimo }}</td>
-                            <td>{{ $queja->estatus }}</td>
-                            <td>{{ $queja->fecha_creacion }}</td>
-                            <td>{{ $queja->fecha_reporte }}</td>
-                            <td>{{ $queja->fecha_de_cierre }}</td>
-                            @if($queja->anonimo == 'no')
+                    @foreach ($sugerencias as $sugerencia)
+                        {{-- @if($incidentes->archivar == 'false') --}}
+                            <tr>
+                                <td>{{ $sugerencia->folio }}</td>
+                                <td>{{ $sugerencia->estatus }}</td>
+                                <td>{{ $sugerencia->fecha_reporte }}</td>
+                                <td>{{ $sugerencia->fecha_cierre }}</td>
                                 <td>
-                                    <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $queja->quejo->avatar }}" title="{{ $queja->quejo->name }}">
+                                    <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $sugerencia->sugirio->avatar }}" title="{{ $sugerencia->sugirio->name }}">
                                 </td>
-                                <td>{{ $queja->quejo->puesto }}</td>
-                                <td>{{ $queja->quejo->area->area }}</td>
-                            @else
-                                <td> -- </td>
-                                <td> -- </td>
-                                <td> -- </td>
-                            @endif
-                            <td>{{ $queja->colaborador_quejado }}</td>
-                            <td>{{ $queja->area_quejado }}</td>
-                            <td>{{ $queja->proceso_quejado }}</td>
-                            <td>{{ $queja->sede }}</td>
-                            <td>{{ $queja->ubicacion }}</td>
-                            <td>{{ $queja->externo_quejado }}</td>
-                            <td>{{ $queja->descripcion }}</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <a href="{{ route('admin.desk.quejas-edit', $queja->id) }}"><i
-                                            class="fas fa-edit"></i></a>
-                                    </div>
-                                    <div class="col-6">
-                                        <form action="{{route('admin.desk.queja-archivo.recuperar', $queja->id)}}" method="POST">
-                                            @csrf
-                                            <button class="btn" title="Recuperar" style="all: unset !important;">
-                                                <i class="fas fa-sign-in-alt"></i>
-                                            </button>
-                                        </form>
+                                <td>{{ $sugerencia->sugirio->email }}</td>
+                                <td>{{ $sugerencia->sugirio->telefono }}</td>
+                                <td>{{ $sugerencia->titulo }}</td>
+                                <td>{{ $sugerencia->area_sugerencias }}</td>
+                                <td>{{ $sugerencia->proceso_sugerencias }}</td>
+                                <td>{{ $sugerencia->descripcion }}</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <a href="{{ route('admin.desk.sugerencias-edit', $sugerencia->id) }}"><i
+                                                class="fas fa-edit"></i></a>
+                                        </div>
+                                        <div class="col-6">
+                                            <form action="{{route('admin.desk.sugerencia-archivo.recuperar', $sugerencia->id)}}" method="POST">
+                                                @csrf
+                                                <button class="btn" title="Recuperar" style="all: unset !important;">
+                                                    <i class="fas fa-sign-in-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+
                                     </div>
 
-                                </div>
+                                </td>
+                                {{-- <td class="opciones_iconos">
+                                    <form action="{{route('admin.inicio-Usuario.capacitaciones.recuperar', $incidentes->id)}}" method="POST">
+                                        @csrf
+                                        <button class="btn" title="Recuperar" style="all: unset !important;">
+                                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#345183;"></i>
+                                        </button>
+                                    </form>
+                                </td> --}}
+                            </tr>
+			   			{{-- @endif --}}
 
-                            </td>
-                        </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -154,7 +149,7 @@
                     }
 
                 ];
-                $(".tabla_quejas").DataTable({
+                $(".tabla_sugerencias").DataTable({
                     buttons: dtButtons,
                 });
             });
