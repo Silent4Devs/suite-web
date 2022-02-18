@@ -283,7 +283,7 @@
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
-                                    html += `<button class="btn archivar" onclick='Archivar("/admin/desk/${data}/archivarRiesgos"); return false;' style="margin-top:-10px">
+                                    html += `<button class="btn archivar" onclick='ArchivarRiesgo("/admin/desk/${data}/archivarRiesgos"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 				       					</div>`;
@@ -298,9 +298,9 @@
                 });
             }
 
-            window.Archivar = function(url) {
+            window.ArchivarRiesgo = function(url) {
                 Swal.fire({
-                    title: '¿Archivar incidente?',
+                    title: '¿Archivar riesgo?',
                     text: "",
                     icon: 'warning',
                     showCancelButton: true,
@@ -327,7 +327,7 @@
                                 if (response.success) {
                                     tabla_riesgos_desk.ajax.reload();
                                     Swal.fire(
-                                        'Archivado',
+                                        'Riesgo Archivado',
                                         '',
                                         'success'
                                     )

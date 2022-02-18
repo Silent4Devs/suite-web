@@ -9,9 +9,9 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class Objetivo extends Model
 {
-    use HasFactory, SoftDeletes, QueryCacheable;
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use HasFactory, SoftDeletes;
+    // public $cacheFor = 3600;
+    // protected static $flushCacheOnUpdate = true;
 
     protected $table = 'ev360_objetivos';
     protected $appends = ['imagen_ruta'];

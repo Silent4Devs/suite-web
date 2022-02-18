@@ -325,6 +325,7 @@ class EV360EvaluacionesController extends Controller
                 ->where('evaluador_id', $evaluador->id)
                 ->where('evaluacion_id', $evaluacion->id)
                 ->get();
+            // dd($objetivos);
             $objetivos_evaluados = ObjetivoRespuesta::where('evaluado_id', $evaluado->id)
                 ->where('evaluador_id', $evaluador->id)
                 ->where('evaluacion_id', $evaluacion->id)
