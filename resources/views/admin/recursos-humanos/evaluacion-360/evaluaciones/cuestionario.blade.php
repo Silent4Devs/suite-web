@@ -39,7 +39,7 @@
 
     </style>
     <div class="mt-3">
-        {{ Breadcrumbs::render('EV360-Evaluacion-Cuestionario', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}
+        {{ Breadcrumbs::render('EV360-Evaluacion-Cuestionario', ['evaluacion' => $evaluacion,'evaluado' => $evaluado,'evaluador' => $evaluador]) }}
     </div>
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Evaluación: {{ $evaluacion->nombre }}</h5>
@@ -74,10 +74,8 @@
                 @if ($evaluado->id == $evaluador->id)
                     <div class="mt-3"><strong>Nota:</strong> Estás realizando tú autoevaluación</div>
                 @endif
-                @if ($evaluado->supervisor)
-                    @if ($evaluado->supervisor->id == $evaluador->id)
-                        <div class="mt-3"><strong>Nota: </strong>Estás evaluando como jefe inmediato</div>
-                    @endif
+                @if ($isJefeInmediato)
+                    <div class="mt-3"><strong>Nota: </strong>Estás evaluando como jefe inmediato</div>
                 @endif
                 <hr>
                 @if ($esta_evaluado)
@@ -165,11 +163,9 @@
                                         </h5>
                                         <p class="m-0 my-2 text-muted">
                                             @if ($evaluado->id == $evaluador->id)
-                                                Califíquese usted en cuanto a su desempeño, en
-                                                comparación con sus compañeros:
+                                                Califíquese las competencias que se le asignaron
                                             @else
-                                                Califique a {{ $evaluado->name }} en cuanto a su desempeño, en
-                                                comparación con sus compañeros:
+                                                Califique las competencias asignadas a {{ $evaluado->name }}
                                             @endif
                                         </p>
                                         <div x-show="show" x-transition:enter.duration.500ms
@@ -185,18 +181,16 @@
                                                 <div class="row">
                                                     <div class="text-white col-4 bg-dark"><strong>Competencia</strong></div>
                                                     @if ($evaluacion->autoevaluacion)
-                                                        @if ($evaluado->supervisor)
-                                                            @if ($evaluado->supervisor->id == $evaluador->id)
-                                                                <div class="text-white col-2 bg-dark">
-                                                                    <strong>Autoevaluación</strong>
-                                                                </div>
-                                                            @endif
+                                                        @if ($isJefeInmediato)
+                                                            <div class="text-white col-2 bg-dark">
+                                                                <strong>Autoevaluación</strong>
+                                                            </div>
                                                         @endif
                                                     @endif
                                                     <div class="text-white col-2 bg-dark"><strong>Nivel esperado</strong>
                                                     </div>
                                                     <div
-                                                        class="bg-dark text-white col-{{ $evaluacion->autoevaluacion ? ($evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->id ? '4' : '6') : '6') : '6' }} justify-content-between">
+                                                        class="bg-dark text-white col-{{ $evaluacion->autoevaluacion ? ($isJefeInmediato ? '4' : '6') : '6' }} justify-content-between">
                                                         <strong>Nivel Obtenido</strong>
                                                     </div>
                                                 </div>
@@ -213,17 +207,14 @@
                                                                     class="ml-2 fas fa-eye"></i></span>
                                                         </div>
                                                         @if ($evaluacion->autoevaluacion)
-                                                            @if ($evaluado->supervisor)
-                                                                @if ($evaluado->supervisor->id == $evaluador->id)
-                                                                    <div class="col-2"
-                                                                        id="autoev{{ $idx }}">
-                                                                        <div style="background: aliceblue;"
-                                                                            class="form-control">
-                                                                            <i class="mr-1 fas fa-circle-notch fa-spin"></i>
-                                                                            Obteniendo
-                                                                        </div>
+                                                            @if ($isJefeInmediato)
+                                                                <div class="col-2" id="autoev{{ $idx }}">
+                                                                    <div style="background: aliceblue;"
+                                                                        class="form-control">
+                                                                        <i class="mr-1 fas fa-circle-notch fa-spin"></i>
+                                                                        Obteniendo
                                                                     </div>
-                                                                @endif
+                                                                </div>
                                                             @endif
                                                         @endif
                                                         <div class="col-2" id="esperado{{ $idx }}">
@@ -232,7 +223,7 @@
                                                             </div>
                                                         </div>
                                                         <div
-                                                            class="col-{{ $evaluacion->autoevaluacion ? ($evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->id ? '4' : '6') : '6') : '6' }} justify-content-between">
+                                                            class="col-{{ $evaluacion->autoevaluacion ? ($isJefeInmediato ? '4' : '6') : '6' }} justify-content-between">
                                                             <select class="form-control" name="respuesta"
                                                                 onchange="event.preventDefault();GuardarRepuesta(this,'{{ route('admin.ev360-competencias.guardarRespuestaCompetencia', $competencia->competencia->id) }}')">
                                                                 <option value="" disabled selected>
@@ -255,10 +246,8 @@
                                         </div>
                                     </section>
                                 </div>
-                                @if ($evaluado->supervisor)
-                                    @if ($evaluado->supervisor->id == $evaluador->id)
-                                        <div class="text-center col-6" id="autoevaluacionCompetencias"></div>
-                                    @endif
+                                @if ($isJefeInmediato)
+                                    <div class="text-center col-6" id="autoevaluacionCompetencias"></div>
                                 @endif
                             </div>
                             <hr>
@@ -354,26 +343,24 @@
                                                             </div>
                                                             <div class="row">
                                                                 @if ($evaluacion->autoevaluacion)
-                                                                    @if ($evaluado->supervisor)
-                                                                        @if ($evaluado->supervisor->id == $evaluador->id)
-                                                                            <div class="col-6">
-                                                                                <label class="m-0 mt-2"><i
-                                                                                        class="mr-2 far fa-dot-circle"></i>Meta
-                                                                                    alcanzada
-                                                                                    autoevaluación</label>
-                                                                                <div style="background: aliceblue;"
-                                                                                    id="autoevaluacionObjetivos{{ $idx }}"
-                                                                                    class="form-control">
-                                                                                    <i
-                                                                                        class="mr-1 fas fa-circle-notch fa-spin"></i>
-                                                                                    Cargando autoevaluacion...
-                                                                                </div>
+                                                                    @if ($isJefeInmediato)
+                                                                        <div class="col-6">
+                                                                            <label class="m-0 mt-2"><i
+                                                                                    class="mr-2 far fa-dot-circle"></i>Meta
+                                                                                alcanzada
+                                                                                autoevaluación</label>
+                                                                            <div style="background: aliceblue;"
+                                                                                id="autoevaluacionObjetivos{{ $idx }}"
+                                                                                class="form-control">
+                                                                                <i
+                                                                                    class="mr-1 fas fa-circle-notch fa-spin"></i>
+                                                                                Cargando autoevaluacion...
                                                                             </div>
-                                                                        @endif
+                                                                        </div>
                                                                     @endif
                                                                 @endif
                                                                 <div
-                                                                    class="col-{{ $evaluacion->autoevaluacion ? ($evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->id ? '6' : '12') : '12') : '12' }}">
+                                                                    class="col-{{ $evaluacion->autoevaluacion ? ($isJefeInmediato ? '6' : '12') : '12' }}">
                                                                     <label class="m-0 mt-2">
                                                                         <i class="mr-2 far fa-dot-circle"></i>
                                                                         MetaAlcanzada
@@ -415,22 +402,20 @@
                                 SECCIÓN DE FIRMAS
                             </div>
                             <h5 class="mt-3 head"><i class="mr-1 fas fa-signature"></i> Firmas</h5>
-                            @if ($evaluado->supervisor)
-                                @if ($evaluado->supervisor->id == $evaluador->id)
-                                    <p class="m-0 my-2 text-muted">
-                                        La presente evaluación debe ser revisada en con junto entre el evaluado y el jefe
-                                        inmediato,
-                                        esto para mantener la transperencia de la misma.
-                                        Sí no estás en revisando en conjunto programa una reunión para llevar a cabo la
-                                        revisión.
-                                    </p>
-                                @else
-                                    <p class="m-0 my-2 text-muted">
-                                        La presente evaluación debe ser firmada por el evaluador, esto para mantener la
-                                        transperencia de la misma.
-                                        Nos permitirá asegurarnos que fue usted el que contestó dicha evalución.
-                                    </p>
-                                @endif
+                            @if ($isJefeInmediato)
+                                <p class="m-0 my-2 text-muted">
+                                    La presente evaluación debe ser revisada en con junto entre el evaluado y el jefe
+                                    inmediato,
+                                    esto para mantener la transperencia de la misma.
+                                    Sí no estás en revisando en conjunto programa una reunión para llevar a cabo la
+                                    revisión.
+                                </p>
+                            @else
+                                <p class="m-0 my-2 text-muted">
+                                    La presente evaluación debe ser firmada por el evaluador, esto para mantener la
+                                    transperencia de la misma.
+                                    Nos permitirá asegurarnos que fue usted el que contestó dicha evalución.
+                                </p>
                             @endif
                             <div class="row">
                                 <div class="text-center col-6">
@@ -462,61 +447,55 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($evaluado->supervisor)
-                                    @if ($evaluado->supervisor->id == $evaluador->id)
-                                        <div class="text-center col-6">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h6>Firma del colaborador evaluado</h6>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <canvas id="sig-evaluado-canvas">
-                                                        Navegador no compatible
-                                                    </canvas>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    {{-- <button class="btn btn-sm btn-success"
-                                                        id="sig-evaluado-submitBtn">Confirmar</button> --}}
-                                                    <button class="btn btn-sm" id="sig-evaluado-clearBtn"><i
-                                                            class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <textarea id="sig-evaluado-dataUrl" readonly
-                                                        class="form-control d-none"
-                                                        rows="5">Data URL de tu firma será almacenada aquí</textarea>
-                                                </div>
+                                @if ($isJefeInmediato)
+                                    <div class="text-center col-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h6>Firma del colaborador evaluado</h6>
                                             </div>
                                         </div>
-                                    @endif
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <canvas id="sig-evaluado-canvas">
+                                                    Navegador no compatible
+                                                </canvas>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                {{-- <button class="btn btn-sm btn-success"
+                                                        id="sig-evaluado-submitBtn">Confirmar</button> --}}
+                                                <button class="btn btn-sm" id="sig-evaluado-clearBtn"><i
+                                                        class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <textarea id="sig-evaluado-dataUrl" readonly class="form-control d-none"
+                                                    rows="5">Data URL de tu firma será almacenada aquí</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endif
                             </div>
                             <p class="m-0 text-muted">
-                                @if ($evaluado->supervisor)
-                                    @if ($evaluado->supervisor->id == $evaluador->id)
-                                        <strong>Políticas de la evaluación:</strong>
-                                        Al firmar la evaluación ambas partes quedan conformes en que lo establecido en la
-                                        evaluación es un reflejo del desempeño del colaborador evaluado.
-                                    @else
-                                        <strong>Políticas de la evaluación:</strong>
-                                        Al firmar la evaluación quedas conforme en que lo establecido en la
-                                        evaluación es un reflejo del desempeño del colaborador evaluado.
-                                    @endif
+                                @if ($isJefeInmediato)
+                                    <strong>Políticas de la evaluación:</strong>
+                                    Al firmar la evaluación ambas partes quedan conformes en que lo establecido en la
+                                    evaluación es un reflejo del desempeño del colaborador evaluado.
+                                @else
+                                    <strong>Políticas de la evaluación:</strong>
+                                    Al firmar la evaluación quedas conforme en que lo establecido en la
+                                    evaluación es un reflejo del desempeño del colaborador evaluado.
                                 @endif
-
                             </p>
                         </div>
 
                         <div class="mt-3 d-flex justify-content-end">
                             <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn_cancelar">Salir</a>
                             <button
-                                onclick="event.preventDefault();FinalizarEvaluacion('{{ route('admin.ev360-evaluaciones.finalizarEvaluacion', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}')"
+                                onclick="event.preventDefault();FinalizarEvaluacion('{{ route('admin.ev360-evaluaciones.finalizarEvaluacion', ['evaluacion' => $evaluacion,'evaluado' => $evaluado,'evaluador' => $evaluador]) }}')"
                                 class="btn btn-danger">Finalizar</button>
                         </div>
                     @endif
@@ -576,7 +555,7 @@
                 "hideMethod": "fadeOut"
             };
             let cargarAutoevaluacion = false;
-            cargarAutoevaluacion = @json($evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->id ? true : false) : false);
+            cargarAutoevaluacion = @json($isJefeInmediato);
 
             if (cargarAutoevaluacion) {
                 let evaluado = @json($evaluado->id);
@@ -777,7 +756,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         let cargarAutoevaluacion = false;
-                        cargarAutoevaluacion = @json($evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->id ? true : false) : false);
+                        cargarAutoevaluacion = @json($isJefeInmediato);
 
                         let data = {}
                         let isEmptyObjetivosSigned = false;
@@ -861,7 +840,7 @@
                         response.forEach((competencia, index) => {
                             let evaluacionContenedor = document.getElementById(`autoev${index}`);
                             evaluacionContenedor.innerHTML = competencia
-                                .calificacion == 0 ? 'No ha evaluado' : competencia.calificacion;
+                                .calificacion == 0 ? 'No se ha evaluado' : competencia.calificacion;
                             evaluacionContenedor.classList.add('form-control');
                             evaluacionContenedor.style.background = 'aliceblue';
                         });
@@ -897,7 +876,7 @@
                             let contenedorMetaAlcanzada = document.getElementById(
                                 `autoevaluacionObjetivos${index}`);
                             contenedorMetaAlcanzada.innerHTML = objetivo.calificacion == 0 ?
-                                'Sin evaluar' : objetivo.calificacion;
+                                'No se ha evaluado' : objetivo.calificacion;
                         });
 
                     }
@@ -908,7 +887,7 @@
         //Render Canvas para Firmas
         (function() {
             let cargarAutoevaluacion = false;
-            cargarAutoevaluacion = @json($evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->id ? true : false) : false);
+            cargarAutoevaluacion = @json($isJefeInmediato);
 
             window.requestAnimFrame = (function(callback) {
                 return window.requestAnimationFrame ||
