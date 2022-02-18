@@ -9,10 +9,10 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class ObjetivoRespuesta extends Model
 {
     use HasFactory;
-    use QueryCacheable;
+    // use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    // public $cacheFor = 3600;
+    // protected static $flushCacheOnUpdate = true;
     protected $table = 'ev360_objetivos_calificaciones';
     protected $guarded = ['id'];
 

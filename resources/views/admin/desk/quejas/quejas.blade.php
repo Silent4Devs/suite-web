@@ -44,11 +44,11 @@
 
    <table class="table tabla_quejas">
    		<thead>
-            {{-- <tr style="border: none !important"> --}}
-                {{-- <th colspan="6">folio</th> --}}
-                {{-- <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reporto</th>
-                <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reportado</th> --}}
-            {{-- </tr> --}}
+            <tr style="border: none !important">
+                <th colspan="6">folio</th>
+                <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reporto</th>
+                <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reportado</th>
+            </tr>
             <tr>
        			<th>Folio</th>
                 <th style="min-width:200px;">Anónimo</th>
@@ -287,7 +287,7 @@
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
-                                    html += `<button class="btn archivar" onclick='Archivar("/admin/desk/${data}/archivarQuejas"); return false;' style="margin-top:-10px">
+                                    html += `<button class="btn archivar" onclick='ArchivarQueja("/admin/desk/${data}/archivarQuejas"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 				       					</div>`;
@@ -302,9 +302,9 @@
                 });
             }
 
-            window.Archivar = function(url) {
+            window.ArchivarQueja = function(url) {
                 Swal.fire({
-                    title: '¿Archivar incidente?',
+                    title: '¿Archivar queja?',
                     text: "",
                     icon: 'warning',
                     showCancelButton: true,
@@ -331,7 +331,7 @@
                                 if (response.success) {
                                     tabla_quejas_desk.ajax.reload();
                                     Swal.fire(
-                                        'Archivado',
+                                        'Queja Archivada',
                                         '',
                                         'success'
                                     )
