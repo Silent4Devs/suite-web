@@ -14,6 +14,8 @@ class Sugerencias extends Model
 
     public $cacheFor = 3600;
     protected static $flushCacheOnUpdate = true;
+    const ARCHIVADO = '1';
+    const NO_ARCHIVADO = '0';
     protected $table = 'sugerencias';
 
     protected $guarded = [

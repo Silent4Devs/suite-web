@@ -174,7 +174,6 @@ class MultiStepForm extends Component
         }
         // if ($this->currentStep == 4) {
         //     dd($this->listaEvaluados);
-
         // }
 
         if ($this->currentStep > $this->totalSteps) {
