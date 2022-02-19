@@ -68,7 +68,9 @@ class MultiStepForm extends Component
 
     //STEP 4
     public $periodos = [];
-
+    public $hayEmpleadosSinCompetencias = false;
+    public $totalEmpleadosSinCompetencias = 0;
+    public $listaEmpleadosSinCompetencias;
     public $totalSteps = 5;
     public $currentStep = 1;
 
@@ -172,9 +174,18 @@ class MultiStepForm extends Component
             $this->listaEvaluados = $this->obtenerEvaluadosConEvaluadores($this->evaluados_objetivo);
             // dd($this->evaluados_objetivo);
         }
-        // if ($this->currentStep == 4) {
-        //     dd($this->listaEvaluados);
-        // }
+        if ($this->currentStep == 4) {
+            $this->listaEmpleadosSinCompetencias = collect();
+            $this->totalEmpleadosSinCompetencias = 0;
+            $this->hayEmpleadosSinCompetencias = false;
+            foreach ($this->listaEvaluados as $evaluadoL) {
+                if ($evaluadoL['evaluado']['competencias_asignadas'] == 0) {
+                    $this->hayEmpleadosSinCompetencias = true;
+                    $this->totalEmpleadosSinCompetencias++;
+                    $this->listaEmpleadosSinCompetencias->push($evaluadoL['evaluado']['name']);
+                }
+            }
+        }
 
         if ($this->currentStep > $this->totalSteps) {
             $this->currentStep = $this->totalSteps;
@@ -598,16 +609,18 @@ class MultiStepForm extends Component
                         $q->with(['competencia']);
                     }]);
                 }])->find($empleado->id);
-                $competencias = $competencias_por_puesto->puestoRelacionado->competencias;
-                foreach ($competencias as $competencia) {
-                    EvaluacionRepuesta::create([
-                        'calificacion' => 0,
-                        'descripcion' => null,
-                        'competencia_id' => $competencia->competencia_id,
-                        'evaluado_id' => $empleado->id,
-                        'evaluador_id' => $evaluador->evaluador_id,
-                        'evaluacion_id' => $evaluacion->id,
-                    ]);
+                $competencias = $competencias_por_puesto->puestoRelacionado->count() > 0 ? $competencias_por_puesto->puestoRelacionado->competencias : null;
+                if (!is_null($competencias)) {
+                    foreach ($competencias as $competencia) {
+                        EvaluacionRepuesta::create([
+                            'calificacion' => 0,
+                            'descripcion' => null,
+                            'competencia_id' => $competencia->competencia_id,
+                            'evaluado_id' => $empleado->id,
+                            'evaluador_id' => $evaluador->evaluador_id,
+                            'evaluacion_id' => $evaluacion->id,
+                        ]);
+                    }
                 }
             }
         }
@@ -615,16 +628,18 @@ class MultiStepForm extends Component
         $evaluadores_objetivos = $evaluadores_objetivos->unique('id')->toArray();
         if ($includeObjetivos) {
             $objetivos = $empleado->objetivos;
-            foreach ($evaluadores_objetivos as $evaluador) {
-                foreach ($objetivos as $objetivo) {
-                    ObjetivoRespuesta::create([
-                        'meta_alcanzada' => 'Sin evaluar',
-                        'calificacion' => 0,
-                        'objetivo_id' => $objetivo->objetivo_id,
-                        'evaluado_id' => $empleado->id,
-                        'evaluador_id' => $evaluador['id'],
-                        'evaluacion_id' => $evaluacion->id,
-                    ]);
+            if (!is_null($objetivos)) {
+                foreach ($evaluadores_objetivos as $evaluador) {
+                    foreach ($objetivos as $objetivo) {
+                        ObjetivoRespuesta::create([
+                            'meta_alcanzada' => 'Sin evaluar',
+                            'calificacion' => 0,
+                            'objetivo_id' => $objetivo->objetivo_id,
+                            'evaluado_id' => $empleado->id,
+                            'evaluador_id' => $evaluador['id'],
+                            'evaluacion_id' => $evaluacion->id,
+                        ]);
+                    }
                 }
             }
         }
