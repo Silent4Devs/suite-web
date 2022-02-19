@@ -244,23 +244,7 @@
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.capital-humano.index') }}"
                     class="c-sidebar-nav-link
-                    {{request()->is('admin/empleados') ||
-                    request()->is('admin/recursos-humanos/evaluacion-360/competencias')||
-                    request()->is('admin/lista-documentos')||
-                    request()->is('admin/perfiles')||
-                    request()->is('admin/recursos-humanos/tipos-contratos-empleados')||
-                    request()->is('admin/lista-documentos')||
-                    request()->is('admin/recursos-humanos/entidades-crediticias') ||
-                    request()->is('admin/recursos-humanos/evaluacion-360/objetivos') ||
-                    request()->is('admin/expedientes-profesionales') ||
-                    request()->is('admin/categoria-capacitacion') ||
-                    request()->is('admin/recursos-humanos/calendario-oficial') ||
-                    request()->is('admin/recursos') ||
-                    request()->is('admin/recursos-humanos/evaluacion-360/evaluaciones/create') ||
-                    request()->is('admin/recursos-humanos/evaluacion-360/evaluaciones') ||
-                    request()->is('admin/tabla-calendario/index') ||
-                    request()->is('admin/capital-humano#') ||
-                    request()->is('admin/capital-humano/*') ? 'active' : '' }}">
+                    {{                     request()->is('admin/empleados') || request()->is('admin/recursos-humanos/evaluacion-360/competencias') || request()->is('admin/lista-documentos') || request()->is('admin/perfiles') || request()->is('admin/recursos-humanos/tipos-contratos-empleados') || request()->is('admin/lista-documentos') || request()->is('admin/recursos-humanos/entidades-crediticias') || request()->is('admin/recursos-humanos/evaluacion-360/objetivos') || request()->is('admin/expedientes-profesionales') || request()->is('admin/categoria-capacitacion') || request()->is('admin/recursos-humanos/calendario-oficial') || request()->is('admin/recursos') || request()->is('admin/recursos-humanos/evaluacion-360/evaluaciones/create') || request()->is('admin/recursos-humanos/evaluacion-360/evaluaciones') || request()->is('admin/tabla-calendario/index') || request()->is('admin/capital-humano#') || request()->is('admin/capital-humano/*') ? 'active' : '' }}">
                     <i class="bi bi-people iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Capital Humano </font>
                 </a>
@@ -278,8 +262,8 @@
                 @endcan --}}
                     <li class="c-sidebar-nav-item">
                         <a href="{{ route('admin.capital-humano.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') || request()->is('admin/capital-humano/*')||  request()->is('admin/empleados/*') ||request()->is('admin/expedientes-profesionales/*')? 'active': '' }}">
-                            {{--  ? 'active' : '' --}}
+                            class="c-sidebar-nav-link {{ request()->is('admin/capital-humano') ||request()->is('admin/capital-humano/*') ||request()->is('admin/empleados/*') ||request()->is('admin/expedientes-profesionales/*')? 'active': '' }}">
+                            {{-- ? 'active' : '' --}}
                             <i class="fa-fw fas fa-file iconos_menu letra_blanca"></i>
                             <font class="letra_blanca" style="margin-left:10px;"> Capital Humano Menú </font>
                         </a>
@@ -487,7 +471,8 @@
 
         {{-- @endcan --}}
         @can('configuracion_datos_access')
-            @can('carga_masiva_de_datos_access') {{-- este acceso no corresponde --}}
+            @can('carga_masiva_de_datos_access')
+                {{-- este acceso no corresponde --}}
                 <li class="c-sidebar-nav-item">
                     <a href="{{ route('cargadocs') }}"
                         class="c-sidebar-nav-link {{ request()->is('CargaDocs') || request()->is('CargaDocs/*') ? 'active' : '' }}">
@@ -709,11 +694,10 @@
                     @can('configuracion_empleados_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.empleados.index') }}"
-                                >
-                                <i class="bi bi-person iconos_menu letra_blanca">
+                                class="c-sidebar-nav-link {{ request()->is('admin/empleados') ||request()->is('admin/empleados/*') ||request()->is('admin/empleados/create')? 'active': '' }}">
+                                <i class="bi bi-person iconos_menu letra_blanca"></i>
 
-                                </i>
-                                <font class="letra_blanca"> Empleados </font>
+                                <font class="letra_blanca">Empleados</font>
                             </a>
                         </li>
                     @endcan
@@ -765,7 +749,6 @@
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('configurar_vista_mis_datos_access')
-
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.panel-inicio.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/panel-inicio') || request()->is('admin/panel-inicio/*') ? 'active' : '' }}">
@@ -933,7 +916,6 @@
         @endcan
         {{-- @can('') este acceso no corresponde --}}
         @can('configurar_soporte_access')
-
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.configurar-soporte.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/configurar-soporte') || request()->is('admin/configurar-soporte/*') ? 'active' : '' }}">
