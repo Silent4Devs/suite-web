@@ -81,7 +81,7 @@ class Empleado extends Model
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
         'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo', 'saludo_completo',
-        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas'
+        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas',
     ];
 
     //, 'jefe_inmediato', 'empleados_misma_area'
@@ -277,10 +277,12 @@ class Empleado extends Model
     {
         return $this->belongsTo('App\Models\Puesto', 'puesto_id', 'id');
     }
+
     public function getCompetenciasAsignadasAttribute()
     {
         return $this->puestoRelacionado->competencias->count();
     }
+
     public function empleados()
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id'); //Sin Eager Loading
