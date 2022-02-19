@@ -1166,6 +1166,17 @@
                                 <p class="m-0 text-muted"><i class="fas fa-info-circle"></i>
                                     Define los periodos que requieras para la evaluación
                                 </p> --}}
+                                @if ($hayEmpleadosSinCompetencias)
+                                    <div class="alert alert-danger" role="alert">
+                                        Existen {{ $totalEmpleadosSinCompetencias }} empleados que no contienen
+                                        competencias
+                                        <ul>
+                                            @foreach ($listaEmpleadosSinCompetencias as $eSinCompetencias)
+                                                <li>{{ $eSinCompetencias }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="px-1 py-2 mb-3 rounded shadow-sm"
                                     style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                     <div class="row w-100">
