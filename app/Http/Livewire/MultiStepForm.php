@@ -458,7 +458,6 @@ class MultiStepForm extends Component
         foreach ($this->listaEvaluados as $listaEvaluado) {
             $this->relacionarEvaluadoConEvaluadores($evaluacion, $listaEvaluado);
         }
-
         // if ($this->includeCompetencias) {
         //     $competenciasSeleccionadas = $this->selected;
         //     foreach ($competenciasSeleccionadas as $competencia) {
@@ -542,7 +541,7 @@ class MultiStepForm extends Component
         //     ]);
         // }
         foreach ($listaEvaluado['evaluadores'] as $evaluador) {
-            if ($evaluador['id'] != 0) {
+            if ($evaluador['id'] != 0 && $evaluador['id'] != "" && $evaluador['id'] != null) {
                 EvaluadoEvaluador::create([
                     'evaluado_id' => $listaEvaluado['evaluado']['id'],
                     'evaluador_id' => $evaluador['id'],

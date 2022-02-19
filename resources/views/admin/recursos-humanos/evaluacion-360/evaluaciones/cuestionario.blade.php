@@ -171,8 +171,8 @@
                                         <div x-show="show" x-transition:enter.duration.500ms
                                             x-transition:leave.duration.400ms>
                                             @if ($preguntas->count() == 0)
-                                                <h6 class="text-center" style="color: #345183;">Sin competencias
-                                                    asignadas</h6>
+                                                <h6 class="text-center" style="color: #345183;">Sin Competencias
+                                                    Asignadas</h6>
                                             @else
                                                 <div class="mt-2 progress">
                                                     <div class="progress-bar bg-success" id="progresoEvaluacion"
@@ -263,41 +263,42 @@
                             <hr>
                         @endif
                         @if ($evaluacion->include_objetivos)
-                            @if (count($objetivos))
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="text-center form-group"
-                                            style="background-color:#345183; border-radius: 100px; color: white;">
-                                            SECCIÓN DE OBJETIVOS
-                                        </div>
-                                        <section class="mt-1" x-data="{show:true}">
-                                            <h5 class="head">
-                                                <i class="mr-1 fas fa-bullseye"></i> Objetivos
-                                                <span style="float: right; cursor:pointer; margin-top: 0px;"
-                                                    @click="show=!show"><i class="fas"
-                                                        :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
-                                                <span style="font-size: 12px">
-                                                    <span class="badge badge-primary">{{ count($objetivos) }}
-                                                        objetivo{{ count($objetivos) > 1 ? 's' : '' }}
-                                                        en total</span>
-                                                    <span class="badge badge-success">Evaluados: <span
-                                                            id="objetivosEvaluados">{{ $objetivos_evaluados }}</span></span>
-                                                    <span class="badge badge-dark">No Evaluados: <span
-                                                            id="objetivosNoEvaluados">{{ $objetivos_no_evaluados }}</span></span>
-                                                    <span><i class="ml-2 mr-1 fas fa-times-circle text-danger"></i>No
-                                                        evaluado</span>
-                                                    <span><i class="ml-2 mr-1 fas fa-check-circle text-success"></i>
-                                                        Evaluado</span>
-                                                </span>
-                                            </h5>
-                                            <p class="m-0 my-2 text-muted">
-                                                @if ($evaluado->id == $evaluador->id)
-                                                    Califíquese usted en cuanto al avance de sus objetivos.
-                                                @else
-                                                    Califique a {{ $evaluado->name }} en cuanto al avance de sus
-                                                    objetivos.
-                                                @endif
-                                            </p>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="text-center form-group"
+                                        style="background-color:#345183; border-radius: 100px; color: white;">
+                                        SECCIÓN DE OBJETIVOS
+                                    </div>
+                                    <section class="mt-1" x-data="{show:true}">
+                                        <h5 class="head">
+                                            <i class="mr-1 fas fa-bullseye"></i> Objetivos
+                                            <span style="float: right; cursor:pointer; margin-top: 0px;"
+                                                @click="show=!show"><i class="fas"
+                                                    :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+                                            <span style="font-size: 12px">
+                                                <span class="badge badge-primary">{{ count($objetivos) }}
+                                                    objetivo{{ count($objetivos) > 1 ? 's' : '' }}
+                                                    en total</span>
+                                                <span class="badge badge-success">Evaluados: <span
+                                                        id="objetivosEvaluados">{{ $objetivos_evaluados }}</span></span>
+                                                <span class="badge badge-dark">No Evaluados: <span
+                                                        id="objetivosNoEvaluados">{{ $objetivos_no_evaluados }}</span></span>
+                                                <span><i class="ml-2 mr-1 fas fa-times-circle text-danger"></i>No
+                                                    evaluado</span>
+                                                <span><i class="ml-2 mr-1 fas fa-check-circle text-success"></i>
+                                                    Evaluado</span>
+                                            </span>
+                                        </h5>
+                                        <p class="m-0 my-2 text-muted">
+                                            @if ($evaluado->id == $evaluador->id)
+                                                Califíquese usted en cuanto al avance de sus objetivos.
+                                            @else
+                                                Califique a {{ $evaluado->name }} en cuanto al avance de sus
+                                                objetivos.
+                                            @endif
+                                        </p>
+                                        @if (count($objetivos))
                                             <div x-show="show" x-transition:enter.duration.500ms
                                                 x-transition:leave.duration.400ms>
                                                 <div class="mb-1 progress">
@@ -399,11 +400,14 @@
                                                     </div>
                                                 @endforeach
                                             </div>
-                                        </section>
-                                    </div>
+                                        @else
+                                            <h6 class="text-center" style="color: #345183;">Sin Objetivos
+                                                Asignados</h6>
+                                        @endif
+                                    </section>
                                 </div>
-                                <hr>
-                            @endif
+                            </div>
+                            <hr>
                         @endif
                         <!-- Sección Firmas -->
                         <div class="mt-4">
