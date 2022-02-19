@@ -280,7 +280,7 @@ class Empleado extends Model
 
     public function getCompetenciasAsignadasAttribute()
     {
-        return $this->puestoRelacionado->competencias->count();
+        return !is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
     }
 
     public function empleados()
