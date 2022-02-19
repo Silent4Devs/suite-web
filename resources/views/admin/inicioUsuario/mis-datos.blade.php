@@ -1071,7 +1071,7 @@ if (!is_null($organizacion)) {
                                         <div id="evaluacionesRealizar" class="row" x-show="show"
                                             x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                             @if ($evaluaciones->count())
-                                                <div class="text-right">
+                                                <div class="text-right col-12">
                                                     @if ($last_evaluacion)
                                                         @if ($esLider)
                                                             <div class="col-12">
