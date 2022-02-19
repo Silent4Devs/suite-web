@@ -609,7 +609,7 @@ class MultiStepForm extends Component
                         $q->with(['competencia']);
                     }]);
                 }])->find($empleado->id);
-                $competencias = $competencias_por_puesto->puestoRelacionado->count() > 0 ? $competencias_por_puesto->puestoRelacionado->competencias : null;
+                $competencias = !is_null($competencias_por_puesto->puestoRelacionado) ? $competencias_por_puesto->puestoRelacionado->competencias : null;
                 if (!is_null($competencias)) {
                     foreach ($competencias as $competencia) {
                         EvaluacionRepuesta::create([
