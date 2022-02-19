@@ -540,7 +540,6 @@ class EV360EvaluacionesController extends Controller
     public function finalizarEvaluacion(Request $request, $evaluacion, $evaluado, $evaluador)
     {
         $evaluacion = Evaluacion::find(intval($evaluacion));
-
         $existsFolderFirmasEvaluacion = Storage::exists('public/evaluaciones/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre));
         if (!$existsFolderFirmasEvaluacion) {
             Storage::makeDirectory('public/evaluaciones/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre));
@@ -652,6 +651,8 @@ class EV360EvaluacionesController extends Controller
             ->where('evaluacion_id', $evaluacion)
             ->where('evaluado', true)
             ->count();
+        $objetivos = $objetivos > 0 ? $objetivos : 1;
+        $objetivos_evaluados = $objetivos_evaluados > 0 ? $objetivos_evaluados : 1;
         if ($objetivos) {
             $progreso_objetivos = floatval(number_format((($objetivos_evaluados / $objetivos) * 100)));
         } else {
@@ -671,6 +672,8 @@ class EV360EvaluacionesController extends Controller
             ->where('evaluado_id', $evaluado)
             ->where('evaluador_id', $evaluador)
             ->where('calificacion', '>', 0)->count();
+        $preguntas_contestadas = $preguntas_contestadas > 0 ? $preguntas_contestadas : 1;
+        $total_preguntas = $total_preguntas > 0 ? $total_preguntas : 1;
         $progreso = floatval(number_format((($preguntas_contestadas / $total_preguntas) * 100)));
 
         return $progreso;
