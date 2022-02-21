@@ -36,7 +36,7 @@
                     style="width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
                     <tr>
                         <td align="center" style="padding:40px 0 30px 0;background:#358765;">
-                            <img src="https://image.flaticon.com/icons/png/512/4786/4786029.png" alt="" width="100"
+                            <img src="{{ asset('img/email.png') }}" alt="" width="100"
                                 style="height:auto;display:block; margin-bottom: 10px;" />
                             <h3 class="p-0 m-0"
                                 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif; color:white">
