@@ -36,6 +36,9 @@
             </a>
         </div>
         <div class="row" x-show="show" x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
+            <div class="col-12" style="width:100px !important;">
+                <canvas id="radarCompetencias" width="400" height="400"></canvas>
+            </div>
             <div class="col-6">
                 <canvas id="jefeGrafica" width="400" height="400"></canvas>
             </div>
@@ -44,9 +47,6 @@
             </div>
             <div class="col-6">
                 <canvas id="areaGrafica" width="400" height="400"></canvas>
-            </div>
-            <div class="col-6">
-                <canvas id="radarCompetencias" width="400" height="400"></canvas>
             </div>
             {{-- @dump($competencias_lista_nombre) --}}
         </div>
@@ -106,7 +106,7 @@
                     x-transition:leave.duration.400ms>
                     <canvas id="autoevaluacionGraficaCompare" width="400" height="400"></canvas>
                 </div>
-                <div class="col-6" x-show="show" x-transition:enter.duration.500ms
+                <div class="col-12" x-show="show" x-transition:enter.duration.500ms
                     x-transition:leave.duration.400ms>
                     <canvas id="radarCompetenciasCompare" width="400" height="400"></canvas>
                 </div>
@@ -191,7 +191,7 @@
                 borderColor: 'rgb(46, 204, 65)',
                 data: calificaciones_autoevaluacion_competencias,
             }, {
-                label: 'Equipo a cargo',
+                label: 'Subordinado',
                 backgroundColor: 'rgb(46, 106, 204)',
                 borderColor: 'rgb(46, 106, 204)',
                 data: calificaciones_equipo_competencias,
@@ -204,7 +204,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Autoevaluación vs Equipo a cargo',
+                        text: 'Autoevaluación vs Subordinado',
                     }
                 }
             }
@@ -226,7 +226,7 @@
                 borderColor: 'rgb(46, 204, 65)',
                 data: calificaciones_autoevaluacion_competencias,
             }, {
-                label: 'Misma área',
+                label: 'Par',
                 backgroundColor: 'rgb(46, 106, 204)',
                 borderColor: 'rgb(46, 106, 204)',
                 data: calificaciones_area_competencias,
@@ -239,7 +239,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Autoevaluación vs Misma área',
+                        text: 'Autoevaluación vs Par',
                     }
                 }
             }
@@ -276,7 +276,7 @@
                     pointHoverBorderColor: 'rgb(192, 57, 43)'
                 },
                 {
-                    label: 'Equipo a cargo',
+                    label: 'Subordinado',
                     data: calificaciones_equipo_competencias,
                     fill: true,
                     backgroundColor: 'rgba(46, 204, 65, 0.2)',
@@ -286,7 +286,7 @@
                     pointHoverBackgroundColor: '#fff',
                     pointHoverBorderColor: 'rgb(46, 204, 65)'
                 }, {
-                    label: 'Misma Área',
+                    label: 'Par',
                     data: calificaciones_area_competencias,
                     fill: true,
                     backgroundColor: 'rgba(230, 126, 34, 0.2)',
@@ -302,6 +302,8 @@
             type: 'radar',
             data: dataRadar,
             options: {
+                responsive: false,
+                maintainAspectRatio: true,
                 elements: {
                     line: {
                         borderWidth: 3
@@ -309,7 +311,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Autoevaluación vs Misma área',
+                            text: 'Autoevaluación vs Par',
                         }
                     }
                 }
@@ -322,6 +324,7 @@
             document.getElementById('radarCompetencias'),
             configRadar
         );
+        radarChart.resize();
     }
 
     function compararGraficas(competencias_lista_nombre, calificaciones_autoevaluacion_competencias,
@@ -412,6 +415,7 @@
             document.getElementById('radarCompetenciasCompare'),
             configRadar
         );
+        radarChartCompare.resize();
     }
 
     function destroyGraficas() {

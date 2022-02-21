@@ -12,6 +12,7 @@ use App\Models\RH\EvaluacionObjetivo;
 use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\GruposEvaluado;
+use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RH\TipoCompetencia;
 use Carbon\Carbon;
@@ -541,7 +542,7 @@ class MultiStepForm extends Component
         //     ]);
         // }
         foreach ($listaEvaluado['evaluadores'] as $evaluador) {
-            if ($evaluador['id'] != 0 && $evaluador['id'] != "" && $evaluador['id'] != null) {
+            if ($evaluador['id'] != 0 && $evaluador['id'] != '' && $evaluador['id'] != null) {
                 EvaluadoEvaluador::create([
                     'evaluado_id' => $listaEvaluado['evaluado']['id'],
                     'evaluador_id' => $evaluador['id'],
@@ -632,6 +633,7 @@ class MultiStepForm extends Component
                     foreach ($objetivos as $objetivo) {
                         ObjetivoRespuesta::create([
                             'meta_alcanzada' => 'Sin evaluar',
+                            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                             'calificacion' => 0,
                             'objetivo_id' => $objetivo->objetivo_id,
                             'evaluado_id' => $empleado->id,

@@ -16,6 +16,11 @@ class ObjetivoRespuesta extends Model
     protected $table = 'ev360_objetivos_calificaciones';
     protected $guarded = ['id'];
 
+    const INACEPTABLE = 0;
+    const MINIMO_ACEPTABLE = 1;
+    const ACEPTABLE = 2;
+    const SOBRESALIENTE = 3;
+
     public function objetivo()
     {
         return $this->belongsTo('App\Models\RH\Objetivo', 'objetivo_id', 'id');

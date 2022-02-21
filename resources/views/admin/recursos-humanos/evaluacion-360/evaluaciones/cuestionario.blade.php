@@ -51,24 +51,26 @@
                     RESUMEN GENERAL
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-{{ $evaluado->id == $evaluador->id ? '12' : '6' }}">
                         <div class="card-custom">
-                            <p><strong>Evaluado</strong></p>
+                            <p><strong>{{ $evaluado->id == $evaluador->id ? 'Autoevaluación' : 'Evaluado' }}</strong></p>
                             <img class="rounded-circle"
                                 src="{{ asset('storage/empleados/imagenes/' . $evaluado->avatar) }}">
                             <h5 class="mt-2">{{ $evaluado->name }}</h5>
                             <p class="title-custom">{{ $evaluado->puesto }}</p>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="card-custom">
-                            <p><strong>Evaluador</strong></p>
-                            <img class="rounded-circle"
-                                src="{{ asset('storage/empleados/imagenes/' . $evaluador->avatar) }}">
-                            <h5 class="mt-2">{{ $evaluador->name }}</h5>
-                            <p class="title-custom">{{ $evaluador->puesto }}</p>
+                    @if ($evaluado->id != $evaluador->id)
+                        <div class="col-6">
+                            <div class="card-custom">
+                                <p><strong>Evaluador</strong></p>
+                                <img class="rounded-circle"
+                                    src="{{ asset('storage/empleados/imagenes/' . $evaluador->avatar) }}">
+                                <h5 class="mt-2">{{ $evaluador->name }}</h5>
+                                <p class="title-custom">{{ $evaluador->puesto }}</p>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                 </div>
                 @if ($evaluado->id == $evaluador->id)
@@ -163,7 +165,7 @@
                                         </h5>
                                         <p class="m-0 my-2 text-muted">
                                             @if ($evaluado->id == $evaluador->id)
-                                                Califíquese las competencias que se le asignaron
+                                                Califique las siguientes competencias que le han sido asignadas
                                             @else
                                                 Califique las competencias asignadas a {{ $evaluado->name }}
                                             @endif
@@ -206,12 +208,13 @@
                                                     <div class="px-2 py-3 shadow-sm col-12">
                                                         <div class="row">
                                                             <div class="col-4">
-                                                                <span><strong>
-                                                                        {!! $competencia->competencia->nombre !!}</strong></span>
-                                                                <span style="cursor: pointer; font-size: 10px;"
+                                                                <span class="mr-2"
+                                                                    style="cursor: pointer; font-size: 10px;"
                                                                     title="Visualizar competencia"
                                                                     onclick="event.preventDefault();VisualizarSignificado(this,'{{ route('admin.ev360-competencias.informacionCompetencia', $competencia->competencia->id) }}')"><i
                                                                         class="ml-2 fas fa-eye"></i></span>
+                                                                <span><strong>
+                                                                        {!! $competencia->competencia->nombre !!}</strong></span>
                                                             </div>
                                                             @if ($evaluacion->autoevaluacion)
                                                                 @if ($isJefeInmediato)
@@ -292,9 +295,10 @@
                                         </h5>
                                         <p class="m-0 my-2 text-muted">
                                             @if ($evaluado->id == $evaluador->id)
-                                                Califíquese usted en cuanto al avance de sus objetivos.
+                                                Califique los siguientes objetivos que le han sido asignados.
                                             @else
-                                                Califique a {{ $evaluado->name }} en cuanto al avance de sus
+                                                Califique los siguientes objetivos asignados a {{ $evaluado->name }} en
+                                                cuanto al avance de sus
                                                 objetivos.
                                             @endif
                                         </p>
@@ -311,31 +315,32 @@
                                                 </div>
                                                 @foreach ($objetivos as $idx => $objetivo)
                                                     <div class="p-3 mt-2 border">
-                                                        <div class="pl-0 col-12">
-                                                            <p class="m-0">
-                                                                <i class="mr-2 fas fa-info-circle"></i>Información del
-                                                                objetivo a
-                                                                evaluar
-                                                            </p>
-                                                            <p style="font-size: 14px;" class="m-0">
-                                                                <strong>
-                                                                    Nombre:
-                                                                </strong>
-                                                                {{ $objetivo->objetivo->nombre }}
+                                                        <div class="px-0 col-12">
+                                                            <p
+                                                                class="m-0 bg-dark pl-2 w-100 text-white mb-2 d-flex align-items-center">
+                                                                {{-- <i class="mr-2 fas fa-info-circle"></i> --}}
                                                                 <span style="font-size:10px"><i
                                                                         id="iconObjetivo{{ $objetivo->id }}"
-                                                                        class="fas fa-{{ $objetivo->evaluado ? 'check' : 'times' }}-circle
-                                                        text-{{ $objetivo->evaluado ? 'success' : 'danger' }}
-                                                        "></i></span>
+                                                                        class="mr-1 fas fa-{{ $objetivo->evaluado ? 'check' : 'times' }}-circle text-{{ $objetivo->evaluado ? 'success' : 'danger' }}"></i>
+                                                                </span>
+                                                                Objetivo: {{ $objetivo->objetivo->nombre }}
                                                             </p>
+
                                                             <div class="row">
-                                                                <div class="col-6">
+                                                                <div class="col-12">
+                                                                    <strong>Perspectiva:</strong>
+                                                                    <img src="{{ $objetivo->objetivo->tipo->imagen_ruta }}"
+                                                                        class="d-inline-block"
+                                                                        style="clip-path: circle(9px at 50% 50%);width: 18px;">
+                                                                    {{ $objetivo->objetivo->tipo->nombre }}
+                                                                </div>
+                                                                <div class="col-12">
                                                                     <p class="m-0" style="font-size:14px">
                                                                         <strong>Descripción:</strong>
                                                                         {{ $objetivo->objetivo->descripcion_meta }}
                                                                     </p>
                                                                 </div>
-                                                                <div class="col-6">
+                                                                <div class="col-12">
                                                                     <p style="font-size:14px" class="m-0">
                                                                         <strong>KPI:</strong>
                                                                         {{ $objetivo->objetivo->KPI }}
@@ -358,8 +363,9 @@
                                                                         <div class="col-6">
                                                                             <label class="m-0 mt-2"><i
                                                                                     class="mr-2 far fa-dot-circle"></i>Meta
-                                                                                alcanzada
-                                                                                autoevaluación</label>
+                                                                                Alcanzada
+                                                                                ({{ $objetivo->objetivo->metrica->definicion }})
+                                                                                - Autoevaluación</label>
                                                                             <div style="background: aliceblue;"
                                                                                 id="autoevaluacionObjetivos{{ $idx }}"
                                                                                 class="form-control">
@@ -374,7 +380,7 @@
                                                                     class="col-{{ $evaluacion->autoevaluacion ? ($isJefeInmediato ? '6' : '12') : '12' }}">
                                                                     <label class="m-0 mt-2">
                                                                         <i class="mr-2 far fa-dot-circle"></i>
-                                                                        MetaAlcanzada
+                                                                        Meta Alcanzada
                                                                         ({{ $objetivo->objetivo->metrica->definicion }})
                                                                         <span class="text-danger">*</span>
                                                                     </label>
@@ -384,12 +390,55 @@
                                                                         class="form-control" type="number"
                                                                         placeholder="Ingresa la meta alcanzada">
                                                                 </div>
+                                                                <div class="col-12">
+                                                                    <label class="m-0 mt-2">
+                                                                        <i class="mr-2 far fa-dot-circle"></i>
+                                                                        Calificación
+                                                                        <span class="text-danger">*</span>
+                                                                    </label>
+                                                                    <select name="" id="calificacionPersepcion"
+                                                                        class="form-control"
+                                                                        onchange="event.preventDefault();saveCalificacionPersepcion(this,'{{ $objetivo->objetivo->id }}','{{ $evaluado->id }}','{{ $evaluador->id }}','{{ $evaluacion->id }}','{{ route('admin.ev360-evaluaciones.objetivos.saveCalificacionPersepcion') }}','{{ $objetivo->id }}')">
+                                                                        <option value="" selected disabled>-- Selecciona una
+                                                                            calificación --</option>
+                                                                        <option
+                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::INACEPTABLE }}">
+                                                                            Inaceptable
+                                                                        </option>
+                                                                        <option
+                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::MINIMO_ACEPTABLE }}">
+                                                                            Mínimo Aceptable
+                                                                        </option>
+                                                                        <option
+                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::ACEPTABLE }}">
+                                                                            Aceptable
+                                                                        </option>
+                                                                        <option
+                                                                            value="{{ App\Models\RH\ObjetivoRespuesta::SOBRESALIENTE }}">
+                                                                            Sobresaliente
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="px-0 mt-2 col-12">
+                                                            @if ($evaluacion->autoevaluacion)
+                                                                @if ($isJefeInmediato)
+                                                                    <label class="m-0 mt-2"><i
+                                                                            class="mr-2 far fa-dot-circle"></i>Comentarios
+                                                                        Autoevaluación</label>
+                                                                    <textarea class="m-0 form-control" readonly rows="0"
+                                                                        id="autoevaluacionComentariosObjetivos{{ $idx }}"
+                                                                        type="text">Cargando autoevaluacion...</textarea>
+                                                                @endif
+                                                            @endif
                                                             <label class="m-0">
                                                                 <i class="mr-2 fas fa-comments"></i>
-                                                                Comentarios
+                                                                @if ($evaluado->id == $evaluador->id)
+                                                                    Comentarios del Autoevaluado
+                                                                @else
+                                                                    Comentarios del Evaluador
+                                                                @endif
                                                             </label>
                                                             <textarea
                                                                 onchange="event.preventDefault();saveMetaAlcanzadaDescripcion(this,'{{ $objetivo->objetivo->id }}','{{ $evaluado->id }}','{{ $evaluador->id }}','{{ $evaluacion->id }}','{{ route('admin.ev360-evaluaciones.objetivos.storeMetaAlcanzadaDescripcion') }}')"
@@ -418,24 +467,24 @@
                             <h5 class="mt-3 head"><i class="mr-1 fas fa-signature"></i> Firmas</h5>
                             @if ($isJefeInmediato)
                                 <p class="m-0 my-2 text-muted">
-                                    La presente evaluación debe ser revisada en con junto entre el evaluado y el jefe
-                                    inmediato,
-                                    esto para mantener la transperencia de la misma.
+                                    La presente evaluación debe ser revisada en conjunto entre el evaluado y el jefe
+                                    inmediato para mantener la transparencia de la misma.
                                     Sí no estás en revisando en conjunto programa una reunión para llevar a cabo la
                                     revisión.
                                 </p>
                             @else
                                 <p class="m-0 my-2 text-muted">
-                                    La presente evaluación debe ser firmada por el evaluador, esto para mantener la
-                                    transperencia de la misma.
-                                    Nos permitirá asegurarnos que fue usted el que contestó dicha evalución.
+                                    La presente evaluación debe ser firmada por el evaluador para mantener la
+                                    transparencia de la misma.
                                 </p>
                             @endif
                             <div class="row">
-                                <div class="text-center col-6">
+                                <div class="text-center col-{{ $isJefeInmediato ? '6' : '12' }}">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h6>Firma del evaluador</h6>
+                                            <h6>Firma del
+                                                {{ $evaluado->id == $evaluador->id ? 'Autoevaluado' : 'Evaluador' }}
+                                            </h6>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -465,7 +514,7 @@
                                     <div class="text-center col-6">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h6>Firma del colaborador evaluado</h6>
+                                                <h6>Firma del Colaborador Evaluado</h6>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -495,11 +544,11 @@
                             </div>
                             <p class="m-0 text-muted">
                                 @if ($isJefeInmediato)
-                                    <strong>Políticas de la evaluación:</strong>
+                                    <strong>Política de la evaluación:</strong>
                                     Al firmar la evaluación ambas partes quedan conformes en que lo establecido en la
                                     evaluación es un reflejo del desempeño del colaborador evaluado.
                                 @else
-                                    <strong>Políticas de la evaluación:</strong>
+                                    <strong>Política de la evaluación:</strong>
                                     Al firmar la evaluación quedas conforme en que lo establecido en la
                                     evaluación es un reflejo del desempeño del colaborador evaluado.
                                 @endif
@@ -579,6 +628,7 @@
                 if (contains_autoevaluacion) {
                     mostrarAutoevaluacion(evaluado, evaluador, evaluacion);
                     mostrarAutoevaluacionObjetivos(evaluado, evaluador, evaluacion);
+                    mostrarAutoevaluacionComentariosObjetivos(evaluado, evaluador, evaluacion);
                 }
             }
 
@@ -672,6 +722,40 @@
             window.saveMetaAlcanzadaDescripcion = function(input, objetivo, evaluado, evaluador, evaluacion, url) {
                 let data = {
                     meta_alcanzada: input.value,
+                    objetivo,
+                    evaluado,
+                    evaluador,
+                    evaluacion,
+                }
+
+                $.ajax({
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                    },
+                    type: "POST",
+                    url: url,
+                    data: data,
+                    dataType: "JSON",
+                    beforeSend: function() {
+                        toastr.info('Guardando información, espere un momento...');
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success('Guardado con éxito');
+                        }
+                        if (response.error) {
+                            toastr.error('Algo salió mal, intente de nuevo...');
+                        }
+                    },
+                    error: function(request, status, error) {
+                        toastr.error(
+                            'Ocurrió un error: ' + error);
+                    }
+                });
+            }
+            window.saveCalificacionPersepcion = function(input, objetivo, evaluado, evaluador, evaluacion, url) {
+                let data = {
+                    calificacion_persepcion: input.value,
                     objetivo,
                     evaluado,
                     evaluador,
@@ -891,6 +975,39 @@
                                 `autoevaluacionObjetivos${index}`);
                             contenedorMetaAlcanzada.innerHTML = objetivo.calificacion == 0 ?
                                 'No se ha evaluado' : objetivo.calificacion;
+                        });
+
+                    }
+                }
+            });
+        }
+
+        function mostrarAutoevaluacionComentariosObjetivos(evaluado, evaluador, evaluacion) {
+            let data = {
+                evaluado,
+                evaluador,
+                evaluacion
+            }
+            let url = "{{ route('admin.ev360-evaluaciones.autoevaluacion.objetivos.get') }}";
+
+            $.ajax({
+                headers: {
+                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                },
+                type: "POST",
+                url: url,
+                data: data,
+                dataType: "JSON",
+                beforeSend: function() {
+
+                },
+                success: function(response) {
+                    if (response.length > 0) {
+                        response.forEach((objetivo, index) => {
+                            let contenedorComentariosObjetivosAutoevaluacion = document.getElementById(
+                                `autoevaluacionComentariosObjetivos${index}`);
+                            contenedorComentariosObjetivosAutoevaluacion.innerHTML = objetivo
+                                .meta_alcanzada
                         });
 
                     }
