@@ -335,7 +335,7 @@ class EV360EvaluacionesController extends Controller
             }])->where('evaluado_id', $evaluado->id)
                 ->where('evaluador_id', $evaluador->id)
                 ->where('evaluacion_id', $evaluacion->id)
-                ->get();
+                ->get()->sortBy('objetivo.tipo_id');
             // dd($objetivos);
             $objetivos_evaluados = ObjetivoRespuesta::where('evaluado_id', $evaluado->id)
                 ->where('evaluador_id', $evaluador->id)
