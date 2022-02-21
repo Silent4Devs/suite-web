@@ -10,9 +10,9 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class Competencia extends Model
 {
-    use HasFactory, SoftDeletes, QueryCacheable;
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use HasFactory, SoftDeletes;
+    // public $cacheFor = 3600;
+    // protected static $flushCacheOnUpdate = true;
 
     protected $table = 'ev360_competencias';
     protected $guarded = ['id'];

@@ -8,9 +8,9 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class CompetenciaPuesto extends Model
 {
-    use HasFactory, QueryCacheable;
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use HasFactory;
+    // public $cacheFor = 3600;
+    // protected static $flushCacheOnUpdate = true;
 
     protected $table = 'ev360_competencias_por_puesto';
     protected $fillable = [
