@@ -376,7 +376,7 @@
                                                                                 ({{ $objetivo->objetivo->metrica->definicion }})
                                                                                 - Autoevaluación</label>
                                                                             <div style="background: aliceblue;"
-                                                                                id="autoevaluacionObjetivos{{ $idx }}"
+                                                                                id="autoevaluacionObjetivos{{ $objetivo->objetivo_id }}"
                                                                                 class="form-control">
                                                                                 <i
                                                                                     class="mr-1 fas fa-circle-notch fa-spin"></i>
@@ -437,7 +437,7 @@
                                                                             class="mr-2 far fa-dot-circle"></i>Comentarios
                                                                         Autoevaluación</label>
                                                                     <textarea class="m-0 form-control" readonly rows="0"
-                                                                        id="autoevaluacionComentariosObjetivos{{ $idx }}"
+                                                                        id="autoevaluacionComentariosObjetivos{{ $objetivo->objetivo_id }}"
                                                                         type="text">Cargando autoevaluacion...</textarea>
                                                                 @endif
                                                             @endif
@@ -983,7 +983,7 @@
                         console.log(response);
                         response.forEach((objetivo, index) => {
                             let contenedorMetaAlcanzada = document.getElementById(
-                                `autoevaluacionObjetivos${index}`);
+                                `autoevaluacionObjetivos${objetivo.objetivo_id}`);
                             contenedorMetaAlcanzada.innerHTML = objetivo.calificacion == 0 ?
                                 'No se ha evaluado' : objetivo.calificacion;
                         });
@@ -1014,9 +1014,10 @@
                 },
                 success: function(response) {
                     if (response.length > 0) {
+                        console.log(response);
                         response.forEach((objetivo, index) => {
                             let contenedorComentariosObjetivosAutoevaluacion = document.getElementById(
-                                `autoevaluacionComentariosObjetivos${index}`);
+                                `autoevaluacionComentariosObjetivos${objetivo.objetivo_id}`);
                             contenedorComentariosObjetivosAutoevaluacion.innerHTML = objetivo
                                 .meta_alcanzada
                         });
