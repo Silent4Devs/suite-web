@@ -109,6 +109,9 @@
                         <div class="col-12">
                             <img class="img-fluid" src="{{ asset('img/mensaje2.png') }}">
                         </div>
+                        <div class="col-12 text-center">
+                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn-success">Regresar</a>
+                        </div>
                     </div>
                 @else
                     @if ($finalizo_tiempo)
@@ -205,54 +208,60 @@
                                                     </div>
                                                 </div>
                                                 @foreach ($preguntas as $idx => $competencia)
-                                                    <div class="px-2 py-3 shadow-sm col-12">
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <span class="mr-2"
-                                                                    style="cursor: pointer; font-size: 10px;"
-                                                                    title="Visualizar competencia"
-                                                                    onclick="event.preventDefault();VisualizarSignificado(this,'{{ route('admin.ev360-competencias.informacionCompetencia', $competencia->competencia->id) }}')"><i
-                                                                        class="ml-2 fas fa-eye"></i></span>
-                                                                <span><strong>
-                                                                        {!! $competencia->competencia->nombre !!}</strong></span>
-                                                            </div>
-                                                            @if ($evaluacion->autoevaluacion)
-                                                                @if ($isJefeInmediato)
-                                                                    <div class="col-2"
-                                                                        id="autoev{{ $idx }}">
-                                                                        <div style="background: aliceblue;"
-                                                                            class="form-control">
-                                                                            <i class="mr-1 fas fa-circle-notch fa-spin"></i>
-                                                                            Obteniendo
+                                                    @if (!is_null($competencia->competencia))
+                                                        <div class="px-2 py-3 shadow-sm col-12">
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <span class="mr-2"
+                                                                        style="cursor: pointer; font-size: 10px;"
+                                                                        title="Visualizar competencia"
+                                                                        onclick="event.preventDefault();VisualizarSignificado(this,'{{ route('admin.ev360-competencias.informacionCompetencia', $competencia->competencia->id) }}')"><i
+                                                                            class="ml-2 fas fa-eye"></i></span>
+                                                                    <span><strong>
+                                                                            {!! $competencia->competencia->nombre !!}</strong></span>
+                                                                </div>
+                                                                @if ($evaluacion->autoevaluacion)
+                                                                    @if ($isJefeInmediato)
+                                                                        <div class="col-2"
+                                                                            id="autoev{{ $idx }}">
+                                                                            <div style="background: aliceblue;"
+                                                                                class="form-control">
+                                                                                <i
+                                                                                    class="mr-1 fas fa-circle-notch fa-spin"></i>
+                                                                                Obteniendo
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
+                                                                    @endif
                                                                 @endif
-                                                            @endif
-                                                            <div class="col-2" id="esperado{{ $idx }}">
-                                                                <div style="background: aliceblue;" class="form-control">
-                                                                    {{ $competencia->competencia->competencia_puesto->first()->nivel_esperado }}
+                                                                <div class="col-2"
+                                                                    id="esperado{{ $idx }}">
+                                                                    <div style="background: aliceblue;"
+                                                                        class="form-control">
+                                                                        {{ $competencia->competencia->competencia_puesto->first()->nivel_esperado }}
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    class="col-{{ $evaluacion->autoevaluacion ? ($isJefeInmediato ? '4' : '6') : '6' }} justify-content-between">
+                                                                    <select class="form-control" name="respuesta"
+                                                                        onchange="event.preventDefault();GuardarRepuesta(this,'{{ route('admin.ev360-competencias.guardarRespuestaCompetencia', $competencia->competencia->id) }}')">
+                                                                        <option value="" disabled selected>
+                                                                            -- Selecciona una calificación --
+                                                                        </option>
+                                                                        @foreach ($competencia->competencia->opciones as $opcion)
+                                                                            <option
+                                                                                data-evaluacion="{{ $evaluacion->id }}"
+                                                                                data-evaluado="{{ $evaluado->id }}"
+                                                                                data-evaluador="{{ $evaluador->id }}"
+                                                                                value="{{ $opcion->ponderacion }}"
+                                                                                {{ $opcion->ponderacion == $competencia->calificacion ? 'selected' : '' }}>
+                                                                                {{ $opcion->ponderacion }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
                                                             </div>
-                                                            <div
-                                                                class="col-{{ $evaluacion->autoevaluacion ? ($isJefeInmediato ? '4' : '6') : '6' }} justify-content-between">
-                                                                <select class="form-control" name="respuesta"
-                                                                    onchange="event.preventDefault();GuardarRepuesta(this,'{{ route('admin.ev360-competencias.guardarRespuestaCompetencia', $competencia->competencia->id) }}')">
-                                                                    <option value="" disabled selected>
-                                                                        -- Selecciona una calificación --
-                                                                    </option>
-                                                                    @foreach ($competencia->competencia->opciones as $opcion)
-                                                                        <option data-evaluacion="{{ $evaluacion->id }}"
-                                                                            data-evaluado="{{ $evaluado->id }}"
-                                                                            data-evaluador="{{ $evaluador->id }}"
-                                                                            value="{{ $opcion->ponderacion }}"
-                                                                            {{ $opcion->ponderacion == $competencia->calificacion ? 'selected' : '' }}>
-                                                                            {{ $opcion->ponderacion }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    @endif
                                                 @endforeach
                                             @endif
 
@@ -937,10 +946,12 @@
                         console.log(response);
                         response.forEach((competencia, index) => {
                             let evaluacionContenedor = document.getElementById(`autoev${index}`);
-                            evaluacionContenedor.innerHTML = competencia
-                                .calificacion == 0 ? 'No se ha evaluado' : competencia.calificacion;
-                            evaluacionContenedor.classList.add('form-control');
-                            evaluacionContenedor.style.background = 'aliceblue';
+                            if (evaluacionContenedor != null) {
+                                evaluacionContenedor.innerHTML = competencia
+                                    .calificacion == 0 ? 'No se ha evaluado' : competencia.calificacion;
+                                evaluacionContenedor.classList.add('form-control');
+                                evaluacionContenedor.style.background = 'aliceblue';
+                            }
                         });
 
                     }

@@ -36,8 +36,6 @@
                     style="width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
                     <tr>
                         <td align="center" style="padding:40px 0 30px 0;background:#1D284B;">
-                            <img src="{{ asset('img/email.png') }}" alt="" width="100"
-                                style="height:auto;display:block; margin-bottom: 10px;" />
                             <h3 class="p-0 m-0"
                                 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif; color:white">
                                 Evaluación de Desempeño - Tabantaj</h3>
@@ -109,13 +107,13 @@
                                                     @endif
                                                 @endforeach
                                             </ul>
-                                            <small>Por favor dirijase a Tabantaj en la sección de "Mi Perfil" donde
-                                                encontrará las respectivas evaluaciones a realizar</small>
+                                            <p>Por favor dirijase a Tabantaj en la sección de "Mi Perfil" donde
+                                                encontrará las respectivas evaluaciones a realizar</p>
                                             <br><br>
-                                            {{-- <a href="{{ route('admin.inicio-Usuario.index') }}"
+                                            <a href="{{ route('admin.inicio-Usuario.index') }}"
                                                 style="outline: none; text-decoration: none; font-size: small; font-family: Arial, Helvetica, sans-serif; background-color: #358765; padding: 10px; border-radius: 10px; color: white;">
                                                 <span>Ir a Tabantaj</span>
-                                            </a> --}}
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
@@ -130,7 +128,7 @@
                                     <td style="padding:0;width:50%;" align="left">
                                         <p
                                             style="margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;">
-                                            &reg; Tabantaj, SilentForBussines {{ date('Y') }}<br />
+                                            &reg; Tabantaj, Silent For Business {{ date('Y') }}<br />
                                         </p>
                                     </td>
                                 </tr>
