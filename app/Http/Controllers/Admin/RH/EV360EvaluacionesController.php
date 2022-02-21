@@ -305,7 +305,13 @@ class EV360EvaluacionesController extends Controller
                 ->where('evaluado_id', $evaluado->id)
                 ->where('evaluador_id', $evaluador->id);
             $preguntas = $preguntas_sql->orderBy('id')->get();
-            $total_preguntas = $preguntas_sql->count();
+            // $total_preguntas = $preguntas_sql->count();
+            $total_preguntas = 0;
+            foreach ($preguntas_sql->get() as $competenciaE) {
+                if (!is_null(Competencia::find($competenciaE->competencia_id))) {
+                    $total_preguntas++;
+                }
+            }
             $preguntas_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion->id)
                 ->where('evaluado_id', $evaluado->id)
                 ->where('evaluador_id', $evaluador->id)
@@ -314,7 +320,7 @@ class EV360EvaluacionesController extends Controller
                 ->where('evaluado_id', $evaluado->id)
                 ->where('evaluador_id', $evaluador->id)
                 ->where('calificacion', '=', 0)->count();
-            if ($total_preguntas) {
+            if ($total_preguntas > 0) {
                 $progreso = floatval(number_format((($preguntas_contestadas / $total_preguntas) * 100)));
             }
         }
@@ -690,7 +696,13 @@ class EV360EvaluacionesController extends Controller
         $preguntas_sql = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)
             ->where('evaluado_id', $evaluado)
             ->where('evaluador_id', $evaluador);
-        $total_preguntas = $preguntas_sql->count();
+        $total_preguntas = 0;
+        foreach ($preguntas_sql->get() as $competenciaE) {
+            if (!is_null(Competencia::find($competenciaE->competencia_id))) {
+                $total_preguntas++;
+            }
+        }
+
         $preguntas_contestadas = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)
             ->where('evaluado_id', $evaluado)
             ->where('evaluador_id', $evaluador)
