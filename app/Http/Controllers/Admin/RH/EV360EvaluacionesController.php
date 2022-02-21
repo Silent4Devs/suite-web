@@ -505,6 +505,7 @@ class EV360EvaluacionesController extends Controller
             return response()->json(['error' => true]);
         }
     }
+
     public function saveCalificacionPersepcion(Request $request)
     {
         $objetivo = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
