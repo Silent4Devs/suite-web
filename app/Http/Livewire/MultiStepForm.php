@@ -598,7 +598,7 @@ class MultiStepForm extends Component
             })->first();
             $evaluadores_objetivos->push(['id' => intval($empleado->id), 'peso' => 0]);
             // if ($empleado->supervisorObjetivos) {
-            $evaluadores_objetivos->push(['id' => intval($supervisorObjetivos->evaluador_id), 'peso' => 100]);
+            $evaluadores_objetivos->push(['id' => intval($supervisorObjetivos->evaluador_id), 'peso' => 13500]);
             // }
         }
 
@@ -696,13 +696,13 @@ class MultiStepForm extends Component
                     if ($evaluador != $empleado->id) {
                         $lista_par_jefe->push(['id' => intval($evaluador), 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
                     } else {
-                        $evaluadores->put('jefe', ['id' => 1, 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
+                        $evaluadores->put('jefe', ['id' => 135, 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
                     }
                 }
                 if (count($lista_par_jefe)) {
                     $evaluadores->put('jefe', $lista_par_jefe->random());
                 } else {
-                    $evaluadores->put('jefe', ['id' => 1, 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
+                    $evaluadores->put('jefe', ['id' => 135, 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
                 }
             }
 
@@ -720,13 +720,13 @@ class MultiStepForm extends Component
                         if ($evaluador != $empleado->id) {
                             $lista_evaluado_por_equipo_a_cargo->push(['id' => intval($evaluador), 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
                         } else {
-                            $evaluadores->put('subordinado', ['id' => 1, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
+                            $evaluadores->put('subordinado', ['id' => 135, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
                         }
                     }
                     if (count($lista_evaluado_por_equipo_a_cargo)) {
                         $evaluadores->put('subordinado', $lista_evaluado_por_equipo_a_cargo->random());
                     } else {
-                        $evaluadores->put('subordinado', ['id' => 1, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
+                        $evaluadores->put('subordinado', ['id' => 135, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
                     }
                 }
             } else {
@@ -734,13 +734,13 @@ class MultiStepForm extends Component
                     if ($evaluador != $empleado->id) {
                         $lista_evaluado_por_equipo_a_cargo->push(['id' => intval($evaluador), 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
                     } else {
-                        $evaluadores->put('subordinado', ['id' => 1, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
+                        $evaluadores->put('subordinado', ['id' => 135, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
                     }
                 }
                 if (count($lista_evaluado_por_equipo_a_cargo)) {
                     $evaluadores->put('subordinado', $lista_evaluado_por_equipo_a_cargo->random());
                 } else {
-                    $evaluadores->put('subordinado', ['id' => 1, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
+                    $evaluadores->put('subordinado', ['id' => 135, 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
                 }
             }
 
@@ -751,23 +751,23 @@ class MultiStepForm extends Component
                 //     if ($evaluador != $empleado->id) {
                 //         $lista_empleados_misma_area->push(['id' => intval($evaluador), 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
                 //     } else {
-                //         $evaluadores->put('par', ['id' => 1, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+                //         $evaluadores->put('par', ['id' => 135, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
                 //     }
                 // }
                 // if (count($lista_empleados_misma_area)) {
                 //     $evaluadores->put('par', $lista_empleados_misma_area->random());
                 // } else {
-                //     $evaluadores->put('par', ['id' => 1, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+                //     $evaluadores->put('par', ['id' => 135, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
                 // }
-                $evaluadores->put('par', ['id' => array_rand($empleado->empleados_pares) > 0 ? array_rand($empleado->empleados_pares) : 1, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+                $evaluadores->put('par', ['id' => array_rand($empleado->empleados_pares) > 0 ? array_rand($empleado->empleados_pares) : 135, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
             } else {
-                $evaluadores->put('par', ['id' => 1, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+                $evaluadores->put('par', ['id' => 135, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
             }
 
             foreach ($evaluadores as $key => $evaluador) {
                 if ($evaluador['id'] == 0) {
                     $base = $evaluadores[$key];
-                    $reemplazo = ['id' => 1];
+                    $reemplazo = ['id' => 135];
                     $evaluadores[$key] = array_replace($base, $reemplazo);
                 }
             }
