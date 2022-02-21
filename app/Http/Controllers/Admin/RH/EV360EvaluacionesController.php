@@ -355,13 +355,20 @@ class EV360EvaluacionesController extends Controller
             $finalizo_tiempo = true;
         }
 
-        $competencias_por_puesto_nivel_esperado = $evaluado->puestoRelacionado->competencias;
-        $competencias_evaluadas_en_esta_evaluacion = $preguntas->pluck('competencia_id')->toArray();
-        $competencias_por_puesto_nivel_esperado = $competencias_por_puesto_nivel_esperado->map(function ($competencia) use ($competencias_evaluadas_en_esta_evaluacion) {
-            if (in_array($competencia->competencia->id, $competencias_evaluadas_en_esta_evaluacion)) {
-                return $competencia;
-            }
-        }); //Filtro para obtener solo las competencias evaluadas al momento de la creación de la evaluacion
+        $competencias_por_puesto_nivel_esperado = $evaluado->puestoRelacionado;
+        if ($competencias_por_puesto_nivel_esperado) {
+            $competencias_por_puesto_nivel_esperado = $evaluado->puestoRelacionado->competencias;
+            $competencias_evaluadas_en_esta_evaluacion = $preguntas->pluck('competencia_id')->toArray();
+            $competencias_por_puesto_nivel_esperado = $competencias_por_puesto_nivel_esperado->map(function ($competencia) use ($competencias_evaluadas_en_esta_evaluacion) {
+                if (!is_null($competencia->competencia)) {
+                    if (in_array($competencia->competencia->id, $competencias_evaluadas_en_esta_evaluacion)) {
+                        return $competencia;
+                    }
+                }
+            }); //Filtro para obtener solo las competencias evaluadas al momento de la creación de la evaluacion
+        } else {
+            $competencias_por_puesto_nivel_esperado = collect();
+        }
 
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.cuestionario', compact('evaluacion', 'preguntas', 'evaluado', 'evaluador', 'total_preguntas', 'preguntas_contestadas', 'preguntas_no_contestadas', 'progreso', 'finalizo_tiempo', 'objetivos', 'progreso_objetivos', 'objetivos_evaluados', 'objetivos_no_evaluados', 'esta_evaluado', 'competencias_por_puesto_nivel_esperado', 'isJefeInmediato'));
     }
@@ -491,6 +498,22 @@ class EV360EvaluacionesController extends Controller
             ->where('objetivo_id', $request->objetivo);
         $update_objetivo = $objetivo->update([
             'meta_alcanzada' => $request->meta_alcanzada,
+        ]);
+        if ($update_objetivo) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
+
+    public function saveCalificacionPersepcion(Request $request)
+    {
+        $objetivo = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
+            ->where('evaluador_id', $request->evaluador)
+            ->where('evaluacion_id', $request->evaluacion)
+            ->where('objetivo_id', $request->objetivo);
+        $update_objetivo = $objetivo->update([
+            'calificacion_persepcion' => $request->calificacion_persepcion,
         ]);
         if ($update_objetivo) {
             return response()->json(['success' => true]);
