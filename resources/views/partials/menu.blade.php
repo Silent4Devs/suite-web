@@ -244,7 +244,7 @@
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.capital-humano.index') }}"
                     class="c-sidebar-nav-link
-                    {{                     request()->is('admin/empleados') || request()->is('admin/recursos-humanos/evaluacion-360/competencias') || request()->is('admin/lista-documentos') || request()->is('admin/perfiles') || request()->is('admin/recursos-humanos/tipos-contratos-empleados') || request()->is('admin/lista-documentos') || request()->is('admin/recursos-humanos/entidades-crediticias') || request()->is('admin/recursos-humanos/evaluacion-360/objetivos') || request()->is('admin/expedientes-profesionales') || request()->is('admin/categoria-capacitacion') || request()->is('admin/recursos-humanos/calendario-oficial') || request()->is('admin/recursos') || request()->is('admin/recursos-humanos/evaluacion-360/evaluaciones/create') || request()->is('admin/recursos-humanos/evaluacion-360/evaluaciones') || request()->is('admin/tabla-calendario/index') || request()->is('admin/capital-humano#') || request()->is('admin/capital-humano/*') ? 'active' : '' }}">
+                    {{ request()->is('admin/empleados') ||request()->is('admin/recursos-humanos/evaluacion-360/competencias') ||request()->is('admin/lista-documentos') ||request()->is('admin/perfiles') ||request()->is('admin/recursos-humanos/tipos-contratos-empleados') ||request()->is('admin/lista-documentos') ||request()->is('admin/recursos-humanos/entidades-crediticias') ||request()->is('admin/recursos-humanos/evaluacion-360/objetivos') ||request()->is('admin/expedientes-profesionales') ||request()->is('admin/categoria-capacitacion') ||request()->is('admin/recursos-humanos/calendario-oficial') ||request()->is('admin/recursos') ||request()->is('admin/recursos-humanos/evaluacion-360/evaluaciones/create') ||request()->is('admin/recursos-humanos/evaluacion-360/evaluaciones') ||request()->is('admin/tabla-calendario/index') ||request()->is('admin/capital-humano#') ||request()->is('admin/capital-humano/*')? 'active': '' }}">
                     <i class="bi bi-people iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Capital Humano </font>
                 </a>
@@ -625,43 +625,44 @@
         @endcan
 
 
+        @can('documentos_access')
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
+                    <i class="bi bi-folder iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca"> Documentos </font>
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('documentos_create')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.documentos.create') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/create') || request()->is('admin/create*') ? 'active' : '' }}">
+                                <i class="bi bi-folder-plus iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca"> Agregar Documento </font>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('documentos_create')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.documentos.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/crear-documentos') || request()->is('admin/crear-documentos*') ? 'active' : '' }}">
+                                <i class="bi bi-card-checklist letra_blanca iconos_menu"></i>
+                                <font class="letra_blanca"> Control Documental </font>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('carpetum_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.carpeta.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/carpeta') || request()->is('admin/carpeta/*') ? 'active' : '' }}">
+                                <i class="bi bi-folder2-open iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca"> Repositorio Documental </font>
+                            </a>
+                        </li>
+                    @endcan
 
-        <li class="c-sidebar-nav-dropdown">
-            <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
-                <i class="bi bi-folder iconos_menu letra_blanca"></i>
-                <font class="letra_blanca"> Documentos </font>
-            </a>
-            <ul class="c-sidebar-nav-dropdown-items">
-
-                <li class="c-sidebar-nav-item">
-                    <a href="{{ route('admin.documentos.create') }}"
-                        class="c-sidebar-nav-link {{ request()->is('admin/create') || request()->is('admin/create*') ? 'active' : '' }}">
-                        <i class="bi bi-folder-plus iconos_menu letra_blanca"></i>
-                        <font class="letra_blanca"> Agregar Documento </font>
-                    </a>
-                </li>
-                @can('documentos_create')
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.documentos.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/crear-documentos') || request()->is('admin/crear-documentos*') ? 'active' : '' }}">
-                            <i class="bi bi-card-checklist letra_blanca iconos_menu"></i>
-                            <font class="letra_blanca"> Control Documental </font>
-                        </a>
-                    </li>
-                @endcan
-                @can('carpetum_access')
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.carpeta.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/carpeta') || request()->is('admin/carpeta/*') ? 'active' : '' }}">
-                            <i class="bi bi-folder2-open iconos_menu letra_blanca"></i>
-                            <font class="letra_blanca"> Repositorio Documental </font>
-                        </a>
-                    </li>
-                @endcan
-
-            </ul>
-        </li>
-
+                </ul>
+            </li>
+        @endcan
 
 
         @can('configuracion_datos_access')
