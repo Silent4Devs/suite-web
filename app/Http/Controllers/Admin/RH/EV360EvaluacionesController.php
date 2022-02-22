@@ -287,7 +287,12 @@ class EV360EvaluacionesController extends Controller
             ->where('evaluado_id', $evaluado->id)
             ->where('evaluador_id', $evaluador->id)
             ->where('evaluacion_id', $evaluacion->id)
-            ->first()->tipo == EvaluadoEvaluador::JEFE_INMEDIATO;
+            ->first();
+        if (is_null($isJefeInmediato)) {
+            $isJefeInmediato = false;
+        } else {
+            $isJefeInmediato = $isJefeInmediato->tipo == EvaluadoEvaluador::JEFE_INMEDIATO;
+        }
         $preguntas = collect();
         $total_preguntas = 0;
         $preguntas_contestadas = 0;
@@ -1082,8 +1087,8 @@ class EV360EvaluacionesController extends Controller
                 }
 
                 return [
-                    'competencia' => $competencia->competencia->nombre,
-                    'tipo_competencia' => $competencia->competencia->tipo_competencia,
+                    'competencia' => $competencia->competencia ? $competencia->competencia->nombre : 'Sin Nombre',
+                    'tipo_competencia' => $competencia->competencia ? $competencia->competencia->tipo_competencia : 'Sin Tipo',
                     'calificacion' => $competencia->calificacion,
                     'porcentaje' => $porcentaje,
                     'evaluado' => $evaluador->evaluado,

@@ -62,7 +62,7 @@ class LoginController extends Controller
             return '/admin/inicioUsuario#datos';
         }
 
-        return '/admin';
+        return '/admin/inicioUsuario#datos';
     }
 
     protected function authenticated(Request $request, $user)
