@@ -12,10 +12,9 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class Permission extends Model
 {
     use SoftDeletes, Auditable, HasFactory;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    // public $cacheFor = 3600;
+    // protected static $flushCacheOnUpdate = true;
 
     public $table = 'permissions';
 
