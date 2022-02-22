@@ -453,13 +453,13 @@
                 </a>
             </li>
         @endcan
-        <li class="c-sidebar-nav-item">
+        {{-- <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->is('admin/iso9001') ? 'active' : '' }}"
                 href="{{ route('admin.iso9001.index') }}#contexto">
                 <i class="bi bi-globe2 iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> ISO 9001 </font>
             </a>
-        </li>
+        </li> --}}
 
         @can('administracion_access')
             <li class="c-sidebar-nav-title">
