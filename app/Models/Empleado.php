@@ -426,7 +426,7 @@ class Empleado extends Model
 
         return $by_area;
     }
-    
+
     public function getEmpleadosParesAttribute()
     {
         $por_par = self::where('id', '!=', $this->id)->where('perfil_empleado_id', $this->perfil_empleado_id)->pluck('id')->toArray();

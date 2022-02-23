@@ -532,7 +532,6 @@ class MultiStepForm extends Component
         // }
         foreach ($listaEvaluado['evaluadores'] as $evaluador) {
             if ($evaluador['id'] != 0) {
-
                 EvaluadoEvaluador::create([
                     'evaluado_id' => $listaEvaluado['evaluado']['id'],
                     'evaluador_id' => $evaluador['id'],
@@ -715,7 +714,7 @@ class MultiStepForm extends Component
             $lista_par_jefe = collect();
             if ($empleado->supervisor) {
                 $evaluadores->put('jefe', ['id' => intval($empleado->supervisor->id), 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
-            }else{
+            } else {
                 foreach ($empleado->empleados_pares as $evaluador) {
                     if ($evaluador != $empleado->id) {
                         $lista_par_jefe->push(['id' => intval($evaluador), 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
@@ -783,16 +782,15 @@ class MultiStepForm extends Component
                 // } else {
                 //     $evaluadores->put('par', ['id' => 1, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
                 // }
-            $evaluadores->put('par', ['id' => array_rand($empleado->empleados_pares) > 0 ? array_rand($empleado->empleados_pares) : 1, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
-
+                $evaluadores->put('par', ['id' => array_rand($empleado->empleados_pares) > 0 ? array_rand($empleado->empleados_pares) : 1, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
             } else {
                 $evaluadores->put('par', ['id' => 1, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
             }
-            
-            foreach($evaluadores as $key=>$evaluador){
+
+            foreach ($evaluadores as $key=>$evaluador) {
                 if ($evaluador['id'] == 0) {
                     $base = $evaluadores[$key];
-                    $reemplazo = array('id' => 1);
+                    $reemplazo = ['id' => 1];
                     $evaluadores[$key] = array_replace($base, $reemplazo);
                 }
             }
