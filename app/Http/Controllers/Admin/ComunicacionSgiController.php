@@ -85,7 +85,7 @@ class ComunicacionSgiController extends Controller
             'descripcion' => 'required',
             'imagen' => 'required|mimetypes:image/jpeg,image/bmp,image/png',
             'publicar_en' => 'required',
-            'link' => 'required',
+            'link' => 'required|url',
             'fecha_programable' => 'required',
         ]);
 

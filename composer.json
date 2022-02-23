@@ -24,6 +24,7 @@
         "intervention/image": "^2.5",
         "jantinnerezo/livewire-alert": "^2.2",
         "jenssegers/date": "^4.0",
+        "ladumor/laravel-pwa": "^0.0.2",
         "laracasts/flash": "^3.0",
         "laravel/dusk": "^6.6",
         "laravel/framework": "^8.0",

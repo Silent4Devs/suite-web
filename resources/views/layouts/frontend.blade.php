@@ -45,7 +45,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
-
+    <!-- PWA  -->
+    <meta name="theme-color" content="#6777ef" />
+    <link rel="apple-touch-icon" href="{{ asset('/img/logo_policromatico.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
     <style type="text/css">
         .select2-selection--multiple {
             overflow: hidden !important;
@@ -910,7 +913,8 @@
                             @foreach (config('panel.available_languages') as $langLocale => $langName)
                                 <a class="dropdown-item"
                                     href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
-                                    ({{ $langName }})</a>
+                                    ({{ $langName }})
+                                </a>
                             @endforeach
                         </div>
                     </li>
@@ -994,14 +998,12 @@
                             <div class="px-3 mt-3 d-flex justify-content-between">
                                 @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                                     @can('profile_password_edit')
-
                                         <a class="btn btn-sm shadow-xs border p-2 rounded {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
                                             href="{{ route('profile.password.edit') }}">
                                             <i class="mr-1 fas fa-user-cog">
                                             </i>
                                             Conf. Perfil
                                         </a>
-
                                     @endcan
                                 @endif
                                 <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
@@ -1051,6 +1053,14 @@
         <!-- incluir de footer -->
         {{-- @include('partials.footer') --}}
     </div>
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
 </body>
 
 <script src="{{ asset('js/app.js') }}"></script>
