@@ -282,6 +282,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            top: 0;
         }
 
         .display-almacenando h1 {
@@ -410,7 +411,7 @@
 
     </style>
     <div class="container row justify-content-center">
-        <div class="mt-3 col-9 card" style="position: relative;">
+        <div class="mt-3 col-12" style="position: relative;">
             <form wire:submit.prevent="register">
                 {{-- STEP 1 --}}
                 @if ($currentStep == 1)
@@ -450,7 +451,7 @@
                                                         configurando tu evaluación, definiendo el nombre y agregando
                                                         una
                                                         descripción
-                                                           
+
                                                     </p>
                                                 </div>
                                             </div>
@@ -466,7 +467,8 @@
                                                 class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
                                                 id="nombre" aria-describedby="nombreHelp" name="nombre"
                                                 value="{{ old('nombre') }}">
-                                            <small id="nombreHelp" class="form-text text-muted">Ingresa el nombre de la evaluación</small>
+                                            <small id="nombreHelp" class="form-text text-muted">Ingresa el nombre de la
+                                                evaluación</small>
                                             @if ($errors->has('nombre'))
                                                 <div class="invalid-feedback">
                                                     {{ $errors->first('nombre') }}
@@ -958,129 +960,154 @@
                                             <th>Autoevaluación</th>
                                             <th>Jefe Inmediato</th>
                                             <th>Pares</th>
-                                            <th>Equipo a Cargo</th>
+                                            <th>Subordinado</th>
                                             {{-- <th>Equipo a cargo</th> --}}
                                         </tr>
                                     </thead>
-                                    <tbody >
+                                    <tbody>
                                         @foreach ($listaEvaluados as $index => $listaEvaluado)
                                             <tr>
-                                                {{-- <td>
-                                                    <select
-                                                        class="mt-3 form-control {{ $errors->has('') ? 'is-invalid' : '' }}"
-                                                        id="ddlViewBy" wire:model.defer="">
-                                                        @foreach ($empleados as $empleado)
-                                                        <?php
-                                                            // $selected='';
-                                                            // if($listaEvaluado['evaluado']->name == $empleado->name )
-                                                            //     $selected="selected";
-                                                        ?>
-                                                            <option value="{{ $empleado->id }}" {{$selected}} >
-                                                                {{ $empleado->name }}
-                                                            </option>
-
-
-                                                        @endforeach
-                                                    </select>
-                                                </td> --}}
-
-                                                <td style="text-align: left !important;">{{$listaEvaluado['evaluado']['name']}}</td>
-                                                <td style="text-align: left !important;">{{$listaEvaluado['evaluado']['area']['area']}}</td>
+                                                <td style="text-align: left !important;">
+                                                    {{ $listaEvaluado['evaluado']['name'] }}</td>
+                                                <td style="text-align: left !important;">
+                                                    {{ $listaEvaluado['evaluado']['area']['area'] }}</td>
                                                 @isset($listaEvaluado['evaluadores']['autoevaluacion'])
-                                                <td style="text-align: left !important;">
-                                                    {{-- <p>{{$listaEvaluado['evaluadores']['autoevaluacion']['id']}}</p> --}}
-                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.autoevaluacion.id" style="pointer-events: none; -webkit-appearance: none;" >
-                                                        <option value="" selected>Selecciona un evaluador</option>
-                                                        @foreach ($empleados as $empleado)
-                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('listaEvaluados.{{$index}}.evaluadores.0.id') <span class="text-danger">{{ $message }}</span> @enderror
-                                                </td>
+                                                    <td style="text-align: left !important;">
+                                                        {{-- <p>{{$listaEvaluado['evaluadores']['autoevaluacion']['id']}}</p> --}}
+                                                        <select name="" id="" class="form-control"
+                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.autoevaluacion.id"
+                                                            style="pointer-events: none; -webkit-appearance: none;">
+                                                            <option value="" selected>Selecciona un evaluador</option>
+                                                            @foreach ($empleados as $empleado)
+                                                                <option value="{{ $empleado->id }}">
+                                                                    {{ $empleado->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('listaEvaluados.{{ $index }}.evaluadores.0.id')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </td>
                                                 @else
-                                                <td style="text-align: left !important;">
-                                                    {{-- <p>{{$listaEvaluado['evaluadores']['autoevaluacion']['id']}}</p> --}}
-                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.autoevaluacion.id" style="pointer-events: none; -webkit-appearance: none;" >
-                                                        <option value="" selected>Selecciona un evaluador</option>
-                                                        @foreach ($empleados as $empleado)
-                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('listaEvaluados.{{$index}}.evaluadores.0.id') <span class="text-danger">{{ $message }}</span> @enderror
-                                                </td>
+                                                    <td style="text-align: left !important;">
+                                                        {{-- <p>{{$listaEvaluado['evaluadores']['autoevaluacion']['id']}}</p> --}}
+                                                        <select name="" id="" class="form-control"
+                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.autoevaluacion.id"
+                                                            style="pointer-events: none; -webkit-appearance: none;">
+                                                            <option value="" selected>Selecciona un evaluador</option>
+                                                            @foreach ($empleados as $empleado)
+                                                                <option value="{{ $empleado->id }}">
+                                                                    {{ $empleado->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('listaEvaluados.{{ $index }}.evaluadores.0.id')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </td>
                                                 @endisset
                                                 @isset($listaEvaluado['evaluadores']['jefe'])
-                                                <td style="text-align: left !important;">
-                                                    {{-- <p>{{$listaEvaluado['evaluadores']['jefe']['id']}}</p> --}}
-                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.jefe.id" >
-                                                        <option value="" selected>Selecciona un evaluador</option>
-                                                        @foreach ($empleados as $empleado)
-                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('listaEvaluados.{{$index}}.evaluadores.1.id') <span class="text-danger">{{ $message }}</span> @enderror
-                                                </td>
+                                                    <td style="text-align: left !important;">
+                                                        {{-- <p>{{$listaEvaluado['evaluadores']['jefe']['id']}}</p> --}}
+                                                        <select name="" id="" class="form-control"
+                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.jefe.id">
+                                                            {{-- <option value="" selected>Selecciona un evaluador</option> --}}
+                                                            @foreach ($empleados as $empleado)
+                                                                <option value="{{ $empleado->id }}">
+                                                                    {{ $empleado->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('listaEvaluados.{{ $index }}.evaluadores.1.id')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </td>
                                                 @else
-                                                <td style="text-align: left !important;">
-                                                    {{-- <p>{{$listaEvaluado['evaluadores']['jefe']['id']}}</p> --}}
-                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.jefe.id" >
-                                                        <option value="" selected>Selecciona un evaluador</option>
-                                                        @foreach ($empleados as $empleado)
-                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('listaEvaluados.{{$index}}.evaluadores.1.id') <span class="text-danger">{{ $message }}</span> @enderror
-                                                </td>
+                                                    <td style="text-align: left !important;">
+                                                        {{-- <p>{{$listaEvaluado['evaluadores']['jefe']['id']}}</p> --}}
+                                                        <select name="" id="" class="form-control"
+                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.jefe.id">
+                                                            {{-- <option value="" selected>Selecciona un evaluador</option> --}}
+                                                            @foreach ($empleados as $empleado)
+                                                                <option value="{{ $empleado->id }}">
+                                                                    {{ $empleado->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('listaEvaluados.{{ $index }}.evaluadores.1.id')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </td>
                                                 @endisset
                                                 @isset($listaEvaluado['evaluadores']['par'])
-                                                <td style="text-align: left !important;">
-                                                    {{-- <p>{{$listaEvaluado['evaluadores']['par']['id']}}</p> --}}
-                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.par.id" >
-                                                        {{-- <option value="" selected>Selecciona un evaluador</option> --}}
-                                                        @foreach ($empleados as $empleado)
-                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('listaEvaluados.{{$index}}.evaluadores.2.id') <span class="text-danger">{{ $message }}</span> @enderror
-                                                </td>
+                                                    <td style="text-align: left !important;">
+                                                        {{-- <p>{{$listaEvaluado['evaluadores']['par']['id']}}</p> --}}
+                                                        <select name="" id="" class="form-control"
+                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.par.id">
+                                                            {{-- <option value="" selected>Selecciona un evaluador</option> --}}
+                                                            @foreach ($empleados as $empleado)
+                                                                <option value="{{ $empleado->id }}">
+                                                                    {{ $empleado->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('listaEvaluados.{{ $index }}.evaluadores.2.id')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </td>
                                                 @else
-                                                <td style="text-align: left !important;">
-                                                    {{-- <p>{{$listaEvaluado['evaluadores']['par']['id']}}</p> --}}
-                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.par.id" >
-                                                        <option value="" selected>Selecciona un evaluador</option>
-                                                        @foreach ($empleados as $empleado)
-                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('listaEvaluados.{{$index}}.evaluadores.2.id') <span class="text-danger">{{ $message }}</span> @enderror
-                                                </td>
+                                                    <td style="text-align: left !important;">
+                                                        {{-- <p>{{$listaEvaluado['evaluadores']['par']['id']}}</p> --}}
+                                                        <select name="" id="" class="form-control"
+                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.par.id">
+                                                            <option value="" selected>Selecciona un evaluador</option>
+                                                            @foreach ($empleados as $empleado)
+                                                                <option value="{{ $empleado->id }}">
+                                                                    {{ $empleado->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('listaEvaluados.{{ $index }}.evaluadores.2.id')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </td>
                                                 @endisset
                                                 @isset($listaEvaluado['evaluadores']['subordinado'])
-                                                <td style="text-align: left !important;">
-                                                    {{-- <p>{{$listaEvaluado['evaluadores']['subordinado']['id']}}</p> --}}
-                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.subordinado.id" >
-                                                        <option value="" selected>Selecciona un evaluador</option>
-                                                        @foreach ($empleados as $empleado)
-                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('listaEvaluados.{{$index}}.evaluadores.3.id') <span class="text-danger">{{ $message }}</span> @enderror
-                                                </td>
+                                                    <td style="text-align: left !important;">
+                                                        {{-- <p>{{$listaEvaluado['evaluadores']['subordinado']['id']}}</p> --}}
+                                                        <select name="" id="" class="form-control"
+                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.subordinado.id">
+                                                            <option value="" selected>Selecciona un evaluador</option>
+                                                            @foreach ($empleados as $empleado)
+                                                                <option value="{{ $empleado->id }}">
+                                                                    {{ $empleado->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('listaEvaluados.{{ $index }}.evaluadores.3.id')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </td>
                                                 @else
-                                                <td style="text-align: left !important;">
-                                                    {{-- <p>{{$listaEvaluado['evaluadores']['subordinado']['id']}}</p> --}}
-                                                    <select name="" id="" class="form-control" wire:model.defer="listaEvaluados.{{$index}}.evaluadores.subordinado.id" >
-                                                        <option value="" selected >Selecciona un evaluador</option>
-                                                        @foreach ($empleados as $empleado)
-                                                            <option value="{{$empleado->id}}">{{$empleado->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('listaEvaluados.{{$index}}.evaluadores.3.id') <span class="text-danger">{{ $message }}</span> @enderror
-                                                </td>
+                                                    <td style="text-align: left !important;">
+                                                        {{-- <p>{{$listaEvaluado['evaluadores']['subordinado']['id']}}</p> --}}
+                                                        <select name="" id="" class="form-control"
+                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.subordinado.id">
+                                                            <option value="" selected>Selecciona un evaluador</option>
+                                                            @foreach ($empleados as $empleado)
+                                                                <option value="{{ $empleado->id }}">
+                                                                    {{ $empleado->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('listaEvaluados.{{ $index }}.evaluadores.3.id')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </td>
                                                 @endisset
                                                 {{-- @foreach ($listaEvaluado['evaluadores'] as $evaluador)
                                                     {{count($listaEvaluado['evaluadores'])}}
-                                                    @if(array_key_exists('tipo', $evaluador))
+                                                    @if (array_key_exists('tipo', $evaluador))
                                                         @if ($evaluador['tipo'] == 0)
                                                             <td style="text-align: left !important;">
                                                                     {{$evaluador['empleado']->name}}
@@ -1139,6 +1166,17 @@
                                 <p class="m-0 text-muted"><i class="fas fa-info-circle"></i>
                                     Define los periodos que requieras para la evaluación
                                 </p> --}}
+                                @if ($hayEmpleadosSinCompetencias)
+                                    <div class="alert alert-danger" role="alert">
+                                        Existen {{ $totalEmpleadosSinCompetencias }} empleados que no contienen
+                                        competencias
+                                        <ul>
+                                            @foreach ($listaEmpleadosSinCompetencias as $eSinCompetencias)
+                                                <li>{{ $eSinCompetencias }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="px-1 py-2 mb-3 rounded shadow-sm"
                                     style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                     <div class="row w-100">
@@ -1390,14 +1428,13 @@
         })
 
         $('#ddlViewBy').on('load', function() {
-            console.log( $("option:selected", this));
+            console.log($("option:selected", this));
 
             /*
             this.$('.textbox').hide();
             var myTag = element.attr("myTag");
             */
         }());
-
     </script>
 
 </div>

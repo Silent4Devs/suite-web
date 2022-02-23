@@ -48,6 +48,10 @@
 
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- PWA  -->
+    <meta name="theme-color" content="#6777ef" />
+    <link rel="apple-touch-icon" href="{{ asset('/img/logo_policromatico.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
     <style type="text/css">
         .material-modulos {
             font-size: 50px;
@@ -1077,7 +1081,7 @@
                                         style="max-width: 65px;clip-path: circle(50% at 50% 50%);"
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
                                         alt="" srcset=""> --}}
-                                    <p class="m-0 text-muted mt-2" style="font-size:14px">
+                                    <p class="m-0 mt-2 text-muted" style="font-size:14px">
                                         Hola, <strong>{{ auth()->user()->empleado->name }}</strong></p>
                                 @else
                                     <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
@@ -1585,7 +1589,14 @@
 
     @yield('scripts')
 
-
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
 
 </body>
 

@@ -178,13 +178,13 @@
                         let html = '<div>';
                         let titulo = "";
                         data.forEach(competencia => {
-                            if (competencia.competencia.existe_imagen_en_servidor) {
-                                titulo = competencia.competencia.nombre;
+                            if (competencia.competencia?.existe_imagen_en_servidor) {
+                                titulo = competencia.competencia?.nombre;
                             } else {
                                 titulo = "No se encontró el recurso para esta competencia";
                             }
                             html += `
-                                <img class="imagen-responsiva" src="${competencia.competencia.imagen_ruta}" title="${titulo}"/>
+                                <img class="imagen-responsiva" src="${competencia.competencia?.imagen_ruta}" title="${titulo}"/>
                                 `;
                         });
                         html += '</div>';
@@ -243,6 +243,4 @@
        <script>
         $('#myTable').ddTableFilter();
         </script> --}}
-
-
 @endsection

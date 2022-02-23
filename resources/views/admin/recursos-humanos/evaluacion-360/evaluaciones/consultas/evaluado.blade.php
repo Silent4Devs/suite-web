@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    {{ Breadcrumbs::render('EV360-Evaluacion-Consulta-Evaluado', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado]) }}
+    {{ Breadcrumbs::render('EV360-Evaluacion-Consulta-Evaluado', ['evaluacion' => $evaluacion,'evaluado' => $evaluado]) }}
 
     <style>
         .fs-consulta {
@@ -167,7 +167,7 @@
                 </div>
 
                 <div class="mt-2">
-                    <span style="font-size: 11px">{{ $lista_equipo_a_cargo->first()['tipo'] }}</span>
+                    <span style="font-size: 11px">Subordinado</span>
                     <span style="font-size: 11px">{{ $lista_equipo_a_cargo->first()['peso_general'] }}%</span>
                     @forelse ($lista_equipo_a_cargo->first()['evaluaciones'] as $evaluador)
                         @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'equipo'])
@@ -180,7 +180,7 @@
                 </div>
 
                 <div class="mt-2">
-                    <span style="font-size: 11px">{{ $lista_misma_area->first()['tipo'] }}</span>
+                    <span style="font-size: 11px">Par</span>
                     <span style="font-size: 11px">{{ $lista_misma_area->first()['peso_general'] }}%</span>
                     @forelse ($lista_misma_area->first()['evaluaciones'] as $evaluador)
                         @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'misma_area'])
@@ -247,7 +247,7 @@
                                     Evaluación realizada por:
                                     <strong> {{ $evaluador['nombre'] }}</strong>
                                     @if ($evaluador['esAutoevaluacion'])
-                                        <span class="badge badge-primary">Autoevaluación</span>
+                                        <span class="badge badge-primary">Meta</span>
                                     @endif
                                     @if ($evaluador['esSupervisor'])
                                         <span class="badge badge-success">Supervisor</span>
@@ -382,10 +382,10 @@
             let data = {
                 labels: labels,
                 datasets: [{
-                    label: 'Autoevaluación',
+                    label: 'Meta',
                     backgroundColor: 'rgb(46, 204, 65)',
                     borderColor: 'rgb(46, 204, 65)',
-                    data: @json($calificaciones_autoevaluacion_competencias),
+                    data: @json($nivelesEsperadosCompetencias),
                 }, {
                     label: 'Jefe Inmediato',
                     backgroundColor: 'rgb(46, 106, 204)',
@@ -400,7 +400,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Autoevaluación vs Jefe Inmediato',
+                            text: 'Meta vs Calificación Jefe Inmediato',
                         }
                     }
                 }
@@ -414,10 +414,10 @@
             let dataEquipo = {
                 labels: labelsEquipo,
                 datasets: [{
-                    label: 'Autoevaluación',
+                    label: 'Meta',
                     backgroundColor: 'rgb(46, 204, 65)',
                     borderColor: 'rgb(46, 204, 65)',
-                    data: @json($calificaciones_autoevaluacion_competencias),
+                    data: @json($nivelesEsperadosCompetencias),
                 }, {
                     label: 'Equipo a cargo',
                     backgroundColor: 'rgb(46, 106, 204)',
@@ -432,7 +432,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Autoevaluación vs Equipo a cargo',
+                            text: 'Meta vs Calificación Subordinado',
                         }
                     }
                 }
@@ -446,12 +446,12 @@
             let dataArea = {
                 labels: labelsArea,
                 datasets: [{
-                    label: 'Autoevaluación',
+                    label: 'Meta',
                     backgroundColor: 'rgb(46, 204, 65)',
                     borderColor: 'rgb(46, 204, 65)',
-                    data: @json($calificaciones_autoevaluacion_competencias),
+                    data: @json($nivelesEsperadosCompetencias),
                 }, {
-                    label: 'Misma área',
+                    label: 'Par',
                     backgroundColor: 'rgb(46, 106, 204)',
                     borderColor: 'rgb(46, 106, 204)',
                     data: @json($calificaciones_area_competencias),
@@ -464,7 +464,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Autoevaluación vs Misma área',
+                            text: 'Meta vs Calificación Par',
                         }
                     }
                 }
@@ -477,8 +477,8 @@
             const dataRadar = {
                 labels: @json($competencias_lista_nombre),
                 datasets: [{
-                        label: 'Autoevaluación',
-                        data: @json($calificaciones_autoevaluacion_competencias),
+                        label: 'Meta',
+                        data: @json($nivelesEsperadosCompetencias),
                         fill: true,
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         borderColor: 'rgb(255, 99, 132)',
@@ -498,7 +498,7 @@
                         pointHoverBorderColor: 'rgb(192, 57, 43)'
                     },
                     {
-                        label: 'Equipo a cargo',
+                        label: 'Subordinado',
                         data: @json($calificaciones_equipo_competencias),
                         fill: true,
                         backgroundColor: 'rgba(46, 204, 65, 0.2)',
@@ -508,7 +508,7 @@
                         pointHoverBackgroundColor: '#fff',
                         pointHoverBorderColor: 'rgb(46, 204, 65)'
                     }, {
-                        label: 'Misma Área',
+                        label: 'Par',
                         data: @json($calificaciones_area_competencias),
                         fill: true,
                         backgroundColor: 'rgba(230, 126, 34, 0.2)',
