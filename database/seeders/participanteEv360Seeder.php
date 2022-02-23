@@ -18,7 +18,7 @@ class participanteEv360Seeder extends Seeder
      */
     public function run()
     {
-        $evaluacionID = 27;
+        $evaluacionID = 21;
         $evaluadoID = 158;
         $evaluacion = Evaluacion::find($evaluacionID);
         $evaluacion->evaluados()->attach($evaluadoID);
