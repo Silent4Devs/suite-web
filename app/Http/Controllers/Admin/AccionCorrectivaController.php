@@ -107,7 +107,8 @@ class AccionCorrectivaController extends Controller
                 return $row->causaorigen ? $row->causaorigen : '';
             });
             $table->addColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
+                return $row->descripcion ? html_entity_decode(strip_tags($row->descripcion), ENT_QUOTES, 'UTF-8') : 'n/a';
+
             });
             $table->addColumn('comentarios', function ($row) {
                 return $row->comentarios ? $row->comentarios : '';
