@@ -29,8 +29,8 @@
             </div>
 
             <div class="row">
-                <div class="mt-3 col-md-4">
-                    Seleccione el metódo de análisis
+                <div class="mt-3 col-md-4 ml-6">
+                    Seleccione el métpdo de análisis
                 </div>
                 <div class="col-md-8">
                     <select id="select_metodos" class="form-control" name="metodo">
@@ -131,8 +131,9 @@
                 </div>
             </div>
             <div class="py-3 text-right col-12">
-                <input type="submit" class="btn btn-success">
+                <input type="submit" class="btn btn-success" value="Guardar">
             </div>
         </form>
     </div>
+
 </div>

@@ -53,12 +53,12 @@ class AccionCorrectiva extends Model implements HasMedia
     ];
 
     const CAUSAORIGEN_SELECT = [
-        'desviacion_proceso'    => 'Desviación en los procesos',
-        'queja_cliente'         => 'Queja de un cliente',
-        'auditoria_interna'     => 'Auditoría Interna',
-        'desviacion_inicadores' => 'Desviación a los indicadores',
-        'incumplimiento_ns'     => 'Incumplimiento a los niveles de servicio',
-        'otro'                  => 'Otro',
+        'Desviación en los procesos' => 'Desviación en los procesos',
+        'Queja de un cliente' => 'Queja de un cliente',
+        'Auditoria Interna' => 'Auditoría Interna',
+        'Desviación a los indicadores' => 'Desviación a los indicadores',
+        'Incumplimiento a los niveles de servicio' => 'Incumplimiento a los niveles de servicio',
+        'otro' => 'Otro',
     ];
 
     protected $fillable = [
