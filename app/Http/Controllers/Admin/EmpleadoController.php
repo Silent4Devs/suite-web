@@ -950,10 +950,21 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show($id)
-    // {
-    //     //
-    // }
+    public function show($id)
+    {
+
+        $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($id));
+        $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
+        $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
+        $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
+        $certificados = CertificacionesEmpleados::where('empleado_id', intval($id))->get();
+        $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
+        $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
+        $empleado = Empleado::get();
+
+
+        return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -1569,11 +1580,8 @@ class EmpleadoController extends Controller
 
     public function datosEmpleado($id)
     {
-        // dd('funciona');
-        // $visualizarEmpleados = Empleado::with('supervisor')->get();
-        // dd($prueba);
+
         $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($id));
-        // dd($visualizarEmpleados);
         $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
         $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
         $beneficiarios = BeneficiariosEmpleado::where('empleado_id', intval($id))->get();
@@ -1582,7 +1590,6 @@ class EmpleadoController extends Controller
         $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
         $empleado = Empleado::get();
 
-        // dd($visualizarEmpleados);
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
