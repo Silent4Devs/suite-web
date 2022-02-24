@@ -131,8 +131,9 @@
                 </div>
             </div>
             <div class="py-3 text-right col-12">
-                <input type="submit" class="btn btn-success">
+                <input type="submit" class="btn btn-success" value="Guardar">
             </div>
         </form>
     </div>
+
 </div>
