@@ -29,8 +29,8 @@
             </div>
 
             <div class="row">
-                <div class="mt-3 col-md-4">
-                    Seleccione el metódo de análisis
+                <div class="mt-3 col-md-4 ml-6">
+                    Seleccione el métpdo de análisis
                 </div>
                 <div class="col-md-8">
                     <select id="select_metodos" class="form-control" name="metodo">
