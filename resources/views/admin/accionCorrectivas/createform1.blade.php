@@ -7,7 +7,7 @@
 
 
     <div class="form-group col-md-8 col-lg-8 col-sm-12">
-        <label for="tema"><i class="fas fa-text-width iconos-crear"></i>Título corto del incidente
+        <label for="tema"><i class="fas fa-text-width iconos-crear"></i>Título corto de la acción correctiva
         </label>
         <input class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" name="tema" id="tema"
             {{ old('tema') }}>

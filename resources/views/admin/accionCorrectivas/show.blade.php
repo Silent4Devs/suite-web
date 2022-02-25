@@ -102,7 +102,7 @@
                                         Descripción</span>
                                 </div>
                                 <div class="form-group">
-                                    <span>{!!$accionCorrectiva->descripcion ?? 'sin registro' !!}  </span>
+                                    <span style="text-align: justify;">{!!$accionCorrectiva->descripcion ?? 'sin registro' !!}  </span>
                                 </div>
                                 <div class="form-group">
                                     <span style="text-align: justify;"><strong style="color:#0CA193;">Área(s) afectada(s) : </strong>{{$accionCorrectiva->areas ?? 'sin registro' }}  </span>
