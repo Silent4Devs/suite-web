@@ -662,6 +662,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
     Route::resource('activos', 'ActivosController');
 
+    Route::get('activosInformacion/descargar', 'ActivosInformacionController@DescargaFormato')->name('activosInformacion.descargar');
+    Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
+    Route::resource('activosInformacion', 'ActivosInformacionController');
+
     // Marca
     Route::get('marcas/get-marcas', 'MarcaController@getMarcas')->name('marcas.getMarcas');
     Route::resource('marcas', 'MarcaController');

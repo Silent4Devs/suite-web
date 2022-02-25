@@ -10,6 +10,7 @@ use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Marca;
 use App\Models\Modelo;
+use App\Models\Proceso;
 use App\Models\Sede;
 use App\Models\SubcategoriaActivo;
 use App\Models\Team;
@@ -146,6 +147,7 @@ class ActivosController extends Controller
         $ubicacions = Sede::all()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $empleados = Empleado::with('area')->get();
+        $procesos = Proceso::with('macroproceso')->get();
 
         $area = Area::get();
 
@@ -154,7 +156,7 @@ class ActivosController extends Controller
         $modelos = Modelo::get();
         $tipos = Tipoactivo::get();
 
-        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos'));
+        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos','procesos'));
     }
 
     public function store(Request $request)

@@ -4,7 +4,7 @@
     {{ Breadcrumbs::render('admin.evidencias-sgsis.create') }}
     <h5 class="col-12 titulo_general_funcion">Editar: Evidencias de Asignación de Recursos al SGSI</h5>
     <div class="mt-4 card">
- 
+
         <div class="card-body">
             <form method="POST" class="row"
                 action="{{ route('admin.evidencias-sgsis.update', [$evidenciasSgsi->id]) }}"
