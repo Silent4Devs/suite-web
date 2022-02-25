@@ -41,9 +41,16 @@
     <div class="mb-3 text-right">
         <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/mejoras')}}">Crear reporte</a>
     </div>
-
-   <table class="table tabla_mejoras">
+    {{-- @foreach($mejoras as $mejora)
+        {{$mejora->mejoro}}
+    @endforeach --}}
+   <table class="table tabla_mejoras" id="tabla_mejoras">
    		<thead>
+            <tr style="border: none !important;">
+                <th colspan="4" style="background-color: #F5F7FA;"></th>
+                <th colspan="7" style="border:1px solid #ccc; text-align:center;">Reporto</th>
+
+            </tr>
    			<tr>
        			<th>Folio</th>
                 <th style="min-width:200px;">Estatus</th>
@@ -51,11 +58,12 @@
                 <th style="min-width:200px;">Fecha de recepción</th>
                 <th style="min-width:200px;">Fecha de cierre</th>
        			<th style="min-width:200px;">Nombre</th>
+                <th style="min-width:200px;">Área</th>
+                <th style="min-width:200px;">Puesto</th>
        			<th style="min-width:200px;">Correo</th>
        			<th style="min-width:200px;">Teléfono</th>
                 <th style="min-width: 500px;">Mejora</th>
                 <th style="min-width:200px;">Tipo de mejora</th>
-                <th style="min-width:200px;">Área</th>
                 <th style="min-width:200px;">Proceso</th>
        			<th style="min-width: 500px;">Descripción</th>
                 <th style="min-width: 500px;">Beneficios</th>
@@ -187,8 +195,16 @@
             //     dtButtons.push(btnAgregar)
             if (!$.fn.dataTable.isDataTable('.tabla_mejoras')) {
                 window.tabla_mejoras_desk = $(".tabla_mejoras").DataTable({
-                    ajax: '/admin/desk/mejoras',
                     buttons: dtButtons,
+                    ajax: '/admin/desk/mejoras',
+                    columnDefs: [
+                        {
+                            "targets": [ 2,3,4,8,9,10,12,14 ],
+                            "visible": false,
+                            "searchable": true
+                        },
+
+                    ],
                     columns: [
                         // {data: 'id'},
                         {
@@ -215,6 +231,15 @@
                             }
                         },
                         {
+                            data: 'area_mejora'
+                        },
+                        {
+                            data: 'id',
+                            render: function(data, type, row, meta) {
+                                return `${row.mejoro.puesto}`;
+                            }
+                        },
+                        {
                             data: 'id',
                             render: function(data, type, row, meta) {
                                 return `${row.mejoro.email}`;
@@ -232,9 +257,6 @@
                         },
                         {
                             data: 'tipo'
-                        },
-                        {
-                            data: 'area_mejora'
                         },
                         {
                             data: 'proceso_mejora'
@@ -265,9 +287,9 @@
                             }
                         },
                     ],
-                        order:[
-                            [0,'desc']
-                        ]
+                    order:[
+                        [0,'desc']
+                    ]
                 });
             }
 
