@@ -70,7 +70,7 @@
             <div class="row" style="position: relative; height:35px;">
                 <button class="btn btn-danger" style="position: absolute; right:20px;" onclick="printJS({
                     printable: 'impreso_row',
-                    type: 'html', 
+                    type: 'html',
                     css: '{{ asset('css/print_comunicados.css') }}',})">
                     <i class="fas fa-print"></i>
                     Imprimir
@@ -101,7 +101,7 @@
                         <p>
                             {{ \Carbon\Carbon::parse($comunicacionSgi->fecha_publicacion)->format('d-m-Y') }}
                             &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;
-                            <a href="{{$comunicacionSgi->link}}">{{$comunicacionSgi->link}}</a>
+                            <a href="{{$comunicacionSgi->link}}" target="_blank">{{$comunicacionSgi->link}}</a>
                             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                             Publicado en: {{$comunicacionSgi->publicar_en}}
                         </p>
