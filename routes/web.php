@@ -885,6 +885,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('matriz-riesgos/planes-de-accion/store/{id}', 'MatrizRiesgosController@storePlanAccion')->name('matriz-riesgos.storePlanAccion');
     Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
     Route::resource('matriz-riesgos', 'MatrizRiesgosController');
+    Route::get('matriz-riesgo/octave', 'MatrizRiesgosController@octave')->name('matriz-riesgos.octave');
+    Route::get('matriz-seguridad/octave/index', 'MatrizRiesgosController@octaveIndex')->name('matriz-seguridad.octaveIndex');
+    Route::get('matriz-seguridad/ISO31000', 'MatrizRiesgosController@ISO31000')->name('matriz-seguridad.ISO31000');
+    Route::get('matriz-seguridad/ISO31000/create', 'MatrizRiesgosController@ISO31000Create')->name('matriz-seguridad.ISO31000Create');
     Route::post('matriz-riesgos/parse-csv-import', 'MatrizRiesgosController@parseCsvImport')->name('matriz-riesgos.parseCsvImport');
     Route::get('matriz-seguridad', 'MatrizRiesgosController@SeguridadInfo')->name('matriz-seguridad');
     Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
