@@ -12,6 +12,7 @@ class CategoriaSubcategoria extends Component
     public $categorias;
     public $subcategorias;
     public $categoria;
+    public $activo;
     public $subcategoria;
     public $categoriaSelect = 4;
 

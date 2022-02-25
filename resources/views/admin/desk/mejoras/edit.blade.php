@@ -79,7 +79,7 @@
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control" id="opciones"
+                                <select name="estatus" class="form-control select2" id="opciones"
                                     onchange='cambioOpciones();'>
                                     <option {{ old('estatus', $mejoras->estatus) == 'nuevo' ? 'selected' : '' }}
                                         value="nuevo">Nuevo</option>
@@ -206,7 +206,7 @@
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción de
                                     la
                                     mejora<sup>*</sup></label>
-                                <textarea name="descripcion"
+                                <textarea name="descripcion" id="descripcion"
                                     class="form-control" required>{{ $mejoras->descripcion }}</textarea>
                             </div>
 
@@ -214,7 +214,7 @@
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Beneficios de
                                     la
                                     mejora<sup>*</sup></label>
-                                <textarea name="beneficios"
+                                <textarea id="beneficios" name="beneficios"
                                     class="form-control" required>{{ $mejoras->beneficios }}</textarea>
                             </div>
 
@@ -254,12 +254,12 @@
                                 Seleccione el metódo de análisis
                             </div>
                             <div class="col-md-8">
-                                <select id="select_metodos" class="form-control">
+                                <select id="select_metodos" class="form-control" name="metodo">
                                     <option selected disabled>- -</option>
-                                    <option class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
+                                    <option {{ old('Lluvia de ideas (Brainstorming)', $analisis?$analisis->metodo:'') == 'Lluvia de ideas (Brainstorming)' ? 'selected' : '' }} class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
                                     </option>
-                                    <option class="op_porque" data-metodo="porque">5 Porqués (5 Why)</option>
-                                    <option class="op_digrama" data-metodo="digrama">Diagrama causa efecto
+                                    <option {{ old('5 Porqués (5 Why)', $analisis?$analisis->metodo:'') == '5 Porqués (5 Why)' ? 'selected' : '' }} class="op_porque" data-metodo="porque">5 Porqués (5 Why)</option>
+                                    <option {{ old('Diagrama causa efecto (Ishikawa)', $analisis?$analisis->metodo:'') == 'Diagrama causa efecto (Ishikawa)' ? 'selected' : '' }} class="op_digrama" data-metodo="digrama">Diagrama causa efecto
                                         (Ishikawa)
                                     </option>
                                 </select>
@@ -516,6 +516,10 @@
         var metodo_v = $("#select_metodos option:selected").attr('data-metodo');
         $(document.getElementById(metodo_v)).addClass("d-block");
     });
+    $(document).ready(function() {
+        var metodo_v = $("#select_metodos option:selected").attr('data-metodo');
+        $(document.getElementById(metodo_v)).addClass("d-block");
+    });
 </script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
@@ -653,5 +657,114 @@
 
     }
 </script>
+<script>
+    $(document).ready(function() {
+        CKEDITOR.replace('descripcion', {
+            toolbar: [{
+                    name: 'styles',
+                    items: ['Styles', 'Format', 'Font', 'FontSize']
+                },
+                {
+                    name: 'colors',
+                    items: ['TextColor', 'BGColor']
+                },
+                {
+                    name: 'editing',
+                    groups: ['find', 'selection', 'spellchecker'],
+                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                }, {
+                    name: 'clipboard',
+                    groups: ['undo'],
+                    items: ['Undo', 'Redo']
+                },
+                {
+                    name: 'tools',
+                    items: ['Maximize']
+                },
+                {
+                    name: 'basicstyles',
+                    groups: ['basicstyles', 'cleanup'],
+                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                        '-',
+                        'CopyFormatting', 'RemoveFormat'
+                    ]
+                },
+                {
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'Blockquote',
+                        '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                        'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                    ]
+                },
+                {
+                    name: 'links',
+                    items: ['Link', 'Unlink']
+                },
+                {
+                    name: 'insert',
+                    items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                },
+                '/',
+            ]
+        });
 
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        CKEDITOR.replace('beneficios', {
+            toolbar: [{
+                    name: 'styles',
+                    items: ['Styles', 'Format', 'Font', 'FontSize']
+                },
+                {
+                    name: 'colors',
+                    items: ['TextColor', 'BGColor']
+                },
+                {
+                    name: 'editing',
+                    groups: ['find', 'selection', 'spellchecker'],
+                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                }, {
+                    name: 'clipboard',
+                    groups: ['undo'],
+                    items: ['Undo', 'Redo']
+                },
+                {
+                    name: 'tools',
+                    items: ['Maximize']
+                },
+                {
+                    name: 'basicstyles',
+                    groups: ['basicstyles', 'cleanup'],
+                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                        '-',
+                        'CopyFormatting', 'RemoveFormat'
+                    ]
+                },
+                {
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'Blockquote',
+                        '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                        'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                    ]
+                },
+                {
+                    name: 'links',
+                    items: ['Link', 'Unlink']
+                },
+                {
+                    name: 'insert',
+                    items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                },
+                '/',
+            ]
+        });
+
+    });
+</script>
 @endsection

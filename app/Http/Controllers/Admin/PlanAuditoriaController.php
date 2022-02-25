@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
+use App\Models\Team;
+use App\Models\Puesto;
+use App\Models\Empleado;
+use Illuminate\Http\Request;
 use App\Functions\GeneratePdf;
+use App\Models\AuditoriaAnual;
+use App\Models\PlanAuditorium;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyPlanAuditoriumRequest;
+use Yajra\DataTables\Facades\DataTables;
+use App\Models\ActividadesPlanAuditorium;
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\StorePlanAuditoriumRequest;
 use App\Http\Requests\UpdatePlanAuditoriumRequest;
-use App\Models\AuditoriaAnual;
-use App\Models\Empleado;
-use App\Models\PlanAuditorium;
-use App\Models\Team;
-use Gate;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\MassDestroyPlanAuditoriumRequest;
 
 class PlanAuditoriaController extends Controller
 {
@@ -89,7 +91,14 @@ class PlanAuditoriaController extends Controller
 
         $equipoauditorias = Empleado::get();
 
-        return view('admin.planAuditoria.create', compact('equipoauditorias'));
+        $empleados = Empleado::get();
+
+        $puesto = Puesto::get();
+
+        $actividadesAuditoria = ActividadesPlanAuditorium::get();
+
+
+        return view('admin.planAuditoria.create', compact('equipoauditorias' ,'empleados','puesto' ,'actividadesAuditoria'));
     }
 
     public function store(StorePlanAuditoriumRequest $request)
@@ -98,6 +107,8 @@ class PlanAuditoriaController extends Controller
         // $generar = new GeneratePdf();
         // $generar->Generate($request['pdf-value'], $planAuditorium);
         $planAuditorium->auditados()->sync($request->equipo);
+        $this->saveUpdateAuditados($request->auditados, $planAuditorium);
+
 
         return redirect()->route('admin.plan-auditoria.index');
     }
@@ -113,7 +124,9 @@ class PlanAuditoriaController extends Controller
 
         $equipoauditorias = Empleado::get();
 
-        return view('admin.planAuditoria.edit', compact('equipoauditorias', 'planAuditorium', 'equipo_seleccionado'));
+        $actividadesAuditoria = ActividadesPlanAuditorium::get();
+
+        return view('admin.planAuditoria.edit', compact('equipoauditorias', 'planAuditorium', 'equipo_seleccionado','actividadesAuditoria'));
     }
 
     public function update(UpdatePlanAuditoriumRequest $request, PlanAuditorium $planAuditorium)
@@ -121,6 +134,7 @@ class PlanAuditoriaController extends Controller
         $planAuditorium->update($request->all());
         // $planAuditorium->auditados()->sync($request->input('auditados', []));
         $planAuditorium->auditados()->sync($request->equipo);
+        $this->saveUpdateAuditados($request->auditados, $planAuditorium);
 
         return redirect()->route('admin.plan-auditoria.index');
     }
@@ -149,4 +163,35 @@ class PlanAuditoriaController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+
+    public function saveUpdateAuditados($auditados, $planAuditorium)
+    {
+        if (!is_null($auditados)) {
+            foreach ($auditados as $auditado) {
+                // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
+                if (ActividadesPlanAuditorium::find($auditado['id']) != null) {
+                    ActividadesPlanAuditorium::find($auditado['id'])->update([
+                        'actividad_auditar' =>  $auditado['actividad_auditar'],
+                        'fecha_act_auditoria' =>  $auditado['fecha_act_auditoria'],
+                        'hora_inicio' =>  $auditado['hora_inicio'],
+                        'hora_fin' =>  $auditado['hora_fin'],
+                        'id_contacto' => $auditado['id_contacto'],
+                    ]);
+                } else {
+                    ActividadesPlanAuditorium::create([
+                        'plan_auditoria_id' => $planAuditorium->id,
+                        'actividad_auditar' =>  $auditado['actividad_auditar'],
+                        'actividad_auditar' =>  $auditado['actividad_auditar'],
+                        'fecha_act_auditoria' =>  $auditado['fecha_act_auditoria'],
+                        'hora_inicio' =>  $auditado['hora_inicio'],
+                        'hora_fin' =>  $auditado['hora_fin'],
+                        'id_contacto' => $auditado['id_contacto'],
+                    ]);
+                }
+            }
+        }
+        // dd($contactos);
+    }
+
 }
