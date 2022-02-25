@@ -255,7 +255,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -394,10 +395,14 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-                        let reporto = JSON.parse(row.reporto);
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${reporto?.avatar}" title="${reporto?.name}"></img>`;
+                            let reporto = JSON.parse(row.reporto);
+                            if (type === "empleadoText") {
+                                return reporto.name;
+                            }else{
+                                let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${reporto?.avatar}" title="${reporto?.name}"></img>`;
 
-                            return `${reporto ? html: ''}`;
+                                return `${reporto ? html: ''}`;
+                            }
                         }
                     },
                     {
@@ -409,8 +414,18 @@
                         name: 'reporto_area'
                     },
                     {
-                        data: 'registro',
-                        name: 'registro'
+                        data: 'empleados',
+                        name: 'empleados',
+                        render: function(data, type, row, meta) {
+                            if (type === "empleadoText") {
+                                return data.name;
+                            }
+                            let reporto = "";
+                            if(data) {
+                                reporto += `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${data.avatar}" title="${data.name}"></img>`;
+                            }
+                            return reporto;
+                        }
                     },
                     {
                         data: 'registro_puesto',
