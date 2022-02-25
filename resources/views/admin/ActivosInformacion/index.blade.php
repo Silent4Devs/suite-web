@@ -84,28 +84,29 @@
                 <tbody>
                 <tr>
                     <td>
-                        1
+                        AB-1
                     </td>
                     <td>
-                        2
+                        Juan Manuel
                     </td>
                     <td>
-                       3
+                       Daniel Perez
                     </td>
                     <td>
-                       4
+                       Miguel Gaspar
                     </td>
                     <td>
-                        5
+                        Pedro Garcia
                     </td>
                     <td>
-                       6
+                       Contrato
                     </td>
                     <td>
-                        Responsable
+                        PDF
                     </td>
                     <td>
-                        Sede
+                        <i class="fas fa-trash"></i>
+                        <i class="fas fa-folder-minus"></i>
                     </td>
                 </tr>
 
