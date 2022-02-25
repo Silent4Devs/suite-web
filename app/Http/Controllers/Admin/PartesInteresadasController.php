@@ -57,10 +57,13 @@ class PartesInteresadasController extends Controller
             });
 
             $table->editColumn('norma', function ($row) {
-                $iso = substr($row->clausulas[0]->modulo, 0, 3);
-                $num = substr($row->clausulas[0]->modulo, 3);
+                if (count($row->clausulas)) {
+                    $iso = substr($row->clausulas[0]->modulo, 0, 3);
+                    $num = substr($row->clausulas[0]->modulo, 3);
 
-                return $row->clausulas ? strtoupper($iso . ' ' . $num) : '';
+                    return $row->clausulas ? strtoupper($iso . ' ' . $num) : '';
+                }
+                return 'sin clausula';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

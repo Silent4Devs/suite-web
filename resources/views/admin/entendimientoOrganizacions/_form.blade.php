@@ -26,9 +26,9 @@
 
 
         <div class="form-group col-sm-12 col-md-6 col-lg-6">
-        <label for="id_asignada"><i class="fas fa-user-tie iconos-crear"></i>Colaborador</label>
-        <select class="form-control  {{ $errors->has(' id_asignada') ? 'is-invalid' : '' }}"
-            name="id_asignada" id="id_asignada">
+        <label for="id_elabora"><i class="fas fa-user-tie iconos-crear"></i>Colaborador</label>
+        <select class="form-control  {{ $errors->has(' id_elabora') ? 'is-invalid' : '' }}"
+            name="id_elabora" id="id_elabora">
             <option value="">Seleccione una opción</option>
             @foreach ($empleados as $empleado)
                 <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
@@ -37,9 +37,9 @@
                 </option>
             @endforeach
         </select>
-        @if ($errors->has(' id_asignada'))
+        @if ($errors->has(' id_elabora'))
             <div class="invalid-feedback">
-                {{ $errors->first(' id_asignada') }}
+                {{ $errors->first(' id_elabora') }}
             </div>
         @endif
     </div>
@@ -119,7 +119,7 @@
 
         document.addEventListener('DOMContentLoaded', function(e) {
 
-            let asignado = document.querySelector('#id_asignada');
+            let asignado = document.querySelector('#id_elabora');
             let area_init = asignado.options[asignado.selectedIndex].getAttribute('data-area');
             let puesto_init = asignado.options[asignado.selectedIndex].getAttribute('data-puesto');
 
