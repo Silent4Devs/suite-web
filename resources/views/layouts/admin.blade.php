@@ -959,6 +959,31 @@
             margin-top: 100px !important;
         }
 
+        .dt-button-collection.dropdown-menu{
+            max-height: 250px;
+            overflow: auto;
+        }
+        .dt-button-collection.dropdown-menu::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+
+        /* Track */
+        .dt-button-collection.dropdown-menu::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0);
+        }
+
+        /* Handle */
+        .dt-button-collection.dropdown-menu::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50px;
+        }
+
+        /* Handle on hover */
+        .dt-button-collection.dropdown-menu::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
     </style>
 
     @yield('styles')

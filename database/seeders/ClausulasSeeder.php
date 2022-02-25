@@ -17,7 +17,7 @@ class ClausulasSeeder extends Seeder
         $clausulas = [
         [
             'nombre' => '4.1 Comprensión de la organización y de su contexto',
-            'modulo' => 'iso27001',
+            // 'modulo' => 'iso27001',
         ],
         ['nombre' => '4.2 Comprensión de las necesidades y expectativas de las partes interesadas'],
         ['nombre' => '4.3 Determinación del alcance del SGSI'],
