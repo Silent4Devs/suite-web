@@ -5,7 +5,18 @@
         <div class="card-body">
             <form method="POST" action="{{ route('admin.activos.store') }}" enctype="multipart/form-data" class="row">
                 @csrf
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-3">
+                    <label class="required " for="nombreactivo_id"><i class="fa-solid fa-list-ol iconos-crear"></i>ID</label>
+                    <input class="form-control select2 {{ $errors->has('nombre_activo') ? 'is-invalid' : '' }}"
+                        name="nombreactivo" id="nombre_activo" required>
+                    @if ($errors->has('nombreactivo'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('nombreactivo') }}
+                        </div>
+                    @endif
+                    <span class="help-block"></span>
+                </div>
+                <div class="form-group col-md-9">
                     <label class="required " for="nombreactivo_id"><i class="fas fa-chart-line iconos-crear"></i>Nombre del
                         Activo</label>
                     <input class="form-control select2 {{ $errors->has('nombre_activo') ? 'is-invalid' : '' }}"
@@ -105,7 +116,7 @@
 
 
                 <div class="form-group col-md-4">
-                    <label for="id_responsable"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
+                    <label for="id_responsable"><i class="fas fa-user-tie iconos-crear"></i>Responsable (Custodio)</label>
                     <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
                         name="id_responsable" id="id_responsable">
                         @foreach ($empleados as $empleado)
@@ -134,6 +145,34 @@
                     <label for="id_area_responsable"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                     <div class="form-control" id="area_responsable"></div>
 
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="id_responsable"><i class="bi bi-file-earmark-post iconos-crear"></i>Proceso</label>
+                        <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
+                            name="id_proceso" id="id_proceso">
+                            @foreach ($procesos as $proceso)
+                                <option data-codigo="{{ $proceso->codigo }}" value="{{ $proceso->id }}"
+                                    data-macroproceso="{{ $proceso->macroproceso->nombre }}">
+                                    {{ $proceso->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @if ($errors->has('empleados'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('area') }}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="codigo_proceso"><i class="fas fa-barcode iconos-crear" style="margin-top: 8px"></i>Codigo</label>
+                    <div class="form-control" id="codigo_proceso"></div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="macroproceso"><i class="bi bi-file-earmark-post-fill iconos-crear"></i>Macroproceso</label>
+                    <div class="form-control" id="macroproceso"></div>
                 </div>
 
 
@@ -195,7 +234,7 @@
                         </div>
 
                         <div style="margin-top:17px;height: 28px !important;margin-left: -10px !important;">
-                            <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+                            <button id="btnAgregarTipo" onclick="event.preventDefault();" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
                             data-toggle="modal" data-target="#marcaslec" data-whatever="@mdo" data-whatever="@mdo" title="Agregar Tipo"><i
                                 class="fas fa-plus"></i></button>
                         </div>
@@ -479,12 +518,24 @@
                 let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
                 document.getElementById('puesto_responsable').innerHTML = puesto_init
                 document.getElementById('area_responsable').innerHTML = area_init
+                let proceso = document.getElementById('id_proceso');
+
+                document.getElementById('codigo_proceso').innerHTML=proceso.options[proceso.selectedIndex].getAttribute('data-codigo')
+                document.getElementById('macroproceso').innerHTML=proceso.options[proceso.selectedIndex].getAttribute('data-macroproceso')
 
                 let dueno = document.querySelector('#dueno_id');
                 let area = dueno.options[dueno.selectedIndex].getAttribute('data-area');
                 let puesto = dueno.options[dueno.selectedIndex].getAttribute('data-puesto');
                 document.getElementById('puesto_dueno').innerHTML = puesto
                 document.getElementById('area_dueno').innerHTML = area
+
+                proceso.addEventListener('change', function(e) {
+                    e.preventDefault();
+                    console.log()
+                    document.getElementById('codigo_proceso').innerHTML=e.target.options[e.target.selectedIndex].getAttribute('data-codigo')
+                    document.getElementById('macroproceso').innerHTML=e.target.options[e.target.selectedIndex].getAttribute('data-macroproceso')
+                })
+
 
                 responsable.addEventListener('change', function(e) {
                     e.preventDefault();

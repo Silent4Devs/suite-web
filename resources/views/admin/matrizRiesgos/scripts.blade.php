@@ -44,7 +44,23 @@
     });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let custodio = document.querySelector('#custodio');
+        let area_init = custodio.options[custodio.selectedIndex].getAttribute('data-area');
+        let puesto_init = custodio.options[custodio.selectedIndex].getAttribute('data-puesto');
 
+        document.getElementById('id_custodio_puesto').innerHTML = puesto_init;
+        document.getElementById('id_custodio_area').innerHTML = area_init;
+        custodio.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('id_custodio_puesto').innerHTML = puesto;
+            document.getElementById('id_custodio_area').innerHTML = area;
+        })
+    });
+</script>
 
     <script>
         $(document).ready(function() {
@@ -335,6 +351,9 @@
         });
     </script>
 
+
+
+
     <script type="text/javascript">
         Livewire.on('planStore', () => {
             $('#planAccionModal').modal('hide');
@@ -370,7 +389,14 @@
 
     </script>
 
+    <script>
+        var numero1 = document.getElementById("numero1").value;
+        var numero2 = document.getElementById("numero2").value;
 
+        var suma = numero1 + numero2;
+
+        document.writeln(suma);
+   </script>
 
 
 @endsection

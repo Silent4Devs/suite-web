@@ -185,7 +185,7 @@
         <div class="modal-content" style="background-color: #1C274A; position:relative; min-width: 600px; width: 90% !important; border:1px solid rgba(255, 255, 255, 0.3);">
             <div class="text-right p-3" data-dismiss="modal" style="font-size: 20px; color:#fff; cursor: pointer;"><i class="fas fa-times"></i></div>
             <div class="modal-body">
-                <video src="{{ asset('img/videos_guia/guia_general.mp4') }}" autoplay controls style="width:100%;"></video>
+                <video src="{{ asset('img/videos_guia/guia_general.mp4') }}"  controls style="width:100%;"></video>
             </div>
         </div>
       </div>
@@ -197,7 +197,7 @@
         <h5 class="titulo_general_funcion">ISO - 27001 - Seguridad de la Información</h5>
         <div class="d-flex">
             <a href="#" class="btn btn-secundario" style="width: 160px !important;" data-toggle="modal" data-target="#modal_guia_general">
-                <i class="far fa-play-circle mr-2"></i> 
+                <i class="far fa-play-circle mr-2"></i>
                 GUÍA GENERAL
             </a>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
