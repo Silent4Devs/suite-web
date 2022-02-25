@@ -55,6 +55,9 @@
         .cdr-rojo{
             background: #FF417B;
         }
+        .caja_secciones section{
+            overflow: unset !important;
+        }
 
     </style>
 
