@@ -23,6 +23,7 @@
             text-align: justify !important;
         }
 
+
     </style>
     <h5 class="col-12 titulo_general_funcion">Acciones Correctivas</h5>
     <div class="mt-5 card">
