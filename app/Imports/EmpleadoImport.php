@@ -60,6 +60,6 @@ class EmpleadoImport implements ToModel
 
     private function obtenerFecha($fecha)
     {
-        return Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($fecha));
+        return Carbon::parse($fecha)->format('Y-m-d');
     }
 }

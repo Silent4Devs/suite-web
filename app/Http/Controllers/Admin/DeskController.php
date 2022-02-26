@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activo;
-use App\Models\AnalisisSeguridad;
+use App\Models\AnalisisSeguridad; //mejora apunta a este modelo
 use App\Models\Area;
 use App\Models\CategoriaIncidente;
 use App\Models\Denuncias;
