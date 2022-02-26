@@ -15,15 +15,17 @@ class MinutasaltadireccionImport implements ToModel
      */
     public function model(array $row)
     {
+
         return new Minutasaltadireccion([
             'objetivoreunion' => $row[0],
             'fechareunion' => $row[1],
-            'hora_inicio' => $row[2],
-            'hora_termino' => $row[3],
-            'tema_reunion' => $row[4],
-            'tema_tratado' => $row[5],
-            'estatus' => $this->obtenerEstatusPorTexto($row[6]),
-            'responsable_id' => $this->obtenerResponsablePorNombre($row[7]),
+            // 'hora_inicio' => $row[2],
+            // 'hora_termino' => $row[3],
+            'tema_reunion' => $row[2],
+            'tema_tratado' => $row[3],
+            'estatus' => $this->obtenerEstatusPorTexto($row[4]),
+            'responsable_id' => $this->obtenerResponsablePorNombre($row[5]),
+
         ]);
     }
 
@@ -52,6 +54,9 @@ class MinutasaltadireccionImport implements ToModel
     {
         $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
 
-        return $empleado_bd->id;
+        if ($empleado_bd) {
+            return $empleado_bd->id;
+        }
+        return null;
     }
 }

@@ -244,7 +244,7 @@
                 <div class="col-md-6">
                     <div class="row align-items-center">
                         <div class="form-group col-md-11">
-                            <label for="modelo">Modelo</label>
+                            <label for="modelo"><i class="fas fa-barcode iconos-crear"></i>Modelo</label>
                             <select class="selecmodelo" name="modelo">
                                 @foreach ($modelos as $modelo)
                                     <option value="{{ $modelo->id }}">{{ $modelo->nombre }}</option>
