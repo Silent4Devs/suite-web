@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activo;
-use App\Models\AnalisisSeguridad;
+use App\Models\AnalisisSeguridad; //mejora apunta a este modelo
 use App\Models\Area;
 use App\Models\CategoriaIncidente;
 use App\Models\Denuncias;
@@ -256,7 +256,6 @@ class DeskController extends Controller
 
             return response()->json(['success' => true]);
         }
-
     }
 
     public function archivoSugerencia()
@@ -276,7 +275,6 @@ class DeskController extends Controller
 
         return redirect()->route('admin.desk.index');
     }
-
 
     public function editRiesgos(Request $request, $id_riesgos)
     {
@@ -491,7 +489,7 @@ class DeskController extends Controller
 
     public function indexDenuncia()
     {
-        $denuncias = Denuncias::with('denuncio','denunciado')->where('archivado', false)->get();
+        $denuncias = Denuncias::with('denuncio', 'denunciado')->where('archivado', false)->get();
 
         return datatables()->of($denuncias)->toJson();
     }
@@ -631,7 +629,6 @@ class DeskController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
-    
     public function updateAnalisisMejoras(Request $request, $id_mejoras)
     {
         $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_mejoras));
@@ -662,7 +659,6 @@ class DeskController extends Controller
 
         return redirect()->route('admin.desk.mejoras-edit', $analisis_seguridad->mejoras_id)->with('success', 'Reporte actualizado');
     }
-
 
     public function archivadoMejora(Request $request, $incidente)
     {

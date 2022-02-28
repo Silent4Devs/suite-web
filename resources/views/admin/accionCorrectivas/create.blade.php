@@ -274,4 +274,116 @@
                     });
                 </script>
 
+                <script>
+                    $(document).ready(function() {
+                        CKEDITOR.replace('descripcion', {
+                            toolbar: [{
+                                    name: 'styles',
+                                    items: ['Styles', 'Format', 'Font', 'FontSize']
+                                },
+                                {
+                                    name: 'colors',
+                                    items: ['TextColor', 'BGColor']
+                                },
+                                {
+                                    name: 'editing',
+                                    groups: ['find', 'selection', 'spellchecker'],
+                                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                                }, {
+                                    name: 'clipboard',
+                                    groups: ['undo'],
+                                    items: ['Undo', 'Redo']
+                                },
+                                {
+                                    name: 'tools',
+                                    items: ['Maximize']
+                                },
+                                {
+                                    name: 'basicstyles',
+                                    groups: ['basicstyles', 'cleanup'],
+                                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                                        '-',
+                                        'CopyFormatting', 'RemoveFormat'
+                                    ]
+                                },
+                                {
+                                    name: 'paragraph',
+                                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                                        'Blockquote',
+                                        '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                                        'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                                    ]
+                                },
+                                {
+                                    name: 'links',
+                                    items: ['Link', 'Unlink']
+                                },
+                                {
+                                    name: 'insert',
+                                    items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                                },
+                                '/',
+                            ]
+                        });
+
+                    });
+                </script>
+                <script>
+                    $(document).ready(function() {
+                        CKEDITOR.replace('comentarios', {
+                            toolbar: [{
+                                    name: 'styles',
+                                    items: ['Styles', 'Format', 'Font', 'FontSize']
+                                },
+                                {
+                                    name: 'colors',
+                                    items: ['TextColor', 'BGColor']
+                                },
+                                {
+                                    name: 'editing',
+                                    groups: ['find', 'selection', 'spellchecker'],
+                                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                                }, {
+                                    name: 'clipboard',
+                                    groups: ['undo'],
+                                    items: ['Undo', 'Redo']
+                                },
+                                {
+                                    name: 'tools',
+                                    items: ['Maximize']
+                                },
+                                {
+                                    name: 'basicstyles',
+                                    groups: ['basicstyles', 'cleanup'],
+                                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                                        '-',
+                                        'CopyFormatting', 'RemoveFormat'
+                                    ]
+                                },
+                                {
+                                    name: 'paragraph',
+                                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                                        'Blockquote',
+                                        '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                                        'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                                    ]
+                                },
+                                {
+                                    name: 'links',
+                                    items: ['Link', 'Unlink']
+                                },
+                                {
+                                    name: 'insert',
+                                    items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                                },
+                                '/',
+                            ]
+                        });
+
+                    });
+                </script>
+
+
             @endsection

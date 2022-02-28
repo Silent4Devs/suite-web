@@ -34,7 +34,7 @@ class ExportExcel extends Controller
 
     public function PartesInteresadas()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/partes_interesadas.xlsx');
 
         return response()->download($path);
     }
@@ -76,7 +76,7 @@ class ExportExcel extends Controller
 
     public function AltaDireccion()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/minutas_alta_direccion.xlsx');
 
         return response()->download($path);
     }
@@ -111,14 +111,14 @@ class ExportExcel extends Controller
 
     public function GrupoArea()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/grupo_areas.xlsx');
 
         return response()->download($path);
     }
 
     public function Empleado()
     {
-        $path = storage_path('app/public/exportExcel/users.xlsx');
+        $path = storage_path('app/public/exportExcel/empleado.xlsx');
 
         return response()->download($path);
     }

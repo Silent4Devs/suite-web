@@ -127,13 +127,13 @@
                     <div class="mt-4 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Describa detalladamente la
                             mejora propuesta<sup>*</sup></label>
-                        <textarea name="descripcion" class="form-control" required></textarea>
+                        <textarea id="descripcion" name="descripcion" class="form-control" required></textarea>
                     </div>
 
                     <div class="mt-4 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Beneficios de la
                             mejora<sup>*</sup></label>
-                        <textarea name="beneficios" class="form-control" required></textarea>
+                        <textarea id="beneficios" name="beneficios" class="form-control" required></textarea>
                     </div>
 
                     <div class="mt-4 text-right form-group col-12">
@@ -194,4 +194,115 @@
             });
         });
     </script>
+
+<script>
+    $(document).ready(function() {
+        CKEDITOR.replace('descripcion', {
+            toolbar: [{
+                    name: 'styles',
+                    items: ['Styles', 'Format', 'Font', 'FontSize']
+                },
+                {
+                    name: 'colors',
+                    items: ['TextColor', 'BGColor']
+                },
+                {
+                    name: 'editing',
+                    groups: ['find', 'selection', 'spellchecker'],
+                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                }, {
+                    name: 'clipboard',
+                    groups: ['undo'],
+                    items: ['Undo', 'Redo']
+                },
+                {
+                    name: 'tools',
+                    items: ['Maximize']
+                },
+                {
+                    name: 'basicstyles',
+                    groups: ['basicstyles', 'cleanup'],
+                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                        '-',
+                        'CopyFormatting', 'RemoveFormat'
+                    ]
+                },
+                {
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'Blockquote',
+                        '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                        'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                    ]
+                },
+                {
+                    name: 'links',
+                    items: ['Link', 'Unlink']
+                },
+                {
+                    name: 'insert',
+                    items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                },
+                '/',
+            ]
+        });
+
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        CKEDITOR.replace('beneficios', {
+            toolbar: [{
+                    name: 'styles',
+                    items: ['Styles', 'Format', 'Font', 'FontSize']
+                },
+                {
+                    name: 'colors',
+                    items: ['TextColor', 'BGColor']
+                },
+                {
+                    name: 'editing',
+                    groups: ['find', 'selection', 'spellchecker'],
+                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                }, {
+                    name: 'clipboard',
+                    groups: ['undo'],
+                    items: ['Undo', 'Redo']
+                },
+                {
+                    name: 'tools',
+                    items: ['Maximize']
+                },
+                {
+                    name: 'basicstyles',
+                    groups: ['basicstyles', 'cleanup'],
+                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                        '-',
+                        'CopyFormatting', 'RemoveFormat'
+                    ]
+                },
+                {
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'Blockquote',
+                        '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                        'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                    ]
+                },
+                {
+                    name: 'links',
+                    items: ['Link', 'Unlink']
+                },
+                {
+                    name: 'insert',
+                    items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                },
+                '/',
+            ]
+        });
+
+    });
+</script>
 @endsection

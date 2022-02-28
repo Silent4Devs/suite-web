@@ -1,0 +1,17 @@
+{
+    "name": "Tabantaj",
+    "short_name": "Tabantaj",
+    "start_url": "/index.php",
+    "background_color": "#6777ef",
+    "description": "Tabantaj",
+    "display": "fullscreen",
+    "theme_color": "#6777ef",
+    "icons": [
+        {
+            "src": "/img/logo_policromatico_2.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

@@ -27,7 +27,7 @@
     </div>
 
     <div class="form-group col-md-6 col-lg-6 col-sm-12">
-        <label for="tema"><i class="fas fa-text-width iconos-crear"></i>Título corto del incidente
+        <label for="tema"><i class="fas fa-text-width iconos-crear"></i>Título corto de la acción correctiva
         </label>
         <input class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" name="tema" id="tema"
             value="{{ old('tema', $accionCorrectiva->tema) }}">
@@ -250,12 +250,12 @@
 
     <div class="mt-2 form-group col-md-12">
         <label class="form-label"><i class="fas fa-comment-dots iconos-crear"></i>Comentarios</label>
-        <textarea name="comentarios" class="form-control">{{ $accionCorrectiva->comentarios }}</textarea>
+        <textarea name="comentarios" class="form-control" id="comentarios">{{ $accionCorrectiva->comentarios }}</textarea>
     </div>
 
     <div class="text-right form-group col-12">
         <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-        <button class="btn btn-danger" type="submit" id="btnGuardar">
+        <button class="btn btn-danger" type="submit" id="btnGuardar" style="margin-top: 4px;">
             {{ trans('global.save') }}
         </button>
         {{-- <button id="form-siguienteaccion" data-toggle="collapse" onclick="closetabcollanext2()" data-target="#collapseplan" class="btn btn-danger">Siguiente</button> --}}

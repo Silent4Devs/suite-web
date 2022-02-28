@@ -48,7 +48,10 @@
 
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+    <!-- PWA  -->
+    <meta name="theme-color" content="#6777ef" />
+    <link rel="apple-touch-icon" href="{{ asset('/img/logo_policromatico.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
     <style type="text/css">
         .material-modulos {
             font-size: 50px;
@@ -937,24 +940,50 @@
         }
 
         /*iconos de alertas azules*/
-        .w-100 .bi.bi-info.mr-3{
+        .w-100 .bi.bi-info.mr-3 {
             margin-right: 0px !important;
             margin-left: 20px !important;
             font-size: 20px;
         }
 
-        .nav.nav-tabs{
+        .nav.nav-tabs {
             margin-bottom: 30px !important;
         }
 
-        .nav.nav-tabs .nav-link.active{
+        .nav.nav-tabs .nav-link.active {
             background-color: #345183 !important;
             color: #fff !important;
         }
 
-        .ventana_menu ul{
+        .ventana_menu ul {
             margin-top: 100px !important;
         }
+
+        .dt-button-collection.dropdown-menu{
+            max-height: 250px;
+            overflow: auto;
+        }
+        .dt-button-collection.dropdown-menu::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+
+        /* Track */
+        .dt-button-collection.dropdown-menu::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0);
+        }
+
+        /* Handle */
+        .dt-button-collection.dropdown-menu::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50px;
+        }
+
+        /* Handle on hover */
+        .dt-button-collection.dropdown-menu::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
     </style>
 
     @yield('styles')
@@ -1018,7 +1047,8 @@
                             @foreach (config('panel.available_languages') as $langLocale => $langName)
                                 <a class="dropdown-item"
                                     href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
-                                    ({{ $langName }})</a>
+                                    ({{ $langName }})
+                                </a>
                             @endforeach
                         </div>
                     </li>
@@ -1075,74 +1105,82 @@
                             </div>
                         </a>
 
-                                @if (auth()->user()->empleado == null)
-                                <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"style="width:100px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
-                                    <div class="px-3 mt-1 d-flex justify-content-center">
-                                        <a style="all: unset; color: #747474; cursor: pointer;"onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                                            <i class="bi bi-box-arrow-right"></i> Salir
-                                        </a>
-                                @else
-                                <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
-                                    <div class="p-2">
-                                        @if (auth()->user()->empleado)
-                                        <p class="m-0 text-muted mt-2" style="font-size:14px">Hola, <strong>{{ auth()->user()->empleado->name }}</strong></p>
-                                        @else
-                                        <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
-                                        @endif
-                                    </div>
+                        @if (auth()->user()->empleado == null)
+                            <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
+                                style="width:100px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
                                 <div class="px-3 mt-1 d-flex justify-content-center">
-                                    @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-                                        @can('profile_password_edit')
-                                            <a style="all: unset; color: #747474; cursor: pointer;"class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"href="{{ route('profile.password.edit') }}">
-                                                <i class="bi bi-gear"></i>
-                                                Configurar Perfil
-                                            </a>
-                                        @endcan
-                                    @endif
-                                    &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <a style="all: unset; color: #747474; cursor: pointer;"
                                         onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                         <i class="bi bi-box-arrow-right"></i> Salir
                                     </a>
-                                     @endif
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </ul>
-        </header>
+                                @else
+                                    <div class="p-3 mt-3 text-center dropdown-menu dropdown-menu-right hide"
+                                        style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
+                                        <div class="p-2">
+                                            @if (auth()->user()->empleado)
+                                                <p class="m-0 mt-2 text-muted" style="font-size:14px">Hola,
+                                                    <strong>{{ auth()->user()->empleado->name }}</strong></p>
+                                            @else
+                                                <i class="fas fa-user-circle iconos_cabecera"
+                                                    style="font-size: 33px;"></i>
+                                            @endif
+                                        </div>
+                                        <div class="px-3 mt-1 d-flex justify-content-center">
+                                            @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+                                                @can('profile_password_edit')
+                                                    <a style="all: unset; color: #747474; cursor: pointer;"
+                                                        class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                                                        href="{{ route('profile.password.edit') }}">
+                                                        <i class="bi bi-gear"></i>
+                                                        Configurar Perfil
+                                                    </a>
+                                                @endcan
+                                            @endif
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a style="all: unset; color: #747474; cursor: pointer;"
+                                                onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                                <i class="bi bi-box-arrow-right"></i> Salir
+                                            </a>
+                                @endif
+    </div>
+    </div>
+    </li>
+    </ul>
+    </ul>
+    </header>
 
-        <div class="c-body">
-            <main class="c-main">
-                <div class="container-fluid" id="app">
-                    @if (session('message'))
-                        <div class="mb-2 row">
-                            <div class="col-lg-12">
-                                <div class="alert alert-success" role="alert">{{ session('message') }}</div>
-                            </div>
+    <div class="c-body">
+        <main class="c-main">
+            <div class="container-fluid" id="app">
+                @if (session('message'))
+                    <div class="mb-2 row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-success" role="alert">{{ session('message') }}</div>
                         </div>
-                </div>
+                    </div>
+            </div>
+            @endif
+            <div id="errores_generales_admin_quitar_recursos">
+                @if ($errors->count() > 0)
+                    <div class="alert alert-danger">
+                        <ul class="list-unstyled">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
-                <div id="errores_generales_admin_quitar_recursos">
-                    @if ($errors->count() > 0)
-                        <div class="alert alert-danger">
-                            <ul class="list-unstyled">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                </div>
-                @yield('content')
+            </div>
+            @yield('content')
 
-        </div>
+    </div>
 
 
-        </main>
-        <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
-            {{ csrf_field() }}
-        </form>
+    </main>
+    <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+    </form>
     </div>
     <!-- incluir de footer -->
     {{-- @include('partials.footer') --}}
@@ -1181,7 +1219,7 @@
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
     <script
         src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"
-        defer></script> {{--  quitar script en el glosario  --}}
+        defer></script> {{-- quitar script en el glosario --}}
     <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
     {{-- <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -1204,7 +1242,8 @@
 
     <script>
         window.Laravel.user = {!! json_encode([
-        'user' => auth()->check() ? auth()->user()->id : null,]) !!};
+    'user' => auth()->check() ? auth()->user()->id : null,
+]) !!};
     </script>
     <script src="//unpkg.com/alpinejs" defer></script>
 
@@ -1588,7 +1627,14 @@
 
     @yield('scripts')
 
-
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
 
 </body>
 

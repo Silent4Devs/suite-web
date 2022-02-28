@@ -15,10 +15,14 @@ class ClausulasSeeder extends Seeder
     public function run()
     {
         $clausulas = [
+<<<<<<< Updated upstream
         [
             'nombre' => '4.1 Comprensión de la organización y de su contexto',
-            'modulo' => 'iso27001',
+            // 'modulo' => 'iso27001',
         ],
+=======
+        ['nombre' => '4.1 Comprensión de la organización y de su contexto'],
+>>>>>>> Stashed changes
         ['nombre' => '4.2 Comprensión de las necesidades y expectativas de las partes interesadas'],
         ['nombre' => '4.3 Determinación del alcance del SGSI'],
         ['nombre' => '4.4 Sistema de Gestión de Seguridad de la Información'],

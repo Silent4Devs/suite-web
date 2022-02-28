@@ -29,10 +29,10 @@
             </div>
 
             <div class="row">
-                <div class="mt-3 col-md-4">
-                    Seleccione el metódo de análisis
+                <div class="form-group mt-2 col-md-4 ml-4">
+                    <label><i class="fas fa-check-square iconos-crear"></i>Seleccione el método de análisis</label>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <select id="select_metodos" class="form-control" name="metodo">
                         <option selected disabled>- -</option>
                         <option
@@ -55,7 +55,7 @@
                 <div id="ideas" class="caja_oculta_dinamica row">
                     <div class="form-group col-12">
                         <label>Ideas</label>
-                        <textarea class="form-control" name="ideas">{{$analisis?$analisis->idea:''}}</textarea>
+                        <textarea class="form-control" id=ideas name="ideas">{{$analisis?$analisis->idea:''}}</textarea>
                     </div>
 
                     <div class="form-group col-12">
@@ -68,32 +68,32 @@
 
                 <div id="porque" class="caja_oculta_dinamica row">
                     <div class="form-group col-12">
-                        Problema: <textarea class="form-control"
+                        <label>Problema:</label> <textarea class="form-control"
                             name="problema_porque">{{$analisis?$analisis->problema_porque:''}}</textarea>
                     </div>
                     <div class="form-group col-12">
                         <label>1er porqué:</label>
-                        <input name="porque_1" class="form-control" value="{{ $analisis?$analisis->porque_1:'' }}">
-                        <label>2do porqué:</label>
-                        <input name="porque_2" class="form-control" value="{{ $analisis?$analisis->porque_2:'' }}">
-                        <label>3er porqué:</label>
-                        <input name="porque_3" class="form-control" value="{{ $analisis?$analisis->porque_3:'' }}">
-                        <label>4to porqué:</label>
-                        <input name="porque_4" class="form-control" value="{{ $analisis?$analisis->porque_4:'' }}">
-                        <label>5to porqué:</label>
-                        <input name="porque_5" class="form-control" value="{{ $analisis?$analisis->porque_5:'' }}">
+                        <textarea name="porque_1" class="form-control">{{ $analisis?$analisis->porque_1:'' }}</textarea>
+                        <label class="mt-4">2do porqué:</label>
+                        <textarea name="porque_2" class="form-control">{{ $analisis?$analisis->porque_2:'' }}</textarea>
+                        <label class="mt-4">3er porqué:</label>
+                        <textarea name="porque_3" class="form-control">{{ $analisis?$analisis->porque_3:'' }}</textarea>
+                        <label class="mt-4">4to porqué:</label>
+                        <textarea name="porque_4" class="form-control">{{ $analisis?$analisis->porque_4:'' }}</textarea>
+                        <label class="mt-4">5to porqué:</label>
+                        <textarea name="porque_5" class="form-control">{{ $analisis?$analisis->porque_5:'' }}</textarea>
                     </div>
-                    <div class="form-group col-12">
+                    {{-- <div class="form-group col-12">
                         Causa Raíz: <textarea class="form-control"
                             name="causa_porque">{{ $analisis?$analisis->causa_porque:'' }}</textarea>
-                    </div>
+                    </div> --}}
                 </div>
 
 
 
                 <div id="digrama" class="caja_oculta_dinamica">
                     <div class="mt-5 col-12" style="overflow: auto;">
-                        <div style="width: 100%; min-width:540px; position: relative;">
+                        <div style="width: 100%; min-width:930px; position: relative;">
                             <img src="{{ asset('img/diagrama_causa_raiz.png') }}" style="width:100%">
 
                             <textarea name="control_a"
@@ -131,8 +131,9 @@
                 </div>
             </div>
             <div class="py-3 text-right col-12">
-                <input type="submit" class="btn btn-success">
+                <input type="submit" class="btn btn-success" value="Guardar">
             </div>
         </form>
     </div>
+
 </div>

@@ -45,7 +45,7 @@
    <table class="table tabla_quejas">
    		<thead>
             <tr style="border: none !important">
-                <th colspan="6">folio</th>
+                <th colspan="6"></th>
                 <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reporto</th>
                 <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reportado</th>
             </tr>

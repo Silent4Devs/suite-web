@@ -55,6 +55,9 @@
         .cdr-rojo{
             background: #FF417B;
         }
+        .caja_secciones section{
+            overflow: unset !important;
+        }
 
     </style>
 
@@ -227,7 +230,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded',function(){
-            const menu=localStorage.getItem('menu-desk');
+            const menu=localStorage.getItem('menu-desk')?localStorage.getItem('menu-desk'):'incidentes';
             document.querySelector('.caja_tab_reveldada').classList.remove('caja_tab_reveldada');
             document.querySelector('.btn_activo').classList.remove('btn_activo');
             document.getElementById(menu).classList.add('caja_tab_reveldada');
