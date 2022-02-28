@@ -38,6 +38,7 @@
 	<div class="card card-body">
 		<div class="row">
             <div class="w-100 text-right">
+                <button class="btn btn-primary" style="background-color: #aaa; border:none !important;" id="btn_todos">Todos</button>
                 <button class="btn btn-primary" style="background-color: #61CB5C; border:none !important;" id="btn_aprobado">Aprobadas</button>
                 <button class="btn btn-primary" style="background-color: #EA7777; border:none !important;" id="btn_rechazado">Rechazadas</button>
                 <button class="btn btn-primary" style="background-color: #F48C16; border:none !important;" id="btn_pendiente">Pendientes</button>
@@ -51,7 +52,7 @@
 	                        <th>Empleado</th>
 	                        <th>Responsable</th>
                             <th>Aprobación</th>
-	                        {{-- <th>opciones</th> --}}
+	                        <th>opciones</th>
 	                    </tr>
 	                </thead>
 
@@ -91,9 +92,9 @@
                                         <span class="pendiente">Pendiente</span>
                                     @endif
     	                        </td>
-    	                        {{-- <td>
-    	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" class="btn">ver</a>
-    							</td>	 --}}                    
+    	                        <td>
+    	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+    							</td>	                    
     						</tr>
                         @endforeach
 	                </tbody>
@@ -214,6 +215,13 @@
     </script>
 
     <script type="text/javascript">
+        $('#btn_todos').click(function(){
+            $('tr').removeClass('d-none');
+
+            $('.btn-primary').removeClass('btn_op');
+            $('#btn_todos').addClass('btn_op');
+        });
+
         $('#btn_aprobado').click(function(){
             $('tbody tr').addClass('d-none');
             $('.tr_aprobado').removeClass('d-none');

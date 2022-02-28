@@ -80,6 +80,8 @@
                                                 <i class="fas fa-calendar-check" style="color:#3CA06C; font-size: 15pt;"></i>
                                             </button>
                                         </form>
+
+                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
                                     @endcan
                                 </td>
                             </tr>

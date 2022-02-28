@@ -44,7 +44,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="checkbox" name="timesheet[{{ $i }}][factible]" style="min-width: 50px;">
+                                <input type="checkbox" checked name="timesheet[{{ $i }}][factible]" style="min-width: 50px;">
                             </td>
                             <td>
                                 <input type="" name="timesheet[{{ $i }}][lunes]" class="ingresar_horas form-control">

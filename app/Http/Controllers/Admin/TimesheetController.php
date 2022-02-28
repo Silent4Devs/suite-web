@@ -135,7 +135,9 @@ class TimesheetController extends Controller
      */
     public function show($id)
     {
-        return view('admin.timesheet.show');
+        $timesheet = Timesheet::find($id);
+        $horas = TimesheetHoras::where('timesheet_id', $id)->get();
+        return view('admin.timesheet.show', compact('timesheet', 'horas'));
     }
 
     /**
@@ -193,10 +195,10 @@ class TimesheetController extends Controller
         return view('admin.timesheet.tareas-proyecto', compact('proyecto_id'));
     }
 
-    public function rechazadas()
+    public function papelera()
     {
         abort_if(Gate::denies('mi_timesheet_horas_rechazadas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $rechazadas = Timesheet::where('rechazado', true)->where('empleado_id', auth()->user()->empleado->id)->get();
+        $rechazadas = Timesheet::where('estatus', 'rechazado')->where('empleado_id', auth()->user()->empleado->id)->get();
 
         return view('admin.timesheet.rechazadas', compact('rechazadas'));
     }
@@ -204,8 +206,8 @@ class TimesheetController extends Controller
     public function aprobaciones()
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $aprobaciones = Timesheet::where('rechazado', false)
-            ->where('aprobado', false)
+        $aprobaciones = Timesheet::where('estatus', 'pendiente')
+            ->where('estatus', 'rechazado')
             ->where('aprobador_id', auth()->user()->empleado->id)
             ->get();
 

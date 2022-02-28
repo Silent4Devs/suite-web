@@ -229,7 +229,7 @@
                                 <a href="{{ route('admin.timesheet-rechazadas') }}">
                                     <div>
                                         <i class="bi bi-calendar2-x"></i><br>
-                                        Horas Rechazadas
+                                        Horas en Papelera
                                     </div>
                                 </a>
                             </li>

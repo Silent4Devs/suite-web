@@ -25,7 +25,7 @@
 
      {{ Breadcrumbs::render('timesheet-rechazadas') }}
 	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Rechazadas</font> </h5>
+	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Papelera</font> </h5>
 
 	<div class="card card-body">
 		<div class="row">

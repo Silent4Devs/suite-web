@@ -15,29 +15,24 @@
                     <label><i class="fas fa-list iconos-crear"></i> Proyecto Nuevo</label>
                     <input name="proyecto" wire:model="proyecto_name" class="form-control" required>
                 </div>
+                <div class="form-group w-100 mr-4">
+                    <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
+                    <select name="area_id" wire:model="cliente_id" class="form-control">
+                        <option selected disabled>Seleccione cliente</option>
+                        <option value="">Sin cliente</option>
+                        @foreach($clientes as $cliente)
+                            <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="form-group" style="position:relative; min-width:150px;">
                     <button class="btn btn-success" style="position: absolute; bottom: 0;"><i class="fas fa-plus"></i>
                         Agregar</button>
                 </div>
             </div>
-            <div class="form-group w-100 mr-4">
-                <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
-                <select name="area_id" wire:model="cliente_id" class="form-control">
-                    <option selected value="">Seleccione cliente</option>
-                    @foreach($clientes as $cliente)
-                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group w-100 mr-4">
-                <label><i class="fas fa-list iconos-crear"></i> Proyecto Nuevo</label>
-                <input name="proyecto" wire:model="proyecto_name" class="form-control" required>
-            </div>
-            <div class="form-group" style="position:relative; min-width:150px;">
-                <button class="btn btn-success" style="position: absolute; bottom: 0;"><i class="fas fa-plus"></i> Agregar</button>
-            </div>
-        </div>
-    </form>
+        </form>
+    @endcan
+
     
     <div class="datatable-fix w-100 mt-5">
         <table id="datatable_timesheet_proyectos" class="table w-100 tabla-animada">
