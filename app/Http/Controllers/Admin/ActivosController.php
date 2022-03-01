@@ -156,7 +156,7 @@ class ActivosController extends Controller
         $modelos = Modelo::get();
         $tipos = Tipoactivo::get();
 
-        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos','procesos'));
+        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'procesos'));
     }
 
     public function store(Request $request)

@@ -72,9 +72,9 @@ class Proceso extends Model
     {
         return $this->belongsToMany(Documento::class);
     }
+
     public function macro()
     {
         return $this->belongsTo(Area::class, 'area_id', 'id');
     }
-
 }

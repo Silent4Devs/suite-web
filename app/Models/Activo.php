@@ -95,6 +95,7 @@ class Activo extends Model
     {
         return $this->belongsTo(Empleado::class, 'id_responsable', 'id');
     }
+
     public function proceso()
     {
         return $this->belongsTo(Empleado::class, 'id_proceso', 'id');

@@ -40,6 +40,4 @@ class ActivoInformacion extends Model
     {
         return $this->belongsTo(Empleado::class, 'id_responsable', 'id');
     }
-
-
 }
