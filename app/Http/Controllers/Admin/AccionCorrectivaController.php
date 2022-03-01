@@ -234,6 +234,7 @@ class AccionCorrectivaController extends Controller
 
     public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
     {
+        // dd($request->all());
         $accionCorrectiva->update($request->all());
         //dd($accionCorrectiva);
         if ($request->input('documentometodo', false)) {
@@ -248,7 +249,7 @@ class AccionCorrectivaController extends Controller
             $accionCorrectiva->documentometodo->delete();
         }
 
-        return redirect()->route('admin.accion-correctivas.index');
+        return redirect()->route('admin.accionCorrectivas.index');
     }
 
     public function show(AccionCorrectiva $accionCorrectiva)
@@ -297,6 +298,7 @@ class AccionCorrectivaController extends Controller
 
     public function storeAnalisis(Request $request, $accion)
     {
+        // dd($request->all());
         $exist_accion_id = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accion)->exists();
         if ($exist_accion_id) {
             $analisis = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accion)->first();

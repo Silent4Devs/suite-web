@@ -15,7 +15,7 @@ class MinutasaltadireccionImport implements ToModel
      */
     public function model(array $row)
     {
-
+        // dd($row);
         return new Minutasaltadireccion([
             'objetivoreunion' => $row[0],
             'fechareunion' => $row[1],
