@@ -63,6 +63,7 @@ class PartesInteresadasController extends Controller
 
                     return $row->clausulas ? strtoupper($iso . ' ' . $num) : '';
                 }
+
                 return 'sin clausula';
             });
 
