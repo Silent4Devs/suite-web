@@ -3,7 +3,7 @@
         @csrf
         <div class="form-group d-flex align-items-center">
             <label class="mt-3 mr-3"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha</label>
-            <input type="date" name="fecha_dia" class="form-control" style="max-width:160px;">
+            <input type="date" name="fecha_dia" class="form-control" style="max-width:160px;" required>
         </div>
         <div class="datatable-fix">
             <table id="datatable_timesheet_create" class="table w-100">
@@ -82,7 +82,16 @@
 
         <div class="mt-4" style="display:flex; justify-content:space-between;">
             <button class="btn btn-secundario" wire:click.prevent="$set('contador', {{ $contador + 1 }})">Agregar fila</button>
-            <button class="btn btn-success">Guardar</button>
+            <div>
+                <label>
+                    <input type="radio" name="estatus" value="papelera" style="opacity:0;">
+                    <button class="btn_cancelar">Enviar a papelera</button>
+                </label>
+                <label>
+                    <input type="radio" name="estatus" value="pendiente" style="opacity:0;">
+                    <button class="btn btn-success">Enviar</button>
+                </label>
+            </div>
         </div>
     </form>
 </div>

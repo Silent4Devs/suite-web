@@ -19,6 +19,7 @@ class Timesheet extends Model
         'aprobador_id',
         'aprobado',
         'rechazado',
+        'estatus',
     ];
 
     public function empleado()

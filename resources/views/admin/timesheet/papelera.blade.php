@@ -23,7 +23,7 @@
     </style>
 
 
-     {{ Breadcrumbs::render('timesheet-rechazadas') }}
+     {{-- {{ Breadcrumbs::render('timesheet-rechazada') }} --}}
 	
 	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Papelera</font> </h5>
 
@@ -43,32 +43,32 @@
 	                </thead>
 
 	                <tbody>
-                        @foreach($rechazadas as $rechazada)
+                        @foreach($papelera as $time)
     	                	<tr>
     	                        <td>
-    	                            {{ $rechazada->fecha_dia }} 
+    	                            {{ $time->fecha_dia }} 
     	                        </td>
     	                        <td>
-    	                            {{ $rechazada->empleado->name }}
+    	                            {{ $time->empleado->name }}
     	                        </td>
     	                        <td>
-                                    {{ $rechazada->aprobador->name }}
+                                    {{ $time->aprobador->name }}
     	                        </td>
     	                        <td>
-                                    @if($rechazada->aprobado)
+                                    @if($time->aprobado)
                                         <span class="aprobada">Aprobada</span>
                                     @endif
 
-                                    @if($rechazada->rechazado)
-                                        <span class="rechazada">Rechazada</span>
+                                    @if($time->rechazado)
+                                        <span class="time">time</span>
                                     @endif
 
-                                    @if(($rechazada->rechazado == false) && ($rechazada->aprobado == false))
+                                    @if(($time->rechazado == false) && ($time->aprobado == false))
                                         <span class="pendiente">Pendiente</span>
                                     @endif
     	                        </td>
     	                        {{-- <td>
-    	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $rechazada->id }}" class="btn">ver</a>
+    	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" class="btn">ver</a>
     							</td>	 --}}                    
     						</tr>
                         @endforeach

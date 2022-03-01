@@ -226,7 +226,7 @@
                         @endcan
                         @can('mi_timesheet_horas_rechazadas_show')
                             <li>
-                                <a href="{{ route('admin.timesheet-rechazadas') }}">
+                                <a href="{{ route('admin.timesheet-papelera') }}">
                                     <div>
                                         <i class="bi bi-calendar2-x"></i><br>
                                         Horas en Papelera

@@ -221,7 +221,7 @@
 
         .btn.btn-success,
         .btn.btn-danger {
-            width: 150px;
+            min-width: 150px !important;
             height: 35px;
             background-color: #345183 !important;
             color: #fff !important;
@@ -242,7 +242,7 @@
         }
 
         .btn_cancelar {
-            width: 150px;
+            min-width: 150px !important;
             height: 35px;
             background-color: #aaa !important;
             color: #fff !important;
@@ -251,7 +251,6 @@
             transition: 0.2s;
             display: inline-block;
             text-align: center;
-            padding-top: 5px;
         }
 
         .btn_cancelar:hover {
