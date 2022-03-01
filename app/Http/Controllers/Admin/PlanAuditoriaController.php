@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Team;
-use App\Models\Puesto;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
 use App\Functions\GeneratePdf;
-use App\Models\AuditoriaAnual;
-use App\Models\PlanAuditorium;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use App\Models\ActividadesPlanAuditorium;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\MassDestroyPlanAuditoriumRequest;
 use App\Http\Requests\StorePlanAuditoriumRequest;
 use App\Http\Requests\UpdatePlanAuditoriumRequest;
-use App\Http\Requests\MassDestroyPlanAuditoriumRequest;
+use App\Models\ActividadesPlanAuditorium;
+use App\Models\AuditoriaAnual;
+use App\Models\Empleado;
+use App\Models\PlanAuditorium;
+use App\Models\Puesto;
+use App\Models\Team;
+use Gate;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class PlanAuditoriaController extends Controller
 {
@@ -97,8 +97,7 @@ class PlanAuditoriaController extends Controller
 
         $actividadesAuditoria = ActividadesPlanAuditorium::get();
 
-
-        return view('admin.planAuditoria.create', compact('equipoauditorias' ,'empleados','puesto' ,'actividadesAuditoria'));
+        return view('admin.planAuditoria.create', compact('equipoauditorias', 'empleados', 'puesto', 'actividadesAuditoria'));
     }
 
     public function store(StorePlanAuditoriumRequest $request)
@@ -108,7 +107,6 @@ class PlanAuditoriaController extends Controller
         // $generar->Generate($request['pdf-value'], $planAuditorium);
         $planAuditorium->auditados()->sync($request->equipo);
         $this->saveUpdateAuditados($request->auditados, $planAuditorium);
-
 
         return redirect()->route('admin.plan-auditoria.index');
     }
@@ -126,7 +124,7 @@ class PlanAuditoriaController extends Controller
 
         $actividadesAuditoria = ActividadesPlanAuditorium::get();
 
-        return view('admin.planAuditoria.edit', compact('equipoauditorias', 'planAuditorium', 'equipo_seleccionado','actividadesAuditoria'));
+        return view('admin.planAuditoria.edit', compact('equipoauditorias', 'planAuditorium', 'equipo_seleccionado', 'actividadesAuditoria'));
     }
 
     public function update(UpdatePlanAuditoriumRequest $request, PlanAuditorium $planAuditorium)
@@ -164,7 +162,6 @@ class PlanAuditoriaController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-
     public function saveUpdateAuditados($auditados, $planAuditorium)
     {
         if (!is_null($auditados)) {
@@ -193,5 +190,4 @@ class PlanAuditoriaController extends Controller
         }
         // dd($contactos);
     }
-
 }

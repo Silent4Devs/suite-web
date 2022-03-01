@@ -17,7 +17,6 @@ class AddIDToActivosTable extends Migration
             $table->string('identificador')->unique()->nullable();
             $table->unsignedInteger('proceso_id')->nullable();
             $table->foreign('proceso_id')->references('id')->on('procesos')->onDelete('cascade')->onUpdate('cascade');
-
         });
     }
 

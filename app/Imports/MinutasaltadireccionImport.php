@@ -15,7 +15,6 @@ class MinutasaltadireccionImport implements ToModel
      */
     public function model(array $row)
     {
-
         return new Minutasaltadireccion([
             'objetivoreunion' => $row[0],
             'fechareunion' => $row[1],
@@ -57,6 +56,7 @@ class MinutasaltadireccionImport implements ToModel
         if ($empleado_bd) {
             return $empleado_bd->id;
         }
+
         return null;
     }
 }
