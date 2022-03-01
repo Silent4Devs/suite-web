@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class ActividadesPlanAuditorium
+ * Class ActividadesPlanAuditorium.
  *
  * @property int $id
  * @property string|null $actividad_auditar
@@ -20,40 +20,38 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Empleado|null $empleado
  * @property PlanAuditorium|null $plan_auditorium
- *
- * @package App\Models
  */
 class ActividadesPlanAuditorium extends Model
 {
-	protected $table = 'actividades_plan_auditoria';
+    protected $table = 'actividades_plan_auditoria';
 
-	protected $casts = [
-		'hora_inicio' => 'time without time zone',
-		'hora_fin' => 'time without time zone',
-		'id_contacto' => 'int',
-		'plan_auditoria_id' => 'int'
-	];
+    protected $casts = [
+        'hora_inicio' => 'time without time zone',
+        'hora_fin' => 'time without time zone',
+        'id_contacto' => 'int',
+        'plan_auditoria_id' => 'int',
+    ];
 
-	protected $dates = [
-		'fecha_act_auditoria'
-	];
+    protected $dates = [
+        'fecha_act_auditoria',
+    ];
 
-	protected $fillable = [
-		'actividad_auditar',
-		'fecha_act_auditoria',
-		'hora_inicio',
-		'hora_fin',
-		'id_contacto',
-		'plan_auditoria_id'
-	];
+    protected $fillable = [
+        'actividad_auditar',
+        'fecha_act_auditoria',
+        'hora_inicio',
+        'hora_fin',
+        'id_contacto',
+        'plan_auditoria_id',
+    ];
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class, 'id_contacto');
-	}
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_contacto');
+    }
 
-	public function plan_auditorium()
-	{
-		return $this->belongsTo(PlanAuditorium::class, 'plan_auditoria_id');
-	}
+    public function plan_auditorium()
+    {
+        return $this->belongsTo(PlanAuditorium::class, 'plan_auditoria_id');
+    }
 }

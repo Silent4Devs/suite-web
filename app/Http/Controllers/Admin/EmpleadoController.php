@@ -952,7 +952,6 @@ class EmpleadoController extends Controller
      */
     public function show($id)
     {
-
         $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($id));
         $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
         $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
@@ -961,7 +960,6 @@ class EmpleadoController extends Controller
         $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
         $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
         $empleado = Empleado::get();
-
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
@@ -1580,7 +1578,6 @@ class EmpleadoController extends Controller
 
     public function datosEmpleado($id)
     {
-
         $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($id));
         $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
         $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
@@ -1589,7 +1586,6 @@ class EmpleadoController extends Controller
         $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
         $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
         $empleado = Empleado::get();
-
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }

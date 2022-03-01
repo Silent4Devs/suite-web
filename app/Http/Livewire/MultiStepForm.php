@@ -599,7 +599,7 @@ class MultiStepForm extends Component
             })->first();
             $evaluadores_objetivos->push(['id' => intval($empleado->id), 'peso' => 0]);
             // if ($empleado->supervisorObjetivos) {
-            $evaluadores_objetivos->push(['id' => intval($supervisorObjetivos->evaluador_id), 'peso' => 13500]);
+            $evaluadores_objetivos->push(['id' => intval($supervisorObjetivos->evaluador_id), 'peso' => 100]);
             // }
         }
 
