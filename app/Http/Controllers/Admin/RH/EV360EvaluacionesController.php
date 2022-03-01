@@ -1042,8 +1042,8 @@ class EV360EvaluacionesController extends Controller
             if ($this->empleadoTieneObjetivosAsignados($evaluado->id, $evaluacion->id)) {
                 $promedio_objetivos += (($calificacion_objetivos * 100) / 2) / 100;
                 $promedio_general_objetivos += $promedio_objetivos * $evaluacion->peso_general_objetivos;
-                $promedio_objetivos = number_format($promedio_objetivos, 2);
-                $promedio_general_objetivos = number_format($promedio_general_objetivos, 2);
+                $promedio_objetivos = floatval(number_format($promedio_objetivos, 2));
+                $promedio_general_objetivos = floatval(number_format($promedio_general_objetivos, 2));
                 $calificacion_final += $promedio_general_objetivos;
             } else {
                 $promedio_objetivos = 1;

@@ -146,19 +146,19 @@
                             @if ($evaluado['informacion_evaluacion']['calificacion_final'] <= 60)
                                 <td style="background-color:#ff4747;color:white;text-align: center !important"><i
                                         class="mr-1 fas fa-exclamation-triangle"></i>Inaceptable</td>
-                            @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <=80) <td
-                                    style="background-color:#e89036;color:white;text-align: center !important"><i
+                            @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= 80)
+                                <td style="background-color:#e89036;color:white;text-align: center !important"><i
                                         class="mr-1 fas fa-exclamation-triangle"></i>Mínimo
                                     Aceptable</td>
-                                @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <=100) <td
-                                        style="background-color:#3e6cd2;color:white;text-align: center !important"><i
-                                            class="mr-1 fas fa-check-circle"></i>Aceptable
-                                        </td>
-                                    @elseif($evaluado['informacion_evaluacion']['calificacion_final']>100)
-                                        <td style="background-color:#3ed257;color:white;text-align: center !important">
-                                            <i class="mr-1 fas fa-check-circle"></i>
-                                            Sobresaliente
-                                        </td>
+                            @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= 100)
+                                <td style="background-color:#3e6cd2;color:white;text-align: center !important"><i
+                                        class="mr-1 fas fa-check-circle"></i>Aceptable
+                                </td>
+                            @elseif($evaluado['informacion_evaluacion']['calificacion_final'] > 100)
+                                <td style="background-color:#3ed257;color:white;text-align: center !important">
+                                    <i class="mr-1 fas fa-check-circle"></i>
+                                    Sobresaliente
+                                </td>
                             @endif
                             </td>
                             @foreach ($competencias_evaluadas as $competencia)
@@ -245,7 +245,7 @@
                                     @if (isset($evaluado['informacion_evaluacion']['evaluadores_objetivos'][0]['objetivos'][$i]))
                                         @php
                                             $objetivo_info = $evaluado['informacion_evaluacion']['evaluadores_objetivos'][0]['objetivos'][$i];
-                                            $avance_porcentaje = number_format(($objetivo_info['calificacion'] * 100) / $objetivo_info['meta'], 2);
+                                            $avance_porcentaje = number_format(($objetivo_info['calificacion'] * 100) / ($objetivo_info['meta'] > 0 ? $objetivo_info['meta'] : 1), 2);
                                         @endphp
                                         <div
                                             style="width: {{ $avance_porcentaje }}%;max-width: 100%;height: 100%;background: #56de4d;">
