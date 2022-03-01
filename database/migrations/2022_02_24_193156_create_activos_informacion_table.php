@@ -23,7 +23,6 @@ class CreateActivosInformacionTable extends Migration
             $table->string('activoInformacion');
             $table->string('formato');
             $table->timestamps();
-
         });
     }
 

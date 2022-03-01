@@ -423,8 +423,6 @@ class MatrizRiesgosController extends Controller
         return view('admin.matrizRiesgos.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
 
-
-
     public function MapaCalor(Request $request)
     {
         return view('admin.matrizRiesgos.heatchart')->with('id', $request->idAnalisis);
@@ -478,7 +476,6 @@ class MatrizRiesgosController extends Controller
     public function ControlesGet()
     {
     }
-
 
     public function octaveIndex(Request $request)
     {
@@ -615,7 +612,6 @@ class MatrizRiesgosController extends Controller
         return view('admin.OCTAVE.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
 
-
     public function octave(Request $request)
     {
 
@@ -642,9 +638,7 @@ class MatrizRiesgosController extends Controller
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
         return view('admin.OCTAVE.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
-
     }
-
 
     public function ISO31000(Request $request)
     {
@@ -743,7 +737,6 @@ class MatrizRiesgosController extends Controller
                 }
             });
 
-
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
@@ -762,7 +755,6 @@ class MatrizRiesgosController extends Controller
 
         return view('admin.MatrizISO31000.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
-
 
     public function ISO31000Create(Request $request)
     {
@@ -790,9 +782,5 @@ class MatrizRiesgosController extends Controller
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
         return view('admin.MatrizISO31000.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
-
     }
-
-
-
 }
