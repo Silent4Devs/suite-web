@@ -1010,7 +1010,7 @@ class EV360EvaluacionesController extends Controller
             if ($evaluadores_objetivos->first()) {
                 if (count($evaluadores_objetivos->first()['objetivos'])) {
                     foreach ($evaluadores_objetivos->first()['objetivos'] as $objetivo) {
-                        $calificacion_objetivos += $objetivo['calificacion'] / $objetivo['meta'];
+                        $calificacion_objetivos += $objetivo['calificacion'] / ($objetivo['meta'] > 0 ? $objetivo['meta'] : 1);
                     }
                 }
             }
