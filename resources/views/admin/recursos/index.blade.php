@@ -190,7 +190,7 @@
                 $('#xlsxImportModal').modal('show');
                 }
                 };
-            
+
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
@@ -205,13 +205,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -250,7 +250,7 @@
                         render: function(data, type, row, meta) {
                             return `
                                 <div>
-                                    <p class="m-0" style="text-align: left;">${row.fecha_inicio_format_diagonal} <strong>al</strong> ${row.fecha_fin_format_diagonal}</p>    
+                                    <p class="m-0" style="text-align: left;">${row.fecha_inicio_format_diagonal} <strong>al</strong> ${row.fecha_fin_format_diagonal}</p>
                                 </div>
                             `;
                         }
@@ -308,8 +308,8 @@
                         render: function(data, type, row, meta) {
                             return `
                             <div>
-                                <p class="m-0" style="text-transform:capitalize;">${data}</p>    
-                                <p class="m-0 text-muted">${row.ubicacion}</p>    
+                                <p class="m-0" style="text-transform:capitalize;">${data}</p>
+                                <p class="m-0 text-muted">${row.ubicacion}</p>
                             </div>
                             `;
                         }
@@ -326,7 +326,7 @@
                             const urlEditar = `recursos/${data}/edit`
                             const urlEliminar = `recursos/${data}`
                             let html =
-                                `                                    
+                                `
                                 <div class="btn-group">
                                     @can('recurso_show')
                                         <a href="${urlSeguimiento }" class="btn btn-sm" title="Seguimiento de la capacitación"><i
