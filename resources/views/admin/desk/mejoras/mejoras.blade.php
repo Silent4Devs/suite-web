@@ -262,10 +262,16 @@
                             data: 'proceso_mejora'
                         },
                         {
-                            data: 'descripcion'
+                            data: 'descripcion',
+                            render: function(data, type, row, meta){
+                                return row.descripcion_html;
+                            }
                         },
                         {
-                            data: 'beneficios'
+                            data: 'beneficios',
+                            render: function(data, type, row, meta){
+                                return row.beneficio_html;
+                            }
                         },
                         {
                             data: 'id',
