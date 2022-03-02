@@ -4,6 +4,7 @@
         text-align:justify !important;
         }
 
+
 </style>
 
 
@@ -92,10 +93,11 @@
         </div>
     </div>
     <input type="hidden" id="actividades" name="actividades">
-
-    <button id="btnAgregar" class="mt-3 mb-5 btn btn-sm btn-outline-success" style="float:right;"><i
-            class="fas fa-plus-circle"></i> Agregar
-        Actividad</button>
+    <div class="col-12">
+        <button id="btnAgregar" class="mt-3 mb-2 btn btn-sm btn-outline-success" style="float:right;"><i
+            class="fas fa-plus-circle"></i> Agregar Actividad
+        </button>
+    </div>
     @if ($errors->has('actividades'))
         <span class="text-danger">
             <i class="mr-2 fas fa-info-circle"></i>{{ $errors->first('actividades') }}
@@ -132,10 +134,10 @@
                                     @php
                                         $empleado = App\Models\Empleado::find(intval($assig->resourceId));
                                     @endphp
-                                    <img src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->foto }}"
+                                    <img src="{{ $empleado->avatar_ruta }}"
                                         id="res_{{ $empleado->id }}" alt="{{ $empleado->name }}"
                                         title="{{ $empleado->name }}"
-                                        style="clip-path: circle(15px at 50% 50%);width: 45px;" />
+                                        style="clip-path: circle(15px at 50% 50%);width: 45px;"/>
                                 @endforeach
                             </td>
                             <td>
