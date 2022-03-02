@@ -631,6 +631,7 @@ class DeskController extends Controller
 
     public function updateAnalisisMejoras(Request $request, $id_mejoras)
     {
+        // dd($request->all());
         $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_mejoras));
         $analisis_seguridad->update([
             'problema_diagrama' => $request->problema_diagrama,
@@ -655,6 +656,7 @@ class DeskController extends Controller
             'metodos_b' => $request->metodos_b,
             'ambiente_a' => $request->ambiente_a,
             'ambiente_b' => $request->ambiente_b,
+            'metodo' => $request->metodo,
         ]);
 
         return redirect()->route('admin.desk.mejoras-edit', $analisis_seguridad->mejoras_id)->with('success', 'Reporte actualizado');
