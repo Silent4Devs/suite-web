@@ -29,7 +29,6 @@ class CreateMatrizNistTable extends Migration
             $table->unsignedInteger('valor')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 
