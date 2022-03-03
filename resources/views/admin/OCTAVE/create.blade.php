@@ -661,6 +661,18 @@
         margin-top: 11px;
     }
 
+    .select2-selection__rendered[title="Muy Bajo"]::before{
+        position: absolute;
+        content:'';
+        width:10px;
+        height:10px;
+        background-color:rgb(61, 114, 77);
+        margin-left:-18px;
+        border-radius: 100px;
+        margin-top: 11px;
+    }
+
+
 
 
 </style>
@@ -807,14 +819,14 @@
                         <label><i class="fab fa-cloudscale iconos-crear"></i>Valor de la criticidad del activo</label>
                         <select  class="form-control select2 {{ $errors->has('valor_criticidad') ? 'is-invalid' : '' }}" name="valor_criticidad" id="criticidad_informacion">
                             <option value="" selected>Selecciona una opción</option>
-                            <option value="1">Muy Bajo</option>
-                            <option value="2">Bajo</option>
-                            <option value="3">Medio</option>
-                            <option value="4">Alto</option>
-                            <option value="5">Crítico</option>
+                            <option value="Muy Bajo">Muy Bajo</option>
+                            <option value="Bajo">Bajo</option>
+                            <option value="Medio">Medio</option>
+                            <option value="Alto">Alto</option>
+                            <option value="Critico">Crítico</option>
                         </select>
+                        <small class="text-danger errores valor_critico_error"></small>
                     </div>
-                    <small class="text-danger errores valor_critico_error"></small>
                 </div>
 
 
@@ -877,12 +889,12 @@
                         <label><i class="fas fa-box-open iconos-crear"></i>Contenedor del Activo</label><br>
                         <select class="form-control {{ $errors->has('contenedor_activos') ? 'is-invalid' : '' }}" name="contenedor_activos" id="contenedor_activos_informacion">
                             <option value="" selected>Selecciona una opción</option>
-                            <option value="Uno">Soluciones Cloud (Google Workspace-Azure)</option>
-                            <option value="Dos">Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
-                            <option value="Tres">Base de Datos</option>
-                            <option value="Cuatro">Servidores</option>
-                            <option value="Cinco">Aplicaciones Internas (Meltsan-Astro)</option>
-                            <option value="Seis">Aplicaciones Externas (CRM)</option>
+                            <option value="Soluciones Cloud (Google Workspace-Azure)">Soluciones Cloud (Google Workspace-Azure)</option>
+                            <option value="Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)">Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
+                            <option value="Base de Datos">Base de Datos</option>
+                            <option value="Servidores">Servidores</option>
+                            <option value="Aplicaciones Internas (Meltsan-Astro)">Aplicaciones Internas (Meltsan-Astro)</option>
+                            <option value="Aplicaciones Externas (CRM)">Aplicaciones Externas (CRM)</option>
                         </select>
                         <small class="text-danger errores contenedor_activo_error"></small>
                     </div>
@@ -927,11 +939,11 @@
                         <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>Confidencialidad</label><br>
                         <select class="form-control select2 {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}" name="confidencialidad" id="confidencialidad_informacion">
                             <option value="" selected>Selecciona</option>
-                            <option value="Uno">1</option>
-                            <option value="Dos">2</option>
-                            <option value="Tres">3</option>
-                            <option value="Cuatro">4</option>
-                            <option value="Cinco">5</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
                         </select>
                         <small class="text-danger errores confidencialidad_error"></small>
                     </div>
@@ -940,11 +952,11 @@
                         <label for="disponibilidad"><i class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label><br>
                         <select class="form-control select2 {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}" name="disponibilidad" id="disponibilidad_informacion">
                             <option value="" selected>Selecciona</option>
-                            <option value="Uno">1</option>
-                            <option value="Dos">2</option>
-                            <option value="Tres">3</option>
-                            <option value="Cuatro">4</option>
-                            <option value="Cinco">5</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
                         </select>
                         <small class="text-danger errores disponibilidad_error"></small>
                     </div>
@@ -983,8 +995,15 @@
                     <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
                         <table class="scroll_estilo table table-responsive" id="activos_info_table" style="width:100%">
                             <thead>
+                                <tr class="negras">
+                                    <th class="text-center" style="background-color:#3490DC;" colspan="8">Descripción General
+                                    </th>
+                                    <th class="text-center" style="background-color:#1168af;" colspan="3">Evaluación del Escenario</th>
+                                    <th class="text-center" style="background-color:#3490DC;" colspan="1">Evaluación del Riesgo</th>
+                                    <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
+                                </tr>
                                 <tr>
-                                    <th>Activos del AI</th>
+                                    <th style="min-width:300px;">Activos del AI</th>
                                     <th style="min-width:300px;">Valor de criticidad del activo</th>
                                     <th style="min-width:300px;">Dueño del Activo</th>
                                     <th style="min-width:300px;">Custodio del Activo</th>
@@ -1009,7 +1028,7 @@
 
                 <hr>
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.matriz-riesgos.octave', ['id' => $id_analisis]) }}"
+                    <a href="{{ route('admin.matriz-seguridad.octaveIndex', ['id' => $id_analisis]) }}"
                         class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
