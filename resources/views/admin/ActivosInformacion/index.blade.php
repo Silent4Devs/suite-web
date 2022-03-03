@@ -55,62 +55,39 @@
             <table class="table table-bordered w-100 datatable-Activo" id="columnaft">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
-                           ID
-                        </th>
-                        <th>
-                           Nombre VP
-                        </th>
-                        <th>
-                            Dueño AI Nombre del VP
-                        </th>
-                        <th>
-                            Nombre Direccíon
-                        </th>
-                        <th>
-                            Custodio AI Nombre Director
-                        </th>
-                        <th>
-                            Activo Información
-                        </th>
-                        <th>
-                            Formato
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
+                        <th style="min-width:75px;">ID</th>
+                        <th style="min-width:100px;">Nombre VP</th>
+                        <th style="min-width:200px;">Dueño AI Nombre del VP</th>
+                        <th style="min-width:150px;">Nombre Direccíon</th>
+                        <th style="min-width:200px;">Custodio AI Nombre Director</th >
+                        <th style="min-width:150px;">Activo Información</th>
+                        <th style="min-width:50px;">Formato</th>
+                        <th style="min-width:100px;">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>
-                        AB-1
-                    </td>
-                    <td>
-                        Juan Manuel
-                    </td>
-                    <td>
-                       Daniel Perez
-                    </td>
-                    <td>
-                       Miguel Gaspar
-                    </td>
-                    <td>
-                        Pedro Garcia
-                    </td>
-                    <td>
-                       Contrato
-                    </td>
-                    <td>
-                        PDF
-                    </td>
-                    <td>
-                        <i class="fas fa-trash"></i>
-                        <i class="fas fa-folder-minus"></i>
-                    </td>
-                </tr>
-
-
+                    @foreach ( $activos as $activo )
+                    <tr>
+                        <td><div>{{$activo->identificador}}</div></td>
+                        <td><div>{{$activo->nombreVP}}</div></td>
+                        <td><div>{{$activo->dueno->name}}</div></td>
+                        <td><div>{{$activo->nombre_direccion}}</div></td>
+                        <td><div>{{$activo->custodio->name}}</div></td>
+                        <td><div>{{$activo->activo_informacion}}</div></td>
+                        <td><div>{{$activo->formato}}</td>
+                        <td><div>
+                            <form action="{{ route('admin.activosInformacion.destroy', $activo->id) }}" method="POST">
+                                <a href="{{ route('admin.activosInformacion.edit',$activo->id )}}"><i class="fas fa-edit"></i></a>
+                                {{-- <a href="{{ route('admin.activosInformacion.show',$activo->id )}}"><i class="fas fa-eye"></i></a> --}}
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" title="delete" style="border: none; background-color:transparent;">
+                                    <i class="fas fa-trash text-danger"></i>
+                                    </button>
+                            </form>
+                        </div></td>
+                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -198,30 +175,30 @@
                 window.location.href = url;
                 }
                 };
-                let btnExport = {
-                text: '<i class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-activo_inventario') }}",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
-                };
-                let btnImport = {
-                text: '<i class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                $('#xlsxImportModal').modal('show');
-                }
-                };
+                // let btnExport = {
+                // text: '<i class="fas fa-download"></i>',
+                // titleAttr: 'Descargar plantilla',
+                // className: "btn btn_cargar" ,
+                // url:"{{ route('descarga-activo_inventario') }}",
+                // action: function(e, dt, node, config) {
+                // let {
+                // url
+                // } = config;
+                // window.location.href = url;
+                // }
+                // };
+                // let btnImport = {
+                // text: '<i class="fas fa-file-upload"></i>',
+                // titleAttr: 'Importar datos',
+                // className: "btn btn_cargar",
+                // action: function(e, dt, node, config) {
+                // $('#xlsxImportModal').modal('show');
+                // }
+                // };
 
                 dtButtons.push(btnAgregar);
-                dtButtons.push(btnExport);
-                dtButtons.push(btnImport);
+                // dtButtons.push(btnExport);
+                // dtButtons.push(btnImport);
             @endcan
             // @can('configuracion_activo_delete')
             //     let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
@@ -255,125 +232,10 @@
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
-                processing: true,
-                serverSide: true,
-                retrieve: true,
-                aaSorting: [],
-            //     ajax: "{{ route('admin.activos.index') }}",
-            //     columnDefs: [{
-            //         targets: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
-            //         visible: false
-            //     }],
-                // columns: [{
-                //         data: 'id',
-                //         name: 'id'
-                //     },
-                //     {
-                //         data: 'nombreactivo',
-                //         name: 'nombreactivo'
 
 
-                //     },
-                //     {
-                //         data: 'tipoactivo_tipo',
-                //         name: 'tipoactivo.tipo'
-                //     },
-                //     {
-                //         data: 'subcategoria',
-                //         name: 'subcategoria.subcategoria'
-
-                //     },
-                //     {
-                //         data: 'descripcion',
-                //         name: 'descripcion'
-                //     },
-                //     {
-                //         data: 'id',
-                //         render: function(data, type, row, meta) {
-
-
-                //             let html =
-                //                 `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.dueno.avatar}" title="${row.dueno.name}"></img>`;
-
-                //             return `${row.dueno ? html: ''}`;
-                //         }
-                //     },
-                //     {
-                //         data: 'id',
-                //         render: function(data, type, row, meta) {
-                //             let html =
-                //                 `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.empleado.avatar}" title="${row.empleado.name}"></img>`;
-
-                //             return  html;
-                //         }
-                //     },
-                //     {
-                //         data: 'ubicacion_sede',
-                //         name: 'ubicacion.sede'
-                //     },
-                //     {
-                //         data: 'sede',
-                //         name: 'sede'
-                //     },
-                //     {
-                //         data: 'marca',
-                //         name: 'marca'
-                //     },
-                //     {
-                //         data: 'modelo',
-                //         name: 'modelo'
-                //     },
-                //     {
-                //         data: 'n_serie',
-                //         name: 'n_serie'
-                //     },
-                //     {
-                //         data: 'n_producto',
-                //         name: 'n_producto'
-                //     },
-                //     {
-                //         data: 'fecha_alta',
-                //         name: 'fecha_alta'
-                //     },
-                //     {
-                //         data: 'fecha_fin',
-                //         name: 'fecha_fin'
-                //     },
-                //     {
-                //         data: 'fecha_compra',
-                //         name: 'fecha_compra'
-                //     },
-                //     {
-                //         data: 'fecha_baja',
-                //         name: 'fecha_baja'
-                //     },
-                //     {
-                //         data: 'observaciones',
-                //         name: 'observaciones'
-                //     },
-                //     {
-                //         data: 'actions',
-                //         name: '{{ trans('global.actions') }}'
-                //     }
-                // ],
-                // orderCellsTop: true,
-                // order: [
-                //     [0, 'desc']
-                // ],
             };
             let table = $('.datatable-Activo').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
         });
     </script>
 
