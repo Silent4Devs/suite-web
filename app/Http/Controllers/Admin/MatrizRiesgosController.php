@@ -875,7 +875,6 @@ class MatrizRiesgosController extends Controller
                 }
             });
 
-
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
@@ -894,7 +893,6 @@ class MatrizRiesgosController extends Controller
 
         return view('admin.NIST.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
-
 
     public function NISTCreate(Request $request)
     {
@@ -922,7 +920,6 @@ class MatrizRiesgosController extends Controller
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
         return view('admin.NIST.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
-
     }
 
 

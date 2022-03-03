@@ -15,6 +15,7 @@ class ActivosInformacionController extends Controller
     public function index(Request $request)
     {
         $activos = ActivoInformacion::get();
+
         return view('admin.activosInformacion.index', compact('activos'));
     }
 
@@ -24,7 +25,8 @@ class ActivosInformacionController extends Controller
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $area = Area::get();
         $procesos = Proceso::with('macroproceso')->get();
-        return view('admin.activosInformacion.create', compact('empleados','area','duenos','procesos'));
+
+        return view('admin.activosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos'));
     }
 
     public function store(Request $request)
@@ -33,21 +35,24 @@ class ActivosInformacionController extends Controller
 
         return redirect()->route('admin.activosInformacion.index')->with('success', 'Guardado con éxito');
     }
+
     public function edit($activos)
     {
         $activos = ActivoInformacion::find($activos);
         $empleados = Empleado::with('area')->get();
         $procesos = Proceso::with('macroproceso')->get();
 
-        return view('admin.activosInformacion.edit', compact('activos','empleados','procesos'));
+        return view('admin.activosInformacion.edit', compact('activos', 'empleados', 'procesos'));
     }
-    public function update(Request $request,$activos)
+
+    public function update(Request $request, $activos)
     {
         $activos = ActivoInformacion::find($activos);
         $activos->update($request->all());
 
         return redirect()->route('admin.activosInformacion.index');
     }
+
     public function destroy($id)
     {
         $activo = ActivoInformacion::find($id);
@@ -56,7 +61,4 @@ class ActivosInformacionController extends Controller
 
         return view('admin.activosInformacion.index', compact('activos'));
     }
-
-
-
 }

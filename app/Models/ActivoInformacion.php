@@ -47,20 +47,18 @@ class ActivoInformacion extends Model
     'deleted_at',
     ];
 
-
     public function dueno()
     {
         return $this->belongsTo(Empleado::class, 'duenoVP', 'id');
     }
+
     public function custodio()
     {
         return $this->belongsTo(Empleado::class, 'custodioALDirector', 'id');
     }
+
     public function proceso()
     {
         return $this->belongsTo(Empleado::class, 'proceso_id', 'id');
     }
-
-
-
 }
