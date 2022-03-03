@@ -15,7 +15,7 @@ class ActivoInformacion extends Model
 
     public $cacheFor = 3600;
     protected static $flushCacheOnUpdate = true;
-    public $table = 'activosInformacion';
+    protected $table = 'activos_informacion';
 
     protected $dates = [
         'created_at',
@@ -24,20 +24,43 @@ class ActivoInformacion extends Model
     ];
 
     protected $fillable = [
-        'identificador',
-        'nombreVP',
-        'duenoVP',
-        'nombreDireccion',
-        'custodioAIDirector',
-        'activoInformacion',
-        'formato',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    'identificador',
+    'nombreVP',
+    'duenoVP',
+    'nombre_direccion',
+    'custodioALDirector',
+    'activo_informacion',
+    'formato',
+    'proceso_id',
+    'creacion',
+    'recepcion',
+    'otra_recepcion',
+    'uso_digital',
+    'nombre_aplicacion',
+    'carpeta_compartida',
+    'otra_AppCarpeta',
+    'uso_fisico',
+    'otro',
+    'imprime',
+    'created_at',
+    'updated_at',
+    'deleted_at',
     ];
 
-    public function empleado()
+
+    public function dueno()
     {
-        return $this->belongsTo(Empleado::class, 'id_responsable', 'id');
+        return $this->belongsTo(Empleado::class, 'duenoVP', 'id');
     }
+    public function custodio()
+    {
+        return $this->belongsTo(Empleado::class, 'custodioALDirector', 'id');
+    }
+    public function proceso()
+    {
+        return $this->belongsTo(Empleado::class, 'proceso_id', 'id');
+    }
+
+
+
 }

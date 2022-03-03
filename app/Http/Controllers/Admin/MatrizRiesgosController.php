@@ -783,4 +783,8 @@ class MatrizRiesgosController extends Controller
 
         return view('admin.MatrizISO31000.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
+
+
+
+
 }
