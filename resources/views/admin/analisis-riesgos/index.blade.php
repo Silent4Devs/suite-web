@@ -333,13 +333,41 @@
                         data: 'enlace',
                         name: 'enlace',
                         render: function(data, type, row, meta) {
+                            console.log(row.tipo);
+                            const tipo = row.tipo;
+                            switch(tipo){
+                            case 'Seguridad de la información':
                             return `
                             <div class="text-center w-100">
-                            @can('analisis_de_riesgos_matriz_riesgo_config')
-                                <a href="matriz-seguridad/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
-                            @endcan
+                                @can('analisis_de_riesgos_matriz_riesgo_config')
+                                    <a href="matriz-seguridad/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                                @endcan
                             </div>
                             `;
+                            break;
+                            case 'OCTAVE':
+                                return `
+                                <div class="text-center w-100">
+                                    <a href="matriz-seguridad/octave/index/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                                </div>
+                            `;
+                            break;
+                            case 'ISO 31000':
+                            return `
+                            <div class="text-center w-100">
+                                <a href="matriz-seguridad/ISO31000/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                            </div>
+                            `;
+                            break;
+                            case 'NIST':
+                            return `
+                            <div class="text-center w-100">
+                                <a href="matriz-seguridad/NIST/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                            </div>
+                            `;
+                            default:
+                             return`No se encuentran coincidencias`;
+                            }
                         }
                     },
                     {
@@ -349,7 +377,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [4, 'desc']
+                    [0, 'desc']
                 ]
             };
             let table = $('.datatable-AnalisisRiesgo').DataTable(dtOverrideGlobals);

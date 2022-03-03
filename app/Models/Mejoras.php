@@ -20,11 +20,21 @@ class Mejoras extends Model
         'id',
     ];
 
-    protected $appends = ['folio', 'fecha_creacion', 'fecha_de_cierre', 'fecha_reporte'];
+    protected $appends = ['folio', 'fecha_creacion', 'fecha_de_cierre', 'fecha_reporte', 'beneficio_html', 'descripcion_html'];
 
     public function getFolioAttribute()
     {
         return  sprintf('MJA-%04d', $this->id);
+    }
+
+    public function getBeneficioHtmlAttribute()
+    {
+        return html_entity_decode(strip_tags($this->beneficios), ENT_QUOTES, 'UTF-8');
+    }
+
+    public function getDescripcionHtmlAttribute()
+    {
+        return html_entity_decode(strip_tags($this->descripcion), ENT_QUOTES, 'UTF-8');
     }
 
     public function mejoro()

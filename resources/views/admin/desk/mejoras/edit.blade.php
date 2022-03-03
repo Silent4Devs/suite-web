@@ -250,25 +250,25 @@
                             <div class="mb-3 col-sm-12 col-lg-12 col-md-12 text-primary ">
                                 <strong style="font-size:13pt;">Folio: {{ $mejoras->folio }}</strong>
                             </div>
-                            <div class="col-md-4">
-                                Seleccione el metódo de análisis
-                            </div>
-                            <div class="col-md-8">
-                                <select id="select_metodos" class="form-control" name="metodo">
-                                    <option selected disabled>- -</option>
-                                    <option {{ old('Lluvia de ideas (Brainstorming)', $analisis?$analisis->metodo:'') == 'Lluvia de ideas (Brainstorming)' ? 'selected' : '' }} class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
-                                    </option>
-                                    <option {{ old('5 Porqués (5 Why)', $analisis?$analisis->metodo:'') == '5 Porqués (5 Why)' ? 'selected' : '' }} class="op_porque" data-metodo="porque">5 Porqués (5 Why)</option>
-                                    <option {{ old('Diagrama causa efecto (Ishikawa)', $analisis?$analisis->metodo:'') == 'Diagrama causa efecto (Ishikawa)' ? 'selected' : '' }} class="op_digrama" data-metodo="digrama">Diagrama causa efecto
-                                        (Ishikawa)
-                                    </option>
-                                </select>
-                            </div>
+                            {{-- <div class="col-12"> --}}
 
-                            <form method="POST" class="col-12"
+                            <form method="POST" class="col-12 row"
                                 action="{{ route('admin.desk.analisis_mejora-update', $analisis) }}">
                                 @csrf
-
+                                <div class="form-group col-12">
+                                    <label>
+                                        Seleccione el metódo de análisis
+                                    </label>
+                                    <select id="select_metodos" class="form-control" name="metodo">
+                                        <option selected disabled>- -</option>
+                                        <option {{ old('Lluvia de ideas (Brainstorming)', $analisis?$analisis->metodo:'') == 'Lluvia de ideas (Brainstorming)' ? 'selected' : '' }} class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
+                                        </option>
+                                        <option {{ old('5 Porqués (5 Why)', $analisis?$analisis->metodo:'') == '5 Porqués (5 Why)' ? 'selected' : '' }} class="op_porque" data-metodo="porque">5 Porqués (5 Why)</option>
+                                        <option {{ old('Diagrama causa efecto (Ishikawa)', $analisis?$analisis->metodo:'') == 'Diagrama causa efecto (Ishikawa)' ? 'selected' : '' }} class="op_digrama" data-metodo="digrama">Diagrama causa efecto
+                                            (Ishikawa)
+                                        </option>
+                                    </select>
+                                </div>
                                 <div class="col-12" style="position: relative;">
 
                                     <div id="ideas" class="caja_oculta_dinamica row">
@@ -363,6 +363,7 @@
                                     <input type="submit" class="btn btn-success">
                                 </div>
                             </form>
+                            {{-- </div> --}}
                         </div>
                     </div>
                 </section>

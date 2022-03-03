@@ -37,6 +37,10 @@ class ComiteseguridadImport implements ToModel
     {
         $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
 
-        return $empleado_bd->id;
+        if ($empleado_bd) {
+            return $empleado_bd->id;
+        }
+
+        return null;
     }
 }

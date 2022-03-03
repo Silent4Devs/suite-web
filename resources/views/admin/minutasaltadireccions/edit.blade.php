@@ -184,7 +184,7 @@
                     <button class="btn btn-danger" id="btnGuardar" type="submit">
                         Actualizar
                     </button>
-                    <button class="btn btn-danger" id="btnUpdateAndReview" type="submit">
+                    <button class="btn btn-danger" id="btnUpdateAndReview" type="submit" style="width: 230px !important;">
                         Actualizar y enviar a revisión
                     </button>
                 </div>

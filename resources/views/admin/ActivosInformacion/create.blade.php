@@ -2,8 +2,8 @@
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Registrar: Activo de Información</h5>
 <div class="mt-4 card">
-
-
+    <form method="POST" action="{{ route("admin.activosInformacion.store")}}" enctype="multipart/form-data">
+        @csrf
     <div class="col-12">
 
             <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
@@ -11,14 +11,23 @@
             </div>
         <div class="row">
             <div class="form-group col-sm-3">
-                <label for="banco"><i class="fas fa-list-ol iconos-crear"></i>ID</label>
-                <input class="form-control {{ $errors->has('banco') ? 'is-invalid' : '' }}" type="text" name="banco" id="banco">
-                <small id="error_banco" class="text-danger"></small>
+                <label for="identificador"><i class="fas fa-list-ol iconos-crear"></i>ID</label>
+                <input class="form-control {{ $errors->has('banco') ? 'is-invalid' : '' }}" type="text" name="identificador" id="identificador">
+                <small id="identificador" class="text-danger"></small>
+            </div>
+            <div class="form-group col-sm-9">
+                <label for="nombreVP"><i class="fas fa-list-ol iconos-crear"></i>Nombre VP</label>
+                <input class="form-control {{ $errors->has('banco') ? 'is-invalid' : '' }}" type="text" name="nombreVP" id="nombreVP">
+                <small id="nombreVP" class="text-danger"></small>
             </div>
         </div>
 
-        <div class="row">
-            <div class="form-group col-md-4">
+
+
+
+
+            {{--  <div class="row">
+                <div class="form-group col-md-4">
                 <label for="dueno_id"><i class="fas fa-user-tie iconos-crear"></i>Nombre VP</label>
                 <select class="form-control select2 {{ $errors->has('dueno_id') ? 'is-invalid' : '' }}"
                     name="dueno_id" id="dueno_id">
@@ -47,13 +56,13 @@
                 <div class="form-control" id="area_dueno"></div>
 
             </div>
-        </div>
+        </div> --}}
 
         <div class="row">
             <div class="form-group col-md-4">
-                <label for="id_responsable"><i class="fas fa-user-tie iconos-crear"></i>Dueño AI</label>
+                <label for="duenoVP"><i class="fas fa-user-tie iconos-crear"></i>Dueño AI Nombre del VP</label>
                 <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
-                    name="id_responsable" id="id_responsable">
+                    name="duenoVP" id="duenoVP">
                     @foreach ($empleados as $empleado)
                         <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                             data-area="{{ $empleado->area->area }}">
@@ -78,11 +87,19 @@
                 <div class="form-control" id="area_responsable"></div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label for="nombre_direccion"><i class="fas fa-list-ol iconos-crear"></i>Nombre Dirección</label>
+                <input class="form-control {{ $errors->has('banco') ? 'is-invalid' : '' }}" type="text" name="nombre_direccion" id="nombre_direccion">
+                <small id="error_banco" class="text-danger"></small>
+            </div>
+        </div>
         <div class="row">
             <div class="form-group col-md-4">
-                <label for="id_custodio"><i class="fas fa-user-tie iconos-crear"></i>Custodio AI Nombre Director</label>
+                <label for="custodioALDirector"><i class="fas fa-user-tie iconos-crear"></i>Custodio AI Nombre Director</label>
                 <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
-                    name="id_custodio" id="id_custodio">
+                    name="custodioALDirector" id="custodioALDirector">
                     @foreach ($empleados as $empleado)
                         <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                             data-area="{{ $empleado->area->area }}">
@@ -122,15 +139,43 @@
         </div> --}}
     <div class="row">
         <div class="form-group col-sm-12">
-            <label for="cuenta_bancaria"><i class="fas fa-folder-plus iconos-crear"></i>Activo de información</label>
-            <input class="form-control {{ $errors->has('cuenta_bancaria') ? 'is-invalid' : '' }}" type="text"
-                name="cuenta_bancaria" id="cuenta_bancaria">
+            <label for="activo_informacion"><i class="fas fa-folder-plus iconos-crear"></i>Activo de información</label>
+            <input class="form-control {{ $errors->has('activo_informacion') ? 'is-invalid' : '' }}" type="text"
+                name="activo_informacion" id="activo_informacion">
         </div>
         <div class="form-group col-sm-12">
-            <label for="cuenta_bancaria"><i class="fas fa-file-contract iconos-crear"></i>Formato</label>
-            <input class="form-control {{ $errors->has('cuenta_bancaria') ? 'is-invalid' : '' }}" type="text"
-                name="cuenta_bancaria" id="cuenta_bancaria">
+            <label for="formato"><i class="fas fa-file-contract iconos-crear"></i>Formato</label>
+            <input class="form-control {{ $errors->has('formato') ? 'is-invalid' : '' }}" type="text"
+                name="formato" id="formato">
         </div>
+
+          <div class="form-group col-md-4">
+                    <label for="proceso_id"><i class="bi bi-file-earmark-post iconos-crear"></i>Proceso</label>
+                        <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
+                            name="proceso_id" id="proceso_id">
+                            @foreach ($procesos as $proceso)
+                                <option data-codigo="{{ $proceso->codigo }}" value="{{ $proceso->id }}"
+                                    data-macroproceso="{{ $proceso->macroproceso->nombre }}">
+                                    {{ $proceso->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @if ($errors->has('empleados'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('area') }}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="codigo_proceso"><i class="fas fa-barcode iconos-crear" style="margin-top: 8px"></i>Codigo</label>
+                    <div class="form-control" id="codigo_proceso"></div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="macroproceso"><i class="bi bi-file-earmark-post-fill iconos-crear"></i>Macroproceso</label>
+                    <div class="form-control" id="macroproceso"></div>
+                </div>
     </div>
 </div>
 
@@ -153,26 +198,26 @@
                     Creación digital
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                    <label class="form-check-label" for="exampleRadios1">
+                    <input class="form-check-input" type="radio" name="creacion" id="creacion" value="1">
+                    <label class="form-check-label" for="creacion1">
                         Aplicación de negocio
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                    <label class="form-check-label" for="exampleRadios2">
+                    <input class="form-check-input" type="radio" name="creacion" id="creacion" value="2">
+                    <label class="form-check-label" for="creacion">
                         Google Workspace
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
-                    <label class="form-check-label" for="exampleRadios3">
+                    <input class="form-check-input" type="radio" name="creacion" id="creacion" value="3">
+                    <label class="form-check-label" for="creacion">
                         Paquetería multimedia
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" value="option4">
-                    <label class="form-check-label" for="exampleRadios4">
+                    <input class="form-check-input" type="radio" name="creacion" id="creacion" value="4">
+                    <label class="form-check-label" for="creacion">
                         Escaneo
                     </label>
                   </div><br>
@@ -180,8 +225,8 @@
                     Creación física
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5" value="option5">
-                    <label class="form-check-label" for="exampleRadios5">
+                    <input class="form-check-input" type="radio" name="creacion" id="creacion" value="5">
+                    <label class="form-check-label" for="creacion">
                         Manualmente
                     </label>
                   </div>
@@ -194,44 +239,44 @@
                         Recepción digital
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion1" value="option1" checked>
-                    <label class="form-check-label" for="recepcion1">
+                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion" value="1">
+                    <label class="form-check-label" for="recepcion">
                         Aplicación de negocio
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion2" value="option2">
+                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion" value="2">
                     <label class="form-check-label" for="recepcion2">
                         Mail corporativo
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion3" value="option3">
-                    <label class="form-check-label" for="recepcion3">
+                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion3" value="3">
+                    <label class="form-check-label" for="recepcion">
                         Mail personal
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion4" value="option4">
-                    <label class="form-check-label" for="recepcion4">
+                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion" value="4">
+                    <label class="form-check-label" for="recepcion">
                         Carpeta compartida
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion5" value="option5">
-                    <label class="form-check-label" for="recepcion5">
+                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion" value="5">
+                    <label class="form-check-label" for="recepcion">
                         Medio extraíble
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion6" value="option6">
-                    <label class="form-check-label" for="recepcion6">
+                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion" value="6">
+                    <label class="form-check-label" for="recepcion">
                         Página web
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion7" value="option7">
-                    <label class="form-check-label" for="recepcion7">
+                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion" value="7">
+                    <label class="form-check-label" for="recepcion">
                         Vía telefónica
                     </label>
                   </div>
@@ -239,21 +284,21 @@
                     Recepción física
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion8" value="option8">
-                    <label class="form-check-label" for="recepcion8">
+                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion" value="8">
+                    <label class="form-check-label" for="recepcion">
                     Entrega personal
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion9" value="option9">
-                    <label class="form-check-label" for="recepcion9">
+                    <input class="form-check-input" type="radio" name="recepcion" id="recepcion" value="9">
+                    <label class="form-check-label" for="recepcion">
                     Mensajería externa
                     </label>
                   </div>
 
                   <div class="form-check">
-                        <input class="form-check-input" type="radio" name="recepcion" id="recepcion9" value="option9">
-                        <label class="form-check-label" for="recepcion9">Otro
+                        <input class="form-check-input" type="radio" name="recepcion" id="recepcion" value="10">
+                        <label class="form-check-label" for="recepcion">Otro
                   </div>
                   {{-- <input type="text" class="form-control"  placeholder="Ingresa el medio de recepción"> --}}
                   <br>
@@ -269,12 +314,12 @@
         </div>
 
         <div class="form-group">
-          <label for="exampleFormControlSelect2">Uso digital</label>
-            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-              <option selected>Aplicación de negocio</option>
-              <option value="1">Google Workspace</option>
-              <option value="2">Paquetería multimedia</option>
-              <option value="3">Carpeta compartida</option>
+          <label for="uso_digital">Uso digital</label>
+            <select class="custom-select my-1 mr-sm-2" id="uso_digital" name="uso_digital">
+              <option value="1">Aplicación de negocio</option>
+              <option value="2">Google Workspace</option>
+              <option value="3">Paquetería multimedia</option>
+              <option value="4">Carpeta compartida</option>
             </select>
         </div>
 
@@ -296,45 +341,44 @@
           </div>
           <input type="text" class="form-control" aria-label="Text input with checkbox">
         </div>
-        <form> --}}
+         --}}
           <div class="form-group">
-            <label for="formGroupExampleInput">Nombre aplicación (si aplica)</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="...">
+            <label for="nombre_aplicacion">Nombre aplicación (si aplica)</label>
+            <input type="text" class="form-control" id="nombre_aplicacion" name="nombre_aplicacion" placeholder="...">
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Nombre carpeta compartida (si aplica)</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="...">
+            <label for="carpeta_compartida">Nombre carpeta compartida (si aplica)</label>
+            <input type="text" class="form-control" id="carpeta_compartida" name="carpeta_compartida" placeholder="...">
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Otra Aplicación/carpeta</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="...">
+            <label for="otra_AppCarpeta">Otra Aplicación/carpeta</label>
+            <input type="text" class="form-control" id="otra_AppCarpeta" name="otra_AppCarpeta" placeholder="...">
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput2">Uso físico</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="...">
+            <label for="uso_fisico">Uso físico</label>
+            <input type="text" class="form-control" id="uso_fisico" name="uso_fisico" placeholder="...">
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput2">Otro</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="...">
+            <label for="otro">Otro</label>
+            <input type="text" class="form-control" id="otro" name="otro" placeholder="...">
           </div>
-        </form>
+
 
         <div class="form-group">
-            <label for="exampleFormControlSelect2">¿Se imprime?</label>
-              <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                <option selected>No</option>
-                <option value="1">Si</option>
+            <label for="imprime">¿Se imprime?</label>
+              <select class="custom-select my-1 mr-sm-2" id="name" name="imprime">
+                <option selected value="no">No</option>
+                <option value="si">Si</option>
               </select>
           </div>
-      </form>
-
-
-
-
+          <div class="form-group col-12 text-right" style="margin-left:15px;" >
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+            <button class="btn btn-danger" type="submit">
+                {{ trans('global.save') }}
+            </button>
+        </div>
+    </form>
     </div>
-
-
-
 </div>
 
 
@@ -348,27 +392,35 @@
 <script>
     document.addEventListener('DOMContentLoaded', function(e) {
 
-        let responsable = document.querySelector('#id_responsable');
+        let responsable = document.querySelector('#duenoVP');
         let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
         let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
         document.getElementById('puesto_responsable').innerHTML = puesto_init
         document.getElementById('area_responsable').innerHTML = area_init
+        let proceso = document.getElementById('proceso_id');
 
-        let custodio = document.querySelector('#id_custodio');
+        let custodio = document.querySelector('#custodioALDirector');
         let area_custodio_init = custodio.options[custodio.selectedIndex].getAttribute('data-area');
         let puesto_custodio_init = custodio.options[custodio.selectedIndex].getAttribute('data-puesto');
         document.getElementById('puesto_custodio').innerHTML = puesto_custodio_init
         document.getElementById('area_custodio').innerHTML = area_custodio_init
 
+        document.getElementById('codigo_proceso').innerHTML=proceso.options[proceso.selectedIndex].getAttribute('data-codigo')
+                document.getElementById('macroproceso').innerHTML=proceso.options[proceso.selectedIndex].getAttribute('data-macroproceso')
 
 
-        let dueno = document.querySelector('#dueno_id');
-        let area = dueno.options[dueno.selectedIndex].getAttribute('data-area');
-        let puesto = dueno.options[dueno.selectedIndex].getAttribute('data-puesto');
-        document.getElementById('puesto_dueno').innerHTML = puesto
-        document.getElementById('area_dueno').innerHTML = area
 
-
+        // let dueno = document.querySelector('#dueno_id');
+        // let area = dueno.options[dueno.selectedIndex].getAttribute('data-area');
+        // let puesto = dueno.options[dueno.selectedIndex].getAttribute('data-puesto');
+        // document.getElementById('puesto_dueno').innerHTML = puesto
+        // document.getElementById('area_dueno').innerHTML = area
+        proceso.addEventListener('change', function(e) {
+            e.preventDefault();
+            console.log()
+            document.getElementById('codigo_proceso').innerHTML=e.target.options[e.target.selectedIndex].getAttribute('data-codigo')
+            document.getElementById('macroproceso').innerHTML=e.target.options[e.target.selectedIndex].getAttribute('data-macroproceso')
+                })
 
         responsable.addEventListener('change', function(e) {
             e.preventDefault();
@@ -385,19 +437,15 @@
             document.getElementById('area_custodio').innerHTML = area
         })
 
-        dueno.addEventListener('change', function(e) {
-            e.preventDefault();
-            let area = this.options[this.selectedIndex].getAttribute('data-area');
-            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('puesto_dueno').innerHTML = puesto
-            document.getElementById('area_dueno').innerHTML = area
-        })
+        // dueno.addEventListener('change', function(e) {
+        //     e.preventDefault();
+        //     let area = this.options[this.selectedIndex].getAttribute('data-area');
+        //     let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+        //     document.getElementById('puesto_dueno').innerHTML = puesto
+        //     document.getElementById('area_dueno').innerHTML = area
+        // })
 
-         // Script Marca activos
 
-        // Script categoria activos
-
-         // Script subcategoria activos
 
          document.getElementById('guardar_subcategoria').addEventListener('click', function(e) {
             e.preventDefault();

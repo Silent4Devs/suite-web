@@ -38,7 +38,10 @@ class PoliticaSgsiImport implements ToModel
     public function obtenerEmpleadoPorNombre($nombre)
     {
         $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+        if ($empleado_bd) {
+            return $empleado_bd->id;
+        }
 
-        return $empleado_bd->id;
+        return null;
     }
 }
