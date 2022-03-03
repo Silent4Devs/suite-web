@@ -617,6 +617,51 @@
 
     }
 
+    .select2-selection__rendered[title="Bajo"]::before{
+        position: absolute;
+        content:'';
+        width:10px;
+        height:10px;
+        background-color:rgb(50, 205, 63);
+        margin-left:-18px;
+        border-radius: 100px;
+        margin-top: 11px;
+    }
+
+    .select2-selection__rendered[title="Medio"]::before{
+        position: absolute;
+        content:'';
+        width:10px;
+        height:10px;
+        background-color:yellow;
+        margin-left:-18px;
+        border-radius: 100px;
+        margin-top: 11px;
+    }
+
+    .select2-selection__rendered[title="Alto"]::before{
+        position: absolute;
+        content:'';
+        width:10px;
+        height:10px;
+        background-color:rgb(255, 136, 0);
+        margin-left:-18px;
+        border-radius: 100px;
+        margin-top: 11px;
+    }
+
+    .select2-selection__rendered[title="Crítico"]::before{
+        position: absolute;
+        content:'';
+        width:10px;
+        height:10px;
+        background-color:red;
+        margin-left:-18px;
+        border-radius: 100px;
+        margin-top: 11px;
+    }
+
+
 
 </style>
 
@@ -762,11 +807,11 @@
                         <label><i class="fab fa-cloudscale iconos-crear"></i>Valor de la criticidad del activo</label>
                         <select  class="form-control select2 {{ $errors->has('valor_criticidad') ? 'is-invalid' : '' }}" name="valor_criticidad" id="criticidad_informacion">
                             <option value="" selected>Selecciona una opción</option>
-                            <option value="Uno">Muy Bajo</option>
-                            <option value="Dos">Bajo</option>
-                            <option value="Tres">Medio</option>
-                            <option value="Cuatro">Alto</option>
-                            <option value="Cinco">Crítico</option>
+                            <option value="1">Muy Bajo</option>
+                            <option value="2">Bajo</option>
+                            <option value="3">Medio</option>
+                            <option value="4">Alto</option>
+                            <option value="5">Crítico</option>
                         </select>
                     </div>
                     <small class="text-danger errores valor_critico_error"></small>
@@ -787,7 +832,7 @@
                     </div>
 
 
-                    <div class="form-group col-md-4">
+                    {{-- <div class="form-group col-md-4">
                         <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                         <div class="form-control" id="id_puesto" readonly></div>
 
@@ -795,7 +840,7 @@
                     <div class="form-group col-md-4">
                         <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                         <div class="form-control" id="id_area" readonly></div>
-                    </div>
+                    </div> --}}
 
                 </div>
 
@@ -814,7 +859,7 @@
                     </div>
 
 
-                    <div class="form-group col-md-4">
+                    {{-- <div class="form-group col-md-4">
                         <label><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                         <div class="form-control" id="id_custodio_puesto" readonly></div>
 
@@ -823,7 +868,7 @@
                         <label><i class="fas fa-street-view iconos-crear"></i>Área</label>
                         <div class="form-control" id="id_custodio_area" readonly></div>
 
-                    </div>
+                    </div> --}}
 
                 </div>
 
@@ -940,13 +985,9 @@
                             <thead>
                                 <tr>
                                     <th>Activos del AI</th>
-                                    <th>Dueño del Activo</th>
-                                    <th>Puesto</th>
-                                    <th>Área</th>
-                                    <th>Custodio del Activo</th>
-                                    <th>Puesto</th>
-                                    <th>Área</th>
                                     <th style="min-width:300px;">Valor de criticidad del activo</th>
+                                    <th style="min-width:300px;">Dueño del Activo</th>
+                                    <th style="min-width:300px;">Custodio del Activo</th>
                                     <th style="min-width:300px;">Contenedor del activo</th>
                                     <th style="min-width:300px;">Escenario de Riesgo</th>
                                     <th style="min-width:300px;">Amenazas</th>
@@ -955,11 +996,10 @@
                                     <th style="min-width:300px;">Disponibilidad</th>
                                     <th style="min-width:300px;">Integridad</th>
                                     <th style="min-width:300px;">Evaluación del Riesgo</th>
-
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
-                            <tbody id="contenedor_activos_info">
+                            <tbody id="contenedor_informacion">
 
                             </tbody>
                         </table>

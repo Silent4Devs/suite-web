@@ -406,18 +406,26 @@
     const amenazas=@json($amenazas);
     const vulnerabilidades=@json($vulnerabilidades);
     const activosoctave=@json($activosoctave);
-    console.log(activosoctave);
+    console.log('Hola');
       let count = 0;
 
     //   renderizarTablaResponsabilidades(count);
 
       function agregarFilaActivosInfo(contador,formulario) {
           console.log(formulario)
-          const contenedorActivosInfo=document.getElementById('contenedor_activos_info');
+          const contenedorActivosInfo=document.getElementById('contenedor_informacion');
           let html=`
           <tr>
             <td><input type="hidden" name="activosoctave[${contador}][id]" value="${formulario.id?formulario.id:0}"><input class="form-control" type="text"  name="activosoctave[${contador}][nombre_ai]" value="${formulario.activosAi}"></td>
-            <td><textarea class="form-control" style="min-height: 25px !important;" type="text" name="activosoctave[${contador}][valor_criticidad]" value="" >${formulario.valorCritico}</textarea></td>
+            <td class="col-4"><select class="form-control" select2 name="activosoctave[${contable}][requisito]" value="${formulario.requisito}"><option value="">Seleccione una opción</option>
+            <option  ${certificacion.requisito == "1" ? "selected":''} value="Indispensable" >Indispensable</option>
+            <option  ${certificacion.requisito == "2" ? "selected":''} value="Deseable" >Deseable</option>
+            <option  ${certificacion.requisito == "3" ? "selected":''} value="1">Muy Bajo</option>
+            <option value="2">Bajo</option>
+            <option value="3">Medio</option>
+            <option value="4">Alto</option>
+            <option value="5">Crítico</option>
+            </select></td>
             <td><select class="form-control" value="${formulario.duenoActivo}" name="activosoctave[${contador}][id_dueno]">`
                 duenos.forEach(dueno=>{
                 html+=`<option data-puesto="${dueno.name}" data-contact="${formulario.id}" value="${dueno.id}" ${formulario.duenoActivo ==  dueno.id ? "selected":''} >${dueno.name}</option>`
@@ -430,7 +438,7 @@
             })
             html+=`</select>
             </td >
-            <td class="col-4"><select class="form-control" name="activosoctave[${contador}][contenedor_activos]" value="${formulario.requisito}"><option value="">Seleccione una opción</option>
+            <td class="col-4"><select class="form-control" name="activosoctave[${contador}][contenedor_activos]" value="${formulario.contenedorActivo}"><option value="">Seleccione una opción</option>
             <option  ${formulario.contenedorActivo == "Soluciones Cloud (Google Workspace-Azure)" ? "selected":''} value="Soluciones Cloud (Google Workspace-Azure)" >Soluciones Cloud (Google Workspace-Azure)</option>
             <option  ${formulario.contenedorActivo == "Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" ? "selected":''} value="Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" >Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
             <option  ${formulario.contenedorActivo == "Base de Datos" ? "selected":''} value="Base de Datos">Base de Datos</option>
@@ -451,7 +459,7 @@
             })
             html+=`</select>
             </td>
-            <td class="col-4"><select class="form-control" select2 name="activosoctave[${contador}][confidencialidad]" value="${formulario.confidencialidad}"><option value="">Seleccione una opción</option>
+            <td><select class="form-control" select2 name="activosoctave[${contador}][confidencialidad]" value="${formulario.confidencialidad}"><option value="">Seleccione una opción</option>
             <option  ${formulario.confidencialidad == "1" ? "selected":''} value="1" >1</option>
             <option  ${formulario.confidencialidad == "2" ? "selected":''} value="2">2</option>
             <option  ${formulario.confidencialidad == "3" ? "selected":''} value="3">3</option>
@@ -459,7 +467,7 @@
             <option  ${formulario.confidencialidad == "5" ? "selected":''} value="5">5</option>
             </select>
             </td>
-            <td class="col-4"><select class="form-control"  select2  name="activosoctave[${contador}][disponibilidad]" value="${formulario.disponibilidad}"><option value="">Seleccione una opción</option>
+            <td><select class="form-control"  select2  name="activosoctave[${contador}][disponibilidad]" value="${formulario.disponibilidad}"><option value="">Seleccione una opción</option>
             <option  ${formulario.disponibilidad == "1" ? "selected":''} value="1" >1</option>
             <option  ${formulario.disponibilidad == "2" ? "selected":''} value="2" >2</option>
             <option  ${formulario.disponibilidad == "3" ? "selected":''} value="3">3</option>
@@ -467,7 +475,7 @@
             <option  ${formulario.disponibilidad == "5" ? "selected":''} value="5">5</option>
             </select>
             </td>
-            <td class="col-4"><select class="form-control"  select2  name="activosoctave[${contador}][integridad]" value="${formulario.integridad}"><option value="">Seleccione una opción</option>
+            <td><select class="form-control"  select2  name="activosoctave[${contador}][integridad]" value="${formulario.integridad}"><option value="">Seleccione una opción</option>
             <option  ${formulario.integridad == "1" ? "selected":''} value="1" >1</option>
             <option  ${formulario.integridad == "2" ? "selected":''} value="2" >2</option>
             <option  ${formulario.integridad == "3" ? "selected":''} value="3">3</option>
@@ -583,11 +591,11 @@
                     contenedorActivo,
                     escenarioRiesgo,
                     amenazasInformacion,
-                    vulnerabilidadesInformacion
+                    vulnerabilidadesInformacion,
                     confidencialidad,
                     disponibilidad,
                     integridad,
-                    evaluacionRiesgo
+                    evaluacionRiesgo,
                 }
 
 

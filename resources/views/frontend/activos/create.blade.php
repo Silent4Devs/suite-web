@@ -73,23 +73,6 @@
                     <span class="help-block">{{ trans('cruds.activo.fields.descripcion_helper') }}</span>
                 </div>
 
-                {{-- <div class="input-field col-sm-12">
-                Adjuntar Contrato
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <span>PDF</span>
-                        <input type="file" name="documentos_relacionados" accept="application/pdf">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" placeholder="Elegir documento pdf" readonly>
-                    </div>
-                </div>
-                <div class="ml-4 display-flex">
-                    <label class="red-text">{{ $errors->first('Type') }}</label>
-                </div>
-            </div> --}}
-
-
                 <div class="col-sm-12 form-group">
                     <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documentos Relacionados</label>
                     <div class="custom-file">
@@ -102,9 +85,6 @@
                         @endif
                     </div>
                 </div>
-
-
-
 
                 <div class="form-group col-md-4">
                     <label for="dueno_id"><i class="fas fa-user-tie iconos-crear"></i>Dueño</label>
@@ -126,23 +106,17 @@
                     @endif
                 </div>
 
-
-
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label for="id_puesto_dueno"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                     <div class="form-control" id="puesto_dueno"></div>
 
                 </div>
 
-
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label for="id_area_dueno"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                     <div class="form-control" id="area_dueno"></div>
 
                 </div>
-
-
-
 
                 <div class="form-group col-md-4">
                     <label for="id_responsable"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
@@ -206,25 +180,11 @@
                     @endif
                 </div>
 
-
-                {{-- <div class="form-group col-md-5 sm-9">
-                <label for="marca">Marca</label>
-                <input class="form-control {{ $errors->has('marca') ? 'is-invalid' : '' }}" name="marca" id="marca" required>
-                @if ($errors->has('marca'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('marca') }}
-                    </div>
-                @endif
-                  <span class="help-block"></span>
-            </div> --}}
                 <div class="col-md-6">
                     <div class="row align-items-center">
                         <div class="form-group col-md-11">
                             <label for="marca"><i class="fas fa-copyright iconos-crear"></i>Marca</label>
                             <select class="selecmarca" name="marca">
-                                {{-- @foreach ($marcas as $marca)
-                        <option value="{{ $marca->id }}" >{{ $marca->nombre }}</option>
-                        @endforeach --}}
                             </select>
                             @if ($errors->has('marca'))
                                 <div class="invalid-feedback">
@@ -233,7 +193,6 @@
                             @endif
                             <span class="help-block"></span>
                         </div>
-
                         <div class="col-md-1 col-sm-1" class="btn btn-primary" data-toggle="modal" data-target="#marcaslec"
                             data-whatever="@mdo" style="padding: 0; margin-top: 15px;">
                             <i class="fas fa-plus-circle iconos-crear" style="font-size:25px;!important"></i>

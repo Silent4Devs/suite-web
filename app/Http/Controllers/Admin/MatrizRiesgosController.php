@@ -832,47 +832,6 @@ class MatrizRiesgosController extends Controller
         return view('admin.MatrizISO31000.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
 
-    public function saveUpdateActivosOctave($activosoctave, $matrizRiesgoOctave)
-    {
-        if (!is_null($activosoctave)) {
-            foreach ($activosoctave as $activoctave) {
-                // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
-                if (MatrizoctaveActivosInfo::find($activoctave['id']) != null) {
-                    MatrizoctaveActivosInfo::find($activoctave['id'])->update([
-                        'nombre_ai' => $activoctave['nombre_ai'],
-                        'valor_criticidad' =>  $activoctave['valor_criticidad'],
-                        'contenedor_activos' =>  $activoctave['contenedor_activos'],
-                        'id_amenaza' =>  $activoctave['id_amenaza'],
-                        'id_vulnerabilidad' =>  $activoctave['id_vulnerabilidad'],
-                        'escenario_riesgo' =>  $activoctave['escenario_riesgo'],
-                        'id_custodio' =>  $activoctave['id_custodio'],
-                        'id_dueno' =>  $activoctave['id_dueno'],
-                        'confidencialidad' =>  $activoctave['confidencialidad'],
-                        'disponibilidad' =>  $activoctave['disponibilidad'],
-                        'integridad' =>  $activoctave['integridad'],
-                        'evaluacion_riesgo' =>  $activoctave['evaluacion_riesgo'],
 
-                    ]);
-                } else {
-                    MatrizoctaveActivosInfo::create([
-                        'id_octave' => $matrizRiesgoOctave->id,
-                        'nombre_ai' => $activoctave['nombre_ai'],
-                        'valor_criticidad' =>  $activoctave['valor_criticidad'],
-                        'contenedor_activos' =>  $activoctave['contenedor_activos'],
-                        'id_amenaza' =>  $activoctave['id_amenaza'],
-                        'id_vulnerabilidad' =>  $activoctave['id_vulnerabilidad'],
-                        'escenario_riesgo' =>  $activoctave['escenario_riesgo'],
-                        'id_custodio' =>  $activoctave['id_custodio'],
-                        'id_dueno' =>  $activoctave['id_dueno'],
-                        'confidencialidad' =>  $activoctave['confidencialidad'],
-                        'disponibilidad' =>  $activoctave['disponibilidad'],
-                        'integridad' =>  $activoctave['integridad'],
-                        'evaluacion_riesgo' =>  $activoctave['evaluacion_riesgo'],
-                    ]);
-                }
-            }
-        }
-        // dd($responsabilidades);
-    }
 
 }
