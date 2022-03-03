@@ -253,48 +253,48 @@
                 aaSorting: [],
                 // ajax: "/admin/matriz-seguridad?id=" + id_matriz,
                 columns: [{
+                        data: 'proveedores',
+                        name: 'proveedores'
+                    },
+                    {
+                        data: 'servicio',
+                        name: 'servicio'
+                    },
+                    {
                         data: 'id_proceso',
                         name: 'id_proceso'
                     },
                     {
-                        data: 'id_responsable',
-                        name: 'id_responsable'
+                        data: 'descripcion_servicio',
+                        name: 'descripcion_servicio'
                     },
                     {
-                        data: 'activo_id',
-                        name: 'activo_id'
+                        data: 'estrategico',
+                        name: 'estrategico'
                     },
                     {
-                        data: 'id_sede',
-                        name: 'id_sede'
+                        data: 'operacional',
+                        name: 'operacional'
                     },
                     {
-                        data: 'id_vulnerabilidad',
-                        name: 'id_vulnerabilidad'
+                        data: 'cumplimiento',
+                        name: 'cumplimiento',
                     },
                     {
-                        data: 'impacto',
-                        name: 'impacto'
+                        data: 'legal',
+                        name: 'legal'
                     },
                     {
-                        data: 'nivelriesgo',
-                        name: 'nivelriesgo',
+                        data: 'reputacional',
+                        name: 'reputacional',
                     },
                     {
-                        data: 'integridad',
-                        name: 'integridad'
+                        data: 'tecnologico',
+                        name: 'tecnologico',
                     },
                     {
-                        data: 'disponibilidad',
-                        name: 'disponibilidad',
-                    },
-                    {
-                        data: 'resultadoponderacion',
-                        name: 'resultadoponderacion',
-                    },
-                    {
-                        data: 'probabilidad',
-                        name: 'probabilidad'
+                        data: 'valor',
+                        name: 'valor'
                     },
                     {
                         data: 'actions',

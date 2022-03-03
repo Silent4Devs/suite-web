@@ -255,7 +255,9 @@ class AccionCorrectivaController extends Controller
     {
         abort_if(Gate::denies('accion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $accionCorrectiva->load('nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas');
+        $accionCorrectiva->load('analisis','nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas');
+
+
 
         return view('admin.accionCorrectivas.show', compact('accionCorrectiva'));
     }

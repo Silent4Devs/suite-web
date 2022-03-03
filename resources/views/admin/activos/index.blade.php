@@ -67,7 +67,7 @@
                         <th>
                             Subcategoría
                         </th>
-                        <th>
+                        <th style="min-width: 350px !important;">
                             {{ trans('cruds.activo.fields.descripcion') }}
                         </th>
                         <th>
