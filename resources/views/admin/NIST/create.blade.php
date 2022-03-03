@@ -644,58 +644,58 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-city iconos-crear"></i>Nombre de la Vulnerabilidad</label><br>
-                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
-                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                        <label for="nombre"><i class="fas fa-shield-alt iconos-crear"></i>Nombre de la Vulnerabilidad</label><br>
+                        <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
+                        id="nombre" value="{{ old('nombre', '') }}">
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-handshake iconos-crear"></i>Amenaza de la vulnerabilidad</label><br>
-                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
-                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                        <label for="amenaza"><i class="fas fa-shield-alt iconos-crear"></i>Amenaza de la vulnerabilidad</label><br>
+                        <input class="form-control {{ $errors->has('amenaza') ? 'is-invalid' : '' }}" type="text" name="amenaza"
+                        id="amenaza" value="{{ old('amenaza', '') }}">
                     </div>
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-handshake iconos-crear"></i>Impacto de la Vulnerabilidad</label><br>
-                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
-                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                        <label for="impacto_vulnerabilidad"><i class="fas fa-shield-alt iconos-crear"></i>Impacto de la Vulnerabilidad</label><br>
+                        <input class="form-control {{ $errors->has('impacto_vulnerabilidad') ? 'is-invalid' : '' }}" type="text" name="impacto_vulnerabilidad"
+                        id="impacto_vulnerabilidad" value="{{ old('impacto_vulnerabilidad', '') }}">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-city iconos-crear"></i>Aplicaciones Impactadas</label><br>
-                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
-                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                        <label for="aplicaciones"><i class="fas fa-fire iconos-crear"></i>Aplicaciones Impactadas</label><br>
+                        <input class="form-control {{ $errors->has('aplicaciones') ? 'is-invalid' : '' }}" type="text" name="aplicaciones"
+                        id="aplicaciones" value="{{ old('aplicaciones', '') }}">
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-handshake iconos-crear"></i>Escenario de Riesgo</label><br>
-                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
-                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                        <label for="escenario"><i class="fas fa-fire iconos-crear"></i>Escenario de Riesgo</label><br>
+                        <input class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}" type="text" name="escenario"
+                        id="escenario" value="{{ old('escenario', '') }}">
                     </div>
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-handshake iconos-crear"></i>Categoría del Riesgo</label><br>
-                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
-                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                        <label for="categoria"><i class="fas fa-fire iconos-crear"></i>Categoría del Riesgo</label><br>
+                        <input class="form-control {{ $errors->has('categoria') ? 'is-invalid' : '' }}" type="text" name="categoria"
+                        id="categoria" value="{{ old('categoria', '') }}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-city iconos-crear"></i>Causa Raíz</label><br>
-                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
-                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                        <label for="causa"><i class="fas fa-seedling iconos-crear"></i>Causa Raíz</label><br>
+                        <input class="form-control {{ $errors->has('causa') ? 'is-invalid' : '' }}" type="text" name="causa"
+                        id="causa" value="{{ old('causa', '') }}">
                     </div>
 
                     <div class="form-group col-md-6 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-handshake iconos-crear"></i>Tipo de Riesgo</label><br>
-                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
-                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                        <label for="tipo"><i class="fas fa-ruler-combined iconos-crear"></i>Tipo de Riesgo</label><br>
+                        <input class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" type="text" name="tipo"
+                        id="tipo" value="{{ old('tipo', '') }}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="legal"><i class="fas fa-gavel iconos-crear"></i>Severidad de la Vulnerabilidad</label>
-                        <select class="form-control select2 {{ $errors->has('legal') ? 'is-invalid' : '' }}" name="legal">
+                        <label for="severidad"><i class="fas fa-gavel iconos-crear"></i>Severidad de la Vulnerabilidad</label>
+                        <select class="form-control select2 {{ $errors->has('severidad') ? 'is-invalid' : '' }}" name="severidad" id="severidad">
                             <option value="" selected>Selecciona</option>
                             <option value="Uno">1</option>
                             <option value="Dos">2</option>
@@ -706,8 +706,8 @@
                     </div>
 
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="reputacional"><i class="fas fa-newspaper iconos-crear"></i>Probabilidad</label>
-                        <select class="form-control select2 {{ $errors->has('reputacional') ? 'is-invalid' : '' }}" name="reputacional">
+                        <label for="probabilidad"><i class="fas fa-wave-square iconos-crear"></i>Probabilidad</label>
+                        <select class="form-control select2 {{ $errors->has('probabilidad') ? 'is-invalid' : '' }}" name="probabilidad" id="probabilidad">
                             <option value="" selected>Selecciona</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -726,8 +726,8 @@
 
                 <div class="row">
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="tecnologico"><i class="fas fa-laptop iconos-crear"></i>Impacto</label>
-                        <select class="form-control select2 {{ $errors->has('tecnologico') ? 'is-invalid' : '' }}" name="tecnologico">
+                        <label for="impacto_num"><i class="fas fa-exclamation-triangle iconos-crear"></i>Impacto</label>
+                        <select class="form-control select2 {{ $errors->has('impacto_num') ? 'is-invalid' : '' }}" name="impacto_num" id="impacto_num">
                             <option value="" selected>Selecciona</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -743,8 +743,8 @@
                     </div>
 
                     <div class="form-group col-sm-4 col-md-3 col-lg-3">
-                        <label for="valor"><i class="fas fa-bullseye iconos-crear"></i>Valor del impacto</label>
-                        <input class="form-control mt-2 {{ $errors->has('valor') ? 'is-invalid' : '' }}" type="number" name="valor"
+                        <label for="valor"><i class="fas fa-exclamation-circle iconos-crear"></i>Valor del impacto</label>
+                        <input class="form-control mt-2 {{ $errors->has('valor') ? 'is-invalid' : '' }}" type="number" name="valor" id="valor"
                         value="{{ old('valor', '') }}">
                         @if ($errors->has('valor'))
                             <div class="invalid-feedback">
