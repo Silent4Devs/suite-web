@@ -25,6 +25,65 @@
 
                 <tbody>
                     {{-- {{ $contador }} --}}
+                    @if($origen == 'edit')
+                        @php
+                            $i_hora = 0;
+                        @endphp
+                        @foreach($horas as $hora)
+                            @php
+                                $i_hora ++;
+                            @endphp
+                            <tr>
+                                <td>
+                                    <select name="timesheet[{{ $i_hora }}][proyecto]" class="select2">
+                                        <option selected value="{{ $hora->proyecto->id }}">{{ $hora->proyecto->proyecto }}</option>   
+                                        @foreach($proyectos as $proyecto)
+                                            <option value="{{ $proyecto->id }}">{{ $proyecto->proyecto }}</option>
+                                        @endforeach 
+                                    </select>   
+                                </td>
+                                <td>
+                                    <select name="timesheet[{{ $i_hora }}][tarea]" class="select2">
+                                        <option selected value="{{ $hora->tarea->id }}">{{ $hora->tarea->tarea }}</option>   
+                                        @foreach($tareas as $tarea)
+                                            <option value="{{ $tarea->id }}">{{ $tarea->tarea }}</option>
+                                        @endforeach  
+                                    </select>
+                                </td>
+                                <td>
+                                    @if(!$hora->facturable)
+                                        <input type="checkbox" checked name="timesheet[{{ $i_hora }}][facturable]" style="min-width: 50px;">
+                                     @else
+                                        <input type="checkbox" checked name="timesheet[{{ $i_hora }}][facturable]" style="min-width: 50px;">
+                                    @endif
+                                </td>
+                                <td>
+                                    <input type="" name="timesheet[{{ $i_hora }}][lunes]" class="ingresar_horas form-control" value="{{ $hora->horas_lunes }}">
+                                </td>
+                                <td>
+                                    <input type="" name="timesheet[{{ $i_hora }}][martes]" class="ingresar_horas form-control" value="{{ $hora->horas_martes }}">
+                                </td>
+                                <td>
+                                    <input type="" name="timesheet[{{ $i_hora }}][miercoles]" class="ingresar_horas form-control" value="{{ $hora->horas_miercoles }}">
+                                </td>
+                                <td>
+                                    <input type="" name="timesheet[{{ $i_hora }}][jueves]" class="ingresar_horas form-control" value="{{ $hora->horas_jueves }}">
+                                </td>
+                                <td>
+                                    <input type="" name="timesheet[{{ $i_hora }}][viernes]" class="ingresar_horas form-control" value="{{ $hora->horas_viernes }}">
+                                </td>   
+                                <td>
+                                    <input type="" name="timesheet[{{ $i_hora }}][sabado]" class="ingresar_horas form-control" value="{{ $hora->horas_sabado }}">
+                                </td>   
+                                <td>
+                                    <input type="" name="timesheet[{{ $i_hora }}][domingo]" class="ingresar_horas form-control" value="{{ $hora->horas_domingo }}">
+                                </td> 
+                                <td>
+                                    <textarea name="timesheet[{{ $i_hora }}][descripcion]" class="form-control" style="min-height:50px !important; resize: none;">{{ $hora->descripcion }}</textarea>
+                                </td>                           
+                            </tr>
+                        @endforeach
+                    @endif
                     @for($i=1; $i<=$contador; $i++)
                         <tr>
                             <td>
@@ -72,7 +131,6 @@
                             </td>                           
                         </tr>
                     @endfor
-
                 </tbody>
             </table>
             
@@ -83,14 +141,19 @@
         <div class="mt-4" style="display:flex; justify-content:space-between;">
             <button class="btn btn-secundario" wire:click.prevent="$set('contador', {{ $contador + 1 }})">Agregar fila</button>
             <div>
-                <label>
-                    <input type="radio" name="estatus" value="papelera" style="opacity:0;">
-                    <button class="btn_cancelar">Enviar a papelera</button>
-                </label>
-                <label>
-                    <input type="radio" name="estatus" value="pendiente" style="opacity:0;">
-                    <button class="btn btn-success">Enviar</button>
-                </label>
+                <button class="btn_cancelar" style="position:relative;">
+                    <input id="estatus_papelera" type="radio" name="estatus" value="papelera" style="opacity:0; position: absolute;">
+                    <label for="estatus_papelera" style="width:100%; height: 100%; position:absolute; display:flex; justify-content: center; align-items: center; top:0; left:0;">
+                        Guardar borrador
+                    </label>
+                </button>
+                    
+                <button class="btn btn-success" style="position: relative;">
+                    <input id="estatus_pendiente" type="radio" name="estatus" value="pendiente" style="opacity:0; position: absolute;">
+                    <label for="estatus_pendiente" style="width:100%; height: 100%; position:absolute; display:flex; justify-content: center; align-items: center; top:0; left:0;">
+                        Enviar
+                    </label>
+                </button>
             </div>
         </div>
     </form>

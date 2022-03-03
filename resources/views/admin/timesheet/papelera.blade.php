@@ -1,31 +1,12 @@
 @extends('layouts.admin')
 @section('content')
-    
-    <style type="text/css">
-        .aprobada{
-            padding: 3px;
-            background-color: #61CB5C;
-            color: #fff;
-            border-radius: 4px;
-        }
-        .rechazada{
-            padding: 3px;
-            background-color: #EA7777;
-            color: #fff;
-            border-radius: 4px;
-        }
-        .pendiente{
-            padding: 3px;
-            background-color: #F48C16;
-            color: #fff;
-            border-radius: 4px;
-        }
-    </style>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
 
-     {{-- {{ Breadcrumbs::render('timesheet-rechazada') }} --}}
+     {{ Breadcrumbs::render('timesheet-papelera') }}
 	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Papelera</font> </h5>
+	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Borrador</font> </h5>
 
 	<div class="card card-body">
 		<div class="row">
@@ -38,7 +19,7 @@
 	                        <th>Empleado</th>
 	                        <th>Responsable</th>
                             <th>Aprobación</th>
-	                        {{-- <th>opciones</th> --}}
+	                        <th>opciones</th>
 	                    </tr>
 	                </thead>
 
@@ -55,21 +36,26 @@
                                     {{ $time->aprobador->name }}
     	                        </td>
     	                        <td>
-                                    @if($time->aprobado)
-                                        <span class="aprobada">Aprobada</span>
+                                     @if($time->estatus == 'aprobado')
+                                        <span class="aprobado">Aprobada</span>
                                     @endif
 
-                                    @if($time->rechazado)
-                                        <span class="time">time</span>
+                                    @if($time->estatus == 'rechazado')
+                                        <span class="aprobado">Rechazada</span>
                                     @endif
 
-                                    @if(($time->rechazado == false) && ($time->aprobado == false))
+                                    @if($time->estatus == 'pendiente')
                                         <span class="pendiente">Pendiente</span>
                                     @endif
+
+                                    @if($time->estatus == 'papelera')
+                                        <span class="papelera">Borrador</span>
+                                    @endif
     	                        </td>
-    	                        {{-- <td>
-    	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" class="btn">ver</a>
-    							</td>	 --}}                    
+    	                        <td>
+    	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="{{ asset('admin/timesheet/edit') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-pen-to-square"></i></a>
+    							</td>	                    
     						</tr>
                         @endforeach
 	                </tbody>

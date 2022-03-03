@@ -55,7 +55,6 @@ class TimesheetController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->estatus);
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'timesheet.1.proyecto' => 'required',
@@ -150,7 +149,10 @@ class TimesheetController extends Controller
      */
     public function edit($id)
     {
-        //
+        $proyectos = TimesheetProyecto::get();
+        $tareas = TimesheetTarea::get();
+        $timesheet = Timesheet::find($id);
+        return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas'));
     }
 
     /**
@@ -221,8 +223,7 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $aprobar = Timesheet::find($id);
         $aprobar->update([
-            'aprobado' => true,
-            'rechazado' => false,
+            'estatus' => 'aprobado',
         ]);
 
         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');

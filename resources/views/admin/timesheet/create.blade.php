@@ -29,7 +29,7 @@
 	<div class="card card-body">
 		<div class="row">
 			
-            @livewire('timesheet.timesheet-horas-filas', ['proyectos'=>$proyectos, 'tareas'=>$tareas])
+            @livewire('timesheet.timesheet-horas-filas', ['proyectos'=>$proyectos, 'tareas'=>$tareas, 'origen'=>'create', 'timesheet_id'=>null])
 
 		</div>
 	</div>

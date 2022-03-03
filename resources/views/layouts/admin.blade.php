@@ -251,6 +251,7 @@
             transition: 0.2s;
             display: inline-block;
             text-align: center;
+            padding-top: 5px;
         }
 
         .btn_cancelar:hover {

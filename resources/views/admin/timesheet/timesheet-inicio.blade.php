@@ -204,22 +204,13 @@
                 <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
                     aria-labelledby="nav-contexto-tab">
                     <ul class="mt-4">
-                        @can('mi_timesheet_horas_aceptadas_show')
-                            <li>
-                                <a href="{{ route('admin.timesheet') }}">
-                                    <div>
-                                        <i class="bi bi-calendar4"></i><br>
-                                        Mis Horas
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
+                        
                         @can('timesheet_create')
                             <li>
                                 <a href="{{ route('admin.timesheet-create') }}">
                                     <div>
                                         <i class="bi bi-calendar-plus"></i><br>
-                                        Crear Timesheet
+                                        Registrar Horas
                                     </div>
                                 </a>
                             </li>
@@ -228,8 +219,18 @@
                             <li>
                                 <a href="{{ route('admin.timesheet-papelera') }}">
                                     <div>
-                                        <i class="bi bi-calendar2-x"></i><br>
-                                        Horas en Papelera
+                                        <i class="bi bi-eraser"></i><br>
+                                        Horas en Borrador
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('mi_timesheet_horas_aceptadas_show')
+                            <li>
+                                <a href="{{ route('admin.timesheet') }}">
+                                    <div>
+                                        <i class="bi bi-calendar4"></i><br>
+                                        Mis Registros
                                     </div>
                                 </a>
                             </li>

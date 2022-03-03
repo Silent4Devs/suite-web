@@ -28,8 +28,7 @@
 
     {{ Breadcrumbs::render('timesheet-aprobaciones') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Probaciones</font>
-    </h5>
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Aprobaciones</font></h5>
 
     <div class="card card-body">
         <div class="row">

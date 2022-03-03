@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 @section('content')
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
     
     <style type="text/css">
         .btn_op{
@@ -8,42 +10,26 @@
         .btn-primary{
             opacity: 0.6;
         }
-
-
-        .aprobada{
-            padding: 3px;
-            background-color: #61CB5C;
-            color: #fff;
-            border-radius: 4px;
-        }
-        .rechazada{
-            padding: 3px;
-            background-color: #EA7777;
-            color: #fff;
-            border-radius: 4px;
-        }
-        .pendiente{
-            padding: 3px;
-            background-color: #F48C16;
-            color: #fff;
-            border-radius: 4px;
-        }
     </style>
 
 
      {{ Breadcrumbs::render('timesheet-index') }}
 	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Mi Timesheet</font> </h5>
+	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Mis Registros</font> </h5>
 
 	<div class="card card-body">
 		<div class="row">
-            <div class="w-100 text-right">
-                <button class="btn btn-primary" style="background-color: #aaa; border:none !important;" id="btn_todos">Todos</button>
-                <button class="btn btn-primary" style="background-color: #61CB5C; border:none !important;" id="btn_aprobado">Aprobadas</button>
-                <button class="btn btn-primary" style="background-color: #EA7777; border:none !important;" id="btn_rechazado">Rechazadas</button>
-                <button class="btn btn-primary" style="background-color: #F48C16; border:none !important;" id="btn_pendiente">Pendientes</button>
-            </div>
-			
+            <div class="col-12 d-flex justify-content-between">
+                <h5 id="titulo_estatus">Todos los Registros</h5>
+                <div class="">
+                    <button class="btn btn-primary" style="background-color: ; border:none !important;" id="btn_todos">Todos</button>
+                    <button class="btn btn-primary" style="background-color: #aaa; border:none !important;" id="btn_papelera">Borrador</button>
+                    <button class="btn btn-primary" style="background-color: #F48C16; border:none !important;" id="btn_pendiente">Pendientes</button>
+                    <button class="btn btn-primary" style="background-color: #61CB5C; border:none !important;" id="btn_aprobado">Aprobados</button>
+                    <button class="btn btn-primary" style="background-color: #EA7777; border:none !important;" id="btn_rechazado">Rechazados</button>
+                </div>
+			</div>
+
 	        <div class="datatable-fix w-100 mt-4">
 	            <table id="datatable_timesheet" class="table w-100">
 	                <thead class="w-100">
@@ -58,20 +44,9 @@
 
 	                <tbody>
                         @foreach($times as $time)
-                            @php
-                                if($time->aprobado){
-                                    $class_tr = 'aprobado';
-                                }
-                                if($time->rechazado){
-                                    $class_tr = 'rechazado';
-                                }
-                                if(($time->rechazado == false) && ($time->aprobado == false)){
-                                    $class_tr = 'pendiente';
-                                }
-                            @endphp
-    	                	<tr class="tr_{{ $class_tr }}">
+    	                	<tr class="tr_{{  $time->estatus }}">
     	                        <td>
-    	                            {{ $time->fecha_dia }} 
+    	                            {{  \Carbon\Carbon::parse($time->fecha_dia)->format("d/m/Y") }} 
     	                        </td>
     	                        <td>
     	                            {{ $time->empleado->name }}
@@ -80,20 +55,28 @@
                                     {{ $time->aprobador->name }}
     	                        </td>
     	                        <td>
-                                    @if($time->aprobado)
-                                        <span class="aprobada">Aprobada</span>
+                                    @if($time->estatus == 'aprobado')
+                                        <span class="aprobado">Aprobada</span>
                                     @endif
 
-                                    @if($time->rechazado)
-                                        <span class="rechazada">Rechazada</span>
+                                    @if($time->estatus == 'rechazado')
+                                        <span class="aprobado">Rechazada</span>
                                     @endif
 
-                                    @if(($time->rechazado == false) && ($time->aprobado == false))
+                                    @if($time->estatus == 'pendiente')
                                         <span class="pendiente">Pendiente</span>
+                                    @endif
+
+                                    @if($time->estatus == 'papelera')
+                                        <span class="papelera">Borrador</span>
                                     @endif
     	                        </td>
     	                        <td>
-    	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+
+                                    @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
+                                        <a href="{{ asset('admin/timesheet/edit') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    @endif
     							</td>	                    
     						</tr>
                         @endforeach
@@ -218,6 +201,8 @@
         $('#btn_todos').click(function(){
             $('tr').removeClass('d-none');
 
+            document.getElementById('titulo_estatus').innerHTML = 'Todos los Registros';
+
             $('.btn-primary').removeClass('btn_op');
             $('#btn_todos').addClass('btn_op');
         });
@@ -226,13 +211,27 @@
             $('tbody tr').addClass('d-none');
             $('.tr_aprobado').removeClass('d-none');
 
+            document.getElementById('titulo_estatus').innerHTML = 'Registros Aprobados';
+
             $('.btn-primary').removeClass('btn_op');
             $('#btn_aprobado').addClass('btn_op');
+        });
+
+        $('#btn_papelera').click(function(){
+            $('tbody tr').addClass('d-none');
+            $('.tr_papelera').removeClass('d-none');
+
+            document.getElementById('titulo_estatus').innerHTML = 'Registros en Borrador';
+
+            $('.btn-primary').removeClass('btn_op');
+            $('#btn_papelera').addClass('btn_op');
         });
 
         $('#btn_rechazado').click(function(){
             $('tbody tr').addClass('d-none');
             $('.tr_rechazado').removeClass('d-none');
+
+            document.getElementById('titulo_estatus').innerHTML = 'Registros Rechazados por el Aprobador';
 
             $('.btn-primary').removeClass('btn_op');
             $('#btn_rechazado').addClass('btn_op');
@@ -241,6 +240,8 @@
         $('#btn_pendiente').click(function(){
             $('tbody tr').addClass('d-none');
             $('.tr_pendiente').removeClass('d-none');
+
+            document.getElementById('titulo_estatus').innerHTML = 'Registros Pendientes de Aprobación';
 
             $('.btn-primary').removeClass('btn_op');
             $('#btn_pendiente').addClass('btn_op');
