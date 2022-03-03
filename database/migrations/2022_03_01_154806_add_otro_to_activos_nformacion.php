@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnMetodoAnalisisSeguridadTable extends Migration
+class AddOtroToActivosNformacion extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnMetodoAnalisisSeguridadTable extends Migration
      */
     public function up()
     {
-        Schema::table('analisis_seguridad', function (Blueprint $table) {
-            // $table->string('metodo')->nullable();
+        Schema::table('activos_informacion', function (Blueprint $table) {
+            $table->string('otra_recepcion')->nullable()->change();
         });
     }
 
@@ -25,6 +25,8 @@ class AddColumnMetodoAnalisisSeguridadTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('activos_informacion', function (Blueprint $table) {
+            //
+        });
     }
 }

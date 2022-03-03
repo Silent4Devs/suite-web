@@ -180,6 +180,7 @@ class ActivosController extends Controller
         }
 
         $activo = Activo::create([
+            'identificador' => $request->identificador,
             'nombreactivo' => $request->nombreactivo,
             'descripcion' => $request->descripcion,
             'marca' => intval($request->marca),
@@ -199,6 +200,7 @@ class ActivosController extends Controller
             'observaciones' => $request->observaciones,
             'documentos_relacionados' => json_encode($data),
             'documento' => $request->documento,
+            'proceso_id' => $request->proceso_id,
 
         ]);
 
@@ -220,6 +222,7 @@ class ActivosController extends Controller
 
     public function edit(Activo $activo)
     {
+        // dd($activo);
         abort_if(Gate::denies('configuracion_activo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -232,6 +235,8 @@ class ActivosController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
+        $procesos = Proceso::with('macroproceso')->get();
+
         $area = Area::get();
 
         $marcas = Marca::get();
@@ -241,11 +246,13 @@ class ActivosController extends Controller
         $categoriasSeleccionado = $activo->tipoactivo_id;
         $subcategoriaSeleccionado = $activo->subtipo_id;
         // dd($subcategoriaSeleccionado);
-        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'activo', 'categoriasSeleccionado', 'subcategoriaSeleccionado'));
+        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'activo', 'procesos', 'categoriasSeleccionado', 'subcategoriaSeleccionado'));
+
     }
 
     public function update(UpdateActivoRequest $request, Activo $activo)
     {
+        // dd($request);
         $data = [];
         if ($request->hasfile('documentos_relacionados')) {
             foreach ($request->file('documentos_relacionados') as $file) {

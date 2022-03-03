@@ -3,7 +3,7 @@
     <div class="mt-5 card">
 
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Matriz Riesgo ISO31000
+            <h3 class="mb-2 text-center text-white"><strong>Matriz Riesgo NIST
                 </strong></h3>
         </div>
         @can('configuracion_sede_create')
@@ -43,51 +43,50 @@
                     @endcan --}}
 
                     <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                    href="{{ route('admin.matriz-seguridad.ISO31000Create')}}" type="submit"
+                    href="{{ route('admin.matriz-seguridad.NISTCreate')}}" type="submit"
                     name="action">Agregar nuevo</a>
 
                 </div>
                 <table class="table table-bordered w-100 datatable datatable-Matriz">
                     <thead class="thead-dark">
                         <tr class="negras">
-                            <th class="text-center" style="background-color:#3490DC;" colspan="4">Descripción General
+                            <th class="text-center" style="background-color:#3490DC;" colspan="12">Escenarios de Riesgos - NIST
                             </th>
-                            <th class="text-center" style="background-color:#1168af;" colspan="7">Evaluación de Impactos Asociados al Proceso</th>
-                            <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
+
                         </tr>
                         <tr>
                             <th>
-                                Proveedores
+                                Nombre de la Vulnerabilidad
                             </th>
                             <th>
-                                Servicio
+                                Amenaza de la vulnerabilidad
                             </th>
                             <th>
-                                Proceso a impactar
+                                Impacto de la Vulnerabilidad
                             </th>
                             <th>
-                                Descripción del servicio a proporcionar
+                                Escenario de Riesgo
                             </th>
                             <th>
-                                Estratégico
+                                Categoría del Riesgo
                             </th>
                             <th>
-                                Operacional
+                                Causa Raíz
                             </th>
                             <th>
-                               Cumplimiento
+                                Tipo de Riesgo
                             </th>
                             <th>
-                                Legal
+                                Severidad de la Vulnerabilidad
                             </th>
                             <th>
-                                Reputacional
+                                Probabilidad
                             </th>
                             <th>
-                                Tecnológico
+                                Impacto
                             </th>
                             <th>
-                                Valor de impacto
+                                Valoración del Riesgo
                             </th>
                            <th>
                                 Opciones
@@ -253,48 +252,48 @@
                 aaSorting: [],
                 // ajax: "/admin/matriz-seguridad?id=" + id_matriz,
                 columns: [{
-                        data: 'proveedores',
-                        name: 'proveedores'
-                    },
-                    {
-                        data: 'servicio',
-                        name: 'servicio'
-                    },
-                    {
                         data: 'id_proceso',
                         name: 'id_proceso'
                     },
                     {
-                        data: 'descripcion_servicio',
-                        name: 'descripcion_servicio'
+                        data: 'id_responsable',
+                        name: 'id_responsable'
                     },
                     {
-                        data: 'estrategico',
-                        name: 'estrategico'
+                        data: 'activo_id',
+                        name: 'activo_id'
                     },
                     {
-                        data: 'operacional',
-                        name: 'operacional'
+                        data: 'id_sede',
+                        name: 'id_sede'
                     },
                     {
-                        data: 'cumplimiento',
-                        name: 'cumplimiento',
+                        data: 'id_vulnerabilidad',
+                        name: 'id_vulnerabilidad'
                     },
                     {
-                        data: 'legal',
-                        name: 'legal'
+                        data: 'impacto',
+                        name: 'impacto'
                     },
                     {
-                        data: 'reputacional',
-                        name: 'reputacional',
+                        data: 'nivelriesgo',
+                        name: 'nivelriesgo',
                     },
                     {
-                        data: 'tecnologico',
-                        name: 'tecnologico',
+                        data: 'integridad',
+                        name: 'integridad'
                     },
                     {
-                        data: 'valor',
-                        name: 'valor'
+                        data: 'disponibilidad',
+                        name: 'disponibilidad',
+                    },
+                    {
+                        data: 'resultadoponderacion',
+                        name: 'resultadoponderacion',
+                    },
+                    {
+                        data: 'probabilidad',
+                        name: 'probabilidad'
                     },
                     {
                         data: 'actions',

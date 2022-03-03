@@ -26,6 +26,8 @@ class Activo extends Model
 
     protected $fillable = [
         'tipoactivo_id',
+        'proceso_id',
+        'identificador',
         'subtipo_id',
         'nombreactivo',
         'descripcion',
@@ -98,7 +100,7 @@ class Activo extends Model
 
     public function proceso()
     {
-        return $this->belongsTo(Empleado::class, 'id_proceso', 'id');
+        return $this->belongsTo(Empleado::class, 'proceso_id', 'id');
     }
 
     public function marca()
