@@ -3,7 +3,7 @@
     <h5 class="col-12 titulo_general_funcion">Registrar: Alta de Activo</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.activos.store', [$activo->id]) }}" enctype="multipart/form-data" class="row">
+            <form method="POST" action="{{ route('admin.activos.update', [$activo->id]) }}" enctype="multipart/form-data" class="row">
                 @csrf
                 @method('PUT')
                 <div class="form-group col-md-12">
