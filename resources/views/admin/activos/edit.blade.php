@@ -6,7 +6,18 @@
             <form method="POST" action="{{ route('admin.activos.update', [$activo->id]) }}" enctype="multipart/form-data" class="row">
                 @csrf
                 @method('PUT')
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-3">
+                    <label class="required " for="identificador"><i class="fa-solid fa-list-ol iconos-crear"></i>ID</label>
+                    <input class="form-control select2 {{ $errors->has('identificador') ? 'is-invalid' : '' }}"
+                        name="identificador" id="identificador" value="{{old("identificador", $activo->identificador)}}" required>
+                    @if ($errors->has('identificador'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('identificador') }}
+                        </div>
+                    @endif
+                    <span class="help-block"></span>
+                </div>
+                <div class="form-group col-md-9">
                     <label class="required " for="nombreactivo_id"><i class="fas fa-chart-line iconos-crear"></i>Nombre del
                         Activo</label>
                     <input class="form-control select2 {{ $errors->has('nombre_activo') ? 'is-invalid' : '' }}"
@@ -55,11 +66,6 @@
 
                 </div>
 
-
-
-
-
-
                 <div class="form-group col-md-4">
                     <label for="dueno_id"><i class="fas fa-user-tie iconos-crear"></i>Dueño</label>
                     <select class="form-control select2 {{ $errors->has('dueno_id') ? 'is-invalid' : '' }}"
@@ -70,7 +76,6 @@
                                 {{ old('dueno_id', $activo->dueno_id) == $empleado->id ? 'selected' : '' }}>
                                 {{ $empleado->name }}
                             </option>
-
                         @endforeach
                     </select>
                     @if ($errors->has('dueno_id'))
@@ -80,23 +85,15 @@
                     @endif
                 </div>
 
-
-
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label for="id_puesto_dueno"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                     <div class="form-control" id="puesto_dueno"></div>
-
                 </div>
-
 
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label for="id_area_dueno"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                     <div class="form-control" id="area_dueno"></div>
-
                 </div>
-
-
-
 
                 <div class="form-group col-md-4">
                     <label for="id_responsable"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
@@ -106,10 +103,8 @@
                             <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                                 data-area="{{ $empleado->area->area }}"
                                 {{ old('id_responsable', $activo->id_responsable) == $empleado->id ? 'selected' : '' }}>
-
                                 {{ $empleado->name }}
                             </option>
-
                         @endforeach
                     </select>
                     @if ($errors->has('empleados'))
@@ -122,13 +117,40 @@
                 <div class="form-group col-md-4">
                     <label for="id_puesto_responsable"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                     <div class="form-control" id="puesto_responsable"></div>
-
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="id_area_responsable"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                     <div class="form-control" id="area_responsable"></div>
+                </div>
 
+                <div class="form-group col-md-4">
+                    <label for="proceso_id"><i class="bi bi-file-earmark-post iconos-crear"></i>Proceso</label>
+                        <select class="form-control select2 {{ $errors->has('proceso_id') ? 'is-invalid' : '' }}"
+                            name="proceso_id" id="proceso_id">
+                            @foreach ($procesos as $proceso)
+                                <option data-codigo="{{ $proceso->codigo }}" value="{{ $proceso->id }}"
+                                    data-macroproceso="{{ $proceso->macroproceso->nombre }}"
+                                    {{ old('proceso_id', $activo->proceso_id) == $proceso->id ? 'selected' : '' }}>
+                                    {{ $proceso->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @if ($errors->has('empleados'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('area') }}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="codigo_proceso"><i class="fas fa-barcode iconos-crear" style="margin-top: 8px"></i>Codigo</label>
+                    <div class="form-control" id="codigo_proceso"></div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="macroproceso"><i class="bi bi-file-earmark-post-fill iconos-crear"></i>Macroproceso</label>
+                    <div class="form-control" id="macroproceso"></div>
                 </div>
 
 
@@ -454,68 +476,6 @@
                 </div>
             </div>
 
-{{--
-            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                @if ($activo->documentos_relacionados)
-
-                                    <!-- carousel -->
-                                    <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
-                                        <ol class='carousel-indicators'>
-                                            @foreach ($activo->documentos_relacionados as $idx => $documento)
-                                                <li data-target=#carouselExampleIndicators
-                                                    data-slide-to={{ $idx }}>
-                                                </li>
-
-                                            @endforeach
-
-                                        </ol>
-                                        <div class='carousel-inner'>
-                                            @foreach ($activo->documentos_relacionados as $idx => $documento)
-                                                <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                    <iframe style="width:100%;height:300px;" seamless class='img-size'
-                                                        src="{{ asset('storage/documento_comunicado_SGI') }}/{{ $documento->documento }}"></iframe>
-                                                </div>
-                                            @endforeach
-
-
-                                        </div>
-                                        <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
-                                            data-slide='prev'>
-                                            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-                                            <span class='sr-only'>Previous</span>
-                                        </a>
-                                        <a class='carousel-control-next' href='#carouselExampleIndicators' role='button'
-                                            data-slide='next'>
-                                            <span class='carousel-control-next-icon' aria-hidden='true'></span>
-                                            <span class='sr-only'>Next</span>
-                                        </a>
-                                    </div>
-                                @else
-                                    <div class="text-center">
-                                        <h3 style="text-align:center" class="mt-3">Sin
-                                            archivo agregado</h3>
-                                        <img src="{{ asset('img/undrawn.png') }}" class="img-fluid "
-                                            style="width:350px !important">
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div> --}}
-
-
-
-
-
-
             </form>
         </div>
 
@@ -526,321 +486,333 @@
 
     @section('scripts')
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function(e) {
+    <script>
+        document.addEventListener('DOMContentLoaded', function(e) {
 
-                let responsable = document.querySelector('#id_responsable');
-                let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
-                let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('puesto_responsable').innerHTML = puesto_init
-                document.getElementById('area_responsable').innerHTML = area_init
+            let responsable = document.querySelector('#id_responsable');
+            let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
+            let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('puesto_responsable').innerHTML = puesto_init
+            document.getElementById('area_responsable').innerHTML = area_init
+            let proceso = document.getElementById('proceso_id');
 
-                let dueno = document.querySelector('#dueno_id');
-                let area = dueno.options[dueno.selectedIndex].getAttribute('data-area');
-                let puesto = dueno.options[dueno.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('puesto_dueno').innerHTML = puesto
-                document.getElementById('area_dueno').innerHTML = area
+            document.getElementById('codigo_proceso').innerHTML=proceso.options[proceso.selectedIndex].getAttribute('data-codigo')
+            document.getElementById('macroproceso').innerHTML=proceso.options[proceso.selectedIndex].getAttribute('data-macroproceso')
 
-                responsable.addEventListener('change', function(e) {
-                    e.preventDefault();
-                    let area = this.options[this.selectedIndex].getAttribute('data-area');
-                    let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                    document.getElementById('puesto_responsable').innerHTML = puesto
-                    document.getElementById('area_responsable').innerHTML = area
-                })
-                dueno.addEventListener('change', function(e) {
-                    e.preventDefault();
-                    let area = this.options[this.selectedIndex].getAttribute('data-area');
-                    let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                    document.getElementById('puesto_dueno').innerHTML = puesto
-                    document.getElementById('area_dueno').innerHTML = area
-                })
+            let dueno = document.querySelector('#dueno_id');
+            let area = dueno.options[dueno.selectedIndex].getAttribute('data-area');
+            let puesto = dueno.options[dueno.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('puesto_dueno').innerHTML = puesto
+            document.getElementById('area_dueno').innerHTML = area
 
-                 // Script Marca activos
-                document.getElementById('guardar_marca').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    let nombre = document.querySelector('#recipient-name').value;
-
-                    $.ajax({
-                        type: "POST",
-                        headers: {
-                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                        },
-                        url: "{{ route('admin.marcas.store') }}",
-                        data: {
-                            nombre
-                        },
-                        dataType: "json",
-                        success: function(response) {
-                            if (response.success) {
-                                document.querySelector('#recipient-name').value = '';
-                                $('.selecmarca').select2('destroy');
-                                $('.selecmarca').select2({
-                                    ajax: {
-                                        url: "{{ route('admin.marcas.getMarcas') }}",
-                                        dataType: "json",
-                                    },
-                                    theme: "bootstrap4"
-                                });
-                                $('#marcaslec').modal('hide')
-                                $('.modal-backdrop').hide();
-                                Swal.fire(
-                                    'Guardada con exito!',
-                                    '',
-                                    'success'
-                                )
-                                const marca=response.marca
-                                console.log(marca);
-                                var option = new Option(marca.nombre,marca.id, true, true);
-                                $('.selecmarca').append(option).trigger('change');
-
-                            }
-                        },
-                        error: function(request, status, error) {
-                            console.log(error)
-                            $.each(request.responseJSON.errors, function(indexInArray,
-
-                                valueOfElement) {
-                                console.log(valueOfElement, indexInArray);
-                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
-
-                            });
-                        }
-                    });
-                    console.log('Guardando')
-                });
-
-                // Script categoria activos
-                document.getElementById('guardar_categoria').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    let tipo = document.querySelector('#tipo-name').value;
-
-                    $.ajax({
-                        type: "POST",
-                        headers: {
-                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                        },
-                        url: "{{ route('admin.tipoactivos.store') }}",
-                        data: {
-                            tipo,ajax:true
-                        },
-                        dataType: "json",
-                        success: function(response) {
-                            if (response.success) {
-                                document.querySelector('#recipient-name').value = '';
-                                $('.selecCategoria').select2('destroy');
-                                $('.selecCategoria').select2({
-                                    ajax: {
-                                        url: "{{ route('admin.tipoactivos.getTipos') }}",
-                                        dataType: "json",
-                                    },
-                                    theme: "bootstrap4"
-                                });
-                                $('#categorialec').modal('hide')
-                                $('.modal-backdrop').hide();
-                                Swal.fire(
-                                    'Guardada con exito!',
-                                    '',
-                                    'success'
-                                )
-                                const activo=response.activo
-                                console.log(activo);
-                                var option = new Option(activo.tipo,activo.id, true, true);
-                                $('.selecCategoria').append(option).trigger('change');
-
-                            }
-                        },
-                        error: function(request, status, error) {
-                            console.log(error)
-                            $.each(request.responseJSON.errors, function(indexInArray,
-
-                                valueOfElement) {
-                                console.log(valueOfElement, indexInArray);
-                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
-
-                            });
-                        }
-                    });
-                    console.log('Guardando')
-                });
-
-                 // Script subcategoria activos
-
-                 document.getElementById('guardar_subcategoria').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    let subcategoria = document.querySelector('#subtipo-name').value;
-                    let categoria_id = document.querySelector('#categoria_id').value;
-
-                    $.ajax({
-                        type: "POST",
-                        headers: {
-                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                        },
-                        url: "{{ route('admin.subtipoactivos.store') }}",
-                        data: {
-                            categoria_id,subcategoria, ajax:true
-                        },
-                        dataType: "json",
-                        success: function(response) {
-                            if (response.success) {
-                                document.querySelector('#recipient-name').value = '';
-                                $('.selecSubcategoria').select2('destroy');
-                                $('.selecSubcategoria').select2({
-                                    ajax: {
-                                        url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
-                                        data: {
-                                            categoria:1
-                                        },
-                                        dataType: "json",
-                                    },
-                                    theme: "bootstrap4"
-                                });
-                                $('#subcategorialec').modal('hide')
-                                $('.modal-backdrop').hide();
-                                Swal.fire(
-                                    'Guardada con exito!',
-                                    '',
-                                    'success'
-                                )
-                                const subtipo=response.subtipo
-                                // const tipo=response.tipo
-                                console.log(subtipo);
-                                var option = new Option(subtipo.subcategoria,subtipo.id, true, true);
-                                $('.selecSubcategoria').append(option).trigger('change');
-                                // var option = new Option(subtipo.categoria_id,subtipo.id, true, true);
-                                // $('.selecCategoria').append(option).trigger('change');
-
-                            }
-                        },
-                        error: function(request, status, error) {
-                            console.log(error)
-                            $.each(request.responseJSON.errors, function(indexInArray,
-
-                                valueOfElement) {
-                                console.log(valueOfElement, indexInArray);
-                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
-
-                            });
-                        }
-                    });
-                    console.log('Guardando')
-                });
-
-
-                 // Script Modelo activos
-                document.getElementById('guardar_modelo').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    let nombre = document.querySelector('#modelo-name').value;
-
-                    $.ajax({
-                        type: "POST",
-                        headers: {
-                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                        },
-                        url: "{{ route('admin.modelos.store') }}",
-                        data: {
-                            nombre
-                        },
-                        dataType: "json",
-                        success: function(response) {
-                            $('#modelolec').modal('hide')
-                            $('.modal-backdrop').hide();
-                            if (response.success) {
-                                document.querySelector('#modelo-name').value = '';
-                                $('.selecmodelo').select2('destroy');
-                                $('.selecmodelo').select2({
-                                    ajax: {
-                                        url: "{{ route('admin.modelos.getModelos') }}",
-                                        dataType: "json",
-                                    },
-                                    theme: "bootstrap4"
-                                });
-
-                                Swal.fire(
-                                    'Guardada con exito!',
-                                    '',
-                                    'success'
-                                )
-                                const modelo=response.modelo
-                                console.log(modelo);
-                                var option = new Option(modelo.nombre,modelo.id, true, true);
-                                $('.selecmodelo').append(option).trigger('change');
-
-                            }
-
-
-                        },
-                        error: function(request, status, error) {
-                            console.log(error)
-                            $.each(request.responseJSON.errors, function(indexInArray,
-
-                                valueOfElement) {
-                                console.log(valueOfElement, indexInArray);
-                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
-
-                            });
-                        }
-                    });
-                    console.log('Guardando')
-                });
-
+            proceso.addEventListener('change', function(e) {
+                e.preventDefault();
+                console.log()
+                document.getElementById('codigo_proceso').innerHTML=e.target.options[e.target.selectedIndex].getAttribute('data-codigo')
+                document.getElementById('macroproceso').innerHTML=e.target.options[e.target.selectedIndex].getAttribute('data-macroproceso')
             })
 
-            $(document).ready(function() {
-                $('.selecmarca').select2({
-                    ajax: {
-                        url: "{{ route('admin.marcas.getMarcas') }}",
-                        dataType: "json",
-                    },
-                    theme: "bootstrap4"
-                });
 
+            responsable.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = this.options[this.selectedIndex].getAttribute('data-area');
+                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('puesto_responsable').innerHTML = puesto
+                document.getElementById('area_responsable').innerHTML = area
+            })
+            dueno.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = this.options[this.selectedIndex].getAttribute('data-area');
+                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('puesto_dueno').innerHTML = puesto
+                document.getElementById('area_dueno').innerHTML = area
+            })
 
-                $('.selecmodelo').select2({
-                    ajax: {
-                        url: "{{ route('admin.modelos.getModelos') }}",
-                        dataType: "json",
-                    },
-                    theme: "bootstrap4"
-                });
+             // Script Marca activos
+            document.getElementById('guardar_marca').addEventListener('click', function(e) {
+                e.preventDefault();
+                let nombre = document.querySelector('#recipient-name').value;
 
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                    },
+                    url: "{{ route('admin.marcas.store') }}",
+                    data: {
+                        nombre
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.success) {
+                            document.querySelector('#recipient-name').value = '';
+                            $('.selecmarca').select2('destroy');
+                            $('.selecmarca').select2({
+                                ajax: {
+                                    url: "{{ route('admin.marcas.getMarcas') }}",
+                                    dataType: "json",
+                                },
+                                theme: "bootstrap4"
+                            });
+                            $('#marcaslec').modal('hide')
+                            $('.modal-backdrop').hide();
+                            Swal.fire(
+                                'Guardada con exito!',
+                                '',
+                                'success'
+                            )
+                            const marca=response.marca
+                            console.log(marca);
+                            var option = new Option(marca.nombre,marca.id, true, true);
+                            $('.selecmarca').append(option).trigger('change');
 
-                $('.selecCategoria').select2({
-                    ajax: {
-                        url: "{{ route('admin.tipoactivos.getTipos') }}",
-                        dataType: "json",
+                        }
                     },
-                    theme: "bootstrap4"
-                });
-                $('.selecSubcategoria').select2({
-                    ajax: {
-                        url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
-                        data:{categoria:1},
-                        dataType: "json",
-                    },
-                    theme: "bootstrap4"
-                });
-                $('.selecCategoria').on('select2:select', function (e) {
-                    var data = e.params.data; console.log(data);
-                    $('.selecSubcategoria').select2({
-                    ajax: {
-                        url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
-                        data:{categoria:data.id},
-                        dataType: "json",
-                    },
-                    theme: "bootstrap4"
-                });
-                  });
+                    error: function(request, status, error) {
+                        console.log(error)
+                        $.each(request.responseJSON.errors, function(indexInArray,
 
+                            valueOfElement) {
+                            console.log(valueOfElement, indexInArray);
+                            $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
+                        });
+                    }
+                });
+                console.log('Guardando')
             });
 
-            // $('.selecCategoria').val('1');
-            // $('.selecCategoria').trigger('changue');
+            // Script categoria activos
+            document.getElementById('guardar_categoria').addEventListener('click', function(e) {
+                e.preventDefault();
+                let tipo = document.querySelector('#tipo-name').value;
+
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                    },
+                    url: "{{ route('admin.tipoactivos.store') }}",
+                    data: {
+                        tipo,ajax:true
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.success) {
+                            document.querySelector('#recipient-name').value = '';
+                            $('.selecCategoria').select2('destroy');
+                            $('.selecCategoria').select2({
+                                ajax: {
+                                    url: "{{ route('admin.tipoactivos.getTipos') }}",
+                                    dataType: "json",
+                                },
+                                theme: "bootstrap4"
+                            });
+                            $('#categorialec').modal('hide')
+                            $('.modal-backdrop').hide();
+                            Swal.fire(
+                                'Guardada con exito!',
+                                '',
+                                'success'
+                            )
+                            const activo=response.activo
+                            console.log(activo);
+                            var option = new Option(activo.tipo,activo.id, true, true);
+                            $('.selecCategoria').append(option).trigger('change');
+
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.log(error)
+                        $.each(request.responseJSON.errors, function(indexInArray,
+
+                            valueOfElement) {
+                            console.log(valueOfElement, indexInArray);
+                            $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
+                        });
+                    }
+                });
+                console.log('Guardando')
+            });
+
+             // Script subcategoria activos
+
+             document.getElementById('guardar_subcategoria').addEventListener('click', function(e) {
+                e.preventDefault();
+                let subcategoria = document.querySelector('#subtipo-name').value;
+                let categoria_id = document.querySelector('#categoria_id').value;
+
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                    },
+                    url: "{{ route('admin.subtipoactivos.store') }}",
+                    data: {
+                        categoria_id,subcategoria, ajax:true
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.success) {
+                            document.querySelector('#recipient-name').value = '';
+                            $('.selecSubcategoria').select2('destroy');
+                            $('.selecSubcategoria').select2({
+                                ajax: {
+                                    url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                                    data: {
+                                        categoria:1
+                                    },
+                                    dataType: "json",
+                                },
+                                theme: "bootstrap4"
+                            });
+                            $('#subcategorialec').modal('hide')
+                            $('.modal-backdrop').hide();
+                            Swal.fire(
+                                'Guardada con exito!',
+                                '',
+                                'success'
+                            )
+                            const subtipo=response.subtipo
+                            // const tipo=response.tipo
+                            console.log(subtipo);
+                            var option = new Option(subtipo.subcategoria,subtipo.id, true, true);
+                            $('.selecSubcategoria').append(option).trigger('change');
+                            // var option = new Option(subtipo.categoria_id,subtipo.id, true, true);
+                            // $('.selecCategoria').append(option).trigger('change');
+
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.log(error)
+                        $.each(request.responseJSON.errors, function(indexInArray,
+
+                            valueOfElement) {
+                            console.log(valueOfElement, indexInArray);
+                            $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
+                        });
+                    }
+                });
+                console.log('Guardando')
+            });
+
+
+             // Script Modelo activos
+            document.getElementById('guardar_modelo').addEventListener('click', function(e) {
+                e.preventDefault();
+                let nombre = document.querySelector('#modelo-name').value;
+
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                    },
+                    url: "{{ route('admin.modelos.store') }}",
+                    data: {
+                        nombre
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        $('#modelolec').modal('hide')
+                        $('.modal-backdrop').hide();
+                        if (response.success) {
+                            document.querySelector('#modelo-name').value = '';
+                            $('.selecmodelo').select2('destroy');
+                            $('.selecmodelo').select2({
+                                ajax: {
+                                    url: "{{ route('admin.modelos.getModelos') }}",
+                                    dataType: "json",
+                                },
+                                theme: "bootstrap4"
+                            });
+
+                            Swal.fire(
+                                'Guardada con exito!',
+                                '',
+                                'success'
+                            )
+                            const modelo=response.modelo
+                            console.log(modelo);
+                            var option = new Option(modelo.nombre,modelo.id, true, true);
+                            $('.selecmodelo').append(option).trigger('change');
+
+                        }
+
+
+                    },
+                    error: function(request, status, error) {
+                        console.log(error)
+                        $.each(request.responseJSON.errors, function(indexInArray,
+
+                            valueOfElement) {
+                            console.log(valueOfElement, indexInArray);
+                            $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
+                        });
+                    }
+                });
+                console.log('Guardando')
+            });
+
+        })
+
+        $(document).ready(function() {
+            $('.selecmarca').select2({
+                ajax: {
+                    url: "{{ route('admin.marcas.getMarcas') }}",
+                    dataType: "json",
+                },
+                theme: "bootstrap4"
+            });
+
+
+            $('.selecmodelo').select2({
+                ajax: {
+                    url: "{{ route('admin.modelos.getModelos') }}",
+                    dataType: "json",
+                },
+                theme: "bootstrap4"
+            });
+
+
+            $('.selecCategoria').select2({
+                ajax: {
+                    url: "{{ route('admin.tipoactivos.getTipos') }}",
+                    dataType: "json",
+                },
+                theme: "bootstrap4"
+            });
+            $('.selecSubcategoria').select2({
+                ajax: {
+                    url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                    data:{categoria:1},
+                    dataType: "json",
+                },
+                theme: "bootstrap4"
+            });
+            $('.selecCategoria').on('select2:select', function (e) {
+                var data = e.params.data; console.log(data);
+                $('.selecSubcategoria').select2({
+                ajax: {
+                    url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                    data:{categoria:data.id},
+                    dataType: "json",
+                },
+                theme: "bootstrap4"
+            });
+              });
+
+        });
+
+        // $('.selecCategoria').val('1');
+        // $('.selecCategoria').trigger('changue');
 
 
 
-        </script>
+    </script>
 
 
 
-    @endsection
+@endsection

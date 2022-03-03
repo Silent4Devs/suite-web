@@ -331,8 +331,8 @@
                     visible: false
                 }],
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                        data: 'identificador',
+                        name: 'identificador'
                     },
                     {
                         data: 'nombreactivo',

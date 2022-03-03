@@ -180,6 +180,7 @@ class ActivosController extends Controller
         }
 
         $activo = Activo::create([
+            'identificador' => $request->identificador,
             'nombreactivo' => $request->nombreactivo,
             'descripcion' => $request->descripcion,
             'marca' => intval($request->marca),
@@ -199,6 +200,7 @@ class ActivosController extends Controller
             'observaciones' => $request->observaciones,
             'documentos_relacionados' => json_encode($data),
             'documento' => $request->documento,
+            'proceso_id' => $request->proceso_id,
 
         ]);
 
@@ -233,6 +235,8 @@ class ActivosController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
+        $procesos = Proceso::with('macroproceso')->get();
+
         $area = Area::get();
 
         $marcas = Marca::get();
@@ -240,7 +244,7 @@ class ActivosController extends Controller
         $modelos = Modelo::get();
         $tipos = Tipoactivo::get();
 
-        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'activo'));
+        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'activo', 'procesos'));
     }
 
     public function update(UpdateActivoRequest $request, Activo $activo)

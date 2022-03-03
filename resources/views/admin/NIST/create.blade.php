@@ -639,99 +639,62 @@
 
 
                 <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
-                    DATOS GENERALES
+                    Evaluacion del Riesgo
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-city iconos-crear"></i>Proveedores</label><br>
+                        <label for="id_sede"><i class="fas fa-city iconos-crear"></i>Nombre de la Vulnerabilidad</label><br>
                         <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
                         id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-handshake iconos-crear"></i>Servicio</label><br>
+                        <label for="id_sede"><i class="fas fa-handshake iconos-crear"></i>Amenaza de la vulnerabilidad</label><br>
+                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
+                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                    </div>
+                    <div class="form-group col-md-4 col-sm-12">
+                        <label for="id_sede"><i class="fas fa-handshake iconos-crear"></i>Impacto de la Vulnerabilidad</label><br>
+                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
+                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-4 col-sm-12">
+                        <label for="id_sede"><i class="fas fa-city iconos-crear"></i>Aplicaciones Impactadas</label><br>
                         <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
                         id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_proceso" style="margin-top:-10px !important;"><i class="bi bi-file-earmark-post iconos-crear"></i>Proceso a Impactar</label><br>
-                        <select class="procesoSelect form-control" name="id_proceso" id="id_proceso">
-                            <option value="">Seleccione una opción</option>
-                            @foreach ($procesos as $proceso)
-                                <option {{old('id_proceso') == $proceso->id ? ' selected="selected"' : ''}} value="{{ $proceso->id }}">{{ $proceso->codigo }} / {{ $proceso->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('id_proceso'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_proceso') }}
-                            </div>
-                        @endif
+                        <label for="id_sede"><i class="fas fa-handshake iconos-crear"></i>Escenario de Riesgo</label><br>
+                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
+                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                    </div>
+                    <div class="form-group col-md-4 col-sm-12">
+                        <label for="id_sede"><i class="fas fa-handshake iconos-crear"></i>Categoría del Riesgo</label><br>
+                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
+                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
                     </div>
                 </div>
-
                 <div class="row">
-                    <div class="form-group col-md-12 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-file-alt iconos-crear"></i>Descripción del servicio a proporcionar</label><br>
-                        <textarea class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
-                        id="nombre_herramienta_puesto">{{ old('indicador', '') }}</textarea>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="id_sede"><i class="fas fa-city iconos-crear"></i>Causa Raíz</label><br>
+                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
+                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="id_sede"><i class="fas fa-handshake iconos-crear"></i>Tipo de Riesgo</label><br>
+                        <input class="form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
+                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
                     </div>
                 </div>
-
-
-                <hr>
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
-                    EVALUACIÓN DE IMPACTOS ASOCIADOS AL PROCESO SOPORTE PROVEEDOR
-                </div>
-
                 <div class="row">
-
-
-                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label for="operacional"><i class="fas fa-chess-knight iconos-crear"></i>Estratégico</label>
-                        <select class="form-control select2 {{ $errors->has('operacional') ? 'is-invalid' : '' }}" name="operacional" >
-                            <option value="" selected>Selecciona</option>
-                            <option value="Uno">1</option>
-                            <option value="Dos">2</option>
-                            <option value="Tres">3</option>
-                            <option value="Cuatro">4</option>
-                            <option value="Cinco">5</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label for="operacional"><i class="fas fa-project-diagram iconos-crear"></i>Operacional</label>
-                        <select class="form-control select2 {{ $errors->has('operacional') ? 'is-invalid' : '' }}" name="operacional" >
-                            <option value="" selected>Selecciona</option>
-                            <option value="Uno">1</option>
-                            <option value="Dos">2</option>
-                            <option value="Tres">3</option>
-                            <option value="Cuatro">4</option>
-                            <option value="Cinco">5</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label for="cumplimiento"><i class="fas fa-check iconos-crear"></i>Cumplimiento</label>
-                        <select class="form-control select2 {{ $errors->has('cumplimiento') ? 'is-invalid' : '' }}" name="cumplimiento">
-                            <option value="" selected>Selecciona</option>
-                            <option value="Uno">1</option>
-                            <option value="Dos">2</option>
-                            <option value="Tres">3</option>
-                            <option value="Cuatro">4</option>
-                            <option value="Cinco">5</option>
-                        </select>
-                    </div>
-
-
-                </div>
-
-                <div class="row">
-
-                    <div class="form-group col-sm-4 col-md-3 col-lg-3">
-                        <label for="legal"><i class="fas fa-gavel iconos-crear"></i>Legal</label>
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                        <label for="legal"><i class="fas fa-gavel iconos-crear"></i>Severidad de la Vulnerabilidad</label>
                         <select class="form-control select2 {{ $errors->has('legal') ? 'is-invalid' : '' }}" name="legal">
                             <option value="" selected>Selecciona</option>
                             <option value="Uno">1</option>
@@ -742,30 +705,40 @@
                         </select>
                     </div>
 
-
-                    <div class="form-group col-sm-4 col-md-3 col-lg-3">
-                        <label for="reputacional"><i class="fas fa-newspaper iconos-crear"></i>Reputacional</label>
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                        <label for="reputacional"><i class="fas fa-newspaper iconos-crear"></i>Probabilidad</label>
                         <select class="form-control select2 {{ $errors->has('reputacional') ? 'is-invalid' : '' }}" name="reputacional">
                             <option value="" selected>Selecciona</option>
-                            <option value="Uno">1</option>
-                            <option value="Dos">2</option>
-                            <option value="Tres">3</option>
-                            <option value="Cuatro">4</option>
-                            <option value="Cinco">5</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+
                         </select>
                     </div>
+                </div>
 
-
-
-                    <div class="form-group col-sm-4 col-md-3 col-lg-3">
-                        <label for="tecnologico"><i class="fas fa-laptop iconos-crear"></i>Tecnológico</label>
+                <div class="row">
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                        <label for="tecnologico"><i class="fas fa-laptop iconos-crear"></i>Impacto</label>
                         <select class="form-control select2 {{ $errors->has('tecnologico') ? 'is-invalid' : '' }}" name="tecnologico">
                             <option value="" selected>Selecciona</option>
-                            <option value="Uno">1</option>
-                            <option value="Dos">2</option>
-                            <option value="Tres">3</option>
-                            <option value="Cuatro">4</option>
-                            <option value="Cinco">5</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
                         </select>
                     </div>
 
@@ -779,187 +752,10 @@
                             </div>
                         @endif
                     </div>
-
                 </div>
-
-
-                <hr>
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
-                    ACTIVOS DE INFORMACIÓN
-                </div>
-
-                <div class="row">
-
-                    <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_vulnerabilidad"><i class="fab fa-cloudscale iconos-crear"></i>Activos Asociados</label>
-                        <select class="procesoSelect form-control" name="id_vulnerabilidad" id="id_vulnerabilidad">
-                            <option value="">Seleccione una opción</option>
-                            @foreach ($vulnerabilidades as $vulnerabilidad)
-                                <option {{old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : ''}} value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('id_vulnerabilidad'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_vulnerabilidad') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.proceso_helper') }}</span>
-                    </div>
-
-                    <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-box-open iconos-crear"></i>Contenedor del Activo</label><br>
-                        <select class="form-control {{ $errors->has('tecnologico') ? 'is-invalid' : '' }}" name="tecnologico">
-                            <option value="" selected>Selecciona una opción</option>
-                            <option value="Uno">Soluciones Cloud (Google Workspace-Azure)</option>
-                            <option value="Dos">Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
-                            <option value="Tres">Base de Datos</option>
-                            <option value="Cuatro">Servidores</option>
-                            <option value="Cinco">Aplicaciones Internas (Meltsan-Astro)</option>
-                            <option value="Cinco">Aplicaciones Externas (CRM)</option>
-
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_amenaza"><i class="fas fa-fire iconos-crear"></i>Amenaza</label>
-                        <select class="procesoSelect form-control" name="id_amenaza" id="id_amenaza">
-                            <option value="">Seleccione una opción</option>
-                            @foreach ($amenazas as $amenaza)
-                                <option {{old('id_amenaza') == $amenaza->id ? ' selected="selected"' : ''}} value="{{ $amenaza->id }}">{{ $amenaza->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('amenaza'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('amenaza') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.proceso_helper') }}</span>
-                    </div>
-
-
-                </div>
-
-
-
-
-                <div class="row">
-
-                    <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_vulnerabilidad"><i class="fas fa-shield-alt iconos-crear"></i>Vulnerabilidad</label>
-                        <select class="procesoSelect form-control" name="id_vulnerabilidad" id="id_vulnerabilidad">
-                            <option value="">Seleccione una opción</option>
-                            @foreach ($vulnerabilidades as $vulnerabilidad)
-                                <option {{old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : ''}} value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('id_vulnerabilidad'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_vulnerabilidad') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.proceso_helper') }}</span>
-                    </div>
-
-                    <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_sede"><i class="fas fa-camera-retro iconos-crear"></i>Escenario de Riesgo</label><br>
-                        <select class="form-control mt-2" name="id_vulnerabilidad" id="id_vulnerabilidad">
-                            <option value="">Seleccione una opción</option>
-                            @foreach ($vulnerabilidades as $vulnerabilidad)
-                                <option {{old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : ''}} value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('id_vulnerabilidad'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_vulnerabilidad') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.proceso_helper') }}</span>
-                    </div>
-
-                    <div class="form-group col-md-4 col-sm-12">
-                        <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>Confidencialidad</label><br>
-                        <select class="form-control select2 {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}" name="confidencialidad" >
-                            <option value="" selected>Selecciona</option>
-                            <option value="Uno">1</option>
-                            <option value="Dos">2</option>
-                            <option value="Tres">3</option>
-                            <option value="Cuatro">4</option>
-                            <option value="Cinco">5</option>
-                        </select>
-                    </div>
-
-                </div>
-
-
-                <div class="row">
-
-
-                    <div class="form-group col-md-4 col-sm-12">
-                        <label for="disponibilidad"><i class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label><br>
-                        <select class="form-control select2 {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}" name="disponibilidad" >
-                            <option value="" selected>Selecciona</option>
-                            <option value="Uno">1</option>
-                            <option value="Dos">2</option>
-                            <option value="Tres">3</option>
-                            <option value="Cuatro">4</option>
-                            <option value="Cinco">5</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-4 col-sm-12">
-                        <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Integridad</label><br>
-                        <select class="form-control select2 {{ $errors->has('integridad') ? 'is-invalid' : '' }}" name="integridad" >
-                            <option value="" selected>Selecciona</option>
-                            <option value="Uno">1</option>
-                            <option value="Dos">2</option>
-                            <option value="Tres">3</option>
-                            <option value="Cuatro">4</option>
-                            <option value="Cinco">5</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-4 col-sm-12">
-                        <label for="evaluacion"><i class="fas fa-exclamation-triangle iconos-crear"></i>Evaluación del Riesgo</label><br>
-                        <input class="mt-2 form-control {{ $errors->has('nombre_herramienta') ? 'is-invalid' : '' }}" type="text" name="nombre_herramienta"
-                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
-                    </div>
-
-                </div>
-
-
-
-                <div class="row col-12">
-                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
-                        <table class="scroll_estilo table table-responsive" id="contactos_table" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Activos Asociados</th>
-                                    <th style="min-width:300px;">Contenedor del activo</th>
-                                    <th style="min-width:300px;">Amenazas</th>
-                                    <th style="min-width:300px;">Vulnerabilidades</th>
-                                    <th style="min-width:300px;">Escenario de Riesgo</th>
-                                    <th style="min-width:300px;">Confidencialidad</th>
-                                    <th style="min-width:300px;">Disponibilidad</th>
-                                    <th style="min-width:300px;">Integridad</th>
-                                    <th style="min-width:300px;">Evaluación del Riesgo</th>
-                                    <th>Opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="contenedor_contactos">
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
 
             </form>
         </div>
-        </form>
     </div>
 
 @endsection

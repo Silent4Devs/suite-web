@@ -6,12 +6,12 @@
             <form method="POST" action="{{ route('admin.activos.store') }}" enctype="multipart/form-data" class="row">
                 @csrf
                 <div class="form-group col-md-3">
-                    <label class="required " for="nombreactivo_id"><i class="fa-solid fa-list-ol iconos-crear"></i>ID</label>
-                    <input class="form-control select2 {{ $errors->has('nombre_activo') ? 'is-invalid' : '' }}"
-                        name="nombreactivo" id="nombre_activo" required>
-                    @if ($errors->has('nombreactivo'))
+                    <label class="required " for="identificador"><i class="fa-solid fa-list-ol iconos-crear"></i>ID</label>
+                    <input class="form-control select2 {{ $errors->has('identificador') ? 'is-invalid' : '' }}"
+                        name="identificador" id="identificador" required>
+                    @if ($errors->has('identificador'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('nombreactivo') }}
+                            {{ $errors->first('identificador') }}
                         </div>
                     @endif
                     <span class="help-block"></span>
@@ -148,9 +148,9 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label for="id_responsable"><i class="bi bi-file-earmark-post iconos-crear"></i>Proceso</label>
+                    <label for="proceso_id"><i class="bi bi-file-earmark-post iconos-crear"></i>Proceso</label>
                         <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
-                            name="id_proceso" id="id_proceso">
+                            name="proceso_id" id="proceso_id">
                             @foreach ($procesos as $proceso)
                                 <option data-codigo="{{ $proceso->codigo }}" value="{{ $proceso->id }}"
                                     data-macroproceso="{{ $proceso->macroproceso->nombre }}">
@@ -518,7 +518,7 @@
                 let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
                 document.getElementById('puesto_responsable').innerHTML = puesto_init
                 document.getElementById('area_responsable').innerHTML = area_init
-                let proceso = document.getElementById('id_proceso');
+                let proceso = document.getElementById('proceso_id');
 
                 document.getElementById('codigo_proceso').innerHTML=proceso.options[proceso.selectedIndex].getAttribute('data-codigo')
                 document.getElementById('macroproceso').innerHTML=proceso.options[proceso.selectedIndex].getAttribute('data-macroproceso')
