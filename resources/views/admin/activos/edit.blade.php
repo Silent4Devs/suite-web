@@ -3,7 +3,7 @@
     <h5 class="col-12 titulo_general_funcion">Registrar: Alta de Activo</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.activos.store', [$activo->id]) }}" enctype="multipart/form-data" class="row">
+            <form method="POST" action="{{ route('admin.activos.update', [$activo->id]) }}" enctype="multipart/form-data" class="row">
                 @csrf
                 @method('PUT')
                 <div class="form-group col-md-12">
@@ -19,7 +19,7 @@
                     <span class="help-block"></span>
                 </div>
 
-                    @livewire('categoria-subcategoria')
+                    @livewire('categoria-subcategoria', ['categoriasSeleccionado'=>$categoriasSeleccionado, 'subcategoriaSeleccionado'=>$subcategoriaSeleccionado])
 
                 <div class="form-group col-12">
                     <label for="descripcion"><i
@@ -420,7 +420,7 @@
                     <div class="modal-body">
                       <form>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="id_asignada">Categoría</label>
                             <select class="form-control  {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
                                 name="categoria_id" id="categoria_id">
@@ -436,13 +436,13 @@
                                     {{ $errors->first('tipo') }}
                                 </div>
                             @endif
-                        </div>
+                        </div> --}}
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                           <label for="recipient-name" class="col-form-label">Subcategoria:</label>
                           <input type="text" class="form-control" id="subtipo-name">
                           <span class="text-danger" id="nombre_error" class="nombre_error"></span>
-                        </div>
+                        </div> --}}
                       </form>
                     </div>
 
@@ -590,14 +590,14 @@
                                     'success'
                                 )
                                 const marca=response.marca
-                                console.log(marca);
+                                // console.log(marca);
                                 var option = new Option(marca.nombre,marca.id, true, true);
                                 $('.selecmarca').append(option).trigger('change');
 
                             }
                         },
                         error: function(request, status, error) {
-                            console.log(error)
+                            // console.log(error)
                             $.each(request.responseJSON.errors, function(indexInArray,
 
                                 valueOfElement) {
@@ -626,6 +626,7 @@
                         },
                         dataType: "json",
                         success: function(response) {
+                            // console.log("aqui");
                             if (response.success) {
                                 document.querySelector('#recipient-name').value = '';
                                 $('.selecCategoria').select2('destroy');
@@ -644,24 +645,24 @@
                                     'success'
                                 )
                                 const activo=response.activo
-                                console.log(activo);
+                                // console.log(activo);
                                 var option = new Option(activo.tipo,activo.id, true, true);
                                 $('.selecCategoria').append(option).trigger('change');
 
                             }
                         },
                         error: function(request, status, error) {
-                            console.log(error)
+                            // console.log(error)
                             $.each(request.responseJSON.errors, function(indexInArray,
 
                                 valueOfElement) {
-                                console.log(valueOfElement, indexInArray);
+                                // console.log(valueOfElement, indexInArray);
                                 $(`span#${indexInArray}_error`).text(valueOfElement[0]);
 
                             });
                         }
                     });
-                    console.log('Guardando')
+                    // console.log('Guardando')
                 });
 
                  // Script subcategoria activos
@@ -704,7 +705,7 @@
                                 )
                                 const subtipo=response.subtipo
                                 // const tipo=response.tipo
-                                console.log(subtipo);
+                                // console.log(subtipo);
                                 var option = new Option(subtipo.subcategoria,subtipo.id, true, true);
                                 $('.selecSubcategoria').append(option).trigger('change');
                                 // var option = new Option(subtipo.categoria_id,subtipo.id, true, true);
@@ -713,17 +714,17 @@
                             }
                         },
                         error: function(request, status, error) {
-                            console.log(error)
+                            // console.log(error)
                             $.each(request.responseJSON.errors, function(indexInArray,
 
                                 valueOfElement) {
-                                console.log(valueOfElement, indexInArray);
+                                // console.log(valueOfElement, indexInArray);
                                 $(`span#${indexInArray}_error`).text(valueOfElement[0]);
 
                             });
                         }
                     });
-                    console.log('Guardando')
+                    // console.log('Guardando')
                 });
 
 
@@ -762,7 +763,7 @@
                                     'success'
                                 )
                                 const modelo=response.modelo
-                                console.log(modelo);
+                                // console.log(modelo);
                                 var option = new Option(modelo.nombre,modelo.id, true, true);
                                 $('.selecmodelo').append(option).trigger('change');
 
@@ -771,17 +772,17 @@
 
                         },
                         error: function(request, status, error) {
-                            console.log(error)
+                            // console.log(error)
                             $.each(request.responseJSON.errors, function(indexInArray,
 
                                 valueOfElement) {
-                                console.log(valueOfElement, indexInArray);
+                                // console.log(valueOfElement, indexInArray);
                                 $(`span#${indexInArray}_error`).text(valueOfElement[0]);
 
                             });
                         }
                     });
-                    console.log('Guardando')
+                    // console.log('Guardando')
                 });
 
             })
@@ -821,16 +822,17 @@
                     theme: "bootstrap4"
                 });
                 $('.selecCategoria').on('select2:select', function (e) {
-                    var data = e.params.data; console.log(data);
+                    var data = e.params.data;
+                    // console.log(data);
                     $('.selecSubcategoria').select2({
-                    ajax: {
-                        url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
-                        data:{categoria:data.id},
-                        dataType: "json",
-                    },
-                    theme: "bootstrap4"
+                        ajax: {
+                            url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                            data:{categoria:data.id},
+                            dataType: "json",
+                        },
+                        theme: "bootstrap4"
+                    });
                 });
-                  });
 
             });
 
