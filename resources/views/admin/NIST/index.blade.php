@@ -50,44 +50,43 @@
                 <table class="table table-bordered w-100 datatable datatable-Matriz">
                     <thead class="thead-dark">
                         <tr class="negras">
-                            <th class="text-center" style="background-color:#3490DC;" colspan="4">Descripción General
+                            <th class="text-center" style="background-color:#3490DC;" colspan="12">Escenarios de Riesgos - NIST
                             </th>
-                            <th class="text-center" style="background-color:#1168af;" colspan="7">Evaluación de Impactos Asociados al Proceso</th>
-                            <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
+
                         </tr>
                         <tr>
                             <th>
-                                Proveedores
+                                Nombre de la Vulnerabilidad
                             </th>
                             <th>
-                                Servicio
+                                Amenaza de la vulnerabilidad
                             </th>
                             <th>
-                                Proceso a impactar
+                                Impacto de la Vulnerabilidad
                             </th>
                             <th>
-                                Descripción del servicio a proporcionar
+                                Escenario de Riesgo
                             </th>
                             <th>
-                                Estratégico
+                                Categoría del Riesgo
                             </th>
                             <th>
-                                Operacional
+                                Causa Raíz
                             </th>
                             <th>
-                               Cumplimiento
+                                Tipo de Riesgo
                             </th>
                             <th>
-                                Legal
+                                Severidad de la Vulnerabilidad
                             </th>
                             <th>
-                                Reputacional
+                                Probabilidad
                             </th>
                             <th>
-                                Tecnológico
+                                Impacto
                             </th>
                             <th>
-                                Valor de impacto
+                                Valoración del Riesgo
                             </th>
                            <th>
                                 Opciones

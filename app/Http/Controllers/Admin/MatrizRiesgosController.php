@@ -783,6 +783,152 @@ class MatrizRiesgosController extends Controller
 
         return view('admin.MatrizISO31000.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
+    public function NIST(Request $request)
+    {
+        // dd($request->all());
+        /*$query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
+        dd($query);*/
+        // abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //  $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots' => function ($query) {
+        //     return $query->with('declaracion_aplicabilidad');
+        // }])->where('id_analisis', '=', $request['id'])->get();
+        // dd($query);
+        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if ($request->ajax()) {
+            $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots' => function ($query) {
+                return $query->with('declaracion_aplicabilidad');
+            }])->where('id_analisis', '=', $request['id'])->get();
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'analisis_de_riesgos_matriz_riesgo_config_show';
+                $editGate = 'analisis_de_riesgos_matriz_riesgo_config_edit';
+                $deleteGate = 'analisis_de_riesgos_matriz_riesgo_config_delete';
+                $crudRoutePart = 'matriz-riesgos';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id_proceso', function ($row) {
+                return $row->proceso ? $row->proceso->nombre : '';
+            });
+            $table->editColumn('id_responsable', function ($row) {
+                return $row->empleado ? $row->empleado->name : '';
+            });
+            $table->editColumn('activo_id', function ($row) {
+                return $row->activo ? $row->activo->nombreactivo : '';
+            });
+            $table->editColumn('id_sede', function ($row) {
+                return $row->sede ? $row->sede->sede : '';
+            });
+            $table->editColumn('id_vulnerabilidad', function ($row) {
+                return $row->vulnerabilidad ? $row->vulnerabilidad->nombre : '';
+            });
+            $table->editColumn('descripcionriesgo', function ($row) {
+                return $row->descripcionriesgo ? $row->descripcionriesgo : '';
+            });
+            $table->editColumn('confidencialidad', function ($row) {
+                if ($row->confidencialidad) {
+                    return 'Sí' ? 'Sí' : '';
+                } else {
+                    return 'No' ? 'No' : '';
+                }
+            });
+            $table->editColumn('integridad', function ($row) {
+                if ($row->integridad) {
+                    return 'Sí' ? 'Sí' : '';
+                } else {
+                    return 'No' ? 'No' : '';
+                }
+            });
+            $table->editColumn('disponibilidad', function ($row) {
+                if ($row->disponibilidad) {
+                    return 'Sí' ? 'Sí' : '';
+                } else {
+                    return 'No' ? 'No' : '';
+                }
+            });
+            $table->editColumn('resultadoponderacion', function ($row) {
+                return $row->resultadoponderacion ? $row->resultadoponderacion : '';
+            });
+            $table->editColumn('probabilidad', function ($row) {
+                //return $row->probabilidad ? $row->probabilidad : "";
+                switch ($row->probabilidad) {
+                    case 0:
+                        return 'NULA' ? 'NULA' : '';
+                        break;
+                    case 3:
+                        return 'BAJA' ? 'BAJA' : '';
+                        break;
+                    case 6:
+                        return 'MEDIA' ? 'MEDIA' : '';
+                        break;
+                    case 9:
+                        return 'ALTA' ? 'ALTA' : '';
+                        break;
+                    default:
+                        break;
+                }
+            });
+
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
+
+        $organizacions = Organizacion::all();
+        $teams = Team::get();
+        $tipoactivos = Tipoactivo::get();
+        $controles = Controle::get();
+        $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
+        $sedes = Sede::get();
+        $areas = Area::get();
+        $procesos = Proceso::get();
+        $numero_sedes = Sede::count();
+        $numero_matriz = MatrizRiesgo::count();
+
+        return view('admin.NIST.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
+    }
+
+
+    public function NISTCreate(Request $request)
+    {
+
+        // $organizacions = Organizacion::all();
+        // $teams = Team::get();
+        // $tipoactivos = Tipoactivo::get();
+        // $controles = Controle::get();
+        // $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
+        // $sedes = Sede::get();
+        // $areas = Area::get();
+        // $procesos = Proceso::get();
+        // $numero_sedes = Sede::count();
+        // $numero_matriz = MatrizRiesgo::count();
+        // $activos = Activo::get();
+
+        $sedes = Sede::get();
+        $areas = Area::get();
+        $procesos = Proceso::get();
+        $responsables = Empleado::get();
+        $activos = Activo::get();
+        $amenazas = Amenaza::get();
+
+        $vulnerabilidades = Vulnerabilidad::get();
+        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+
+        return view('admin.NIST.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
+
+    }
 
 
 
