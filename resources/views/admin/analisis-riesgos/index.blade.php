@@ -358,6 +358,13 @@
                                 <a href="matriz-seguridad/ISO31000/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                             </div>
                             `;
+                            break;
+                            case 'NIST':
+                            return `
+                            <div class="text-center w-100">
+                                <a href="matriz-seguridad/NIST/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                            </div>
+                            `;
                             default:
                              return`No se encuentran coincidencias`;
                             }
@@ -370,7 +377,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [4, 'desc']
+                    [0, 'desc']
                 ]
             };
             let table = $('.datatable-AnalisisRiesgo').DataTable(dtOverrideGlobals);

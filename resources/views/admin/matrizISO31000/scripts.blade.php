@@ -1,54 +1,3 @@
-
-<style>
-
-    .bajo{
-        color:#fff !important;
-        background-color:rgb(50, 205, 63) !important;
-        /* position:relative; */
-    }
-
-    .bajo::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(50, 205, 63) !important;
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
-
-    .medio{
-        color:#000 !important;
-        background-color:yellow !important;
-
-    }
-
-    .alto{
-        color:#fff !important;
-        background-color:rgb(255, 136, 0) !important;
-
-    }
-
-    .critico{
-        color:#fff !important;
-        background-color:red !important;
-    }
-
-    #selectValorCritico{
-
-        color:#000 !important;
-    }
-
-    /* .muybajo{
-
-        background-color:red !important;
-
-        } */
-
-
-</style>
-
 @section('scripts')
 
 {{-- <script type=text/javascript>
@@ -452,11 +401,9 @@
 
     <script>
     $(document).ready(function () {
-    const custodios=@json($custodios);
-    const duenos=@json($duenos);
+    const activosmatriz31000=@json($activosmatriz31000);
     const amenazas=@json($amenazas);
     const vulnerabilidades=@json($vulnerabilidades);
-    const activosoctave=@json($activosoctave);
     // console.log(formulario.confidencialidad);
     let count = 0;
 
@@ -467,57 +414,38 @@
           const contenedorActivosInfo=document.getElementById('contenedor_informacion');
           let html=`
           <tr>
-            <td><input type="hidden" name="activosoctave[${contador}][id]" value="${formulario.id?formulario.id:0}"><input class="form-control" type="text"  name="activosoctave[${contador}][nombre_ai]" value="${formulario.activosAi}"></td>
-            <td class="col-4"><select id="selectValorCritico" class="form-control select2" name="activosoctave[${contador}][valor_criticidad]" value="${formulario.valorCriticoInformacion}"><option style="background-color:#fff !important; color:#000 !important;" value="">Seleccione una opción</option>
-            <option style="background-color:rgb(50, 205, 63)" ${formulario.valorCriticoInformacion == "Muy Bajo" ? "selected":''} value="Muy Bajo">Muy Bajo</option>
-            <option style="background-color:rgb(50, 205, 63)" ${formulario.valorCriticoInformacion == "Bajo" ? "selected":''} value="Bajo" >Bajo</option>
-            <option style="background-color:yellow;" ${formulario.valorCriticoInformacion == "Medio" ? "selected":''} value="Medio">Medio</option>
-            <option style="background-color:rgb(255, 136, 0);" ${formulario.valorCriticoInformacion == "Alto" ? "selected":''} value="Alto">Alto</option>
-            <option style="background-color:red;" ${formulario.valorCriticoInformacion == "Critico" ? "selected":''} value="Critico">Critico</option>
+            <td><input type="hidden" name="activosmatriz31000[${contador}][id]" value="${formulario.id?formulario.id:0}"><input class="form-control" type="text"  name="activosmatriz31000[${contador}][activos_asociados]" value="${formulario.activosAsociados}"></td>
+            <td class="col-4"><select class="form-control" name="activosmatriz31000[${contador}][contenedor_activos]" value="${formulario.contenedorActivoOpcion}"><option value="">Seleccione una opción</option>
+            <option  ${formulario.contenedorActivoOpcion == "Soluciones Cloud (Google Workspace-Azure)" ? "selected":''} value="Soluciones Cloud (Google Workspace-Azure)" >Soluciones Cloud (Google Workspace-Azure)</option>
+            <option  ${formulario.contenedorActivoOpcion == "Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" ? "selected":''} value="Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" >Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
+            <option  ${formulario.contenedorActivoOpcion == "Base de Datos" ? "selected":''} value="Base de Datos">Base de Datos</option>
+            <option  ${formulario.contenedorActivoOpcion == "Servidores" ? "selected":''} value="Servidores">Servidores</option>
+            <option  ${formulario.contenedorActivoOpcion == "Aplicaciones Internas (Meltsan-Astro)" ? "selected":''} value="Aplicaciones Internas (Meltsan-Astro)">Aplicaciones Internas (Meltsan-Astro)</option>
+            <option  ${formulario.contenedorActivoOpcion == "Aplicaciones Externas (CRM)" ? "selected":''} value="Aplicaciones Externas (CRM)">Aplicaciones Externas (CRM)</option>
             </select></td>
-            <td><select class="form-control" value="${formulario.duenoActivo}" name="activosoctave[${contador}][id_dueno]">`
-                duenos.forEach(dueno=>{
-                html+=`<option data-puesto="${dueno.name}" data-contact="${formulario.id}" value="${dueno.id}" ${formulario.duenoActivo ==  dueno.id ? "selected":''} >${dueno.name}</option>`
-            })
-            html+=`</select>
-            </td >
-            <td><select class="form-control" value="${formulario.custodioActivo}" name="activosoctave[${contador}][id_custodio]">`
-                custodios.forEach(custodio=>{
-                html+=`<option data-puesto="${custodio.name}" data-contact="${formulario.id}" value="${custodio.id}" ${formulario.custodioActivo ==  custodio.id ? "selected":''} >${custodio.name}</option>`
-            })
-            html+=`</select>
-            </td >
-            <td class="col-4"><select class="form-control" name="activosoctave[${contador}][contenedor_activos]" value="${formulario.contenedorActivo}"><option value="">Seleccione una opción</option>
-            <option  ${formulario.contenedorActivo == "Soluciones Cloud (Google Workspace-Azure)" ? "selected":''} value="Soluciones Cloud (Google Workspace-Azure)" >Soluciones Cloud (Google Workspace-Azure)</option>
-            <option  ${formulario.contenedorActivo == "Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" ? "selected":''} value="Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" >Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
-            <option  ${formulario.contenedorActivo == "Base de Datos" ? "selected":''} value="Base de Datos">Base de Datos</option>
-            <option  ${formulario.contenedorActivo == "Servidores" ? "selected":''} value="Servidores">Servidores</option>
-            <option  ${formulario.contenedorActivo == "Aplicaciones Internas (Meltsan-Astro)" ? "selected":''} value="Aplicaciones Internas (Meltsan-Astro)">Aplicaciones Internas (Meltsan-Astro)</option>
-            <option  ${formulario.contenedorActivo == "Aplicaciones Externas (CRM)" ? "selected":''} value="Aplicaciones Externas (CRM)">Aplicaciones Externas (CRM)</option>
-            </select></td>
-            <td><textarea class="form-control" type="text"  name="activosoctave[${contador}][escenario_riesgo]">${formulario.escenarioRiesgo}</textarea></td>
-            <td><select class="form-control" value="${formulario.amenazasInformacion}" name="activosoctave[${contador}][id_amenaza]">`
+            <td><select class="form-control" value="${formulario.amenazasInformacion}" name="activosmatriz31000[${contador}][id_amenaza]">`
                 amenazas.forEach(amenaza=>{
                 html+=`<option value="${amenaza.id}" ${formulario.amenazasInformacion ==  amenaza.id ? "selected":''} >${amenaza.nombre}</option>`
             })
             html+=`</select>
             </td>
-            <td><select class="form-control" value="${formulario.vulnerabilidadesInformacion}" name="activosoctave[${contador}][id_vulnerabilidad]">`
+            <td><select class="form-control" value="${formulario.vulnerabilidadesInformacion}" name="activosmatriz31000[${contador}][id_vulnerabilidad]">`
                 vulnerabilidades.forEach(vulnerabilidad=>{
                 html+=`<option value="${vulnerabilidad.id}" ${formulario.vulnerabilidadesInformacion ==  vulnerabilidad.id ? "selected":''} >${vulnerabilidad.nombre}</option>`
             })
             html+=`</select>
             </td>
-            <td><select class="form-control" select2 name="activosoctave[${contador}][confidencialidad]" value="${formulario.confidencialidadInformacion}">
+            <td><textarea class="form-control" type="text"  name="activosmatriz31000[${contador}][escenario_riesgo]">${formulario.escenarioRiesgo}</textarea></td>
+            <td><select class="form-control" select2 name="activosmatriz31000[${contador}][confidencialidad]" value="${formulario.confidencialidadInformacion}">
                 <option value="">Seleccione una opción</option>
-            <option  ${formulario.confidencialidadInformacion == "1" ? "selected":''} value="1" >1</option>
-            <option  ${formulario.confidencialidadInformacion == "2" ? "selected":''} value="2">2</option>
-            <option  ${formulario.confidencialidadInformacion == "3" ? "selected":''} value="3">3</option>
-            <option  ${formulario.confidencialidadInformacion == "4" ? "selected":''} value="4">4</option>
-            <option  ${formulario.confidencialidadInformacion == "5" ? "selected":''} value="5">5</option>
+            <option  ${formulario.confidencialidadActivo == "1" ? "selected":''} value="1" >1</option>
+            <option  ${formulario.confidencialidadActivo == "2" ? "selected":''} value="2">2</option>
+            <option  ${formulario.confidencialidadActivo == "3" ? "selected":''} value="3">3</option>
+            <option  ${formulario.confidencialidadActivo == "4" ? "selected":''} value="4">4</option>
+            <option  ${formulario.confidencialidadActivo == "5" ? "selected":''} value="5">5</option>
             </select>
             </td>
-            <td><select class="form-control"  select2  name="activosoctave[${contador}][disponibilidad]" value="${formulario.disponibilidadInformacion}"><option value="">Seleccione una opción</option>
+            <td><select class="form-control"  select2  name="activosmatriz31000[${contador}][disponibilidad]" value="${formulario.disponibilidadInformacion}"><option value="">Seleccione una opción</option>
             <option  ${formulario.disponibilidadInformacion == "1" ? "selected":''} value="1" >1</option>
             <option  ${formulario.disponibilidadInformacion == "2" ? "selected":''} value="2" >2</option>
             <option  ${formulario.disponibilidadInformacion == "3" ? "selected":''} value="3">3</option>
@@ -525,7 +453,7 @@
             <option  ${formulario.disponibilidadInformacion == "5" ? "selected":''} value="5">5</option>
             </select>
             </td>
-            <td><select class="form-control"  select2  name="activosoctave[${contador}][integridad]" value="${formulario.integridadInformacion}"><option value="">Seleccione una opción</option>
+            <td><select class="form-control"  select2  name="activosmatriz31000[${contador}][integridad]" value="${formulario.integridadInformacion}"><option value="">Seleccione una opción</option>
             <option  ${formulario.integridadInformacion == "1" ? "selected":''} value="1" >1</option>
             <option  ${formulario.integridadInformacion == "2" ? "selected":''} value="2" >2</option>
             <option  ${formulario.integridadInformacion == "3" ? "selected":''} value="3">3</option>
@@ -533,7 +461,7 @@
             <option  ${formulario.integridadInformacion == "5" ? "selected":''} value="5">5</option>
             </select>
             </td>
-            <td><input class="form-control" type="text" name="activosoctave[${contador}][evaluacion_riesgo]" value="${formulario.evaluacionRiesgo}"></td>
+            <td><input class="form-control" type="text" name="activosmatriz31000[${contador}][evaluacion_riesgo]" value="${formulario.evaluacionRiesgo}"></td>
             <td><button type="button" name="btn-remove-activos" id="" class="btn btn-danger remove">Eliminar</button></td>
          </tr>
           `
@@ -545,18 +473,15 @@
 
 
       function limpiarFormulario(){
-        const activosAi = document.getElementById('nombre_ai_informacion').value=null;
-        const valorCriticoInformacion = document.getElementById('criticidad_informacion').value=null;
-        const duenoActivo = document.getElementById('dueno_informacion').value=null;
-        const custodioActivo = document.getElementById('custodio_informacion').value=null;
-        const contenedorActivo = document.getElementById('contenedor_activos_informacion').value=null;
-        const escenarioRiesgo = document.getElementById('escenario_riesgo_informacion').value=null;
+        const activosAsociados = document.getElementById('activos_asociados_informacion').value=null;
+        const ccontenedorActivoOpcion = document.getElementById('contenedor_activo_informacion').value=null;
         const amenazasInformacion = document.getElementById('amenaza_informacion').value=null;
         const vulnerabilidadesInformacion = document.getElementById('vulnerabilidad_informacion').value=null;
-        const confidencialidadInformacion = document.getElementById('confidencialidad_informacion').value=null;
+        const confidencialidadActivo = document.getElementById('confidencialidad_informacion').value=null;
+        const escenarioRiesgo = document.getElementById('escenario_riesgo_informacion').value=null;
         const disponibilidadInformacion = document.getElementById('disponibilidad_informacion').value=null;
         const integridadInformacion = document.getElementById('integridad_informacion').value=null;
-        const evaluacionRiesgo = document.getElementById('evaluacion_informacion').value=null;
+        const evaluacionRiesgo = document.getElementById('evaluación_riesgo_informacion').value=null;
       }
 
       function  limpiarErrores() {
@@ -568,44 +493,25 @@
 
       $(document).on("click", "#btn-suscribir-activos_info", function () {
         limpiarErrores()
-          const activosAi = document.getElementById('nombre_ai_informacion').value;
-          const valorCriticoInformacion = document.getElementById('criticidad_informacion').value;
-          const duenoActivo = document.getElementById('dueno_informacion').value;
-          const custodioActivo = document.getElementById('custodio_informacion').value;
-          const contenedorActivo = document.getElementById('contenedor_activos_informacion').value;
-          const escenarioRiesgo = document.getElementById('escenario_riesgo_informacion').value;
-          const amenazasInformacion  = document.getElementById('amenaza_informacion').value;
-          const vulnerabilidadesInformacion = document.getElementById('vulnerabilidad_informacion').value;
-          const confidencialidadInformacion = document.getElementById('confidencialidad_informacion').value;
-          const disponibilidadInformacion = document.getElementById('disponibilidad_informacion').value;
-          const integridadInformacion = document.getElementById('integridad_informacion').value;
-          const evaluacionRiesgo = document.getElementById('evaluacion_informacion').value;
+        const activosAsociados = document.getElementById('activos_asociados_informacion').value;
+        const contenedorActivoOpcion = document.getElementById('contenedor_activo_informacion').value;
+        const amenazasInformacion = document.getElementById('amenaza_informacion').value;
+        const vulnerabilidadesInformacion = document.getElementById('vulnerabilidad_informacion').value;
+        const confidencialidadActivo = document.getElementById('confidencialidad_informacion').value;
+        const escenarioRiesgo = document.getElementById('escenario_riesgo_informacion').value;
+        const disponibilidadInformacion = document.getElementById('disponibilidad_informacion').value;
+        const integridadInformacion = document.getElementById('integridad_informacion').value;
+        const evaluacionRiesgo = document.getElementById('evaluación_riesgo_informacion').value;
 
-          if(activosAi  =="" || valorCriticoInformacion ==""  || duenoActivo =="" || custodioActivo ==""  || contenedorActivo =="" || escenarioRiesgo  =="" || amenazasInformacion  =="" || vulnerabilidadesInformacion =="" ||
-          confidencialidadInformacion =="" || disponibilidadInformacion =="" || integridadInformacion =="" || evaluacionRiesgo == ""){
-                    if (activosAi == "") {
-                        document.querySelector('.nombre_ai_error').innerText =
-                            "Debes agregar nombre del AI";
+          if(activosAsociados  =="" || contenedorActivoOpcion ==""  || amenazasInformacion =="" || vulnerabilidadesInformacion ==""  || confidencialidadActivo =="" || escenarioRiesgo  =="" ||
+          disponibilidadInformacion =="" || integridadInformacion =="" || evaluacionRiesgo ==""){
+                    if (activosAsociados == "") {
+                        document.querySelector('.activos_asociados_error').innerText =
+                            "Debes agregar un activo asociado ";
                     }
-                    if (valorCriticoInformacion == "") {
-                        document.querySelector('.valor_critico_error').innerText =
-                            "Debes agregar valor";
-                    }
-                    if (duenoActivo == "") {
-                        document.querySelector('.dueno_error').innerText =
-                            "Selecciona al dueño";
-                    }
-                    if (custodioActivo == "") {
-                        document.querySelector('.custodio_error').innerText =
-                            "Selecciona al custodio";
-                    }
-                    if (contenedorActivo == "") {
+                    if (contenedorActivoOpcion == "") {
                         document.querySelector('.contenedor_activo_error').innerText =
-                            "Selecciona un opción del contenedor ";
-                    }
-                    if (escenarioRiesgo == "") {
-                        document.querySelector('.escenario_riesgo_error').innerText =
-                            "Debes agregar un escenario de riesgo";
+                            "Debes seleccionar una opción";
                     }
                     if (amenazasInformacion == "") {
                         document.querySelector('.amenaza_error').innerText =
@@ -613,19 +519,23 @@
                     }
                     if (vulnerabilidadesInformacion == "") {
                         document.querySelector('.vulnerabilidad_error').innerText =
-                            "Debes seleccionar una vulnerabilidad";
+                            "Selecciona una vulnerabilidad";
                     }
-                    if (confidencialidadInformacion == "") {
+                    if (confidencialidadActivo == "") {
                         document.querySelector('.confidencialidad_error').innerText =
-                            "Debes agregar confidencialidad";
+                            "Selecciona confidencialidad ";
+                    }
+                    if (escenarioRiesgo == "") {
+                        document.querySelector('.escenario_riesgo_error').innerText =
+                            "Debes agregar un escenario de riesgo";
                     }
                     if (disponibilidadInformacion == "") {
                         document.querySelector('.disponibilidad_error').innerText =
-                            "Debes agregar disponibilidad";
+                            "Debes seleccionar disponibilidad";
                     }
                     if (integridadInformacion == "") {
                         document.querySelector('.integridad_error').innerText =
-                            "Debes agregar integridad";
+                            "Debes seleccionar integridad";
                     }
                     if (evaluacionRiesgo == "") {
                         document.querySelector('.evaluacion_riesgo_error').innerText =
@@ -634,15 +544,12 @@
 
                 }else{
                     let formulario = {
-                    activosAi,
-                    valorCriticoInformacion,
-                    duenoActivo,
-                    custodioActivo,
-                    contenedorActivo,
-                    escenarioRiesgo,
+                    activosAsociados,
+                    contenedorActivoOpcion,
                     amenazasInformacion,
                     vulnerabilidadesInformacion,
-                    confidencialidadInformacion,
+                    confidencialidadActivo,
+                    escenarioRiesgo,
                     disponibilidadInformacion,
                     integridadInformacion,
                     evaluacionRiesgo,
