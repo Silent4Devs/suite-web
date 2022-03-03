@@ -14,7 +14,7 @@ class AddColumnMetodoAnalisisSeguridadTable extends Migration
     public function up()
     {
         Schema::table('analisis_seguridad', function (Blueprint $table) {
-            $table->string('metodo')->nullable();
+            // $table->string('metodo')->nullable();
         });
 
     }
