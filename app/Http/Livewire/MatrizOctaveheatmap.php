@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\Area;
 use App\Models\MatrizOctave;
 use App\Models\Proceso;
 use App\Models\Sede;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class MatrizOctaveheatmap extends Component
 {
@@ -125,7 +125,6 @@ class MatrizOctaveheatmap extends Component
         }
 
         foreach ($matriz_query->get() as $key => $value) {
-
             switch ($value->valor) {
                 case 5:
                     $this->nula_muyalto++;
