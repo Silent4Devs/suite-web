@@ -365,24 +365,27 @@
             const amenazas = @json($amenazas);
             const vulnerabilidades = @json($vulnerabilidades);
             let count = 0;
-
-            if (activosmatriz31000.activos_informacion.length > 0) {
-                activosmatriz31000.activos_informacion.forEach((item, index) => {
-                    let formulario = {
-                        id: item.id,
-                        activosAsociados: null,
-                        contenedorActivoOpcion: item.contenedor_activos,
-                        amenazasInformacion: item.id_amenaza,
-                        vulnerabilidadesInformacion: item.id_vulnerabilidad,
-                        confidencialidadActivo,
-                        escenarioRiesgo,
-                        disponibilidadInformacion,
-                        integridadInformacion,
-                        evaluacionRiesgo,
-                    }
-                    agregarFilaActivosInfo(index, formulario);
-                });
-                count = activosmatriz31000.activos_informacion.length;
+            console.log(activosmatriz31000.activos_informacion);
+            if (activosmatriz31000.activos_informacion != undefined) {
+                if (activosmatriz31000.activos_informacion.length > 0) {
+                    console.log(activosmatriz31000);
+                    activosmatriz31000.activos_informacion.forEach((item, index) => {
+                        let formulario = {
+                            id: item.id,
+                            activosAsociados: item.activos_asociados,
+                            contenedorActivoOpcion: item.contenedor_activos,
+                            amenazasInformacion: item.id_amenaza,
+                            vulnerabilidadesInformacion: item.id_vulnerabilidad,
+                            confidencialidadActivo: item.confidencialidad,
+                            escenarioRiesgo: item.escenario_riesgo,
+                            disponibilidadInformacion: item.disponibilidad,
+                            integridadInformacion: item.integridad,
+                            evaluacionRiesgo: item.evaluación_riesgo,
+                        }
+                        agregarFilaActivosInfo(index, formulario);
+                    });
+                    count = activosmatriz31000.activos_informacion.length;
+                }
             }
 
             function agregarFilaActivosInfo(contador, formulario) {
@@ -393,12 +396,12 @@
           <tr>
             <td><input type="hidden" name="activosmatriz31000[${contador}][id]" value="${formulario.id?formulario.id:0}"><input class="form-control" type="text"  name="activosmatriz31000[${contador}][activos_asociados]" value="${formulario.activosAsociados}"></td>
             <td class="col-4"><select class="form-control" name="activosmatriz31000[${contador}][contenedor_activos]" value="${formulario.contenedorActivoOpcion}"><option value="">Seleccione una opción</option>
-            <option  ${formulario.contenedorActivoOpcion == "1" ? "selected":''} value="Soluciones Cloud (Google Workspace-Azure)" >Soluciones Cloud (Google Workspace-Azure)</option>
-            <option  ${formulario.contenedorActivoOpcion == "2" ? "selected":''} value="Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" >Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
-            <option  ${formulario.contenedorActivoOpcion == "3" ? "selected":''} value="Base de Datos">Base de Datos</option>
-            <option  ${formulario.contenedorActivoOpcion == "4" ? "selected":''} value="Servidores">Servidores</option>
-            <option  ${formulario.contenedorActivoOpcion == "5" ? "selected":''} value="Aplicaciones Internas (Meltsan-Astro)">Aplicaciones Internas (Meltsan-Astro)</option>
-            <option  ${formulario.contenedorActivoOpcion == "6" ? "selected":''} value="Aplicaciones Externas (CRM)">Aplicaciones Externas (CRM)</option>
+            <option  ${formulario.contenedorActivoOpcion == "1" ? "selected":''} value="1" >Soluciones Cloud (Google Workspace-Azure)</option>
+            <option  ${formulario.contenedorActivoOpcion == "2" ? "selected":''} value="2" >Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
+            <option  ${formulario.contenedorActivoOpcion == "3" ? "selected":''} value="3">Base de Datos</option>
+            <option  ${formulario.contenedorActivoOpcion == "4" ? "selected":''} value="4">Servidores</option>
+            <option  ${formulario.contenedorActivoOpcion == "5" ? "selected":''} value="5">Aplicaciones Internas (Meltsan-Astro)</option>
+            <option  ${formulario.contenedorActivoOpcion == "6" ? "selected":''} value="6">Aplicaciones Externas (CRM)</option>
             </select></td>
             <td><select class="form-control" value="${formulario.amenazasInformacion}" name="activosmatriz31000[${contador}][id_amenaza]">`
                 amenazas.forEach(amenaza => {
@@ -442,7 +445,7 @@
             </select>
             </td>
             <td><input class="form-control evaluacion_riesgo" type="text" name="activosmatriz31000[${contador}][evaluacion_riesgo]" data-contador="${contador}" value="${formulario.evaluacionRiesgo}"></td>
-            <td><button type="button" name="btn-remove-activos" id="" class="btn btn-danger remove btn-remove-activos">Eliminar</button></td>
+            <td><button type="button" name="btn-remove-activos" id="" class="btn btn-danger remove btn-remove-activos" data-delete-back="${formulario.id?formulario.id:0}">Eliminar</button></td>
          </tr>
           `
                 contenedorActivosInfo.innerHTML += html;
@@ -555,9 +558,44 @@
 
             });
 
+
             $(document).on("click", ".btn-remove-activos", function() {
-                $(this).closest("tr").remove();
-                count--;
+                let fila = this;
+                if (this.getAttribute('data-delete-back') > 0) {
+                    Swal.fire({
+                        title: '¿Quieres eliminar esta fila?',
+                        text: "¡No puedes revertir esto!",
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Eliminar',
+                        cancelButtonText: 'Conservar',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                url: "{{ route('admin.matriz-seguridad.ISO31000.activo.delete') }}",
+                                data: {
+                                    id: this.getAttribute('data-delete-back')
+                                },
+                                dataType: "JSON",
+                                success: function(response) {
+                                    toastr.success('Se ha eliminado el activo');
+                                    $(fila).closest("tr").remove();
+                                    count--;
+                                }
+                            });
+                        }
+                    })
+                } else {
+                    $(this).closest("tr").remove();
+                    count--;
+                }
             });
 
 
