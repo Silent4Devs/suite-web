@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .text-orange {
             color: orange !important;
@@ -478,204 +477,200 @@
         }
 
         span.red {
-        background: red;
-        border-radius: 0.8em;
-        -moz-border-radius: 0.8em;
-        -webkit-border-radius: 0.8em;
-        color: #ffffff;
-        display: inline-block;
-        font-weight: bold;
-        line-height: 1.6em;
-        margin-right: 15px;
-        text-align: center;
-        width: 1.6em;
+            background: red;
+            border-radius: 0.8em;
+            -moz-border-radius: 0.8em;
+            -webkit-border-radius: 0.8em;
+            color: #ffffff;
+            display: inline-block;
+            font-weight: bold;
+            line-height: 1.6em;
+            margin-right: 15px;
+            text-align: center;
+            width: 1.6em;
         }
 
     </style>
 
-<style>
+    <style>
+        .select2-results__option {
+            position: relative;
+            padding-left: 30px !important;
 
-    .select2-results__option{
-       position: relative;
-       padding-left:30px !important;
+        }
 
-    }
+        .select2-results__option:nth-child(2)::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(61, 114, 77);
+            margin-left: -20px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
 
-    .select2-results__option:nth-child(2)::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(61, 114, 77);
-        margin-left:-20px;
-        border-radius: 100px;
-        margin-top: 6px;
-    }
+        .select2-selection__rendered[title="1"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(61, 114, 77);
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
 
-    .select2-selection__rendered[title="1"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(61, 114, 77);
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
+        .select2-results__option:nth-child(3)::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(50, 205, 63);
+            margin-left: -20px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
 
-    .select2-results__option:nth-child(3)::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(50, 205, 63);
-        margin-left:-20px;
-        border-radius: 100px;
-        margin-top: 6px;
-    }
+        .select2-selection__rendered[title="2"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(50, 205, 63);
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
 
-    .select2-selection__rendered[title="2"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(50, 205, 63);
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
+        .select2-results__option:nth-child(4)::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: yellow;
+            margin-left: -20px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
 
-    .select2-results__option:nth-child(4)::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:yellow;
-        margin-left:-20px;
-        border-radius: 100px;
-        margin-top: 6px;
-    }
+        .select2-selection__rendered[title="3"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: yellow;
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
 
-    .select2-selection__rendered[title="3"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:yellow;
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
+        .select2-results__option:nth-child(5)::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(255, 136, 0);
+            margin-left: -20px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
 
-    .select2-results__option:nth-child(5)::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(255, 136, 0);
-        margin-left:-20px;
-        border-radius: 100px;
-        margin-top: 6px;
-    }
+        .select2-selection__rendered[title="4"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(255, 136, 0);
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
 
-    .select2-selection__rendered[title="4"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(255, 136, 0);
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
+        .select2-results__option:nth-child(6)::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            margin-left: -20px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
 
-   .select2-results__option:nth-child(6)::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:red;
-        margin-left:-20px;
-        border-radius: 100px;
-        margin-top: 6px;
-    }
+        .select2-selection__rendered[title="5"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
 
-    .select2-selection__rendered[title="5"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:red;
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
-
-    .select2-selection__rendered{
-        padding-left:30px !important;
-
-
-    }
-
-    .select2-selection__rendered[title="Bajo"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(50, 205, 63);
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
-
-    .select2-selection__rendered[title="Medio"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:yellow;
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
-
-    .select2-selection__rendered[title="Alto"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(255, 136, 0);
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
-
-    .select2-selection__rendered[title="Crítico"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:red;
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
-
-    .select2-selection__rendered[title="Muy Bajo"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(61, 114, 77);
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
+        .select2-selection__rendered {
+            padding-left: 30px !important;
 
 
+        }
 
+        .select2-selection__rendered[title="Bajo"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(50, 205, 63);
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
 
-</style>
+        .select2-selection__rendered[title="Medio"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: yellow;
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        .select2-selection__rendered[title="Alto"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(255, 136, 0);
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        .select2-selection__rendered[title="Crítico"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        .select2-selection__rendered[title="Muy Bajo"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(61, 114, 77);
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+    </style>
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -683,42 +678,33 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.matriz-riesgos.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.matriz-riesgos.octave.store') }}" enctype="multipart/form-data">
                 @csrf
-
-
-
                 <div class="form-group">
                     <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>
                 </div>
-
-                {{-- <input type="hidden" value="{{ $id_analisis }}" name="id_analisis"> --}}
-
-
+                <input type="hidden" value="{{ $id_analisis }}" name="id_analisis">
                 <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
-
                 <div class="row">
-
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="vp"><i class="fas fa-city iconos-crear"></i>VP</label><br>
                         <input class="form-control {{ $errors->has('vp') ? 'is-invalid' : '' }}" type="text" name="vp"
-                        id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
+                            id="nombre_herramienta_puesto" value="{{ old('indicador', '') }}">
                         @if ($errors->has('vp'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('vp') }}
-                        </div>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('vp') }}
+                            </div>
                         @endif
                     </div>
-
-
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área</label><br>
                         <select class="sedeSelect form-control" name="id_area" id="id_area">
-                            <option value="">Seleccione una opción</option>
+                            <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($areas as $area)
-                                <option {{old('id_area') == $area->id ? ' selected="selected"' : ''}} value="{{ $area->id }}">{{ $area->area }}</option>
+                                <option {{ old('id_area') == $area->id ? ' selected="selected"' : '' }}
+                                    value="{{ $area->id }}">{{ $area->area }}</option>
                             @endforeach
                         </select>
                         @if ($errors->has('id_area'))
@@ -727,27 +713,25 @@
                             </div>
                         @endif
                     </div>
-
-
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="servicio"><i class="fas fa-handshake iconos-crear"></i>Servicio</label><br>
-                        <input class="form-control {{ $errors->has('servicio') ? 'is-invalid' : '' }}" type="text" name="servicio"
-                        id="servicio" value="{{ old('servicio', '') }}">
+                        <input class="form-control {{ $errors->has('servicio') ? 'is-invalid' : '' }}" type="text"
+                            name="servicio" id="servicio" value="{{ old('servicio', '') }}">
                         @if ($errors->has('servicio'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('servicio') }}
-                        </div>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('servicio') }}
+                            </div>
                         @endif
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="id_sede"><i class="fas fa-map-marker-alt iconos-crear"></i>Sede</label><br>
                         <select class="sedeSelect form-control" name="id_sede" id="id_sede">
-                            <option value="">Seleccione una opción</option>
+                            <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($sedes as $sede)
-                                <option {{old('id_sede') == $sede->id ? ' selected="selected"' : ''}} value="{{ $sede->id }}">{{ $sede->sede }}</option>
+                                <option {{ old('id_sede') == $sede->id ? ' selected="selected"' : '' }}
+                                    value="{{ $sede->id }}">{{ $sede->sede }}</option>
                             @endforeach
                         </select>
                         @if ($errors->has('id_sede'))
@@ -756,13 +740,13 @@
                             </div>
                         @endif
                     </div>
-
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="id_proceso"><i class="fas fa-project-diagram iconos-crear"></i>Proceso</label><br>
                         <select class="procesoSelect form-control" name="id_proceso" id="id_proceso">
-                            <option value="">Seleccione una opción</option>
+                            <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($procesos as $proceso)
-                                <option {{old('id_proceso') == $proceso->id ? ' selected="selected"' : ''}} value="{{ $proceso->id }}">{{ $proceso->codigo }} / {{ $proceso->nombre }}
+                                <option {{ old('id_proceso') == $proceso->id ? ' selected="selected"' : '' }}
+                                    value="{{ $proceso->id }}">{{ $proceso->codigo }} / {{ $proceso->nombre }}
                                 </option>
                             @endforeach
                         </select>
@@ -772,13 +756,13 @@
                             </div>
                         @endif
                     </div>
-
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="activo_id"><i class="fas fa-user-tie iconos-crear"></i>Activo</label><br>
                         <select class="responsableSelect form-control" name="activo_id" id="activo_id">
-                            <option value="">Seleccione una opción</option>
+                            <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($activos as $activo)
-                                <option {{old('activo_id') == $activo->id ? ' selected="selected"' : ''}} value="{{ $activo->id }}">{{ $activo->nombreactivo }}
+                                <option {{ old('activo_id') == $activo->id ? ' selected="selected"' : '' }}
+                                    value="{{ $activo->id }}">{{ $activo->nombreactivo }}
                                 </option>
                             @endforeach
                         </select>
@@ -788,112 +772,97 @@
                             </div>
                         @endif
                     </div>
-
                 </div>
-
                 <hr>
                 <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     EVALUACIÓN DE IMPACTOS ASOCIADOS AL PROCESO
                 </div>
-
                 <div>
-                    @livewire('octave.select-impactos')
+                    @livewire('octave.select-impactos',["operacionalId"=>1,"cumplimientoId"=>1,"legalId"=>1,"reputacionalId"=>1,"tecnologicoId"=>1])
                 </div>
-
-
                 <hr>
                 <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     ACTIVOS DE INFORMACIÓN
                 </div>
-
                 <div class="row">
                     <div class="form-group col-md-8 col-sm-12">
                         <label><i class="fas fa-file-alt iconos-crear"></i>Nombre del AI</label><br>
-                        <input class="form-control {{ $errors->has('nombre_ai') ? 'is-invalid' : '' }}" type="text" name="nombre_ai"
-                        id="nombre_ai_informacion" value="{{ old('nombre_ai', '') }}">
+                        <input class="form-control {{ $errors->has('nombre_ai') ? 'is-invalid' : '' }}" type="text"
+                            name="nombre_ai" id="nombre_ai_informacion" value="{{ old('nombre_ai', '') }}">
                         <small class="text-danger errores nombre_ai_error"></small>
                     </div>
-
-
                     <div class="form-group col-sm-12 col-md-4 col-lg-4" style="margin-top:-7px;">
                         <label><i class="fab fa-cloudscale iconos-crear"></i>Valor de la criticidad del activo</label>
-                        <select  class="form-control select2 {{ $errors->has('valor_criticidad') ? 'is-invalid' : '' }}" name="valor_criticidad" id="criticidad_informacion">
-                            <option value="" selected>Selecciona una opción</option>
-                            <option value="Muy Bajo">Muy Bajo</option>
-                            <option value="Bajo">Bajo</option>
-                            <option value="Medio">Medio</option>
-                            <option value="Alto">Alto</option>
-                            <option value="Critico">Crítico</option>
+                        <select class="form-control select2 {{ $errors->has('valor_criticidad') ? 'is-invalid' : '' }}"
+                            name="valor_criticidad" id="criticidad_informacion">
+                            <option value="" selected disabled>Selecciona una opción</option>
+                            <option value="1">Muy Bajo</option>
+                            <option value="2">Bajo</option>
+                            <option value="3">Medio</option>
+                            <option value="4">Alto</option>
+                            <option value="5">Crítico</option>
                         </select>
                         <small class="text-danger errores valor_critico_error"></small>
                     </div>
                 </div>
-
-
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="id_dueno"><i class="fas fa-user-tie iconos-crear"></i>Dueño del Activo</label><br>
                         <select class="responsableSelect form-control" name="id_dueno" id="dueno_informacion">
-                            <option value="">Seleccione una opción</option>
+                            <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($duenos as $dueno)
-                                <option  data-puesto="{{ $dueno->puesto }}" value="{{ $dueno->id }}" data-area="{{ $dueno->area->area }}">{{ $dueno->name }}
+                                <option data-puesto="{{ $dueno->puesto }}" value="{{ $dueno->id }}"
+                                    data-area="{{ $dueno->area->area }}">{{ $dueno->name }}
                                 </option>
                             @endforeach
                         </select>
                         <small class="text-danger errores dueno_error"></small>
                     </div>
-
-
-                    {{-- <div class="form-group col-md-4">
+                    <div class="form-group col-md-4">
                         <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                        <div class="form-control" id="id_puesto" readonly></div>
-
+                        <div class="form-control" id="dueno_id_puesto" readonly></div>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                        <div class="form-control" id="id_area" readonly></div>
-                    </div> --}}
-
+                        <div class="form-control" id="dueno_id_area" readonly></div>
+                    </div>
                 </div>
-
-
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="id_custodio"><i class="fas fa-user-tie iconos-crear"></i>Custodio del Activo</label><br>
                         <select class="responsableSelect form-control" name="id_custodio" id="custodio_informacion">
-                            <option value="">Seleccione una opción</option>
+                            <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($custodios as $custodio)
-                                <option  data-puesto="{{ $custodio->puesto }}" value="{{ $custodio->id }}" data-area="{{ $custodio->area->area }}">{{ $custodio->name }}
+                                <option data-puesto="{{ $custodio->puesto }}" value="{{ $custodio->id }}"
+                                    data-area="{{ $custodio->area->area }}">{{ $custodio->name }}
                                 </option>
                             @endforeach
                         </select>
                         <small class="text-danger errores custodio_error"></small>
                     </div>
-
-
-                    {{-- <div class="form-group col-md-4">
+                    <div class="form-group col-md-4">
                         <label><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                         <div class="form-control" id="id_custodio_puesto" readonly></div>
-
                     </div>
                     <div class="form-group col-md-4">
                         <label><i class="fas fa-street-view iconos-crear"></i>Área</label>
                         <div class="form-control" id="id_custodio_area" readonly></div>
-
-                    </div> --}}
-
+                    </div>
                 </div>
-
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
                         <label><i class="fas fa-box-open iconos-crear"></i>Contenedor del Activo</label><br>
-                        <select class="form-control {{ $errors->has('contenedor_activos') ? 'is-invalid' : '' }}" name="contenedor_activos" id="contenedor_activos_informacion">
-                            <option value="" selected>Selecciona una opción</option>
-                            <option value="Soluciones Cloud (Google Workspace-Azure)">Soluciones Cloud (Google Workspace-Azure)</option>
-                            <option value="Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)">Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
+                        <select class="form-control {{ $errors->has('contenedor_activos') ? 'is-invalid' : '' }}"
+                            name="contenedor_activos" id="contenedor_activos_informacion">
+                            <option value="" selected disabled>Selecciona una opción</option>
+                            <option value="Soluciones Cloud (Google Workspace-Azure)">Soluciones Cloud (Google
+                                Workspace-Azure)</option>
+                            <option value="Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)">
+                                Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
                             <option value="Base de Datos">Base de Datos</option>
                             <option value="Servidores">Servidores</option>
-                            <option value="Aplicaciones Internas (Meltsan-Astro)">Aplicaciones Internas (Meltsan-Astro)</option>
+                            <option value="Aplicaciones Internas (Meltsan-Astro)">Aplicaciones Internas (Meltsan-Astro)
+                            </option>
                             <option value="Aplicaciones Externas (CRM)">Aplicaciones Externas (CRM)</option>
                         </select>
                         <small class="text-danger errores contenedor_activo_error"></small>
@@ -902,130 +871,79 @@
                     <div class="form-group col-md-4 col-sm-4">
                         <label for="id_amenaza"><i class="fas fa-fire iconos-crear"></i>Amenaza</label>
                         <select class="procesoSelect form-control" name="id_amenaza" id="amenaza_informacion">
-                            <option value="">Seleccione una opción</option>
+                            <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($amenazas as $amenaza)
-                                <option {{old('id_amenaza') == $amenaza->id ? ' selected="selected"' : ''}} value="{{ $amenaza->id }}">{{ $amenaza->nombre }}
+                                <option {{ old('id_amenaza') == $amenaza->id ? ' selected="selected"' : '' }}
+                                    value="{{ $amenaza->id }}">{{ $amenaza->nombre }}
                                 </option>
                             @endforeach
                         </select>
                         <small class="text-danger errores amenaza_error"></small>
                     </div>
-
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="id_vulnerabilidad"><i class="fas fa-shield-alt iconos-crear"></i>Vulnerabilidad</label>
                         <select class="procesoSelect form-control" name="id_vulnerabilidad" id="vulnerabilidad_informacion">
-                            <option value="">Seleccione una opción</option>
+                            <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($vulnerabilidades as $vulnerabilidad)
-                                <option {{old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : ''}} value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
+                                <option
+                                    {{ old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : '' }}
+                                    value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
                                 </option>
                             @endforeach
                         </select>
                         <small class="text-danger errores vulnerabilidad_error"></small>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="form-group col-md-12 col-sm-12">
                         <label><i class="fas fa-camera-retro iconos-crear"></i>Escenario de Riesgo</label><br>
-                        <textarea class="form-control {{ $errors->has('escenario_riesgo') ? 'is-invalid' : '' }}" type="text" name="escenario_riesgo"
-                        id="escenario_riesgo_informacion">{{ old('escenario_riesgo', '') }}</textarea>
+                        <textarea class="form-control {{ $errors->has('escenario_riesgo') ? 'is-invalid' : '' }}"
+                            type="text" name="escenario_riesgo"
+                            id="escenario_riesgo_informacion">{{ old('escenario_riesgo', '') }}</textarea>
                     </div>
                     <small class="text-danger errores escenario_riesgo_error"></small>
                 </div>
-
-
-                <div class="row">
-                    <div class="form-group col-md-3 col-sm-12">
-                        <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>Confidencialidad</label><br>
-                        <select class="form-control select2 {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}" name="confidencialidad" id="confidencialidad_informacion">
-                            <option value="" selected>Selecciona</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                        <small class="text-danger errores confidencialidad_error"></small>
-                    </div>
-
-                    <div class="form-group col-md-3 col-sm-12">
-                        <label for="disponibilidad"><i class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label><br>
-                        <select class="form-control select2 {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}" name="disponibilidad" id="disponibilidad_informacion">
-                            <option value="" selected>Selecciona</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                        <small class="text-danger errores disponibilidad_error"></small>
-                    </div>
-
-                    <div class="form-group col-md-3 col-sm-12">
-                        <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Integridad</label><br>
-                        <select class="form-control select2 {{ $errors->has('integridad') ? 'is-invalid' : '' }}" name="integridad" id="integridad_informacion">
-                            <option value="" selected>Selecciona</option>
-                            <option value="Uno">1</option>
-                            <option value="Dos">2</option>
-                            <option value="Tres">3</option>
-                            <option value="Cuatro">4</option>
-                            <option value="Cinco">5</option>
-                        </select>
-                        <small class="text-danger errores integridad_error"></small>
-                    </div>
-
-                    <div class="form-group col-md-3 col-sm-12">
-                        <label for="evaluacion_riesgo"><i class="fas fa-exclamation-triangle iconos-crear"></i>Evaluación del Riesgo</label><br>
-                        <input class="mt-2 form-control {{ $errors->has('evaluacion_riesgo') ? 'is-invalid' : '' }}" type="text" name="evaluacion_riesgo" id="evaluacion_informacion"
-                         value="{{ old('evaluacion_riesgo', '') }}" id="evaluacion_riesgo_informacion">
-                         <small class="text-danger errores evaluacion_riesgo_error"></small>
-                    </div>
-
+                {{-- COMPONENTE PARA EVALUACION DE RIESGOS --}}
+                @livewire('octave.select-evaluacion-riesgos',['impactoOb'=>5])
+                {{-- FIN COMPONENTE PARA EVALUACION DE RIESGOS --}}
+                <div class="mb-3 ml-3 col-12 mt-4 text-right">
+                    <button type="button" name="btn-suscribir-activos_info" id="btn-suscribir-activos_info"
+                        class="btn btn-success">Agregar</button>
                 </div>
+                <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
+                    <table class="scroll_estilo table table-responsive" id="activos_info_table" style="width:100%">
+                        <thead>
+                            <tr class="negras">
+                                <th class="text-center" style="background-color:#3490DC;" colspan="8">Descripción
+                                    General
+                                </th>
+                                <th class="text-center" style="background-color:#1168af;" colspan="3">Evaluación del
+                                    Escenario</th>
+                                <th class="text-center" style="background-color:#3490DC;" colspan="1">Evaluación del
+                                    Riesgo</th>
+                                <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
+                            </tr>
+                            <tr>
+                                <th style="min-width:300px;">Activos del AI</th>
+                                <th style="min-width:300px;">Valor de criticidad del activo</th>
+                                <th style="min-width:300px;">Dueño del Activo</th>
+                                <th style="min-width:300px;">Custodio del Activo</th>
+                                <th style="min-width:300px;">Contenedor del activo</th>
+                                <th style="min-width:300px;">Escenario de Riesgo</th>
+                                <th style="min-width:300px;">Amenazas</th>
+                                <th style="min-width:300px;">Vulnerabilidades</th>
+                                <th style="min-width:300px;">Confidencialidad</th>
+                                <th style="min-width:300px;">Disponibilidad</th>
+                                <th style="min-width:300px;">Integridad</th>
+                                <th style="min-width:300px;">Evaluación del Riesgo</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contenedor_informacion">
 
-
-                    <div class="mb-3 ml-3 col-12 mt-4 text-right">
-                        <button type="button" name="btn-suscribir-activos_info" id="btn-suscribir-activos_info"
-                            class="btn btn-success">Agregar</button>
-                    </div>
-
-
-
-
-                    <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
-                        <table class="scroll_estilo table table-responsive" id="activos_info_table" style="width:100%">
-                            <thead>
-                                <tr class="negras">
-                                    <th class="text-center" style="background-color:#3490DC;" colspan="8">Descripción General
-                                    </th>
-                                    <th class="text-center" style="background-color:#1168af;" colspan="3">Evaluación del Escenario</th>
-                                    <th class="text-center" style="background-color:#3490DC;" colspan="1">Evaluación del Riesgo</th>
-                                    <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
-                                </tr>
-                                <tr>
-                                    <th style="min-width:300px;">Activos del AI</th>
-                                    <th style="min-width:300px;">Valor de criticidad del activo</th>
-                                    <th style="min-width:300px;">Dueño del Activo</th>
-                                    <th style="min-width:300px;">Custodio del Activo</th>
-                                    <th style="min-width:300px;">Contenedor del activo</th>
-                                    <th style="min-width:300px;">Escenario de Riesgo</th>
-                                    <th style="min-width:300px;">Amenazas</th>
-                                    <th style="min-width:300px;">Vulnerabilidades</th>
-                                    <th style="min-width:300px;">Confidencialidad</th>
-                                    <th style="min-width:300px;">Disponibilidad</th>
-                                    <th style="min-width:300px;">Integridad</th>
-                                    <th style="min-width:300px;">Evaluación del Riesgo</th>
-                                    <th>Opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="contenedor_informacion">
-
-                            </tbody>
-                        </table>
-                    </div>
-
-
-
+                        </tbody>
+                    </table>
+                </div>
                 <hr>
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad.octaveIndex', ['id' => $id_analisis]) }}"
@@ -1038,7 +956,5 @@
         </div>
         </form>
     </div>
-
 @endsection
-
 @include('admin.Octave.scripts')
