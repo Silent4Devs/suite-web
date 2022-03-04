@@ -16,13 +16,13 @@
                         <th>
                             {{ trans('cruds.objetivosseguridad.fields.id') }}
                         </th>
-                        <th>
+                        <th style="min-width:450px !important;">
                             Objetivo&nbsp;de&nbsp;seguridad
                         </th>
-                        <th>
+                        <th style="min-width:150px !important;">
                             {{ trans('cruds.objetivosseguridad.fields.indicador') }}
                         </th>
-                        <th>
+                        <th style="min-width:150px !important;">
                             Responsable
                         </th>
                         <th>

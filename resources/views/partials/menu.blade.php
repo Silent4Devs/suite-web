@@ -569,6 +569,7 @@
                                 <i class="bi bi-pc-display-horizontal iconos_menu letra_blanca"></i>
                                 <font class="letra_blanca "> Activos </font>
                             </a>
+
                             <ul class="c-sidebar-nav-dropdown-items">
                                 @can('configuracion_tipoactivo_access')
                                     <li class="c-sidebar-nav-item">
@@ -708,6 +709,35 @@
                                 <font class="letra_blanca">Empleados</font>
                             </a>
                         </li>
+                    @endcan
+                    @can('configuracion_area_access')
+                            <li class="c-sidebar-nav-dropdown">
+                                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                                    <i class="bi bi-person-video3 iconos_menu letra_blanca"></i>
+                                    <font class="letra_blanca ">Capacitaciones</font>
+                                </a>
+                                <ul class="c-sidebar-nav-dropdown-items">
+                                    @can('configuracion_grupoarea_create')
+                                        <li class="c-sidebar-nav-item">
+                                            <a href="{{ route('admin.grupoarea.index') }}"
+                                                class="c-sidebar-nav-link {{ request()->is('admin/grupoarea') || request()->is('admin/grupoarea/*') ? 'active' : '' }}">
+                                                <i class="ml-2 bi bi-mortarboard iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                                <font class="letra_blanca"> Crear Grupo </font>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('configuracion_area_create')
+                                        <li class="c-sidebar-nav-item">
+                                            <a href="{{ route('admin.areas.index') }}"
+                                                class="c-sidebar-nav-link {{ request()->is('admin/areas') || request()->is('admin/areas/*/edit') || request()->is('admin/areas/create')? 'active': '' }}">
+
+                                                <i class="bi bi-geo iconos_menu letra_blanca"></i>
+                                                <font class="letra_blanca"> Crear Áreas </font>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </li>
                     @endcan
                     <li class="c-sidebar-nav-dropdown">
                         <a class="c-sidebar-nav-dropdown-toggle" href="#">
