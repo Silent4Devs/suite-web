@@ -58,7 +58,7 @@
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
                         <label for="id_empleado"><i class="fas fa-user-tie iconos-crear"></i>Elaboró </label>
-                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
+                        <select class="form-control {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
                             name="id_empleado" id="id_empleado">
                             <option value disabled {{ old('id_empleado', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
