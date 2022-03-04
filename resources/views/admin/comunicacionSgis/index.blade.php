@@ -278,7 +278,7 @@
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
                                                         <div class='carousel-item ${idx==0?"active":""}'>
-                                                            <iframe seamless class='img-size' src='{{ asset('tmp/uploads/') }}/${archivo.documento}'></iframe>
+                                                            <iframe seamless class='img-size' src='{{ asset("storage/documento_comunicado_SGI") }}/${archivo.documento}'></iframe>
                                                         </div>`
                                                     })}
 
