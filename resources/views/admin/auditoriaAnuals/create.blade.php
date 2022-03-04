@@ -42,8 +42,8 @@
                 @endif
             </div>
 
-            {{-- <div class="form-group col-md-6">
-                <label for="auditorlider_id"><i class="fas fa-user-tie iconos-crear"></i>{{ trans('cruds.auditoriaAnual.fields.auditorlider') }}</label>
+            <div class="form-group col-md-6">
+                <label for="auditorlider_id"><i class="fas fa-user-tie iconos-crear"></i>Auditor(a) líder</label>
                 <select class="form-control select2 {{ $errors->has('auditorlider') ? 'is-invalid' : '' }}" name="auditorlider_id" id="auditorlider_id">
                     @foreach($auditorliders as $id => $auditorlider)
                         <option value="{{ $id }}" {{ old('auditorlider_id') == $id ? 'selected' : '' }}>{{ $auditorlider }}</option>
@@ -55,12 +55,12 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.auditorlider_helper') }}</span>
-            </div> --}}
+            </div>
 
 
-            <div class="form-group col-sm-12 col-md-6 col-lg-6">
+            {{-- <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="auditorlider_id"><i class="fas fa-user-tie iconos-crear"></i>Auditor(a) líder</label>
-                <select class="form-control  {{ $errors->has('auditorlider_id') ? 'is-invalid' : '' }}"
+                <select class="form-control select2 {{ $errors->has('auditorlider_id') ? 'is-invalid' : '' }}"
                     name="auditorlider_id" id="auditorlider_id">
                     <option value="">Seleccione una opción</option>
                     @foreach ($empleados as $empleado)
@@ -75,7 +75,7 @@
                         {{ $errors->first(' id_asignada') }}
                     </div>
                 @endif
-            </div>
+            </div> --}}
 
 
             <div class="form-group col-12">

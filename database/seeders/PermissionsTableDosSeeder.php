@@ -35,6 +35,5 @@ class PermissionsTableDosSeeder extends Seeder
         ];
 
         Permission::insert($permissions);
-
     }
 }

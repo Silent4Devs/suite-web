@@ -30,7 +30,7 @@
                     <span class="help-block"></span>
                 </div>
 
-                    @livewire('categoria-subcategoria')
+                    @livewire('categoria-subcategoria', ['categoriasSeleccionado'=>$categoriasSeleccionado, 'subcategoriaSeleccionado'=>$subcategoriaSeleccionado])
 
                 <div class="form-group col-12">
                     <label for="descripcion"><i
@@ -442,7 +442,7 @@
                     <div class="modal-body">
                       <form>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="id_asignada">Categoría</label>
                             <select class="form-control  {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
                                 name="categoria_id" id="categoria_id">
@@ -458,13 +458,13 @@
                                     {{ $errors->first('tipo') }}
                                 </div>
                             @endif
-                        </div>
+                        </div> --}}
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                           <label for="recipient-name" class="col-form-label">Subcategoria:</label>
                           <input type="text" class="form-control" id="subtipo-name">
                           <span class="text-danger" id="nombre_error" class="nombre_error"></span>
-                        </div>
+                        </div> --}}
                       </form>
                     </div>
 
@@ -528,10 +528,70 @@
                 document.getElementById('area_dueno').innerHTML = area
             })
 
-             // Script Marca activos
-            document.getElementById('guardar_marca').addEventListener('click', function(e) {
-                e.preventDefault();
-                let nombre = document.querySelector('#recipient-name').value;
+<<<<<<< HEAD
+                responsable.addEventListener('change', function(e) {
+                    e.preventDefault();
+                    let area = this.options[this.selectedIndex].getAttribute('data-area');
+                    let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                    document.getElementById('puesto_responsable').innerHTML = puesto
+                    document.getElementById('area_responsable').innerHTML = area
+                })
+                dueno.addEventListener('change', function(e) {
+                    e.preventDefault();
+                    let area = this.options[this.selectedIndex].getAttribute('data-area');
+                    let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                    document.getElementById('puesto_dueno').innerHTML = puesto
+                    document.getElementById('area_dueno').innerHTML = area
+                })
+
+                 // Script Marca activos
+                document.getElementById('guardar_marca').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let nombre = document.querySelector('#recipient-name').value;
+
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                        },
+                        url: "{{ route('admin.marcas.store') }}",
+                        data: {
+                            nombre
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.success) {
+                                document.querySelector('#recipient-name').value = '';
+                                $('.selecmarca').select2('destroy');
+                                $('.selecmarca').select2({
+                                    ajax: {
+                                        url: "{{ route('admin.marcas.getMarcas') }}",
+                                        dataType: "json",
+                                    },
+                                    theme: "bootstrap4"
+                                });
+                                $('#marcaslec').modal('hide')
+                                $('.modal-backdrop').hide();
+                                Swal.fire(
+                                    'Guardada con exito!',
+                                    '',
+                                    'success'
+                                )
+                                const marca=response.marca
+                                // console.log(marca);
+                                var option = new Option(marca.nombre,marca.id, true, true);
+                                $('.selecmarca').append(option).trigger('change');
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            // console.log(error)
+                            $.each(request.responseJSON.errors, function(indexInArray,
+
+                                valueOfElement) {
+                                console.log(valueOfElement, indexInArray);
+                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
 
                 $.ajax({
                     type: "POST",
@@ -572,20 +632,134 @@
                         console.log(error)
                         $.each(request.responseJSON.errors, function(indexInArray,
 
+<<<<<<< HEAD
+                // Script categoria activos
+                document.getElementById('guardar_categoria').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let tipo = document.querySelector('#tipo-name').value;
+
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                        },
+                        url: "{{ route('admin.tipoactivos.store') }}",
+                        data: {
+                            tipo,ajax:true
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            // console.log("aqui");
+                            if (response.success) {
+                                document.querySelector('#recipient-name').value = '';
+                                $('.selecCategoria').select2('destroy');
+                                $('.selecCategoria').select2({
+                                    ajax: {
+                                        url: "{{ route('admin.tipoactivos.getTipos') }}",
+                                        dataType: "json",
+                                    },
+                                    theme: "bootstrap4"
+                                });
+                                $('#categorialec').modal('hide')
+                                $('.modal-backdrop').hide();
+                                Swal.fire(
+                                    'Guardada con exito!',
+                                    '',
+                                    'success'
+                                )
+                                const activo=response.activo
+                                // console.log(activo);
+                                var option = new Option(activo.tipo,activo.id, true, true);
+                                $('.selecCategoria').append(option).trigger('change');
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            // console.log(error)
+                            $.each(request.responseJSON.errors, function(indexInArray,
+
+                                valueOfElement) {
+                                // console.log(valueOfElement, indexInArray);
+                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
+                            });
+                        }
+                    });
+                    // console.log('Guardando')
+=======
                             valueOfElement) {
                             console.log(valueOfElement, indexInArray);
                             $(`span#${indexInArray}_error`).text(valueOfElement[0]);
 
                         });
                     }
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
                 });
                 console.log('Guardando')
             });
 
+<<<<<<< HEAD
+                 // Script subcategoria activos
+
+                 document.getElementById('guardar_subcategoria').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let subcategoria = document.querySelector('#subtipo-name').value;
+                    let categoria_id = document.querySelector('#categoria_id').value;
+
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                        },
+                        url: "{{ route('admin.subtipoactivos.store') }}",
+                        data: {
+                            categoria_id,subcategoria, ajax:true
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.success) {
+                                document.querySelector('#recipient-name').value = '';
+                                $('.selecSubcategoria').select2('destroy');
+                                $('.selecSubcategoria').select2({
+                                    ajax: {
+                                        url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                                        data: {
+                                            categoria:1
+                                        },
+                                        dataType: "json",
+                                    },
+                                    theme: "bootstrap4"
+                                });
+                                $('#subcategorialec').modal('hide')
+                                $('.modal-backdrop').hide();
+                                Swal.fire(
+                                    'Guardada con exito!',
+                                    '',
+                                    'success'
+                                )
+                                const subtipo=response.subtipo
+                                // const tipo=response.tipo
+                                // console.log(subtipo);
+                                var option = new Option(subtipo.subcategoria,subtipo.id, true, true);
+                                $('.selecSubcategoria').append(option).trigger('change');
+                                // var option = new Option(subtipo.categoria_id,subtipo.id, true, true);
+                                // $('.selecCategoria').append(option).trigger('change');
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            // console.log(error)
+                            $.each(request.responseJSON.errors, function(indexInArray,
+
+                                valueOfElement) {
+                                // console.log(valueOfElement, indexInArray);
+                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+=======
             // Script categoria activos
             document.getElementById('guardar_categoria').addEventListener('click', function(e) {
                 e.preventDefault();
                 let tipo = document.querySelector('#tipo-name').value;
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
 
                 $.ajax({
                     type: "POST",
@@ -621,6 +795,10 @@
                             $('.selecCategoria').append(option).trigger('change');
 
                         }
+<<<<<<< HEAD
+                    });
+                    // console.log('Guardando')
+=======
                     },
                     error: function(request, status, error) {
                         console.log(error)
@@ -632,6 +810,7 @@
 
                         });
                     }
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
                 });
                 console.log('Guardando')
             });
@@ -682,11 +861,23 @@
                             // var option = new Option(subtipo.categoria_id,subtipo.id, true, true);
                             // $('.selecCategoria').append(option).trigger('change');
 
+<<<<<<< HEAD
+                                Swal.fire(
+                                    'Guardada con exito!',
+                                    '',
+                                    'success'
+                                )
+                                const modelo=response.modelo
+                                // console.log(modelo);
+                                var option = new Option(modelo.nombre,modelo.id, true, true);
+                                $('.selecmodelo').append(option).trigger('change');
+=======
                         }
                     },
                     error: function(request, status, error) {
                         console.log(error)
                         $.each(request.responseJSON.errors, function(indexInArray,
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
 
                             valueOfElement) {
                             console.log(valueOfElement, indexInArray);
@@ -698,11 +889,22 @@
                 console.log('Guardando')
             });
 
+<<<<<<< HEAD
+                        },
+                        error: function(request, status, error) {
+                            // console.log(error)
+                            $.each(request.responseJSON.errors, function(indexInArray,
+
+                                valueOfElement) {
+                                // console.log(valueOfElement, indexInArray);
+                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+=======
 
              // Script Modelo activos
             document.getElementById('guardar_modelo').addEventListener('click', function(e) {
                 e.preventDefault();
                 let nombre = document.querySelector('#modelo-name').value;
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
 
                 $.ajax({
                     type: "POST",
@@ -739,6 +941,12 @@
                             $('.selecmodelo').append(option).trigger('change');
 
                         }
+<<<<<<< HEAD
+                    });
+                    // console.log('Guardando')
+                });
+=======
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
 
 
                     },
@@ -758,6 +966,35 @@
 
         })
 
+<<<<<<< HEAD
+                $('.selecCategoria').select2({
+                    ajax: {
+                        url: "{{ route('admin.tipoactivos.getTipos') }}",
+                        dataType: "json",
+                    },
+                    theme: "bootstrap4"
+                });
+                $('.selecSubcategoria').select2({
+                    ajax: {
+                        url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                        data:{categoria:1},
+                        dataType: "json",
+                    },
+                    theme: "bootstrap4"
+                });
+                $('.selecCategoria').on('select2:select', function (e) {
+                    var data = e.params.data;
+                    // console.log(data);
+                    $('.selecSubcategoria').select2({
+                        ajax: {
+                            url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                            data:{categoria:data.id},
+                            dataType: "json",
+                        },
+                        theme: "bootstrap4"
+                    });
+                });
+=======
         $(document).ready(function() {
             $('.selecmarca').select2({
                 ajax: {
@@ -766,6 +1003,7 @@
                 },
                 theme: "bootstrap4"
             });
+>>>>>>> e219dc436d16a740249702415aa1c70a129aac4c
 
 
             $('.selecmodelo').select2({

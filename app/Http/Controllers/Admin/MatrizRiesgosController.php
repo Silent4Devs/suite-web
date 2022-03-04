@@ -774,12 +774,11 @@ class MatrizRiesgosController extends Controller
         $responsables = Empleado::get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
-
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
-        $activosmatriz31000 = MatrizIso31000::find($id);
+        $activosmatriz31000 = MatrizIso31000::with('activosInformacion')->find($id);
 
-        return view('admin.MatrizISO31000.create', compact('activosmatriz31000', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', $request->id_analisis);
+        return view('admin.MatrizISO31000.edit', compact('activosmatriz31000', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', $request->id_analisis);
     }
 
     public function ISO31000Store(Request $request)
@@ -790,19 +789,13 @@ class MatrizRiesgosController extends Controller
         return redirect("admin/matriz-seguridad/ISO31000?id={$request->id_analisis}")->with('success', 'Guardado con éxito');
     }
 
-    public function updateMatriz31000(Request $request, MatrizIso31000 $matrizRiesgo31000)
+    public function ISO31000Update(Request $request, $id)
     {
-        $calculo = new Mriesgos();
-        $res = $calculo->CalculoD($request);
-        $request->request->add(['resultadoponderacion' => $res]);
-        $matrizRiesgo31000->update($request->all());
+        $matrizIso3100 = MatrizIso31000::find($id);
+        $matrizIso3100->update(($request->all()));
+        $this->saveUpdateMatriz31000ActivosInfo($request->activosmatriz31000, $matrizIso3100);
 
-        if (isset($request->plan_accion)) {
-            // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
-            $matrizRiesgo31000->planes()->sync($request->plan_accion);
-        }
-
-        return redirect()->route('admin.matriz-riesgos.octave', ['id' => $request->id_analisis])->with('success', 'Actualizado con éxito');
+        return redirect("admin/matriz-seguridad/ISO31000?id={$request->id_analisis}")->with('success', 'Guardado con éxito');
     }
 
     public function NIST(Request $request)
@@ -931,29 +924,29 @@ class MatrizRiesgosController extends Controller
         return redirect("admin/matriz-seguridad/NIST?id={$request->id_analisis}")->with('success', 'Editado con éxito');
     }
 
-    public function storeMatriz31000(Request $request)
-    {
-        //$request->merge(['plan_de_accion' => $request['plan_accion']['0']]);
-        // dd($request->controles_id);
-        $matrizRiesgo31000 = MatrizIso31000::create($request->all());
+    // public function storeMatriz31000(Request $request)
+    // {
+    //     //$request->merge(['plan_de_accion' => $request['plan_accion']['0']]);
+    //     // dd($request->controles_id);
+    //     $matrizRiesgo31000 = MatrizIso31000::create($request->all());
 
-        foreach ($request->controles_id as $item) {
-            $control = new MatrizIso31000ControlesPivot();
-            // $control->matriz_id = 2;
-            $control->matriz_id = $matrizRiesgo31000->id;
-            $control->controles_id = $item;
-            $control->save();
-        }
+    //     foreach ($request->controles_id as $item) {
+    //         $control = new MatrizIso31000ControlesPivot();
+    //         // $control->matriz_id = 2;
+    //         $control->matriz_id = $matrizRiesgo31000->id;
+    //         $control->controles_id = $item;
+    //         $control->save();
+    //     }
 
-        if (isset($request->plan_accion)) {
-            // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
-            $matrizRiesgo31000->planes()->sync($request->plan_accion);
-        }
+    //     if (isset($request->plan_accion)) {
+    //         // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+    //         $matrizRiesgo31000->planes()->sync($request->plan_accion);
+    //     }
 
-        $this->saveUpdateMatriz31000ActivosInfo($request->externos, $matrizRiesgo31000);
+    //     $this->saveUpdateMatriz31000ActivosInfo($request->externos, $matrizRiesgo31000);
 
-        return redirect()->route('admin.matriz-riesgos.octave', ['id' => $request->id_analisis])->with('success', 'Guardado con éxito');
-    }
+    //     return redirect()->route('admin.matriz-riesgos.octave', ['id' => $request->id_analisis])->with('success', 'Guardado con éxito');
+    // }
 
     public function saveUpdateActivosOctave($activosoctave, $matrizRiesgoOctave)
     {

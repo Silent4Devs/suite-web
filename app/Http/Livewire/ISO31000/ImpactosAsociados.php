@@ -14,8 +14,14 @@ class ImpactosAsociados extends Component
     public $tecnologico = 1;
     public $valor = 6;
 
-    public function mount()
+    public function mount($estrategico, $operacional, $cumplimiento, $legal, $reputacional, $tecnologico)
     {
+        $this->estrategico = $estrategico;
+        $this->operacional = $operacional;
+        $this->cumplimiento = $cumplimiento;
+        $this->legal = $legal;
+        $this->reputacional = $reputacional;
+        $this->tecnologico = $tecnologico;
         $this->calcularValor();
     }
 
