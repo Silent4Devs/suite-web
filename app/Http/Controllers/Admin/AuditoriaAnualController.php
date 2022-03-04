@@ -81,17 +81,19 @@ class AuditoriaAnualController extends Controller
     {
         abort_if(Gate::denies('auditoria_anual_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $empleados = Empleado::get();
+        // $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $auditorliders = Empleado::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $auditorliders = Empleado::all()->pluck('name', 'id');
+        // dd($auditorliders);
 
-        return view('admin.auditoriaAnuals.create', compact('auditorliders', 'empleados'));
+        return view('admin.auditoriaAnuals.create', compact('auditorliders'));
     }
 
     public function store(StoreAuditoriaAnualRequest $request)
     {
         $auditoriaAnual = AuditoriaAnual::create($request->all());
 
-        return redirect()->route('admin.auditoria-anuals.index');
+        return redirect()->route('admin.auditoria-anuals.index')->with('success', 'Guardado con éxito');;
     }
 
     public function edit(AuditoriaAnual $auditoriaAnual)

@@ -98,11 +98,6 @@ class SubcategoriaActivosSeeder extends Seeder
                 'subcategoria' => 'Memoria USB',
                 'categoria_id' => '1',
             ],
-
-            [
-                'subcategoria' => 'Memoria RAM',
-                'categoria_id' => '1',
-            ],
             [
                 'subcategoria' => 'Teléfono',
                 'categoria_id' => '1',
@@ -164,7 +159,7 @@ class SubcategoriaActivosSeeder extends Seeder
                 'categoria_id' => '3',
             ],
             [
-                'subcategoria' => 'Sillon',
+                'subcategoria' => 'Sillón',
                 'categoria_id' => '3',
             ],
             [
@@ -324,10 +319,6 @@ class SubcategoriaActivosSeeder extends Seeder
                 'categoria_id' => '5',
             ],
             [
-                'subcategoria' => 'Liquido limpiador',
-                'categoria_id' => '5',
-            ],
-            [
                 'subcategoria' => 'Pasta térmica',
                 'categoria_id' => '5',
             ],
@@ -352,7 +343,7 @@ class SubcategoriaActivosSeeder extends Seeder
                 'categoria_id' => '5',
             ],
             [
-                'subcategoria' => 'Caja de Herraminetas',
+                'subcategoria' => 'Caja de herramientas',
                 'categoria_id' => '6',
             ],
             [

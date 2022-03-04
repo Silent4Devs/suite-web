@@ -290,19 +290,32 @@
                     },
                     {
                         data: 'objetivo',
-                        name: 'objetivo'
+                        name: 'objetivo',
+                        render: function(data, type, row, meta){
+                                return row.objetivo_html;
+                        }
+
                     },
                     {
                         data: 'alcance',
-                        name: 'alcance'
+                        name: 'alcance',
+                        render: function(data, type, row, meta){
+                                return row.alcance_html;
+                        }
                     },
                     {
                         data: 'criterios',
-                        name: 'criterios'
+                        name: 'criterios',
+                        render: function(data, type, row, meta){
+                                return row.criterios_html;
+                        }
                     },
                     {
                         data: 'documentoauditar',
-                        name: 'documentoauditar'
+                        name: 'documentoauditar',
+                        render: function(data, type, row, meta){
+                                return row.documento_auditar_html;
+                        }
                     },
                     {
                         data: 'equipo_auditor',

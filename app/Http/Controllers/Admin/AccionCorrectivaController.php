@@ -192,6 +192,7 @@ class AccionCorrectivaController extends Controller
 
     public function edit(AccionCorrectiva $accionCorrectiva)
     {
+        // dd($accionCorrectiva);
         abort_if(Gate::denies('accion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $nombrereportas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -247,8 +248,9 @@ class AccionCorrectivaController extends Controller
         } elseif ($accionCorrectiva->documentometodo) {
             $accionCorrectiva->documentometodo->delete();
         }
+        Flash::success('Editado con éxito');
 
-        return redirect()->route('admin.accionCorrectivas.index');
+        return redirect()->route('admin.accion-correctivas.index')->with('success', 'Editado con éxito');
     }
 
     public function show(AccionCorrectiva $accionCorrectiva)
@@ -266,7 +268,7 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->delete();
 
-        Flash::success('Registro guardado exitosamente');
+        Flash::success('Registro eliminado exitosamente');
 
         return back();
     }
