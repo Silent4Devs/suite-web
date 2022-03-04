@@ -435,6 +435,11 @@ class MatrizRiesgosController extends Controller
         return view('admin.matrizRiesgos.heatchart')->with('id', $request->idAnalisis);
     }
 
+    public function MapaCalorOctave(Request $request)
+    {
+        return view('admin.OCTAVE.heatchart')->with('id', $request->idAnalisis);
+    }
+
     public function createPlanAccion(MatrizRiesgo $id)
     {
         $planImplementacion = new PlanImplementacion();
