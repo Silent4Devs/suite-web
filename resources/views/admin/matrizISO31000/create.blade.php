@@ -619,7 +619,7 @@
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Escenario de Riesgo</h3>
+            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Matriz ISO31000</h3>
         </div>
 
         <div class="card-body">
@@ -694,7 +694,14 @@
                 <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     EVALUACIÓN DE IMPACTOS ASOCIADOS AL PROCESO SOPORTE PROVEEDOR
                 </div>
-                @livewire('i-s-o31000.impactos-asociados')
+                @livewire('i-s-o31000.impactos-asociados',[
+                'estrategico'=> 1,
+                'operacional'=> 1,
+                'cumplimiento'=> 1,
+                'legal'=> 1,
+                'reputacional'=> 1,
+                'tecnologico'=> 1
+                ])
                 <hr>
                 <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     ACTIVOS DE INFORMACIÓN
@@ -768,7 +775,9 @@
                     </div>
                 </div>
 
-                @livewire('i-s-o31000.activos-informacion')
+                @livewire('i-s-o31000.activos-informacion',[
+                'impactoOb' => 6
+                ])
 
                 <div class="mb-3 ml-3 col-12 mt-4 text-right">
                     <button type="button" name="btn-suscribir-activos_info" id="btn-suscribir-activos_info"

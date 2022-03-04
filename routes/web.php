@@ -666,8 +666,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
     Route::get('activos/create', 'ActivosInformacionController@create')->name('activosInformacion.create');
     Route::get('activosInformacion/{activo}', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
-    Route::resource('activosInformacion', 'ActivosInformacionController')->except('edit','create');
-
+    Route::resource('activosInformacion', 'ActivosInformacionController')->except('edit', 'create');
 
     // Marca
     Route::get('marcas/get-marcas', 'MarcaController@getMarcas')->name('marcas.getMarcas');
@@ -892,7 +891,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('carta-aceptacion/destroy', 'CartaAceptacionRiesgosController@destroy')->name('carta-aceptacion.destroy');
     Route::resource('carta-aceptacion', 'CartaAceptacionRiesgosController')->except('destroy');
 
-
     // Matriz Riesgos
     Route::get('matriz-riesgos/planes-de-accion/create/{id}', 'MatrizRiesgosController@createPlanAccion')->name('matriz-riesgos.createPlanAccion');
     Route::post('matriz-riesgos/planes-de-accion/store/{id}', 'MatrizRiesgosController@storePlanAccion')->name('matriz-riesgos.storePlanAccion');
@@ -908,6 +906,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('matriz-seguridad/ISO31000/create', 'MatrizRiesgosController@ISO31000Create')->name('matriz-seguridad.ISO31000Create');
     Route::get('matriz-seguridad/ISO31000/{id}/edit', 'MatrizRiesgosController@ISO31000Edit')->name('matriz-seguridad.ISO31000.edit');
     Route::post('matriz-seguridad/ISO31000', 'MatrizRiesgosController@ISO31000Store')->name('matriz-seguridad.ISO31000.store');
+    Route::put('matriz-seguridad/{id}/ISO31000', 'MatrizRiesgosController@ISO31000Update')->name('matriz-seguridad.ISO31000.update');
     Route::get('matriz-seguridad/NIST', 'MatrizRiesgosController@NIST')->name('matriz-seguridad.NIST');
     Route::get('matriz-seguridad/NIST/create', 'MatrizRiesgosController@NISTCreate')->name('matriz-seguridad.NISTCreate');
     Route::get('matriz-seguridad/NIST/{id}/edit', 'MatrizRiesgosController@NISTEdit')->name('matriz-seguridad.NIST.edit');

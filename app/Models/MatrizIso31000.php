@@ -67,4 +67,9 @@ class MatrizIso31000 extends Model
     {
         return $this->belongsTo(AnalisisDeRiesgo::class, 'id_analisis');
     }
+
+    public function activosInformacion()
+    {
+        return $this->hasMany(Matriz31000ActivosInfo::class, 'id_matriz31000', 'id');
+    }
 }
