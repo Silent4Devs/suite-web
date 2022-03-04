@@ -23,6 +23,8 @@ class TimesheetController extends Controller
     {
         $times = timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
 
+        dd(auth()->user()->empleado->es_supervisor);
+
         return view('admin.timesheet.index', compact('times'));
     }
 
@@ -211,19 +213,31 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $aprobaciones = Timesheet::where('estatus', 'pendiente')
-            ->where('estatus', 'rechazado')
+            ->where('estatus', 'pendiente')
             ->where('aprobador_id', auth()->user()->empleado->id)
             ->get();
 
         return view('admin.timesheet.aprobaciones', compact('aprobaciones'));
     }
 
-    public function aprobar($id)
+    public function aprobar(Request $request, $id)
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $aprobar = Timesheet::find($id);
         $aprobar->update([
             'estatus' => 'aprobado',
+            'comentarios' => $request->comentarios,
+        ]);
+
+        return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
+    }
+
+    public function rechazar($id)
+    {
+        abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $aprobar = Timesheet::find($id);
+        $aprobar->update([
+            'estatus' => 'rechazado',
         ]);
 
         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');

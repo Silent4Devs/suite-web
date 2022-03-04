@@ -70,17 +70,17 @@
                                         <span class="pendiente">Pendiente</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="">
                                     @can('timesheet_administrador_aprobar_horas')
-                                        <form action="{{ route('admin.timesheet-aprobar', ['id' => $aprobacion->id]) }}"
-                                            method="POST">
-                                            @csrf
-                                            <button title="Aprobar" class="btn">
-                                                <i class="fas fa-calendar-check" style="color:#3CA06C; font-size: 15pt;"></i>
-                                            </button>
-                                        </form>
+                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $aprobacion->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+                                        
+                                        <div class="btn" data-toggle="modal" data-target="#modal_aprobar_{{ $aprobacion->id}}"> 
+                                            <i class="fas fa-calendar-check" style="color:#3CA06C; font-size: 15pt;"></i>
+                                        </div>
 
-                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+                                        <div class="btn" data-toggle="modal" data-target="#modal_rechazar_{{ $aprobacion->id}}">
+                                            <i class="fa-solid fa-calendar-xmark" style="color:#F05353; font-size: 15pt;"></i>
+                                        </div>
                                     @endcan
                                 </td>
                             </tr>
@@ -91,6 +91,87 @@
 
         </div>
     </div>
+
+    @foreach ($aprobaciones as $aprobacion)
+        {{-- aprobar --}}
+        <div class="modal fade" id="modal_aprobar_{{ $aprobacion->id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="delete">
+                            <div class="text-center">
+                                <i class="fa-solid fa-calendar-check" style="color: #3CA06C; font-size:60pt;"></i>
+                                <h1 class="my-4" style="font-size:14pt;">Aceptar Registro</h1>
+                                <p class="parrafo">¿Esta seguro que desea aceptar este registro?</p>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <form action="{{ route('admin.timesheet-aprobar', ['id' => $aprobacion->id]) }}" method="POST" class="row">
+                                    @csrf
+                                    <div class="form-group col-12">
+                                        <label><i class="fa-solid fa-comment-dots iconos_crear"></i> Comentarios</label>
+                                        <textarea class="form-control" name="comentarios"></textarea>
+                                        <small>Escriba las razones por la que acepta este registro.</small>
+                                    </div>
+                                    <div class="col-12 text-right">
+                                         <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
+                                            Canecelar
+                                        </button>
+                                        <button title="Rechazar" class="btn btn-info" style="border:none; background-color:#3CA06C;">
+                                            <i class="fas fa-calendar-check iconos_crear"></i>
+                                            Aceptar Registro
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {{-- rechazar --}}
+        <div class="modal fade" id="modal_rechazar_{{ $aprobacion->id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="delete">
+                            <div class="text-center">
+                                <i class="fa-solid fa-calendar-xmark" style="color: #F05353; font-size:60pt;"></i>
+                                <h1 class="my-4" style="font-size:14pt;">Rechazar Registro</h1>
+                                <p class="parrafo">¿Esta seguro que desea rechazar este registro?</p>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <form action="{{ route('admin.timesheet-rechazar', ['id' => $aprobacion->id]) }}" method="POST" class="row">
+                                    @csrf
+                                    <div class="form-group col-12">
+                                        <label><i class="fa-solid fa-comment-dots iconos_crear"></i> Comentarios</label>
+                                        <textarea class="form-control" name="comentarios"></textarea>
+                                        <small>Escriba las razones por la que rechaza este registro.</small>
+                                    </div>
+                                    <div class="col-12 text-right">
+                                        <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
+                                            Canecelar
+                                        </button>
+                                        <button title="Rechazar" class="btn btn-info" style="border:none; background-color:#F05353;">
+                                            <i class="fas fa-calendar-xmark iconos_crear"></i>
+                                            Rechazar Registro
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
 @endsection
 

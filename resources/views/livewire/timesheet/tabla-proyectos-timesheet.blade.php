@@ -3,6 +3,10 @@
         <form wire:submit.prevent="create()" class="form-group w-100">
             <div class="d-flex justify-content-center w-100">
                 <div class="form-group w-100 mr-4">
+                    <label><i class="fas fa-list iconos-crear"></i> Proyecto Nuevo</label>
+                    <input name="proyecto" wire:model="proyecto_name" class="form-control" required>
+                </div>
+                <div class="form-group w-100 mr-4">
                     <label><i class="fab fa-adn iconos-crear"></i> Área</label>
                     <select name="area_id" wire:model="area_id" class="form-control" required>
                         <option selected value="">Seleccione área</option>
@@ -10,10 +14,6 @@
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
                         @endforeach
                     </select>
-                </div>
-                <div class="form-group w-100 mr-4">
-                    <label><i class="fas fa-list iconos-crear"></i> Proyecto Nuevo</label>
-                    <input name="proyecto" wire:model="proyecto_name" class="form-control" required>
                 </div>
                 <div class="form-group w-100 mr-4">
                     <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
