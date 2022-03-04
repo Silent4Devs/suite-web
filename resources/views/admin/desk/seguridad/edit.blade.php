@@ -71,7 +71,7 @@
                                     corto
                                     del incidente</label>
                                 <input type="" name="titulo" value="{{ $incidentesSeguridad->titulo }}"
-                                    class="form-control">
+                                    class="form-control" required>
                             </div>
 
                             <div class="mt-2 form-group col-md-4">
@@ -208,7 +208,7 @@
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción
                                     del
                                     incidente</label>
-                                <textarea name="descripcion" class="form-control">{{ $incidentesSeguridad->descripcion }}
+                                <textarea name="descripcion" class="form-control" required>{{ $incidentesSeguridad->descripcion }}
                                     </textarea>
                             </div>
 
@@ -293,7 +293,7 @@
                                     @endforeach
                                 </select>
                                 <textarea name="areas_afectados" class="form-control" id="texto_activos"
-                                    required>{{ $incidentesSeguridad->areas_afectados }}</textarea>
+                                    >{{ $incidentesSeguridad->areas_afectados }}</textarea>
                             </div>
 
                             <div class="mt-2 form-group col-md-4 procesos_multiselect">
@@ -307,7 +307,7 @@
                                     @endforeach
                                 </select>
                                 <textarea name="procesos_afectados" class="form-control" id="texto_activos"
-                                    required>{{ $incidentesSeguridad->procesos_afectados }}</textarea>
+                                    >{{ $incidentesSeguridad->procesos_afectados }}</textarea>
                             </div>
 
                             <div class="mt-2 form-group col-md-4 activos_multiselect">
@@ -321,7 +321,7 @@
                                     @endforeach
                                 </select>
                                 <textarea name="activos_afectados" class="form-control" id="texto_activos"
-                                    required>{{ $incidentesSeguridad->activos_afectados }}</textarea>
+                                    >{{ $incidentesSeguridad->activos_afectados }}</textarea>
                             </div>
 
 
