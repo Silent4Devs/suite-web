@@ -15,7 +15,6 @@ class AddColumnsActivosAsociadosToMatriz31000ActivosInfoTable extends Migration
     {
         Schema::table('matriz31000_activos_info', function (Blueprint $table) {
             $table->string('activos_asociados')->nullable();
-
         });
     }
 

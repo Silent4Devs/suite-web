@@ -9,7 +9,10 @@
         @can('configuracion_sede_create')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'MatrizRiesgo', 'route' => 'admin.matriz-riesgos.parseCsvImport'])
+                    @include('csvImport.modal', [
+                        'model' => 'MatrizRiesgo',
+                        'route' => 'admin.matriz-riesgos.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -43,14 +46,15 @@
                     @endcan --}}
 
                     <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                    href="{{ route('admin.matriz-seguridad.NISTCreate')}}" type="submit"
-                    name="action">Agregar nuevo</a>
+                        href="{{ route('admin.matriz-seguridad.NISTCreate') }}?id_analisis={{ $id_matriz }}"
+                        type="submit" name="action">Agregar nuevo</a>
 
                 </div>
                 <table class="table table-bordered w-100 datatable datatable-Matriz">
                     <thead class="thead-dark">
                         <tr class="negras">
-                            <th class="text-center" style="background-color:#3490DC;" colspan="12">Escenarios de Riesgos - NIST
+                            <th class="text-center" style="background-color:#3490DC;" colspan="13">Escenarios de Riesgos
+                                - NIST
                             </th>
 
                         </tr>
@@ -63,6 +67,9 @@
                             </th>
                             <th>
                                 Impacto de la Vulnerabilidad
+                            </th>
+                            <th>
+                                Aplicaciones
                             </th>
                             <th>
                                 Escenario de Riesgo
@@ -88,7 +95,7 @@
                             <th>
                                 Valoración del Riesgo
                             </th>
-                           <th>
+                            <th>
                                 Opciones
                             </th>
                         </tr>
@@ -116,13 +123,12 @@
             </div>
         @endif
     </div>
-
-
 @endsection
 
 @section('scripts')
     @parent
     <script>
+        let idMatriz = @json($id_matriz);
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
@@ -224,13 +230,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -252,52 +258,61 @@
                 aaSorting: [],
                 // ajax: "/admin/matriz-seguridad?id=" + id_matriz,
                 columns: [{
-                        data: 'id_proceso',
+                        data: 'nombre',
                         name: 'id_proceso'
                     },
                     {
-                        data: 'id_responsable',
+                        data: 'amenaza',
                         name: 'id_responsable'
                     },
                     {
-                        data: 'activo_id',
+                        data: 'impacto_vulnerabilidad',
                         name: 'activo_id'
                     },
                     {
-                        data: 'id_sede',
+                        data: 'aplicaciones',
                         name: 'id_sede'
                     },
                     {
-                        data: 'id_vulnerabilidad',
+                        data: 'escenario',
                         name: 'id_vulnerabilidad'
                     },
                     {
-                        data: 'impacto',
+                        data: 'categoria',
                         name: 'impacto'
                     },
                     {
-                        data: 'nivelriesgo',
+                        data: 'causa',
                         name: 'nivelriesgo',
                     },
                     {
-                        data: 'integridad',
+                        data: 'tipo',
                         name: 'integridad'
                     },
                     {
-                        data: 'disponibilidad',
+                        data: 'severidad',
                         name: 'disponibilidad',
                     },
                     {
-                        data: 'resultadoponderacion',
+                        data: 'probabilidad',
                         name: 'resultadoponderacion',
                     },
                     {
-                        data: 'probabilidad',
+                        data: 'impacto_num',
                         name: 'probabilidad'
                     },
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'valor',
+                        name: 'probabilidad'
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let urlEdit = `/admin/matriz-seguridad/NIST/${data}/edit`;
+                            return `
+                            <a href="${urlEdit}?id_analisis=${idMatriz}" class="btn"><i class="fas fa-edit"></i></a>
+                            `;
+                        }
                     }
                 ],
                 orderCellsTop: true,
@@ -316,4 +331,3 @@
         });
     </script>
 @endsection
-
