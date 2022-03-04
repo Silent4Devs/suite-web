@@ -1,43 +1,41 @@
-
 <style>
-
-    .bajo{
-        color:#fff !important;
-        background-color:rgb(50, 205, 63) !important;
+    .bajo {
+        color: #fff !important;
+        background-color: rgb(50, 205, 63) !important;
         /* position:relative; */
     }
 
-    .bajo::before{
+    .bajo::before {
         position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(50, 205, 63) !important;
-        margin-left:-18px;
+        content: '';
+        width: 10px;
+        height: 10px;
+        background-color: rgb(50, 205, 63) !important;
+        margin-left: -18px;
         border-radius: 100px;
         margin-top: 11px;
     }
 
-    .medio{
-        color:#000 !important;
-        background-color:yellow !important;
+    .medio {
+        color: #000 !important;
+        background-color: yellow !important;
 
     }
 
-    .alto{
-        color:#fff !important;
-        background-color:rgb(255, 136, 0) !important;
+    .alto {
+        color: #fff !important;
+        background-color: rgb(255, 136, 0) !important;
 
     }
 
-    .critico{
-        color:#fff !important;
-        background-color:red !important;
+    .critico {
+        color: #fff !important;
+        background-color: red !important;
     }
 
-    #selectValorCritico{
+    #selectValorCritico {
 
-        color:#000 !important;
+        color: #000 !important;
     }
 
     /* .muybajo{
@@ -46,80 +44,40 @@
 
         } */
 
-
 </style>
 
 @section('scripts')
-
-{{-- <script type=text/javascript>
-    $('#id_responsable').change(function() {
-        var responsableID = $(this).val();
-        if (responsableID) {
-            $.ajax({
-                type: "GET",
-                url: "{{ url('admin/getEmployeeData') }}?id=" + responsableID,
-                success: function(res) {
-                    if (res) {
-                        $("#id_puesto").empty();
-                        $("#id_puesto").attr("value", res.puesto);
-                        $("#id_area").empty();
-                        $("#id_area").attr("value", res.area);
-                    } else {
-                        $("#id_puesto").empty();
-                        $("#id_area").empty();
-                    }
-                }
-            });
-        } else {
-            $("#id_puesto").empty();
-            $("#id_area").empty();
-        }
-    });
-</script> --}}
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let responsable = document.querySelector('#id_responsable');
-        let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
-        let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
-
-        document.getElementById('id_puesto').innerHTML = puesto_init;
-        document.getElementById('id_area').innerHTML = area_init;
-        responsable.addEventListener('change', function(e) {
-            e.preventDefault();
-            let area = this.options[this.selectedIndex].getAttribute('data-area');
-            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('id_puesto').innerHTML = puesto;
-            document.getElementById('id_area').innerHTML = area;
-        })
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let custodio = document.querySelector('#custodio');
-        let area_init = custodio.options[custodio.selectedIndex].getAttribute('data-area');
-        let puesto_init = custodio.options[custodio.selectedIndex].getAttribute('data-puesto');
-
-        document.getElementById('id_custodio_puesto').innerHTML = puesto_init;
-        document.getElementById('id_custodio_area').innerHTML = area_init;
-        custodio.addEventListener('change', function(e) {
-            e.preventDefault();
-            let area = this.options[this.selectedIndex].getAttribute('data-area');
-            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('id_custodio_puesto').innerHTML = puesto;
-            document.getElementById('id_custodio_area').innerHTML = area;
-        })
-    });
-</script>
-
     <script>
-        $(document).ready(function() {
-            $(".js-example-basic-multiple").select2(
-                'theme': 'bootstrap4',
-                allowClear: true,
-                minimumResultsForSearch: -1,
-            );
+        document.addEventListener('DOMContentLoaded', function() {
+            let custodio = document.querySelector('#dueno_informacion');
+            let area_init = custodio.options[custodio.selectedIndex].getAttribute('data-area');
+            let puesto_init = custodio.options[custodio.selectedIndex].getAttribute('data-puesto');
+
+            document.getElementById('dueno_id_puesto').innerHTML = puesto_init;
+            document.getElementById('dueno_id_area').innerHTML = area_init;
+            custodio.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = this.options[this.selectedIndex].getAttribute('data-area');
+                console.log(area);
+                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('dueno_id_puesto').innerHTML = puesto;
+                document.getElementById('dueno_id_area').innerHTML = area;
+            })
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            let custodio = document.querySelector('#custodio_informacion');
+            let area_init = custodio.options[custodio.selectedIndex].getAttribute('data-area');
+            let puesto_init = custodio.options[custodio.selectedIndex].getAttribute('data-puesto');
+
+            document.getElementById('id_custodio_puesto').innerHTML = puesto_init;
+            document.getElementById('id_custodio_area').innerHTML = area_init;
+            custodio.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = this.options[this.selectedIndex].getAttribute('data-area');
+                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('id_custodio_puesto').innerHTML = puesto;
+                document.getElementById('id_custodio_area').innerHTML = area;
+            })
         });
     </script>
 
@@ -425,164 +383,199 @@
     </script>
 
     <script type="text/javascript">
-
         $("#ejemplo").click(function() {
-                var val = $(this).val();
-                if(val == 0){
-                    $("#ver1").css("display", "none");
-                    $("#modulo_planaccion").css("display", "block");
-                }else{
-                    $("#ver1").css("display", "block");
-                    $("#modulo_planaccion").css("display", "none");
+            var val = $(this).val();
+            if (val == 0) {
+                $("#ver1").css("display", "none");
+                $("#modulo_planaccion").css("display", "block");
+            } else {
+                $("#ver1").css("display", "block");
+                $("#modulo_planaccion").css("display", "none");
 
-                }
-            });
-
+            }
+        });
     </script>
 
     <script>
+        $(document).ready(function() {
+            const custodios = @json($custodios);
+            const duenos = @json($duenos);
+            const amenazas = @json($amenazas);
+            const vulnerabilidades = @json($vulnerabilidades);
+            const activosoctave = @json($activosoctave);
+            const matrizActivosOctave = @json($matrizOctave);
+            let count = 0;
+            if (matrizActivosOctave.matriz_activos) {
+                matrizActivosOctave.matriz_activos.forEach((item, index) => {
+                    let formulario = {
+                        id: item.id,
+                        activosAi: item.nombre_ai,
+                        valorCriticoInformacion: item.valor_criticidad,
+                        duenoActivo: item.id_dueno,
+                        custodioActivo: item.id_custodio,
+                        contenedorActivo: item.contenedor_activos,
+                        escenarioRiesgo: item.escenario_riesgo,
+                        amenazasInformacion: item.id_amenaza,
+                        vulnerabilidadesInformacion: item.id_vulnerabilidad,
+                        confidencialidadInformacion: item.confidencialidad,
+                        disponibilidadInformacion: item.disponibilidad,
+                        integridadInformacion: item.integridad,
+                        evaluacionRiesgo: item.evaluacion_riesgo,
+                    }
+                    agregarFilaActivosInfo(index, formulario);
+                });
+                count = matrizActivosOctave.matriz_activos.length;
+            }
+            //   renderizarTablaResponsabilidades(count);
 
-        var numero1 = document.getElementById("numero1").value;
-        var numero2 = document.getElementById("numero2").value;
-
-        var suma = numero1 + numero2;
-
-        document.writeln(suma);
-   </script>
-
-    <script>
-    $(document).ready(function () {
-    const custodios=@json($custodios);
-    const duenos=@json($duenos);
-    const amenazas=@json($amenazas);
-    const vulnerabilidades=@json($vulnerabilidades);
-    const activosoctave=@json($activosoctave);
-    // console.log(formulario.confidencialidad);
-    let count = 0;
-
-    //   renderizarTablaResponsabilidades(count);
-
-      function agregarFilaActivosInfo(contador,formulario) {
-        //   console.log(formulario.confidencialidad)
-          const contenedorActivosInfo=document.getElementById('contenedor_informacion');
-          let html=`
-          <tr>
-            <td><input type="hidden" name="activosoctave[${contador}][id]" value="${formulario.id?formulario.id:0}"><input class="form-control" type="text"  name="activosoctave[${contador}][nombre_ai]" value="${formulario.activosAi}"></td>
-            <td class="col-4"><select id="selectValorCritico" class="form-control select2" name="activosoctave[${contador}][valor_criticidad]" value="${formulario.valorCriticoInformacion}"><option style="background-color:#fff !important; color:#000 !important;" value="">Seleccione una opción</option>
-            <option style="background-color:rgb(50, 205, 63)" ${formulario.valorCriticoInformacion == "Muy Bajo" ? "selected":''} value="Muy Bajo">Muy Bajo</option>
-            <option style="background-color:rgb(50, 205, 63)" ${formulario.valorCriticoInformacion == "Bajo" ? "selected":''} value="Bajo" >Bajo</option>
-            <option style="background-color:yellow;" ${formulario.valorCriticoInformacion == "Medio" ? "selected":''} value="Medio">Medio</option>
-            <option style="background-color:rgb(255, 136, 0);" ${formulario.valorCriticoInformacion == "Alto" ? "selected":''} value="Alto">Alto</option>
-            <option style="background-color:red;" ${formulario.valorCriticoInformacion == "Critico" ? "selected":''} value="Critico">Critico</option>
-            </select></td>
-            <td><select class="form-control" value="${formulario.duenoActivo}" name="activosoctave[${contador}][id_dueno]">`
-                duenos.forEach(dueno=>{
-                html+=`<option data-puesto="${dueno.name}" data-contact="${formulario.id}" value="${dueno.id}" ${formulario.duenoActivo ==  dueno.id ? "selected":''} >${dueno.name}</option>`
-            })
-            html+=`</select>
-            </td >
-            <td><select class="form-control" value="${formulario.custodioActivo}" name="activosoctave[${contador}][id_custodio]">`
-                custodios.forEach(custodio=>{
-                html+=`<option data-puesto="${custodio.name}" data-contact="${formulario.id}" value="${custodio.id}" ${formulario.custodioActivo ==  custodio.id ? "selected":''} >${custodio.name}</option>`
-            })
-            html+=`</select>
-            </td >
-            <td class="col-4"><select class="form-control" name="activosoctave[${contador}][contenedor_activos]" value="${formulario.contenedorActivo}"><option value="">Seleccione una opción</option>
-            <option  ${formulario.contenedorActivo == "Soluciones Cloud (Google Workspace-Azure)" ? "selected":''} value="Soluciones Cloud (Google Workspace-Azure)" >Soluciones Cloud (Google Workspace-Azure)</option>
-            <option  ${formulario.contenedorActivo == "Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" ? "selected":''} value="Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" >Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
-            <option  ${formulario.contenedorActivo == "Base de Datos" ? "selected":''} value="Base de Datos">Base de Datos</option>
-            <option  ${formulario.contenedorActivo == "Servidores" ? "selected":''} value="Servidores">Servidores</option>
-            <option  ${formulario.contenedorActivo == "Aplicaciones Internas (Meltsan-Astro)" ? "selected":''} value="Aplicaciones Internas (Meltsan-Astro)">Aplicaciones Internas (Meltsan-Astro)</option>
-            <option  ${formulario.contenedorActivo == "Aplicaciones Externas (CRM)" ? "selected":''} value="Aplicaciones Externas (CRM)">Aplicaciones Externas (CRM)</option>
-            </select></td>
-            <td><textarea class="form-control" type="text"  name="activosoctave[${contador}][escenario_riesgo]">${formulario.escenarioRiesgo}</textarea></td>
-            <td><select class="form-control" value="${formulario.amenazasInformacion}" name="activosoctave[${contador}][id_amenaza]">`
-                amenazas.forEach(amenaza=>{
-                html+=`<option value="${amenaza.id}" ${formulario.amenazasInformacion ==  amenaza.id ? "selected":''} >${amenaza.nombre}</option>`
-            })
-            html+=`</select>
-            </td>
-            <td><select class="form-control" value="${formulario.vulnerabilidadesInformacion}" name="activosoctave[${contador}][id_vulnerabilidad]">`
-                vulnerabilidades.forEach(vulnerabilidad=>{
-                html+=`<option value="${vulnerabilidad.id}" ${formulario.vulnerabilidadesInformacion ==  vulnerabilidad.id ? "selected":''} >${vulnerabilidad.nombre}</option>`
-            })
-            html+=`</select>
-            </td>
-            <td><select class="form-control" select2 name="activosoctave[${contador}][confidencialidad]" value="${formulario.confidencialidadInformacion}">
-                <option value="">Seleccione una opción</option>
-            <option  ${formulario.confidencialidadInformacion == "1" ? "selected":''} value="1" >1</option>
-            <option  ${formulario.confidencialidadInformacion == "2" ? "selected":''} value="2">2</option>
-            <option  ${formulario.confidencialidadInformacion == "3" ? "selected":''} value="3">3</option>
-            <option  ${formulario.confidencialidadInformacion == "4" ? "selected":''} value="4">4</option>
-            <option  ${formulario.confidencialidadInformacion == "5" ? "selected":''} value="5">5</option>
-            </select>
-            </td>
-            <td><select class="form-control"  select2  name="activosoctave[${contador}][disponibilidad]" value="${formulario.disponibilidadInformacion}"><option value="">Seleccione una opción</option>
-            <option  ${formulario.disponibilidadInformacion == "1" ? "selected":''} value="1" >1</option>
-            <option  ${formulario.disponibilidadInformacion == "2" ? "selected":''} value="2" >2</option>
-            <option  ${formulario.disponibilidadInformacion == "3" ? "selected":''} value="3">3</option>
-            <option  ${formulario.disponibilidadInformacion == "4" ? "selected":''} value="4">4</option>
-            <option  ${formulario.disponibilidadInformacion == "5" ? "selected":''} value="5">5</option>
-            </select>
-            </td>
-            <td><select class="form-control"  select2  name="activosoctave[${contador}][integridad]" value="${formulario.integridadInformacion}"><option value="">Seleccione una opción</option>
-            <option  ${formulario.integridadInformacion == "1" ? "selected":''} value="1" >1</option>
-            <option  ${formulario.integridadInformacion == "2" ? "selected":''} value="2" >2</option>
-            <option  ${formulario.integridadInformacion == "3" ? "selected":''} value="3">3</option>
-            <option  ${formulario.integridadInformacion == "4" ? "selected":''} value="4">4</option>
-            <option  ${formulario.integridadInformacion == "5" ? "selected":''} value="5">5</option>
-            </select>
-            </td>
-            <td><input class="form-control" type="text" name="activosoctave[${contador}][evaluacion_riesgo]" value="${formulario.evaluacionRiesgo}"></td>
-            <td><button type="button" name="btn-remove-activos" id="" class="btn btn-danger remove">Eliminar</button></td>
-         </tr>
-          `
-          contenedorActivosInfo.innerHTML += html;
-            limpiarFormulario();
+            function agregarFilaActivosInfo(contador, formulario) {
+                const contenedorActivosInfo = document.getElementById('contenedor_informacion');
+                let html =
+                    `
+                        <tr>
+                            <td><input type="hidden" name="activosoctave[${contador}][id]" value="${formulario.id?formulario.id:0}"><input class="form-control" type="text"  name="activosoctave[${contador}][nombre_ai]" value="${formulario.activosAi}"></td>
+                            <td class="col-4"><select id="selectValorCritico" class="form-control select2" name="activosoctave[${contador}][valor_criticidad]" value="${formulario.valorCriticoInformacion}"><option style="background-color:#fff !important; color:#000 !important;" value="">Seleccione una opción</option>
+                            <option style="background-color:rgb(50, 205, 63)" ${formulario.valorCriticoInformacion == "1" ? "selected":''} value="1">Muy Bajo</option>
+                            <option style="background-color:rgb(50, 205, 63)" ${formulario.valorCriticoInformacion == "2" ? "selected":''} value="2" >Bajo</option>
+                            <option style="background-color:yellow;" ${formulario.valorCriticoInformacion == "3" ? "selected":''} value="3">Medio</option>
+                            <option style="background-color:rgb(255, 136, 0);" ${formulario.valorCriticoInformacion == "4" ? "selected":''} value="4">Alto</option>
+                            <option style="background-color:red;" ${formulario.valorCriticoInformacion == "5" ? "selected":''} value="5">Critico</option>
+                            </select></td>
+                            <td><select class="form-control" value="${formulario.duenoActivo}" name="activosoctave[${contador}][id_dueno]">`
+                duenos.forEach(dueno => {
+                    html +=
+                        `<option data-puesto="${dueno.name}" data-contact="${formulario.id}" value="${dueno.id}" ${formulario.duenoActivo ==  dueno.id ? "selected":''} >${dueno.name}</option>`
+                })
+                html +=
+                    `</select>
+                                        </td >
+                                        <td><select class="form-control" value="${formulario.custodioActivo}" name="activosoctave[${contador}][id_custodio]">`
+                custodios.forEach(custodio => {
+                    html +=
+                        `<option data-puesto="${custodio.name}" data-contact="${formulario.id}" value="${custodio.id}" ${formulario.custodioActivo ==  custodio.id ? "selected":''} >${custodio.name}</option>`
+                })
+                html +=
+                    `</select>
+                            </td >
+                            <td class="col-4"><select class="form-control" name="activosoctave[${contador}][contenedor_activos]" value="${formulario.contenedorActivo}"><option value="">Seleccione una opción</option>
+                            <option  ${formulario.contenedorActivo == "Soluciones Cloud (Google Workspace-Azure)" ? "selected":''} value="Soluciones Cloud (Google Workspace-Azure)" >Soluciones Cloud (Google Workspace-Azure)</option>
+                            <option  ${formulario.contenedorActivo == "Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" ? "selected":''} value="Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" >Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
+                            <option  ${formulario.contenedorActivo == "Base de Datos" ? "selected":''} value="Base de Datos">Base de Datos</option>
+                            <option  ${formulario.contenedorActivo == "Servidores" ? "selected":''} value="Servidores">Servidores</option>
+                            <option  ${formulario.contenedorActivo == "Aplicaciones Internas (Meltsan-Astro)" ? "selected":''} value="Aplicaciones Internas (Meltsan-Astro)">Aplicaciones Internas (Meltsan-Astro)</option>
+                            <option  ${formulario.contenedorActivo == "Aplicaciones Externas (CRM)" ? "selected":''} value="Aplicaciones Externas (CRM)">Aplicaciones Externas (CRM)</option>
+                            </select></td>
+                            <td><textarea class="form-control" type="text"  name="activosoctave[${contador}][escenario_riesgo]">${formulario.escenarioRiesgo}</textarea></td>
+                            <td><select class="form-control" value="${formulario.amenazasInformacion}" name="activosoctave[${contador}][id_amenaza]">`
+                amenazas.forEach(amenaza => {
+                    html +=
+                        `<option value="${amenaza.id}" ${formulario.amenazasInformacion ==  amenaza.id ? "selected":''} >${amenaza.nombre}</option>`
+                })
+                html +=
+                    `</select>
+                                        </td>
+                                        <td><select class="form-control" value="${formulario.vulnerabilidadesInformacion}" name="activosoctave[${contador}][id_vulnerabilidad]">`
+                vulnerabilidades.forEach(vulnerabilidad => {
+                    html +=
+                        `<option value="${vulnerabilidad.id}" ${formulario.vulnerabilidadesInformacion ==  vulnerabilidad.id ? "selected":''} >${vulnerabilidad.nombre}</option>`
+                })
+                html += `</select>
+                            </td>
+                            <td><select class="form-control" select2 name="activosoctave[${contador}][confidencialidad]" value="${formulario.confidencialidadInformacion}" data-evaluacion-escenario="1" data-contador="${contador}">
+                            <option  ${formulario.confidencialidadInformacion == "0" ? "selected":''} value="0" >0</option>
+                            <option  ${formulario.confidencialidadInformacion == "1" ? "selected":''} value="1" >1</option>
+                            <option  ${formulario.confidencialidadInformacion == "2" ? "selected":''} value="2">2</option>
+                            <option  ${formulario.confidencialidadInformacion == "3" ? "selected":''} value="3">3</option>
+                            <option  ${formulario.confidencialidadInformacion == "4" ? "selected":''} value="4">4</option>
+                            <option  ${formulario.confidencialidadInformacion == "5" ? "selected":''} value="5">5</option>
+                            </select>
+                            </td>
+                            <td><select class="form-control"  select2  name="activosoctave[${contador}][disponibilidad]" value="${formulario.disponibilidadInformacion}" data-evaluacion-escenario="1" data-contador="${contador}">
+                            <option  ${formulario.disponibilidadInformacion == "0" ? "selected":''} value="0" >0</option>
+                            <option  ${formulario.disponibilidadInformacion == "1" ? "selected":''} value="1" >1</option>
+                            <option  ${formulario.disponibilidadInformacion == "2" ? "selected":''} value="2" >2</option>
+                            <option  ${formulario.disponibilidadInformacion == "3" ? "selected":''} value="3">3</option>
+                            <option  ${formulario.disponibilidadInformacion == "4" ? "selected":''} value="4">4</option>
+                            <option  ${formulario.disponibilidadInformacion == "5" ? "selected":''} value="5">5</option>
+                            </select>
+                            </td>
+                            <td><select class="form-control"  select2  name="activosoctave[${contador}][integridad]" value="${formulario.integridadInformacion}" data-evaluacion-escenario="1" data-contador="${contador}">
+                            <option  ${formulario.integridadInformacion == "0" ? "selected":''} value="0" >0</option>
+                            <option  ${formulario.integridadInformacion == "1" ? "selected":''} value="1" >1</option>
+                            <option  ${formulario.integridadInformacion == "2" ? "selected":''} value="2" >2</option>
+                            <option  ${formulario.integridadInformacion == "3" ? "selected":''} value="3">3</option>
+                            <option  ${formulario.integridadInformacion == "4" ? "selected":''} value="4">4</option>
+                            <option  ${formulario.integridadInformacion == "5" ? "selected":''} value="5">5</option>
+                            </select>
+                            </td>
+                            <td><input class="form-control evaluacion_riesgo" type="text" name="activosoctave[${contador}][evaluacion_riesgo]" value="${formulario.evaluacionRiesgo}" readonly data-contador="${contador}"></td>
+                            <td><button type="button" name="btn-remove-activos" id="" class="btn btn-danger remove">Eliminar</button></td>
+                        </tr>
+                    `
+                $("#contenedor_informacion").append(html);
+                // contenedorActivosInfo.innerHTML += html;
+                limpiarFormulario();
 
 
-      }
+            }
 
 
-      function limpiarFormulario(){
-        const activosAi = document.getElementById('nombre_ai_informacion').value=null;
-        const valorCriticoInformacion = document.getElementById('criticidad_informacion').value=null;
-        const duenoActivo = document.getElementById('dueno_informacion').value=null;
-        const custodioActivo = document.getElementById('custodio_informacion').value=null;
-        const contenedorActivo = document.getElementById('contenedor_activos_informacion').value=null;
-        const escenarioRiesgo = document.getElementById('escenario_riesgo_informacion').value=null;
-        const amenazasInformacion = document.getElementById('amenaza_informacion').value=null;
-        const vulnerabilidadesInformacion = document.getElementById('vulnerabilidad_informacion').value=null;
-        const confidencialidadInformacion = document.getElementById('confidencialidad_informacion').value=null;
-        const disponibilidadInformacion = document.getElementById('disponibilidad_informacion').value=null;
-        const integridadInformacion = document.getElementById('integridad_informacion').value=null;
-        const evaluacionRiesgo = document.getElementById('evaluacion_informacion').value=null;
-      }
+            function limpiarFormulario() {
+                const activosAi = document.getElementById('nombre_ai_informacion').value = null;
+                const valorCriticoInformacion = document.getElementById('criticidad_informacion').value = null;
+                const duenoActivo = document.getElementById('dueno_informacion').value = null;
+                const duenoPuesto = document.getElementById('dueno_id_puesto').innerHTML = null;
+                const duenoArea = document.getElementById('dueno_id_area').innerHTML = null;
+                const custodioActivo = document.getElementById('custodio_informacion').value = null;
+                const custodioPuestoActivo = document.getElementById('id_custodio_puesto').innerHTML = null;
+                const custodioAreaActivo = document.getElementById('id_custodio_area').innerHTML = null;
+                const contenedorActivo = document.getElementById('contenedor_activos_informacion').value = null;
+                const escenarioRiesgo = document.getElementById('escenario_riesgo_informacion').value = null;
+                const amenazasInformacion = document.getElementById('amenaza_informacion').value = null;
+                const vulnerabilidadesInformacion = document.getElementById('vulnerabilidad_informacion').value =
+                    null;
+                const confidencialidadInformacion = document.getElementById('confidencialidad_informacion').value =
+                    null;
+                const disponibilidadInformacion = document.getElementById('disponibilidad_informacion').value =
+                    null;
+                const integridadInformacion = document.getElementById('integridad_informacion').value = null;
+                const evaluacionRiesgo = document.getElementById('evaluacion_informacion').value = null;
+                $('#criticidad_informacion').val('').trigger('change');
+                $('#confidencialidad_informacion').val('0').trigger('change');
+                $('#disponibilidad_informacion').val('0').trigger('change');
+                $('#integridad_informacion').val('0').trigger('change');
+            }
 
-      function  limpiarErrores() {
+            function limpiarErrores() {
                 document.querySelectorAll('.errores').forEach(item => {
                     item.innerText = null
                 })
             }
 
 
-      $(document).on("click", "#btn-suscribir-activos_info", function () {
-        limpiarErrores()
-          const activosAi = document.getElementById('nombre_ai_informacion').value;
-          const valorCriticoInformacion = document.getElementById('criticidad_informacion').value;
-          const duenoActivo = document.getElementById('dueno_informacion').value;
-          const custodioActivo = document.getElementById('custodio_informacion').value;
-          const contenedorActivo = document.getElementById('contenedor_activos_informacion').value;
-          const escenarioRiesgo = document.getElementById('escenario_riesgo_informacion').value;
-          const amenazasInformacion  = document.getElementById('amenaza_informacion').value;
-          const vulnerabilidadesInformacion = document.getElementById('vulnerabilidad_informacion').value;
-          const confidencialidadInformacion = document.getElementById('confidencialidad_informacion').value;
-          const disponibilidadInformacion = document.getElementById('disponibilidad_informacion').value;
-          const integridadInformacion = document.getElementById('integridad_informacion').value;
-          const evaluacionRiesgo = document.getElementById('evaluacion_informacion').value;
+            $(document).on("click", "#btn-suscribir-activos_info", function() {
+                limpiarErrores()
+                const activosAi = document.getElementById('nombre_ai_informacion').value;
+                const valorCriticoInformacion = document.getElementById('criticidad_informacion').value;
+                const duenoActivo = document.getElementById('dueno_informacion').value;
+                const custodioActivo = document.getElementById('custodio_informacion').value;
+                const contenedorActivo = document.getElementById('contenedor_activos_informacion').value;
+                const escenarioRiesgo = document.getElementById('escenario_riesgo_informacion').value;
+                const amenazasInformacion = document.getElementById('amenaza_informacion').value;
+                const vulnerabilidadesInformacion = document.getElementById('vulnerabilidad_informacion')
+                    .value;
+                const confidencialidadInformacion = document.getElementById('confidencialidad_informacion')
+                    .value;
+                const disponibilidadInformacion = document.getElementById('disponibilidad_informacion')
+                    .value;
+                const integridadInformacion = document.getElementById('integridad_informacion').value;
+                const evaluacionRiesgo = document.getElementById('evaluacion_informacion').value;
 
-          if(activosAi  =="" || valorCriticoInformacion ==""  || duenoActivo =="" || custodioActivo ==""  || contenedorActivo =="" || escenarioRiesgo  =="" || amenazasInformacion  =="" || vulnerabilidadesInformacion =="" ||
-          confidencialidadInformacion =="" || disponibilidadInformacion =="" || integridadInformacion =="" || evaluacionRiesgo == ""){
+                if (activosAi == "" || valorCriticoInformacion == "" || duenoActivo == "" ||
+                    custodioActivo == "" || contenedorActivo == "" || escenarioRiesgo == "" ||
+                    amenazasInformacion == "" || vulnerabilidadesInformacion == "" ||
+                    confidencialidadInformacion == "" || disponibilidadInformacion == "" ||
+                    integridadInformacion == "" || evaluacionRiesgo == "") {
                     if (activosAi == "") {
                         document.querySelector('.nombre_ai_error').innerText =
                             "Debes agregar nombre del AI";
@@ -632,50 +625,77 @@
                             "Debes agregar evaluación";
                     }
 
-                }else{
+                } else {
                     let formulario = {
-                    activosAi,
-                    valorCriticoInformacion,
-                    duenoActivo,
-                    custodioActivo,
-                    contenedorActivo,
-                    escenarioRiesgo,
-                    amenazasInformacion,
-                    vulnerabilidadesInformacion,
-                    confidencialidadInformacion,
-                    disponibilidadInformacion,
-                    integridadInformacion,
-                    evaluacionRiesgo,
+                        activosAi,
+                        valorCriticoInformacion,
+                        duenoActivo,
+                        custodioActivo,
+                        contenedorActivo,
+                        escenarioRiesgo,
+                        amenazasInformacion,
+                        vulnerabilidadesInformacion,
+                        confidencialidadInformacion,
+                        disponibilidadInformacion,
+                        integridadInformacion,
+                        evaluacionRiesgo,
+                    }
+
+
+                    agregarFilaActivosInfo(count, formulario);
+                    count++;
                 }
 
+            });
 
-                agregarFilaActivosInfo(count, formulario);
-                count++;
-                }
-
-      });
-
-      $(document).on("click", ".btn-remove-activos", function () {
-        $(this).closest("tr").remove();
-        count --;
-      });
+            $(document).on("click", ".btn-remove-activos", function() {
+                $(this).closest("tr").remove();
+                count--;
+            });
 
 
-    });
-  </script>
+        });
+    </script>
 
     <script type="text/javascript">
         $(document).on('change', '#selectValorCritico', function(event) {
             let optionSelected = $('#selectValorCritico option:selected').val();
             // console.log(optionSelected);
-           $('#selectValorCritico').removeClass('bajo');
-           $('#selectValorCritico').removeClass('medio');
-           $('#selectValorCritico').removeClass('alto');
-           $('#selectValorCritico').removeClass('critico');
-           $('#selectValorCritico').addClass(optionSelected);
+            $('#selectValorCritico').removeClass('bajo');
+            $('#selectValorCritico').removeClass('medio');
+            $('#selectValorCritico').removeClass('alto');
+            $('#selectValorCritico').removeClass('critico');
+            $('#selectValorCritico').addClass(optionSelected);
 
         });
+        Livewire.on('impactoObtenido', impacto => {
+            document.querySelectorAll('.evaluacion_riesgo').forEach(el => {
+                let contador = el.getAttribute('data-contador');
+                let confidencialidad = document.querySelector(
+                    `[name="activosoctave[${contador}][confidencialidad]"]`).value
+                let disponibilidad = document.querySelector(
+                    `[name="activosoctave[${contador}][disponibilidad]"]`).value
+                let integridad = document.querySelector(
+                    `[name="activosoctave[${contador}][integridad]"]`).value
+                el.value = (Number(confidencialidad) + Number(disponibilidad) + Number(integridad)) *
+                    impacto;
+            });
+        })
+        document.getElementById('activos_info_table').addEventListener('change', (e) => {
+            if (e.target.getAttribute('data-evaluacion-escenario') == 1) {
+                let impacto = Number(document.getElementById("valorImpacto").value);
+                let contador = e.target.getAttribute('data-contador');
+                let confidencialidad = document.querySelector(
+                    `[name="activosoctave[${contador}][confidencialidad]"]`).value
+                let disponibilidad = document.querySelector(
+                    `[name="activosoctave[${contador}][disponibilidad]"]`).value
+                let integridad = document.querySelector(
+                    `[name="activosoctave[${contador}][integridad]"]`).value
+                let evaluacionRiesgo = document.querySelector(
+                        `[name="activosoctave[${contador}][evaluacion_riesgo]"]`).value = (Number(
+                        confidencialidad) + Number(disponibilidad) + Number(integridad)) *
+                    impacto;
+            }
+        })
     </script>
-
-
 @endsection

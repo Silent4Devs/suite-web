@@ -92,10 +92,12 @@ class MatrizOctave extends Model
 		return $this->belongsTo(AnalisisDeRiesgo::class, 'id_analisis');
 	}
 
-    public function matriz_octave_controles_pivots()
-    {
-        return $this->hasMany(MatrizOctaveControlesPivot::class, 'id_octave');
-    }
-
-
+	public function matriz_octave_controles_pivots()
+	{
+		return $this->hasMany(MatrizOctaveControlesPivot::class, 'id_octave');
+	}
+	public function matrizActivos()
+	{
+		return $this->hasMany(MatrizoctaveActivosInfo::class, 'id_octave', 'id');
+	}
 }
