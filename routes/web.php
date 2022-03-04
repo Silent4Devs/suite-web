@@ -666,8 +666,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
     Route::get('activos/create', 'ActivosInformacionController@create')->name('activosInformacion.create');
     Route::get('activosInformacion/{activo}', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
-    Route::resource('activosInformacion', 'ActivosInformacionController')->except('edit','create');
-
+    Route::resource('activosInformacion', 'ActivosInformacionController')->except('edit', 'create');
 
     // Marca
     Route::get('marcas/get-marcas', 'MarcaController@getMarcas')->name('marcas.getMarcas');
@@ -891,7 +890,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Route::get('carta-aceptacion/riesgos', 'CartadeAceptacionController@ISO31000')->name('matriz-seguridad.ISO31000');
     Route::delete('carta-aceptacion/destroy', 'CartaAceptacionRiesgosController@destroy')->name('carta-aceptacion.destroy');
     Route::resource('carta-aceptacion', 'CartaAceptacionRiesgosController')->except('destroy');
-
 
     // Matriz Riesgos
     Route::get('matriz-riesgos/planes-de-accion/create/{id}', 'MatrizRiesgosController@createPlanAccion')->name('matriz-riesgos.createPlanAccion');

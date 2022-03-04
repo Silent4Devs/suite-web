@@ -247,7 +247,6 @@ class ActivosController extends Controller
         $subcategoriaSeleccionado = $activo->subtipo_id;
         // dd($subcategoriaSeleccionado);
         return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'activo', 'procesos', 'categoriasSeleccionado', 'subcategoriaSeleccionado'));
-
     }
 
     public function update(UpdateActivoRequest $request, Activo $activo)
