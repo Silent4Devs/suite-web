@@ -71,14 +71,14 @@
 
 
                     <div class="form-group col-md-4">
-                        <label for="id_empleado"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
+                        <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
                         <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
-                            name="id_empleado" id="id_elaboro">
+                            name="id_elaboro" id="id_elaboro">
                             <option value="">Seleccione una opción</option>
                             @foreach ($empleados as $id => $empleado)
                                 <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                                     data-area="{{ $empleado->area->area }}"
-                                    {{ old('id_empleado', $analisis->id_empleado) == $empleado->id ? 'selected' : '' }}>
+                                    {{ old('id_elaboro', $analisis->id_elaboro) == $empleado->id ? 'selected' : '' }}>
 
                                     {{ $empleado->name }}
                                 </option>

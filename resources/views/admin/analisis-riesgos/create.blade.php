@@ -57,19 +57,19 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_empleado"><i class="fas fa-user-tie iconos-crear"></i>Elaboró </label>
-                        <select class="form-control {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
-                            name="id_empleado" id="id_empleado">
-                            <option value disabled {{ old('id_empleado', null) === null ? 'selected' : '' }}>
+                        <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró </label>
+                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
+                            name="id_elaboro" id="id_elaboro">
+                            <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach ($empleados as $key => $label)
                                 <option value="{{ $label->id }}">{{ $label->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @if ($errors->has('id_empleado'))
+                        @if ($errors->has('id_elaboro'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('id_empleado') }}
+                                {{ $errors->first('id_elaboro') }}
                             </div>
                         @endif
                     </div>
