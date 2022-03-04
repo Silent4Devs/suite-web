@@ -199,4 +199,9 @@ class AccionCorrectiva extends Model implements HasMedia
     {
         return $this->hasMany(ActividadAccionCorrectiva::class, 'accion_correctiva_id', 'id');
     }
+
+    public function analisis()
+    {
+        return $this->hasMany(AnalisisAccionCorrectiva::class, 'accion_correctiva_id', 'id');
+    }
 }

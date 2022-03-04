@@ -1051,6 +1051,7 @@ class EV360EvaluacionesController extends Controller
                 $calificacion_final += $evaluacion->peso_general_objetivos;
             }
         }
+
         return [
             'lista_autoevaluacion' => $lista_autoevaluacion,
             'lista_jefe_inmediato' => $lista_jefe_inmediato,

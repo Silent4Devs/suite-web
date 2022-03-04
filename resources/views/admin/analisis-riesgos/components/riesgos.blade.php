@@ -29,4 +29,14 @@
             </a>
         </li>
     @endcan
+
+        <li>
+            <a href="{{ route('admin.carta-aceptacion.index') }}">
+                <div>
+                    <i class="far fa-file-alt" style="font-size: 35pt;"></i><br>
+                    Cartas de Aceptación
+                </div>
+            </a>
+        </li>
+
 </ul>

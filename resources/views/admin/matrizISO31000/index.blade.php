@@ -9,7 +9,10 @@
         @can('configuracion_sede_create')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'MatrizRiesgo', 'route' => 'admin.matriz-riesgos.parseCsvImport'])
+                    @include('csvImport.modal', [
+                        'model' => 'MatrizRiesgo',
+                        'route' => 'admin.matriz-riesgos.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -43,8 +46,8 @@
                     @endcan --}}
 
                     <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                    href="{{ route('admin.matriz-seguridad.ISO31000Create')}}" type="submit"
-                    name="action">Agregar nuevo</a>
+                        href="{{ route('admin.matriz-seguridad.ISO31000Create') }}?id_analisis={{ $id_matriz }}"
+                        type="submit" name="action">Agregar nuevo</a>
 
                 </div>
                 <table class="table table-bordered w-100 datatable datatable-Matriz">
@@ -52,7 +55,8 @@
                         <tr class="negras">
                             <th class="text-center" style="background-color:#3490DC;" colspan="4">Descripción General
                             </th>
-                            <th class="text-center" style="background-color:#1168af;" colspan="7">Evaluación de Impactos Asociados al Proceso</th>
+                            <th class="text-center" style="background-color:#1168af;" colspan="7">Evaluación de Impactos
+                                Asociados al Proceso</th>
                             <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
                         </tr>
                         <tr>
@@ -75,7 +79,7 @@
                                 Operacional
                             </th>
                             <th>
-                               Cumplimiento
+                                Cumplimiento
                             </th>
                             <th>
                                 Legal
@@ -89,7 +93,7 @@
                             <th>
                                 Valor de impacto
                             </th>
-                           <th>
+                            <th>
                                 Opciones
                             </th>
                         </tr>
@@ -117,13 +121,12 @@
             </div>
         @endif
     </div>
-
-
 @endsection
 
 @section('scripts')
     @parent
     <script>
+        let idMatriz = @json($id_matriz);
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
@@ -225,13 +228,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -253,52 +256,57 @@
                 aaSorting: [],
                 // ajax: "/admin/matriz-seguridad?id=" + id_matriz,
                 columns: [{
+                        data: 'proveedores',
+                        name: 'proveedores'
+                    },
+                    {
+                        data: 'servicio',
+                        name: 'servicio'
+                    },
+                    {
                         data: 'id_proceso',
                         name: 'id_proceso'
                     },
                     {
-                        data: 'id_responsable',
-                        name: 'id_responsable'
+                        data: 'descripcion_servicio',
+                        name: 'descripcion_servicio'
                     },
                     {
-                        data: 'activo_id',
-                        name: 'activo_id'
+                        data: 'estrategico',
+                        name: 'estrategico'
                     },
                     {
-                        data: 'id_sede',
-                        name: 'id_sede'
+                        data: 'operacional',
+                        name: 'operacional'
                     },
                     {
-                        data: 'id_vulnerabilidad',
-                        name: 'id_vulnerabilidad'
+                        data: 'cumplimiento',
+                        name: 'cumplimiento',
                     },
                     {
-                        data: 'impacto',
-                        name: 'impacto'
+                        data: 'legal',
+                        name: 'legal'
                     },
                     {
-                        data: 'nivelriesgo',
-                        name: 'nivelriesgo',
+                        data: 'reputacional',
+                        name: 'reputacional',
                     },
                     {
-                        data: 'integridad',
-                        name: 'integridad'
+                        data: 'tecnologico',
+                        name: 'tecnologico',
                     },
                     {
-                        data: 'disponibilidad',
-                        name: 'disponibilidad',
+                        data: 'valor',
+                        name: 'valor'
                     },
                     {
-                        data: 'resultadoponderacion',
-                        name: 'resultadoponderacion',
-                    },
-                    {
-                        data: 'probabilidad',
-                        name: 'probabilidad'
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let urlEdit = `/admin/matriz-seguridad/ISO31000/${data}/edit`;
+                            return `
+                            <a href="${urlEdit}?id_analisis=${idMatriz}" class="btn"><i class="fas fa-edit"></i></a>
+                            `;
+                        }
                     }
                 ],
                 orderCellsTop: true,
@@ -317,4 +325,3 @@
         });
     </script>
 @endsection
-

@@ -40,6 +40,7 @@ class ComiteseguridadImport implements ToModel
         if ($empleado_bd) {
             return $empleado_bd->id;
         }
+
         return null;
     }
 }
