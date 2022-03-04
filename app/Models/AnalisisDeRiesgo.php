@@ -35,7 +35,7 @@ class AnalisisDeRiesgo extends Model
     protected $table = 'analisis_de_riesgo';
 
     protected $casts = [
-        'id_empleado' => 'int',
+        'id_elaboro' => 'int',
         'estatus' => 'int',
     ];
 
@@ -48,7 +48,7 @@ class AnalisisDeRiesgo extends Model
         'tipo',
         'fecha',
         'porcentaje_implementacion',
-        'id_empleado',
+        'id_elaboro',
         'estatus',
     ];
 
@@ -68,7 +68,7 @@ class AnalisisDeRiesgo extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_empleado');
+        return $this->belongsTo(Empleado::class, 'id_elaboro');
     }
 
     public function matriz_riesgos()
