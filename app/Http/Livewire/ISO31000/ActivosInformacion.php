@@ -6,7 +6,6 @@ use Livewire\Component;
 
 class ActivosInformacion extends Component
 {
-
     public $confidencialidad = 0;
     public $disponibilidad = 0;
     public $integridad = 0;
@@ -26,7 +25,6 @@ class ActivosInformacion extends Component
     {
         return view('livewire.i-s-o31000.activos-informacion');
     }
-
 
     public function calcularConImpacto($impacto)
     {

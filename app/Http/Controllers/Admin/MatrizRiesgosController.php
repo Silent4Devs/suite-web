@@ -605,6 +605,7 @@ class MatrizRiesgosController extends Controller
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $activosoctave = MatrizOctave::get();
         $matrizOctave = MatrizOctave::with('matrizActivos')->find($id);
+
         return view('admin.OCTAVE.edit', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'duenos', 'custodios', 'activosoctave', 'matrizOctave'))->with('id_analisis', $request->id_analisis);
     }
 
@@ -625,10 +626,12 @@ class MatrizRiesgosController extends Controller
 
         return redirect()->route('admin.matriz-riesgos.octave', ['id' => $request->id_analisis])->with('success', 'Actualizado con éxito');
     }
+
     public function deleteActivoOctave(Request $request)
     {
         $matrizRiesgoOctave = MatrizoctaveActivosInfo::find($request->id);
         $matrizRiesgoOctave->delete();
+
         return response()->json(['status' => 200]);
     }
 
@@ -754,8 +757,10 @@ class MatrizRiesgosController extends Controller
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $activosmatriz31000 = MatrizIso31000::get();
+
         return view('admin.MatrizISO31000.create', compact('activosmatriz31000', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', $request->id_analisis);
     }
+
     public function ISO31000Edit(Request $request, $id)
     {
         $sedes = Sede::get();
@@ -768,6 +773,7 @@ class MatrizRiesgosController extends Controller
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $activosmatriz31000 = MatrizIso31000::find($id);
+
         return view('admin.MatrizISO31000.create', compact('activosmatriz31000', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', $request->id_analisis);
     }
 
@@ -775,6 +781,7 @@ class MatrizRiesgosController extends Controller
     {
         $matrizIso3100 = MatrizIso31000::create($request->all());
         $this->saveUpdateMatriz31000ActivosInfo($request->activosmatriz31000, $matrizIso3100);
+
         return redirect("admin/matriz-seguridad/ISO31000?id={$request->id_analisis}")->with('success', 'Guardado con éxito');
     }
 
@@ -888,6 +895,7 @@ class MatrizRiesgosController extends Controller
 
         return view('admin.NIST.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables', 'matrizNist'))->with('id_analisis', $request->id_analisis);
     }
+
     public function NISTEdit(Request $request, $id)
     {
         $sedes = Sede::get();
@@ -906,12 +914,15 @@ class MatrizRiesgosController extends Controller
     public function NISTStore(Request $request)
     {
         MatrizNist::create($request->all());
+
         return redirect("admin/matriz-seguridad/NIST?id={$request->id_analisis}")->with('success', 'Guardado con éxito');
     }
+
     public function NISTUpdate(Request $request, $id)
     {
         $matrizNist = MatrizNist::find($id);
         $matrizNist->update($request->all());
+
         return redirect("admin/matriz-seguridad/NIST?id={$request->id_analisis}")->with('success', 'Editado con éxito');
     }
 

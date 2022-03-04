@@ -27,15 +27,16 @@ class SelectImpacto extends Component
     {
         $this->calcularValor();
     }
+
     public function updatedProbabilidad($value)
     {
         $this->calcularValor();
     }
+
     public function updatedImpacto($value)
     {
         $this->calcularValor();
     }
-
 
     private function calcularValor()
     {

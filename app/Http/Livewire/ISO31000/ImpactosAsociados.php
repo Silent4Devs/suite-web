@@ -28,22 +28,27 @@ class ImpactosAsociados extends Component
     {
         $this->calcularValor();
     }
+
     public function updatedOperacional($value)
     {
         $this->calcularValor();
     }
+
     public function updatedCumplimiento($value)
     {
         $this->calcularValor();
     }
+
     public function updatedLegal($value)
     {
         $this->calcularValor();
     }
+
     public function updatedReputacional($value)
     {
         $this->calcularValor();
     }
+
     public function updatedTecnologico($value)
     {
         $this->calcularValor();
