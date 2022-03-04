@@ -364,10 +364,26 @@
             const activosmatriz31000 = @json($activosmatriz31000);
             const amenazas = @json($amenazas);
             const vulnerabilidades = @json($vulnerabilidades);
-            // console.log(formulario.confidencialidad);
             let count = 0;
 
-            //   renderizarTablaResponsabilidades(count);
+            if (activosmatriz31000.activos_informacion.length > 0) {
+                activosmatriz31000.activos_informacion.forEach((item, index) => {
+                    let formulario = {
+                        id: item.id,
+                        activosAsociados: null,
+                        contenedorActivoOpcion: item.contenedor_activos,
+                        amenazasInformacion: item.id_amenaza,
+                        vulnerabilidadesInformacion: item.id_vulnerabilidad,
+                        confidencialidadActivo,
+                        escenarioRiesgo,
+                        disponibilidadInformacion,
+                        integridadInformacion,
+                        evaluacionRiesgo,
+                    }
+                    agregarFilaActivosInfo(index, formulario);
+                });
+                count = activosmatriz31000.activos_informacion.length;
+            }
 
             function agregarFilaActivosInfo(contador, formulario) {
                 console.log(formulario)

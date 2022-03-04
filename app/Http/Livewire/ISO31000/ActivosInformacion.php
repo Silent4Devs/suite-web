@@ -16,8 +16,9 @@ class ActivosInformacion extends Component
 
     protected $listeners = ['impactoObtenido31' => 'calcularConImpacto'];
 
-    public function mount()
+    public function mount($impactoOb)
     {
+        $this->impactoOb = $impactoOb;
         $this->calcularValor();
     }
 
