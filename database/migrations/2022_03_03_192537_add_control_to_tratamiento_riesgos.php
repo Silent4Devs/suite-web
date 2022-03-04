@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnsActivosAsociadosToMatriz31000ActivosInfoTable extends Migration
+class AddControlToTratamientoRiesgos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddColumnsActivosAsociadosToMatriz31000ActivosInfoTable extends Migration
      */
     public function up()
     {
-        Schema::table('matriz31000_activos_info', function (Blueprint $table) {
-            $table->string('activos_asociados')->nullable();
+        Schema::table('tratamiento_riesgos', function (Blueprint $table) {
+            $table->dropForeign('control_fk_2444996');
+            $table->foreign('control_id')->references('id')->on('declaracion_aplicabilidad');
         });
     }
 
@@ -25,7 +26,7 @@ class AddColumnsActivosAsociadosToMatriz31000ActivosInfoTable extends Migration
      */
     public function down()
     {
-        Schema::table('matriz31000_activos_info', function (Blueprint $table) {
+        Schema::table('tratamiento_riesgos', function (Blueprint $table) {
             //
         });
     }

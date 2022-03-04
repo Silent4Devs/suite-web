@@ -246,6 +246,7 @@ class Empleado extends Model
         return $this->belongsTo(Area::class, 'area_id', 'id');
     }
 
+
     public function sede()
     {
         return $this->belongsTo(Sede::class, 'sede_id', 'id');

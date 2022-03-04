@@ -14,40 +14,40 @@
             <table class="table table-bordered w-100 datatable-TratamientoRiesgo">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        <th style="min-width: 30px;">
                             {{ trans('cruds.tratamientoRiesgo.fields.id') }}
                         </th>
-                        <th>
+                        <th style="min-width: 100px;">
                             Niveles&nbsp;de&nbsp;riesgo
                         </th>
-                        <th>
+                        <th style="min-width: 300px;">
                             {{ trans('cruds.tratamientoRiesgo.fields.control') }}
                         </th>
-                        <th style="min-width: 500px;">
+                        <th style="min-width: 100px;">
                             {{ trans('cruds.tratamientoRiesgo.fields.acciones') }}
                         </th>
-                        <th>
+                        <th style="min-width: 300px;">
                             {{ trans('cruds.tratamientoRiesgo.fields.responsable') }}
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Fecha&nbsp;compromiso
                         </th>
-                        <th>
+                        <th style="min-width: 100px;">
                             {{ trans('cruds.tratamientoRiesgo.fields.prioridad') }}
                         </th>
-                        <th>
+                        <th style="min-width: 100px;">
                             {{ trans('cruds.tratamientoRiesgo.fields.estatus') }}
                         </th>
-                        <th>
+                        <th style="min-width: 150px;">
                             {{ trans('cruds.tratamientoRiesgo.fields.probabilidad') }}
                         </th>
-                        <th>
+                        <th style="min-width: 150px;">
                             {{ trans('cruds.tratamientoRiesgo.fields.impacto') }}
                         </th>
-                        <th>
+                        <th style="min-width: 150px;">
                             Niveles&nbsp;de&nbsp;riesgo&nbsp;residual
                         </th>
-                        <th>
+                        <th style="min-width: 20px;">
                             Opciones
                         </th>
                     </tr>
@@ -243,8 +243,8 @@
                         name: 'nivelriesgo'
                     },
                     {
-                        data: 'control_control',
-                        name: 'control.control'
+                        data: 'control_id',
+                        name: 'control_id'
                     },
                     {
                         data: 'acciones',
