@@ -53,11 +53,11 @@ class AnalisisDeRiesgo extends Model
     ];
 
     const TipoSelect = [
-        '1' => 'Seguridad de la información',
-        '2'     => 'AMEF',
-        '3' => 'OCTAVE',
-        '4'=> 'NIST',
-        '5' => 'ISO 31000',
+        'Seguridad de la información' => 'Seguridad de la información',
+        'AMEF'     => 'AMEF',
+        'OCTAVE' => 'OCTAVE',
+        'NIST'=> 'NIST',
+        'ISO 31000' => 'ISO 31000',
     ];
 
     const EstatusSelect = [

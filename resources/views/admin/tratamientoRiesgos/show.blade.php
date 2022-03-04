@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-   
+
     {{ Breadcrumbs::render('admin.tratamiento-riesgos.create') }}
- 
+
 <div class="card">
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.tratamientoRiesgo.title') }}
@@ -38,7 +38,7 @@
                             {{ trans('cruds.tratamientoRiesgo.fields.control') }}
                         </th>
                         <td>
-                            {{ $tratamientoRiesgo->control->control ?? '' }}
+                            {{ $tratamientoRiesgo->control->anexo_indice }} {{ $tratamientoRiesgo->control->anexo_politica }}
                         </td>
                     </tr>
                     <tr>

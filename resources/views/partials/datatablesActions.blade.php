@@ -96,6 +96,11 @@
             </a>
         @endcan
     @endif
+    @if (Request::route()->getName() == 'admin.carta-aceptacion.index')
+        <a class="mr-2 rounded btn btn-sm" href="">
+            {{-- {{ trans('global.view') }} --}} <i class="fas fa-envelope" title="Enviar Correo"></i>
+        </a>
+    @endif
     @can($editGate)
         <a class="mr-2 rounded btn btn-sm" href="{{ route('admin.' . $crudRoutePart . '.edit', $row->id) }}">
             {{-- {{ trans('global.edit') }} --}} <i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i>

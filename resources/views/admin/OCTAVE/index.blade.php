@@ -9,7 +9,10 @@
         @can('configuracion_sede_create')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'MatrizRiesgo', 'route' => 'admin.matriz-riesgos.parseCsvImport'])
+                    @include('csvImport.modal', [
+                        'model' => 'MatrizRiesgo',
+                        'route' => 'admin.matriz-riesgos.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -43,16 +46,19 @@
                     @endcan --}}
 
                     <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                    href="{{ route('admin.matriz-riesgos.octave')}}" type="submit"
-                    name="action">Agregar nuevo</a>
-
+                        href="{{ route('admin.matriz-riesgos.octave') }}?id_analisis={{ $id_matriz }}" type="submit"
+                        name="action">Agregar
+                        nuevo</a>
+                    <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
+                        href="{{ route('admin.matriz-octavemapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
                 </div>
                 <table class="table table-bordered w-100 datatable datatable-Matriz">
                     <thead class="thead-dark">
                         <tr class="negras">
                             <th class="text-center" style="background-color:#3490DC;" colspan="6">Descripción General
                             </th>
-                            <th class="text-center" style="background-color:#1168af;" colspan="6">Evaluación de Impactos Asociados al Proceso</th>
+                            <th class="text-center" style="background-color:#1168af;" colspan="6">Evaluación de Impactos
+                                Asociados al Proceso</th>
                             <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
                         </tr>
                         <tr>
@@ -78,7 +84,7 @@
                                 Operacional
                             </th>
                             <th>
-                               Cumplimiento
+                                Cumplimiento
                             </th>
                             <th>
                                 Legal
@@ -92,7 +98,7 @@
                             <th>
                                 Valor de impacto
                             </th>
-                           <th>
+                            <th>
                                 Opciones
                             </th>
                         </tr>
@@ -120,13 +126,12 @@
             </div>
         @endif
     </div>
-
-
 @endsection
 
 @section('scripts')
     @parent
     <script>
+        let idMatriz = @json($id_matriz);
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
@@ -256,56 +261,61 @@
                 aaSorting: [],
                 // ajax: "/admin/matriz-seguridad?id=" + id_matriz,
                 columns: [{
-                        data: 'id_proceso',
-                        name: 'id_proceso'
+                        data: 'vp',
+                        name: 'vp'
                     },
                     {
-                        data: 'id_responsable',
-                        name: 'id_responsable'
+                        data: 'id_area',
+                        name: 'id_area'
                     },
                     {
-                        data: 'activo_id',
-                        name: 'activo_id'
+                        data: 'servicio',
+                        name: 'servicio'
                     },
                     {
                         data: 'id_sede',
                         name: 'id_sede'
                     },
                     {
-                        data: 'id_vulnerabilidad',
-                        name: 'id_vulnerabilidad'
+                        data: 'id_proceso',
+                        name: 'id_proceso'
                     },
                     {
-                        data: 'impacto',
-                        name: 'impacto'
+                        data: 'activo_id',
+                        name: 'activo_id'
                     },
                     {
-                        data: 'nivelriesgo',
-                        name: 'nivelriesgo',
+                        data: 'operacional',
+                        name: 'operacional',
                     },
                     {
-                        data: 'integridad',
-                        name: 'integridad'
+                        data: 'cumplimiento',
+                        name: 'cumplimiento'
                     },
                     {
-                        data: 'disponibilidad',
-                        name: 'disponibilidad',
+                        data: 'legal',
+                        name: 'legal',
                     },
                     {
-                        data: 'resultadoponderacion',
-                        name: 'resultadoponderacion',
+                        data: 'reputacional',
+                        name: 'reputacional',
                     },
                     {
-                        data: 'probabilidad',
-                        name: 'probabilidad'
+                        data: 'tecnologico',
+                        name: 'tecnologico'
                     },
                     {
-                        data: 'impacto',
-                        name: 'impacto'
+                        data: 'valor',
+                        name: 'valor'
                     },
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let urlEdit = `/admin/matriz-riesgo/${data}/octave/edit`;
+                            return `
+                            <a href="${urlEdit}?id_analisis=${idMatriz}" class="btn"><i class="fas fa-edit"></i></a>
+                            `;
+                        }
                     }
                 ],
                 orderCellsTop: true,
