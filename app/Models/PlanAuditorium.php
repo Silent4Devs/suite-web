@@ -44,6 +44,8 @@ class PlanAuditorium extends Model
         'team_id',
     ];
 
+    protected $appends = ['objetivo_html', 'alcance_html', 'criterios_html', 'documento_auditar_html'];
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
@@ -73,4 +75,25 @@ class PlanAuditorium extends Model
     {
         return $this->belongsTo(Team::class);
     }
+
+    public function getObjetivoHtmlAttribute()
+    {
+        return html_entity_decode(strip_tags($this->objetivo), ENT_QUOTES, 'UTF-8');
+    }
+
+    public function getAlcanceHtmlAttribute()
+    {
+        return html_entity_decode(strip_tags($this->alcance), ENT_QUOTES, 'UTF-8');
+    }
+
+    public function getCriteriosHtmlAttribute()
+    {
+        return html_entity_decode(strip_tags($this->criterios), ENT_QUOTES, 'UTF-8');
+    }
+
+    public function getDocumentoAuditarHtmlAttribute()
+    {
+        return html_entity_decode(strip_tags($this->documentoauditar), ENT_QUOTES, 'UTF-8');
+    }
+
 }

@@ -14,24 +14,28 @@ class CategoriaSubcategoria extends Component
     public $categoria;
     public $activo;
     public $subcategoria;
-    public $categoriaSelect = 4;
+    public $categoriasSeleccionado;
+    public $subcategoriaSeleccionado;
 
     public $selectedState = null;
 
-    public function mount()
+    public function mount($categoriasSeleccionado, $subcategoriaSeleccionado)
     {
+        // dd($subcategoriaSeleccionado);
         $this->categorias = Tipoactivo::select('id', 'tipo')->get();
         $this->subcategorias = collect();
+        $this->categoriasSeleccionado = $categoriasSeleccionado;
+        $this->subcategoriaSeleccionado = $subcategoriaSeleccionado;
     }
 
     public function render()
     {
-        return view('livewire.categoria-subcategoria', ['categoriaSelect'=>$this->categoriaSelect]);
+        return view('livewire.categoria-subcategoria');
     }
 
     public function updatedCategoria($value)
     {
-        if (!is_null($value)) {
+        if (is_null($value)) {
             $this->subcategorias = SubcategoriaActivo::select('id', 'subcategoria')->where('categoria_id', $value)->get();
         }
     }
