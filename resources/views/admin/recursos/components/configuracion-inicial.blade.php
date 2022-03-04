@@ -212,11 +212,8 @@
 
         function inicializarInformacionGeneral() {
             tituloInvitaciones.innerHTML = nombreCapacitacion.value;
-            // console.log(tituloInvitaciones);
-            tituloCapacitacionLecciones.innerHTML = nombreCapacitacion.value;
             categoriaInvitaciones.innerHTML = categoria.options[categoria.selectedIndex].getAttribute(
                 'data-nombre');
-
             tipoInvitaciones.innerHTML = selectTipo.value;
             modalidadInvitaciones.innerHTML = selectModalidad.value;
             ubicacionInvitaciones.innerHTML = ubicacionConfInicial.value;
@@ -235,6 +232,7 @@
             categoriaInvitaciones.innerHTML = e.target.options[e.target.options.selectedIndex]
                 .getAttribute(
                     'data-nombre')
+                    console.log("texto");
         });
 
         selectTipo.addEventListener('change', function(e) {
