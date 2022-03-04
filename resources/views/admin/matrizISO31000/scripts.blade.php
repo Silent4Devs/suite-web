@@ -1,76 +1,39 @@
 @section('scripts')
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let responsable = document.querySelector('#id_responsable');
+            let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
+            let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
 
-{{-- <script type=text/javascript>
-    $('#id_responsable').change(function() {
-        var responsableID = $(this).val();
-        if (responsableID) {
-            $.ajax({
-                type: "GET",
-                url: "{{ url('admin/getEmployeeData') }}?id=" + responsableID,
-                success: function(res) {
-                    if (res) {
-                        $("#id_puesto").empty();
-                        $("#id_puesto").attr("value", res.puesto);
-                        $("#id_area").empty();
-                        $("#id_area").attr("value", res.area);
-                    } else {
-                        $("#id_puesto").empty();
-                        $("#id_area").empty();
-                    }
-                }
-            });
-        } else {
-            $("#id_puesto").empty();
-            $("#id_area").empty();
-        }
-    });
-</script> --}}
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let responsable = document.querySelector('#id_responsable');
-        let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
-        let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
-
-        document.getElementById('id_puesto').innerHTML = puesto_init;
-        document.getElementById('id_area').innerHTML = area_init;
-        responsable.addEventListener('change', function(e) {
-            e.preventDefault();
-            let area = this.options[this.selectedIndex].getAttribute('data-area');
-            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('id_puesto').innerHTML = puesto;
-            document.getElementById('id_area').innerHTML = area;
-        })
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let custodio = document.querySelector('#custodio');
-        let area_init = custodio.options[custodio.selectedIndex].getAttribute('data-area');
-        let puesto_init = custodio.options[custodio.selectedIndex].getAttribute('data-puesto');
-
-        document.getElementById('id_custodio_puesto').innerHTML = puesto_init;
-        document.getElementById('id_custodio_area').innerHTML = area_init;
-        custodio.addEventListener('change', function(e) {
-            e.preventDefault();
-            let area = this.options[this.selectedIndex].getAttribute('data-area');
-            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('id_custodio_puesto').innerHTML = puesto;
-            document.getElementById('id_custodio_area').innerHTML = area;
-        })
-    });
-</script>
-
-    <script>
-        $(document).ready(function() {
-            $(".js-example-basic-multiple").select2(
-                'theme': 'bootstrap4',
-                allowClear: true,
-                minimumResultsForSearch: -1,
-            );
+            document.getElementById('id_puesto').innerHTML = puesto_init;
+            document.getElementById('id_area').innerHTML = area_init;
+            responsable.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = this.options[this.selectedIndex].getAttribute('data-area');
+                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('id_puesto').innerHTML = puesto;
+                document.getElementById('id_area').innerHTML = area;
+            })
         });
-    </script>
+    </script> --}}
+
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let custodio = document.querySelector('#custodio');
+            let area_init = custodio.options[custodio.selectedIndex].getAttribute('data-area');
+            let puesto_init = custodio.options[custodio.selectedIndex].getAttribute('data-puesto');
+
+            document.getElementById('id_custodio_puesto').innerHTML = puesto_init;
+            document.getElementById('id_custodio_area').innerHTML = area_init;
+            custodio.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = this.options[this.selectedIndex].getAttribute('data-area');
+                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('id_custodio_puesto').innerHTML = puesto;
+                document.getElementById('id_custodio_area').innerHTML = area;
+            })
+        });
+    </script> --}}
 
     <script type=text/javascript>
         $('#probabilidad').change(function() {
@@ -374,70 +337,71 @@
     </script>
 
     <script type="text/javascript">
-
         $("#ejemplo").click(function() {
-                var val = $(this).val();
-                if(val == 0){
-                    $("#ver1").css("display", "none");
-                    $("#modulo_planaccion").css("display", "block");
-                }else{
-                    $("#ver1").css("display", "block");
-                    $("#modulo_planaccion").css("display", "none");
+            var val = $(this).val();
+            if (val == 0) {
+                $("#ver1").css("display", "none");
+                $("#modulo_planaccion").css("display", "block");
+            } else {
+                $("#ver1").css("display", "block");
+                $("#modulo_planaccion").css("display", "none");
 
-                }
-            });
-
+            }
+        });
     </script>
 
-    <script>
-
+    {{-- <script>
         var numero1 = document.getElementById("numero1").value;
         var numero2 = document.getElementById("numero2").value;
 
         var suma = numero1 + numero2;
 
         document.writeln(suma);
-   </script>
+    </script> --}}
 
     <script>
-    $(document).ready(function () {
-    const activosmatriz31000=@json($activosmatriz31000);
-    const amenazas=@json($amenazas);
-    const vulnerabilidades=@json($vulnerabilidades);
-    // console.log(formulario.confidencialidad);
-    let count = 0;
+        $(document).ready(function() {
+            const activosmatriz31000 = @json($activosmatriz31000);
+            const amenazas = @json($amenazas);
+            const vulnerabilidades = @json($vulnerabilidades);
+            // console.log(formulario.confidencialidad);
+            let count = 0;
 
-    //   renderizarTablaResponsabilidades(count);
+            //   renderizarTablaResponsabilidades(count);
 
-      function agregarFilaActivosInfo(contador,formulario) {
-        //   console.log(formulario.confidencialidad)
-          const contenedorActivosInfo=document.getElementById('contenedor_informacion');
-          let html=`
+            function agregarFilaActivosInfo(contador, formulario) {
+                console.log(formulario)
+                const contenedorActivosInfo = document.getElementById('contenedor_informacion');
+                let html =
+                    `
           <tr>
             <td><input type="hidden" name="activosmatriz31000[${contador}][id]" value="${formulario.id?formulario.id:0}"><input class="form-control" type="text"  name="activosmatriz31000[${contador}][activos_asociados]" value="${formulario.activosAsociados}"></td>
             <td class="col-4"><select class="form-control" name="activosmatriz31000[${contador}][contenedor_activos]" value="${formulario.contenedorActivoOpcion}"><option value="">Seleccione una opción</option>
-            <option  ${formulario.contenedorActivoOpcion == "Soluciones Cloud (Google Workspace-Azure)" ? "selected":''} value="Soluciones Cloud (Google Workspace-Azure)" >Soluciones Cloud (Google Workspace-Azure)</option>
-            <option  ${formulario.contenedorActivoOpcion == "Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" ? "selected":''} value="Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" >Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
-            <option  ${formulario.contenedorActivoOpcion == "Base de Datos" ? "selected":''} value="Base de Datos">Base de Datos</option>
-            <option  ${formulario.contenedorActivoOpcion == "Servidores" ? "selected":''} value="Servidores">Servidores</option>
-            <option  ${formulario.contenedorActivoOpcion == "Aplicaciones Internas (Meltsan-Astro)" ? "selected":''} value="Aplicaciones Internas (Meltsan-Astro)">Aplicaciones Internas (Meltsan-Astro)</option>
-            <option  ${formulario.contenedorActivoOpcion == "Aplicaciones Externas (CRM)" ? "selected":''} value="Aplicaciones Externas (CRM)">Aplicaciones Externas (CRM)</option>
+            <option  ${formulario.contenedorActivoOpcion == "1" ? "selected":''} value="Soluciones Cloud (Google Workspace-Azure)" >Soluciones Cloud (Google Workspace-Azure)</option>
+            <option  ${formulario.contenedorActivoOpcion == "2" ? "selected":''} value="Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)" >Soluciones Corporativas (Equipo de Cómputo-IPAD-Disco Externo-Gavetas)</option>
+            <option  ${formulario.contenedorActivoOpcion == "3" ? "selected":''} value="Base de Datos">Base de Datos</option>
+            <option  ${formulario.contenedorActivoOpcion == "4" ? "selected":''} value="Servidores">Servidores</option>
+            <option  ${formulario.contenedorActivoOpcion == "5" ? "selected":''} value="Aplicaciones Internas (Meltsan-Astro)">Aplicaciones Internas (Meltsan-Astro)</option>
+            <option  ${formulario.contenedorActivoOpcion == "6" ? "selected":''} value="Aplicaciones Externas (CRM)">Aplicaciones Externas (CRM)</option>
             </select></td>
             <td><select class="form-control" value="${formulario.amenazasInformacion}" name="activosmatriz31000[${contador}][id_amenaza]">`
-                amenazas.forEach(amenaza=>{
-                html+=`<option value="${amenaza.id}" ${formulario.amenazasInformacion ==  amenaza.id ? "selected":''} >${amenaza.nombre}</option>`
-            })
-            html+=`</select>
+                amenazas.forEach(amenaza => {
+                    html +=
+                        `<option value="${amenaza.id}" ${formulario.amenazasInformacion ==  amenaza.id ? "selected":''} >${amenaza.nombre}</option>`
+                })
+                html +=
+                    `</select>
             </td>
             <td><select class="form-control" value="${formulario.vulnerabilidadesInformacion}" name="activosmatriz31000[${contador}][id_vulnerabilidad]">`
-                vulnerabilidades.forEach(vulnerabilidad=>{
-                html+=`<option value="${vulnerabilidad.id}" ${formulario.vulnerabilidadesInformacion ==  vulnerabilidad.id ? "selected":''} >${vulnerabilidad.nombre}</option>`
-            })
-            html+=`</select>
+                vulnerabilidades.forEach(vulnerabilidad => {
+                    html +=
+                        `<option value="${vulnerabilidad.id}" ${formulario.vulnerabilidadesInformacion ==  vulnerabilidad.id ? "selected":''} >${vulnerabilidad.nombre}</option>`
+                })
+                html += `</select>
             </td>
             <td><textarea class="form-control" type="text"  name="activosmatriz31000[${contador}][escenario_riesgo]">${formulario.escenarioRiesgo}</textarea></td>
-            <td><select class="form-control" select2 name="activosmatriz31000[${contador}][confidencialidad]" value="${formulario.confidencialidadInformacion}">
-                <option value="">Seleccione una opción</option>
+            <td><select class="form-control" select2 name="activosmatriz31000[${contador}][confidencialidad]" value="${formulario.confidencialidadInformacion}" data-evaluacion-escenario="1" data-contador="${contador}">
+            <option  ${formulario.confidencialidadActivo == "0" ? "selected":''} value="0" >0</option>
             <option  ${formulario.confidencialidadActivo == "1" ? "selected":''} value="1" >1</option>
             <option  ${formulario.confidencialidadActivo == "2" ? "selected":''} value="2">2</option>
             <option  ${formulario.confidencialidadActivo == "3" ? "selected":''} value="3">3</option>
@@ -445,7 +409,7 @@
             <option  ${formulario.confidencialidadActivo == "5" ? "selected":''} value="5">5</option>
             </select>
             </td>
-            <td><select class="form-control"  select2  name="activosmatriz31000[${contador}][disponibilidad]" value="${formulario.disponibilidadInformacion}"><option value="">Seleccione una opción</option>
+            <td><select class="form-control"  select2  name="activosmatriz31000[${contador}][disponibilidad]" data-evaluacion-escenario="1" data-contador="${contador}"><option  ${formulario.disponibilidadInformacion == "0" ? "selected":''} value="0" >0</option>
             <option  ${formulario.disponibilidadInformacion == "1" ? "selected":''} value="1" >1</option>
             <option  ${formulario.disponibilidadInformacion == "2" ? "selected":''} value="2" >2</option>
             <option  ${formulario.disponibilidadInformacion == "3" ? "selected":''} value="3">3</option>
@@ -453,7 +417,7 @@
             <option  ${formulario.disponibilidadInformacion == "5" ? "selected":''} value="5">5</option>
             </select>
             </td>
-            <td><select class="form-control"  select2  name="activosmatriz31000[${contador}][integridad]" value="${formulario.integridadInformacion}"><option value="">Seleccione una opción</option>
+            <td><select class="form-control"  select2  name="activosmatriz31000[${contador}][integridad]" data-evaluacion-escenario="1" data-contador="${contador}"><option  ${formulario.integridadInformacion == "0" ? "selected":''} value="0" >0</option>
             <option  ${formulario.integridadInformacion == "1" ? "selected":''} value="1" >1</option>
             <option  ${formulario.integridadInformacion == "2" ? "selected":''} value="2" >2</option>
             <option  ${formulario.integridadInformacion == "3" ? "selected":''} value="3">3</option>
@@ -461,50 +425,63 @@
             <option  ${formulario.integridadInformacion == "5" ? "selected":''} value="5">5</option>
             </select>
             </td>
-            <td><input class="form-control" type="text" name="activosmatriz31000[${contador}][evaluacion_riesgo]" value="${formulario.evaluacionRiesgo}"></td>
-            <td><button type="button" name="btn-remove-activos" id="" class="btn btn-danger remove">Eliminar</button></td>
+            <td><input class="form-control evaluacion_riesgo" type="text" name="activosmatriz31000[${contador}][evaluacion_riesgo]" data-contador="${contador}" value="${formulario.evaluacionRiesgo}"></td>
+            <td><button type="button" name="btn-remove-activos" id="" class="btn btn-danger remove btn-remove-activos">Eliminar</button></td>
          </tr>
           `
-          contenedorActivosInfo.innerHTML += html;
-            limpiarFormulario();
+                contenedorActivosInfo.innerHTML += html;
+                limpiarFormulario();
 
 
-      }
+            }
 
 
-      function limpiarFormulario(){
-        const activosAsociados = document.getElementById('activos_asociados_informacion').value=null;
-        const ccontenedorActivoOpcion = document.getElementById('contenedor_activo_informacion').value=null;
-        const amenazasInformacion = document.getElementById('amenaza_informacion').value=null;
-        const vulnerabilidadesInformacion = document.getElementById('vulnerabilidad_informacion').value=null;
-        const confidencialidadActivo = document.getElementById('confidencialidad_informacion').value=null;
-        const escenarioRiesgo = document.getElementById('escenario_riesgo_informacion').value=null;
-        const disponibilidadInformacion = document.getElementById('disponibilidad_informacion').value=null;
-        const integridadInformacion = document.getElementById('integridad_informacion').value=null;
-        const evaluacionRiesgo = document.getElementById('evaluación_riesgo_informacion').value=null;
-      }
+            function limpiarFormulario() {
+                const activosAsociados = document.getElementById('activos_asociados_informacion').value = null;
+                const ccontenedorActivoOpcion = document.getElementById('contenedor_activo_informacion').value =
+                    null;
+                const amenazasInformacion = document.getElementById('amenaza_informacion').value = null;
+                const vulnerabilidadesInformacion = document.getElementById('vulnerabilidad_informacion').value =
+                    null;
+                const confidencialidadActivo = document.getElementById('confidencialidad_informacion').value = null;
+                const escenarioRiesgo = document.getElementById('escenario_riesgo_informacion').value = null;
+                const disponibilidadInformacion = document.getElementById('disponibilidad_informacion').value =
+                    null;
+                const integridadInformacion = document.getElementById('integridad_informacion').value = null;
+                const evaluacionRiesgo = document.getElementById('evaluación_riesgo_informacion').value = null;
+                $('#confidencialidad_informacion').val('0').trigger('change');
+                $('#disponibilidad_informacion').val('0').trigger('change');
+                $('#integridad_informacion').val('0').trigger('change');
+            }
 
-      function  limpiarErrores() {
+            function limpiarErrores() {
                 document.querySelectorAll('.errores').forEach(item => {
                     item.innerText = null
                 })
             }
 
 
-      $(document).on("click", "#btn-suscribir-activos_info", function () {
-        limpiarErrores()
-        const activosAsociados = document.getElementById('activos_asociados_informacion').value;
-        const contenedorActivoOpcion = document.getElementById('contenedor_activo_informacion').value;
-        const amenazasInformacion = document.getElementById('amenaza_informacion').value;
-        const vulnerabilidadesInformacion = document.getElementById('vulnerabilidad_informacion').value;
-        const confidencialidadActivo = document.getElementById('confidencialidad_informacion').value;
-        const escenarioRiesgo = document.getElementById('escenario_riesgo_informacion').value;
-        const disponibilidadInformacion = document.getElementById('disponibilidad_informacion').value;
-        const integridadInformacion = document.getElementById('integridad_informacion').value;
-        const evaluacionRiesgo = document.getElementById('evaluación_riesgo_informacion').value;
+            $(document).on("click", "#btn-suscribir-activos_info", function() {
+                limpiarErrores()
+                const activosAsociados = document.getElementById('activos_asociados_informacion').value;
+                const contenedorActivoOpcion = document.getElementById('contenedor_activo_informacion')
+                    .value;
+                const amenazasInformacion = document.getElementById('amenaza_informacion').value;
+                const vulnerabilidadesInformacion = document.getElementById('vulnerabilidad_informacion')
+                    .value;
+                const confidencialidadActivo = document.getElementById('confidencialidad_informacion')
+                    .value;
+                const escenarioRiesgo = document.getElementById('escenario_riesgo_informacion').value;
+                const disponibilidadInformacion = document.getElementById('disponibilidad_informacion')
+                    .value;
+                const integridadInformacion = document.getElementById('integridad_informacion').value;
+                const evaluacionRiesgo = document.getElementById('evaluación_riesgo_informacion').value;
 
-          if(activosAsociados  =="" || contenedorActivoOpcion ==""  || amenazasInformacion =="" || vulnerabilidadesInformacion ==""  || confidencialidadActivo =="" || escenarioRiesgo  =="" ||
-          disponibilidadInformacion =="" || integridadInformacion =="" || evaluacionRiesgo ==""){
+                if (activosAsociados == "" || contenedorActivoOpcion == "" || amenazasInformacion == "" ||
+                    vulnerabilidadesInformacion == "" || confidencialidadActivo == "" || escenarioRiesgo ==
+                    "" ||
+                    disponibilidadInformacion == "" || integridadInformacion == "" || evaluacionRiesgo == ""
+                ) {
                     if (activosAsociados == "") {
                         document.querySelector('.activos_asociados_error').innerText =
                             "Debes agregar un activo asociado ";
@@ -542,47 +519,75 @@
                             "Debes agregar evaluación";
                     }
 
-                }else{
+                } else {
                     let formulario = {
-                    activosAsociados,
-                    contenedorActivoOpcion,
-                    amenazasInformacion,
-                    vulnerabilidadesInformacion,
-                    confidencialidadActivo,
-                    escenarioRiesgo,
-                    disponibilidadInformacion,
-                    integridadInformacion,
-                    evaluacionRiesgo,
+                        activosAsociados,
+                        contenedorActivoOpcion,
+                        amenazasInformacion,
+                        vulnerabilidadesInformacion,
+                        confidencialidadActivo,
+                        escenarioRiesgo,
+                        disponibilidadInformacion,
+                        integridadInformacion,
+                        evaluacionRiesgo,
+                    }
+
+
+                    agregarFilaActivosInfo(count, formulario);
+                    count++;
                 }
 
+            });
 
-                agregarFilaActivosInfo(count, formulario);
-                count++;
-                }
-
-      });
-
-      $(document).on("click", ".btn-remove-activos", function () {
-        $(this).closest("tr").remove();
-        count --;
-      });
+            $(document).on("click", ".btn-remove-activos", function() {
+                $(this).closest("tr").remove();
+                count--;
+            });
 
 
-    });
-  </script>
+        });
+    </script>
 
     <script type="text/javascript">
         $(document).on('change', '#selectValorCritico', function(event) {
             let optionSelected = $('#selectValorCritico option:selected').val();
             // console.log(optionSelected);
-           $('#selectValorCritico').removeClass('bajo');
-           $('#selectValorCritico').removeClass('medio');
-           $('#selectValorCritico').removeClass('alto');
-           $('#selectValorCritico').removeClass('critico');
-           $('#selectValorCritico').addClass(optionSelected);
+            $('#selectValorCritico').removeClass('bajo');
+            $('#selectValorCritico').removeClass('medio');
+            $('#selectValorCritico').removeClass('alto');
+            $('#selectValorCritico').removeClass('critico');
+            $('#selectValorCritico').addClass(optionSelected);
 
         });
+        Livewire.on('impactoObtenido31', impacto => {
+            console.log(impacto);
+            document.querySelectorAll('.evaluacion_riesgo').forEach(el => {
+                let contador = el.getAttribute('data-contador');
+                let confidencialidad = document.querySelector(
+                    `[name="activosmatriz31000[${contador}][confidencialidad]"]`).value
+                let disponibilidad = document.querySelector(
+                    `[name="activosmatriz31000[${contador}][disponibilidad]"]`).value
+                let integridad = document.querySelector(
+                    `[name="activosmatriz31000[${contador}][integridad]"]`).value
+                el.value = (Number(confidencialidad) + Number(disponibilidad) + Number(integridad)) *
+                    impacto;
+            });
+        })
+        document.getElementById('activos_info_table').addEventListener('change', (e) => {
+            if (e.target.getAttribute('data-evaluacion-escenario') == 1) {
+                let impacto = Number(document.getElementById("valor").value);
+                let contador = e.target.getAttribute('data-contador');
+                let confidencialidad = document.querySelector(
+                    `[name="activosmatriz31000[${contador}][confidencialidad]"]`).value
+                let disponibilidad = document.querySelector(
+                    `[name="activosmatriz31000[${contador}][disponibilidad]"]`).value
+                let integridad = document.querySelector(
+                    `[name="activosmatriz31000[${contador}][integridad]"]`).value
+                let evaluacionRiesgo = document.querySelector(
+                        `[name="activosmatriz31000[${contador}][evaluacion_riesgo]"]`).value = (Number(
+                        confidencialidad) + Number(disponibilidad) + Number(integridad)) *
+                    impacto;
+            }
+        })
     </script>
-
-
 @endsection
