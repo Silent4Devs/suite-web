@@ -509,7 +509,7 @@
                             </select>
                             </td>
                             <td><input class="form-control evaluacion_riesgo" type="text" name="activosoctave[${contador}][evaluacion_riesgo]" value="${formulario.evaluacionRiesgo}" readonly data-contador="${contador}"></td>
-                            <td><button type="button" name="btn-remove-activos" id="" class="btn btn-danger remove">Eliminar</button></td>
+                            <td><button type="button" name="btn-remove-activos" id="" class="btn btn-danger remove btn-remove-activos" data-delete-back="${formulario.id?formulario.id:0}">Eliminar</button></td>
                         </tr>
                     `
                 $("#contenedor_informacion").append(html);
@@ -649,8 +649,42 @@
             });
 
             $(document).on("click", ".btn-remove-activos", function() {
-                $(this).closest("tr").remove();
-                count--;
+                let fila = this;
+                if (this.getAttribute('data-delete-back') > 0) {
+                    Swal.fire({
+                        title: '¿Quieres eliminar esta fila?',
+                        text: "¡No puedes revertir esto!",
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Eliminar',
+                        cancelButtonText: 'Conservar',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                url: "{{ route('admin.matriz-riesgo.octave.activo.delete') }}",
+                                data: {
+                                    id: this.getAttribute('data-delete-back')
+                                },
+                                dataType: "JSON",
+                                success: function(response) {
+                                    toastr.success('Se ha eliminado el activo');
+                                    $(fila).closest("tr").remove();
+                                    count--;
+                                }
+                            });
+                        }
+                    })
+                } else {
+                    $(this).closest("tr").remove();
+                    count--;
+                }
             });
 
 
