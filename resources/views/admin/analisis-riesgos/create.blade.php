@@ -144,7 +144,7 @@
 
 @section('scripts')
     <script type=text/javascript>
-        $('#id_empleado').change(function() {
+        $('#id_elaboro').change(function() {
             var elaboroID = $(this).val();
             if (elaboroID) {
                 $.ajax({
