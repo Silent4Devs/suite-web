@@ -16,7 +16,7 @@ class ActivosInformacionController extends Controller
     {
         $activos = ActivoInformacion::get();
 
-        return view('admin.activosInformacion.index', compact('activos'));
+        return view('admin.ActivosInformacion.index', compact('activos'));
     }
 
     public function create()
@@ -26,14 +26,14 @@ class ActivosInformacionController extends Controller
         $area = Area::get();
         $procesos = Proceso::with('macroproceso')->get();
 
-        return view('admin.activosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos'));
+        return view('admin.ActivosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos'));
     }
 
     public function store(Request $request)
     {
         $subtipos = ActivoInformacion::create($request->all());
 
-        return redirect()->route('admin.activosInformacion.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.ActivosInformacion.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit($activos)
@@ -42,7 +42,7 @@ class ActivosInformacionController extends Controller
         $empleados = Empleado::with('area')->get();
         $procesos = Proceso::with('macroproceso')->get();
 
-        return view('admin.activosInformacion.edit', compact('activos', 'empleados', 'procesos'));
+        return view('admin.ActivosInformacion.edit', compact('activos', 'empleados', 'procesos'));
     }
 
     public function update(Request $request, $activos)
@@ -50,7 +50,7 @@ class ActivosInformacionController extends Controller
         $activos = ActivoInformacion::find($activos);
         $activos->update($request->all());
 
-        return redirect()->route('admin.activosInformacion.index');
+        return redirect()->route('admin.ActivosInformacion.index');
     }
 
     public function destroy($id)
@@ -59,6 +59,6 @@ class ActivosInformacionController extends Controller
         $activo->delete();
         $activos = ActivoInformacion::get();
 
-        return view('admin.activosInformacion.index', compact('activos'));
+        return view('admin.ActivosInformacion.index', compact('activos'));
     }
 }
