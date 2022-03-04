@@ -5,12 +5,12 @@
 <h5 class="col-12 titulo_general_funcion">Editar: Tratamiento de los Riesgos</h5>
 <div class="mt-4 card">
     <div class="card-body">
-        <form method="POST" class="row" action="{{ route("admin.tratamiento-riesgos.update", [$tratamientoRiesgo->id]) }}" enctype="multipart/form-data">
+        <form method="POST" class="row" action="{{ route("admin.tratamiento-riesgos.update", [$tratamientos->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
            <div class="form-group col-md-6">
                 <label for="nivelriesgo"><i class="fas fa-chart-bar iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.nivelriesgo') }}</label>
-                <input class="form-control {{ $errors->has('nivelriesgo') ? 'is-invalid' : '' }}" type="text" name="nivelriesgo" id="nivelriesgo" value="{{ old('nivelriesgo', $tratamientoRiesgo->nivelriesgo) }}">
+                <input class="form-control {{ $errors->has('nivelriesgo') ? 'is-invalid' : '' }}" type="text" name="nivelriesgo" id="nivelriesgo" value="{{ old('nivelriesgo', $tratamientos->nivelriesgo) }}">
                 @if($errors->has('nivelriesgo'))
                     <div class="invalid-feedback">
                         {{ $errors->first('nivelriesgo') }}
@@ -22,7 +22,9 @@
                 <label for="control_id"><i class="fas fa-chart-area iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.control') }}</label>
                 <select class="form-control select2 {{ $errors->has('control') ? 'is-invalid' : '' }}" name="control_id" id="control_id">
                     @foreach($controls as $id => $control)
-                        <option value="{{ $id }}" {{ (old('control_id') ? old('control_id') : $tratamientoRiesgo->control->id ?? '') == $id ? 'selected' : '' }}>{{ $control }}</option>
+                        <option value="{{ $control->id }}"
+                        {{ old('control_id', $tratamientos->control_id) == $control->id ? 'selected' : '' }}
+                        >{{ $control->anexo_indice }} {{ $control->anexo_politica }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('control'))
@@ -34,7 +36,7 @@
             </div>
            <div class="form-group col-12">
                 <label for="acciones"><i class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.acciones') }}</label>
-                <textarea class="form-control {{ $errors->has('acciones') ? 'is-invalid' : '' }}" name="acciones" id="acciones">{{ old('acciones', $tratamientoRiesgo->acciones) }}</textarea>
+                <textarea class="form-control {{ $errors->has('acciones') ? 'is-invalid' : '' }}" name="acciones" id="acciones">{{ old('acciones', $tratamientos->acciones) }}</textarea>
                 @if($errors->has('acciones'))
                     <div class="invalid-feedback">
                         {{ $errors->first('acciones') }}
@@ -49,7 +51,7 @@
                     @foreach ($empleados as $id => $empleado)
                         <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                             data-area="{{ $empleado->area->area }}"
-                            {{ old('id_reviso', $tratamientoRiesgo->id_reviso) == $empleado->id ? 'selected' : '' }}>
+                            {{ old('id_reviso', $tratamientos->id_reviso) == $empleado->id ? 'selected' : '' }}>
 
                             {{ $empleado->name }}
                         </option>
@@ -65,7 +67,7 @@
                 <label for="fechacompromiso"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de entrada en vigor</label>
                 <input class="form-control {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}"
                     type="date" name="fechacompromiso" id="fechacompromiso"
-                    value="{{ old('fechacompromiso',\Carbon\Carbon::parse($tratamientoRiesgo->fechacompromiso))->format('Y-m-d') }}">
+                    value="{{ old('fechacompromiso',\Carbon\Carbon::parse($tratamientos->fechacompromiso))->format('Y-m-d') }}">
                 @if ($errors->has('fechacompromiso'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fechacompromiso') }}
@@ -77,7 +79,7 @@
                 <select class="form-control {{ $errors->has('prioridad') ? 'is-invalid' : '' }}" name="prioridad" id="prioridad">
                     <option value disabled {{ old('prioridad', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\TratamientoRiesgo::PRIORIDAD_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('prioridad', $tratamientoRiesgo->prioridad) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                        <option value="{{ $key }}" {{ old('prioridad', $tratamientos->prioridad) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('prioridad'))
@@ -89,7 +91,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="estatus"><i class="fas fa-signal iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.estatus') }}</label>
-                <input class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" type="text" name="estatus" id="estatus" value="{{ old('estatus', $tratamientoRiesgo->estatus) }}">
+                <input class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" type="text" name="estatus" id="estatus" value="{{ old('estatus', $tratamientos->estatus) }}">
                 @if($errors->has('estatus'))
                     <div class="invalid-feedback">
                         {{ $errors->first('estatus') }}
@@ -99,7 +101,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="probabilidad"><i class="fas fa-percentage iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.probabilidad') }}</label>
-                <input class="form-control {{ $errors->has('probabilidad') ? 'is-invalid' : '' }}" type="text" name="probabilidad" id="probabilidad" value="{{ old('probabilidad', $tratamientoRiesgo->probabilidad) }}">
+                <input class="form-control {{ $errors->has('probabilidad') ? 'is-invalid' : '' }}" type="text" name="probabilidad" id="probabilidad" value="{{ old('probabilidad', $tratamientos->probabilidad) }}">
                 @if($errors->has('probabilidad'))
                     <div class="invalid-feedback">
                         {{ $errors->first('probabilidad') }}
@@ -109,7 +111,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="impacto"><i class="fas fa-chart-line iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.impacto') }}</label>
-                <input class="form-control {{ $errors->has('impacto') ? 'is-invalid' : '' }}" type="text" name="impacto" id="impacto" value="{{ old('impacto', $tratamientoRiesgo->impacto) }}">
+                <input class="form-control {{ $errors->has('impacto') ? 'is-invalid' : '' }}" type="text" name="impacto" id="impacto" value="{{ old('impacto', $tratamientos->impacto) }}">
                 @if($errors->has('impacto'))
                     <div class="invalid-feedback">
                         {{ $errors->first('impacto') }}
@@ -119,7 +121,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="nivelriesgoresidual"><i class="fas fa-chart-bar iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.nivelriesgoresidual') }}</label>
-                <input class="form-control {{ $errors->has('nivelriesgoresidual') ? 'is-invalid' : '' }}" type="text" name="nivelriesgoresidual" id="nivelriesgoresidual" value="{{ old('nivelriesgoresidual', $tratamientoRiesgo->nivelriesgoresidual) }}">
+                <input class="form-control {{ $errors->has('nivelriesgoresidual') ? 'is-invalid' : '' }}" type="text" name="nivelriesgoresidual" id="nivelriesgoresidual" value="{{ old('nivelriesgoresidual', $tratamientos->nivelriesgoresidual) }}">
                 @if($errors->has('nivelriesgoresidual'))
                     <div class="invalid-feedback">
                         {{ $errors->first('nivelriesgoresidual') }}
