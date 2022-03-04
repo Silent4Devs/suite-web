@@ -48,7 +48,7 @@ class AnalisisDeRiesgo extends Model
         'tipo',
         'fecha',
         'porcentaje_implementacion',
-        'id_elaboro',
+        'id_empleado',
         'estatus',
     ];
 
@@ -68,7 +68,7 @@ class AnalisisDeRiesgo extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_elaboro');
+        return $this->belongsTo(Empleado::class, 'id_empleado');
     }
 
     public function matriz_riesgos()
