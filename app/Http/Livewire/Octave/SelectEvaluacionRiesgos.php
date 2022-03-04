@@ -14,7 +14,7 @@ class SelectEvaluacionRiesgos extends Component
     public $colorTextoTipo;
     public $impactoOb = 5;
 
-    protected  $listeners = ['impactoObtenido' => 'calcularConImpacto'];
+    protected $listeners = ['impactoObtenido' => 'calcularConImpacto'];
 
     public function mount($impactoOb)
     {
@@ -37,10 +37,12 @@ class SelectEvaluacionRiesgos extends Component
     {
         $this->calcularValor();
     }
+
     public function updatedDisponibilidad()
     {
         $this->calcularValor();
     }
+
     public function updatedIntegridad()
     {
         $this->calcularValor();
@@ -58,20 +60,20 @@ class SelectEvaluacionRiesgos extends Component
     private function calcularReglaColoresTipo($valor)
     {
         if ($valor <= 10) {
-            $this->colorReglaTipo = "#6AA84F";
-            $this->colorTextoTipo = "#fff";
+            $this->colorReglaTipo = '#6AA84F';
+            $this->colorTextoTipo = '#fff';
         } elseif ($valor <= 23) {
-            $this->colorReglaTipo = "#00FF00";
-            $this->colorTextoTipo = "#000";
+            $this->colorReglaTipo = '#00FF00';
+            $this->colorTextoTipo = '#000';
         } elseif ($valor <= 42) {
-            $this->colorReglaTipo = "#FFFF00";
-            $this->colorTextoTipo = "#000";
+            $this->colorReglaTipo = '#FFFF00';
+            $this->colorTextoTipo = '#000';
         } elseif ($valor <= 61) {
-            $this->colorReglaTipo = "#FF9900";
-            $this->colorTextoTipo = "#fff";
+            $this->colorReglaTipo = '#FF9900';
+            $this->colorTextoTipo = '#fff';
         } else {
-            $this->colorReglaTipo = "#FF0000";
-            $this->colorTextoTipo = "#fff";
+            $this->colorReglaTipo = '#FF0000';
+            $this->colorTextoTipo = '#fff';
         }
     }
 }

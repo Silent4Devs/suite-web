@@ -15,7 +15,6 @@ class SelectImpactos extends Component
     public $colorReglaTipo;
     public $colorTextoTipo;
 
-
     public function mount($operacionalId, $cumplimientoId, $legalId, $reputacionalId, $tecnologicoId)
     {
         if (!is_null($operacionalId)) {
@@ -50,14 +49,17 @@ class SelectImpactos extends Component
     {
         $this->calcularValor();
     }
+
     public function updatedLegalId($value)
     {
         $this->calcularValor();
     }
+
     public function updatedReputacionalId($value)
     {
         $this->calcularValor();
     }
+
     public function updatedTecnologicoId($value)
     {
         $this->calcularValor();
@@ -78,20 +80,20 @@ class SelectImpactos extends Component
     private function calcularReglaColoresTipo($valor)
     {
         if ($valor <= 5) {
-            $this->colorReglaTipo = "#6AA84F";
-            $this->colorTextoTipo = "#fff";
+            $this->colorReglaTipo = '#6AA84F';
+            $this->colorTextoTipo = '#fff';
         } elseif ($valor <= 10) {
-            $this->colorReglaTipo = "#00FF00";
-            $this->colorTextoTipo = "#000";
+            $this->colorReglaTipo = '#00FF00';
+            $this->colorTextoTipo = '#000';
         } elseif ($valor <= 15) {
-            $this->colorReglaTipo = "#FFFF00";
-            $this->colorTextoTipo = "#000";
+            $this->colorReglaTipo = '#FFFF00';
+            $this->colorTextoTipo = '#000';
         } elseif ($valor <= 20) {
-            $this->colorReglaTipo = "#FF9900";
-            $this->colorTextoTipo = "#fff";
+            $this->colorReglaTipo = '#FF9900';
+            $this->colorTextoTipo = '#fff';
         } else {
-            $this->colorReglaTipo = "#FF0000";
-            $this->colorTextoTipo = "#fff";
+            $this->colorReglaTipo = '#FF0000';
+            $this->colorTextoTipo = '#fff';
         }
     }
 }
