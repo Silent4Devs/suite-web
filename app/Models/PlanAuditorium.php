@@ -95,5 +95,4 @@ class PlanAuditorium extends Model
     {
         return html_entity_decode(strip_tags($this->documentoauditar), ENT_QUOTES, 'UTF-8');
     }
-
 }

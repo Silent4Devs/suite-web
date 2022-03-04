@@ -7,7 +7,6 @@ use App\Http\Requests\MassDestroyTratamientoRiesgoRequest;
 use App\Http\Requests\StoreTratamientoRiesgoRequest;
 use App\Http\Requests\UpdateTratamientoRiesgoRequest;
 use App\Models\DeclaracionAplicabilidad;
-use App\Models\Controle;
 use App\Models\Empleado;
 use App\Models\Team;
 use App\Models\TratamientoRiesgo;
@@ -102,7 +101,6 @@ class TratamientoRiesgosController extends Controller
     {
         abort_if(Gate::denies('tratamiento_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
         $controls = DeclaracionAplicabilidad::with('control')->get();
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::with('area')->get();
@@ -118,7 +116,7 @@ class TratamientoRiesgosController extends Controller
         return redirect()->route('admin.tratamiento-riesgos.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit( $tratamientos)
+    public function edit($tratamientos)
     {
         abort_if(Gate::denies('tratamiento_riesgo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -127,7 +125,7 @@ class TratamientoRiesgosController extends Controller
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.tratamientoRiesgos.edit', compact('tratamientos','controls', 'responsables','empleados'));
+        return view('admin.tratamientoRiesgos.edit', compact('tratamientos', 'controls', 'responsables', 'empleados'));
     }
 
     public function update(UpdateTratamientoRiesgoRequest $request, TratamientoRiesgo $tratamientoRiesgo)
