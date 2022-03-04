@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-    
+
     {{ Breadcrumbs::render('admin.tratamiento-riesgos.create') }}
-<h5 class="col-12 titulo_general_funcion">Registrar: Tratamiento de los Riesgos</h5>    
+<h5 class="col-12 titulo_general_funcion">Registrar: Tratamiento de los Riesgos</h5>
 <div class="card mt-4">
     <div class="card-body">
         <form method="POST" action="{{ route("admin.tratamiento-riesgos.store") }}" enctype="multipart/form-data" class="row">
@@ -21,7 +21,7 @@
                 <label for="control_id"><i class="fas fa-chart-area iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.control') }}</label>
                 <select class="form-control select2 {{ $errors->has('control') ? 'is-invalid' : '' }}" name="control_id" id="control_id">
                     @foreach($controls as $id => $control)
-                        <option value="{{ $id }}" {{ old('control_id') == $id ? 'selected' : '' }}>{{ $control }}</option>
+                        <option value="{{ $control->id }}" {{ old('control_id') == $id ? 'selected' : '' }}>{{ $control->anexo_indice }} {{ $control->anexo_politica }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('control'))
@@ -46,10 +46,10 @@
                 <select class="form-control {{ $errors->has('reviso') ? 'is-invalid' : '' }}" name="id_reviso" id="id_reviso">
                     @foreach ($empleados as $empleado)
                     <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
-            
+
                         {{ $empleado->name }}
                     </option>
-            
+
                     @endforeach
                 </select>
                 @if ($errors->has('empleados'))
@@ -69,7 +69,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.fechacompromiso_helper') }}</span>
             </div>
-            
+
             <div class="form-group col-md-6">
                 <label><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.prioridad') }}</label>
                 <select class="form-control {{ $errors->has('prioridad') ? 'is-invalid' : '' }}" name="prioridad" id="prioridad">

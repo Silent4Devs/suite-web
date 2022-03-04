@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .text-orange {
             color: orange !important;
@@ -478,147 +477,145 @@
         }
 
         span.red {
-        background: red;
-        border-radius: 0.8em;
-        -moz-border-radius: 0.8em;
-        -webkit-border-radius: 0.8em;
-        color: #ffffff;
-        display: inline-block;
-        font-weight: bold;
-        line-height: 1.6em;
-        margin-right: 15px;
-        text-align: center;
-        width: 1.6em;
+            background: red;
+            border-radius: 0.8em;
+            -moz-border-radius: 0.8em;
+            -webkit-border-radius: 0.8em;
+            color: #ffffff;
+            display: inline-block;
+            font-weight: bold;
+            line-height: 1.6em;
+            margin-right: 15px;
+            text-align: center;
+            width: 1.6em;
         }
 
     </style>
 
-<style>
+    <style>
+        .select2-results__option {
+            position: relative;
+            padding-left: 30px !important;
 
-    .select2-results__option{
-       position: relative;
-       padding-left:30px !important;
+        }
 
-    }
+        .select2-results__option:nth-child(2)::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(61, 114, 77);
+            margin-left: -20px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
 
-    .select2-results__option:nth-child(2)::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(61, 114, 77);
-        margin-left:-20px;
-        border-radius: 100px;
-        margin-top: 6px;
-    }
+        .select2-selection__rendered[title="1"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(61, 114, 77);
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
 
-    .select2-selection__rendered[title="1"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(61, 114, 77);
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
+        .select2-results__option:nth-child(3)::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(50, 205, 63);
+            margin-left: -20px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
 
-    .select2-results__option:nth-child(3)::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(50, 205, 63);
-        margin-left:-20px;
-        border-radius: 100px;
-        margin-top: 6px;
-    }
+        .select2-selection__rendered[title="2"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(50, 205, 63);
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
 
-    .select2-selection__rendered[title="2"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(50, 205, 63);
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
+        .select2-results__option:nth-child(4)::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: yellow;
+            margin-left: -20px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
 
-    .select2-results__option:nth-child(4)::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:yellow;
-        margin-left:-20px;
-        border-radius: 100px;
-        margin-top: 6px;
-    }
+        .select2-selection__rendered[title="3"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: yellow;
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
 
-    .select2-selection__rendered[title="3"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:yellow;
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
+        .select2-results__option:nth-child(5)::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(255, 136, 0);
+            margin-left: -20px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
 
-    .select2-results__option:nth-child(5)::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(255, 136, 0);
-        margin-left:-20px;
-        border-radius: 100px;
-        margin-top: 6px;
-    }
+        .select2-selection__rendered[title="4"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: rgb(255, 136, 0);
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
 
-    .select2-selection__rendered[title="4"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:rgb(255, 136, 0);
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
+        .select2-results__option:nth-child(6)::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            margin-left: -20px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
 
-   .select2-results__option:nth-child(6)::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:red;
-        margin-left:-20px;
-        border-radius: 100px;
-        margin-top: 6px;
-    }
+        .select2-selection__rendered[title="5"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            margin-left: -18px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
 
-    .select2-selection__rendered[title="5"]::before{
-        position: absolute;
-        content:'';
-        width:10px;
-        height:10px;
-        background-color:red;
-        margin-left:-18px;
-        border-radius: 100px;
-        margin-top: 11px;
-    }
-
-    .select2-selection__rendered{
-        padding-left:30px !important;
-
-
-    }
+        .select2-selection__rendered {
+            padding-left: 30px !important;
 
 
-</style>
+        }
+
+    </style>
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -626,7 +623,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.matriz-riesgos.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.matriz-seguridad.NIST.store') }}" enctype="multipart/form-data">
                 @csrf
 
 
@@ -635,7 +632,7 @@
                     <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>
                 </div>
 
-                {{-- <input type="hidden" value="{{ $id_analisis }}" name="id_analisis"> --}}
+                <input type="hidden" value="{{ $id_analisis }}" name="id_analisis">
 
 
                 <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
@@ -644,120 +641,71 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="nombre"><i class="fas fa-shield-alt iconos-crear"></i>Nombre de la Vulnerabilidad</label><br>
-                        <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
-                        id="nombre" value="{{ old('nombre', '') }}">
+                        <label for="nombre"><i class="fas fa-shield-alt iconos-crear"></i>Nombre de la
+                            Vulnerabilidad</label><br>
+                        <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
+                            name="nombre" id="nombre" value="{{ old('nombre', '') }}">
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="amenaza"><i class="fas fa-shield-alt iconos-crear"></i>Amenaza de la vulnerabilidad</label><br>
-                        <input class="form-control {{ $errors->has('amenaza') ? 'is-invalid' : '' }}" type="text" name="amenaza"
-                        id="amenaza" value="{{ old('amenaza', '') }}">
+                        <label for="amenaza"><i class="fas fa-shield-alt iconos-crear"></i>Amenaza de la
+                            vulnerabilidad</label><br>
+                        <input class="form-control {{ $errors->has('amenaza') ? 'is-invalid' : '' }}" type="text"
+                            name="amenaza" id="amenaza" value="{{ old('amenaza', '') }}">
                     </div>
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="impacto_vulnerabilidad"><i class="fas fa-shield-alt iconos-crear"></i>Impacto de la Vulnerabilidad</label><br>
-                        <input class="form-control {{ $errors->has('impacto_vulnerabilidad') ? 'is-invalid' : '' }}" type="text" name="impacto_vulnerabilidad"
-                        id="impacto_vulnerabilidad" value="{{ old('impacto_vulnerabilidad', '') }}">
+                        <label for="impacto_vulnerabilidad"><i class="fas fa-shield-alt iconos-crear"></i>Impacto de la
+                            Vulnerabilidad</label><br>
+                        <input class="form-control {{ $errors->has('impacto_vulnerabilidad') ? 'is-invalid' : '' }}"
+                            type="text" name="impacto_vulnerabilidad" id="impacto_vulnerabilidad"
+                            value="{{ old('impacto_vulnerabilidad', '') }}">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="aplicaciones"><i class="fas fa-fire iconos-crear"></i>Aplicaciones Impactadas</label><br>
-                        <input class="form-control {{ $errors->has('aplicaciones') ? 'is-invalid' : '' }}" type="text" name="aplicaciones"
-                        id="aplicaciones" value="{{ old('aplicaciones', '') }}">
+                        <label for="aplicaciones"><i class="fas fa-fire iconos-crear"></i>Aplicaciones
+                            Impactadas</label><br>
+                        <input class="form-control {{ $errors->has('aplicaciones') ? 'is-invalid' : '' }}" type="text"
+                            name="aplicaciones" id="aplicaciones" value="{{ old('aplicaciones', '') }}">
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="escenario"><i class="fas fa-fire iconos-crear"></i>Escenario de Riesgo</label><br>
-                        <input class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}" type="text" name="escenario"
-                        id="escenario" value="{{ old('escenario', '') }}">
+                        <input class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}" type="text"
+                            name="escenario" id="escenario" value="{{ old('escenario', '') }}">
                     </div>
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="categoria"><i class="fas fa-fire iconos-crear"></i>Categoría del Riesgo</label><br>
-                        <input class="form-control {{ $errors->has('categoria') ? 'is-invalid' : '' }}" type="text" name="categoria"
-                        id="categoria" value="{{ old('categoria', '') }}">
+                        <input class="form-control {{ $errors->has('categoria') ? 'is-invalid' : '' }}" type="text"
+                            name="categoria" id="categoria" value="{{ old('categoria', '') }}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6 col-sm-12">
                         <label for="causa"><i class="fas fa-seedling iconos-crear"></i>Causa Raíz</label><br>
-                        <input class="form-control {{ $errors->has('causa') ? 'is-invalid' : '' }}" type="text" name="causa"
-                        id="causa" value="{{ old('causa', '') }}">
+                        <input class="form-control {{ $errors->has('causa') ? 'is-invalid' : '' }}" type="text"
+                            name="causa" id="causa" value="{{ old('causa', '') }}">
                     </div>
 
                     <div class="form-group col-md-6 col-sm-12">
                         <label for="tipo"><i class="fas fa-ruler-combined iconos-crear"></i>Tipo de Riesgo</label><br>
-                        <input class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" type="text" name="tipo"
-                        id="tipo" value="{{ old('tipo', '') }}">
+                        <input class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" type="text"
+                            name="tipo" id="tipo" value="{{ old('tipo', '') }}">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="severidad"><i class="fas fa-gavel iconos-crear"></i>Severidad de la Vulnerabilidad</label>
-                        <select class="form-control select2 {{ $errors->has('severidad') ? 'is-invalid' : '' }}" name="severidad" id="severidad">
-                            <option value="" selected>Selecciona</option>
-                            <option value="Uno">1</option>
-                            <option value="Dos">2</option>
-                            <option value="Tres">3</option>
-                            <option value="Cuatro">4</option>
-                            <option value="Cinco">5</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="probabilidad"><i class="fas fa-wave-square iconos-crear"></i>Probabilidad</label>
-                        <select class="form-control select2 {{ $errors->has('probabilidad') ? 'is-invalid' : '' }}" name="probabilidad" id="probabilidad">
-                            <option value="" selected>Selecciona</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-
-                        </select>
-                    </div>
-                </div>
+                @livewire('n-i-s-t.select-impacto',['severidad'=>1,'probabilidad'=>1,'impacto'=>1])
 
                 <div class="row">
-                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="impacto_num"><i class="fas fa-exclamation-triangle iconos-crear"></i>Impacto</label>
-                        <select class="form-control select2 {{ $errors->has('impacto_num') ? 'is-invalid' : '' }}" name="impacto_num" id="impacto_num">
-                            <option value="" selected>Selecciona</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-sm-4 col-md-3 col-lg-3">
-                        <label for="valor"><i class="fas fa-exclamation-circle iconos-crear"></i>Valor del impacto</label>
-                        <input class="form-control mt-2 {{ $errors->has('valor') ? 'is-invalid' : '' }}" type="number" name="valor" id="valor"
-                        value="{{ old('valor', '') }}">
-                        @if ($errors->has('valor'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('valor') }}
-                            </div>
-                        @endif
+                    <div class="col-12" style="text-align: right">
+                        <button type="submit" class="btn btn-danger">Guardar</button>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
-
 @endsection
 
-@include('admin.matrizRiesgos.scripts')
+@section('scripts')
+    @include('admin.NIST.scripts')
+@endsection

@@ -35,7 +35,7 @@ class AnalisisDeRiesgo extends Model
     protected $table = 'analisis_de_riesgo';
 
     protected $casts = [
-        'id_empleado' => 'int',
+        'id_elaboro' => 'int',
         'estatus' => 'int',
     ];
 

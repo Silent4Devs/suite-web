@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class MatrizIso31000
+ * Class MatrizIso31000.
  *
  * @property int $id
  * @property string|null $proveedores
@@ -26,49 +26,50 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Proceso|null $proceso
  * @property AnalisisDeRiesgo|null $analisis_de_riesgo
- *
- * @package App\Models
  */
 class MatrizIso31000 extends Model
 {
-	protected $table = 'matriz_iso31000';
+    protected $table = 'matriz_iso31000';
 
-	protected $casts = [
-		'id_proceso' => 'int',
-		'estrategico' => 'int',
-		'operacional' => 'int',
-		'cumplimiento' => 'int',
-		'legal' => 'int',
-		'reputacional' => 'int',
-		'tecnologico' => 'int',
-		'valor' => 'int',
-		'id_analisis' => 'int'
-	];
+    protected $casts = [
+        'id_proceso' => 'int',
+        'estrategico' => 'int',
+        'operacional' => 'int',
+        'cumplimiento' => 'int',
+        'legal' => 'int',
+        'reputacional' => 'int',
+        'tecnologico' => 'int',
+        'valor' => 'int',
+        'id_analisis' => 'int',
+    ];
 
-	protected $fillable = [
-		'proveedores',
-		'servicio',
-		'id_proceso',
-		'descripcion_servicio',
-		'estrategico',
-		'operacional',
-		'cumplimiento',
-		'legal',
-		'reputacional',
-		'tecnologico',
-		'valor',
-		'id_analisis'
-	];
+    protected $fillable = [
+        'proveedores',
+        'servicio',
+        'id_proceso',
+        'descripcion_servicio',
+        'estrategico',
+        'operacional',
+        'cumplimiento',
+        'legal',
+        'reputacional',
+        'tecnologico',
+        'valor',
+        'id_analisis',
+    ];
 
-	public function proceso()
-	{
-		return $this->belongsTo(Proceso::class, 'id_proceso');
-	}
+    public function proceso()
+    {
+        return $this->belongsTo(Proceso::class, 'id_proceso');
+    }
 
-	public function analisis_de_riesgo()
-	{
-		return $this->belongsTo(AnalisisDeRiesgo::class, 'id_analisis');
-	}
+    public function analisis_de_riesgo()
+    {
+        return $this->belongsTo(AnalisisDeRiesgo::class, 'id_analisis');
+    }
 
-
+    public function activosInformacion()
+    {
+        return $this->hasMany(Matriz31000ActivosInfo::class, 'id_matriz31000', 'id');
+    }
 }

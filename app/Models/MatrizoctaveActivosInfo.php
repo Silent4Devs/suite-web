@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class MatrizoctaveActivosInfo
+ * Class MatrizoctaveActivosInfo.
  *
  * @property int $id
  * @property string|null $nombre_ai
@@ -29,59 +29,57 @@ use Illuminate\Database\Eloquent\Model;
  * @property MatrizOctave|null $matriz_octave
  * @property Vulnerabilidad|null $vulnerabilidad
  * @property Empleado|null $empleado
- *
- * @package App\Models
  */
 class MatrizoctaveActivosInfo extends Model
 {
-	protected $table = 'matrizoctave_activos_info';
+    protected $table = 'matrizoctave_activos_info';
 
-	protected $casts = [
-		'valor_criticidad' => 'int',
-		'id_amenaza' => 'int',
-		'id_octave' => 'int',
-		'id_vulnerabilidad' => 'int',
-		'id_custodio' => 'int',
-		'id_dueno' => 'int',
-		'confidencialidad' => 'int',
-		'disponibilidad' => 'int',
-		'integridad' => 'int',
-		'evaluacion_riesgo' => 'int'
-	];
+    protected $casts = [
+        'valor_criticidad' => 'int',
+        'id_amenaza' => 'int',
+        'id_octave' => 'int',
+        'id_vulnerabilidad' => 'int',
+        'id_custodio' => 'int',
+        'id_dueno' => 'int',
+        'confidencialidad' => 'int',
+        'disponibilidad' => 'int',
+        'integridad' => 'int',
+        'evaluacion_riesgo' => 'int',
+    ];
 
-	protected $fillable = [
-		'nombre_ai',
-		'valor_criticidad',
-		'contenedor_activos',
-		'id_amenaza',
-		'id_octave',
-		'id_vulnerabilidad',
-		'escenario_riesgo',
-		'id_custodio',
-		'id_dueno',
-		'confidencialidad',
-		'disponibilidad',
-		'integridad',
-		'evaluacion_riesgo'
-	];
+    protected $fillable = [
+        'nombre_ai',
+        'valor_criticidad',
+        'contenedor_activos',
+        'id_amenaza',
+        'id_octave',
+        'id_vulnerabilidad',
+        'escenario_riesgo',
+        'id_custodio',
+        'id_dueno',
+        'confidencialidad',
+        'disponibilidad',
+        'integridad',
+        'evaluacion_riesgo',
+    ];
 
-	public function amenaza()
-	{
-		return $this->belongsTo(Amenaza::class, 'id_amenaza');
-	}
+    public function amenaza()
+    {
+        return $this->belongsTo(Amenaza::class, 'id_amenaza');
+    }
 
-	public function matriz_octave()
-	{
-		return $this->belongsTo(MatrizOctave::class, 'id_octave');
-	}
+    public function matriz_octave()
+    {
+        return $this->belongsTo(MatrizOctave::class, 'id_octave');
+    }
 
-	public function vulnerabilidad()
-	{
-		return $this->belongsTo(Vulnerabilidad::class, 'id_vulnerabilidad');
-	}
+    public function vulnerabilidad()
+    {
+        return $this->belongsTo(Vulnerabilidad::class, 'id_vulnerabilidad');
+    }
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class, 'id_dueno');
-	}
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_dueno');
+    }
 }

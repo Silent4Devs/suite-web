@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Matriz31000ActivosInfo
+ * Class Matriz31000ActivosInfo.
  *
  * @property int $id
  * @property string|null $contenedor_activos
@@ -26,54 +26,52 @@ use Illuminate\Database\Eloquent\Model;
  * @property Vulnerabilidad|null $vulnerabilidad
  * @property MatrizIso31000|null $matriz_iso31000
  * @property Activo|null $activo
- *
- * @package App\Models
  */
 class Matriz31000ActivosInfo extends Model
 {
-	protected $table = 'matriz31000_activos_info';
+    protected $table = 'matriz31000_activos_info';
 
-	protected $casts = [
-		'id_amenaza' => 'int',
-		'id_vulnerabilidad' => 'int',
-		'id_matriz31000' => 'int',
-		'confidencialidad' => 'int',
-		'disponibilidad' => 'int',
-		'integridad' => 'int',
-		'evaluación_riesgo' => 'int',
-		'activo_id' => 'int'
-	];
+    protected $casts = [
+        'id_amenaza' => 'int',
+        'id_vulnerabilidad' => 'int',
+        'id_matriz31000' => 'int',
+        'confidencialidad' => 'int',
+        'disponibilidad' => 'int',
+        'integridad' => 'int',
+        'evaluación_riesgo' => 'int',
+        'activo_id' => 'int',
+    ];
 
-	protected $fillable = [
-		'contenedor_activos',
-		'id_amenaza',
-		'id_vulnerabilidad',
-		'id_matriz31000',
-		'escenario_riesgo',
-		'confidencialidad',
-		'disponibilidad',
-		'integridad',
-		'evaluación_riesgo',
-		'activo_id'
-	];
+    protected $fillable = [
+        'contenedor_activos',
+        'id_amenaza',
+        'id_vulnerabilidad',
+        'id_matriz31000',
+        'escenario_riesgo',
+        'confidencialidad',
+        'disponibilidad',
+        'integridad',
+        'evaluación_riesgo',
+        'activo_id',
+    ];
 
-	public function amenaza()
-	{
-		return $this->belongsTo(Amenaza::class, 'id_amenaza');
-	}
+    public function amenaza()
+    {
+        return $this->belongsTo(Amenaza::class, 'id_amenaza');
+    }
 
-	public function vulnerabilidad()
-	{
-		return $this->belongsTo(Vulnerabilidad::class, 'id_vulnerabilidad');
-	}
+    public function vulnerabilidad()
+    {
+        return $this->belongsTo(Vulnerabilidad::class, 'id_vulnerabilidad');
+    }
 
-	public function matriz_iso31000()
-	{
-		return $this->belongsTo(MatrizIso31000::class, 'id_matriz31000');
-	}
+    public function matriz_iso31000()
+    {
+        return $this->belongsTo(MatrizIso31000::class, 'id_matriz31000');
+    }
 
-	public function activo()
-	{
-		return $this->belongsTo(Activo::class);
-	}
+    public function activo()
+    {
+        return $this->belongsTo(Activo::class);
+    }
 }

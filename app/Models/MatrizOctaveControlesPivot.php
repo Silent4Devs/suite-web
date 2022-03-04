@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class MatrizOctaveControlesPivot
+ * Class MatrizOctaveControlesPivot.
  *
  * @property int $id
  * @property int|null $id_octave
@@ -16,30 +16,28 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property MatrizOctave|null $matriz_octave
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
- *
- * @package App\Models
  */
 class MatrizOctaveControlesPivot extends Model
 {
-	protected $table = 'matriz_octave_controles_pivots';
+    protected $table = 'matriz_octave_controles_pivots';
 
-	protected $casts = [
-		'id_octave' => 'int',
-		'controles_id' => 'int'
-	];
+    protected $casts = [
+        'id_octave' => 'int',
+        'controles_id' => 'int',
+    ];
 
-	protected $fillable = [
-		'id_octave',
-		'controles_id'
-	];
+    protected $fillable = [
+        'id_octave',
+        'controles_id',
+    ];
 
-	public function matriz_octave()
-	{
-		return $this->belongsTo(MatrizOctave::class, 'id_octave');
-	}
+    public function matriz_octave()
+    {
+        return $this->belongsTo(MatrizOctave::class, 'id_octave');
+    }
 
-	public function declaracion_aplicabilidad()
-	{
-		return $this->belongsTo(DeclaracionAplicabilidad::class, 'controles_id');
-	}
+    public function declaracion_aplicabilidad()
+    {
+        return $this->belongsTo(DeclaracionAplicabilidad::class, 'controles_id');
+    }
 }

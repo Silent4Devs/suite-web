@@ -62,7 +62,7 @@ class TratamientoRiesgo extends Model
 
     public function control()
     {
-        return $this->belongsTo(Controle::class, 'control_id');
+        return $this->belongsTo(DeclaracionAplicabilidad::class, 'control_id', 'id');
     }
 
     public function responsable()

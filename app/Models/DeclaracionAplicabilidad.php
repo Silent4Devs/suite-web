@@ -55,4 +55,9 @@ class DeclaracionAplicabilidad extends Model
     {
         return $this->hasMany(NotificacionAprobadores::class, 'declaracion_id', 'id');
     }
+
+    public function control()
+    {
+        return $this->belongsTo(self::class, 'anexo_indice', 'id', 'anexo_politica');
+    }
 }
