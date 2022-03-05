@@ -12,7 +12,7 @@
         }
 
     </style>
-    
+
     @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('seguridad-create-perfil') }}
     @endif
@@ -22,11 +22,11 @@
     @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('seguridad-create') }}
     @endif
-    
+
     <h5 class="col-12 titulo_general_funcion">Incidentes de Seguridad</h5>
     <div class="container">
         <div class="card card_formulario">
-            
+
             <div class="card-body">
                 <div class="titulo-formulario">
                     <i class="bi bi-exclamation-octagon mr-3"></i> Incidentes de seguridad
@@ -47,31 +47,36 @@
                             <strong>Datos generales:</strong>
                         </label>
                     </div>
+                    @if (auth()->user()->empleado)
 
-                    <div class="mt-2 form-group col-4">
-                        <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                        <div class="form-control">{{Str::limit(auth()->user()->empleado->name, 30, '...') }}</div>
-                    </div>
 
-                    <div class="mt-2 form-group col-4">
-                        <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                        <div class="form-control">{{ auth()->user()->empleado->puesto }}</div>
-                    </div>
+                        <div class="mt-2 form-group col-4">
+                            <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                            <div class="form-control">{{Str::limit(auth()->user()->empleado->name, 30, '...') }}</div>
+                        </div>
 
-                    <div class="mt-2 form-group col-4">
-                        <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Área</label>
-                        <div class="form-control">{{ auth()->user()->empleado->area->area }}</div>
-                    </div>
+                        <div class="mt-2 form-group col-4">
+                            <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                            <div class="form-control">{{ auth()->user()->empleado->puesto }}</div>
+                        </div>
 
-                    <div class="mt-2 form-group col-6">
-                        <label class="form-label"><i class="fas fa-envelope iconos-crear"></i> Correo Electrónico</label>
-                        <div class="form-control">{{ auth()->user()->empleado->email }}</div>
-                    </div>
+                        <div class="mt-2 form-group col-4">
+                            <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Área</label>
+                            <div class="form-control">{{ auth()->user()->empleado->area->area }}</div>
+                        </div>
 
-                    <div class="mt-2 form-group col-6">
-                        <label class="form-label"><i class="fas fa-phone iconos-crear"></i> Teléfono</label>
-                        <div class="form-control">{{ auth()->user()->empleado->telefono }}</div>
-                    </div>
+                        <div class="mt-2 form-group col-6">
+                            <label class="form-label"><i class="fas fa-envelope iconos-crear"></i> Correo Electrónico</label>
+                            <div class="form-control">{{ auth()->user()->empleado->email }}</div>
+                        </div>
+
+                        <div class="mt-2 form-group col-6">
+                            <label class="form-label"><i class="fas fa-phone iconos-crear"></i> Teléfono</label>
+                            <div class="form-control">{{ auth()->user()->empleado->telefono }}</div>
+                        </div>
+                    @else
+                        <p><strong>no hay un empleado vinculado a este usuario</strong></p>
+                    @endif
 
                     <div class="mt-4 form-group col-12">
                         <label class="form-label">
