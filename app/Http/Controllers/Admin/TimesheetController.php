@@ -23,8 +23,6 @@ class TimesheetController extends Controller
     {
         $times = timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
 
-        dd(auth()->user()->empleado->es_supervisor);
-
         return view('admin.timesheet.index', compact('times'));
     }
 
@@ -46,7 +44,10 @@ class TimesheetController extends Controller
         $proyectos = TimesheetProyecto::get();
         $tareas = TimesheetTarea::get();
 
-        return view('admin.timesheet.create', compact('proyectos', 'tareas'));
+        $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
+
+
+        return view('admin.timesheet.create', compact('proyectos', 'tareas', 'fechasRegistradas'));
     }
 
     /**
@@ -127,7 +128,7 @@ class TimesheetController extends Controller
             }
         }
 
-        return redirect()->route('admin.timesheet');
+        return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
     }
 
     /**

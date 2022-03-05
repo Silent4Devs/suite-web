@@ -1,9 +1,12 @@
 <div class="w-100">
+
     <form action="{{ route('admin.timesheet.store') }}" method="POST">
         @csrf
-        <div class="form-group d-flex align-items-center">
+        <div class="form-group d-flex align-items-center" wire:ignore>
             <label class="mt-3 mr-3"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha</label>
-            <input type="date" name="fecha_dia" class="form-control" style="max-width:160px;" required>
+
+            
+            <input type="date" id="fecha_dia" name="fecha_dia" class="form-control" style="max-width:160px;" required>
         </div>
         <div class="datatable-fix">
             <table id="datatable_timesheet_create" class="table w-100">

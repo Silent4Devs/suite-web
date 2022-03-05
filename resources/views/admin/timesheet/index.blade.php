@@ -19,6 +19,7 @@
 
 	<div class="card card-body">
 		<div class="row">
+            @include('partials.flashMessages')
             <div class="col-12 d-flex justify-content-between">
                 <h5 id="titulo_estatus">Todos los Registros</h5>
                 <div class="">

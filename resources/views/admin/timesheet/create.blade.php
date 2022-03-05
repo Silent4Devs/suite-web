@@ -45,4 +45,37 @@
         });
     </script>
 
+    <script type="text/javascript">
+        
+    </script>
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', ()=>{
+            let fechasRegistradas = @json($fechasRegistradas);
+
+            function toISODate(d) {
+                const z = n => ('0' + n).slice(-2);
+                return d.getFullYear() + '-' + z(d.getMonth()+1) + '-' + z(d.getDate()); 
+            }
+
+            $("#fecha_dia").flatpickr({
+                "disable": [
+                    function(date) {
+                        // return true to disable
+                        return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 6);
+
+                    },
+                    function(date){
+                        const rdatedData = fechasRegistradas;
+                        return rdatedData.includes (toISODate(date));
+                    }
+                ],
+                "locale": {
+                    "firstDayOfWeek": 1 // start week on Monday
+                }
+            });
+        });
+        
+    </script>
+
 @endsection

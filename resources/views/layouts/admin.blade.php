@@ -52,6 +52,10 @@
     <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('/img/logo_policromatico.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
+
     <style type="text/css">
         .material-modulos {
             font-size: 50px;
