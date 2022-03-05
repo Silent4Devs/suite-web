@@ -42,31 +42,35 @@
                         <b>Datos generales:</b>
                     </div>
 
-                    <div class="mt-0 form-group col-4">
-                        <label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
-                        <div class="form-control">{{ Str::limit(auth()->user()->empleado->name, 30, '...') }}</div>
-                    </div>
+                    @if (auth()->user()->empleado)
 
-                    <div class="mt-0 form-group col-4">
-                        <label class="form-label"><i class="fas fa-user-tag iconos-crear"></i>Puesto</label>
-                        <div class="form-control">{{ auth()->user()->empleado->puesto }}</div>
-                    </div>
+                        <div class="mt-0 form-group col-4">
+                            <label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
+                            <div class="form-control">{{ Str::limit(auth()->user()->empleado->name, 30, '...') }}</div>
+                        </div>
 
-                    <div class="mt-0 form-group col-4">
-                        <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i></i>Área</label>
-                        <div class="form-control">{{ auth()->user()->empleado->area->area }}</div>
-                    </div>
+                        <div class="mt-0 form-group col-4">
+                            <label class="form-label"><i class="fas fa-user-tag iconos-crear"></i>Puesto</label>
+                            <div class="form-control">{{ auth()->user()->empleado->puesto }}</div>
+                        </div>
 
-                    <div class="mt-4 form-group col-6">
-                        <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo electrónico</label>
-                        <div class="form-control">{{ auth()->user()->empleado->email }}</div>
-                    </div>
+                        <div class="mt-0 form-group col-4">
+                            <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i></i>Área</label>
+                            <div class="form-control">{{ auth()->user()->empleado->area->area }}</div>
+                        </div>
 
-                    <div class="mt-4 form-group col-6">
-                        <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
-                        <div class="form-control">{{ auth()->user()->empleado->telefono }}</div>
-                    </div>
+                        <div class="mt-4 form-group col-6">
+                            <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo electrónico</label>
+                            <div class="form-control">{{ auth()->user()->empleado->email }}</div>
+                        </div>
 
+                        <div class="mt-4 form-group col-6">
+                            <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
+                            <div class="form-control">{{ auth()->user()->empleado->telefono }}</div>
+                        </div>
+                    @else
+                        <p><strong>no hay un empleado vinculado a este usuario</strong></p>
+                    @endif
                     <div class="mt-4 form-group col-12">
                         <b>Mejora dirigida a:</b>
                     </div>
