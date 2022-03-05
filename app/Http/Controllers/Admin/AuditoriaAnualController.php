@@ -93,7 +93,7 @@ class AuditoriaAnualController extends Controller
     {
         $auditoriaAnual = AuditoriaAnual::create($request->all());
 
-        return redirect()->route('admin.auditoria-anuals.index')->with('success', 'Guardado con éxito');;
+        return redirect()->route('admin.auditoria-anuals.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(AuditoriaAnual $auditoriaAnual)

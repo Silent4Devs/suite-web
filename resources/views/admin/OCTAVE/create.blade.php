@@ -957,4 +957,4 @@
         </form>
     </div>
 @endsection
-@include('admin.Octave.scripts')
+@include('admin.OCTAVE.scripts')

@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\CartaAceptacion;
+use App\Models\CartaAceptacionPivot;
+use App\Models\DeclaracionAplicabilidad;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Models\CartaAceptacion;
-use App\Http\Controllers\Controller;
-use App\Models\CartaAceptacionPivot;
-use Illuminate\Support\Facades\Gate;
-use App\Models\DeclaracionAplicabilidad;
 use Yajra\DataTables\Facades\DataTables;
 
 class CartaAceptacionRiesgosController extends Controller
 {
     public function index(Request $request)
     {
-
         if ($request->ajax()) {
             $query = CartaAceptacion::get();
             $table = Datatables::of($query);
@@ -73,34 +70,28 @@ class CartaAceptacionRiesgosController extends Controller
                 return $row->confidencialidad ? $row->confidencialidad : '';
             });
 
-
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
         }
 
-
-
         return view('admin.CartaAceptacionRiesgos.index');
     }
 
-
     public function create(Request $request)
     {
-
-        $responsables =Empleado::get();
+        $responsables = Empleado::get();
         $directoresRiesgo = Empleado::get();
         $presidencias = Empleado::get();
         $vicepresidentesOperaciones = Empleado::get();
-        $vicepresidentes  = Empleado::get();
+        $vicepresidentes = Empleado::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
-        return view('admin.CartaAceptacionRiesgos.create', compact('controles','vicepresidentes','vicepresidentesOperaciones','presidencias','directoresRiesgo','responsables'));
+        return view('admin.CartaAceptacionRiesgos.create', compact('controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
     }
 
     public function store(Request $request)
     {
-
         $cartaAceptacion = CartaAceptacion::create([
             'folio_riesgo'=> $request->folio_riesgo,
             'fecharegistro'=> $request->fecharegistro,
@@ -136,7 +127,7 @@ class CartaAceptacionRiesgosController extends Controller
 
         foreach ($request->controles_id as $item) {
             $control = new CartaAceptacionPivot();
-            $control->carta_id=$cartaAceptacion->id;
+            $control->carta_id = $cartaAceptacion->id;
             $control->controles_id = $item;
             $control->save();
         }
@@ -145,28 +136,25 @@ class CartaAceptacionRiesgosController extends Controller
         return redirect(route('admin.carta-aceptacion.index'));
     }
 
-
     public function update(Request $request, CartaAceptacion $cartaAceptacion)
     {
         $cartaAceptacion->update($request->all());
         // $cartaAceptacion = CartaAceptacion::create($request->all());
 
-
         return redirect(route('admin.carta-aceptacion.index'));
     }
 
-    public function edit( $cartaAceptacion)
+    public function edit($cartaAceptacion)
     {
         $cartaAceptacion = CartaAceptacion::find($cartaAceptacion);
-        $responsables =Empleado::get();
+        $responsables = Empleado::get();
         $directoresRiesgo = Empleado::get();
         $presidencias = Empleado::get();
         $vicepresidentesOperaciones = Empleado::get();
-        $vicepresidentes  = Empleado::get();
+        $vicepresidentes = Empleado::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
-        return view('admin.CartaAceptacionRiesgos.edit', compact('cartaAceptacion','controles','vicepresidentes','vicepresidentesOperaciones','presidencias','directoresRiesgo','responsables'));
-
+        return view('admin.CartaAceptacionRiesgos.edit', compact('cartaAceptacion', 'controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
     }
 
     public function show($cartaAceptacion)
@@ -175,22 +163,20 @@ class CartaAceptacionRiesgosController extends Controller
         // $controles =DeclaracionAplicabilidad::where('carta_id','=',$cartaAceptacion->id)->get();
         $cartaAceptacion = CartaAceptacion::find($cartaAceptacion);
         // dd($cartaAceptacion->controles);
-        $responsables =Empleado::get();
+        $responsables = Empleado::get();
         $directoresRiesgo = Empleado::get();
         $presidencias = Empleado::get();
         $vicepresidentesOperaciones = Empleado::get();
-        $vicepresidentes  = Empleado::get();
+        $vicepresidentes = Empleado::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
-        return view('admin.CartaAceptacionRiesgos.show', compact('cartaAceptacion','controles','vicepresidentes','vicepresidentesOperaciones','presidencias','directoresRiesgo','responsables'));
+        return view('admin.CartaAceptacionRiesgos.show', compact('cartaAceptacion', 'controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
     }
 
     public function destroy(CartaAceptacion $cartaAceptacion)
     {
-
         $cartaAceptacion->delete();
 
         return back();
     }
-
 }
