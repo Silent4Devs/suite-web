@@ -124,7 +124,6 @@ class PartesInteresadasController extends Controller
 
     public function destroy(PartesInteresada $partesInteresada)
     {
-        dd($partesInteresada);
         abort_if(Gate::denies('partes_interesada_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $partesInteresada->delete();

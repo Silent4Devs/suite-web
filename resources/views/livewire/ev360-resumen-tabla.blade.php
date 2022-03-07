@@ -46,7 +46,7 @@
         }
 
     </style>
-    <div class="mt-3 ml-2 row align-items-center">
+    {{-- <div class="mt-3 ml-2 row align-items-center">
         <div class="pl-2 col-6">
             <input type="text" class="form-control" placeholder="Buscar..." wire:model.debounce.800ms="search">
         </div>
@@ -62,7 +62,7 @@
             </select>
             <span class="ml-2">Página</span>
         </div>
-    </div>
+    </div> --}}
     <div class="mt-3 ml-3">
         <span wire:loading wire:target="perPage" class="text-muted"><i class="fas fa-spinner fa-pulse"></i> Obteniendo
             Información</span>
@@ -70,7 +70,7 @@
             ...</span>
     </div>
     <div class="container">
-        <div class="container pl-0 datatable-fix" style="overflow: auto">
+        <div wire:ignore class="container pl-0 datatable-fix" style="overflow: auto">
             <table class="table table-bordered w-100 datatable-Activo" id="tblResumen" style="font-size: 10px;">
                 <thead class="thead-dark">
                     <tr>
@@ -267,7 +267,16 @@
                     @endforelse
                 </tbody>
             </table>
-            {{ $lista->links() }}
+            {{-- {{ $lista->links() }} --}}
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        $("#tblResumen").DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
+            }
+        });
+    })
+</script>
