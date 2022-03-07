@@ -29,6 +29,7 @@ class Ev360ResumenTabla extends Component
     public $search = '';
     public $competencias_evaluadas;
     public $objetivos_evaluados;
+
     public function mount($evaluacion)
     {
         $this->evaluacion = $evaluacion;
