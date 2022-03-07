@@ -8,7 +8,9 @@ use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\ObjetivoRespuesta;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -23,7 +25,7 @@ class Ev360ResumenTabla extends Component
 
     public $evaluacion;
     public $lista_evaluados;
-    public $perPage = 10;
+    public $perPage = 5;
     public $search = '';
     public $competencias_evaluadas;
     public $objetivos_evaluados;
@@ -80,7 +82,6 @@ class Ev360ResumenTabla extends Component
         } else {
             $collection = $this->lista_evaluados;
         }
-
         $offset = max(0, ($this->page - 1) * $this->perPage);
         // need one more here so the simple paginatior knows
         // if there are more pages left
@@ -90,8 +91,15 @@ class Ev360ResumenTabla extends Component
         $this->competencias_evaluadas = Competencia::find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
         $this->objetivos_evaluados = $this->obtenerCantidadMaximaDeObjetivos($evaluacion->id);
 
-        return view('livewire.ev360-resumen-tabla', ['lista_evaluados', 'calificaciones', 'evaluacion', 'competencias_evaluadas', 'lista' => $paginator]);
+        return view('livewire.ev360-resumen-tabla', ['lista_evaluados', 'calificaciones', 'evaluacion', 'competencias_evaluadas', 'lista' => $collection]);
     }
+
+    // public function paginate($items, $perPage = 5, $page = null, $options = [])
+    // {
+    //     $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+    //     $items = $items instanceof Collection ? $items : Collection::make($items);
+    //     return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    // }
 
     public function obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion)
     {

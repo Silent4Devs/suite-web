@@ -798,6 +798,14 @@ class MatrizRiesgosController extends Controller
         return redirect("admin/matriz-seguridad/ISO31000?id={$request->id_analisis}")->with('success', 'Guardado con éxito');
     }
 
+    public function deleteActivoISO31000(Request $request)
+    {
+        $matrizRiesgoOctave = Matriz31000ActivosInfo::find($request->id);
+        $matrizRiesgoOctave->delete();
+
+        return response()->json(['status' => 200]);
+    }
+
     public function NIST(Request $request)
     {
         abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -1005,7 +1013,7 @@ class MatrizRiesgosController extends Controller
                         'confidencialidad' =>  $activomatriz31000['confidencialidad'],
                         'disponibilidad' =>  $activomatriz31000['disponibilidad'],
                         'integridad' =>  $activomatriz31000['integridad'],
-                        'evaluacion_riesgo' =>  $activomatriz31000['evaluacion_riesgo'],
+                        'evaluación_riesgo' =>  $activomatriz31000['evaluacion_riesgo'],
                         // 'activo_id' =>  $activomatriz31000['activo_id']
                     ]);
                 } else {
