@@ -54,7 +54,7 @@
                             {{ trans('cruds.tratamientoRiesgo.fields.responsable') }}
                         </th>
                         <td>
-                            {{ $tratamientoRiesgo->responsable->name ?? '' }}
+                            {{ $tratamientoRiesgo->empleado->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
