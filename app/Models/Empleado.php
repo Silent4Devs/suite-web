@@ -81,7 +81,7 @@ class Empleado extends Model
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
         'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo', 'saludo_completo',
-        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas',
+        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'es_supervisor'
     ];
 
     //, 'jefe_inmediato', 'empleados_misma_area'
@@ -516,5 +516,13 @@ class Empleado extends Model
     public function contactos()
     {
         return $this->hasMany('App\Models\PuestoContactos', 'id_contacto')->orderBy('id');
+    }
+
+    public function getEsSupervisorAttribute()
+    {
+       if ( count($this->children) > 0) {
+            return true;
+        } 
+        return false;
     }
 }

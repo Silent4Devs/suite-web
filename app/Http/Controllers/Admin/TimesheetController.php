@@ -44,7 +44,10 @@ class TimesheetController extends Controller
         $proyectos = TimesheetProyecto::get();
         $tareas = TimesheetTarea::get();
 
-        return view('admin.timesheet.create', compact('proyectos', 'tareas'));
+        $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
+
+
+        return view('admin.timesheet.create', compact('proyectos', 'tareas', 'fechasRegistradas'));
     }
 
     /**
@@ -103,6 +106,7 @@ class TimesheetController extends Controller
             'fecha_dia' => $request->fecha_dia,
             'empleado_id' => auth()->user()->empleado->id,
             'aprobador_id' => auth()->user()->empleado->supervisor_id,
+            'estatus' => $request->estatus,
         ]);
 
         foreach ($request->timesheet as $index => $hora) {
@@ -124,7 +128,7 @@ class TimesheetController extends Controller
             }
         }
 
-        return redirect()->route('admin.timesheet');
+        return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
     }
 
     /**
@@ -135,7 +139,9 @@ class TimesheetController extends Controller
      */
     public function show($id)
     {
-        return view('admin.timesheet.show');
+        $timesheet = Timesheet::find($id);
+        $horas = TimesheetHoras::where('timesheet_id', $id)->get();
+        return view('admin.timesheet.show', compact('timesheet', 'horas'));
     }
 
     /**
@@ -146,7 +152,10 @@ class TimesheetController extends Controller
      */
     public function edit($id)
     {
-        //
+        $proyectos = TimesheetProyecto::get();
+        $tareas = TimesheetTarea::get();
+        $timesheet = Timesheet::find($id);
+        return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas'));
     }
 
     /**
@@ -193,32 +202,43 @@ class TimesheetController extends Controller
         return view('admin.timesheet.tareas-proyecto', compact('proyecto_id'));
     }
 
-    public function rechazadas()
+    public function papelera()
     {
         abort_if(Gate::denies('mi_timesheet_horas_rechazadas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $rechazadas = Timesheet::where('rechazado', true)->where('empleado_id', auth()->user()->empleado->id)->get();
+        $papelera = Timesheet::where('estatus', 'papelera')->where('empleado_id', auth()->user()->empleado->id)->get();
 
-        return view('admin.timesheet.rechazadas', compact('rechazadas'));
+        return view('admin.timesheet.papelera', compact('papelera'));
     }
 
     public function aprobaciones()
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $aprobaciones = Timesheet::where('rechazado', false)
-            ->where('aprobado', false)
+        $aprobaciones = Timesheet::where('estatus', 'pendiente')
+            ->where('estatus', 'pendiente')
             ->where('aprobador_id', auth()->user()->empleado->id)
             ->get();
 
         return view('admin.timesheet.aprobaciones', compact('aprobaciones'));
     }
 
-    public function aprobar($id)
+    public function aprobar(Request $request, $id)
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $aprobar = Timesheet::find($id);
         $aprobar->update([
-            'aprobado' => true,
-            'rechazado' => false,
+            'estatus' => 'aprobado',
+            'comentarios' => $request->comentarios,
+        ]);
+
+        return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
+    }
+
+    public function rechazar($id)
+    {
+        abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $aprobar = Timesheet::find($id);
+        $aprobar->update([
+            'estatus' => 'rechazado',
         ]);
 
         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
