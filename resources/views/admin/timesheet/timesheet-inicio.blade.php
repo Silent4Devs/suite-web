@@ -193,93 +193,127 @@
                         <i class="bi bi-calendar4"></i>
                         Mi Timesheet
                     </a>
-                    <a class="nav-link" id="nav-liderazgo-tab" data-type="liderazgo" data-toggle="tab"
-                        href="#nav-liderazgo" role="tab" aria-controls="nav-liderazgo" aria-selected="false">
-                        <i class="bi bi-person-lines-fill"></i>
-                        Administrador
-                    </a>
+                    @if(auth()->user()->empleado)
+                        @if(auth()->user()->empleado->es_supervisor)
+                        <a class="nav-link" id="nav-gerente-tab" data-type="gerente" data-toggle="tab"
+                            href="#nav-gerente" role="tab" aria-controls="nav-gerente" aria-selected="false">
+                            <i class="bi bi-person-video2"></i>
+                            Gerente
+                        </a>
+                        @endif
+                    @endif
+
+                    @if(Auth::user()->can('timesheet_administrador_proyectos_access') || Auth::user()->can('timesheet_administrador_tareas_proyectos_access') || Auth::user()->can('timesheet_administrador_clientes_access'))
+                        <a class="nav-link" id="nav-liderazgo-tab" data-type="liderazgo" data-toggle="tab"
+                            href="#nav-liderazgo" role="tab" aria-controls="nav-liderazgo" aria-selected="false">
+                            <i class="bi bi-person-lines-fill"></i>
+                            Administrador
+                        </a>
+                    @endif
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
                     aria-labelledby="nav-contexto-tab">
                     <ul class="mt-4">
-                        @can('mi_timesheet_horas_aceptadas_show')
-                            <li>
-                                <a href="{{ route('admin.timesheet') }}">
-                                    <div>
-                                        <i class="bi bi-calendar4"></i><br>
-                                        Mis Horas
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
+                        
                         @can('timesheet_create')
                             <li>
                                 <a href="{{ route('admin.timesheet-create') }}">
                                     <div>
                                         <i class="bi bi-calendar-plus"></i><br>
-                                        Crear Timesheet
+                                        Registrar Horas
                                     </div>
                                 </a>
                             </li>
                         @endcan
                         @can('mi_timesheet_horas_rechazadas_show')
                             <li>
-                                <a href="{{ route('admin.timesheet-rechazadas') }}">
+                                <a href="{{ route('admin.timesheet-papelera') }}">
                                     <div>
-                                        <i class="bi bi-calendar2-x"></i><br>
-                                        Horas Rechazadas
+                                        <i class="bi bi-eraser"></i><br>
+                                        Horas en Borrador
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('mi_timesheet_horas_aceptadas_show')
+                            <li>
+                                <a href="{{ route('admin.timesheet') }}">
+                                    <div>
+                                        <i class="bi bi-calendar4"></i><br>
+                                        Mis Registros
                                     </div>
                                 </a>
                             </li>
                         @endcan
                     </ul>
                 </div>
-                <div class="tab-pane mb-4 fade" id="nav-liderazgo" role="tabpanel" aria-labelledby="nav-liderazgo-tab">
-                    <ul class="mt-4">
-                        @can('timesheet_administrador_proyectos_access')
-                            <li>
-                                <a href="{{ route('admin.timesheet-proyectos') }}">
-                                    <div>
-                                        <i class="bi bi-list-task"></i><br>
-                                        Proyectos
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('timesheet_administrador_tareas_proyectos_access')
-                            <li>
-                                <a href="{{ route('admin.timesheet-tareas') }}">
-                                    <div>
-                                        <i class="bi bi-card-list"></i><br>
-                                        Tareas
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('timesheet_administrador_aprobar_rechazar_horas_access')
-                            <li>
-                                <a href="{{ route('admin.timesheet-aprobaciones') }}">
-                                    <div>
-                                        <i class="bi bi-calendar2-check"></i><br>
-                                        Aprobaciones
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('timesheet_administrador_clientes_access')
-                            <li>
-                                <a href="{{ route('admin.timesheet-clientes') }}">
-                                    <div>
-                                        <i class="bi bi-bag"></i><br>
-                                        Clientes
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
-                    </ul>
-                </div>
+                @if(auth()->user()->empleado)
+                    @if(auth()->user()->empleado->es_supervisor)
+                        <div class="tab-pane mb-4 fade" id="nav-gerente" role="tabpanel" aria-labelledby="nav-gerente-tab">
+                            <ul class="mt-4">
+                                @can('timesheet_administrador_aprobar_rechazar_horas_access')
+                                    <li>
+                                        <a href="{{ route('admin.timesheet-aprobaciones') }}">
+                                            <div>
+                                                <i class="bi bi-calendar2-check"></i><br>
+                                                Aprobaciones
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('timesheet_administrador_aprobar_rechazar_horas_access')
+                                    <li>
+                                        <a href="{{ route('admin.timesheet-rechazos') }}">
+                                            <div>
+                                                <i class="bi bi-calendar2-x"></i><br>
+                                                Rechazos
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
+                    @endif
+                @endif
+
+                @if(Auth::user()->can('timesheet_administrador_proyectos_access') || Auth::user()->can('timesheet_administrador_tareas_proyectos_access') || Auth::user()->can('timesheet_administrador_clientes_access'))
+                    <div class="tab-pane mb-4 fade" id="nav-liderazgo" role="tabpanel" aria-labelledby="nav-liderazgo-tab">
+                        <ul class="mt-4">
+                            @can('timesheet_administrador_proyectos_access')
+                                <li>
+                                    <a href="{{ route('admin.timesheet-proyectos') }}">
+                                        <div>
+                                            <i class="bi bi-list-task"></i><br>
+                                            Proyectos
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('timesheet_administrador_tareas_proyectos_access')
+                                <li>
+                                    <a href="{{ route('admin.timesheet-tareas') }}">
+                                        <div>
+                                            <i class="bi bi-card-list"></i><br>
+                                            Tareas
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('timesheet_administrador_clientes_access')
+                                <li>
+                                    <a href="{{ route('admin.timesheet-clientes') }}">
+                                        <div>
+                                            <i class="bi bi-bag"></i><br>
+                                            Clientes
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
