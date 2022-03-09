@@ -78,6 +78,8 @@
                                     @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
                                         <a href="{{ asset('admin/timesheet/edit') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-pen-to-square"></i></a>
                                     @endif
+
+                                    {{-- <a href="{{ route('admin.timesheet.destroy', $time->id) }}" class="btn" style="color:red;"><i class="fa-solid fa-trash-can"></i></a> --}}
     							</td>	                    
     						</tr>
                         @endforeach

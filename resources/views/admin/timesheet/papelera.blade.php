@@ -27,7 +27,7 @@
                         @foreach($papelera as $time)
     	                	<tr>
     	                        <td>
-    	                            {{ $time->fecha_dia }} 
+    	                            {{ \Carbon\Carbon::parse($time->fecha_dia)->format("d/m/Y") }} 
     	                        </td>
     	                        <td>
     	                            {{ $time->empleado->name }}
