@@ -30,6 +30,7 @@ use App\Models\Sede;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\Vulnerabilidad;
+use App\Models\ActivoInformacion;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -593,8 +594,10 @@ class MatrizRiesgosController extends Controller
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $activosoctave = MatrizOctave::get();
         $matrizOctave = new MatrizOctave();
+        $nombreAis = ActivoInformacion::with('dueno','custodio')->get();
+        // dd($nombreAis);
 
-        return view('admin.OCTAVE.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'duenos', 'custodios', 'activosoctave', 'matrizOctave'))->with('id_analisis', $request->id_analisis);
+        return view('admin.OCTAVE.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'duenos', 'custodios', 'activosoctave', 'matrizOctave','nombreAis'))->with('id_analisis', $request->id_analisis);
     }
 
     public function octaveEdit(Request $request, $id)
@@ -611,7 +614,7 @@ class MatrizRiesgosController extends Controller
         $activosoctave = MatrizOctave::get();
         $matrizOctave = MatrizOctave::with('matrizActivos')->find($id);
 
-        return view('admin.OCTAVE.edit', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'duenos', 'custodios', 'activosoctave', 'matrizOctave'))->with('id_analisis', $request->id_analisis);
+        return view('admin.OCTAVE.edit', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'duenos', 'custodios', 'activosoctave', 'matrizOctave','nombreAis'))->with('id_analisis', $request->id_analisis);
     }
 
     public function updateOctave(Request $request, $matrizRiesgoOctave)
@@ -642,6 +645,7 @@ class MatrizRiesgosController extends Controller
 
     public function storeOctave(Request $request)
     {
+        // dd($request);
         //$request->merge(['plan_de_accion' => $request['plan_accion']['0']]);
         // dd($request->all());
         $matrizRiesgoOctave = MatrizOctave::create($request->all());
