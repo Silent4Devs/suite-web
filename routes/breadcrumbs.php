@@ -801,6 +801,10 @@ Breadcrumbs::for('timesheet-create', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
     $trail->push('Llenar Horas');
 });
+Breadcrumbs::for('timesheet-edit', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Llenar Horas');
+});
 Breadcrumbs::for('timesheet-proyectos', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
     $trail->push('Proyectos');
@@ -822,4 +826,17 @@ Breadcrumbs::for('timesheet-papelera', function ($trail) {
 Breadcrumbs::for('timesheet-aprobaciones', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
     $trail->push('Probaciones');
+});
+Breadcrumbs::for('timesheet-rechazos', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Probaciones');
+});
+Breadcrumbs::for('timesheet-clientes', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Clientes');
+});
+Breadcrumbs::for('timesheet-clientes-form', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Clientes', route('admin.timesheet-clientes'));
+    $trail->push('Formulario');
 });

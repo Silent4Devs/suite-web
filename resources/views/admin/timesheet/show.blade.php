@@ -1,12 +1,14 @@
 @extends('layouts.admin')
 @section('content')
+
+	{{ Breadcrumbs::render('timesheet-create') }}
 	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;"> {{ $timesheet->fecha_dia }} | {{ $timesheet->empleado->name }} </font></h5>
+	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;"> {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->format("d/m/Y") }} | {{ $timesheet->empleado->name }} </font></h5>
 
 	<div class="card card-body">
 		<div class="row">
 			<div class="datatable-fix col-12" style="margin:auto;">
-				<div  class="col-12 mb-4"><strong>Fecha: </strong> {{ $timesheet->fecha_dia }}</div>
+				<div  class="col-12 mb-4"><strong>Fecha: </strong> {{ \Carbon\Carbon::parse($timesheet->fecha_dia)->format("d/m/Y") }}</div>
 		        <table id="datatable_timesheet_create" class="table table-responsive w-100">
 		            <thead>
 		                <tr>
@@ -33,7 +35,7 @@
 		                            <div class="form-control">{{ $hora->tarea->tarea }}</div>
 		                        </td>
 		                        <td>
-		                        	@if(!$hora->facturable)
+		                        	@if($hora->facturable)
 		                            	<div class="btn btn-info" style="transform: scale(0.5);"><i class="fa-solid fa-check"></i></div>
 		                             @else
 		                             	<div class="btn btn-info" style="transform: scale(0.5); background-color: #ccc !important;"><i class="fa-solid fa-xmark"></i></div>

@@ -12543,8 +12543,6 @@ html:not([dir="rtl"]) .was-validated .custom-select:invalid, html:not([dir="rtl"
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
 }
 
 .no-gutters {
@@ -25573,8 +25571,6 @@ pre code {
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
 }
 
 .no-gutters {

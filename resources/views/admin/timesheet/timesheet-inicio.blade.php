@@ -197,7 +197,7 @@
                         @if(auth()->user()->empleado->es_supervisor)
                         <a class="nav-link" id="nav-gerente-tab" data-type="gerente" data-toggle="tab"
                             href="#nav-gerente" role="tab" aria-controls="nav-gerente" aria-selected="false">
-                            <i class="bi bi-person-lines-fill"></i>
+                            <i class="bi bi-person-video2"></i>
                             Gerente
                         </a>
                         @endif
@@ -259,6 +259,16 @@
                                             <div>
                                                 <i class="bi bi-calendar2-check"></i><br>
                                                 Aprobaciones
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('timesheet_administrador_aprobar_rechazar_horas_access')
+                                    <li>
+                                        <a href="{{ route('admin.timesheet-rechazos') }}">
+                                            <div>
+                                                <i class="bi bi-calendar2-x"></i><br>
+                                                Rechazos
                                             </div>
                                         </a>
                                     </li>
