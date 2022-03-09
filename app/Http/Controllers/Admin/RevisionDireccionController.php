@@ -99,8 +99,9 @@ class RevisionDireccionController extends Controller
         return view('admin.revisionDireccions.edit', compact('revisionDireccion'));
     }
 
-    public function update(UpdateRevisionDireccionRequest $request, RevisionDireccion $revisionDireccion)
+    public function update(Request $request,$revisionDireccion)
     {
+        $revisionDireccion = RevisionDireccion::find($revisionDireccion);
         $revisionDireccion->update($request->all());
 
         return redirect()->route('admin.revision-direccions.index');
