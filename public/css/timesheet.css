@@ -1,0 +1,24 @@
+.aprobado{
+    padding: 3px;
+    background-color: #61CB5C;
+    color: #fff;
+    border-radius: 4px;
+}
+.rechazado{
+    padding: 3px;
+    background-color: #EA7777;
+    color: #fff;
+    border-radius: 4px;
+}
+.pendiente{
+    padding: 3px;
+    background-color: #F48C16;
+    color: #fff;
+    border-radius: 4px;
+}
+.papelera{
+    padding: 3px;
+    background-color: #aaa;
+    color: #fff;
+    border-radius: 4px;
+}
