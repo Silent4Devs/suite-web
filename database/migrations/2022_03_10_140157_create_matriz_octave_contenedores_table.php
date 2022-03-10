@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMatrizOctaveContenedores extends Migration
+class CreateMatrizOctaveContenedoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,8 +15,10 @@ class CreateMatrizOctaveContenedores extends Migration
     {
         Schema::create('matriz_octave_contenedores', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('identificador_contenedor')->nullable();
             $table->string('nom_contenedor')->nullable();
             $table->integer('riesgo')->nullable();
+            $table->string('vinculado_ai')->nullable();
             $table->string('descripcion')->nullable();
             $table->unsignedInteger('id_matriz_octave_escenarios')->nullable();
             $table->foreign('id_matriz_octave_escenarios')->references('id')->on('matriz_octave_escenarios');
