@@ -26,9 +26,9 @@
     </style>
 
 
-    {{ Breadcrumbs::render('timesheet-aprobaciones') }}
+    {{ Breadcrumbs::render('timesheet-rechazos') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Aprobaciones</font></h5>
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Rechazos</font></h5>
 
     <div class="card card-body">
         <div class="row">
@@ -46,41 +46,37 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($aprobaciones as $aprobacion)
+                        @foreach ($rechazos as $rechazo)
                             <tr>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->format("d/m/Y") }}
+                                    {{ \Carbon\Carbon::parse($rechazo->fecha_dia)->format("d/m/Y") }}
 
                                 </td>
                                 <td>
-                                    {{ $aprobacion->empleado->name }}
+                                    {{ $rechazo->empleado->name }}
                                 </td>
                                 <td>
-                                    {{ $aprobacion->aprobador->name }}
+                                    {{ $rechazo->aprobador->name }}
                                 </td>
                                 <td>
-                                    @if ($aprobacion->aprobado)
+                                    @if ($rechazo->aprobado)
                                         <span class="aprobada">Aprobada</span>
                                     @endif
 
-                                    @if ($aprobacion->rechazado)
+                                    @if ($rechazo->rechazado)
                                         <span class="rechazada">Rechazada</span>
                                     @endif
 
-                                    @if ($aprobacion->rechazado == false && $aprobacion->aprobado == false)
+                                    @if ($rechazo->rechazado == false && $rechazo->aprobado == false)
                                         <span class="pendiente">Pendiente</span>
                                     @endif
                                 </td>
                                 <td class="">
                                     @can('timesheet_administrador_aprobar_horas')
-                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $aprobacion->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $rechazo->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
                                         
-                                        <div class="btn" data-toggle="modal" data-target="#modal_aprobar_{{ $aprobacion->id}}"> 
+                                        <div class="btn" data-toggle="modal" data-target="#modal_aprobar_{{ $rechazo->id}}"> 
                                             <i class="fas fa-calendar-check" style="color:#3CA06C; font-size: 15pt;"></i>
-                                        </div>
-
-                                        <div class="btn" data-toggle="modal" data-target="#modal_rechazar_{{ $aprobacion->id}}">
-                                            <i class="fa-solid fa-calendar-xmark" style="color:#F05353; font-size: 15pt;"></i>
                                         </div>
                                     @endcan
                                 </td>
@@ -93,9 +89,9 @@
         </div>
     </div>
 
-    @foreach ($aprobaciones as $aprobacion)
+    @foreach ($rechazos as $rechazo)
         {{-- aprobar --}}
-        <div class="modal fade" id="modal_aprobar_{{ $aprobacion->id}}" tabindex="-1" role="dialog"
+        <div class="modal fade" id="modal_aprobar_{{ $rechazo->id}}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -108,7 +104,7 @@
                             </div>
                             
                             <div class="mt-4">
-                                <form action="{{ route('admin.timesheet-aprobar', ['id' => $aprobacion->id]) }}" method="POST" class="row">
+                                <form action="{{ route('admin.timesheet-aprobar', ['id' => $rechazo->id]) }}" method="POST" class="row">
                                     @csrf
                                     <div class="form-group col-12">
                                         <label><i class="fa-solid fa-comment-dots iconos_crear"></i> Comentarios</label>
@@ -133,45 +129,6 @@
             </div>
         </div>
 
-
-        {{-- rechazar --}}
-        <div class="modal fade" id="modal_rechazar_{{ $aprobacion->id}}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="delete">
-                            <div class="text-center">
-                                <i class="fa-solid fa-calendar-xmark" style="color: #F05353; font-size:60pt;"></i>
-                                <h1 class="my-4" style="font-size:14pt;">Rechazar Registro</h1>
-                                <p class="parrafo">¿Esta seguro que desea rechazar este registro?</p>
-                            </div>
-                            
-                            <div class="mt-4">
-                                <form action="{{ route('admin.timesheet-rechazar', ['id' => $aprobacion->id]) }}" method="POST" class="row">
-                                    @csrf
-                                    <div class="form-group col-12">
-                                        <label><i class="fa-solid fa-comment-dots iconos_crear"></i> Comentarios</label>
-                                        <textarea class="form-control" name="comentarios"></textarea>
-                                        <small>Escriba las razones por la que rechaza este registro.</small>
-                                    </div>
-                                    <div class="col-12 text-right">
-                                        <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
-                                            Canecelar
-                                        </button>
-                                        <button title="Rechazar" class="btn btn-info" style="border:none; background-color:#F05353;">
-                                            <i class="fas fa-calendar-xmark iconos_crear"></i>
-                                            Rechazar Registro
-                                        </button>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     @endforeach
 
 @endsection

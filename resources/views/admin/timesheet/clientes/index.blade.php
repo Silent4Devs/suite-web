@@ -5,13 +5,13 @@
     </style>
 
 
-     {{ Breadcrumbs::render('timesheet-index') }}
+     {{ Breadcrumbs::render('timesheet-clientes') }}
 	
 	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Clientes</font> </h5>
 
 	<div class="card card-body">
 		<div class="row">
-			
+			@include('partials.flashMessages')
 	        <div class="datatable-fix w-100">
 	            <table id="datatable_clientes" class="table w-100">
 	                <thead>
@@ -21,7 +21,7 @@
                             <th rowspan="2" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">RFC persona moral o persona física</th>
                             <th colspan="6" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">DOMICILIO FISCAL</th>
                             <th colspan="4" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">DATOS DEL CONTACTO</th>
-                            <th rowspan="2" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Opciones</th>
+                            {{-- <th rowspan="2" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Opciones</th> --}}
                         </tr>
                         <tr>
                             <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Calle y Número</th>
@@ -54,9 +54,10 @@
                                <td>{{ $cliente->puesto_contacto }}</td>
                                <td>{{ $cliente->correo_contacto }}</td>
                                <td>{{ $cliente->celular_contacto }}</td>
-                               <td>
-                                   
-                               </td>
+                               {{-- <td class="d-flex">
+                                   <a href="" class="btn" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+                                   <a href="" class="btn" title="Eliminar" style="color:red;"><i class="fa-solid fa-trash-can"></i></a>
+                               </td> --}}
     						</tr>
                         @endforeach
 	                </tbody>

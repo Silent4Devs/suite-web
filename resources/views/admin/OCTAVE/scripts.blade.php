@@ -732,4 +732,34 @@
             }
         })
     </script>
+
+
+    <script type=text/javascript>
+        document.getElementById('nombre_ai_informacion').addEventListener('change',(e)=>{
+            let dueno_nombre = e.target.options[e.target.selectedIndex].getAttribute('data-dueno');
+            let dueno_puesto = e.target.options[e.target.selectedIndex].getAttribute('data-dueno-puesto');
+            let dueno_area = e.target.options[e.target.selectedIndex].getAttribute('data-dueno-area');
+            let dueno_informacion = document.getElementById('dueno_informacion');
+            let dueno_id_puesto = document.getElementById('dueno_id_puesto');
+            let dueno_id_area = document.getElementById('dueno_id_area');
+            dueno_informacion.innerHTML = dueno_nombre;
+            dueno_id_puesto.innerHTML = dueno_puesto;
+            dueno_id_area.innerHTML = dueno_area;
+
+            let custodio_nombre = e.target.options[e.target.selectedIndex].getAttribute('data-custodio');
+            let custodio_puesto = e.target.options[e.target.selectedIndex].getAttribute('data-custodio-puesto');
+            let custodio_area = e.target.options[e.target.selectedIndex].getAttribute('data-custodio-area');
+            let custodio_informacion = document.getElementById('custodio_informacion');
+            let id_custodio_puesto = document.getElementById('id_custodio_puesto');
+            let id_custodio_area = document.getElementById('id_custodio_area');
+            custodio_informacion.innerHTML = custodio_nombre;
+            id_custodio_puesto.innerHTML = custodio_puesto;
+            id_custodio_area.innerHTML = custodio_area;
+
+
+        });
+
+    </script>
+
+
 @endsection

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Timesheet;
+namespace App\Http\Livewire;
 
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use Livewire\Component;
 
-class TimesheetHorasFilas extends Component
+class TimesheetHorasEdit extends Component
 {
     public $proyectos;
     public $tareas;
@@ -14,7 +14,7 @@ class TimesheetHorasFilas extends Component
     public $origen;
     public $timesheet;
     public $timesheet_id;
-    public $contador = 5;
+    public $contador;
 
     public function mount($proyectos, $tareas, $origen, $timesheet_id)
     {
@@ -26,12 +26,15 @@ class TimesheetHorasFilas extends Component
 
     public function render()
     {
-        if ($this->origen == 'edit') {
-            $this->contador = 2;
-            $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
-            $this->timesheet = Timesheet::find($this->timesheet_id);
-        }
+        $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
+        $this->timesheet = Timesheet::find($this->timesheet_id);
 
-        return view('livewire.timesheet.timesheet-horas-filas');
+        return view('livewire.timesheet-horas-edit');
+    }
+
+    public function agregarFila()
+    {
+        $this->contador = $this->contador + 1;
+        $this->emit('filaAgregada');
     }
 }
