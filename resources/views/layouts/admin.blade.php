@@ -963,10 +963,11 @@
             margin-top: 100px !important;
         }
 
-        .dt-button-collection.dropdown-menu{
+        .dt-button-collection.dropdown-menu {
             max-height: 250px;
             overflow: auto;
         }
+
         .dt-button-collection.dropdown-menu::-webkit-scrollbar {
             width: 7px;
             height: 7px;
@@ -1123,7 +1124,8 @@
                                         <div class="p-2">
                                             @if (auth()->user()->empleado)
                                                 <p class="m-0 mt-2 text-muted" style="font-size:14px">Hola,
-                                                    <strong>{{ auth()->user()->empleado->name }}</strong></p>
+                                                    <strong>{{ auth()->user()->empleado->name }}</strong>
+                                                </p>
                                             @else
                                                 <i class="fas fa-user-circle iconos_cabecera"
                                                     style="font-size: 33px;"></i>
@@ -1146,7 +1148,7 @@
                                                 onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                                 <i class="bi bi-box-arrow-right"></i> Salir
                                             </a>
-                                @endif
+                        @endif
     </div>
     </div>
     </li>
@@ -1634,7 +1636,7 @@
     <script src="{{ asset('/sw.js') }}"></script>
     <script>
         if (!navigator.serviceWorker.controller) {
-            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+            navigator.serviceWorker.register("/sw.js").then(function(reg) {
                 console.log("Service worker has been registered for scope: " + reg.scope);
             });
         }

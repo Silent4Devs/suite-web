@@ -594,10 +594,8 @@ class MatrizRiesgosController extends Controller
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $activosoctave = MatrizOctave::get();
         $matrizOctave = new MatrizOctave();
-        $nombreAis = ActivoInformacion::with('dueno','custodio')->get();
-        // dd($nombreAis);
-
-        return view('admin.OCTAVE.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'duenos', 'custodios', 'activosoctave', 'matrizOctave','nombreAis'))->with('id_analisis', $request->id_analisis);
+        $nombreAis = ActivoInformacion::with('dueno', 'custodio')->get();
+        return view('admin.OCTAVE.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'duenos', 'custodios', 'activosoctave', 'matrizOctave', 'nombreAis'))->with('id_analisis', $request->id_analisis);
     }
 
     public function octaveEdit(Request $request, $id)
@@ -613,8 +611,8 @@ class MatrizRiesgosController extends Controller
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $activosoctave = MatrizOctave::get();
         $matrizOctave = MatrizOctave::with('matrizActivos')->find($id);
-
-        return view('admin.OCTAVE.edit', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'duenos', 'custodios', 'activosoctave', 'matrizOctave','nombreAis'))->with('id_analisis', $request->id_analisis);
+        $nombreAis = ActivoInformacion::with('dueno', 'custodio')->get();
+        return view('admin.OCTAVE.edit', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'duenos', 'custodios', 'activosoctave', 'matrizOctave', 'nombreAis'))->with('id_analisis', $request->id_analisis);
     }
 
     public function updateOctave(Request $request, $matrizRiesgoOctave)

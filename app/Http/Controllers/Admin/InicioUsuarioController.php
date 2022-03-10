@@ -190,7 +190,6 @@ class InicioUsuarioController extends Controller
                     ->where('evaluado_id', auth()->user()->empleado->id)
                     ->first();
             }
-
             $mis_objetivos = auth()->user()->empleado->objetivos;
 
             // SECCION MIS DATOS

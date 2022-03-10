@@ -714,7 +714,9 @@
                         @endif
                     </div>
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="servicio"><i class="fas fa-handshake iconos-crear"></i>Servicio</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title="En este campo por favor agregue el nombre del servicio"></i><br>
+                        <label for="servicio"><i class="fas fa-handshake iconos-crear"></i>Servicio</label><i
+                            class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                            title="En este campo por favor agregue el nombre del servicio"></i><br>
                         <input class="form-control {{ $errors->has('servicio') ? 'is-invalid' : '' }}" type="text"
                             name="servicio" id="servicio" value="{{ old('servicio', '') }}">
                         @if ($errors->has('servicio'))
@@ -777,12 +779,19 @@
                     </div> --}}
 
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="nombre_ai_informacion"><i class="fas fa-project-diagram iconos-crear"></i>Nombre del AI</label><br>
+                        <label for="nombre_ai_informacion"><i class="fas fa-project-diagram iconos-crear"></i>Nombre del
+                            AI</label><br>
                         <select class="procesoSelect form-control" name="nombre_ai_informacion" id="nombre_ai_informacion">
                             <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($nombreAis as $nombreAi)
                                 <option {{ old('nombre_ai_informacion') == $nombreAi->id ? ' selected="selected"' : '' }}
-                                    value="{{ $nombreAi->id }}" data-dueno="{{$nombreAi->dueno->name}}" data-dueno-puesto="{{$nombreAi->dueno->puesto}}" data-dueno-area="{{$nombreAi->dueno->area->area}}" data-custodio="{{$nombreAi->custodio->name}}" data-custodio-puesto="{{$nombreAi->custodio->puesto}}" data-custodio-area="{{$nombreAi->custodio->area->area}}"> {{ $nombreAi->activo_informacion }}
+                                    value="{{ $nombreAi->id }}" data-dueno="{{ $nombreAi->dueno->name }}"
+                                    data-dueno-puesto="{{ $nombreAi->dueno->puesto }}"
+                                    data-dueno-area="{{ $nombreAi->dueno->area->area }}"
+                                    data-custodio="{{ $nombreAi->custodio->name }}"
+                                    data-custodio-puesto="{{ $nombreAi->custodio->puesto }}"
+                                    data-custodio-area="{{ $nombreAi->custodio->area->area }}">
+                                    {{ $nombreAi->activo_informacion }}
                                 </option>
                             @endforeach
                         </select>
@@ -969,4 +978,3 @@
     </div>
 @endsection
 @include('admin.OCTAVE.scripts')
-

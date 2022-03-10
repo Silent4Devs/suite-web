@@ -1031,9 +1031,17 @@ if (!is_null($organizacion)) {
                                         style="padding-top:17px !important; padding-bottom:17px !important;">
                                         <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge mr-2"></i>Mi
                                             Autoevaluación
+                                            @if (!$mis_evaluaciones->evaluado)
+                                                <div class="circle-total-evaluaciones" style="top:-5px !important;">
+                                                    <span style="position: absolute;top: 3px;">1</span>
+                                                </div>
+                                            @endif
                                         </h5>
+
                                         @if ($last_evaluacion)
-                                            @include('admin.inicioUsuario.info_card_evaluacion')
+                                            @include(
+                                                'admin.inicioUsuario.info_card_evaluacion'
+                                            )
                                         @endif
                                         <hr class="hr-custom-title">
                                         <div id="evaluacionesRealizar" x-show="show" x-transition:enter.duration.500ms
@@ -1047,10 +1055,7 @@ if (!is_null($organizacion)) {
                                                                                 font-size: 13px;" aria-valuenow="25" aria-valuemin="0"
                                                                                 aria-valuemax="100">25%</div> --}}
                                                     @if ($last_evaluacion)
-
-
-
-                                                        @if ($mis_evaluaciones)
+                                                        {{-- @if ($mis_evaluaciones)
                                                             <div class="progress"
                                                                 style="height: 28px; margin-top: 20px;">
                                                                 <div class="progress-bar" role="progressbar"
@@ -1061,7 +1066,7 @@ if (!is_null($organizacion)) {
                                                                     {{ $mis_evaluaciones->progreso_competencias }}%
                                                                 </div>
                                                             </div>
-                                                        @endif
+                                                        @endif --}}
 
 
                                                         <div class="text-center" style="margin-top:20px;">
@@ -1072,7 +1077,6 @@ if (!is_null($organizacion)) {
                                                                 href="{{ route('admin.ev360-evaluaciones.misEvaluaciones', ['evaluacion' => $last_evaluacion->id,'evaluado' => auth()->user()->empleado->id]) }}">Ver
                                                                 mis Autoevaluaciones</a>
                                                         </div>
-
                                                     @endif
                                                 </div>
                                                 <div
@@ -1099,7 +1103,9 @@ if (!is_null($organizacion)) {
                                             @endif
                                         </h5>
                                         @if ($last_evaluacion)
-                                            @include('admin.inicioUsuario.info_card_evaluacion')
+                                            @include(
+                                                'admin.inicioUsuario.info_card_evaluacion'
+                                            )
                                         @endif
                                         <hr class="hr-custom-title">
 
