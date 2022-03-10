@@ -102,7 +102,7 @@
                 </select>
             </div>
         @endif
-        <div class="col-md-3">
+        {{-- <div class="col-md-3">
             <p class="text-xl text-gray-700">Sede:</p>
             <select class="form-control" wire:model.debounce.500ms="sede_id">
                 <option value="" selected disabled>Seleccione una sede</option>
@@ -119,7 +119,7 @@
                     <option value="{{ $area->id }}">{{ $area->area }}</option>
                 @endforeach
             </select>
-        </div>
+        </div> --}}
         @if (!count($mapas))
             <div class="col-md-3">
                 <p class="text-xl text-gray-700">Proceso:</p>
@@ -131,6 +131,24 @@
                 </select>
             </div>
         @endif
+        <div class="col-md-3">
+            <p class="text-xl text-gray-700">Activo de Información:</p>
+            <select class="form-control" wire:model.debounce.500ms="area_id">
+                <option value="" selected disabled>Seleccione un área</option>
+                {{-- @foreach ($areas as $area)
+                    <option value="{{ $area->id }}">{{ $area->area }}</option>
+                @endforeach --}}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <p class="text-xl text-gray-700">Vicepresidencia:</p>
+            <select class="form-control" wire:model.debounce.500ms="area_id">
+                <option value="" selected disabled>Seleccione un área</option>
+                {{-- @foreach ($areas as $area)
+                    <option value="{{ $area->id }}">{{ $area->area }}</option>
+                @endforeach --}}
+            </select>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">

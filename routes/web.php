@@ -422,9 +422,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Timesheet
     Route::get('timesheet', 'TimesheetController@index')->name('timesheet');
-    Route::get('timesheet/rechazadas', 'TimesheetController@rechazadas')->name('timesheet-rechazadas');
+    Route::get('timesheet/show/{id}', 'TimesheetController@show')->name('timesheet-show');
+    Route::get('timesheet/edit/{id}', 'TimesheetController@edit')->name('timesheet-edit');
+    Route::get('timesheet/papelera', 'TimesheetController@papelera')->name('timesheet-papelera');
     Route::get('timesheet/aprobaciones', 'TimesheetController@aprobaciones')->name('timesheet-aprobaciones');
+    Route::get('timesheet/rechazos', 'TimesheetController@rechazos')->name('timesheet-rechazos');
     Route::post('timesheet/aprobar/{id}', 'TimesheetController@aprobar')->name('timesheet-aprobar');
+    Route::post('timesheet/rechazar/{id}', 'TimesheetController@rechazar')->name('timesheet-rechazar');
     Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
     Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
 
@@ -435,8 +439,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('timesheet/clientes', 'TimesheetController@clientes')->name('timesheet-clientes');
     Route::get('timesheet/clientes/create', 'TimesheetController@clientesCreate')->name('timesheet-clientes-create');
     Route::post('timesheet/clientes/store', 'TimesheetController@clientesStore')->name('timesheet-clientes-store');
+    Route::post('timesheet/clientes/delete/{id}', 'TimesheetController@clientesDelete')->name('timesheet-delete');
 
-    Route::resource('timesheet', 'TimesheetController')->except(['create', 'index']);
+    Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
 
     //Competencia Tipo
 
@@ -901,6 +906,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::put('matriz-riesgo/{id}/octave', 'MatrizRiesgosController@updateOctave')->name('matriz-riesgos.octave.update');
     Route::get('matriz-riesgo/{id}/octave/edit', 'MatrizRiesgosController@octaveEdit')->name('matriz-riesgos.octave.edit');
     Route::get('matriz-riesgo/octave', 'MatrizRiesgosController@octave')->name('matriz-riesgos.octave');
+    Route::get('getEmployeeDataOctaveNomActivoInfo', 'MatrizRiesgosController@getEmployeeDataOctaveNomActivoInfo')->name('getEmployeeDataOctaveNomActivoInfo');
+
     Route::get('matriz-seguridad/octave/index', 'MatrizRiesgosController@octaveIndex')->name('matriz-seguridad.octaveIndex');
     Route::get('matriz-seguridad/ISO31000', 'MatrizRiesgosController@ISO31000')->name('matriz-seguridad.ISO31000');
     Route::post('matriz-riesgo/ISO31000/delete-activo', 'MatrizRiesgosController@deleteActivoISO31000')->name('matriz-seguridad.ISO31000.activo.delete');
