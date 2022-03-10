@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRevisionDireccionRequest;
 use App\Http\Requests\StoreRevisionDireccionRequest;
-use App\Http\Requests\UpdateRevisionDireccionRequest;
 use App\Models\RevisionDireccion;
 use App\Models\Team;
 use Gate;
@@ -99,7 +98,7 @@ class RevisionDireccionController extends Controller
         return view('admin.revisionDireccions.edit', compact('revisionDireccion'));
     }
 
-    public function update(Request $request,$revisionDireccion)
+    public function update(Request $request, $revisionDireccion)
     {
         $revisionDireccion = RevisionDireccion::find($revisionDireccion);
         $revisionDireccion->update($request->all());

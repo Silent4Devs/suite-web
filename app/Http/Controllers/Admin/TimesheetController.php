@@ -46,7 +46,6 @@ class TimesheetController extends Controller
 
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
 
-
         return view('admin.timesheet.create', compact('proyectos', 'tareas', 'fechasRegistradas'));
     }
 
@@ -141,6 +140,7 @@ class TimesheetController extends Controller
     {
         $timesheet = Timesheet::find($id);
         $horas = TimesheetHoras::where('timesheet_id', $id)->get();
+
         return view('admin.timesheet.show', compact('timesheet', 'horas'));
     }
 
@@ -221,12 +221,9 @@ class TimesheetController extends Controller
             'aprobador_id' => auth()->user()->empleado->supervisor_id,
             'estatus' => $request->estatus,
         ]);
-        
-
 
         foreach ($request->timesheet as $index => $hora) {
             if (array_key_exists('proyecto', $hora) && array_key_exists('tarea', $hora)) {
-
                 $horas_nuevas = TimesheetHoras::find($hora['id_hora']);
 
                 if ($horas_nuevas != null) {
@@ -244,7 +241,7 @@ class TimesheetController extends Controller
                         'horas_domingo' => $hora['domingo'],
                         'descripcion' => $hora['descripcion'],
                     ]);
-                }else{
+                } else {
                     TimesheetHoras::create([
                         'timesheet_id' => $timesheet_edit->id,
                         'proyecto_id' => array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
@@ -260,8 +257,6 @@ class TimesheetController extends Controller
                         'descripcion' => $hora['descripcion'],
                     ]);
                 }
-
-                
             }
         }
 
@@ -278,7 +273,7 @@ class TimesheetController extends Controller
     {
         $timesheet_borrado = Timesheet::find($id);
 
-        $timesheet_borrado->delete();        
+        $timesheet_borrado->delete();
     }
 
     public function proyectos()
