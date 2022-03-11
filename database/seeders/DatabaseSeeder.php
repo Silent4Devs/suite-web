@@ -50,6 +50,9 @@ class DatabaseSeeder extends Seeder
             ConfigurarSoporteSeeder::class,
             CategoriaActivosSeeder::class,
             SubcategoriaActivosSeeder::class,
+            activosDisponibilidadSeeder::class,
+            activosConfidencialidadSeeder::class,
+            activosIntegridadSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }
