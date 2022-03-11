@@ -670,6 +670,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Activos
 
     // Route::post('activos/create', 'ActivosController@save');
+    Route::post('activosInformacion/validacion', 'ActivosInformacionController@validacion')->name('activosInformacion.validacion');
     Route::get('activos/descargar', 'ActivosController@DescargaFormato')->name('activos.descargar');
     Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
     Route::resource('activos', 'ActivosController');
@@ -678,7 +679,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
     Route::get('activos/create', 'ActivosInformacionController@create')->name('activosInformacion.create');
     Route::get('activosInformacion/{activo}', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
-    Route::resource('activosInformacion', 'ActivosInformacionController')->except('edit', 'create');
+    Route::resource('activosInformacion', 'ActivosInformacionController')->names([
+        'index' => 'activosInformacion.index',
+        'store' => 'activosInformacion.store',
+        'show' => 'activosInformacion.show',
+        'update' => 'activosInformacion.update',
+    ])->except('edit', 'create');
 
     // Marca
     Route::get('marcas/get-marcas', 'MarcaController@getMarcas')->name('marcas.getMarcas');

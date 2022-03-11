@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class MatrizOctaveContenedor extends Model
@@ -14,7 +13,6 @@ class MatrizOctaveContenedor extends Model
     protected static $flushCacheOnUpdate = true;
     protected $table = 'matriz_octave_escenarios';
 
-
     protected $fillable = [
         'nom_contenedor',
         'riesgo',
@@ -22,7 +20,6 @@ class MatrizOctaveContenedor extends Model
         'integridad',
         'id_matriz_octave_escenarios',
     ];
-
 
     public function matriz_octave_escenario()
     {
