@@ -55,13 +55,14 @@
                 <div id="ideas" class="caja_oculta_dinamica row">
                     <div class="form-group col-12">
                         <label>Ideas</label>
-                        <textarea class="form-control" id=ideas name="ideas">{{$analisis?$analisis->idea:''}}</textarea>
+                        <textarea class="form-control" id="escritura_ideas" name="ideas">{{$analisis?$analisis->ideas:''}}</textarea>
+
                     </div>
 
-                    <div class="form-group col-12">
+                    {{-- <div class="form-group col-12">
                         <label>Causa Raíz</label>
-                        <textarea class="form-control" name="causa_ideas">{{$analisis?$analisis->causa_ideas:''}}</textarea>
-                    </div>
+                        <textarea class="form-control" id="escritura_causa" name="causa_ideas">{{$analisis?$analisis->causa_ideas:''}}</textarea>
+                    </div> --}}
                 </div>
 
 
@@ -72,15 +73,15 @@
                             name="problema_porque">{{$analisis?$analisis->problema_porque:''}}</textarea>
                     </div>
                     <div class="form-group col-12">
-                        <label>1er porqué:</label>
+                        <label>1. ¿Por qué?</label>
                         <textarea name="porque_1" class="form-control">{{ $analisis?$analisis->porque_1:'' }}</textarea>
-                        <label class="mt-4">2do porqué:</label>
+                        <label class="mt-4">2. ¿Por qué?</label>
                         <textarea name="porque_2" class="form-control">{{ $analisis?$analisis->porque_2:'' }}</textarea>
-                        <label class="mt-4">3er porqué:</label>
+                        <label class="mt-4">3. ¿Por qué?</label>
                         <textarea name="porque_3" class="form-control">{{ $analisis?$analisis->porque_3:'' }}</textarea>
-                        <label class="mt-4">4to porqué:</label>
+                        <label class="mt-4">4. ¿Por qué?</label>
                         <textarea name="porque_4" class="form-control">{{ $analisis?$analisis->porque_4:'' }}</textarea>
-                        <label class="mt-4">5to porqué:</label>
+                        <label class="mt-4">5. ¿Por qué?</label>
                         <textarea name="porque_5" class="form-control">{{ $analisis?$analisis->porque_5:'' }}</textarea>
                     </div>
                     {{-- <div class="form-group col-12">

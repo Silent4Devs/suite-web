@@ -36,7 +36,7 @@
         }
 
     </style>
-    <h5 class="col-12 titulo_general_funcion">Inventario de Activos de Información</h5>
+    {{-- <h5 class="col-12 titulo_general_funcion">Inventario de Activos de Información</h5> --}}
     <div class="mt-5 card">
         @can('configuracion_activo_create')
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -50,46 +50,84 @@
             </div>
         @endcan
 
+        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Activo de Información</h3>
+        </div>
+
+
         @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-Activo" id="columnaft">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="min-width:75px;">ID</th>
-                        <th style="min-width:100px;">Nombre VP</th>
-                        <th style="min-width:200px;">Dueño AI Nombre del VP</th>
-                        <th style="min-width:150px;">Nombre Direccíon</th>
-                        <th style="min-width:200px;">Custodio AI Nombre Director</th >
-                        <th style="min-width:150px;">Activo Información</th>
-                        <th style="min-width:50px;">Formato</th>
-                        <th style="min-width:100px;">Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ( $activos as $activo )
-                    <tr>
-                        <td><div>{{$activo->identificador}}</div></td>
-                        <td><div>{{$activo->nombreVP}}</div></td>
-                        <td><div>{{$activo->dueno->name}}</div></td>
-                        <td><div>{{$activo->nombre_direccion}}</div></td>
-                        <td><div>{{$activo->custodio->name}}</div></td>
-                        <td><div>{{$activo->activo_informacion}}</div></td>
-                        <td><div>{{$activo->formato}}</td>
-                        <td><div>
-                            <form action="{{ route('admin.activosInformacion.destroy', $activo->id) }}" method="POST">
-                                <a href="{{ route('admin.activosInformacion.edit',$activo->id )}}"><i class="fas fa-edit"></i></a>
-                                {{-- <a href="{{ route('admin.activosInformacion.show',$activo->id )}}"><i class="fas fa-eye"></i></a> --}}
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" title="delete" style="border: none; background-color:transparent;">
-                                    <i class="fas fa-trash text-danger"></i>
-                                    </button>
-                            </form>
-                        </div></td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12" style="margin-left:-15px;" >
+                    <div class="nav nav-tabs active" id="tabsEmpleado" role="tablist">
+                        <a class="nav-link" href="{{route('admin.carta-aceptacion.index')}}">
+                        <i class="fas fa-project-diagram mr-2" style="font-size:20px;"></i>Procesos
+                        </a>
+                        <a class="nav-link"  href="{{route('admin.activosInformacion.index')}}" >
+                            <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
+                        Activos
+                        </a>
+                        <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}"  >
+                            <i class="fas fa-camera-retro mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
+                        Escenarios
+                        </a>
+                        <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}" >
+                            <i class="fas fa-box-open mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
+                            Contenedores
+                        </a>
+
+                        <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}" >
+                            <i class="fas fa-network-wired mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
+                            Árbol de Riesgos
+                        </a>
+                        <a class="nav-link "  href="{{route('admin.carta-aceptacion.index')}}" >
+                        <i class="fas fa-chart-bar mr-2" style="font-size:20px;" style="text-decoration:none;"></i>Gráfica
+                        </a>
+                    </div>
+                </div>
+
+                <div class="datatable-fix mt-3 col-12" >
+                    <table class="table table-bordered  w-100 datatable-Activo" id="columnaft">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="min-width:75px;">ID</th>
+                                <th style="min-width:100px;">Nombre VP</th>
+                                <th style="min-width:200px;">Dueño AI Nombre del VP</th>
+                                <th style="min-width:150px;">Nombre Direccíon</th>
+                                <th style="min-width:200px;">Custodio AI Nombre Director</th >
+                                <th style="min-width:150px;">Activo Información</th>
+                                <th style="min-width:50px;">Formato</th>
+                                <th style="min-width:100px;">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ( $activos as $activo )
+                            <tr>
+                                <td><div>{{$activo->identificador}}</div></td>
+                                <td><div>{{$activo->nombreVP}}</div></td>
+                                <td><div>{{$activo->dueno->name}}</div></td>
+                                <td><div>{{$activo->nombre_direccion}}</div></td>
+                                <td><div>{{$activo->custodio->name}}</div></td>
+                                <td><div>{{$activo->activo_informacion}}</div></td>
+                                <td><div>{{$activo->formato}}</td>
+                                <td><div>
+                                    <form action="{{ route('admin.activosInformacion.destroy', $activo->id) }}" method="POST">
+                                        <a href="{{ route('admin.activosInformacion.edit',$activo->id )}}"><i class="fas fa-edit"></i></a>
+                                        {{-- <a href="{{ route('admin.activosInformacion.show',$activo->id )}}"><i class="fas fa-eye"></i></a> --}}
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" title="delete" style="border: none; background-color:transparent;">
+                                            <i class="fas fa-trash text-danger"></i>
+                                            </button>
+                                    </form>
+                                </div></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
