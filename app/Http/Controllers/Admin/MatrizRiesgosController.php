@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyMatrizRiesgoRequest;
 use App\Http\Requests\StoreMatrizRiesgoRequest;
 use App\Http\Requests\UpdateMatrizRiesgoRequest;
 use App\Models\Activo;
+use App\Models\ActivoInformacion;
 use App\Models\Amenaza;
 use App\Models\Area;
 use App\Models\Controle;
@@ -17,8 +18,8 @@ use App\Models\Matriz31000ActivosInfo;
 use App\Models\MatrizIso31000;
 use App\Models\MatrizIso31000ControlesPivot;
 use App\Models\MatrizNist;
-use App\Models\MatrizOctave;
 //use Illuminate\Support\Facades\Request;
+use App\Models\MatrizOctave;
 use App\Models\MatrizoctaveActivosInfo;
 use App\Models\MatrizOctaveControlesPivot;
 use App\Models\MatrizRiesgo;
@@ -30,7 +31,6 @@ use App\Models\Sede;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\Vulnerabilidad;
-use App\Models\ActivoInformacion;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -595,6 +595,8 @@ class MatrizRiesgosController extends Controller
         $activosoctave = MatrizOctave::get();
         $matrizOctave = new MatrizOctave();
         $nombreAis = ActivoInformacion::with('dueno', 'custodio')->get();
+        // dd($nombreAis);
+
         return view('admin.OCTAVE.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'duenos', 'custodios', 'activosoctave', 'matrizOctave', 'nombreAis'))->with('id_analisis', $request->id_analisis);
     }
 
@@ -611,24 +613,16 @@ class MatrizRiesgosController extends Controller
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $activosoctave = MatrizOctave::get();
         $matrizOctave = MatrizOctave::with('matrizActivos')->find($id);
-        $nombreAis = ActivoInformacion::with('dueno', 'custodio')->get();
         return view('admin.OCTAVE.edit', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'duenos', 'custodios', 'activosoctave', 'matrizOctave', 'nombreAis'))->with('id_analisis', $request->id_analisis);
     }
 
     public function updateOctave(Request $request, $matrizRiesgoOctave)
     {
-        // $calculo = new Mriesgos();
-        // $res = $calculo->CalculoD($request);
-        // $request->request->add(['resultadoponderacion' => $res]);
         $matrizRiesgoOctave = MatrizOctave::find($matrizRiesgoOctave);
         $matrizRiesgoOctave->update($request->all());
         $this->saveUpdateActivosOctave($request->activosoctave, $matrizRiesgoOctave);
 
         return redirect("admin/matriz-seguridad/octave/index?id={$request->id_analisis}")->with('success', 'Editado con éxito');
-        // if (isset($request->plan_accion)) {
-        //     $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
-        //     $matrizRiesgoOctave->planes()->sync($request->plan_accion);
-        // }
 
         return redirect()->route('admin.matriz-riesgos.octave', ['id' => $request->id_analisis])->with('success', 'Actualizado con éxito');
     }
@@ -643,24 +637,7 @@ class MatrizRiesgosController extends Controller
 
     public function storeOctave(Request $request)
     {
-        // dd($request);
-        //$request->merge(['plan_de_accion' => $request['plan_accion']['0']]);
-        // dd($request->all());
         $matrizRiesgoOctave = MatrizOctave::create($request->all());
-
-        // foreach ($request->controles_id as $item) {
-        //     $control = new MatrizOctaveControlesPivot();
-        //     // $control->matriz_id = 2;
-        //     $control->matriz_id = $matrizRiesgoOctave->id;
-        //     $control->controles_id = $item;
-        //     $control->save();
-        // }
-
-        // if (isset($request->plan_accion)) {
-        //     // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
-        //     $matrizRiesgoOctave->planes()->sync($request->plan_accion);
-        // }
-
         $this->saveUpdateActivosOctave($request->activosoctave, $matrizRiesgoOctave);
 
         return redirect("admin/matriz-seguridad/octave/index?id={$request->id_analisis}")->with('success', 'Guardado con éxito');
@@ -668,14 +645,6 @@ class MatrizRiesgosController extends Controller
 
     public function ISO31000(Request $request)
     {
-        // dd($request->all());
-        /*$query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
-        dd($query);*/
-        // abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //  $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots' => function ($query) {
-        //     return $query->with('declaracion_aplicabilidad');
-        // }])->where('id_analisis', '=', $request['id'])->get();
-        // dd($query);
         abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizIso31000::get();

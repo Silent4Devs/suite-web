@@ -34,14 +34,14 @@ class TablaProyectosTimesheet extends Component
             'proyecto_name'=>'required',
             'area_id'=>'required',
         ]);
-        
+
         if ($this->cliente_id) {
             $nuevo_proyecto = TimesheetProyecto::create([
                 'proyecto' => $this->proyecto_name,
                 'area_id' => $this->area_id,
                 'cliente_id' => $this->cliente_id,
             ]);
-        }else{
+        } else {
             $nuevo_proyecto = TimesheetProyecto::create([
                 'proyecto' => $this->proyecto_name,
                 'area_id' => $this->area_id,
