@@ -29,10 +29,10 @@ class ActivosInformacionController extends Controller
         $area = Area::get();
         $procesos = Proceso::with('macroproceso')->get();
         $confidencials = activoConfidencialidad::get();
-        $integridads= activoIntegridad::get();
-        $disponibilidads= activoDisponibilidad::get();
+        $integridads = activoIntegridad::get();
+        $disponibilidads = activoDisponibilidad::get();
 
-        return view('admin.ActivosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos','confidencials','integridads','disponibilidads'));
+        return view('admin.ActivosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads'));
     }
 
     public function store(Request $request)
@@ -67,10 +67,12 @@ class ActivosInformacionController extends Controller
 
         return view('admin.ActivosInformacion.index', compact('activos'));
     }
+
     public function validacion(Request $request)
     {
         $codigo = $request->identificador;
-        $existe = ActivoInformacion::where('identificador',$codigo)->exists();
+        $existe = ActivoInformacion::where('identificador', $codigo)->exists();
+
         return response()->json(['existe'=>$existe]);
     }
 }
