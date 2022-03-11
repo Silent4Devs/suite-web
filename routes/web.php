@@ -22,11 +22,16 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
 
+    Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
+    Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
+    Route::resource('contenedores', 'ContenedorMatrizOctaveController');
 
-    Route::get('contenedores', 'ContenedorMatrizOctave@index');
+
+
+
+
 
     Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
-
 
     //Modulo Capital Humano
     Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
@@ -1008,8 +1013,6 @@ Route::group(['prefix' => 'iso9001'], function () {
     Route::post('plantTrabajoBase/bloqueo/is-locked', 'iso9001\LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
     Route::post('plantTrabajoBase/bloqueo/registrar', 'iso9001\LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
 });
-
-
 
 /* Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth', '2fa']], function () {
 
