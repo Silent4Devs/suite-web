@@ -2,17 +2,12 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-
 use App\Models\Timesheet;
-use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
-use App\Models\TimesheetProyecto;
-use App\Models\TimesheetTarea;
+use Livewire\Component;
 
 class TimesheetHorasEdit extends Component
 {
-    
     public $proyectos;
     public $tareas;
     public $horas;
@@ -40,6 +35,6 @@ class TimesheetHorasEdit extends Component
     public function agregarFila()
     {
         $this->contador = $this->contador + 1;
-        $this->emit('filaAgregada'); 
+        $this->emit('filaAgregada');
     }
 }

@@ -2,13 +2,9 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use Livewire\Component;
-
 use App\Models\Timesheet;
-use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
-use App\Models\TimesheetProyecto;
-use App\Models\TimesheetTarea;
+use Livewire\Component;
 
 class TimesheetHorasFilas extends Component
 {
@@ -35,6 +31,7 @@ class TimesheetHorasFilas extends Component
             $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
             $this->timesheet = Timesheet::find($this->timesheet_id);
         }
+
         return view('livewire.timesheet.timesheet-horas-filas');
     }
 }

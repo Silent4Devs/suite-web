@@ -21,6 +21,10 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+    Route::get('contenedores', 'ContenedorMatrizOctave@index');
+
+    Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
+
     //Modulo Capital Humano
     Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
 
@@ -663,6 +667,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Activos
 
     // Route::post('activos/create', 'ActivosController@save');
+    Route::post('activosInformacion/validacion', 'ActivosInformacionController@validacion')->name('activosInformacion.validacion');
     Route::get('activos/descargar', 'ActivosController@DescargaFormato')->name('activos.descargar');
     Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
     Route::resource('activos', 'ActivosController');
@@ -671,7 +676,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
     Route::get('activos/create', 'ActivosInformacionController@create')->name('activosInformacion.create');
     Route::get('activosInformacion/{activo}', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
-    Route::resource('activosInformacion', 'ActivosInformacionController')->except('edit', 'create');
+    Route::resource('activosInformacion', 'ActivosInformacionController')->names([
+        'index' => 'activosInformacion.index',
+        'store' => 'activosInformacion.store',
+        'show' => 'activosInformacion.show',
+        'update' => 'activosInformacion.update',
+    ])->except('edit', 'create');
 
     // Marca
     Route::get('marcas/get-marcas', 'MarcaController@getMarcas')->name('marcas.getMarcas');
@@ -1018,6 +1028,7 @@ Route::group(['prefix' => 'iso9001'], function () {
     Route::post('plantTrabajoBase/bloqueo/is-locked', 'iso9001\LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
     Route::post('plantTrabajoBase/bloqueo/registrar', 'iso9001\LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
 });
+
 /* Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth', '2fa']], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
