@@ -906,6 +906,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('carta-aceptacion/destroy', 'CartaAceptacionRiesgosController@destroy')->name('carta-aceptacion.destroy');
     Route::resource('carta-aceptacion', 'CartaAceptacionRiesgosController')->except('destroy');
 
+    //Tabla de impactos
+    Route::resource('tabla-impacto', 'TablaImpactoController');
+
+    //niveles de impacto
+    Route::get('niveles-impacto/get-niveles/{id?}', 'NivelesImpactoController@getNivelesImpactos')->name('niveles.getNivelesImpactos');
+    Route::resource('niveles-impacto', 'NivelesImpactoController');
+
+
+
     // Matriz Riesgos
     Route::get('matriz-riesgos/planes-de-accion/create/{id}', 'MatrizRiesgosController@createPlanAccion')->name('matriz-riesgos.createPlanAccion');
     Route::post('matriz-riesgos/planes-de-accion/store/{id}', 'MatrizRiesgosController@storePlanAccion')->name('matriz-riesgos.storePlanAccion');
@@ -935,6 +944,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
     Route::get('matriz-octavemapa', 'MatrizRiesgosController@MapaCalorOctave')->name('matriz-octavemapa');
     Route::get('controles-get', 'MatrizRiesgosController@ControlesGet')->name('controles-get');
+
+    //ProcesosOctave
+    Route::delete('procesos-octave/destroy', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
+    Route::resource('procesos-octave', 'ProcesosOctaveController')->except('destroy');
+
+    //Servicios
+    Route::delete('servicios/destroy', 'ServiciosController@destroy')->name('servicios.destroy');
+    Route::resource('servicios', 'ServiciosController')->except('destroy');
 
     // Gap Unos
     Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
