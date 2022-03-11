@@ -362,9 +362,10 @@ class EV360EvaluacionesController extends Controller
             ->where('evaluacion_id', $evaluacion->id)->first()->evaluado;
 
         $finalizo_tiempo = false;
-        if (Carbon::parse($evaluacion->fecha_fin)->diffInDays(Carbon::now()) == 0) {
+        if (Carbon::parse($evaluacion->fecha_fin)->diffInDays(Carbon::now()) + 1 == 0) {
             $finalizo_tiempo = true;
         }
+        dd($finalizo_tiempo);
 
         $competencias_por_puesto_nivel_esperado = $evaluado->puestoRelacionado;
         if ($competencias_por_puesto_nivel_esperado) {
