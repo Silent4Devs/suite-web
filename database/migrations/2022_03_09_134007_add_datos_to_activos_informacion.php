@@ -54,7 +54,6 @@ class AddDatosToActivosInformacion extends Migration
             $table->foreign('confidencialidad_id')->references('id')->on('activo_confidencialidad')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('integridad_id')->references('id')->on('activo_integridad')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('disponibilidad_id')->references('id')->on('activo_disponibilidad')->onDelete('cascade')->onUpdate('cascade');
-
         });
     }
 

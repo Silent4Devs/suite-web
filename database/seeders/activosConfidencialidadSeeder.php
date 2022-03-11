@@ -14,7 +14,6 @@ class activosConfidencialidadSeeder extends Seeder
      */
     public function run()
     {
-
         $inputs = [
             [
                 'id'    => 1,
@@ -40,5 +39,4 @@ class activosConfidencialidadSeeder extends Seeder
 
         activoConfidencialidad::insert($inputs);
     }
-
 }

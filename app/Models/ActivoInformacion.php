@@ -93,6 +93,7 @@ class ActivoInformacion extends Model
     {
         return $this->belongsTo(Empleado::class, 'custodioALDirector', 'id');
     }
+
     public function direccion()
     {
         return $this->belongsTo(Area::class, 'nombre_direccion', 'id');
@@ -102,14 +103,17 @@ class ActivoInformacion extends Model
     {
         return $this->belongsTo(Empleado::class, 'proceso_id', 'id');
     }
+
     public function confidencialidad()
     {
         return $this->belongsTo(activoConfidencialidad::class, 'confidencialidad_id', 'id');
     }
+
     public function integridad()
     {
         return $this->belongsTo(activoIntegridad::class, 'integridad_id', 'id');
     }
+
     public function disponibilidad()
     {
         return $this->belongsTo(activoDisponibilidad::class, 'disponibilidad_id', 'id');
