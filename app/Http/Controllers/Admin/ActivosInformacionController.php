@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\activoConfidencialidad;
+use App\Models\activoDisponibilidad;
 use App\Models\ActivoInformacion;
+use App\Models\activoIntegridad;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Proceso;
@@ -25,15 +28,18 @@ class ActivosInformacionController extends Controller
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $area = Area::get();
         $procesos = Proceso::with('macroproceso')->get();
+        $confidencials = activoConfidencialidad::get();
+        $integridads= activoIntegridad::get();
+        $disponibilidads= activoDisponibilidad::get();
 
-        return view('admin.ActivosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos'));
+        return view('admin.ActivosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos','confidencials','integridads','disponibilidads'));
     }
 
     public function store(Request $request)
     {
         $subtipos = ActivoInformacion::create($request->all());
 
-        return redirect()->route('admin.ActivosInformacion.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.activosInformacion.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit($activos)
@@ -50,7 +56,7 @@ class ActivosInformacionController extends Controller
         $activos = ActivoInformacion::find($activos);
         $activos->update($request->all());
 
-        return redirect()->route('admin.ActivosInformacion.index');
+        return redirect()->route('admin.activosInformacion.index');
     }
 
     public function destroy($id)
@@ -60,5 +66,11 @@ class ActivosInformacionController extends Controller
         $activos = ActivoInformacion::get();
 
         return view('admin.ActivosInformacion.index', compact('activos'));
+    }
+    public function validacion(Request $request)
+    {
+        $codigo = $request->identificador;
+        $existe = ActivoInformacion::where('identificador',$codigo)->exists();
+        return response()->json(['existe'=>$existe]);
     }
 }

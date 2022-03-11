@@ -56,11 +56,12 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width:75px;">ID</th>
+                        <th style="min-width:220px;">Nombre del Activo Información</th>
+                        <th style="min-width:100px;">Riesgo</th>
                         <th style="min-width:100px;">Nombre VP</th>
                         <th style="min-width:200px;">Dueño AI Nombre del VP</th>
                         <th style="min-width:150px;">Nombre Direccíon</th>
                         <th style="min-width:200px;">Custodio AI Nombre Director</th >
-                        <th style="min-width:150px;">Activo Información</th>
                         <th style="min-width:50px;">Formato</th>
                         <th style="min-width:100px;">Opciones</th>
                     </tr>
@@ -69,11 +70,12 @@
                     @foreach ( $activos as $activo )
                     <tr>
                         <td><div>{{$activo->identificador}}</div></td>
+                        <td><div>{{$activo->activo_informacion}}</div></td>
+                        <td><div>No definido</div></td>
                         <td><div>{{$activo->nombreVP}}</div></td>
                         <td><div>{{$activo->dueno->name}}</div></td>
                         <td><div>{{$activo->nombre_direccion}}</div></td>
                         <td><div>{{$activo->custodio->name}}</div></td>
-                        <td><div>{{$activo->activo_informacion}}</div></td>
                         <td><div>{{$activo->formato}}</td>
                         <td><div>
                             <form action="{{ route('admin.activosInformacion.destroy', $activo->id) }}" method="POST">
