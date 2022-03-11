@@ -761,23 +761,6 @@
                             </div>
                         @endif
                     </div>
-                    <div class="form-group col-md-4 col-sm-12">
-                        <label for="activo_id"><i class="fas fa-user-tie iconos-crear"></i>Activo</label><br>
-                        <select class="responsableSelect form-control" name="activo_id" id="activo_id">
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            @foreach ($activos as $activo)
-                                <option
-                                    {{ old('activo_id', $matrizOctave->activo_id) == $activo->id ? ' selected="selected"' : '' }}
-                                    value="{{ $activo->id }}">{{ $activo->nombreactivo }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('activo_id'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('activo_id') }}
-                            </div>
-                        @endif
-                    </div>
                 </div>
                 <hr>
                 <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
@@ -791,12 +774,30 @@
                     ACTIVOS DE INFORMACIÓN
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-8 col-sm-12">
+                    {{-- <div class="form-group col-md-8 col-sm-12">
                         <label><i class="fas fa-file-alt iconos-crear"></i>Nombre del AI</label><br>
                         <input class="form-control {{ $errors->has('nombre_ai') ? 'is-invalid' : '' }}" type="text"
                             name="nombre_ai" id="nombre_ai_informacion" value="{{ old('nombre_ai', '') }}">
                         <small class="text-danger errores nombre_ai_error"></small>
+                    </div> --}}
+
+                    <div class="form-group col-md-4 col-sm-12">
+                        <label for="nombre_ai_informacion"><i class="fas fa-project-diagram iconos-crear"></i>Nombre del AI</label><br>
+                        <select class="procesoSelect form-control" name="nombre_ai_informacion" id="nombre_ai_informacion">
+                            <option value="" selected disabled>Seleccione una opción</option>
+                            @foreach ($nombreAis as $nombreAi)
+                                <option {{ old('nombre_ai_informacion') == $nombreAi->id ? ' selected="selected"' : '' }}
+                                    value="{{ $nombreAi->id }}"> {{ $nombreAi->activo_informacion }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('nombre_ai_informacion'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('nombre_ai_informacion') }}
+                            </div>
+                        @endif
                     </div>
+
                     <div class="form-group col-sm-12 col-md-4 col-lg-4" style="margin-top:-7px;">
                         <label><i class="fab fa-cloudscale iconos-crear"></i>Valor de la criticidad del activo</label>
                         <select class="form-control select2 {{ $errors->has('valor_criticidad') ? 'is-invalid' : '' }}"

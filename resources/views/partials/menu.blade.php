@@ -710,60 +710,36 @@
                             </a>
                         </li>
                     @endcan
-                    @can('configuracion_area_access')
-                            <li class="c-sidebar-nav-dropdown">
-                                <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                    <i class="bi bi-person-video3 iconos_menu letra_blanca"></i>
-                                    <font class="letra_blanca ">Capacitaciones</font>
-                                </a>
-                                <ul class="c-sidebar-nav-dropdown-items">
-                                    @can('configuracion_grupoarea_create')
-                                        <li class="c-sidebar-nav-item">
-                                            <a href="{{ route('admin.grupoarea.index') }}"
-                                                class="c-sidebar-nav-link {{ request()->is('admin/grupoarea') || request()->is('admin/grupoarea/*') ? 'active' : '' }}">
-                                                <i class="ml-2 bi bi-mortarboard iconos_menu letra_blanca" style="font-size:12pt;"></i>
-                                                <font class="letra_blanca"> Crear Grupo </font>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('configuracion_area_create')
-                                        <li class="c-sidebar-nav-item">
-                                            <a href="{{ route('admin.areas.index') }}"
-                                                class="c-sidebar-nav-link {{ request()->is('admin/areas') || request()->is('admin/areas/*/edit') || request()->is('admin/areas/create')? 'active': '' }}">
+                    {{-- @can('configuracion_area_access') --}}
+                        <li class="c-sidebar-nav-dropdown">
+                            <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                                <i class="bi bi-person-video3 iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca ">Capacitaciones</font>
+                            </a>
+                            <ul class="c-sidebar-nav-dropdown-items">
+                                {{-- @can('configuracion_grupoarea_create') --}}
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ asset('admin/categoria-capacitacion')}}"
+                                            class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
+                                            <i class="ml-2 bi bi-mortarboard iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                            <font class="letra_blanca"> Crear Categorías </font>
+                                        </a>
+                                    </li>
+                                {{-- @endcan --}}
+                                {{-- @can('configuracion_area_create') --}}
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ asset('admin/recursos') }}"
+                                            class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') || request()->is('admin/recursos/create')? 'active': '' }}">
 
-                                                <i class="bi bi-geo iconos_menu letra_blanca"></i>
-                                                <font class="letra_blanca"> Crear Áreas </font>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                </ul>
-                            </li>
-                    @endcan
-                    <li class="c-sidebar-nav-dropdown">
-                        <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                            <i class="bi bi-person-video3 iconos_menu letra_blanca"></i>
-                            <font class="letra_blanca ">Capacitaciones</font>
-                        </a>
-                        <ul class="c-sidebar-nav-dropdown-items">
-                            @can('configuracion_macroproceso_access')
-                                <li class="c-sidebar-nav-item">
-                                    <a href="{{ asset('admin/categoria-capacitacion') }}">
-                                        <i class="ml-2 bi bi-mortarboard iconos_menu letra_blanca" style="font-size:12pt;"></i>
-                                        <font class="letra_blanca"> Crear Categorías</font>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('configuracion_procesos_access')
-                                <li class="c-sidebar-nav-item">
-                                    <a href="{{ asset('admin/recursos') }}">
-                                        <i class="ml-2 bi bi-person-video3 iconos_menu letra_blanca"
-                                            style="font-size:12pt;"></i>
-                                        <font class="letra_blanca"> Crear Capacitación</font>
-                                    </a>
-                                </li>
-                            @endcan
-                        </ul>
-                    </li>
+                                            <i class="ml-2 bi bi-person-video3 iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                            <font class="letra_blanca"> Crear Capacitación</font>
+                                        </a>
+                                    </li>
+                                {{-- @endcan --}}
+                            </ul>
+                        </li>
+                    {{-- @endcan --}}
+                    
                     @can('configuracion_empleados_access')
                         {{-- <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.empleados.index') }}"

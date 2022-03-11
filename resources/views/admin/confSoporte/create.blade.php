@@ -62,7 +62,7 @@
                         {{ $errors->first('id_telefono') }}
                     </div>
                 @endif
-            </div> 
+            </div>
             <div class="form-group col-md-4 col-sm-4">
                 <label for="id_extension"><i class="fas fa-briefcase iconos-crear"></i>Extensión</label>
                 <input class="form-control {{ $errors->has('id_extension') ? 'is-invalid' : '' }}" type="string" maxlength="10"
@@ -72,7 +72,7 @@
                         {{ $errors->first('id_extension') }}
                     </div>
                 @endif
-            </div> 
+            </div>
             <div class="form-group col-md-4 col-sm-4">
                 <label for="id_telefono_movil"><i class="fas fa-briefcase iconos-crear"></i>Telefono Móvil</label>
                 <input class="form-control {{ $errors->has('id_telefono_movil') ? 'is-invalid' : '' }}" type="string" maxlength="10"
@@ -82,7 +82,7 @@
                         {{ $errors->first('id_telefono_movil') }}
                     </div>
                 @endif
-            </div>  
+            </div>
             <div class="form-group col-md-4 col-sm-4">
                 <label for="id_email"><i class="fas fa-briefcase iconos-crear"></i>Correo    </label>
                 <input class="form-control {{ $errors->has('id_email') ? 'is-invalid' : '' }}" type="string" maxlength="10"
@@ -92,7 +92,7 @@
                         {{ $errors->first('id_email') }}
                     </div>
                 @endif
-            </div>  
+            </div>
             <div class="text-right form-group col-md-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">

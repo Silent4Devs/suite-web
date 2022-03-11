@@ -714,7 +714,7 @@
                         @endif
                     </div>
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="servicio"><i class="fas fa-handshake iconos-crear"></i>Servicio</label><br>
+                        <label for="servicio"><i class="fas fa-handshake iconos-crear"></i>Servicio</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title="En este campo por favor agregue el nombre del servicio"></i><br>
                         <input class="form-control {{ $errors->has('servicio') ? 'is-invalid' : '' }}" type="text"
                             name="servicio" id="servicio" value="{{ old('servicio', '') }}">
                         @if ($errors->has('servicio'))
@@ -728,7 +728,7 @@
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="id_sede"><i class="fas fa-map-marker-alt iconos-crear"></i>Sede</label><br>
                         <select class="sedeSelect form-control" name="id_sede" id="id_sede">
-                            <option value="" selected disabled>Seleccione una opción</option>
+                            {{-- <option value="" selected disabled>Seleccione una opción</option> --}}
                             @foreach ($sedes as $sede)
                                 <option {{ old('id_sede') == $sede->id ? ' selected="selected"' : '' }}
                                     value="{{ $sede->id }}">{{ $sede->sede }}</option>
@@ -756,22 +756,6 @@
                             </div>
                         @endif
                     </div>
-                    <div class="form-group col-md-4 col-sm-12">
-                        <label for="activo_id"><i class="fas fa-user-tie iconos-crear"></i>Activo</label><br>
-                        <select class="responsableSelect form-control" name="activo_id" id="activo_id">
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            @foreach ($activos as $activo)
-                                <option {{ old('activo_id') == $activo->id ? ' selected="selected"' : '' }}
-                                    value="{{ $activo->id }}">{{ $activo->nombreactivo }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('activo_id'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('activo_id') }}
-                            </div>
-                        @endif
-                    </div>
                 </div>
                 <hr>
                 <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
@@ -785,12 +769,30 @@
                     ACTIVOS DE INFORMACIÓN
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-8 col-sm-12">
+                    {{-- <div class="form-group col-md-8 col-sm-12">
                         <label><i class="fas fa-file-alt iconos-crear"></i>Nombre del AI</label><br>
                         <input class="form-control {{ $errors->has('nombre_ai') ? 'is-invalid' : '' }}" type="text"
                             name="nombre_ai" id="nombre_ai_informacion" value="{{ old('nombre_ai', '') }}">
                         <small class="text-danger errores nombre_ai_error"></small>
+                    </div> --}}
+
+                    <div class="form-group col-md-4 col-sm-12">
+                        <label for="nombre_ai_informacion"><i class="fas fa-project-diagram iconos-crear"></i>Nombre del AI</label><br>
+                        <select class="procesoSelect form-control" name="nombre_ai_informacion" id="nombre_ai_informacion">
+                            <option value="" selected disabled>Seleccione una opción</option>
+                            @foreach ($nombreAis as $nombreAi)
+                                <option {{ old('nombre_ai_informacion') == $nombreAi->id ? ' selected="selected"' : '' }}
+                                    value="{{ $nombreAi->id }}" data-dueno="{{$nombreAi->dueno->name}}" data-dueno-puesto="{{$nombreAi->dueno->puesto}}" data-dueno-area="{{$nombreAi->dueno->area->area}}" data-custodio="{{$nombreAi->custodio->name}}" data-custodio-puesto="{{$nombreAi->custodio->puesto}}" data-custodio-area="{{$nombreAi->custodio->area->area}}"> {{ $nombreAi->activo_informacion }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('nombre_ai_informacion'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('nombre_ai_informacion') }}
+                            </div>
+                        @endif
                     </div>
+
                     <div class="form-group col-sm-12 col-md-4 col-lg-4" style="margin-top:-7px;">
                         <label><i class="fab fa-cloudscale iconos-crear"></i>Valor de la criticidad del activo</label>
                         <select class="form-control select2 {{ $errors->has('valor_criticidad') ? 'is-invalid' : '' }}"
@@ -806,7 +808,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-4 col-sm-12">
+                    {{-- <div class="form-group col-md-4 col-sm-12">
                         <label for="id_dueno"><i class="fas fa-user-tie iconos-crear"></i>Dueño del Activo</label><br>
                         <select class="responsableSelect form-control" name="id_dueno" id="dueno_informacion">
                             <option value="" selected disabled>Seleccione una opción</option>
@@ -817,6 +819,10 @@
                             @endforeach
                         </select>
                         <small class="text-danger errores dueno_error"></small>
+                    </div> --}}
+                    <div class="form-group col-md-4">
+                        <label for="dueno_informacion"><i class="fas fa-briefcase iconos-crear"></i>Dueño del Activo</label>
+                        <div class="form-control" id="dueno_informacion" readonly></div>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
@@ -828,7 +834,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-4 col-sm-12">
+                    {{-- <div class="form-group col-md-4 col-sm-12">
                         <label for="id_custodio"><i class="fas fa-user-tie iconos-crear"></i>Custodio del Activo</label><br>
                         <select class="responsableSelect form-control" name="id_custodio" id="custodio_informacion">
                             <option value="" selected disabled>Seleccione una opción</option>
@@ -839,6 +845,11 @@
                             @endforeach
                         </select>
                         <small class="text-danger errores custodio_error"></small>
+                    </div> --}}
+
+                    <div class="form-group col-md-4">
+                        <label for="id_custodio"><i class="fas fa-briefcase iconos-crear"></i>Custodio del Activo</label>
+                        <div class="form-control" id="custodio_informacion" readonly></div>
                     </div>
                     <div class="form-group col-md-4">
                         <label><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
@@ -958,3 +969,4 @@
     </div>
 @endsection
 @include('admin.OCTAVE.scripts')
+

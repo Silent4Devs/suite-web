@@ -81,7 +81,7 @@ class Empleado extends Model
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
         'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo', 'saludo_completo',
-        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas',
+        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'es_supervisor',
     ];
 
     //, 'jefe_inmediato', 'empleados_misma_area'
@@ -323,9 +323,19 @@ class Empleado extends Model
         return $this->belongsTo(self::class);
     }
 
+    public function onlyChildren()
+    {
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->select('id');
+    }
+
     public function children()
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+    }
+
+    public function empleadoEsSupervisor()
+    {
+        // code...
     }
 
     public function fodas()
@@ -516,5 +526,10 @@ class Empleado extends Model
     public function contactos()
     {
         return $this->hasMany('App\Models\PuestoContactos', 'id_contacto')->orderBy('id');
+    }
+
+    public function getEsSupervisorAttribute()
+    {
+        return $this->onlyChildren->count() > 0 ? true : false;
     }
 }

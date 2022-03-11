@@ -1,31 +1,12 @@
 @extends('layouts.admin')
 @section('content')
-    
-    <style type="text/css">
-        .aprobada{
-            padding: 3px;
-            background-color: #61CB5C;
-            color: #fff;
-            border-radius: 4px;
-        }
-        .rechazada{
-            padding: 3px;
-            background-color: #EA7777;
-            color: #fff;
-            border-radius: 4px;
-        }
-        .pendiente{
-            padding: 3px;
-            background-color: #F48C16;
-            color: #fff;
-            border-radius: 4px;
-        }
-    </style>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
 
-     {{ Breadcrumbs::render('timesheet-rechazadas') }}
+     {{ Breadcrumbs::render('timesheet-papelera') }}
 	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Rechazadas</font> </h5>
+	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Borrador</font> </h5>
 
 	<div class="card card-body">
 		<div class="row">
@@ -38,38 +19,43 @@
 	                        <th>Empleado</th>
 	                        <th>Responsable</th>
                             <th>Aprobación</th>
-	                        {{-- <th>opciones</th> --}}
+	                        <th>opciones</th>
 	                    </tr>
 	                </thead>
 
 	                <tbody>
-                        @foreach($rechazadas as $rechazada)
+                        @foreach($papelera as $time)
     	                	<tr>
     	                        <td>
-    	                            {{ $rechazada->fecha_dia }} 
+    	                            {{ \Carbon\Carbon::parse($time->fecha_dia)->format("d/m/Y") }} 
     	                        </td>
     	                        <td>
-    	                            {{ $rechazada->empleado->name }}
+    	                            {{ $time->empleado->name }}
     	                        </td>
     	                        <td>
-                                    {{ $rechazada->aprobador->name }}
+                                    {{ $time->aprobador->name }}
     	                        </td>
     	                        <td>
-                                    @if($rechazada->aprobado)
-                                        <span class="aprobada">Aprobada</span>
+                                     @if($time->estatus == 'aprobado')
+                                        <span class="aprobado">Aprobada</span>
                                     @endif
 
-                                    @if($rechazada->rechazado)
-                                        <span class="rechazada">Rechazada</span>
+                                    @if($time->estatus == 'rechazado')
+                                        <span class="aprobado">Rechazada</span>
                                     @endif
 
-                                    @if(($rechazada->rechazado == false) && ($rechazada->aprobado == false))
+                                    @if($time->estatus == 'pendiente')
                                         <span class="pendiente">Pendiente</span>
                                     @endif
+
+                                    @if($time->estatus == 'papelera')
+                                        <span class="papelera">Borrador</span>
+                                    @endif
     	                        </td>
-    	                        {{-- <td>
-    	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $rechazada->id }}" class="btn">ver</a>
-    							</td>	 --}}                    
+    	                        <td>
+    	                        	<a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="{{ asset('admin/timesheet/edit') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-pen-to-square"></i></a>
+    							</td>	                    
     						</tr>
                         @endforeach
 	                </tbody>
