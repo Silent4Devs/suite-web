@@ -1037,4 +1037,9 @@ class MatrizRiesgosController extends Controller
             }
         }
     }
+
+    public function graficas()
+    {
+        return view('admin.OCTAVE.graficas');
+    }
 }

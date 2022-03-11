@@ -925,6 +925,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
     Route::get('matriz-octavemapa', 'MatrizRiesgosController@MapaCalorOctave')->name('matriz-octavemapa');
     Route::get('controles-get', 'MatrizRiesgosController@ControlesGet')->name('controles-get');
+    Route::get('octave/graficas', 'MatrizRiesgosController@graficas')->name('controles-get');
 
     // Gap Unos
     Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
