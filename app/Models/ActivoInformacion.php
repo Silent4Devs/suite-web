@@ -3,18 +3,17 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
+use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+
 
 class ActivoInformacion extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+
     protected $table = 'activos_informacion';
 
     protected $dates = [
@@ -22,6 +21,7 @@ class ActivoInformacion extends Model
         'updated_at',
         'deleted_at',
     ];
+    protected $appends=['riesgo_activo'];
 
     protected $fillable = [
     'identificador',
@@ -84,6 +84,18 @@ class ActivoInformacion extends Model
     'deleted_at',
     ];
 
+    public function getRiesgoActivoAttribute()
+    {
+        $contenedores= $this->contenedores;
+        $cantidadContenedores = count($contenedores)>0?count($contenedores):1;
+        $sumatoria = 0;
+        foreach ($contenedores as $contenedor) {
+            $sumatoria += $contenedor->riesgo ? $contenedor->riesgo:0;
+        }
+        $sumatoria = $sumatoria/$cantidadContenedores;
+        return round($sumatoria);
+    }
+
     public function dueno()
     {
         return $this->belongsTo(Empleado::class, 'duenoVP', 'id');
@@ -117,5 +129,9 @@ class ActivoInformacion extends Model
     public function disponibilidad()
     {
         return $this->belongsTo(activoDisponibilidad::class, 'disponibilidad_id', 'id');
+    }
+    public function contenedores()
+    {
+        return $this->belongsToMany(MatrizOctaveContenedor::class,'activos_contenedores','activo_id','contenedor_id');
     }
 }

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Livewire\ISO31000\ActivosInformacion;
 use App\Models\activoConfidencialidad;
 use App\Models\activoDisponibilidad;
 use App\Models\ActivoInformacion;
 use App\Models\activoIntegridad;
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\MatrizOctaveContenedor;
 use App\Models\Proceso;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,6 +20,7 @@ class ActivosInformacionController extends Controller
     public function index(Request $request)
     {
         $activos = ActivoInformacion::get();
+
 
         return view('admin.ActivosInformacion.index', compact('activos'));
     }
@@ -31,13 +34,18 @@ class ActivosInformacionController extends Controller
         $confidencials = activoConfidencialidad::get();
         $integridads = activoIntegridad::get();
         $disponibilidads = activoDisponibilidad::get();
+        $contenedores = MatrizOctaveContenedor::get();
 
-        return view('admin.ActivosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads'));
+        return view('admin.ActivosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads','contenedores'));
     }
 
     public function store(Request $request)
     {
-        $subtipos = ActivoInformacion::create($request->all());
+        $contenedores = array_map(function ($value) {
+            return intval($value);
+        }, $request->contenedores);
+        $activos = ActivoInformacion::create($request->all());
+        $activos->contenedores()->sync($contenedores);
 
         return redirect()->route('admin.activosInformacion.index')->with('success', 'Guardado con éxito');
     }
@@ -75,4 +83,6 @@ class ActivosInformacionController extends Controller
 
         return response()->json(['existe'=>$existe]);
     }
+
+
 }

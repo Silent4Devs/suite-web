@@ -20,7 +20,7 @@ class MatrizOctaveContenedor extends Model
         'id_matriz_octave_escenarios',
     ];
 
-    public function matriz_octave_escenario()
+    public function escenarios()
     {
         return $this->hasMany(MatrizOctaveEscenario::class, 'id_octave_contenedor', 'id');
     }
