@@ -224,7 +224,7 @@
             </div>
             <div class="form-group col-md-8 col-sm-12">
                 <label for="id_proceso"><i class="fas fa-project-diagram iconos-crear"></i>Proceso a evaluar</label><br>
-                <select class="procesoSelect mt-2 form-control" name="id_proceso" id="id_proceso">
+                <select class="procesoSelect mt-2 form-control" name="id_proceso" id="proceso_activo">
                     <option value="" selected disabled>Seleccione una opción</option>
                     @foreach ($procesos as $proceso)
                         <option {{ old('id_proceso') == $proceso->id ? ' selected="selected"' : '' }}
@@ -239,9 +239,11 @@
                 @endif
             </div>
 
+
+
             <div  class="form-group col-sm-4 col-md-4 col-lg-4">
                 <label for="nivel_riesgo"><i class="fas fa-bullseye iconos-crear"></i>Nivel de Riesgo</label>
-                <input class="form-control mt-2 {{ $errors->has('nivel_riesgo') ? 'is-invalid' : '' }}" type="number"
+                <input class="form-control mt-2 {{ $errors->has('nivel_riesgo') ? 'is-invalid' : '' }}" type="number" id="nivel_riesgo"
                    name="nivel_riesgo" value="{{ old('nivel_riesgo', '') }}" readonly>
                 @if ($errors->has('nivel_riesgo'))
                     <div class="invalid-feedback">
@@ -265,8 +267,17 @@
                     </div>
                 @endif
             </div>
-
+            <div class="form-group col-md-6 col-sm-12">
+            <label><i class="fas fa-handshake iconos-crear"></i>Servicio</label>
+            <div style="float: right;">
+            <button id="btnAgregarTipo" onclick="event.preventDefault();" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+            data-toggle="modal" data-target="#tipoCompetenciaModal" data-whatever="@mdo" data-whatever="@mdo" title="Agregar Tipo Impacto"><i
+                class="fas fa-plus"></i></button>
+            </div>
             @livewire('servicio-component')
+
+            @livewire('servicio-select-component',['servicio_seleccionado'=>$servicio_seleccionado])
+            </div>
 
 
 
@@ -282,14 +293,14 @@
                 ACTIVOS DEL PROCESO
             </div>
 
-            <div class="form-group col-md-6 col-sm-12">
+            <div class="form-group col-md-6 col-sm-12" id="contenedorActivos">
 
             </div>
 
             <div  class="form-group col-sm-4 col-md-4 col-lg-4">
                 <label for="valor"><i class="fas fa-bullseye iconos-crear"></i>Promedio de Activos</label>
                 <input class="form-control mt-2 {{ $errors->has('valor') ? 'is-invalid' : '' }}" type="number"
-                   name="valor" value="{{ old('valor', '') }}" readonly>
+                   name="valor" id="valor" value="{{ old('valor', '') }}" readonly>
                 @if ($errors->has('valor'))
                     <div class="invalid-feedback">
                         {{ $errors->first('valor') }}
@@ -729,5 +740,76 @@
         initSelect2();
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    let contacto = document.querySelector('#nombre_contacto_puesto');
+    let area_init = contacto.options[contacto.selectedIndex].getAttribute('data-area');
+
+    document.getElementById('area_contacto').innerHTML = area_init;
+    contacto.addEventListener('change', function(e) {
+        e.preventDefault();
+        let area = this.options[this.selectedIndex].getAttribute('data-area');
+        document.getElementById('area_contacto').innerHTML = area;
+    })
+})
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        Livewire.on('cerrarModal',()=>{
+        console.log('cerrarModal');
+        $('#tipoCompetenciaModal').modal('hide');
+        document.querySelector('.modal-backdrop').style.display='none'
+         });
+    });
+
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    let proceso = document.querySelector('#proceso_activo');
+    // let activo_init = proceso.options[proceso.selectedIndex].getAttribute('data-activo');
+
+    // document.getElementById('area_proceso').innerHTML = area_init;
+
+    proceso.addEventListener('change', function(e){
+        console.log('hola')
+        let proceso = e.target.options[e.target.selectedIndex].value;
+        document.getElementById('valor').value=null;
+        $.ajax({
+            type: "POST",
+            headers: {
+            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+            },
+            url: "{{route('admin.procesos.octave.activos')}}",
+            data: {proceso},
+            dataType: "json",
+            success: function (response) {
+                let contenedor=document.getElementById('contenedorActivos');
+                let cantidadActivos=response.length>0?response.length:1;
+                let sumatoria=0;
+                let html = '<ul>';
+                    response.forEach(item=>{
+                        sumatoria+=item.riesgo_activo;
+                        html+=`<li>${item.activo_informacion}</li>`;
+                    })
+                    sumatoria=sumatoria/cantidadActivos;
+                    html+='</ul>'
+                    contenedor.innerHTML=html;
+                    document.getElementById('valor').value=sumatoria;
+                    let total = sumatoria * Number(document.getElementById('valorImpacto').value);
+                    document.getElementById('nivel_riesgo').value=total
+            }
+        });
+    })
+})
+
+</script>
+
+
+
 
 @endsection

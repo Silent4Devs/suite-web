@@ -26,9 +26,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
     Route::resource('contenedores', 'ContenedorMatrizOctaveController');
 
-    Route::get('contenedores', 'ContenedorMatrizOctave@index');
-
-
 
 
 
@@ -953,9 +950,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
     Route::get('matriz-octavemapa', 'MatrizRiesgosController@MapaCalorOctave')->name('matriz-octavemapa');
     Route::get('controles-get', 'MatrizRiesgosController@ControlesGet')->name('controles-get');
-    Route::get('octave/graficas', 'MatrizRiesgosController@graficas')->name('controles-get');
 
     //ProcesosOctave
+    Route::post('procesos-octave/activos','ProcesosOctaveController@activos')->name('procesos.octave.activos');
     Route::delete('procesos-octave/destroy', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
     Route::resource('procesos-octave', 'ProcesosOctaveController')->except('destroy');
 

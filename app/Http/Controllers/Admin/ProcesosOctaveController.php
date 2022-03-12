@@ -73,8 +73,9 @@ class ProcesosOctaveController extends Controller
         $procesos = Proceso::get();
         $activosInfo = ActivoInformacion::get();
         $servicios=MatrizOctaveServicio::get();
+        $servicio_seleccionado=null;
 
-        return view('admin.procesos-octave.create', compact('areas','procesos', 'activosInfo','servicios'));
+        return view('admin.procesos-octave.create', compact('areas','procesos', 'activosInfo','servicios','servicio_seleccionado'));
     }
 
     public function store(Request $request)
@@ -105,5 +106,13 @@ class ProcesosOctaveController extends Controller
 
     public function show(){
 
+    }
+
+
+    public function activos(Request $request){
+        $proceso=$request->proceso;
+        $model=Proceso::find($proceso);
+        $activos=$model->activosAI;
+        return $activos;
     }
 }

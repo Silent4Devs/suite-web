@@ -25,7 +25,7 @@ class MatrizOctaveServicio extends Model
 
 	protected $fillable = [
 		'servicio',
-		'descripcion'
+		'descripcion',
 	];
 
 	public function matriz_octave_procesos()
