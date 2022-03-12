@@ -1,5 +1,11 @@
 @extends('layouts.admin')
 @section('content')
+<style>
+
+
+
+</style>
+
     <h5 class="col-12 titulo_general_funcion">Registrar: Activo de Información</h5>
 <div class="mt-4 card">
     <form method="POST" action="{{ route("admin.activosInformacion.store")}}" enctype="multipart/form-data">
@@ -21,6 +27,15 @@
                     <input class="form-control {{ $errors->has('activo_informacion') ? 'is-invalid' : '' }}" type="text"
                         name="activo_informacion" id="activo_informacion">
                 </div>
+                <div class="form-group col-sm-12 multi_select_box">
+                    <label for="contenedores"><i class="fas fa-boxes iconos-crear"></i>Contenedor asociado al</label>
+                    <select class="multi_select select2 col-sm-12" multiple size="3" name="contenedores[]">
+                        @foreach ($contenedores as $contenedor)
+                        <option value="{{$contenedor->id}}" data-riesgo="{{$contenedor->riesgo}}">{{$contenedor->nom_contenedor}}</option>
+                        @endforeach
+                      </select>
+                </div>
+
                 <div class="form-group col-sm-12">
                     <label for="nombreVP"><i class="fas fa-list-ol iconos-crear"></i>Nombre VP</label>
                     <select class="custom-select my-1 mr-sm-2" id="nombreVP" name="nombreVP">
@@ -971,12 +986,12 @@
                 <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Escala Disponibilidad</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Escala Criticidad</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body ">
                         <table class="table">
                             <thead>
                               <tr>
@@ -1014,6 +1029,7 @@
 
     </form>
 </div>
+</div>
 
 
 
@@ -1024,7 +1040,9 @@
 @section('scripts')
 
 <script>
+
     document.addEventListener('DOMContentLoaded', function(e) {
+
         obtenerCriticidad()
         let responsable = document.querySelector('#duenoVP');
         let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
@@ -1094,6 +1112,8 @@
             document.getElementById('valor_criticidad').value= sumatoria;
         }
 
+        $('.multi_select').selectpicker();
+
 
 
 
@@ -1127,14 +1147,19 @@
             }
         });
         })
-
-
     })
 
 
-
-
 </script>
+{{-- <script>
+    document.addEventListener('DOMContentLoaded', function(e) {
+         $('.select2').select2({
+        'theme': 'bootstrap4'
+        });
+    });
+
+</script> --}}
+
 
 
 

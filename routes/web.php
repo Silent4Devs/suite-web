@@ -675,15 +675,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Activos
 
-    // Route::post('activos/create', 'ActivosController@save');
-    Route::post('activosInformacion/validacion', 'ActivosInformacionController@validacion')->name('activosInformacion.validacion');
+    // Route::post('activos/create', 'ActivosController@create');
     Route::get('activos/descargar', 'ActivosController@DescargaFormato')->name('activos.descargar');
     Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
     Route::resource('activos', 'ActivosController');
 
+    Route::post('activosInformacion/validacion', 'ActivosInformacionController@validacion')->name('activosInformacion.validacion');
     Route::get('activosInformacion/descargar', 'ActivosInformacionController@DescargaFormato')->name('activosInformacion.descargar');
     Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
-    Route::get('activos/create', 'ActivosInformacionController@create')->name('activosInformacion.create');
+    Route::get('activosInformacion/create', 'ActivosInformacionController@create')->name('activosInformacion.create');
     Route::get('activosInformacion/{activo}', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
     Route::resource('activosInformacion', 'ActivosInformacionController')->names([
         'index' => 'activosInformacion.index',
