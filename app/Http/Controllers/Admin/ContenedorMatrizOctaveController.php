@@ -111,6 +111,8 @@ class ContenedorMatrizOctaveController extends Controller
         ]);
         $escenario->controles()->sync($controles);
         $sumatoria = $this->calcularRiesgo($contenedor);
+        $contenedor = MatrizOctaveContenedor::find($contenedor);
+        $contenedor->update(['riesgo'=>$sumatoria]);
 
         return response()->json(['estatus'=>200, 'riesgo'=>$sumatoria]);
     }

@@ -419,7 +419,7 @@
                                 </td>
 
                                 <td  style="color:#345183;">
-                                    @switch ($cartaAceptacion->legal)
+                                @switch ($cartaAceptacion->legal)
                                     @case(1)
                                     <div class="cuadro_verdelimon"></div>
                                         @break

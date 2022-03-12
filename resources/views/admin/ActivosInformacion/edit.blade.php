@@ -371,14 +371,14 @@
                         <label for="otra_AppCarpeta">Otra Aplicación/carpeta</label>
                         <input type="text" class="form-control" id="otra_AppCarpeta" name="otra_AppCarpeta" placeholder="..." value="{{ old('otra_AppCarpeta', $activos->otra_AppCarpeta)}}">
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="uso_fisico">Uso físico</label>
                         <input type="text" class="form-control" id="uso_fisico" name="uso_fisico" placeholder="..." value="{{ old('uso_fisico', $activos->uso_fisico)}}">
                     </div>
                     <div class="form-group">
                         <label for="otro">Otro</label>
                         <input type="text" class="form-control" id="otro" name="otro" placeholder="..." value="{{ old('otro', $activos->otro)}}">
-                    </div>
+                    </div> --}}
 
 
                     <div class="form-group">
