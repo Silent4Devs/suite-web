@@ -14,9 +14,7 @@ class CreateDeleteToMatrizOctaveContenedoresTable extends Migration
     public function up()
     {
         Schema::table('matriz_octave_contenedores', function (Blueprint $table) {
-
             $table->softDeletes();
-
         });
     }
 
@@ -27,6 +25,5 @@ class CreateDeleteToMatrizOctaveContenedoresTable extends Migration
      */
     public function down()
     {
-
     }
 }

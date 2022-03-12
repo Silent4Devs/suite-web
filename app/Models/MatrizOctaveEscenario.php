@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 class MatrizOctaveEscenario extends Model
 {
     use SoftDeletes;
@@ -22,8 +21,9 @@ class MatrizOctaveEscenario extends Model
         'controles',
         'id_octave_contenedor',
     ];
+
     /**
-     * The controles that belong to the MatrizOctaveEscenario
+     * The controles that belong to the MatrizOctaveEscenario.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
