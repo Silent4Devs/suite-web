@@ -17,8 +17,9 @@ class CreateCartaAceptacionPivots extends Migration
             $table->increments('id');
             $table->unsignedInteger('controles_id')->nullable();
             $table->foreign('controles_id')->references('id')->on('declaracion_aplicabilidad');
-            $table->unsignedInteger('carta_id')->nullable();
-            $table->foreign('carta_id')->references('id')->on('carta_aceptacion');
+            $table->unsignedInteger('id_matriz_octave_escenarios')->nullable();
+            $table->foreign('id_matriz_octave_escenarios')->references('id')->on('matriz_octave_escenarios');
+
             $table->timestamps();
         });
     }
