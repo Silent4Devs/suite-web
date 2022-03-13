@@ -13,8 +13,8 @@
             position: absolute;
         }
         .tabla-grafica-1 td{
-            width: 300px;
-            height: 250px;
+            width: 250px;
+            height: 200px;
             border: 2px solid #fff;
             vertical-align: middle;
             text-align: center;
@@ -76,8 +76,8 @@
             background-color: red;
         }
         .color-td{
-            min-width: 150px;
-            height: 100px;
+            min-width: 100px;
+            height: 80px;
             border: 3px solid #fff;
         }
     </style>
@@ -141,9 +141,9 @@
                 </table>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-8" style="overflow: auto;">
                 
-                <div class="caja-grafica" style="width: 650px;">
+                <div class="caja-grafica py-5" style="width: 650px;">
                     <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
                     <table class="tabla-grafica-1">
                         <tr>
@@ -191,9 +191,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8" style="overflow: auto;">
                 
-                <div class="caja-grafica" style="width: 850px;">
+                <div class="caja-grafica py-5" style="width: 680px;">
                     <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
                     <table class="tabla-grafica-2">
                         <tr>
@@ -277,9 +277,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-8 mt-4">
+            <div class="col-md-8 mt-4" style="overflow: auto;">
                 
-                <div class="caja-grafica" style="width: 850px;">
+                <div class="caja-grafica py-5" style="width: 680px;">
                     <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
                     <table class="tabla-grafica-2">
                         <tr>
