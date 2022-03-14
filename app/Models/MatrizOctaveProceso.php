@@ -64,11 +64,11 @@ class MatrizOctaveProceso extends Model
         'promedio',
     ];
 
-
     public function proceso()
     {
         return $this->belongsTo(Proceso::class, 'id_proceso');
     }
+
     public function children()
     {
         return $this->belongsTo(Proceso::class, 'id_proceso')->with('children');

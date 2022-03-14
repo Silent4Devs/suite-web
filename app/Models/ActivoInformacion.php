@@ -84,8 +84,9 @@ class ActivoInformacion extends Model
 
     public function getNameAttribute()
     {
-        return $this->identificador . " " . $this->activo_informacion;
+        return $this->identificador . ' ' . $this->activo_informacion;
     }
+
     public function getContentAttribute()
     {
         return Str::limit($this->nombreVP, 20, '...') ? Str::limit($this->nombreVP, 20, '...') : 'Sin Contenido';
@@ -107,15 +108,15 @@ class ActivoInformacion extends Model
     public function getColorAttribute()
     {
         if ($this->riesgo_activo <= 5) {
-            return "#0C7000";
-        } else if ($this->riesgo_activo <= 10) {
-            return "#2BE015";
-        } else if ($this->riesgo_activo <= 15) {
-            return "#FFFF00";
-        } else if ($this->riesgo_activo <= 20) {
-            return "#FF7000";
+            return '#0C7000';
+        } elseif ($this->riesgo_activo <= 10) {
+            return '#2BE015';
+        } elseif ($this->riesgo_activo <= 15) {
+            return '#FFFF00';
+        } elseif ($this->riesgo_activo <= 20) {
+            return '#FF7000';
         } else {
-            return "#FF0000";
+            return '#FF0000';
         }
     }
 
@@ -158,6 +159,7 @@ class ActivoInformacion extends Model
     {
         return $this->belongsToMany(MatrizOctaveContenedor::class, 'activos_contenedores', 'activo_id', 'contenedor_id');
     }
+
     public function children()
     {
         return $this->belongsToMany(MatrizOctaveContenedor::class, 'activos_contenedores', 'activo_id', 'contenedor_id')->with('children');

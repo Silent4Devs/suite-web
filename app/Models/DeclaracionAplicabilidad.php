@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 use Illuminate\Support\Str;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class DeclaracionAplicabilidad extends Model
 {
@@ -37,11 +37,11 @@ class DeclaracionAplicabilidad extends Model
         'updated_at',
     ];
 
-
     public function getNameAttribute()
     {
-        return $this->anexo_indice . " " . $this->nocontrolm_escenario;
+        return $this->anexo_indice . ' ' . $this->nocontrolm_escenario;
     }
+
     public function getContentAttribute()
     {
         return Str::limit($this->descripcion_control, 20, '...') ? Str::limit($this->descripcion_control, 20, '...') : 'Sin Contenido';

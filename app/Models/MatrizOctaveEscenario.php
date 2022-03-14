@@ -27,21 +27,23 @@ class MatrizOctaveEscenario extends Model
     {
         $suma = $this->confidencialidad + $this->integridad + $this->disponibilidad;
         if ($suma <= 5) {
-            return "#0C7000";
-        } else if ($suma <= 10) {
-            return "#2BE015";
-        } else if ($suma <= 15) {
-            return "#FFFF00";
-        } else if ($suma <= 20) {
-            return "#FF7000";
+            return '#0C7000';
+        } elseif ($suma <= 10) {
+            return '#2BE015';
+        } elseif ($suma <= 15) {
+            return '#FFFF00';
+        } elseif ($suma <= 20) {
+            return '#FF7000';
         } else {
-            return "#FF0000";
+            return '#FF0000';
         }
     }
+
     public function getNameAttribute()
     {
-        return $this->identificador_escenario . " " . $this->nom_escenario;
+        return $this->identificador_escenario . ' ' . $this->nom_escenario;
     }
+
     public function getContentAttribute()
     {
         return Str::limit($this->descripcion, 20, '...') ? Str::limit($this->descripcion, 20, '...') : 'Sin Contenido';
@@ -51,6 +53,7 @@ class MatrizOctaveEscenario extends Model
     {
         return $this->belongsToMany(DeclaracionAplicabilidad::class, 'matriz_octave_escenario_controles', 'id_matriz_octave_escenarios', 'controles_id');
     }
+
     public function children()
     {
         return $this->belongsToMany(DeclaracionAplicabilidad::class, 'matriz_octave_escenario_controles', 'id_matriz_octave_escenarios', 'controles_id');
