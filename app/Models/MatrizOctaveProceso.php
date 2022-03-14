@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Livewire\ISO31000\ActivosInformacion;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -63,9 +64,14 @@ class MatrizOctaveProceso extends Model
         'promedio',
     ];
 
+
     public function proceso()
     {
         return $this->belongsTo(Proceso::class, 'id_proceso');
+    }
+    public function children()
+    {
+        return $this->belongsTo(Proceso::class, 'id_proceso')->with('children');
     }
 
     public function grupo()
@@ -73,13 +79,13 @@ class MatrizOctaveProceso extends Model
         return $this->belongsTo(Grupo::class, 'id_direccion');
     }
 
-	public function servicio()
-	{
-		return $this->belongsTo(MatrizOctaveServicio::class, 'servicio_id','id');
-	}
+    public function servicio()
+    {
+        return $this->belongsTo(MatrizOctaveServicio::class, 'servicio_id', 'id');
+    }
 
     public function activos_informacion()
     {
-        return $this->belongsTo(ActivosInformacion::class, 'id_activos_informacion');
+        return $this->hasMany(ActivosInformacion::class, 'id_activos_informacion', 'id');
     }
 }

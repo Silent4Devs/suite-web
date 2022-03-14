@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Str;
 
 /**
  * Class Proceso.
@@ -43,6 +44,8 @@ class Proceso extends Model
     const ACTIVO = '1';
     const NO_ACTIVO = '2';
 
+    protected $appends = ["name", "content"];
+
     protected $fillable = [
         'codigo',
         'nombre',
@@ -52,6 +55,15 @@ class Proceso extends Model
         'documento_id',
 
     ];
+
+    public function getNameAttribute()
+    {
+        return $this->codigo . " " . $this->nombre;
+    }
+    public function getContentAttribute()
+    {
+        return Str::limit($this->descripcion, 20, '...') ? Str::limit($this->descripcion, 20, '...') : 'Sin Contenido';
+    }
 
     public function macroproceso()
     {
@@ -81,5 +93,9 @@ class Proceso extends Model
     public function activosAI()
     {
         return $this->hasMany(ActivoInformacion::class, 'proceso_id', 'id');
+    }
+    public function children()
+    {
+        return $this->hasMany(ActivoInformacion::class, 'proceso_id', 'id')->with('children');
     }
 }
