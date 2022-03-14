@@ -16,7 +16,6 @@ class AddForeignKeyToMatrizOctaveEscenariosTable extends Migration
         Schema::table('matriz_octave_escenarios', function (Blueprint $table) {
             $table->unsignedInteger('id_octave_contenedor')->nullable();
             $table->foreign('id_octave_contenedor')->references('id')->on('matriz_octave_contenedores');
-
         });
     }
 

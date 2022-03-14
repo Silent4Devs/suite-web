@@ -121,44 +121,44 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div id="caja_select_color" class="form-group col-md-4 col-sm-12">
                         <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>Confidencialidad</label><br>
                         <select class="form-control select2 {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}"
                             name="confidencialidad" id="confidencialidad_informacion">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            <option value="0">0 - Sin Impacto</option>
+                            <option value="1">1 - Muy Bajo</option>
+                            <option value="2">2 - Bajo</option>
+                            <option value="3">3 - Medio</option>
+                            <option value="4">4 - Alto</option>
+                            <option value="5">5 - Crítico</option>
                         </select>
                         <small class="text-danger errores confidencialidad_error"></small>
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12 caja_select_color">
                         <label for="disponibilidad"><i class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label><br>
                         <select class="form-control select2 {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}"
                             name="disponibilidad" id="disponibilidad_informacion">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            <option value="0">0 - Sin Impacto</option>
+                            <option value="1">1 - Muy Bajo</option>
+                            <option value="2">2 - Bajo</option>
+                            <option value="3">3 - Medio</option>
+                            <option value="4">4 - Alto</option>
+                            <option value="5">5 - Crítico</option>
                         </select>
                         <small class="text-danger errores disponibilidad_error"></small>
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12 caja_select_color">
                         <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Integridad</label><br>
                         <select class="form-control select2 {{ $errors->has('integridad') ? 'is-invalid' : '' }}"
                             name="integridad" id="integridad_informacion">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            <option value="0">0 - Sin Impacto</option>
+                            <option value="1">1 - Muy Bajo</option>
+                            <option value="2">2 - Bajo</option>
+                            <option value="3">3 - Medio</option>
+                            <option value="4">4 - Alto</option>
+                            <option value="5">5 - Crítico</option>
                         </select>
                         <small class="text-danger errores integridad_error"></small>
                     </div>
@@ -193,19 +193,18 @@
                         </div>
                     @endif
                 </div> --}}
-                    <div class="form-group col-md-12 col-lg-12 col-sm-12">
+                    <div id="omitir_color" class="form-group col-md-12 col-lg-12 col-sm-12">
                         <label><i class="fas fa-user iconos-crear"></i>Controles Aplicables</label>
-                        <select
-                        class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
+                        <select class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
                         name="controles[]" id="controles" multiple="multiple">
-                        <option value disabled>
-                            Selecciona una opción</option>
-                        @foreach ($controles as $control)
-                            <option value="{{ $control->id }}">
-                                {{ $control->anexo_indice }} {{ $control->anexo_politica }}
-                            </option>
-                        @endforeach
-                    </select>
+                            <option value disabled>
+                                Selecciona una opción</option>
+                            @foreach ($controles as $control)
+                                <option value="{{ $control->id }}">
+                                    {{ $control->anexo_indice }} {{ $control->anexo_politica }}
+                                </option>
+                            @endforeach
+                        </select>
                         @if ($errors->has('controles'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('controles') }}

@@ -14,8 +14,6 @@ class MatrizOctaveContenedor extends Model
     protected $fillable = [
         'identificador_contenedor',
         'nom_contenedor',
-        'riesgo',
-        'vinculado_ai',
         'descripcion',
         'id_matriz_octave_escenarios',
     ];
@@ -24,7 +22,4 @@ class MatrizOctaveContenedor extends Model
     {
         return $this->hasMany(MatrizOctaveEscenario::class, 'id_octave_contenedor', 'id');
     }
-
-
-
 }

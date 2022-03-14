@@ -138,6 +138,7 @@ class CategoriaCapacitacionController extends Controller
     {
         abort_if(Gate::denies('categorias_capacitaciones_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $categoriaCapacitacion->delete();
+        $competencia->delete();
 
         return redirect()->route('admin.categoria-capacitacion.index');
     }
