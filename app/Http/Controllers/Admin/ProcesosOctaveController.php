@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\admin;
 
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\ActivoInformacion;
 use App\Models\Area;
 use App\Models\Proceso;
-use Illuminate\Http\Request;
-use App\Models\ActivoInformacion;
 use App\Models\MatrizOctaveProceso;
-use App\Http\Controllers\Controller;
 use App\Models\MatrizOctaveServicio;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProcesosOctaveController extends Controller
 {
@@ -43,7 +44,7 @@ class ProcesosOctaveController extends Controller
                 return $row->id ? $row->id : '';
             });
             $table->editColumn('proceso', function ($row) {
-                return $row->proceso ? $row->proceso : '';
+                return $row->proceso ? $row->proceso->nombre : '';
             });
 
             $table->editColumn('nivel_riesgo', function ($row) {
@@ -66,34 +67,32 @@ class ProcesosOctaveController extends Controller
         return view('admin.procesos-octave.index');
     }
 
-
-    public function create(){
-
-        $areas=Area::get();
+    public function create()
+    {
+        $areas = Area::get();
         $procesos = Proceso::get();
         $activosInfo = ActivoInformacion::get();
-        $servicios=MatrizOctaveServicio::get();
+        $servicios = MatrizOctaveServicio::get();
+        $servicio_seleccionado = null;
 
-        return view('admin.procesos-octave.create', compact('areas','procesos', 'activosInfo','servicios'));
+        return view('admin.procesos-octave.create', compact('areas', 'procesos', 'activosInfo', 'servicios', 'servicio_seleccionado'));
     }
 
     public function store(Request $request)
     {
-
         $procesosOctave = MatrizOctaveProceso::create($request->all());
-
 
         return redirect()->route('admin.procesos-octave.index');
     }
 
-    public function edit(){
-
-        $areas=Area::get();
+    public function edit()
+    {
+        $areas = Area::get();
         $procesos = Proceso::get();
         $activosInfo = ActivoInformacion::get();
-        $servicios=MatrizOctaveServicio::get();
+        $servicios = MatrizOctaveServicio::get();
 
-        return view('admin.procesos-octave.edit', compact('areas','procesos', 'activosInfo','servicios'));
+        return view('admin.procesos-octave.edit', compact('areas', 'procesos', 'activosInfo', 'servicios'));
     }
 
     public function update(Request $request, MatrizOctaveProceso $procesosOctave)
@@ -103,7 +102,16 @@ class ProcesosOctaveController extends Controller
         return redirect()->route('admin.procesos-octave.index');
     }
 
-    public function show(){
+    public function show()
+    {
+    }
 
+    public function activos(Request $request)
+    {
+        $proceso = $request->proceso;
+        $model = Proceso::find($proceso);
+        $activos = $model->activosAI;
+
+        return $activos;
     }
 }

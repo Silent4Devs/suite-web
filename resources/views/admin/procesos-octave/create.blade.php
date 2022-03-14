@@ -8,45 +8,23 @@
 
 }
 
-.select2-results__option:nth-child(1)::before {
-    position: absolute;
-    content: '';
-    width: 10px;
-    height: 10px;
-    background-color: rgb(61, 114, 77);
-    margin-left: -20px;
-    border-radius: 100px;
-    margin-top: 6px;
-}
-
-.select2-selection__rendered[title="1 Muy Bajo"]::before {
-    position: absolute;
-    content: '';
-    width: 10px;
-    height: 10px;
-    background-color: rgb(61, 114, 77);
-    margin-left: -18px;
-    border-radius: 100px;
-    margin-top: 11px;
-}
-
 .select2-results__option:nth-child(2)::before {
     position: absolute;
     content: '';
     width: 10px;
     height: 10px;
-    background-color: rgb(50, 205, 63);
+    background-color: rgb(61, 114, 77);
     margin-left: -20px;
     border-radius: 100px;
     margin-top: 6px;
 }
 
-.select2-selection__rendered[title="2 Bajo"]::before {
+.select2-selection__rendered[title="1 - Muy Bajo"]::before {
     position: absolute;
     content: '';
     width: 10px;
     height: 10px;
-    background-color: rgb(50, 205, 63);
+    background-color: rgb(61, 114, 77);
     margin-left: -18px;
     border-radius: 100px;
     margin-top: 11px;
@@ -57,18 +35,18 @@
     content: '';
     width: 10px;
     height: 10px;
-    background-color: yellow;
+    background-color: rgb(50, 205, 63);
     margin-left: -20px;
     border-radius: 100px;
     margin-top: 6px;
 }
 
-.select2-selection__rendered[title="3 Medio"]::before {
+.select2-selection__rendered[title="2 - Bajo"]::before {
     position: absolute;
     content: '';
     width: 10px;
     height: 10px;
-    background-color: yellow;
+    background-color: rgb(50, 205, 63);
     margin-left: -18px;
     border-radius: 100px;
     margin-top: 11px;
@@ -79,18 +57,18 @@
     content: '';
     width: 10px;
     height: 10px;
-    background-color: rgb(255, 136, 0);
+    background-color: yellow;
     margin-left: -20px;
     border-radius: 100px;
     margin-top: 6px;
 }
 
-.select2-selection__rendered[title="4 Alto"]::before {
+.select2-selection__rendered[title="3 - Medio"]::before {
     position: absolute;
     content: '';
     width: 10px;
     height: 10px;
-    background-color: rgb(255, 136, 0);
+    background-color: yellow;
     margin-left: -18px;
     border-radius: 100px;
     margin-top: 11px;
@@ -101,13 +79,35 @@
     content: '';
     width: 10px;
     height: 10px;
+    background-color: rgb(255, 136, 0);
+    margin-left: -20px;
+    border-radius: 100px;
+    margin-top: 6px;
+}
+
+.select2-selection__rendered[title="4 - Alto"]::before {
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: rgb(255, 136, 0);
+    margin-left: -18px;
+    border-radius: 100px;
+    margin-top: 11px;
+}
+
+.select2-results__option:nth-child(6)::before {
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 10px;
     background-color: red;
     margin-left: -20px;
     border-radius: 100px;
     margin-top: 6px;
 }
 
-.select2-selection__rendered[title="5 Crítico"]::before {
+.select2-selection__rendered[title="5 - Crítico"]::before {
     position: absolute;
     content: '';
     width: 10px;
@@ -184,39 +184,13 @@
 
 <div class="mt-5 card">
     <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Matriz Octave</h3>
+        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong>Proceso</h3>
     </div>
     <div class="card-body">
         <form method="POST" action="{{ route('admin.procesos-octave.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="row">
-            <div class="col-12" style="margin-left:-15px;">
-                <div class="nav nav-tabs" id="tabsEmpleado" role="tablist">
-                    <a class="nav-link active" href="{{route('admin.procesos-octave.index')}}">
-                    <i class="fas fa-project-diagram mr-2" style="font-size:20px;"></i>Procesos
-                    </a>
-                    <a class="nav-link"  href="{{route('admin.activosInformacion.index')}}" >
-                        <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
-                       Activos
-                    </a>
-                    <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}"  >
-                        <i class="fas fa-camera-retro mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
-                       Escenarios
-                    </a>
-                    <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}" >
-                        <i class="fas fa-box-open mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
-                        Contenedores
-                    </a>
-
-                    <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}" >
-                        <i class="fas fa-network-wired mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
-                        Árbol de Riesgos
-                    </a>
-                    <a class="nav-link "  href="{{route('admin.carta-aceptacion.index')}}" >
-                    <i class="fas fa-chart-bar mr-2" style="font-size:20px;" style="text-decoration:none;"></i>Gráfica
-                    </a>
-                </div>
-            </div>
+            @include('admin.OCTAVE.menu')
 
 
             <div class="text-center form-group col-12" style="background-color:#345183; border-radius: 100px; color: white;">
@@ -224,7 +198,7 @@
             </div>
             <div class="form-group col-md-8 col-sm-12">
                 <label for="id_proceso"><i class="fas fa-project-diagram iconos-crear"></i>Proceso a evaluar</label><br>
-                <select class="procesoSelect mt-2 form-control" name="id_proceso" id="id_proceso">
+                <select class="procesoSelect mt-2 form-control" name="id_proceso" id="proceso_activo">
                     <option value="" selected disabled>Seleccione una opción</option>
                     @foreach ($procesos as $proceso)
                         <option {{ old('id_proceso') == $proceso->id ? ' selected="selected"' : '' }}
@@ -239,9 +213,11 @@
                 @endif
             </div>
 
+
+
             <div  class="form-group col-sm-4 col-md-4 col-lg-4">
                 <label for="nivel_riesgo"><i class="fas fa-bullseye iconos-crear"></i>Nivel de Riesgo</label>
-                <input class="form-control mt-2 {{ $errors->has('nivel_riesgo') ? 'is-invalid' : '' }}" type="number"
+                <input class="form-control mt-2 {{ $errors->has('nivel_riesgo') ? 'is-invalid' : '' }}" type="number" id="nivel_riesgo"
                    name="nivel_riesgo" value="{{ old('nivel_riesgo', '') }}" readonly>
                 @if ($errors->has('nivel_riesgo'))
                     <div class="invalid-feedback">
@@ -265,8 +241,17 @@
                     </div>
                 @endif
             </div>
-
+            <div class="form-group col-md-6 col-sm-12">
+            <label><i class="fas fa-handshake iconos-crear"></i>Servicio</label>
+            <div style="float: right;">
+            <button id="btnAgregarTipo" onclick="event.preventDefault();" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+            data-toggle="modal" data-target="#tipoCompetenciaModal" data-whatever="@mdo" data-whatever="@mdo" title="Agregar Tipo Impacto"><i
+                class="fas fa-plus"></i></button>
+            </div>
             @livewire('servicio-component')
+
+            @livewire('servicio-select-component',['servicio_seleccionado'=>$servicio_seleccionado])
+            </div>
 
 
 
@@ -275,21 +260,21 @@
             </div>
 
 
-                @livewire('octave.select-impactos',["operacionalId"=>1,"cumplimientoId"=>1,"legalId"=>1,"reputacionalId"=>1,"tecnologicoId"=>1])
+                @livewire('octave.select-impactos',["operacionalId"=>0,"cumplimientoId"=>0,"legalId"=>0,"reputacionalId"=>0,"tecnologicoId"=>0])
 
 
             <div class="text-center form-group col-12" style="background-color:#345183; border-radius: 100px; color: white;">
                 ACTIVOS DEL PROCESO
             </div>
 
-            <div class="form-group col-md-6 col-sm-12">
+            <div class="form-group col-md-6 col-sm-12" id="contenedorActivos">
 
             </div>
 
             <div  class="form-group col-sm-4 col-md-4 col-lg-4">
                 <label for="valor"><i class="fas fa-bullseye iconos-crear"></i>Promedio de Activos</label>
                 <input class="form-control mt-2 {{ $errors->has('valor') ? 'is-invalid' : '' }}" type="number"
-                   name="valor" value="{{ old('valor', '') }}" readonly>
+                   name="valor" id="valor" value="{{ old('valor', '') }}" readonly>
                 @if ($errors->has('valor'))
                     <div class="invalid-feedback">
                         {{ $errors->first('valor') }}
@@ -729,5 +714,76 @@
         initSelect2();
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    let contacto = document.querySelector('#nombre_contacto_puesto');
+    let area_init = contacto.options[contacto.selectedIndex].getAttribute('data-area');
+
+    document.getElementById('area_contacto').innerHTML = area_init;
+    contacto.addEventListener('change', function(e) {
+        e.preventDefault();
+        let area = this.options[this.selectedIndex].getAttribute('data-area');
+        document.getElementById('area_contacto').innerHTML = area;
+    })
+})
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        Livewire.on('cerrarModal',()=>{
+        console.log('cerrarModal');
+        $('#tipoCompetenciaModal').modal('hide');
+        document.querySelector('.modal-backdrop').style.display='none'
+         });
+    });
+
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    let proceso = document.querySelector('#proceso_activo');
+    // let activo_init = proceso.options[proceso.selectedIndex].getAttribute('data-activo');
+
+    // document.getElementById('area_proceso').innerHTML = area_init;
+
+    proceso.addEventListener('change', function(e){
+        console.log('hola')
+        let proceso = e.target.options[e.target.selectedIndex].value;
+        document.getElementById('valor').value=null;
+        $.ajax({
+            type: "POST",
+            headers: {
+            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+            },
+            url: "{{route('admin.procesos.octave.activos')}}",
+            data: {proceso},
+            dataType: "json",
+            success: function (response) {
+                let contenedor=document.getElementById('contenedorActivos');
+                let cantidadActivos=response.length>0?response.length:1;
+                let sumatoria=0;
+                let html = '<ul>';
+                    response.forEach(item=>{
+                        sumatoria+=item.riesgo_activo;
+                        html+=`<li>${item.activo_informacion}</li>`;
+                    })
+                    sumatoria=sumatoria/cantidadActivos;
+                    html+='</ul>'
+                    contenedor.innerHTML=html;
+                    document.getElementById('valor').value=sumatoria;
+                    let total = sumatoria * Number(document.getElementById('valorImpacto').value);
+                    document.getElementById('nivel_riesgo').value=total
+            }
+        });
+    })
+})
+
+</script>
+
+
+
 
 @endsection

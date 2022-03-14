@@ -104,43 +104,18 @@
 
             <h5 class="col-12 my-5"><strong>Evaluación de Procesos</strong></h5>
 
-            <div class="row mt-5">
-                <div class="form-group col-md-6">
-                    <label>Dirección</label>
-                    <select class="form-control"></select>
-                </div>
-                <div class="form-group col-md-6">
-                    <label>Servicio</label>
-                    <select class="form-control"></select>
-                </div>
+            <div class="form-group col-md-6">
+                <label>Dirección</label>
+                <select class="form-control"></select>
             </div>
-
-            <div class="col-md-4 mt-3">
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Riesgo</th>
-                            <th scope="col">Probabilidad</th>
-                            <th scope="col">Impacto</th>
-                            <th scope="col">Nivel riesgo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td scope="col">#</td>
-                            <td scope="col">Riesgo</td>
-                            <td scope="col">Probabilidad</td>
-                            <td scope="col">Impacto</td>
-                            <td scope="col">Nivel riesgo</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="form-group col-md-6">
+                <label>Servicio</label>
+                <select class="form-control"></select>
             </div>
 
             <div class="col-12" style="overflow: auto;">
                 
-                <div class="caja-grafica py-5" style="width: 650px;">
+                <div class="caja-grafica pt-5" style="width: 500px;">
                     <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
                     <table class="tabla-grafica-1">
                         <tr>
@@ -165,7 +140,31 @@
                     </table>
                     <div class="info-grafica" style="left:300px; margin-top: 20px;">Impacto</div>
                 </div>
-            </div>    
+
+            </div>   
+
+            <div class="col-12 mt-3">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Riesgo</th>
+                            <th scope="col">Probabilidad</th>
+                            <th scope="col">Impacto</th>
+                            <th scope="col">Nivel riesgo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="col">#</td>
+                            <td scope="col">Riesgo</td>
+                            <td scope="col">Probabilidad</td>
+                            <td scope="col">Impacto</td>
+                            <td scope="col">Nivel riesgo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> 
         </div>
 
         <div class="row caja-graf d-none" id="caja_graf_act">

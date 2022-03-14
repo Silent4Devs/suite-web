@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Livewire\ISO31000\ActivosInformacion;
 use App\Models\activoConfidencialidad;
 use App\Models\activoDisponibilidad;
 use App\Models\ActivoInformacion;
@@ -21,7 +20,6 @@ class ActivosInformacionController extends Controller
     {
         $activos = ActivoInformacion::get();
 
-
         return view('admin.ActivosInformacion.index', compact('activos'));
     }
 
@@ -36,7 +34,7 @@ class ActivosInformacionController extends Controller
         $disponibilidads = activoDisponibilidad::get();
         $contenedores = MatrizOctaveContenedor::get();
 
-        return view('admin.ActivosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads','contenedores'));
+        return view('admin.ActivosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores'));
     }
 
     public function store(Request $request)
@@ -83,6 +81,4 @@ class ActivosInformacionController extends Controller
 
         return response()->json(['existe'=>$existe]);
     }
-
-
 }

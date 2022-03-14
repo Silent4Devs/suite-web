@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class MatrizOctaveProceso
+ * Class MatrizOctaveProceso.
  *
  * @property int $id
  * @property int|null $id_proceso
@@ -28,60 +28,58 @@ use Illuminate\Database\Eloquent\Model;
  * @property Grupo|null $grupo
  * @property MatrizOctaveServicio|null $matriz_octave_servicio
  * @property ActivosInformacion|null $activos_informacion
- *
- * @package App\Models
  */
 class MatrizOctaveProceso extends Model
 {
-	protected $table = 'matriz_octave_procesos';
+    protected $table = 'matriz_octave_procesos';
 
-	protected $casts = [
-		'id_proceso' => 'int',
-		'nivel_riesgo' => 'int',
-		'id_direccion' => 'int',
-		'servicio_id' => 'int',
-		'operacional' => 'int',
-		'cumplimiento' => 'int',
-		'legal' => 'int',
-		'reputacional' => 'int',
-		'tecnologico' => 'int',
-		'impacto' => 'int',
-		'id_activos_informacion' => 'int',
-		'promedio' => 'int'
-	];
+    protected $casts = [
+        'id_proceso' => 'int',
+        'nivel_riesgo' => 'int',
+        'id_direccion' => 'int',
+        'servicio_id' => 'int',
+        'operacional' => 'int',
+        'cumplimiento' => 'int',
+        'legal' => 'int',
+        'reputacional' => 'int',
+        'tecnologico' => 'int',
+        'impacto' => 'int',
+        'id_activos_informacion' => 'int',
+        'promedio' => 'int',
+    ];
 
-	protected $fillable = [
-		'id_proceso',
-		'nivel_riesgo',
-		'id_direccion',
-		'servicio_id',
-		'operacional',
-		'cumplimiento',
-		'legal',
-		'reputacional',
-		'tecnologico',
-		'impacto',
-		'id_activos_informacion',
-		'promedio'
-	];
+    protected $fillable = [
+        'id_proceso',
+        'nivel_riesgo',
+        'id_direccion',
+        'servicio_id',
+        'operacional',
+        'cumplimiento',
+        'legal',
+        'reputacional',
+        'tecnologico',
+        'impacto',
+        'id_activos_informacion',
+        'promedio',
+    ];
 
-	public function proceso()
-	{
-		return $this->belongsTo(Proceso::class, 'id_proceso');
-	}
+    public function proceso()
+    {
+        return $this->belongsTo(Proceso::class, 'id_proceso');
+    }
 
-	public function grupo()
-	{
-		return $this->belongsTo(Grupo::class, 'id_direccion');
-	}
+    public function grupo()
+    {
+        return $this->belongsTo(Grupo::class, 'id_direccion');
+    }
 
 	public function servicio()
 	{
-		return $this->belongsTo(MatrizOctaveServicio::class, 'servicio_id');
+		return $this->belongsTo(MatrizOctaveServicio::class, 'servicio_id','id');
 	}
 
-	public function activos_informacion()
-	{
-		return $this->belongsTo(ActivosInformacion::class, 'id_activos_informacion');
-	}
+    public function activos_informacion()
+    {
+        return $this->belongsTo(ActivosInformacion::class, 'id_activos_informacion');
+    }
 }
