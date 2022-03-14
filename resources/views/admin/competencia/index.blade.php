@@ -201,9 +201,9 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
 
-                            
+
                             let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.nombrecolaborador.avatar}" title="${row.nombrecolaborador.name}"></img>`;
-                            
+
                             return `${row.nombrecolaborador ? html: ''}`;
                         }
                     },

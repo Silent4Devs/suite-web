@@ -15,8 +15,8 @@ class AddAreaToActivosInformacion extends Migration
     public function up()
     {
 
-        // $table->unsignedBigInteger('nombre_direccion')->nullable()->change();
-        DB::statement('ALTER TABLE activos_informacion ALTER COLUMN nombre_direccion TYPE integer;');
+            // $table->unsignedBigInteger('nombre_direccion')->nullable()->change();
+        DB::statement('ALTER TABLE activos_informacion ALTER COLUMN nombre_direccion TYPE integer USING (nombre_direccion::integer);');
     }
 
     /**

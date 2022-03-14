@@ -36,7 +36,7 @@
         }
 
     </style>
-    <h5 class="col-12 titulo_general_funcion">Inventario de Activos de Información</h5>
+    {{-- <h5 class="col-12 titulo_general_funcion">Inventario de Activos de Información</h5> --}}
     <div class="mt-5 card">
         @can('configuracion_activo_create')
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -50,6 +50,11 @@
             </div>
         @endcan
 
+        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Activo de Información</h3>
+        </div>
+
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-Activo" id="columnaft">
@@ -57,7 +62,7 @@
                     <tr>
                         <th style="min-width:75px;">ID</th>
                         <th style="min-width:220px;">Nombre del Activo Información</th>
-                        <th style="min-width:100px;">Riesgo</th>
+                        <th style="min-width:100px;">Riesgo AI</th>
                         <th style="min-width:100px;">Nombre VP</th>
                         <th style="min-width:200px;">Dueño AI Nombre del VP</th>
                         <th style="min-width:150px;">Nombre Direccíon</th>
@@ -71,7 +76,7 @@
                     <tr>
                         <td><div>{{$activo->identificador}}</div></td>
                         <td><div>{{$activo->activo_informacion}}</div></td>
-                        <td><div>No definido</div></td>
+                        <td><div>{{$activo->riesgo_activo}}</div></td>
                         <td><div>{{$activo->nombreVP}}</div></td>
                         <td><div>{{$activo->dueno->name}}</div></td>
                         <td><div>{{$activo->nombre_direccion}}</div></td>

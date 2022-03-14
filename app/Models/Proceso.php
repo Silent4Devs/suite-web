@@ -77,4 +77,9 @@ class Proceso extends Model
     {
         return $this->belongsTo(Area::class, 'area_id', 'id');
     }
+
+    public function activosAI()
+    {
+        return $this->hasMany(ActivoInformacion::class, 'proceso_id', 'id');
+    }
 }
