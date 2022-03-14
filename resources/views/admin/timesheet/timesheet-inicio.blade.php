@@ -186,6 +186,7 @@
     <h5 class="titulo_general_funcion">Timesheet</h5>
     <div class="mt-5 card">
         <div class="card-body">
+            @include('partials.flashMessages')
             <nav>
                 <div class="nav nav-tabs" id="tabsIso27001" role="tablist">
                     <a class="nav-link active" id="nav-contexto-tab" data-type="contexto" data-toggle="tab"
@@ -311,12 +312,58 @@
                                     </a>
                                 </li>
                             @endcan
+
+                                <li>
+                                    <a href="#" data-toggle="modal" data-target="#dia_semana_modal">
+                                        <div>
+                                            <i class="bi bi-calendar2-event"></i><br>
+                                            Establecer Día
+                                        </div>
+                                    </a>
+                                </li>
+
                         </ul>
                     </div>
                 @endif
             </div>
         </div>
     </div>
+
+    
+        <div class="modal fade" id="dia_semana_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Día de Registro para la Organización</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form method="POST" action="{{ route('admin.timesheet-acualizarDia') }}" class="row">
+                    @csrf
+                    <div class="form-group col-12">
+                        <label>Seleccione el dia de registro para los miembros de la organización</label>
+                        <select class="form-control" name="dia_timesheet">
+                            <option value="{{ $organizacion->dia_timesheet }}">{{ $organizacion->dia_timesheet ? 'Actusal: ' : ''}}{{ $organizacion->dia_timesheet }}</option>
+                            <option value="Lunes">Lunes</option>
+                            <option value="Martes">Martes</option>
+                            <option value="Miércoles">Miércoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                            <option value="Sábado">Sábado</option>
+                            <option value="Domingo">Domingo</option>
+                        </select>
+                    </div>
+                    <div class="col-12 text-right">
+                        <div type="button" class="btn btn_cancelar" data-dismiss="modal">Cancelar</div>
+                        <button class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
 @endsection
 
 

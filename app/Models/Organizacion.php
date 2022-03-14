@@ -72,6 +72,7 @@ class Organizacion extends Model
         'youtube',
         'facebook',
         'twitter',
+        'dia_timesheet',
 
     ];
 
