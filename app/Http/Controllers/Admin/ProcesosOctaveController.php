@@ -7,6 +7,8 @@ use App\Models\ActivoInformacion;
 use App\Models\Area;
 use App\Models\MatrizOctaveProceso;
 use App\Models\MatrizOctaveServicio;
+use App\Models\Proceso;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProcesosOctaveController extends Controller
