@@ -267,8 +267,8 @@
         }
 
         /* #shot_screen{
-                                                                                                                                                                                                width:100% !important;
-                                                                                                                                                                                            } */
+                                                                                                                                                                                                                    width:100% !important;
+                                                                                                                                                                                                                } */
 
     </style>
     <style>
@@ -687,7 +687,7 @@
                         container.appendChild(img);
                     },
                     success: function(response) {
-                        let arbol = JSON.parse(response).servicio.procesos[0][0].children;
+                        let arbol = JSON.parse(response);
                         console.log(arbol);
                         let container = document.querySelector('.imagen-search');
                         container.src = "";

@@ -10,10 +10,18 @@ class ArbolRiesgosOctaveController extends Controller
 {
     public function index()
     {
-        $procesosTree = collect(['servicio' => ['nombre' => 'Broxel', 'procesos' => collect()]]);
-        $procesosTree['servicio']['procesos']->push(MatrizOctaveProceso::with(['children'])->get());
+        $procesosTree = collect(['name' => 'Broxel', 'content' => 'Sin contenido', 'children' => collect()]);
+        $procesos = collect();
+        if (MatrizOctaveProceso::with(['children'])->count() > 0) {
+            foreach (MatrizOctaveProceso::with(['children'])->get() as $procesoOctave) {
+                $procesos->push($procesoOctave->children);
+            }
+        }
+        $procesosTree['children'] = $procesos;
+
+        // $procesosTree['children'] = MatrizOctaveProceso::with(['children'])->count() > 0 ? MatrizOctaveProceso::with(['children'])->get()->children : [];
         $organizacion = Organizacion::first();
-        $existeArbol = $procesosTree['servicio']['procesos']->count() > 0;
+        $existeArbol = $procesosTree['children']->count() > 0;
         $rutaImagenes = asset('storage/empleados/imagenes/');
 
         return view('admin.OCTAVE.arbol-riesgos', compact('procesosTree', 'organizacion', 'existeArbol', 'rutaImagenes'));
@@ -21,8 +29,14 @@ class ArbolRiesgosOctaveController extends Controller
 
     public function obtenerArbol()
     {
-        $procesosTree = collect(['servicio' => ['nombre' => 'Broxel', 'procesos' => collect()]]);
-        $procesosTree['servicio']['procesos']->push(MatrizOctaveProceso::with(['children'])->get());
+        $procesosTree = collect(['name' => 'Broxel', 'children' => collect()]);
+        $procesos = collect();
+        if (MatrizOctaveProceso::with(['children'])->count() > 0) {
+            foreach (MatrizOctaveProceso::with(['children'])->get() as $procesoOctave) {
+                $procesos->push($procesoOctave->children);
+            }
+        }
+        $procesosTree['children'] = $procesos;
 
         return json_encode($procesosTree);
     }
