@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCartaAceptacionPivots extends Migration
+class CreateMatrizOctaveEscenarioControlesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateCartaAceptacionPivots extends Migration
      */
     public function up()
     {
-        Schema::create('carta_aceptacion_pivots', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('controles_id')->nullable();
-            $table->foreign('controles_id')->references('id')->on('declaracion_aplicabilidad');
-            $table->unsignedInteger('id_matriz_octave_escenarios')->nullable();
+        Schema::create('matriz_octave_escenario_controles', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('id_matriz_octave_escenarios')->nullable();
             $table->foreign('id_matriz_octave_escenarios')->references('id')->on('matriz_octave_escenarios');
-
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateCartaAceptacionPivots extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carta_aceptacion_pivots');
+        Schema::dropIfExists('matriz_octave_escenario_controles');
     }
 }

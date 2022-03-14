@@ -2,30 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MatrizOctaveContenedor extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
-    protected $table = 'matriz_octave_escenarios';
-
+    protected $table = 'matriz_octave_contenedores';
 
     protected $fillable = [
+        'identificador_contenedor',
         'nom_contenedor',
-        'riesgo',
         'descripcion',
-        'integridad',
         'id_matriz_octave_escenarios',
     ];
 
-
-    public function matriz_octave_escenario()
+    public function escenarios()
     {
-        return $this->belongsTo(MatrizOctaveEscenario::class, 'id_matriz_octave_escenarios', 'id');
+        return $this->hasMany(MatrizOctaveEscenario::class, 'id_octave_contenedor', 'id');
     }
 }
