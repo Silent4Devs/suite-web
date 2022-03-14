@@ -246,7 +246,6 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Date' => Jenssegers\Date\Date::class,
         'LaravelPwa' => \Ladumor\LaravelPwa\LaravelPwa::class,
-
     ],
 
 

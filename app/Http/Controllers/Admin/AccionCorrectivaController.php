@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use Flash;
-use App\Models\Area;
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Puesto;
-use App\Models\Proceso;
-use App\Models\Empleado;
-use App\Models\Tipoactivo;
-use Illuminate\Http\Request;
 use App\Functions\GeneratePdf;
-use App\Models\AccionCorrectiva;
 use App\Http\Controllers\Controller;
-use App\Models\PlanaccionCorrectiva;
-use App\Models\AnalisisAccionCorrectiva;
-use Yajra\DataTables\Facades\DataTables;
-use App\Models\ActividadAccionCorrectiva;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\UpdateAccionCorrectivaRequest;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
+use App\Http\Requests\UpdateAccionCorrectivaRequest;
+use App\Models\AccionCorrectiva;
+use App\Models\ActividadAccionCorrectiva;
+use App\Models\AnalisisAccionCorrectiva;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\PlanaccionCorrectiva;
+use App\Models\Proceso;
+use App\Models\Puesto;
+use App\Models\Team;
+use App\Models\Tipoactivo;
+use App\Models\User;
+use Flash;
+use Gate;
+use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class AccionCorrectivaController extends Controller
 {
@@ -259,9 +259,9 @@ class AccionCorrectivaController extends Controller
         abort_if(Gate::denies('accion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $actividades = ActividadAccionCorrectiva::with('responsables')->where('accion_correctiva_id', $accionCorrectiva->id)->get();
-        $accionCorrectiva->load('analisis', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas','planes');
+        $accionCorrectiva->load('analisis', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas', 'planes');
         // dd($actividades);
-        return view('admin.accionCorrectivas.show', compact('accionCorrectiva','actividades'));
+        return view('admin.accionCorrectivas.show', compact('accionCorrectiva', 'actividades'));
     }
 
     public function destroy(AccionCorrectiva $accionCorrectiva)

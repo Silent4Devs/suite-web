@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class NivelesImpacto
+ * Class NivelesImpacto.
  *
  * @property int $id
  * @property string|null $nivel
@@ -19,31 +19,29 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property TablaImpacto|null $tabla_impacto
  * @property Collection|TipoImpacto[] $tipo_impactos
- *
- * @package App\Models
  */
 class NivelesImpacto extends Model
 {
-	protected $table = 'niveles_impacto';
+    protected $table = 'niveles_impacto';
 
-	protected $casts = [
-		'tabla_impacto_id' => 'int'
-	];
+    protected $casts = [
+        'tabla_impacto_id' => 'int',
+    ];
 
-	protected $fillable = [
-		'nivel',
-		'clasificacion',
-		'color',
-		'tabla_impacto_id'
-	];
+    protected $fillable = [
+        'nivel',
+        'clasificacion',
+        'color',
+        'tabla_impacto_id',
+    ];
 
-	public function tabla_impacto()
-	{
-		return $this->belongsTo(TablaImpacto::class);
-	}
+    public function tabla_impacto()
+    {
+        return $this->belongsTo(TablaImpacto::class);
+    }
 
-	public function tipo_impactos()
-	{
-		return $this->hasMany(TipoImpacto::class);
-	}
+    public function tipo_impactos()
+    {
+        return $this->hasMany(TipoImpacto::class);
+    }
 }

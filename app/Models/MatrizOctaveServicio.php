@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class MatrizOctaveServicio
+ * Class MatrizOctaveServicio.
  *
  * @property int $id
  * @property string|null $servicio
@@ -16,20 +16,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  *
  * @property Collection|MatrizOctaveProceso[] $matriz_octave_procesos
- *
- * @package App\Models
  */
 class MatrizOctaveServicio extends Model
 {
-	protected $table = 'matriz_octave_servicios';
+    protected $table = 'matriz_octave_servicios';
 
-	protected $fillable = [
-		'servicio',
-		'descripcion',
-	];
+    protected $fillable = [
+        'servicio',
+        'descripcion',
+    ];
 
-	public function matriz_octave_procesos()
-	{
-		return $this->hasMany(MatrizOctaveProceso::class, 'servicio_id');
-	}
+    public function matriz_octave_procesos()
+    {
+        return $this->hasMany(MatrizOctaveProceso::class, 'servicio_id');
+    }
 }
