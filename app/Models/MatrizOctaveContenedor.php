@@ -14,8 +14,6 @@ class MatrizOctaveContenedor extends Model
     protected $fillable = [
         'identificador_contenedor',
         'nom_contenedor',
-        'riesgo',
-        'vinculado_ai',
         'descripcion',
         'id_matriz_octave_escenarios',
     ];

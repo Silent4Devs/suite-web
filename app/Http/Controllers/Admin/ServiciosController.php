@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\MatrizOctaveServicio;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ServiciosController extends Controller
 {
@@ -32,12 +33,6 @@ class ServiciosController extends Controller
                 ));
             });
 
-            // $table->editColumn('id', function ($row) {
-            //     return $row->id ? $row->id : '';
-            // });
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->editColumn('servicio', function ($row) {
                 return $row->servicio ? $row->servicio : '';
             });
@@ -51,6 +46,35 @@ class ServiciosController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.procesos-octave.index');
+        return view('admin.servicios.index');
+    }
+
+    public function create(Request $request)
+    {
+        return view('admin.servicios.create');
+    }
+
+    public function store(Request $request)
+    {
+        $servicios = MatrizOctaveServicio::create([
+            'servicio'=> $request->servicio,
+            'descripcion'=> $request->descripcion,
+
+        ]);
+
+        return redirect(route('admin.servicios.index'));
+    }
+
+    public function update(Request $request, MatrizOctaveServicio $servicios)
+    {
+        $servicios->update($request->all());
+        // $cartaAceptacion = CartaAceptacion::create($request->all());
+
+        return redirect(route('admin.servicios.index'));
+    }
+
+    public function edit($servicios)
+    {
+        return view('admin.servicios.edit');
     }
 }

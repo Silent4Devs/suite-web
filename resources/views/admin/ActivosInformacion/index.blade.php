@@ -57,6 +57,7 @@
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
+              @include('admin.OCTAVE.menu')
             <table class="table table-bordered w-100 datatable-Activo" id="columnaft">
                 <thead class="thead-dark">
                     <tr>

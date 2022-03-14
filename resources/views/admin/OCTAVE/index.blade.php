@@ -45,8 +45,13 @@
                             href="{{ route('admin.matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
                     @endcan --}}
 
-                    <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
+                    {{-- <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
                         href="{{ route('admin.matriz-riesgos.octave') }}?id_analisis={{ $id_matriz }}" type="submit"
+                        name="action">Agregar
+                        nuevo</a> --}}
+
+                      <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
+                        href="{{ route('admin.procesos-octave.index') }}" type="submit"
                         name="action">Agregar
                         nuevo</a>
                     <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"

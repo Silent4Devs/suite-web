@@ -7,12 +7,51 @@ use App\Models\DeclaracionAplicabilidad;
 use App\Models\MatrizOctaveContenedor;
 use App\Models\MatrizOctaveEscenario;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Yajra\Datatables\Datatables;
 
 class ContenedorMatrizOctaveController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        abort_if(Gate::denies('categorias_capacitaciones_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if ($request->ajax()) {
+            $query = MatrizOctaveContenedor::orderByDesc('id')->get();
+            $table = DataTables::of($query);
+
+            $table->addColumn('actions', '&nbsp;');
+            $table->addIndexColumn();
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'categorias_capacitaciones_show';
+                $editGate = 'categorias_capacitaciones_edit';
+                $deleteGate = 'categorias_capacitaciones_delete';
+                $crudRoutePart = 'categoria-capacitacion';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('identificador_contenedor', function ($row) {
+                return $row->identificador_contenedor ? $row->identificador_contenedor : '';
+            });
+            $table->editColumn('nom_contenedor', function ($row) {
+                return $row->nom_contenedor ? $row->nom_contenedor : '';
+            });
+            $table->editColumn('descripcion', function ($row) {
+                return $row->descripcion ? $row->descripcion : '';
+            });
+
+            $table->rawColumns(['actions']);
+
+            return $table->make(true);
+        }
+
         return view('admin.ContenedorMatrizOctave.index');
     }
 
@@ -31,7 +70,7 @@ class ContenedorMatrizOctaveController extends Controller
         return redirect()->route('admin.contenedores.edit', $contenedor);
     }
 
-    public function edit(Request $request, $contenedor)
+    public function edit(Request $request, $contenedor, MatrizOctaveContenedor $matrizOctaveContenedor)
     {
         $contenedor = MatrizOctaveContenedor::find($contenedor);
         $sumatoria = $this->calcularRiesgo($contenedor->id);
@@ -96,5 +135,13 @@ class ContenedorMatrizOctaveController extends Controller
         }])->find($contenedor)->escenarios;
 
         return Datatables::of($escenarios)->make(true);
+    }
+
+    public function massDestroy(MatrizOctaveContenedor $contenedor)
+    {
+        abort_if(Gate::denies('categorias_capacitaciones_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $matrizOctaveContenedor->delete();
+
+        return redirect()->route('admin.contenedores.index');
     }
 }

@@ -23,6 +23,8 @@ Auth::routes();
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
     Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
     Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
+    Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
+
     Route::resource('contenedores', 'ContenedorMatrizOctaveController');
 
     Route::get('contenedores', 'ContenedorMatrizOctave@index');
@@ -166,7 +168,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('recursos-humanos/evaluacion-360/objetivos', 'RH\EV360ObjetivosController')->names([
         'index' => 'ev360-objetivos.index',
         'destroy' => 'ev360-objetivos.destroy',
-    ])->except(['create', 'show']);
+    ])->except(['show']);
 
     Route::get('Perspectiva/edit/{perspectivas}', 'RH\ObejetivoPerspectivaController@edit')->name('perspectivas.edit');
     Route::resource('Perspectiva', 'RH\ObejetivoPerspectivaController', ['except' => ['edit']]);
@@ -438,6 +440,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('timesheet/aprobar/{id}', 'TimesheetController@aprobar')->name('timesheet-aprobar');
     Route::post('timesheet/rechazar/{id}', 'TimesheetController@rechazar')->name('timesheet-rechazar');
     Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
+    Route::post('timesheet/actualizarDia', 'TimesheetController@actualizarDia')->name('timesheet-acualizarDia');
     Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
 
     Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
@@ -946,8 +949,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
     Route::get('matriz-octavemapa', 'MatrizRiesgosController@MapaCalorOctave')->name('matriz-octavemapa');
     Route::get('controles-get', 'MatrizRiesgosController@ControlesGet')->name('controles-get');
+    Route::get('octave/graficas', 'MatrizRiesgosController@graficas')->name('octave-graficas');
 
     //ProcesosOctave
+    Route::post('procesos-octave/activos', 'ProcesosOctaveController@activos')->name('procesos.octave.activos');
     Route::delete('procesos-octave/destroy', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
     Route::resource('procesos-octave', 'ProcesosOctaveController')->except('destroy');
 

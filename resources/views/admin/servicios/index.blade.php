@@ -1,75 +1,86 @@
 @extends('layouts.admin')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.competencia.index') }}
+<style>
 
-    @can('competencium_create')
+    .btn_cargar{
+        border-radius: 100px !important;
+        border: 1px solid #345183;
+        color: #345183;
+        text-align: center;
+        padding: 0;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 !important;
+        margin-right: 10px !important;
+    }
+    .btn_cargar:hover{
+        color: #fff;
+        background:#345183 ;
+    }
+    .btn_cargar i{
+        font-size: 15pt;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .agregar{
+        margin-right:15px;
+    }
 
+    .table tr td:nth-child(4) {
 
+    text-align: left !important;
+
+    }
+
+</style>
+
+    {{-- {{ Breadcrumbs::render('perfil-puesto') }} --}}
+    @can('puesto_create')
+        <h5 class="col-12 titulo_general_funcion">Servicios </h5>
         <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Competencias</strong></h3>
+            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+                {{-- <div class="col-lg-12">
+                    @include('csvImport.modalperfilpuesto', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
+                </div> --}}
             </div>
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.competencia.create') }}">
-                    Agregar <strong>+</strong>
+                <div class="col-lg-12"> --}}
+                    {{-- <a class="btn btn-success" href="{{ route('admin.puestos.create') }}">
+                  Agregar <strong>+</strong>
             </a>
-        </div>
-    </div> --}}
+            <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                {{ trans('global.app_csvImport') }}
+            </button> --}}
+                    {{-- @include('csvImport.modal', ['model' => 'Puesto', 'route' => 'admin.puestos.parseCsvImport'])
+                </div>
+            </div> --}}
         @endcan
 
-        <a href="{{ route('admin.buscarCV') }}" class="mb-2 btn btn-dark d-block">Buscar CV</a>
-        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-Competencium">
+            <table class="table table-bordered w-100 datatable-Carta">
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                            {{ trans('cruds.competencium.fields.id') }}
+                            Servicio
                         </th>
                         <th>
-                            {{ trans('cruds.competencium.fields.nombrecolaborador') }}
+                            Descripción
                         </th>
-                        <th>
-                            {{ trans('cruds.competencium.fields.perfilpuesto') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.competencium.fields.certificados') }}
-                        </th>
-                        <th>
+                       <th>
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -77,7 +88,7 @@
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
-                    title: `Competencias ${new Date().toLocaleDateString().trim()}`,
+                    title: `Puestos ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
@@ -87,7 +98,7 @@
                 },
                 {
                     extend: 'excelHtml5',
-                    title: `Competencias ${new Date().toLocaleDateString().trim()}`,
+                    title: `Puestos ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
@@ -97,7 +108,7 @@
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: `Competencias ${new Date().toLocaleDateString().trim()}`,
+                    title: `Puestos ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar PDF',
@@ -113,7 +124,7 @@
                 },
                 {
                     extend: 'print',
-                    title: `Competencias ${new Date().toLocaleDateString().trim()}`,
+                    title: `Puestos ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
@@ -143,24 +154,47 @@
 
             ];
 
-            @can('objetivosseguridad_create')
+            @can('puesto_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar competencia',
-                url: "{{ route('admin.competencia.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                titleAttr: 'Agregar area',
+                url: "{{ route('admin.servicios.create') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config){
                 let {url} = config;
                 window.location.href = url;
                 }
                 };
-                dtButtons.push(btnAgregar);
+                let btnExport = {
+                text: '<i  class="fas fa-download"></i>',
+                titleAttr: 'Descargar plantilla',
+                className: "btn btn_cargar" ,
+                url:"{{ route('descarga-puesto') }}",
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
+                }
+            };
+            let btnImport = {
+                text: '<i  class="fas fa-file-upload"></i>',
+                titleAttr: 'Importar datos',
+                className: "btn btn_cargar",
+                action: function(e, dt, node, config) {
+                    $('#xlsxImportModal').modal('show');
+                }
+            };
+
+            dtButtons.push(btnAgregar);
+            dtButtons.push(btnExport);
+            dtButtons.push(btnImport);
             @endcan
-            @can('competencium_delete')
+            @can('puesto_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.competencia.massDestroy') }}",
+                url: "{{ route('admin.servicios.destroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -192,30 +226,14 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.competencia.index') }}",
+                ajax: "{{ route('admin.servicios.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                        data: 'servicio',
+                        name: 'servicio'
                     },
                     {
-                        data: 'id',
-                        render: function(data, type, row, meta) {
-
-
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.nombrecolaborador.avatar}" title="${row.nombrecolaborador.name}"></img>`;
-
-                            return `${row.nombrecolaborador ? html: ''}`;
-                        }
-                    },
-                    {
-                        data: 'perfilpuesto',
-                        name: 'perfilpuesto'
-                    },
-                    {
-                        data: 'certificados',
-                        name: 'certificados',
-                        sortable: false,
-                        searchable: false
+                        data: 'descripcion',
+                        name: 'descripcion'
                     },
                     {
                         data: 'actions',
@@ -224,23 +242,24 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [0, 'desc']
                 ]
             };
-            let table = $('.datatable-Competencium').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+            let table = $('.datatable-Carta').DataTable(dtOverrideGlobals);
+            $('#lista_areas').on('change', function() {
+                console.log(this.value);
+                if (this.value != null && this.value != "") {
+                    this.style.border = "2px solid #20a4a1";
+                    table.columns(1).search("(^" + this.value + "$)", true, false).draw();
+                } else {
+                    this.style.border = "none";
+                    table.columns(1).search(this.value).draw();
+                }
+            });
         });
+    </script>
 
+    <script>
+        $(document).ready(function() {})
     </script>
 @endsection

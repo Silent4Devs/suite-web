@@ -496,6 +496,10 @@
         padding-left: 30px !important;
 
     }
+    #select2-controles-results .select2-results__option::before{
+        content:'';
+        display: none !important;
+    }
 
     .select2-results__option:nth-child(2)::before {
         position: absolute;
@@ -595,6 +599,7 @@
         border-radius: 100px;
         margin-top: 6px;
     }
+
 
     .select2-selection__rendered[title="5"]::before {
         position: absolute;

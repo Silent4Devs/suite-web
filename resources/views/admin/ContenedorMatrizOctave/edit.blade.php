@@ -7,6 +7,8 @@
     <h5 class="col-12 titulo_general_funcion">Registrar: </strong>Contenedores Matriz Octave</h5>
     <div class="mt-4 card">
         <div class="card-body">
+
+            @include('admin.OCTAVE.menu')
             <form method="POST" action="{{ route('admin.contenedores.update', ['contenedore' => $contenedor]) }}"
                 enctype="multipart/form-data" id="form_edit">
                 @csrf
@@ -20,7 +22,7 @@
 
                 <div class="row">
                     <div class="form-group col-md-2 col-lg-2 col-sm-12">
-                        <label for="identificador_contenedor"><i class="fas fa-table iconos-crear"></i>ID</label>
+                        <label for="identificador_contenedor"><i class="fas fa-barcode iconos-crear"></i>ID</label>
                         <input class="form-control {{ $errors->has('identificador_contenedor') ? 'is-invalid' : '' }}"
                             type="text" name="identificador_contenedor" id="identificador_contenedor"
                             value="{{ old('identificador_contenedor', $contenedor->identificador_contenedor) }}">
@@ -32,7 +34,7 @@
                     </div>
 
                     <div class="form-group col-md-8 col-lg-8 col-sm-12">
-                        <label for="nom_contenedor"><i class="fas fa-table iconos-crear"></i>Nombre del Contenedor</label>
+                        <label for="nom_contenedor"><i class="fas fa-box-open iconos-crear"></i>Nombre del Contenedor</label>
                         <input class="form-control {{ $errors->has('nom_contenedor') ? 'is-invalid' : '' }}" type="text"
                             name="nom_contenedor" id="nom_contenedor"
                             value="{{ old('nom_contenedor', $contenedor->nom_contenedor) }}">
@@ -44,7 +46,7 @@
                     </div>
 
                     <div class="form-group col-md-2 col-lg-2 col-sm-12">
-                        <label for="riesgo"><i class="fas fa-table iconos-crear"></i>Riesgo</label>
+                        <label for="riesgo"><i class="fas fa-bullseye iconos-crear"></i>Riesgo</label>
                         <input class="form-control {{ $errors->has('riesgo') ? 'is-invalid' : '' }}" type="text"
                             name="riesgo" id="riesgo" value="{{ old('riesgo', $contenedor->riesgo) }}" readonly>
                         @if ($errors->has('riesgo'))
@@ -66,7 +68,7 @@
                 </div> --}}
 
                     <div class="form-group col-md-12 col-lg-12 col-sm-12">
-                        <label for="descripcion"><i class="fas fa-table iconos-crear"></i>Descripción</label>
+                        <label for="descripcion"><i class="far fa-file-alt iconos-crear"></i>Descripción</label>
                         <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
                             name="descripcion" id="descripcion"
                             required>{{ old('descripcion', $contenedor->descripcion) }}</textarea>
@@ -86,7 +88,7 @@
 
                 <div class="row">
                     <div class="form-group col-md-2 col-lg-2 col-sm-12">
-                        <label for="identificador_escenario"><i class="fas fa-table iconos-crear"></i>ID</label>
+                        <label for="identificador_escenario"><i class="fas fa-barcode iconos-crear"></i>ID</label>
                         <input class="form-control {{ $errors->has('identificador_escenario') ? 'is-invalid' : '' }}"
                             type="text" name="identificador_escenario" id="identificador_escenario"
                             value="{{ old('identificador_escenario', '') }}">
@@ -99,7 +101,7 @@
                     </div>
 
                     <div class="form-group col-md-10 col-lg-10 col-sm-12">
-                        <label for="nom_escenario"><i class="fas fa-table iconos-crear"></i>Nombre del Escenario</label>
+                        <label for="nom_escenario"><i class="fas fa-camera-retro iconos-crear"></i>Nombre del Escenario</label>
                         <input class="form-control {{ $errors->has('nom_escenario') ? 'is-invalid' : '' }}" type="text"
                             name="nom_escenario" id="nom_escenario" value="{{ old('nom_escenario', '') }}">
                             <small class="nom_escenario_error errores text-danger"></small>
@@ -111,7 +113,7 @@
                     </div>
 
                     <div class="form-group col-md-12 col-lg-12 col-sm-12">
-                        <label for="descripcion"><i class="fas fa-table iconos-crear"></i>Descripción</label>
+                        <label for="descripcion"><i class="far fa-file-alt iconos-crear"></i>Descripción</label>
                         <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
                             name="descripcion" id="descripcion" required>{{ old('descripcion') }}</textarea>
                         @if ($errors->has('descripcion'))
@@ -121,44 +123,44 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div id="caja_select_color" class="form-group col-md-4 col-sm-12">
                         <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>Confidencialidad</label><br>
                         <select class="form-control select2 {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}"
                             name="confidencialidad" id="confidencialidad_informacion">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            <option value="0">0 - Sin Impacto</option>
+                            <option value="1">1 - Muy Bajo</option>
+                            <option value="2">2 - Bajo</option>
+                            <option value="3">3 - Medio</option>
+                            <option value="4">4 - Alto</option>
+                            <option value="5">5 - Crítico</option>
                         </select>
                         <small class="text-danger errores confidencialidad_error"></small>
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12 caja_select_color">
                         <label for="disponibilidad"><i class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label><br>
                         <select class="form-control select2 {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}"
                             name="disponibilidad" id="disponibilidad_informacion">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            <option value="0">0 - Sin Impacto</option>
+                            <option value="1">1 - Muy Bajo</option>
+                            <option value="2">2 - Bajo</option>
+                            <option value="3">3 - Medio</option>
+                            <option value="4">4 - Alto</option>
+                            <option value="5">5 - Crítico</option>
                         </select>
                         <small class="text-danger errores disponibilidad_error"></small>
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12 caja_select_color">
                         <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Integridad</label><br>
                         <select class="form-control select2 {{ $errors->has('integridad') ? 'is-invalid' : '' }}"
                             name="integridad" id="integridad_informacion">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            <option value="0">0 - Sin Impacto</option>
+                            <option value="1">1 - Muy Bajo</option>
+                            <option value="2">2 - Bajo</option>
+                            <option value="3">3 - Medio</option>
+                            <option value="4">4 - Alto</option>
+                            <option value="5">5 - Crítico</option>
                         </select>
                         <small class="text-danger errores integridad_error"></small>
                     </div>
@@ -193,28 +195,29 @@
                         </div>
                     @endif
                 </div> --}}
-                    <div class="form-group col-md-12 col-lg-12 col-sm-12">
-                        <label><i class="fas fa-user iconos-crear"></i>Controles Aplicables</label>
-                        <select
-                        class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
+                    <div id="omitir_color" class="form-group col-md-12 col-lg-12 col-sm-12">
+                        <label><i class="fa-solid fa-check-to-slot iconos-crear"></i>Controles Aplicables</label>
+                        <select class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
                         name="controles[]" id="controles" multiple="multiple">
-                        <option value disabled>
-                            Selecciona una opción</option>
-                        @foreach ($controles as $control)
-                            <option value="{{ $control->id }}">
-                                {{ $control->anexo_indice }} {{ $control->anexo_politica }}
-                            </option>
-                        @endforeach
-                    </select>
+                            <option value disabled>
+                                Selecciona una opción</option>
+                            @foreach ($controles as $control)
+                                <option value="{{ $control->id }}">
+                                    {{ $control->anexo_indice }} {{ $control->anexo_politica }}
+                                </option>
+                            @endforeach
+                        </select>
                         @if ($errors->has('controles'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('controles') }}
                             </div>
                         @endif
                     </div>
-                    <button class="btn btn-danger" id="agregarEscenario">
-                        Agregar
-                    </button>
+                    <div class="mb-3 mr-4 col-12 mt-4 text-right">
+                        <button class="btn btn-danger" id="agregarEscenario">
+                            Agregar
+                        </button>
+                    </div>
                 </div>
 
                 <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
