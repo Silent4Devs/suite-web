@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\MatrizOctaveServicio;
+use Illuminate\Http\Request;
 
 class ServiciosController extends Controller
 {
@@ -46,13 +46,11 @@ class ServiciosController extends Controller
                 return $row->descripcion ? $row->descripcion : '';
             });
 
-
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
         }
 
         return view('admin.procesos-octave.index');
-
     }
 }

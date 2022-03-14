@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\DeclaracionAplicabilidad;
 use App\Models\MatrizOctaveContenedor;
 use App\Models\MatrizOctaveEscenario;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
-use App\Models\DeclaracionAplicabilidad;
-
 
 class ContenedorMatrizOctaveController extends Controller
 {
@@ -44,13 +44,15 @@ class ContenedorMatrizOctaveController extends Controller
     {
         $contenedor = MatrizOctaveContenedor::find($contenedor);
         $contenedor = $contenedor->update($request->all());
+
         return redirect()->route('admin.contenedores.index');
     }
 
-    public function agregarEscenarios(Request $request, $contenedor){
-        $controles = array_map(function ($value){
+    public function agregarEscenarios(Request $request, $contenedor)
+    {
+        $controles = array_map(function ($value) {
             return intval($value);
-        },$request->controles);
+        }, $request->controles);
 
         $request->validate([
             'identificador_escenario'=>'required',
@@ -73,20 +75,23 @@ class ContenedorMatrizOctaveController extends Controller
 
         return response()->json(['estatus'=>200, 'riesgo'=>$sumatoria]);
     }
-    public function calcularRiesgo($contenedor){
+
+    public function calcularRiesgo($contenedor)
+    {
         $escenarios = MatrizOctaveContenedor::with('escenarios')->find($contenedor)->escenarios;
-        $cantidadEscenarios = count($escenarios)>0?count($escenarios):1;
+        $cantidadEscenarios = count($escenarios) > 0 ? count($escenarios) : 1;
         $sumatoria = 0;
         foreach ($escenarios as $escenario) {
-            $sumatoria = $sumatoria + ($escenario->confidencialidad?$escenario->confidencialidad:0) + ($escenario->integridad?$escenario->integridad:0) + ($escenario->disponibilidad?$escenario->disponibilidad:0);
+            $sumatoria = $sumatoria + ($escenario->confidencialidad ? $escenario->confidencialidad : 0) + ($escenario->integridad ? $escenario->integridad : 0) + ($escenario->disponibilidad ? $escenario->disponibilidad : 0);
         }
-        $sumatoria = $sumatoria/$cantidadEscenarios;
+        $sumatoria = $sumatoria / $cantidadEscenarios;
 
         return round($sumatoria);
     }
+
     public function escenarios($contenedor)
     {
-        $escenarios = MatrizOctaveContenedor::with(['escenarios'=>function($q){
+        $escenarios = MatrizOctaveContenedor::with(['escenarios'=>function ($q) {
             $q->with('controles');
         }])->find($contenedor)->escenarios;
 

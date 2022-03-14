@@ -3,16 +3,13 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
-use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 class ActivoInformacion extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-
 
     protected $table = 'activos_informacion';
 
@@ -21,7 +18,7 @@ class ActivoInformacion extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends=['riesgo_activo'];
+    protected $appends = ['riesgo_activo'];
 
     protected $fillable = [
     'identificador',
@@ -86,13 +83,14 @@ class ActivoInformacion extends Model
 
     public function getRiesgoActivoAttribute()
     {
-        $contenedores= $this->contenedores;
-        $cantidadContenedores = count($contenedores)>0?count($contenedores):1;
+        $contenedores = $this->contenedores;
+        $cantidadContenedores = count($contenedores) > 0 ? count($contenedores) : 1;
         $sumatoria = 0;
         foreach ($contenedores as $contenedor) {
-            $sumatoria += $contenedor->riesgo ? $contenedor->riesgo:0;
+            $sumatoria += $contenedor->riesgo ? $contenedor->riesgo : 0;
         }
-        $sumatoria = $sumatoria/$cantidadContenedores;
+        $sumatoria = $sumatoria / $cantidadContenedores;
+
         return round($sumatoria);
     }
 
@@ -113,7 +111,7 @@ class ActivoInformacion extends Model
 
     public function proceso()
     {
-        return $this->belongsTo(Empleado::class, 'proceso_id', 'id');
+        return $this->belongsTo(Proceso::class, 'proceso_id', 'id');
     }
 
     public function confidencialidad()
@@ -130,8 +128,9 @@ class ActivoInformacion extends Model
     {
         return $this->belongsTo(activoDisponibilidad::class, 'disponibilidad_id', 'id');
     }
+
     public function contenedores()
     {
-        return $this->belongsToMany(MatrizOctaveContenedor::class,'activos_contenedores','activo_id','contenedor_id');
+        return $this->belongsToMany(MatrizOctaveContenedor::class, 'activos_contenedores', 'activo_id', 'contenedor_id');
     }
 }

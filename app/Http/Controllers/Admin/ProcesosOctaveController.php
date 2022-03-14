@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\ActivoInformacion;
 use App\Models\Area;
+use App\Models\MatrizOctaveProceso;
+use App\Models\MatrizOctaveServicio;
 use App\Models\Proceso;
 use Illuminate\Http\Request;
-use App\Models\ActivoInformacion;
-use App\Models\MatrizOctaveProceso;
-use App\Http\Controllers\Controller;
-use App\Models\MatrizOctaveServicio;
 
 class ProcesosOctaveController extends Controller
 {
@@ -66,34 +66,31 @@ class ProcesosOctaveController extends Controller
         return view('admin.procesos-octave.index');
     }
 
-
-    public function create(){
-
-        $areas=Area::get();
+    public function create()
+    {
+        $areas = Area::get();
         $procesos = Proceso::get();
         $activosInfo = ActivoInformacion::get();
-        $servicios=MatrizOctaveServicio::get();
+        $servicios = MatrizOctaveServicio::get();
 
-        return view('admin.procesos-octave.create', compact('areas','procesos', 'activosInfo','servicios'));
+        return view('admin.procesos-octave.create', compact('areas', 'procesos', 'activosInfo', 'servicios'));
     }
 
     public function store(Request $request)
     {
-
         $procesosOctave = MatrizOctaveProceso::create($request->all());
-
 
         return redirect()->route('admin.procesos-octave.index');
     }
 
-    public function edit(){
-
-        $areas=Area::get();
+    public function edit()
+    {
+        $areas = Area::get();
         $procesos = Proceso::get();
         $activosInfo = ActivoInformacion::get();
-        $servicios=MatrizOctaveServicio::get();
+        $servicios = MatrizOctaveServicio::get();
 
-        return view('admin.procesos-octave.edit', compact('areas','procesos', 'activosInfo','servicios'));
+        return view('admin.procesos-octave.edit', compact('areas', 'procesos', 'activosInfo', 'servicios'));
     }
 
     public function update(Request $request, MatrizOctaveProceso $procesosOctave)
@@ -103,7 +100,7 @@ class ProcesosOctaveController extends Controller
         return redirect()->route('admin.procesos-octave.index');
     }
 
-    public function show(){
-
+    public function show()
+    {
     }
 }
