@@ -82,261 +82,277 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo</h5>
+    {{-- <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo</h5> --}}
 
-    <div class="mt-5 card card-body">
-        <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
-            <div class="row w-100">
-                <div class="text-center col-1 align-items-center d-flex justify-content-center">
-                    <div class="w-100">
-                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
+    <div class="mt-5 card">
+        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+            <h3 class="mb-1 text-center text-white"><strong> Gráfica</h3></strong>
+        </div>
+
+         <div class="card-body">
+
+            @include('admin.OCTAVE.menu')
+
+            <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
+                <div class="row w-100">
+                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                        <div class="w-100">
+                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor, seleccione opciones para mostrar sus
+                            datos</p>
                     </div>
                 </div>
-                <div class="col-11">
-                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor, seleccione opciones para mostrar sus
-                        datos</p>
+            </div>
+            <div class="row mt-5">
+                <div class="form-group col-md-4">
+                    <label>Procesos</label>
+                    <select class="form-control">
+                        <option>Seleccione una opción</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Activos</label>
+                    <select class="form-control">
+                        <option>Seleccione una opción</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Contenedor</label>
+                    <select class="form-control">
+                        <option>Seleccione una opción</option>
+                    </select>
                 </div>
             </div>
-        </div>
-        <div class="row mt-5">
-            <div class="form-group col-md-4">
-                <label>Sede</label>
-                <select class="form-control"></select>
-            </div>
-            <div class="form-group col-md-4">
-                <label>Area</label>
-                <select class="form-control"></select>
-            </div>
-            <div class="form-group col-md-4">
-                <label>Proceso</label>
-                <select class="form-control"></select>
-            </div>
-        </div>
 
-        <div class="row caja-graf" id="caja_graf_ev">
+            <div class="row caja-graf" id="caja_graf_ev">
 
-            <h5 class="col-12 my-5"><strong>Evaluación de Procesos</strong></h5>
+                <h5 class="col-12 my-5"><strong>Evaluación de Procesos</strong></h5>
 
-            <div class="col-md-4 mt-3">
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
+                <div class="col-md-4 mt-3">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Riesgo</th>
+                                <th scope="col">Probabilidad</th>
+                                <th scope="col">Impacto</th>
+                                <th scope="col">Nivel riesgo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="col">#</td>
+                                <td scope="col">Riesgo</td>
+                                <td scope="col">Probabilidad</td>
+                                <td scope="col">Impacto</td>
+                                <td scope="col">Nivel riesgo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-8" style="overflow: auto;">
+
+                    <div class="caja-grafica py-5" style="width: 650px;">
+                        <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
+                        <table class="tabla-grafica-1">
+                            <tr>
+                                <td bgcolor="#F1F120">
+                                    <span> Riesgos a considerar</span>
+                                </td>
+                                <td bgcolor="#F15B5B">
+                                    <span> Riesgos de prioridad</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td bgcolor="#7CCD30">
+                                    <span> Riesgos a monitorear</span>
+                                </td>
+                                <td bgcolor="#F9AB10">
+                                    <span> Riesgos relevantes</span>
+
+                                    <div class="circle-s">S1</div>
+                                    <div class="circle-s">S2</div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="info-grafica" style="left:300px; margin-top: 20px;">Impacto</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row caja-graf d-none" id="caja_graf_act">
+                <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Mapa de Riesgos de Activos</strong> <i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
+                <div class="col-md-4 mt-3">
+                    <table class="table table-responsive">
+                        <thead>
                             <th scope="col">#</th>
-                            <th scope="col">Riesgo</th>
-                            <th scope="col">Probabilidad</th>
-                            <th scope="col">Impacto</th>
+                            <th scope="col">Proceso</th>
+                            <th scope="col">Activo</th>
+                            <th scope="col">Contenedor</th>
                             <th scope="col">Nivel riesgo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
+                        </thead>
+                        <tbody>
                             <td scope="col">#</td>
-                            <td scope="col">Riesgo</td>
-                            <td scope="col">Probabilidad</td>
-                            <td scope="col">Impacto</td>
+                            <th scope="col">Proceso</th>
+                            <th scope="col">Activo</th>
+                            <th scope="col">Contenedor</th>
                             <td scope="col">Nivel riesgo</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="col-md-8" style="overflow: auto;">
-                
-                <div class="caja-grafica py-5" style="width: 650px;">
-                    <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
-                    <table class="tabla-grafica-1">
-                        <tr>
-                            <td bgcolor="#F1F120">
-                                <span> Riesgos a considerar</span>
-                            </td>
-                            <td bgcolor="#F15B5B">
-                                <span> Riesgos de prioridad</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#7CCD30">
-                                <span> Riesgos a monitorear</span>
-                            </td>
-                            <td bgcolor="#F9AB10">
-                                <span> Riesgos relevantes</span>
-
-                                <div class="circle-s">S1</div>
-                                <div class="circle-s">S2</div>
-                            </td>
-                        </tr>
+                        </tbody>
                     </table>
-                    <div class="info-grafica" style="left:300px; margin-top: 20px;">Impacto</div>
                 </div>
-            </div>    
-        </div>
+                <div class="col-md-8" style="overflow: auto;">
 
-        <div class="row caja-graf d-none" id="caja_graf_act">
-            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Mapa de Riesgos de Activos</strong> <i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
-            <div class="col-md-4 mt-3">
-                <table class="table table-responsive">
-                    <thead>
-                        <th scope="col">#</th>
-                        <th scope="col">Riesgo</th>
-                        <th scope="col">Probabilidad</th>
-                        <th scope="col">Impacto</th>
-                        <th scope="col">Nivel riesgo</th>
-                    </thead>
-                    <tbody>
-                        <td scope="col">#</td>
-                        <td scope="col">Riesgo</td>
-                        <td scope="col">Probabilidad</td>
-                        <td scope="col">Impacto</td>
-                        <td scope="col">Nivel riesgo</td>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-8" style="overflow: auto;">
-                
-                <div class="caja-grafica py-5" style="width: 680px;">
-                    <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
-                    <table class="tabla-grafica-2">
-                        <tr>
-                            <td class="info-td"><div class="vertical">Muy&nbsp;Probable</div></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-naranja"></td>
-                            <td class="color-td td-naranja"></td>
-                            <td class="color-td td-rojo"></td>
-                            <td class="color-td td-rojo"></td>
-                        </tr>
-                        <tr>
-                            <td class="info-td"><div class="vertical">Probable</div></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-naranja"></td>
-                            <td class="color-td td-naranja"></td>
-                            <td class="color-td td-rojo"></td>
-                        </tr>
-                        <tr>
-                            <td class="info-td"><div class="vertical">Posible</div></td>
-                            <td class="color-td td-verde"></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-naranja">
-                                <div class="circle-s">S1</div>
-                                <div class="circle-s">S2</div>
-                            </td>
-                            <td class="color-td td-naranja"></td>
-                        </tr>
-                        <tr>
-                            <td class="info-td"><div class="vertical">Poco&nbsp;Probable</div></td>
-                            <td class="color-td td-verde"></td>
-                            <td class="color-td td-verde"></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-naranja"></td>
-                        </tr>
-                        <tr>
-                            <td class="info-td"><div class="vertical">Improbable</div></td>
-                            <td class="color-td td-verde-o"></td>
-                            <td class="color-td td-verde"></td>
-                            <td class="color-td td-verde"></td>
-                            <td class="color-td td-verde"></td>
-                            <td class="color-td td-amarillo"></td>
-                        </tr>
-                        <tr>
-                            <td class="info-td"></td>
-                            <td class="info-td">Muy Bajo</td>
-                            <td class="info-td">Bajo</td>
-                            <td class="info-td">Medio</td>
-                            <td class="info-td">Alto</td>
-                            <td class="info-td">Critico</td>
-                        </tr>
-                    </table>
-                    <div class="info-grafica" style="left:300px; margin-top: 20px;">Impacto</div>
+                    <div class="caja-grafica py-5" style="width: 680px;">
+                        <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
+                        <table class="tabla-grafica-2">
+                            <tr>
+                                <td class="info-td"><div class="vertical">Muy&nbsp;Probable</div></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-naranja"></td>
+                                <td class="color-td td-naranja"></td>
+                                <td class="color-td td-rojo"></td>
+                                <td class="color-td td-rojo"></td>
+                            </tr>
+                            <tr>
+                                <td class="info-td"><div class="vertical">Probable</div></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-naranja"></td>
+                                <td class="color-td td-naranja"></td>
+                                <td class="color-td td-rojo"></td>
+                            </tr>
+                            <tr>
+                                <td class="info-td"><div class="vertical">Posible</div></td>
+                                <td class="color-td td-verde"></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-naranja">
+                                    <div class="circle-s">S1</div>
+                                    <div class="circle-s">S2</div>
+                                </td>
+                                <td class="color-td td-naranja"></td>
+                            </tr>
+                            <tr>
+                                <td class="info-td"><div class="vertical">Poco&nbsp;Probable</div></td>
+                                <td class="color-td td-verde"></td>
+                                <td class="color-td td-verde"></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-naranja"></td>
+                            </tr>
+                            <tr>
+                                <td class="info-td"><div class="vertical">Improbable</div></td>
+                                <td class="color-td td-verde-o"></td>
+                                <td class="color-td td-verde"></td>
+                                <td class="color-td td-verde"></td>
+                                <td class="color-td td-verde"></td>
+                                <td class="color-td td-amarillo"></td>
+                            </tr>
+                            <tr>
+                                <td class="info-td"></td>
+                                <td class="info-td">Muy Bajo</td>
+                                <td class="info-td">Bajo</td>
+                                <td class="info-td">Medio</td>
+                                <td class="info-td">Alto</td>
+                                <td class="info-td">Critico</td>
+                            </tr>
+                        </table>
+                        <div class="info-grafica" style="left:300px; margin-top: 20px;">Impacto</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row caja-graf d-none" id="caja_graf_con">
-            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Mapa de Riesgos de Contenedor</strong><i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
-            <div class="col-md-4 mt-3">
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Riesgo</th>
-                            <th scope="col">Probabilidad</th>
-                            <th scope="col">Impacto</th>
-                            <th scope="col">Nivel riesgo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td scope="col">#</td>
-                            <td scope="col">Riesgo</td>
-                            <td scope="col">Probabilidad</td>
-                            <td scope="col">Impacto</td>
-                            <td scope="col">Nivel riesgo</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-8 mt-4" style="overflow: auto;">
-                
-                <div class="caja-grafica py-5" style="width: 680px;">
-                    <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
-                    <table class="tabla-grafica-2">
-                        <tr>
-                            <td class="info-td"><div class="vertical">Muy&nbsp;Probable</div></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-naranja"></td>
-                            <td class="color-td td-naranja"></td>
-                            <td class="color-td td-rojo"></td>
-                            <td class="color-td td-rojo"></td>
-                        </tr>
-                        <tr>
-                            <td class="info-td"><div class="vertical">Probable</div></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-naranja"></td>
-                            <td class="color-td td-naranja"></td>
-                            <td class="color-td td-rojo"></td>
-                        </tr>
-                        <tr>
-                            <td class="info-td"><div class="vertical">Posible</div></td>
-                            <td class="color-td td-verde"></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-naranja">
-                                <div class="circle-s">S1</div>
-                                <div class="circle-s">S2</div>
-                            </td>
-                            <td class="color-td td-naranja"></td>
-                        </tr>
-                        <tr>
-                            <td class="info-td"><div class="vertical">Poco&nbsp;Probable</div></td>
-                            <td class="color-td td-verde"></td>
-                            <td class="color-td td-verde"></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-amarillo"></td>
-                            <td class="color-td td-naranja"></td>
-                        </tr>
-                        <tr>
-                            <td class="info-td"><div class="vertical">Improbable</div></td>
-                            <td class="color-td td-verde-o"></td>
-                            <td class="color-td td-verde"></td>
-                            <td class="color-td td-verde"></td>
-                            <td class="color-td td-verde"></td>
-                            <td class="color-td td-amarillo"></td>
-                        </tr>
-                        <tr>
-                            <td class="info-td"></td>
-                            <td class="info-td">Muy Bajo</td>
-                            <td class="info-td">Bajo</td>
-                            <td class="info-td">Medio</td>
-                            <td class="info-td">Alto</td>
-                            <td class="info-td">Critico</td>
-                        </tr>
+            <div class="row caja-graf d-none" id="caja_graf_con">
+                <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Mapa de Riesgos de Contenedor</strong><i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
+                <div class="col-md-4 mt-3">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Riesgo</th>
+                                <th scope="col">Probabilidad</th>
+                                <th scope="col">Impacto</th>
+                                <th scope="col">Nivel riesgo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="col">#</td>
+                                <td scope="col">Riesgo</td>
+                                <td scope="col">Probabilidad</td>
+                                <td scope="col">Impacto</td>
+                                <td scope="col">Nivel riesgo</td>
+                            </tr>
+                        </tbody>
                     </table>
-                    <div class="info-grafica" style="left:300px; margin-top: 20px;">Impacto</div>
+                </div>
+                <div class="col-md-8 mt-4" style="overflow: auto;">
+
+                    <div class="caja-grafica py-5" style="width: 680px;">
+                        <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
+                        <table class="tabla-grafica-2">
+                            <tr>
+                                <td class="info-td"><div class="vertical">Muy&nbsp;Probable</div></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-naranja"></td>
+                                <td class="color-td td-naranja"></td>
+                                <td class="color-td td-rojo"></td>
+                                <td class="color-td td-rojo"></td>
+                            </tr>
+                            <tr>
+                                <td class="info-td"><div class="vertical">Probable</div></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-naranja"></td>
+                                <td class="color-td td-naranja"></td>
+                                <td class="color-td td-rojo"></td>
+                            </tr>
+                            <tr>
+                                <td class="info-td"><div class="vertical">Posible</div></td>
+                                <td class="color-td td-verde"></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-naranja">
+                                    <div class="circle-s">S1</div>
+                                    <div class="circle-s">S2</div>
+                                </td>
+                                <td class="color-td td-naranja"></td>
+                            </tr>
+                            <tr>
+                                <td class="info-td"><div class="vertical">Poco&nbsp;Probable</div></td>
+                                <td class="color-td td-verde"></td>
+                                <td class="color-td td-verde"></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-amarillo"></td>
+                                <td class="color-td td-naranja"></td>
+                            </tr>
+                            <tr>
+                                <td class="info-td"><div class="vertical">Improbable</div></td>
+                                <td class="color-td td-verde-o"></td>
+                                <td class="color-td td-verde"></td>
+                                <td class="color-td td-verde"></td>
+                                <td class="color-td td-verde"></td>
+                                <td class="color-td td-amarillo"></td>
+                            </tr>
+                            <tr>
+                                <td class="info-td"></td>
+                                <td class="info-td">Muy Bajo</td>
+                                <td class="info-td">Bajo</td>
+                                <td class="info-td">Medio</td>
+                                <td class="info-td">Alto</td>
+                                <td class="info-td">Critico</td>
+                            </tr>
+                        </table>
+                        <div class="info-grafica" style="left:300px; margin-top: 20px;">Impacto</div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
@@ -358,6 +374,6 @@
             $('#caja_graf_ev').removeClass('d-none');
         });
 
-        
+
     </script>
 @endsection

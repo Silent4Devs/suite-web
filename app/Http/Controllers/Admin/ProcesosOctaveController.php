@@ -9,6 +9,7 @@ use App\Models\ActivoInformacion;
 use App\Models\MatrizOctaveProceso;
 use App\Http\Controllers\Controller;
 use App\Models\MatrizOctaveServicio;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProcesosOctaveController extends Controller
 {
@@ -43,7 +44,7 @@ class ProcesosOctaveController extends Controller
                 return $row->id ? $row->id : '';
             });
             $table->editColumn('proceso', function ($row) {
-                return $row->proceso ? $row->proceso : '';
+                return $row->proceso ? $row->proceso->nombre : '';
             });
 
             $table->editColumn('nivel_riesgo', function ($row) {

@@ -186,63 +186,12 @@
         <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Matriz Octave</h3>
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="col-12" style="margin-left:-15px;">
-                <div class="nav nav-tabs" id="tabsEmpleado" role="tablist">
-                    <a class="nav-link" href="{{route('admin.procesos-octave.index')}}">
-                    <i class="fas fa-project-diagram mr-2" style="font-size:20px;"></i>Procesos
-                    </a>
-                    <a class="nav-link"  href="{{route('admin.activosInformacion.index')}}" >
-                        <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
-                       Activos
-                    </a>
-                    <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}"  >
-                        <i class="fas fa-camera-retro mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
-                       Escenarios
-                    </a>
-                    <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}" >
-                        <i class="fas fa-box-open mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
-                        Contenedores
-                    </a>
-
-                    <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}" >
-                        <i class="fas fa-network-wired mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
-                        Árbol de Riesgos
-                    </a>
-                    <a class="nav-link "  href="{{route('admin.carta-aceptacion.index')}}" >
-                    <i class="fas fa-chart-bar mr-2" style="font-size:20px;" style="text-decoration:none;"></i>Gráfica
-                    </a>
-                </div>
-            </div>
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade" id="nav-competencias" role="tabpanel"
-                aria-labelledby="nav-competencias-tab">
-                <h1>4</h1>
-                 </div>
-                <div class="tab-pane fade show active" id="nav-general" role="tabpanel"
-                    aria-labelledby="nav-general-tab">
-                    <h1>1</h1>
-                </div>
-                <div class="tab-pane fade" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
-                    <div class="mt-4">
-                        @include('admin.OCTAVE.escenario')
-                    </div>
-
-                </div>
-                <div class="tab-pane fade" id="nav-financiera" role="tabpanel"
-                    aria-labelledby="nav-financiera-tab">
-                    @include('admin.OCTAVE.contenedores')
 
 
-                </div>
+            @include('admin.OCTAVE.menu')
 
-                <div class="tab-pane fade" id="nav-documentos" role="tabpanel"
-                    aria-labelledby="nav-documentos-tab">
-                    <h1>5</h1>
-                </div>
 
-            </div>
-        </div>
+
     </div>
 
 
