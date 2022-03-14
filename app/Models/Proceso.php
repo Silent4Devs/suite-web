@@ -80,6 +80,6 @@ class Proceso extends Model
 
     public function activosAI()
     {
-        return $this->hasMany(ActivoInformacion::class, 'proceso_id','id');
+        return $this->hasMany(ActivoInformacion::class, 'proceso_id', 'id');
     }
 }

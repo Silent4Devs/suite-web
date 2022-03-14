@@ -21,7 +21,6 @@ use App\Models\MatrizNist;
 //use Illuminate\Support\Facades\Request;
 use App\Models\MatrizOctave;
 use App\Models\MatrizoctaveActivosInfo;
-use App\Models\MatrizOctaveControlesPivot;
 use App\Models\MatrizRiesgo;
 use App\Models\MatrizRiesgosControlesPivot;
 use App\Models\Organizacion;
@@ -613,6 +612,7 @@ class MatrizRiesgosController extends Controller
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $activosoctave = MatrizOctave::get();
         $matrizOctave = MatrizOctave::with('matrizActivos')->find($id);
+
         return view('admin.OCTAVE.edit', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'duenos', 'custodios', 'activosoctave', 'matrizOctave', 'nombreAis'))->with('id_analisis', $request->id_analisis);
     }
 

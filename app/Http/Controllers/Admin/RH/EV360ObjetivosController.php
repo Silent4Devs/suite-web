@@ -34,10 +34,8 @@ class EV360ObjetivosController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.objetivos.index', compact('areas', 'puestos', 'perfiles'));
     }
 
-
     public function create()
     {
-
         return view('admin.recursos-humanos.evaluacion-360.objetivos.objetivos-negocio');
     }
 

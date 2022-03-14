@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\MatrizOctaveServicio;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ServiciosController extends Controller
@@ -33,17 +33,13 @@ class ServiciosController extends Controller
                 ));
             });
 
-
-
             $table->editColumn('servicio', function ($row) {
                 return $row->servicio ? $row->servicio : '';
             });
 
-
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : '';
             });
-
 
             $table->rawColumns(['actions', 'placeholder']);
 
@@ -51,13 +47,10 @@ class ServiciosController extends Controller
         }
 
         return view('admin.servicios.index');
-
     }
 
     public function create(Request $request)
     {
-
-
         return view('admin.servicios.create');
     }
 
@@ -82,11 +75,6 @@ class ServiciosController extends Controller
 
     public function edit($servicios)
     {
-
-
         return view('admin.servicios.edit');
     }
-
-
-
 }
