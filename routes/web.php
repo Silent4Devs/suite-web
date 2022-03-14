@@ -26,7 +26,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
     Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
 
-    Route::get('contenedores', 'ContenedorMatrizOctave@index');
 
     Route::resource('contenedores', 'ContenedorMatrizOctaveController');
 
@@ -953,6 +952,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('controles-get', 'MatrizRiesgosController@ControlesGet')->name('controles-get');
 
     //ProcesosOctave
+    Route::post('procesos-octave/activos','ProcesosOctaveController@activos')->name('procesos.octave.activos');
     Route::delete('procesos-octave/destroy', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
     Route::resource('procesos-octave', 'ProcesosOctaveController')->except('destroy');
 
