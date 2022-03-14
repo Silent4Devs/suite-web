@@ -94,29 +94,26 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor, seleccione opciones para mostrar sus
-                        datos</p>
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Seleccione los procesos para consultar su información</p>
                 </div>
             </div>
         </div>
-        <div class="row mt-5">
-            <div class="form-group col-md-4">
-                <label>Sede</label>
-                <select class="form-control"></select>
-            </div>
-            <div class="form-group col-md-4">
-                <label>Area</label>
-                <select class="form-control"></select>
-            </div>
-            <div class="form-group col-md-4">
-                <label>Proceso</label>
-                <select class="form-control"></select>
-            </div>
-        </div>
+        
 
         <div class="row caja-graf" id="caja_graf_ev">
 
             <h5 class="col-12 my-5"><strong>Evaluación de Procesos</strong></h5>
+
+            <div class="row mt-5">
+                <div class="form-group col-md-6">
+                    <label>Dirección</label>
+                    <select class="form-control"></select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Servicio</label>
+                    <select class="form-control"></select>
+                </div>
+            </div>
 
             <div class="col-md-4 mt-3">
                 <table class="table table-responsive">
@@ -141,7 +138,7 @@
                 </table>
             </div>
 
-            <div class="col-md-8" style="overflow: auto;">
+            <div class="col-12" style="overflow: auto;">
                 
                 <div class="caja-grafica py-5" style="width: 650px;">
                     <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>

@@ -298,6 +298,10 @@ class TimesheetController extends Controller
         $timesheet_borrado = Timesheet::find($id);
 
         $timesheet_borrado->delete();
+
+        if ($timesheet_borrado->delete()) {
+            dd('zd');
+        }
     }
 
     public function proyectos()
