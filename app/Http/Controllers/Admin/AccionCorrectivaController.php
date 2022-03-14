@@ -8,6 +8,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
 use App\Http\Requests\UpdateAccionCorrectivaRequest;
 use App\Models\AccionCorrectiva;
+use App\Models\ActividadAccionCorrectiva;
 use App\Models\AnalisisAccionCorrectiva;
 use App\Models\Area;
 use App\Models\Empleado;
@@ -257,9 +258,10 @@ class AccionCorrectivaController extends Controller
     {
         abort_if(Gate::denies('accion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $accionCorrectiva->load('analisis', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas');
-
-        return view('admin.accionCorrectivas.show', compact('accionCorrectiva'));
+        $actividades = ActividadAccionCorrectiva::with('responsables')->where('accion_correctiva_id', $accionCorrectiva->id)->get();
+        $accionCorrectiva->load('analisis', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas', 'planes');
+        // dd($actividades);
+        return view('admin.accionCorrectivas.show', compact('accionCorrectiva', 'actividades'));
     }
 
     public function destroy(AccionCorrectiva $accionCorrectiva)

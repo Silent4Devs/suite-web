@@ -21,7 +21,11 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
-    Route::get('contenedores', 'ContenedorMatrizOctave@index');
+    Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
+    Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
+    Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
+
+    Route::resource('contenedores', 'ContenedorMatrizOctaveController');
 
     Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
 
@@ -162,7 +166,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('recursos-humanos/evaluacion-360/objetivos', 'RH\EV360ObjetivosController')->names([
         'index' => 'ev360-objetivos.index',
         'destroy' => 'ev360-objetivos.destroy',
-    ])->except(['create', 'show']);
+    ])->except(['show']);
 
     Route::get('Perspectiva/edit/{perspectivas}', 'RH\ObejetivoPerspectivaController@edit')->name('perspectivas.edit');
     Route::resource('Perspectiva', 'RH\ObejetivoPerspectivaController', ['except' => ['edit']]);
@@ -666,15 +670,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Activos
 
-    // Route::post('activos/create', 'ActivosController@save');
-    Route::post('activosInformacion/validacion', 'ActivosInformacionController@validacion')->name('activosInformacion.validacion');
+    // Route::post('activos/create', 'ActivosController@create');
     Route::get('activos/descargar', 'ActivosController@DescargaFormato')->name('activos.descargar');
     Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
     Route::resource('activos', 'ActivosController');
 
+    Route::post('activosInformacion/validacion', 'ActivosInformacionController@validacion')->name('activosInformacion.validacion');
     Route::get('activosInformacion/descargar', 'ActivosInformacionController@DescargaFormato')->name('activosInformacion.descargar');
     Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
-    Route::get('activos/create', 'ActivosInformacionController@create')->name('activosInformacion.create');
+    Route::get('activosInformacion/create', 'ActivosInformacionController@create')->name('activosInformacion.create');
     Route::get('activosInformacion/{activo}', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
     Route::resource('activosInformacion', 'ActivosInformacionController')->names([
         'index' => 'activosInformacion.index',
@@ -906,6 +910,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('carta-aceptacion/destroy', 'CartaAceptacionRiesgosController@destroy')->name('carta-aceptacion.destroy');
     Route::resource('carta-aceptacion', 'CartaAceptacionRiesgosController')->except('destroy');
 
+    //Tabla de impactos
+    Route::resource('tabla-impacto', 'TablaImpactoController');
+
+    //niveles de impacto
+    Route::get('niveles-impacto/get-niveles/{id?}', 'NivelesImpactoController@getNivelesImpactos')->name('niveles.getNivelesImpactos');
+    Route::resource('niveles-impacto', 'NivelesImpactoController');
+
     // Matriz Riesgos
     Route::get('matriz-riesgos/planes-de-accion/create/{id}', 'MatrizRiesgosController@createPlanAccion')->name('matriz-riesgos.createPlanAccion');
     Route::post('matriz-riesgos/planes-de-accion/store/{id}', 'MatrizRiesgosController@storePlanAccion')->name('matriz-riesgos.storePlanAccion');
@@ -935,6 +946,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
     Route::get('matriz-octavemapa', 'MatrizRiesgosController@MapaCalorOctave')->name('matriz-octavemapa');
     Route::get('controles-get', 'MatrizRiesgosController@ControlesGet')->name('controles-get');
+
+    //ProcesosOctave
+    Route::post('procesos-octave/activos', 'ProcesosOctaveController@activos')->name('procesos.octave.activos');
+    Route::delete('procesos-octave/destroy', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
+    Route::resource('procesos-octave', 'ProcesosOctaveController')->except('destroy');
+
+    //Servicios
+    Route::delete('servicios/destroy', 'ServiciosController@destroy')->name('servicios.destroy');
+    Route::resource('servicios', 'ServiciosController')->except('destroy');
 
     // Gap Unos
     Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');

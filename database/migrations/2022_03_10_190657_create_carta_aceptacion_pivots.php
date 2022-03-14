@@ -19,7 +19,6 @@ class CreateCartaAceptacionPivots extends Migration
             $table->foreign('controles_id')->references('id')->on('declaracion_aplicabilidad');
             $table->unsignedInteger('id_matriz_octave_escenarios')->nullable();
             $table->foreign('id_matriz_octave_escenarios')->references('id')->on('matriz_octave_escenarios');
-
             $table->timestamps();
         });
     }

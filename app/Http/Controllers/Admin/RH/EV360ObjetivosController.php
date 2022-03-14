@@ -36,11 +36,7 @@ class EV360ObjetivosController extends Controller
 
     public function create()
     {
-        // $objetivo = new Objetivo;
-        // $tipo_seleccionado = null;
-        // $metrica_seleccionada = null;
-
-        // return view('admin.recursos-humanos.evaluacion-360.objetivos.create', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada'));
+        return view('admin.recursos-humanos.evaluacion-360.objetivos.objetivos-negocio');
     }
 
     public function createByEmpleado(Request $request, $empleado)
@@ -143,12 +139,12 @@ class EV360ObjetivosController extends Controller
     public function destroyByEmpleado(Request $request, ObjetivoEmpleado $objetivo)
     {
 
-            // $objetivo = ObjetivoEmpleado::find($request->all());
+        // $objetivo = ObjetivoEmpleado::find($request->all());
         $objetivo->delete();
 
         return response()->json(['success' => 'deleted successfully!', $request->all()]);
         // $objetivo->delete();
-            // return response()->json(['success'=> 'Eliminado exitosamente']);
+        // return response()->json(['success'=> 'Eliminado exitosamente']);
     }
 
     public function edit($objetivo)
