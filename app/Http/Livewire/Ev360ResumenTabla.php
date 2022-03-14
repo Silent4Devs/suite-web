@@ -67,6 +67,7 @@ class Ev360ResumenTabla extends Component
                 $sobresaliente++;
             }
         }
+        dd($evaluado);
         $calificaciones->push([
             'Inaceptable' => $inaceptable,
             'Mínimo Aceptable' => $minimo_aceptable,
@@ -127,7 +128,7 @@ class Ev360ResumenTabla extends Component
             ->where('evaluado_id', $evaluado->id)
             ->get();
         $calificacion_final = 0;
-
+        $cantidad_competencias_evaluadas = 0;
         $promedio_competencias = 0;
         $promedio_general_competencias = 0;
         $lista_autoevaluacion = collect();
@@ -245,10 +246,12 @@ class Ev360ResumenTabla extends Component
 
                 $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
             }
-            // dd($promedio_competencias);
+
             $cantidad_participantes = $promedio_competencias_collect->count();
+
             if ($this->empleadoTieneCompetenciasAsignadas($evaluado->id, $evaluacion->id)) {
                 $promedio_competencias = number_format($promedio_competencias_collect->sum(), 2);
+                dd($promedio_competencias);
                 $promedio_general_competencias = number_format(($promedio_competencias * ($evaluacion->peso_general_competencias / 100)) / $cantidad_participantes, 2);
                 $calificacion_final += $promedio_general_competencias;
             } else {
@@ -333,6 +336,8 @@ class Ev360ResumenTabla extends Component
                 $calificacion_final += $evaluacion->peso_general_objetivos;
             }
         }
+
+        dd($promedio_competencias);
 
         return [
             'peso_general_competencias' => $evaluacion->peso_general_competencias,

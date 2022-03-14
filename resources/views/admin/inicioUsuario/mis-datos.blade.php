@@ -597,42 +597,6 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                         </div>
-                        {{-- @if (is_null($activos))
-                        No cuenta con activos a su cargo
-                    @else
-                    <div class="row">
-                            <div class="row" style="margin-top: 1px;">
-                                <div class="col-12 text-muted" style="">
-                                    <table id="dom" class="table table-bordered w-100 datatable-glosario" style="width: 100%; border: none !important;">
-                                        <thead>
-                                            <tr>
-                                                <th style="border-bottom: none !important;">ID</th>
-                                                <th style="border-bottom: none !important;">Activo</th>
-                                                <th style="text-align: center !important; border-bottom: none !important;">N. Serie</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($activos as $activo)
-                                            <tr data-toggle="modal" data-target="#modal_competencia{{ $activo->id }}" style="cursor: pointer;">
-                                                <td style="vertical-align: middle;">{{$activo->id}}</td>
-                                                <td style="vertical-align: middle; text-align: left !important;">{{$activo->nombreactivo}}</td>
-                                                <td style="text-align: center !important; vertical-align: middle;">{{$activo->descripcion}}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-
-
-                                </div>
-                            </div> --}}
-
-
-
-
-
-
-
-
                         <div class=" card card_margin_b_n" x-data="{show:false}" style="padding:20px;">
                             <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
@@ -646,9 +610,6 @@ if (!is_null($organizacion)) {
                                     @if (count($competencias) === 0)
                                         No se han definido competencias actualmente
                                     @else
-                                        <div class="row">
-                                        </div>
-                                        {{-- @foreach ($competencias as $competencia) --}}
                                         <div class="row" style="margin-top: 1px;">
                                             <div class="col-12 text-muted scroll_estilo" style="overflow:auto;">
                                                 <table id="dom" class="table table-bordered w-100 datatable-glosario"
@@ -678,7 +639,7 @@ if (!is_null($organizacion)) {
                                                                         {{ $competencia->competencia->nombre }}</td>
                                                                     <td
                                                                         style="text-align: center !important; vertical-align: middle;">
-                                                                        {{ $competencia->competencia->tipo_id }}</td>
+                                                                        {{ $competencia->nivel_esperado }}</td>
                                                                 </tr>
                                                             @endif
                                                         @endforeach
@@ -686,22 +647,11 @@ if (!is_null($organizacion)) {
                                                 </table>
                                             </div>
                                         </div>
-                                        {{-- @endforeach --}}
-
-                                        {{-- <button class="btn btn_cancelar" data-toggle="modal" data-target="#modal_competencias" style="margin-right: 3px; float: right; border-radius: 0px !important;">
-                                            <i class="fas fa-book mr-2" ></i>
-                                            Diccionario
-                                        </button> --}}
                                     @endif
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-
-
-
                     @if (count($competencias))
                         @foreach ($competencias as $competencia)
                             @if ($competencia->competencia)
@@ -719,16 +669,7 @@ if (!is_null($organizacion)) {
                                                 <span class="mr-2">Tipo:
                                                     {{ $competencia->competencia->tipo ? $competencia->competencia->tipo->nombre : '' }}</span>
                                             </div>
-
                                             <div class="modal-body">
-
-                                                {{-- <h5 style="display: flex; justify-content: space-between; align-items:center;">
-                                                <span><img class="img_empleado" src="{{$competencia->competencia->imagen_ruta}}">
-                                                <strong>{{ $competencia->competencia->nombre }}</strong></span>
-                                                <span class="mr-2">Tipo: {{ $competencia->competencia->tipo->nombre }}</span>
-                                            </h5>
-                                            <hr> --}}
-
                                                 <div class="mt-3">
                                                     <strong>Descripción: </strong>
                                                     <p style="text-align: justify;">
@@ -758,14 +699,6 @@ if (!is_null($organizacion)) {
                                                             @endif
                                                         </tbody>
                                                     </table>
-
-
-
-                                                    {{-- @foreach ($competencia->competencia->opciones as $conducta)
-                                                    <div class="card-body card" style="background-color:#eee;">
-                                                        {!! htmlspecialchars_decode($conducta->definicion) !!}
-                                                    </div>
-                                                @endforeach --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -774,16 +707,6 @@ if (!is_null($organizacion)) {
                             @endif
                         @endforeach
                     @endif
-
-
-
-
-
-
-
-
-
-                    {{-- MOD Informacion General --}}
                     <div class="col-md-8">
                         <div class="card_data_mis_datos card" style="height: 480px !important;">
                             <div class="card-body" style="padding-bottom: 14px !important;">
@@ -954,43 +877,6 @@ if (!is_null($organizacion)) {
                                         <hr class="hr-custom-title">
                                         <div style="padding-top: 25px;" x-show="show" x-transition:enter.duration.500ms
                                             x-transition:leave.duration.400ms>
-                                            {{-- @foreach ($lista_evaluaciones as $evaluacion)
-                                                                    <small class="mt-3 d-inline-block"
-                                                                        style="font-size:15px">{{ $evaluacion['nombre'] }}</small>
-                                                                    <br>
-                                                                    <small><i
-                                                                            class="mr-1 fas fa-calendar-day"></i>{{ $evaluacion['fecha_inicio'] }}</small>
-                                                                    <small><i
-                                                                            class="mr-1 fas fa-calendar-day"></i>{{ $evaluacion['fecha_fin'] }}</small>
-                                                                    @foreach ($evaluacion['informacion_evaluacion']['evaluadores_objetivos'] as $evaluador)
-                                                                        @if ($evaluador['esSupervisor'])
-                                                                            <small>{{ $evaluador['nombre'] }}</small>
-                                                                            <br>
-                                                                            @foreach ($evaluador['objetivos'] as $objetivo)
-                                                                                <small style="font-size:13px"
-                                                                                    class="m-0">{{ $objetivo['nombre'] }}</small>
-                                                                                <br>
-                                                                                <small>KPI:
-                                                                                    <strong>{{ $objetivo['KPI'] }}</strong></small>
-                                                                                <small>Meta:
-                                                                                    <strong>{{ $objetivo['meta'] }}</strong></small>
-                                                                                <small>Alcanzado:
-                                                                                    <strong>{{ $objetivo['calificacion'] }}</strong></small>
-                                                                                <small>Comentario(s): <strong>
-                                                                                        {{ $objetivo['meta_alcanzada'] }}</strong></small>
-                                                                                <div class="progress">
-                                                                                    <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                                                                        role="progressbar"
-                                                                                        style="width: {{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}%;"
-                                                                                        aria-valuenow="{{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}"
-                                                                                        aria-valuemin="0" aria-valuemax="100">
-                                                                                        {{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}%
-                                                                                    </div>
-                                                                                </div>
-                                                                            @endforeach
-                                                                        @endif
-                                                                    @endforeach
-                                                                @endforeach --}}
                                             @foreach ($mis_objetivos as $objetivo)
                                                 <div class="card" style="position:relative">
                                                     <div class="card-body"
@@ -1031,39 +917,27 @@ if (!is_null($organizacion)) {
                                         style="padding-top:17px !important; padding-bottom:17px !important;">
                                         <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge mr-2"></i>Mi
                                             Autoevaluación
+                                            @if ($mis_evaluaciones)
+                                                @if (!$mis_evaluaciones->evaluado)
+                                                    <div class="circle-total-evaluaciones"
+                                                        style="top:-5px !important;">
+                                                        <span style="position: absolute;top: 3px;">1</span>
+                                                    </div>
+                                                @endif
+                                            @endif
                                         </h5>
+
                                         @if ($last_evaluacion)
-                                            @include('admin.inicioUsuario.info_card_evaluacion')
+                                            @include(
+                                                'admin.inicioUsuario.info_card_evaluacion'
+                                            )
                                         @endif
                                         <hr class="hr-custom-title">
                                         <div id="evaluacionesRealizar" x-show="show" x-transition:enter.duration.500ms
                                             x-transition:leave.duration.400ms>
                                             <div class="card" style="position:relative; margin-top:25px;">
                                                 <div class="card-body" style="z-index: 1;">
-
-                                                    {{-- <div class="progress-bar" role="progressbar" style="width: 25%;
-                                                                                background: #345183;
-                                                                                font-weight: bold;
-                                                                                font-size: 13px;" aria-valuenow="25" aria-valuemin="0"
-                                                                                aria-valuemax="100">25%</div> --}}
                                                     @if ($last_evaluacion)
-
-
-
-                                                        @if ($mis_evaluaciones)
-                                                            <div class="progress"
-                                                                style="height: 28px; margin-top: 20px;">
-                                                                <div class="progress-bar" role="progressbar"
-                                                                    style="width: {{ $mis_evaluaciones->progreso_competencias }}%;background: #345183;font-weight: bold;font-size: 13px;"
-                                                                    aria-valuenow="
-                                                                                    {{ $mis_evaluaciones->progreso_competencias }}"
-                                                                    aria-valuemin="0" aria-valuemax="100">
-                                                                    {{ $mis_evaluaciones->progreso_competencias }}%
-                                                                </div>
-                                                            </div>
-                                                        @endif
-
-
                                                         <div class="text-center" style="margin-top:20px;">
                                                             <a class="btn btn-sm btn-light"
                                                                 href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $last_evaluacion->id,'evaluado' => auth()->user()->empleado->id,'evaluador' => auth()->user()->empleado->id]) }}">
@@ -1072,7 +946,6 @@ if (!is_null($organizacion)) {
                                                                 href="{{ route('admin.ev360-evaluaciones.misEvaluaciones', ['evaluacion' => $last_evaluacion->id,'evaluado' => auth()->user()->empleado->id]) }}">Ver
                                                                 mis Autoevaluaciones</a>
                                                         </div>
-
                                                     @endif
                                                 </div>
                                                 <div
@@ -1099,7 +972,9 @@ if (!is_null($organizacion)) {
                                             @endif
                                         </h5>
                                         @if ($last_evaluacion)
-                                            @include('admin.inicioUsuario.info_card_evaluacion')
+                                            @include(
+                                                'admin.inicioUsuario.info_card_evaluacion'
+                                            )
                                         @endif
                                         <hr class="hr-custom-title">
 

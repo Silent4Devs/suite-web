@@ -11,7 +11,6 @@ class NivelesImpactoController extends Controller
     public function store(Request $request)
     {
         if ($request->ajax()) {
-
             $nivel = $request->nivel;
             $clasificacion = $request->clasificacion;
             $color = $request->color;
