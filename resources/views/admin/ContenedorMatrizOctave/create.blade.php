@@ -1,20 +1,29 @@
 @extends('layouts.admin')
 @section('content')
-<h5 class="col-12 titulo_general_funcion">Registrar: </strong>Contenedores Matriz Octave</h5>
-<div class="mt-4 card">
+{{-- <h5 class="col-12 titulo_general_funcion">Registrar: </strong>Contenedores Matriz Octave</h5> --}}
+<div class="mt-5 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong>Contenedor</h3>
+    </div>
     <div class="card-body">
+
         <form method="POST" action="{{ route("admin.contenedores.store") }}" enctype="multipart/form-data">
             @csrf
 
+            <div class="mt-2">
+                @include('admin.OCTAVE.menu')
+            </div>
             <div class="py-1 text-center form-group col-12" style="background-color:#345183; border-radius:100px; color: white;">REGISTRO DE CONTENEDORES</div>
 
             {{-- <div class="form-group">
                 <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>
             </div> --}}
 
+
+
             <div class="row">
                 <div class="form-group col-md-2 col-lg-2 col-sm-12">
-                    <label for="identificador_contenedor"><i class="fas fa-table iconos-crear"></i>ID</label>
+                    <label for="identificador_contenedor"><i class="fas fa-barcode iconos-crear"></i>ID</label>
                     <input class="form-control {{ $errors->has('identificador_contenedor') ? 'is-invalid' : '' }}" type="text"
                         name="identificador_contenedor" id="identificador_contenedor" value="{{ old('identificador_contenedor', '') }}">
                     @if ($errors->has('identificador_contenedor'))
@@ -24,8 +33,8 @@
                     @endif
                 </div>
 
-                <div class="form-group col-md-8 col-lg-8 col-sm-12">
-                    <label for="nom_contenedor"><i class="fas fa-table iconos-crear"></i>Nombre del Contenedor</label>
+                <div class="form-group col-md-10 col-lg-10 col-sm-12">
+                    <label for="nom_contenedor"><i class="fas fa-box-open iconos-crear"></i>Nombre del Contenedor</label>
                     <input class="form-control {{ $errors->has('nom_contenedor') ? 'is-invalid' : '' }}" type="text"
                         name="nom_contenedor" id="nom_contenedor" value="{{ old('nom_contenedor', '') }}">
                     @if ($errors->has('nom_contenedor'))
@@ -58,7 +67,7 @@
                 </div> --}}
 
                 <div class="form-group col-md-12 col-lg-12 col-sm-12">
-                    <label for="descripcion"><i class="fas fa-table iconos-crear"></i>Descripción</label>
+                    <label for="descripcion"><i class="far fa-file-alt iconos-crear"></i>Descripción</label>
                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
                         name="descripcion" id="descripcion" required>{{ old('descripcion') }}</textarea>
                     @if ($errors->has('descripcion'))

@@ -8,6 +8,7 @@ use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
+use App\Models\Organizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -30,7 +31,21 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.timesheet.timesheet-inicio');
+        $organizacion = Organizacion::first();
+
+        return view('admin.timesheet.timesheet-inicio', compact('organizacion'));
+    }
+
+    public function actualizarDia(Request $request)
+    {
+
+        $organizacion = Organizacion::first();
+
+        $organizacion->update([
+            'dia_timesheet'=>$request->dia_timesheet,
+        ]);  
+
+        return redirect()->route('admin.timesheet-inicio')->with('success', 'Guardado con éxito');      
     }
 
     /**
@@ -46,7 +61,9 @@ class TimesheetController extends Controller
 
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
 
-        return view('admin.timesheet.create', compact('proyectos', 'tareas', 'fechasRegistradas'));
+        $organizacion = Organizacion::first();
+
+        return view('admin.timesheet.create', compact('proyectos', 'tareas', 'fechasRegistradas', 'organizacion'));
     }
 
     /**
@@ -58,6 +75,9 @@ class TimesheetController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $organizacion_semana = Organizacion::first();
+
         $request->validate([
             'timesheet.1.proyecto' => 'required',
             'timesheet.1.tarea' => 'required',
@@ -100,9 +120,10 @@ class TimesheetController extends Controller
                 }
             }
         }
-
+        // dd($organizacion_semana->dia_timesheet);
         $timesheet_nuevo = Timesheet::create([
             'fecha_dia' => $request->fecha_dia,
+            'dia_semana' => $organizacion_semana->dia_timesheet,
             'empleado_id' => auth()->user()->empleado->id,
             'aprobador_id' => auth()->user()->empleado->supervisor_id,
             'estatus' => $request->estatus,
@@ -171,6 +192,9 @@ class TimesheetController extends Controller
     {
         // dd($request->all());
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $organizacion_semana = Organizacion::first();
+
         $request->validate([
             'timesheet.1.proyecto' => 'required',
             'timesheet.1.tarea' => 'required',

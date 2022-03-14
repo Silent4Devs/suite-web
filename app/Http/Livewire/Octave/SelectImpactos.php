@@ -6,11 +6,11 @@ use Livewire\Component;
 
 class SelectImpactos extends Component
 {
-    public $operacionalId = 1;
-    public $cumplimientoId = 1;
-    public $legalId = 1;
-    public $reputacionalId = 1;
-    public $tecnologicoId = 1;
+    public $operacionalId = 0;
+    public $cumplimientoId = 0;
+    public $legalId = 0;
+    public $reputacionalId = 0;
+    public $tecnologicoId = 0;
     public $valorId;
     public $colorReglaTipo;
     public $colorTextoTipo;

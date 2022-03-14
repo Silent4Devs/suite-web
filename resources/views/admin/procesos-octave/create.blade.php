@@ -8,45 +8,23 @@
 
 }
 
-.select2-results__option:nth-child(1)::before {
-    position: absolute;
-    content: '';
-    width: 10px;
-    height: 10px;
-    background-color: rgb(61, 114, 77);
-    margin-left: -20px;
-    border-radius: 100px;
-    margin-top: 6px;
-}
-
-.select2-selection__rendered[title="1 Muy Bajo"]::before {
-    position: absolute;
-    content: '';
-    width: 10px;
-    height: 10px;
-    background-color: rgb(61, 114, 77);
-    margin-left: -18px;
-    border-radius: 100px;
-    margin-top: 11px;
-}
-
 .select2-results__option:nth-child(2)::before {
     position: absolute;
     content: '';
     width: 10px;
     height: 10px;
-    background-color: rgb(50, 205, 63);
+    background-color: rgb(61, 114, 77);
     margin-left: -20px;
     border-radius: 100px;
     margin-top: 6px;
 }
 
-.select2-selection__rendered[title="2 Bajo"]::before {
+.select2-selection__rendered[title="1 - Muy Bajo"]::before {
     position: absolute;
     content: '';
     width: 10px;
     height: 10px;
-    background-color: rgb(50, 205, 63);
+    background-color: rgb(61, 114, 77);
     margin-left: -18px;
     border-radius: 100px;
     margin-top: 11px;
@@ -57,18 +35,18 @@
     content: '';
     width: 10px;
     height: 10px;
-    background-color: yellow;
+    background-color: rgb(50, 205, 63);
     margin-left: -20px;
     border-radius: 100px;
     margin-top: 6px;
 }
 
-.select2-selection__rendered[title="3 Medio"]::before {
+.select2-selection__rendered[title="2 - Bajo"]::before {
     position: absolute;
     content: '';
     width: 10px;
     height: 10px;
-    background-color: yellow;
+    background-color: rgb(50, 205, 63);
     margin-left: -18px;
     border-radius: 100px;
     margin-top: 11px;
@@ -79,18 +57,18 @@
     content: '';
     width: 10px;
     height: 10px;
-    background-color: rgb(255, 136, 0);
+    background-color: yellow;
     margin-left: -20px;
     border-radius: 100px;
     margin-top: 6px;
 }
 
-.select2-selection__rendered[title="4 Alto"]::before {
+.select2-selection__rendered[title="3 - Medio"]::before {
     position: absolute;
     content: '';
     width: 10px;
     height: 10px;
-    background-color: rgb(255, 136, 0);
+    background-color: yellow;
     margin-left: -18px;
     border-radius: 100px;
     margin-top: 11px;
@@ -101,13 +79,35 @@
     content: '';
     width: 10px;
     height: 10px;
+    background-color: rgb(255, 136, 0);
+    margin-left: -20px;
+    border-radius: 100px;
+    margin-top: 6px;
+}
+
+.select2-selection__rendered[title="4 - Alto"]::before {
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: rgb(255, 136, 0);
+    margin-left: -18px;
+    border-radius: 100px;
+    margin-top: 11px;
+}
+
+.select2-results__option:nth-child(6)::before {
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 10px;
     background-color: red;
     margin-left: -20px;
     border-radius: 100px;
     margin-top: 6px;
 }
 
-.select2-selection__rendered[title="5 Crítico"]::before {
+.select2-selection__rendered[title="5 - Crítico"]::before {
     position: absolute;
     content: '';
     width: 10px;
@@ -184,39 +184,13 @@
 
 <div class="mt-5 card">
     <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Matriz Octave</h3>
+        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong>Proceso</h3>
     </div>
     <div class="card-body">
         <form method="POST" action="{{ route('admin.procesos-octave.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="row">
-            <div class="col-12" style="margin-left:-15px;">
-                <div class="nav nav-tabs" id="tabsEmpleado" role="tablist">
-                    <a class="nav-link active" href="{{route('admin.procesos-octave.index')}}">
-                    <i class="fas fa-project-diagram mr-2" style="font-size:20px;"></i>Procesos
-                    </a>
-                    <a class="nav-link"  href="{{route('admin.activosInformacion.index')}}" >
-                        <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
-                       Activos
-                    </a>
-                    <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}"  >
-                        <i class="fas fa-camera-retro mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
-                       Escenarios
-                    </a>
-                    <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}" >
-                        <i class="fas fa-box-open mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
-                        Contenedores
-                    </a>
-
-                    <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}" >
-                        <i class="fas fa-network-wired mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
-                        Árbol de Riesgos
-                    </a>
-                    <a class="nav-link "  href="{{route('admin.carta-aceptacion.index')}}" >
-                    <i class="fas fa-chart-bar mr-2" style="font-size:20px;" style="text-decoration:none;"></i>Gráfica
-                    </a>
-                </div>
-            </div>
+            @include('admin.OCTAVE.menu')
 
 
             <div class="text-center form-group col-12" style="background-color:#345183; border-radius: 100px; color: white;">
@@ -286,7 +260,7 @@
             </div>
 
 
-                @livewire('octave.select-impactos',["operacionalId"=>1,"cumplimientoId"=>1,"legalId"=>1,"reputacionalId"=>1,"tecnologicoId"=>1])
+                @livewire('octave.select-impactos',["operacionalId"=>0,"cumplimientoId"=>0,"legalId"=>0,"reputacionalId"=>0,"tecnologicoId"=>0])
 
 
             <div class="text-center form-group col-12" style="background-color:#345183; border-radius: 100px; color: white;">
