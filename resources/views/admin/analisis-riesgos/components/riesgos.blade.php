@@ -39,4 +39,14 @@
             </a>
         </li>
 
+        <li>
+            <a href="{{ route('admin.tabla-impacto.index') }}">
+                <div>
+                <i class="fa-solid fa-chart-line"></i>
+                <br>
+                    Tabla de impacto
+                </div>
+            </a>
+        </li>
+
 </ul>

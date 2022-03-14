@@ -21,7 +21,6 @@ use App\Models\MatrizNist;
 //use Illuminate\Support\Facades\Request;
 use App\Models\MatrizOctave;
 use App\Models\MatrizoctaveActivosInfo;
-use App\Models\MatrizOctaveControlesPivot;
 use App\Models\MatrizRiesgo;
 use App\Models\MatrizRiesgosControlesPivot;
 use App\Models\Organizacion;
@@ -619,18 +618,11 @@ class MatrizRiesgosController extends Controller
 
     public function updateOctave(Request $request, $matrizRiesgoOctave)
     {
-        // $calculo = new Mriesgos();
-        // $res = $calculo->CalculoD($request);
-        // $request->request->add(['resultadoponderacion' => $res]);
         $matrizRiesgoOctave = MatrizOctave::find($matrizRiesgoOctave);
         $matrizRiesgoOctave->update($request->all());
         $this->saveUpdateActivosOctave($request->activosoctave, $matrizRiesgoOctave);
 
         return redirect("admin/matriz-seguridad/octave/index?id={$request->id_analisis}")->with('success', 'Editado con éxito');
-        // if (isset($request->plan_accion)) {
-        //     $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
-        //     $matrizRiesgoOctave->planes()->sync($request->plan_accion);
-        // }
 
         return redirect()->route('admin.matriz-riesgos.octave', ['id' => $request->id_analisis])->with('success', 'Actualizado con éxito');
     }
@@ -645,24 +637,7 @@ class MatrizRiesgosController extends Controller
 
     public function storeOctave(Request $request)
     {
-        // dd($request);
-        //$request->merge(['plan_de_accion' => $request['plan_accion']['0']]);
-        // dd($request->all());
         $matrizRiesgoOctave = MatrizOctave::create($request->all());
-
-        // foreach ($request->controles_id as $item) {
-        //     $control = new MatrizOctaveControlesPivot();
-        //     // $control->matriz_id = 2;
-        //     $control->matriz_id = $matrizRiesgoOctave->id;
-        //     $control->controles_id = $item;
-        //     $control->save();
-        // }
-
-        // if (isset($request->plan_accion)) {
-        //     // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
-        //     $matrizRiesgoOctave->planes()->sync($request->plan_accion);
-        // }
-
         $this->saveUpdateActivosOctave($request->activosoctave, $matrizRiesgoOctave);
 
         return redirect("admin/matriz-seguridad/octave/index?id={$request->id_analisis}")->with('success', 'Guardado con éxito');
@@ -670,14 +645,6 @@ class MatrizRiesgosController extends Controller
 
     public function ISO31000(Request $request)
     {
-        // dd($request->all());
-        /*$query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
-        dd($query);*/
-        // abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //  $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots' => function ($query) {
-        //     return $query->with('declaracion_aplicabilidad');
-        // }])->where('id_analisis', '=', $request['id'])->get();
-        // dd($query);
         abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizIso31000::get();
@@ -1036,5 +1003,10 @@ class MatrizRiesgosController extends Controller
                 }
             }
         }
+    }
+
+    public function graficas()
+    {
+        return view('admin.OCTAVE.graficas');
     }
 }
