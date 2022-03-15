@@ -6,6 +6,7 @@ use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class ActivoInformacion extends Model
 {
@@ -18,68 +19,78 @@ class ActivoInformacion extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends = ['riesgo_activo'];
+    protected $appends = ['riesgo_activo', 'name', 'content', 'color'];
 
     protected $fillable = [
-    'identificador',
-    'nombreVP',
-    'duenoVP',
-    'nombre_direccion',
-    'custodioALDirector',
-    'activo_informacion',
-    'formato',
-    'proceso_id',
-    'creacion',
-    'recepcion',
-    'otra_recepcion',
-    'uso_digital',
-    'nombre_aplicacion',
-    'carpeta_compartida',
-    'otra_AppCarpeta',
-    'uso_fisico',
-    'otro',
-    'imprime',
-    'direccion_envio',
-    'vp_envio',
-    'envio_digital',
-    'otro_envio_digital',
-    'informacion_total',
-    'proveedor_envio',
-    'envio_ext',
-    'otro_envioExt',
-    'informacion_totalExt',
-    'acceso_informacionExt',
-    'requiere_info',
-    'almacenamiento_digital',
-    'almacenamiento_aplicacion',
-    'carpeta_compartida_almacenamiento',
-    'otra_AppCarpeta_almacenamiento',
-    'almacenamiento_fisico',
-    'otro_almacenamiento_fisico',
-    'ubicacion_fisica',
-    'almacenamiento_acceso',
-    'acceso_requerido',
-    'tiempo_almacenamiento',
-    'destruye',
-    'eliminacion_digital',
-    'otro_eliminacion',
-    'eliminacion_fisica',
-    'question',
-    'question_1',
-    'question_2',
-    'question_3',
-    'question_4',
-    'question_5',
-    'question_6',
-    'question_7',
-    'confidencialidad_id',
-    'integridad_id',
-    'disponibilidad_id',
-    'valor_criticidad',
-    'created_at',
-    'updated_at',
-    'deleted_at',
+        'identificador',
+        'nombreVP',
+        'duenoVP',
+        'nombre_direccion',
+        'custodioALDirector',
+        'activo_informacion',
+        'formato',
+        'proceso_id',
+        'creacion',
+        'recepcion',
+        'otra_recepcion',
+        'uso_digital',
+        'nombre_aplicacion',
+        'carpeta_compartida',
+        'otra_AppCarpeta',
+        'uso_fisico',
+        'otro',
+        'imprime',
+        'direccion_envio',
+        'vp_envio',
+        'envio_digital',
+        'otro_envio_digital',
+        'informacion_total',
+        'proveedor_envio',
+        'envio_ext',
+        'otro_envioExt',
+        'informacion_totalExt',
+        'acceso_informacionExt',
+        'requiere_info',
+        'almacenamiento_digital',
+        'almacenamiento_aplicacion',
+        'carpeta_compartida_almacenamiento',
+        'otra_AppCarpeta_almacenamiento',
+        'almacenamiento_fisico',
+        'otro_almacenamiento_fisico',
+        'ubicacion_fisica',
+        'almacenamiento_acceso',
+        'acceso_requerido',
+        'tiempo_almacenamiento',
+        'destruye',
+        'eliminacion_digital',
+        'otro_eliminacion',
+        'eliminacion_fisica',
+        'question',
+        'question_1',
+        'question_2',
+        'question_3',
+        'question_4',
+        'question_5',
+        'question_6',
+        'question_7',
+        'confidencialidad_id',
+        'integridad_id',
+        'disponibilidad_id',
+        'valor_criticidad',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
+
+    public function getNameAttribute()
+    {
+        return $this->identificador . ' ' . $this->activo_informacion;
+    }
+
+    public function getContentAttribute()
+    {
+        return Str::limit($this->nombreVP, 20, '...') ? Str::limit($this->nombreVP, 20, '...') : 'Sin Contenido';
+    }
 
     public function getRiesgoActivoAttribute()
     {
@@ -92,6 +103,21 @@ class ActivoInformacion extends Model
         $sumatoria = $sumatoria / $cantidadContenedores;
 
         return round($sumatoria);
+    }
+
+    public function getColorAttribute()
+    {
+        if ($this->riesgo_activo <= 5) {
+            return '#0C7000';
+        } elseif ($this->riesgo_activo <= 10) {
+            return '#2BE015';
+        } elseif ($this->riesgo_activo <= 15) {
+            return '#FFFF00';
+        } elseif ($this->riesgo_activo <= 20) {
+            return '#FF7000';
+        } else {
+            return '#FF0000';
+        }
     }
 
     public function dueno()
@@ -132,5 +158,10 @@ class ActivoInformacion extends Model
     public function contenedores()
     {
         return $this->belongsToMany(MatrizOctaveContenedor::class, 'activos_contenedores', 'activo_id', 'contenedor_id');
+    }
+
+    public function children()
+    {
+        return $this->belongsToMany(MatrizOctaveContenedor::class, 'activos_contenedores', 'activo_id', 'contenedor_id')->with('children');
     }
 }
