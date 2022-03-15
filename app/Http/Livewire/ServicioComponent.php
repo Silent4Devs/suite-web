@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Livewire;
+
 use App\Models\MatrizOctaveServicio;
 use Carbon\Carbon;
 use Livewire\Component;
 
 class ServicioComponent extends Component
 {
-
     public $servicio;
     public $descripcion;
     protected $rules = [

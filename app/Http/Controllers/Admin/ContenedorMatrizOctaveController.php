@@ -7,15 +7,14 @@ use App\Models\DeclaracionAplicabilidad;
 use App\Models\MatrizOctaveContenedor;
 use App\Models\MatrizOctaveEscenario;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Yajra\Datatables\Datatables;
 
 class ContenedorMatrizOctaveController extends Controller
 {
     public function index(Request $request)
     {
-
         abort_if(Gate::denies('categorias_capacitaciones_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizOctaveContenedor::orderByDesc('id')->get();
@@ -76,7 +75,6 @@ class ContenedorMatrizOctaveController extends Controller
 
     public function edit(Request $request, $contenedor, MatrizOctaveContenedor $matrizOctaveContenedor)
     {
-
         $contenedor = MatrizOctaveContenedor::find($contenedor);
         $sumatoria = $this->calcularRiesgo($contenedor->id);
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
@@ -141,6 +139,7 @@ class ContenedorMatrizOctaveController extends Controller
 
         return Datatables::of($escenarios)->make(true);
     }
+
     public function massDestroy(MatrizOctaveContenedor $contenedor)
     {
         abort_if(Gate::denies('categorias_capacitaciones_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');

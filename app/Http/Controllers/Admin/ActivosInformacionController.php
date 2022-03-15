@@ -22,7 +22,6 @@ class ActivosInformacionController extends Controller
     {
         $activos = ActivoInformacion::get();
 
-
         return view('admin.ActivosInformacion.index', compact('activos'));
     }
 
@@ -86,6 +85,4 @@ class ActivosInformacionController extends Controller
 
         return response()->json(['existe'=>$existe]);
     }
-
-
 }

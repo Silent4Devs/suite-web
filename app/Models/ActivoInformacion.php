@@ -3,16 +3,14 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
-use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Support\Str;
 
 class ActivoInformacion extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-
 
     protected $table = 'activos_informacion';
 
@@ -21,7 +19,7 @@ class ActivoInformacion extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends=['riesgo_activo'];
+    protected $appends = ['riesgo_activo', 'name', 'content', 'color'];
 
     protected $fillable = [
     'identificador',
@@ -87,16 +85,42 @@ class ActivoInformacion extends Model
     'deleted_at',
     ];
 
+    public function getNameAttribute()
+    {
+        return $this->identificador . ' ' . $this->activo_informacion;
+    }
+
+    public function getContentAttribute()
+    {
+        return Str::limit($this->nombreVP, 20, '...') ? Str::limit($this->nombreVP, 20, '...') : 'Sin Contenido';
+    }
+
     public function getRiesgoActivoAttribute()
     {
-        $contenedores= $this->contenedores;
-        $cantidadContenedores = count($contenedores)>0?count($contenedores):1;
+        $contenedores = $this->contenedores;
+        $cantidadContenedores = count($contenedores) > 0 ? count($contenedores) : 1;
         $sumatoria = 0;
         foreach ($contenedores as $contenedor) {
-            $sumatoria += $contenedor->riesgo ? $contenedor->riesgo:0;
+            $sumatoria += $contenedor->riesgo ? $contenedor->riesgo : 0;
         }
-        $sumatoria = $sumatoria/$cantidadContenedores;
+        $sumatoria = $sumatoria / $cantidadContenedores;
+
         return round($sumatoria);
+    }
+
+    public function getColorAttribute()
+    {
+        if ($this->riesgo_activo <= 5) {
+            return '#0C7000';
+        } elseif ($this->riesgo_activo <= 10) {
+            return '#2BE015';
+        } elseif ($this->riesgo_activo <= 15) {
+            return '#FFFF00';
+        } elseif ($this->riesgo_activo <= 20) {
+            return '#FF7000';
+        } else {
+            return '#FF0000';
+        }
     }
 
     public function dueno()
@@ -121,7 +145,7 @@ class ActivoInformacion extends Model
 
     public function proceso()
     {
-        return $this->belongsTo(Empleado::class, 'proceso_id', 'id');
+        return $this->belongsTo(Proceso::class, 'proceso_id', 'id');
     }
 
     public function confidencialidad()
@@ -138,8 +162,14 @@ class ActivoInformacion extends Model
     {
         return $this->belongsTo(activoDisponibilidad::class, 'disponibilidad_id', 'id');
     }
+
     public function contenedores()
     {
-        return $this->belongsToMany(MatrizOctaveContenedor::class,'activos_contenedores','activo_id','contenedor_id');
+        return $this->belongsToMany(MatrizOctaveContenedor::class, 'activos_contenedores', 'activo_id', 'contenedor_id');
+    }
+
+    public function children()
+    {
+        return $this->belongsToMany(MatrizOctaveContenedor::class, 'activos_contenedores', 'activo_id', 'contenedor_id')->with('children');
     }
 }
