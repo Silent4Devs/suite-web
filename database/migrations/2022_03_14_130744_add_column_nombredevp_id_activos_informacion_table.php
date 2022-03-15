@@ -21,7 +21,6 @@ class AddColumnNombredevpIdActivosInformacionTable extends Migration
             $table->unsignedInteger('nombredevp_id')->nullable();
             $table->foreign('nombredevp_id')->references('id')->on('grupos')->onDelete('cascade')->onUpdate('cascade');
         });
-
     }
 
     /**
