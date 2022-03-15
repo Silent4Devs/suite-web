@@ -10,6 +10,16 @@ class ArbolRiesgosOctaveController extends Controller
 {
     public function index()
     {
+        $procesosTree = $this->obtenerRamas();
+        $organizacion = Organizacion::first();
+        $existeArbol = $procesosTree['children']->count() > 0;
+        $rutaImagenes = asset('storage/empleados/imagenes/');
+
+        return view('admin.OCTAVE.arbol-riesgos', compact('procesosTree', 'organizacion', 'existeArbol', 'rutaImagenes'));
+    }
+
+    public function obtenerRamas()
+    {
         $procesosTree = collect(['name' => 'Broxel', 'content' => 'Sin contenido', 'children' => collect()]);
         $procesos = collect();
         if (MatrizOctaveProceso::with(['children'])->count() > 0) {
@@ -18,26 +28,12 @@ class ArbolRiesgosOctaveController extends Controller
             }
         }
         $procesosTree['children'] = $procesos;
-
-        // $procesosTree['children'] = MatrizOctaveProceso::with(['children'])->count() > 0 ? MatrizOctaveProceso::with(['children'])->get()->children : [];
-        $organizacion = Organizacion::first();
-        $existeArbol = $procesosTree['children']->count() > 0;
-        $rutaImagenes = asset('storage/empleados/imagenes/');
-
-        return view('admin.OCTAVE.arbol-riesgos', compact('procesosTree', 'organizacion', 'existeArbol', 'rutaImagenes'));
+        return $procesosTree;
     }
 
     public function obtenerArbol()
     {
-        $procesosTree = collect(['name' => 'Broxel', 'children' => collect()]);
-        $procesos = collect();
-        if (MatrizOctaveProceso::with(['children'])->count() > 0) {
-            foreach (MatrizOctaveProceso::with(['children'])->get() as $procesoOctave) {
-                $procesos->push($procesoOctave->children);
-            }
-        }
-        $procesosTree['children'] = $procesos;
-
+        $procesosTree = $this->obtenerRamas();
         return json_encode($procesosTree);
     }
 }
