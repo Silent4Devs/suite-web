@@ -24,7 +24,7 @@
         }
         .tabla-grafica-1 td span{
             position: absolute;
-            top: 20px;
+            top: 2px;
             left: 0;
             width: 100%;
             text-align: center;
@@ -105,7 +105,7 @@
 
             <h5 class="col-12 my-5"><strong>Evaluación de Procesos</strong></h5>
 
-            {{-- <div class="form-group col-md-6">
+            <div class="form-group col-md-6">
                 <label>Dirección</label>
                 <select class="form-control" id="select_direccion">
                     <option selected data-id="todos_registros">Todos</option>
@@ -116,13 +116,13 @@
             </div>
             <div class="form-group col-md-6">
                 <label>Servicio</label>
-                <select class="form-control">
+                <select class="form-control" id="select_servicio">
+                    <option selected data-id="todos_registros">Todos</option>
                     @foreach($servicios as $servicios)
-                        <option selected data-id="todos_registros">Todos</option>
-                        <option data-id="{{ $servicios->id }}">{{ $servicios->servicio }}</option>
+                        <option data-id="servicio_id_{{ $servicios->id }}">{{ $servicios->servicio }}</option>
                     @endforeach
                 </select>
-            </div> --}}
+            </div>
 
             <div class="col-12 pb-5" style="overflow: auto;">
                 
@@ -145,7 +145,7 @@
                                 <span> Riesgos relevantes</span>
 
                                 @foreach($procesos as $proceso)
-                                    <div class="circle-s direccion_id_{{ $proceso->id_direccion }}" data-id="id_proceso_{{ $proceso->id }}">P{{ $proceso->id }}</div>
+                                    <div class="circle-s direccion_id_{{ $proceso->id_direccion }} servicio_id_{{ $proceso->servicio_id }}" data-id="id_proceso_{{ $proceso->id }}" data-nombre="Proceso {{ $proceso->id_proceso }}">P{{ $proceso->id_proceso }}</div>
                                 @endforeach
                             </td>
                         </tr>
@@ -168,9 +168,9 @@
                     </thead>
                     <tbody>
                         @foreach($procesos as $proceso)
-                            <tr class="direccion_id_{{ $proceso->id_direccion }}">
-                                <td scope="col">{{ $proceso->id }}</td>
-                                <td scope="col">{{ $proceso->id }}</td>
+                            <tr class="direccion_id_{{ $proceso->id_direccion }} servicio_id_{{ $proceso->servicio_id }}">
+                                <td scope="col">Proceso: {{ $proceso->id_proceso }}</td>
+                                <td scope="col">{{ $proceso->nivel_riesgo }}</td>
                                 <td scope="col">{{ $proceso->id }}</td>
                                 <td scope="col">{{ $proceso->id }}</td>
                                 <td scope="col">{{ $proceso->nivel_riesgo }}</td>
@@ -182,7 +182,7 @@
         </div>
 
         <div class="row caja-graf d-none" id="caja_graf_act">
-            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Evaluación de Activos</strong> <i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
+            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Evaluación de Activos del <font id="nombre_proceso"></font></strong> <i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
             
             <div class="col-12 mb-5" style="overflow: auto;">
                 
@@ -212,7 +212,7 @@
                             <td class="color-td td-amarillo"></td>
                             <td class="color-td td-naranja">
                                 @foreach($activos as $activo)
-                                    <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}">A{{ $activo->identificador }}</div>
+                                    <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                 @endforeach
                             </td>
                             <td class="color-td td-naranja"></td>
@@ -247,7 +247,7 @@
             </div>
 
             <div class="col-12 mt-3">
-                <table class="table">
+                {{-- <table class="table">
                     <thead>
                         <th scope="col">#</th>
                         <th scope="col">Riesgo</th>
@@ -256,41 +256,24 @@
                         <th scope="col">Nivel riesgo</th>
                     </thead>
                     <tbody>
-                        <td scope="col">#</td>
-                        <td scope="col">Riesgo</td>
-                        <td scope="col">Probabilidad</td>
-                        <td scope="col">Impacto</td>
-                        <td scope="col">Nivel riesgo</td>
+                        @foreach($activos as $activo)
+                            <tr>
+                                <td scope="col">#</td>
+                                <td scope="col">Riesgo</td>
+                                <td scope="col">Probabilidad</td>
+                                <td scope="col">Impacto</td>
+                                <td scope="col">Nivel riesgo</td>
+                            </tr>
+                        @endforeach
                     </tbody>
-                </table>
+                </table> --}}
             </div>
         </div>
 
         <div class="row caja-graf d-none" id="caja_graf_con">
             <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Mapa de Riesgos de Contenedor</strong><i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
-            <div class="col-md-4 mt-3">
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Riesgo</th>
-                            <th scope="col">Probabilidad</th>
-                            <th scope="col">Impacto</th>
-                            <th scope="col">Nivel riesgo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td scope="col">#</td>
-                            <td scope="col">Riesgo</td>
-                            <td scope="col">Probabilidad</td>
-                            <td scope="col">Impacto</td>
-                            <td scope="col">Nivel riesgo</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-8 mt-4" style="overflow: auto;">
+            
+            <div class="col-12 mt-4" style="overflow: auto;">
                 
                 <div class="caja-grafica py-5" style="width: 680px;">
                     <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
@@ -305,7 +288,14 @@
                         </tr>
                         <tr>
                             <td class="info-td"><div class="vertical">Probable</div></td>
-                            <td class="color-td td-amarillo"></td>
+                            <td class="color-td td-amarillo">
+                                @foreach($activos as $activo)
+                                    @foreach($activo->contenedores as $contenedor)
+                                        {{-- {{ $contenedor }} --}}
+                                        <div class="circle-s activo_id_{{ $activo->id }}">C{{ $contenedor->identificador_contenedor }}</div>
+                                    @endforeach
+                                @endforeach
+                            </td>
                             <td class="color-td td-amarillo"></td>
                             <td class="color-td td-naranja"></td>
                             <td class="color-td td-naranja"></td>
@@ -317,8 +307,7 @@
                             <td class="color-td td-amarillo"></td>
                             <td class="color-td td-amarillo"></td>
                             <td class="color-td td-naranja">
-                                <div class="circle-s">S1</div>
-                                <div class="circle-s">S2</div>
+                                
                             </td>
                             <td class="color-td td-naranja"></td>
                         </tr>
@@ -350,6 +339,28 @@
                     <div class="info-grafica" style="left:300px; margin-top: 20px;">Impacto</div>
                 </div>
             </div>
+            <div class="col-12 mt-3">
+                {{-- <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Riesgo</th>
+                            <th scope="col">Probabilidad</th>
+                            <th scope="col">Impacto</th>
+                            <th scope="col">Nivel riesgo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="col">#</td>
+                            <td scope="col">Riesgo</td>
+                            <td scope="col">Probabilidad</td>
+                            <td scope="col">Impacto</td>
+                            <td scope="col">Nivel riesgo</td>
+                        </tr>
+                    </tbody>
+                </table> --}}
+            </div>
         </div>
     </div>
 @endsection
@@ -371,19 +382,48 @@
             $('#caja_graf_ev').removeClass('d-none');
         });
 
-        
+        // ______________________________________________________________________________________________
+
         $('#caja_graf_ev .circle-s').click(function(){
             let proceso_id = $('#caja_graf_ev .circle-s:hover').attr('data-id');
+            let proceso_nombre = $('#caja_graf_ev .circle-s:hover').attr('data-nombre');
             $('#caja_graf_act .circle-s:not(.d-none)').addClass('d-none');
             $('.' + proceso_id).removeClass('d-none');
         });
 
+        $('#caja_graf_act .circle-s').click(function(){
+            let activo_id = $('#caja_graf_act .circle-s:hover').attr('data-id');
+            $('#caja_graf_con .circle-s:not(.d-none)').addClass('d-none');
+            $('.' + activo_id).removeClass('d-none');
+        });
+
+        // ______________________________________________________________________________________________
 
         $(document).on('change', '#select_direccion', function(event) {
-            let clase_direccion = $('#select_direccion option:selected').attr('data-id');
-            $('#caja_graf_ev .circle-s:not(.'+ clase_direccion +'), #caja_graf_ev .circle-s:not(d-none)').addClass('d-none');
+            let clase_direccion = '.' + $('#select_direccion option:selected').attr('data-id');
+            
+            $('#caja_graf_ev .circle-s').addClass('d-none');
 
-            if (clase_direccion == 'todos') {
+            $(clase_direccion).removeClass('d-none');
+
+            console.log($('.circle-s:not(' + clase_servicio + ')' ));
+            $('.circle-s:not(' + clase_servicio + ')' ).addClass('d-none');
+
+            if (clase_direccion == '.todos_registros') {
+                $('#caja_graf_ev .circle-s').removeClass('d-none');
+            }
+        });
+
+
+        $(document).on('change', '#select_servicio', function(event) {
+            let clase_servicio = '.' + $('#select_servicio option:selected').attr('data-id');
+            
+            $('#caja_graf_ev .circle-s').addClass('d-none');
+
+            $(clase_servicio).removeClass('d-none');
+            $('.circle-s:not(' + clase_direccion + ')' ).addClass('d-none');
+
+            if (clase_servicio == '.todos_registros') {
                 $('#caja_graf_ev .circle-s').removeClass('d-none');
             }
         });
