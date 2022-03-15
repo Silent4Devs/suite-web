@@ -28,12 +28,14 @@ class ArbolRiesgosOctaveController extends Controller
             }
         }
         $procesosTree['children'] = $procesos;
+
         return $procesosTree;
     }
 
     public function obtenerArbol()
     {
         $procesosTree = $this->obtenerRamas();
+
         return json_encode($procesosTree);
     }
 }

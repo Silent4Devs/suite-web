@@ -65,10 +65,12 @@ class Proceso extends Model
             return '#FF0000';
         }
     }
+
     public function getProcesoOctaveRiesgoAttribute()
     {
         return $this->procesoOctave ? $this->procesoOctave->nivel_riesgo : 0;
     }
+
     public function getNameAttribute()
     {
         return $this->codigo . ' ' . $this->nombre;

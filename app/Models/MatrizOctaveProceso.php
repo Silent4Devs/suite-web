@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Http\Livewire\ISO31000\ActivosInformacion;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class MatrizOctaveProceso extends Model
