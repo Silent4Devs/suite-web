@@ -35,20 +35,7 @@ class MatrizOctaveProceso extends Model
 {
 	protected $table = 'matriz_octave_procesos';
 
-	protected $casts = [
-		'id_proceso' => 'int',
-		'nivel_riesgo' => 'int',
-		'id_direccion' => 'int',
-		'servicio_id' => 'int',
-		'operacional' => 'int',
-		'cumplimiento' => 'int',
-		'legal' => 'int',
-		'reputacional' => 'int',
-		'tecnologico' => 'int',
-		'impacto' => 'int',
-		'id_activos_informacion' => 'int',
-		'promedio' => 'int'
-	];
+
 
 	protected $fillable = [
 		'id_proceso',

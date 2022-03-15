@@ -79,6 +79,9 @@ class ActivoInformacion extends Model
     'integridad_id',
     'disponibilidad_id',
     'valor_criticidad',
+    'nombredevp_id',
+    'name_direccion_id',
+    'vp_id',
     'created_at',
     'updated_at',
     'deleted_at',
@@ -99,6 +102,11 @@ class ActivoInformacion extends Model
     public function dueno()
     {
         return $this->belongsTo(Empleado::class, 'duenoVP', 'id');
+    }
+
+    public function vp()
+    {
+        return $this->belongsTo(Grupo::class, 'nombredevp_id', 'id');
     }
 
     public function custodio()

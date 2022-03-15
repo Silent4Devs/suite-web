@@ -11,6 +11,8 @@ class MatrizOctaveEscenario extends Model
 
     protected $table = 'matriz_octave_escenarios';
 
+    protected $appends=['sumatoria'];
+
     protected $fillable = [
         'identificador_escenario',
         'nom_escenario',
@@ -31,8 +33,7 @@ class MatrizOctaveEscenario extends Model
     {
         return $this->belongsToMany(DeclaracionAplicabilidad::class, 'matriz_octave_escenario_controles', 'id_matriz_octave_escenarios', 'controles_id');
     }
-    // public function matriz_octave_contenedor()
-    // {
-    //     return $this->hasMany(MatrizOctaveContenedor::class, 'id_matriz_octave_escenarios');
-    // }
+    public function getSumatoriaAttribute(){
+        return round(($this->confidencialidad+$this->integridad+$this->disponibilidad)/3);
+    }
 }
