@@ -4877,16 +4877,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "2.3.5",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "fd4380d6fc37626e2f799f29d91195040137eba9"
+                "reference": "d7fd7450628561ba697b7097d86db72662f54aef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/fd4380d6fc37626e2f799f29d91195040137eba9",
-                "reference": "fd4380d6fc37626e2f799f29d91195040137eba9",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/d7fd7450628561ba697b7097d86db72662f54aef",
+                "reference": "d7fd7450628561ba697b7097d86db72662f54aef",
                 "shasum": ""
             },
             "require": {
@@ -4908,7 +4908,7 @@
                 "phpstan/phpstan": "^0.12.91",
                 "phpunit/phpunit": "^8.5",
                 "predis/predis": "^1.1",
-                "rollbar/rollbar": "^1.3",
+                "rollbar/rollbar": "^1.3 || ^2 || ^3",
                 "ruflin/elastica": ">=0.90@dev",
                 "swiftmailer/swiftmailer": "^5.3|^6.0"
             },
@@ -4960,7 +4960,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/2.3.5"
+                "source": "https://github.com/Seldaek/monolog/tree/2.4.0"
             },
             "funding": [
                 {
@@ -4972,7 +4972,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-01T21:08:31+00:00"
+            "time": "2022-03-14T12:44:37+00:00"
         },
         {
             "name": "myclabs/php-enum",
@@ -7752,16 +7752,16 @@
         },
         {
             "name": "spatie/laravel-health",
-            "version": "1.8.7",
+            "version": "1.8.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-health.git",
-                "reference": "0886afbd49ef1db26106e8742dc2455d7569d548"
+                "reference": "d1e43d326a27d8ec4c06b11a5fe99b235551d563"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-health/zipball/0886afbd49ef1db26106e8742dc2455d7569d548",
-                "reference": "0886afbd49ef1db26106e8742dc2455d7569d548",
+                "url": "https://api.github.com/repos/spatie/laravel-health/zipball/d1e43d326a27d8ec4c06b11a5fe99b235551d563",
+                "reference": "d1e43d326a27d8ec4c06b11a5fe99b235551d563",
                 "shasum": ""
             },
             "require": {
@@ -7833,7 +7833,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-health/issues",
-                "source": "https://github.com/spatie/laravel-health/tree/1.8.7"
+                "source": "https://github.com/spatie/laravel-health/tree/1.8.8"
             },
             "funding": [
                 {
@@ -7841,7 +7841,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-09T13:44:04+00:00"
+            "time": "2022-03-14T07:20:59+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
@@ -13768,16 +13768,16 @@
         },
         {
             "name": "reliese/laravel",
-            "version": "v1.1.4",
+            "version": "v1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reliese/laravel.git",
-                "reference": "e016b56015e217802b41ef59852524608272b6f0"
+                "reference": "fdd4d70bfa8dfed1455b7d1a52823172769e5116"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reliese/laravel/zipball/e016b56015e217802b41ef59852524608272b6f0",
-                "reference": "e016b56015e217802b41ef59852524608272b6f0",
+                "url": "https://api.github.com/repos/reliese/laravel/zipball/fdd4d70bfa8dfed1455b7d1a52823172769e5116",
+                "reference": "fdd4d70bfa8dfed1455b7d1a52823172769e5116",
                 "shasum": ""
             },
             "require": {
@@ -13827,7 +13827,7 @@
                 "issues": "https://github.com/reliese/laravel/issues",
                 "source": "https://github.com/reliese/laravel"
             },
-            "time": "2022-02-23T02:45:15+00:00"
+            "time": "2022-03-14T09:11:37+00:00"
         },
         {
             "name": "sebastian/cli-parser",

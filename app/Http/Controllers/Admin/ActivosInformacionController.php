@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\activoConfidencialidad;
-use App\Models\activoDisponibilidad;
-use App\Models\ActivoInformacion;
-use App\Models\activoIntegridad;
 use App\Models\Area;
-use App\Models\Empleado;
-use App\Models\MatrizOctaveContenedor;
-use App\Models\Proceso;
 use App\Models\User;
+use App\Models\Grupo;
+use App\Models\Proceso;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
+use App\Models\activoIntegridad;
+use App\Models\ActivoInformacion;
+use App\Http\Controllers\Controller;
+use App\Models\activoDisponibilidad;
+use App\Models\activoConfidencialidad;
+use App\Models\MatrizOctaveContenedor;
+use App\Http\Livewire\ISO31000\ActivosInformacion;
 
 class ActivosInformacionController extends Controller
 {
@@ -33,8 +35,9 @@ class ActivosInformacionController extends Controller
         $integridads = activoIntegridad::get();
         $disponibilidads = activoDisponibilidad::get();
         $contenedores = MatrizOctaveContenedor::get();
+        $grupos = Grupo::get();
 
-        return view('admin.ActivosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores'));
+        return view('admin.ActivosInformacion.create', compact('grupos','empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads','contenedores'));
     }
 
     public function store(Request $request)
@@ -53,8 +56,9 @@ class ActivosInformacionController extends Controller
         $activos = ActivoInformacion::find($activos);
         $empleados = Empleado::with('area')->get();
         $procesos = Proceso::with('macroproceso')->get();
+        $grupos = Grupo::get();
 
-        return view('admin.ActivosInformacion.edit', compact('activos', 'empleados', 'procesos'));
+        return view('admin.ActivosInformacion.edit', compact('grupos','activos', 'empleados', 'procesos'));
     }
 
     public function update(Request $request, $activos)

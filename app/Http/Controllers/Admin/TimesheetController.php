@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Organizacion;
 use App\Models\Timesheet;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
-use App\Models\Organizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -38,14 +38,13 @@ class TimesheetController extends Controller
 
     public function actualizarDia(Request $request)
     {
-
         $organizacion = Organizacion::first();
 
         $organizacion->update([
             'dia_timesheet'=>$request->dia_timesheet,
-        ]);  
+        ]);
 
-        return redirect()->route('admin.timesheet-inicio')->with('success', 'Guardado con éxito');      
+        return redirect()->route('admin.timesheet-inicio')->with('success', 'Guardado con éxito');
     }
 
     /**

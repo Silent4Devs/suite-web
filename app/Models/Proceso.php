@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Str;
 
 /**
  * Class Proceso.
@@ -26,10 +26,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class Proceso extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'procesos';
 
     protected $casts = [
@@ -43,6 +39,8 @@ class Proceso extends Model
     const ACTIVO = '1';
     const NO_ACTIVO = '2';
 
+    protected $appends = ['name', 'content', 'proceso_octave_riesgo', 'color'];
+
     protected $fillable = [
         'codigo',
         'nombre',
@@ -52,6 +50,36 @@ class Proceso extends Model
         'documento_id',
 
     ];
+
+    public function getColorAttribute()
+    {
+        if (intval($this->proceso_octave_riesgo) <= 5) {
+            return '#0C7000';
+        } elseif (intval($this->proceso_octave_riesgo) <= 20) {
+            return '#2BE015';
+        } elseif (intval($this->proceso_octave_riesgo) <= 50) {
+            return '#FFFF00';
+        } elseif (intval($this->proceso_octave_riesgo) <= 80) {
+            return '#FF7000';
+        } else {
+            return '#FF0000';
+        }
+    }
+
+    public function getProcesoOctaveRiesgoAttribute()
+    {
+        return $this->procesoOctave ? $this->procesoOctave->nivel_riesgo : 0;
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->codigo . ' ' . $this->nombre;
+    }
+
+    public function getContentAttribute()
+    {
+        return Str::limit($this->descripcion, 20, '...') ? Str::limit($this->descripcion, 20, '...') : 'Sin Contenido';
+    }
 
     public function macroproceso()
     {
@@ -81,5 +109,15 @@ class Proceso extends Model
     public function activosAI()
     {
         return $this->hasMany(ActivoInformacion::class, 'proceso_id', 'id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(ActivoInformacion::class, 'proceso_id', 'id')->with('children');
+    }
+
+    public function procesoOctave()
+    {
+        return $this->hasOne(MatrizOctaveProceso::class, 'id_proceso', 'id');
     }
 }
