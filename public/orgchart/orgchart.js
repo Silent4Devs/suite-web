@@ -382,8 +382,103 @@ export default class OrgChart {
       this._renderEmployeeInformation();
     } else if (this.options.typeOrgChart == 'area') {
       this._renderAreaInformation();
+    } else if (this.options.typeOrgChart == 'arbol-riesgos') {
+      this._renderRiesgosInformacion();
     }
 
+  }
+
+  _renderRiesgosInformacion() {
+    let dataSource = event.currentTarget.getAttribute('data-source');
+    let dataSourceJSON = JSON.parse(dataSource);
+    let chartContainer = document.querySelector('#chart-side');
+    chartContainer.classList.add('side');
+    chartContainer.classList.add('nav-shadow');
+    console.log(dataSourceJSON);
+    // Close button
+    let a_close = document.createElement('a');
+    a_close.href = 'javascript:void(0)';
+    a_close.classList.add('closebtn');
+    a_close.onclick = function () {
+      chartContainer.innerHTML = '';
+      chartContainer.style.width = "0px";
+      chartContainer.classList.remove('side');
+      chartContainer.classList.remove('nav-shadow');
+    };
+    a_close.innerHTML = '&times;';
+    //Title information
+    let title_info = document.createElement('h3');
+    title_info.classList.add('side');
+    title_info.classList.add('title-info-nav');
+    title_info.innerText = `${dataSourceJSON.area}`;
+
+
+    //photo
+    let div_img = document.createElement('div');
+    div_img.style.borderBottom = `20px solid ${dataSourceJSON.color}`;
+    div_img.classList.add('container-img-nav');
+
+    let photo = "";
+    let photo_info = document.createElement('img');
+    if (dataSourceJSON.foto == null) {
+      if (dataSourceJSON.genero == 'H') {
+        photo = `${this.options.nodeRepositoryImages}/man.png`;
+      } else if (dataSourceJSON.genero == 'M') {
+        photo = `${this.options.nodeRepositoryImages}/woman.png`;
+      } else {
+        photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
+      }
+    }
+    else {
+      photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
+    }
+    // console.log(dataSourceJSON);
+    photo_info.classList.add('side');
+    photo_info.classList.add('img-nav');
+    photo_info.style.clipPath = "circle()"
+    photo_info.src = `${dataSourceJSON.foto_ruta}`
+    div_img.appendChild(photo_info);
+
+    //title
+    let title_info_text = document.createElement('p');
+    title_info_text.classList.add('side');
+    title_info_text.classList.add('title-nav');
+    title_info_text.innerText = `${dataSourceJSON.grupo_name}`;
+
+    let c_more = document.createElement('div');
+    title_info_text.classList.add('side');
+    c_more.classList.add('c_more');
+    let content_more = `
+        <h4>Descripción</h4>
+        <p class="text-justify mr-3" style="text-align: justify !important">${dataSourceJSON.descripcion}</p>
+        `;
+    // console.log(dataSourceJSON.lider);
+    if (dataSourceJSON.lider != null) {
+      content_more += `
+                <div class="supervisor justify-content-center" style="text-align:center !important" >
+                <h4 class="supervisor-title">Responsable del área:</h4>
+                <img src="${dataSourceJSON.lider?.avatar_ruta}"
+                class="text-center img_empleado" title="${dataSourceJSON.lider?.name}" >
+                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider ? dataSourceJSON.lider.name : 'sin definir'}</span></p>
+                <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider?.puesto}</span></p>
+              </div>
+            `;
+    }
+    c_more.innerHTML = content_more;
+    chartContainer.appendChild(a_close);
+    chartContainer.appendChild(div_img);
+    chartContainer.appendChild(title_info);
+    chartContainer.appendChild(title_info_text);
+    chartContainer.appendChild(c_more);
+
+    if (chartContainer.clientWidth == 0) {
+      chartContainer.style.width = "250px";
+    } else {
+      chartContainer.innerHTML = '';
+      chartContainer.style.width = "0px";
+      chartContainer.classList.remove('side');
+      chartContainer.classList.remove('nav-shadow');
+    }
   }
 
   _renderAreaInformation() {
@@ -1609,6 +1704,10 @@ export default class OrgChart {
         nodeDiv.style.border = `3px solid ${nodeData.grupo.color}`;
         // nodeDiv.style.background = `${nodeData.grupo.color}`;
       }
+      if (nodeData.color != null) {
+        nodeDiv.style.border = `3px solid ${nodeData.color}`;
+        // nodeDiv.style.background = `${nodeData.grupo.color}`;
+      }
 
       delete nodeData.children;
       nodeDiv.dataset.source = JSON.stringify(nodeData);
@@ -1861,7 +1960,7 @@ export default class OrgChart {
       mask = chartContainer.querySelector(':scope > .mask'),
       sourceChart = chartContainer.querySelector('.charContainerAll:not(.hidden)'),
       flag = opts.direction === 'l2r' || opts.direction === 'r2l' || opts.direction === 'b2t';
-   
+
     let tableAll = document.querySelector('.charContainerAll');
     if (!mask) {
       mask = document.createElement('div');

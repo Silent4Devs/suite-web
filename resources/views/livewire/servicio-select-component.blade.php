@@ -1,5 +1,5 @@
 <div id="tipo_competencia_select">
-    <select class="form-control serviciodesc {{ $errors->has('tipo_id') ? 'is-invalid' : '' }}" name="servicio"
+    <select class="form-control serviciodesc {{ $errors->has('tipo_id') ? 'is-invalid' : '' }}" name="servicio_id"
         id="tipo_id">
         <option value="" selected disabled>
            Selecciona una opción

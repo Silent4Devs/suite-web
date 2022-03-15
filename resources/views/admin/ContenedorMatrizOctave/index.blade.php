@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('content')
 
-<h5 class="col-12 titulo_general_funcion">Registrar Contenedores</h5>
 
 <div class="mt-5 card">
     {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
@@ -9,6 +8,10 @@
         @include('csvImport.modalpartesinteresadas', ['model' => 'Amenaza', 'route' => 'admin.amenazas.parseCsvImport'])
     </div>
     </div> --}}
+
+    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong>Contenedor</h3>
+    </div>
 
     <div class="container">
         <div class="row">
@@ -24,6 +27,9 @@
     </div>
     @include('partials.flashMessages')
     <div class="card-body datatable-fix">
+
+            @include('admin.OCTAVE.menu')
+
         <table class="table datatable-ConfSoporte tbl-contenedores " style="width: 100%">
             <thead class="thead-dark dt-personalizada">
                 <tr>
@@ -117,17 +123,17 @@
 
             ];
 
-            // @can('recurso_create')
-                // let btnAgregar = {
-                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                // titleAttr: 'Agregar curso y capacitación',
-                // url: "{{ route('admin.contenedores.create') }}",
-                // className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                // action: function(e, dt, node, config){
-                // let {url} = config;
-                // window.location.href = url;
-                // }
-                // };
+            @can('recurso_create')
+                let btnAgregar = {
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                titleAttr: 'Agregar curso y capacitación',
+                url: "{{ route('admin.contenedores.create') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                action: function(e, dt, node, config){
+                let {url} = config;
+                window.location.href = url;
+                }
+                };
                 // let btnExport = {
                 // text: '<i class="fas fa-download"></i>',
                 // titleAttr: 'Descargar plantilla',
@@ -149,10 +155,10 @@
                 // }
                 // };
 
-                // dtButtons.push(btnAgregar);
+                dtButtons.push(btnAgregar);
                 // dtButtons.push(btnExport);
                 // dtButtons.push(btnImport);
-            // @endcan
+            @endcan
 
             @can('competencium_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';

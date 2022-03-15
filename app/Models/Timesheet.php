@@ -21,6 +21,7 @@ class Timesheet extends Model
         'rechazado',
         'estatus',
         'comentarios',
+        'dia_semana',
     ];
 
     public function empleado()
