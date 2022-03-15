@@ -30,6 +30,8 @@ use App\Models\Sede;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\Vulnerabilidad;
+use App\Models\MatrizOctaveProceso;
+use App\Models\MatrizOctaveServicio;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -1007,6 +1009,11 @@ class MatrizRiesgosController extends Controller
 
     public function graficas()
     {
-        return view('admin.OCTAVE.graficas');
+        $procesos = MatrizOctaveProceso::get();
+        $direcciones = Area::get();
+        $servicios = MatrizOctaveServicio::get();
+        $activos = ActivoInformacion::get();
+
+        return view('admin.OCTAVE.graficas', compact('procesos', 'direcciones', 'servicios', 'activos'));
     }
 }
