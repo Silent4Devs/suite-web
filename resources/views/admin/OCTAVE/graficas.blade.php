@@ -182,7 +182,7 @@
         </div>
 
         <div class="row caja-graf d-none" id="caja_graf_act">
-            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Evaluación de Activos del <font id="nombre_proceso"></font></strong> <i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
+            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Evaluación de Activos <font id="nombre_proceso"></font></strong> <i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
             
             <div class="col-12 mb-5" style="overflow: auto;">
                 
