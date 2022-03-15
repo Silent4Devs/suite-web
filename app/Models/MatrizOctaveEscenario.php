@@ -53,8 +53,10 @@ class MatrizOctaveEscenario extends Model
     {
         return $this->belongsToMany(DeclaracionAplicabilidad::class, 'matriz_octave_escenario_controles', 'id_matriz_octave_escenarios', 'controles_id');
     }
-    public function getSumatoriaAttribute(){
-        return round(($this->confidencialidad+$this->integridad+$this->disponibilidad)/3);
+
+    public function getSumatoriaAttribute()
+    {
+        return round(($this->confidencialidad + $this->integridad + $this->disponibilidad) / 3);
     }
 
     public function children()
