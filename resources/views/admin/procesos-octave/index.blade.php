@@ -59,33 +59,7 @@
 
         <div class="card-body">
             <div class="row">
-                <div class="col-12" style="margin-left:-15px;" >
-                    <div class="nav nav-tabs active" id="tabsEmpleado" role="tablist">
-                        <a class="nav-link active" href="{{route('admin.procesos-octave.index')}}">
-                        <i class="fas fa-project-diagram mr-2" style="font-size:20px;"></i>Procesos
-                        </a>
-                        <a class="nav-link"  href="{{route('admin.activosInformacion.index')}}" >
-                            <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
-                        Activos
-                        </a>
-                        <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}"  >
-                            <i class="fas fa-camera-retro mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
-                        Escenarios
-                        </a>
-                        <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}" >
-                            <i class="fas fa-box-open mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
-                            Contenedores
-                        </a>
-
-                        <a class="nav-link"  href="{{route('admin.carta-aceptacion.index')}}" >
-                            <i class="fas fa-network-wired mr-2" style="font-size:20px;" style="text-decoration:none;"></i>
-                            Árbol de Riesgos
-                        </a>
-                        <a class="nav-link "  href="{{route('admin.carta-aceptacion.index')}}" >
-                        <i class="fas fa-chart-bar mr-2" style="font-size:20px;" style="text-decoration:none;"></i>Gráfica
-                        </a>
-                    </div>
-                </div>
+                @include('admin.OCTAVE.menu')
                 <div class="datatable-fix mt-3 col-12">
                     <table class="table table-bordered w-100 datatable-Carta">
                         <thead class="thead-dark">
@@ -260,7 +234,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.carta-aceptacion.index') }}",
+                ajax: "{{ route('admin.procesos-octave.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

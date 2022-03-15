@@ -6,11 +6,17 @@
 
 </style>
 
-    <h5 class="col-12 titulo_general_funcion">Registrar: Activo de Información</h5>
-<div class="mt-4 card">
+    {{-- <h5 class="col-12 titulo_general_funcion">Registrar: Activo de Información</h5> --}}
+<div class="mt-5 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong>Activo de Información</h3>
+    </div>
     <form method="POST" action="{{ route("admin.activosInformacion.store")}}" enctype="multipart/form-data">
         @csrf
         {{-- Informacion General --}}
+        <div class="mt-5">
+            @include('admin.OCTAVE.menu')
+        </div>
         <div class="col-12">
                 <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     Información General
@@ -28,8 +34,8 @@
                         name="activo_informacion" id="activo_informacion">
                 </div>
                 <div class="form-group col-sm-12 multi_select_box">
-                    <label for="contenedores"><i class="fas fa-boxes iconos-crear"></i>Contenedor asociado al</label>
-                    <select class="multi_select select2 col-sm-12" multiple size="3" name="contenedores[]">
+                    <label for="contenedores" class="required"><i class="fas fa-boxes iconos-crear"></i>Contenedor asociado al activo</label>
+                    <select class="multi_select select2 col-sm-12" multiple size="3" name="contenedores[]" required>
                         @foreach ($contenedores as $contenedor)
                         <option value="{{$contenedor->id}}" data-riesgo="{{$contenedor->riesgo}}">{{$contenedor->nom_contenedor}}</option>
                         @endforeach
@@ -138,7 +144,7 @@
                         </div>
 
                         <div class="form-group col-md-4">
-                            <label for="codigo_proceso"><i class="fas fa-barcode iconos-crear" style="margin-top: 8px"></i>Codigo</label>
+                            <label for="codigo_proceso"><i class="fas fa-barcode iconos-crear" style="margin-top: 8px"></i>Código</label>
                             <div class="form-control" id="codigo_proceso"></div>
                         </div>
 
@@ -160,14 +166,14 @@
         {{-- 1 Creas/Reccibes --}}
         <div class="col-12" x-data='{openCrea:false, openRecibe:false}'>
             <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
-                1. ¿ A través de que medio CREAS al interno o RECIBES de un tercero el activo de información?
+                1. ¿A través de que medio CREAS al interno o RECIBES de un tercero el activo de información?
             </div>
             <p style="text-align: center">
                 <button class="btn btn-primary" x-on:click.prevent='openCrea= !openCrea'>
-                ¿Creas?
+                Se Crea
                 </button>
                 <button class="btn btn-primary" x-on:click.prevent='openRecibe= !openRecibe'>
-                ¿Recibes?
+                Se Recibe
                 </button>
             </p>
             <div id="collapseExample" x-show='openCrea' x-transition>
@@ -394,7 +400,7 @@
                         <div class="row">
                             <div class="card-body">
                                 <div class="mt-4 text-center form-group" style="background-color:rgb(224, 231, 236); border-radius: 100px; color: rgb(0, 0, 0);">
-                                    Envio digital
+                                    Envío digital
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="envio_digital" id="envio_digital" value="1">
@@ -433,7 +439,7 @@
                                     </label>
                                 </div><br>
                                 <div class="mt-4 text-center form-group" style="background-color:rgb(224, 231, 236); border-radius: 100px; color: rgb(0, 0, 0);">
-                                    Envio físico
+                                    Envío físico
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="envio_digital" id="envio_digital" value="7">
@@ -493,7 +499,7 @@
                         <div class="row">
                             <div class="card-body">
                                 <div class="mt-4 text-center form-group" style="background-color:rgb(224, 231, 236); border-radius: 100px; color: rgb(0, 0, 0);">
-                                    Envio digital
+                                    Envío digital
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="envio_ext" id="envio_ext" value="1">
@@ -532,7 +538,7 @@
                                     </label>
                                 </div><br>
                                 <div class="mt-4 text-center form-group" style="background-color:rgb(224, 231, 236); border-radius: 100px; color: rgb(0, 0, 0);">
-                                    Envio físico
+                                    Envío físico
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="envio_ext" id="envio_ext" value="7">
@@ -577,7 +583,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-sm-12">
-                                <label for="requiere_info"><i class="fas fa-folder-plus iconos-crear"></i>En caso que no, ¿cuáles se requieren?
+                                <label for="requiere_info"><i class="fas fa-folder-plus iconos-crear"></i>En caso de no tener acceso, ¿qué accesos se requieren?
                                 </label>
                                 <input class="form-control {{ $errors->has('requiere_info') ? 'is-invalid' : '' }}" type="text"
                                     name="requiere_info" id="requiere_info">
@@ -673,7 +679,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="acceso_requerido">En caso que no, ¿cuáles se requieren?</label>
+                                <label for="acceso_requerido">En caso de no tener acceso, ¿qué accesos se requieren?</label>
                                 <input type="text" class="form-control" id="acceso_requerido" name="acceso_requerido" placeholder="...">
                             </div>
                             <div class="form-group">
