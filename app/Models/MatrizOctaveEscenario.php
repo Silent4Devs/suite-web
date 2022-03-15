@@ -11,7 +11,7 @@ class MatrizOctaveEscenario extends Model
     use SoftDeletes;
 
     protected $table = 'matriz_octave_escenarios';
-    protected $appends = ['name', 'content', 'color'];
+    protected $appends = ['name', 'content', 'color', 'sumatoria'];
     protected $fillable = [
         'identificador_escenario',
         'nom_escenario',
@@ -52,6 +52,9 @@ class MatrizOctaveEscenario extends Model
     public function controles()
     {
         return $this->belongsToMany(DeclaracionAplicabilidad::class, 'matriz_octave_escenario_controles', 'id_matriz_octave_escenarios', 'controles_id');
+    }
+    public function getSumatoriaAttribute(){
+        return round(($this->confidencialidad+$this->integridad+$this->disponibilidad)/3);
     }
 
     public function children()

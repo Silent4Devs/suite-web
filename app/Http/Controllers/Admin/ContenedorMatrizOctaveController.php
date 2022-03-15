@@ -43,6 +43,9 @@ class ContenedorMatrizOctaveController extends Controller
             $table->editColumn('nom_contenedor', function ($row) {
                 return $row->nom_contenedor ? $row->nom_contenedor : '';
             });
+            $table->editColumn('riesgo', function ($row) {
+                return $row->riesgo ? $row->riesgo : '';
+            });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : '';
             });
@@ -111,7 +114,7 @@ class ContenedorMatrizOctaveController extends Controller
         $sumatoria = $this->calcularRiesgo($contenedor);
         $contenedor = MatrizOctaveContenedor::find($contenedor);
         $contenedor->update(['riesgo'=>$sumatoria]);
-
+        // dd($contenedor);
         return response()->json(['estatus'=>200, 'riesgo'=>$sumatoria]);
     }
 
