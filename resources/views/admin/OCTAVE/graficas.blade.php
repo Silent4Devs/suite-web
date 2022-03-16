@@ -145,7 +145,7 @@
                                 <span> Riesgos relevantes</span>
 
                                 @foreach($procesos as $proceso)
-                                    <div class="circle-s direccion_id_{{ $proceso->id_direccion }} servicio_id_{{ $proceso->servicio_id }}" data-id="id_proceso_{{ $proceso->id }}" data-nombre="Proceso {{ $proceso->id_proceso }}">P{{ $proceso->id_proceso }}</div>
+                                    <div class="circle-s direccion_id_{{ $proceso->id_direccion }} servicio_id_{{ $proceso->servicio_id }}" data-id="id_proceso_{{ $proceso->proceso->id }}" data-nombre="Proceso {{ $proceso->id_proceso }}">P{{ $proceso->id }}</div>
                                 @endforeach
                             </td>
                         </tr>
