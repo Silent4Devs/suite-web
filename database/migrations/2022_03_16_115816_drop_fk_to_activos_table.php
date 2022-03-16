@@ -15,8 +15,6 @@ class DropFkToActivosTable extends Migration
     {
         Schema::table('activos', function (Blueprint $table) {
             $table->dropForeign('subtipo_fk_2474601');
-
-
         });
     }
 
