@@ -66,7 +66,7 @@
                         <th style="min-width:100px;">Riesgo AI</th>
                         <th style="min-width:100px;">Nombre VP</th>
                         <th style="min-width:200px;">Dueño AI Nombre del VP</th>
-                        <th style="min-width:150px;">Nombre Direccíon</th>
+                        <th style="min-width:150px;">Nombre Dirección</th>
                         <th style="min-width:200px;">Custodio AI Nombre Director</th >
                         <th style="min-width:50px;">Formato</th>
                         <th style="min-width:100px;">Opciones</th>
