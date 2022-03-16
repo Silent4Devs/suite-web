@@ -196,6 +196,7 @@
             <div class="text-center form-group col-12" style="background-color:#345183; border-radius: 100px; color: white;">
                 DATOS DEL PROCESO
             </div>
+            {{-- <input type="text" value="{{$id_matriz}}"> --}}
             <div class="form-group col-md-6 col-sm-12">
                 <label for="id_proceso"><i class="fas fa-project-diagram iconos-crear"></i>Proceso a evaluar</label><br>
                 <select class="procesoSelect mt-2 form-control" name="id_proceso" id="proceso_activo">
@@ -778,39 +779,42 @@
                         sumatoria+=item.riesgo_activo;
                         html+=`<li>${item.activo_informacion}</li>`;
                     })
-                    sumatoria=sumatoria/cantidadActivos;
+                    sumatoria=Number(sumatoria/cantidadActivos);
                     html+='</ul>'
                     contenedor.innerHTML=html;
                     let resultado="";
-                    if (sumatoria <=5){
+                    document.getElementById('valor').value=Math.round(sumatoria);
+                    let total = sumatoria * Number(document.getElementById('valorImpacto').value);
+                    document.getElementById('nivel_riesgo').value=Math.round(total);
+                    if (total <=5){
                         resultado="Muy Bajo"
                         contenedorTxt.style.background="green"
                         contenedorValor.style.background="green"
                         contenedorTxt.style.color="white"
                         contenedorValor.style.color="white"
                     }
-                    if (sumatoria >=6){
+                    else if (total >5 && total<=20){
                         resultado="Baja"
                         contenedorTxt.style.background="rgb(50, 205, 63)"
                         contenedorValor.style.background="rgb(50, 205, 63)"
                         contenedorTxt.style.color="white"
                         contenedorValor.style.color="white"
                     }
-                    if (sumatoria >=21){
+                    else if (total <=50){
                         resultado="Medio"
                         contenedorTxt.style.background="yellow"
                         contenedorValor.style.background="yellow"
                         contenedorTxt.style.color="black"
                         contenedorValor.style.color="black"
                     }
-                    if (sumatoria >=51){
+                    else if (total <=80){
                         resultado="Alta"
                         contenedorTxt.style.background="orange"
                         contenedorValor.style.background="orange"
                         contenedorTxt.style.color="white"
                         contenedorValor.style.color="white"
                     }
-                    if (sumatoria >=81){
+                    else{
                         resultado="Crítica"
                         contenedorTxt.style.background="red"
                         contenedorValor.style.background="red"
@@ -818,9 +822,6 @@
                         contenedorValor.style.color="white"
 
                     }
-                    document.getElementById('valor').value=Math.round(sumatoria);
-                    let total = sumatoria * Number(document.getElementById('valorImpacto').value);
-                    document.getElementById('nivel_riesgo').value=Math.round(total);
                     document.getElementById('valorCriticidadTxt').innerHTML=resultado;
 
             }

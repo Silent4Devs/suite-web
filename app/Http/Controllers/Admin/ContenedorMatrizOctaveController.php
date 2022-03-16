@@ -124,13 +124,19 @@ class ContenedorMatrizOctaveController extends Controller
         $cantidadEscenarios = count($escenarios) > 0 ? count($escenarios) : 1;
         $sumatoria = 0;
         foreach ($escenarios as $escenario) {
-            $sumatoria = $sumatoria + ($escenario->confidencialidad ? $escenario->confidencialidad : 0) + ($escenario->integridad ? $escenario->integridad : 0) + ($escenario->disponibilidad ? $escenario->disponibilidad : 0);
+            $sumatoria = $sumatoria + $this->obtenerPromedio($escenario);
         }
         $sumatoria = $sumatoria / $cantidadEscenarios;
 
         return round($sumatoria);
     }
 
+    private function obtenerPromedio($escenario)
+    {
+        $promedio = ($escenario->confidencialidad ? $escenario->confidencialidad : 0) + ($escenario->integridad ? $escenario->integridad : 0) + ($escenario->disponibilidad ? $escenario->disponibilidad : 0);
+        $promedio = $promedio/3;
+        return $promedio;
+    }
     public function escenarios($contenedor)
     {
         $escenarios = MatrizOctaveContenedor::with(['escenarios' => function ($q) {

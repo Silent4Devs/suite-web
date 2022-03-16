@@ -49,9 +49,9 @@ class MatrizOctaveProceso extends Model
         return $this->belongsTo(Proceso::class, 'id_proceso')->with('children');
     }
 
-    public function grupo()
+    public function area()
     {
-        return $this->belongsTo(Grupo::class, 'id_direccion');
+        return $this->belongsTo(Area::class, 'id_direccion','id');
     }
 
     public function servicio()
