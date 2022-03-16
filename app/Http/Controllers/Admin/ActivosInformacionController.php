@@ -53,8 +53,12 @@ class ActivosInformacionController extends Controller
         $activos = ActivoInformacion::find($activos);
         $empleados = Empleado::with('area')->get();
         $procesos = Proceso::with('macroproceso')->get();
+        $confidencials = activoConfidencialidad::get();
+        $integridads = activoIntegridad::get();
+        $disponibilidads = activoDisponibilidad::get();
+        $contenedores = MatrizOctaveContenedor::get();
 
-        return view('admin.ActivosInformacion.edit', compact('activos', 'empleados', 'procesos'));
+        return view('admin.ActivosInformacion.edit', compact('activos', 'empleados', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores'));
     }
 
     public function update(Request $request, $activos)
