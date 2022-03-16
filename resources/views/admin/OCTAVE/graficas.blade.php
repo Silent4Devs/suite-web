@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-        
+
 
         <div class="row caja-graf" id="caja_graf_ev">
 
@@ -125,7 +125,7 @@
             </div>
 
             <div class="col-12 pb-5" style="overflow: auto;">
-                
+
                 <div class="caja-grafica " style="width: 500px;">
                     <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
                     <table class="tabla-grafica-1">
@@ -135,6 +135,9 @@
                             </td>
                             <td bgcolor="#F15B5B">
                                 <span> Riesgos de prioridad</span>
+                                @foreach($activos as $activo)
+                                <div class="circle-s id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                            @endforeach
                             </td>
                         </tr>
                         <tr>
@@ -153,7 +156,7 @@
                     <div class="info-grafica" style="left:220px; margin-top: 20px;">Impacto</div>
                 </div>
 
-            </div>   
+            </div>
 
             <div class="col-12 mt-3">
                 <table class="table">
@@ -178,14 +181,14 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div> 
+            </div>
         </div>
 
         <div class="row caja-graf d-none" id="caja_graf_act">
             <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Evaluación de Activos <font id="nombre_proceso"></font></strong> <i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
-            
+
             <div class="col-12 mb-5" style="overflow: auto;">
-                
+
                 <div class="caja-grafica py-5" style="width: 680px;">
                     <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
                     <table class="tabla-grafica-2">
@@ -211,9 +214,9 @@
                             <td class="color-td td-amarillo"></td>
                             <td class="color-td td-amarillo"></td>
                             <td class="color-td td-naranja">
-                                @foreach($activos as $activo)
+                                {{-- @foreach($activos as $activo)
                                     <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
-                                @endforeach
+                                @endforeach --}}
                             </td>
                             <td class="color-td td-naranja"></td>
                         </tr>
@@ -272,9 +275,9 @@
 
         <div class="row caja-graf d-none" id="caja_graf_con">
             <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Mapa de Riesgos de Contenedor</strong><i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
-            
+
             <div class="col-12 mt-4" style="overflow: auto;">
-                
+
                 <div class="caja-grafica py-5" style="width: 680px;">
                     <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
                     <table class="tabla-grafica-2">
@@ -307,7 +310,7 @@
                             <td class="color-td td-amarillo"></td>
                             <td class="color-td td-amarillo"></td>
                             <td class="color-td td-naranja">
-                                
+
                             </td>
                             <td class="color-td td-naranja"></td>
                         </tr>
@@ -401,7 +404,7 @@
 
         $(document).on('change', '#select_direccion', function(event) {
             let clase_direccion = '.' + $('#select_direccion option:selected').attr('data-id');
-            
+
             $('#caja_graf_ev .circle-s').addClass('d-none');
 
             $(clase_direccion).removeClass('d-none');
@@ -417,7 +420,7 @@
 
         $(document).on('change', '#select_servicio', function(event) {
             let clase_servicio = '.' + $('#select_servicio option:selected').attr('data-id');
-            
+
             $('#caja_graf_ev .circle-s').addClass('d-none');
 
             $(clase_servicio).removeClass('d-none');

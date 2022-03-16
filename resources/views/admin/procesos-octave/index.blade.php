@@ -283,8 +283,7 @@
                             <div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background-color:${color}; color:${texto}">${data} - ${valor}</div>
                             `
                         }
-                    },
-                    {
+                    },{
                         data: 'direccion',
                         name: 'direccion'
                     },
