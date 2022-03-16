@@ -2,33 +2,9 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use App\Http\Livewire\ISO31000\ActivosInformacion;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class MatrizOctaveProceso.
- *
- * @property int $id
- * @property int|null $id_proceso
- * @property int|null $nivel_riesgo
- * @property int|null $id_direccion
- * @property int|null $servicio_id
- * @property int|null $operacional
- * @property int|null $cumplimiento
- * @property int|null $legal
- * @property int|null $reputacional
- * @property int|null $tecnologico
- * @property int|null $impacto
- * @property int|null $id_activos_informacion
- * @property int|null $promedio
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- *
- * @property Proceso|null $proceso
- * @property Grupo|null $grupo
- * @property MatrizOctaveServicio|null $matriz_octave_servicio
- * @property ActivosInformacion|null $activos_informacion
- */
 class MatrizOctaveProceso extends Model
 {
     protected $table = 'matriz_octave_procesos';
@@ -68,6 +44,11 @@ class MatrizOctaveProceso extends Model
         return $this->belongsTo(Proceso::class, 'id_proceso');
     }
 
+    public function children()
+    {
+        return $this->belongsTo(Proceso::class, 'id_proceso')->with('children');
+    }
+
     public function grupo()
     {
         return $this->belongsTo(Grupo::class, 'id_direccion');
@@ -80,6 +61,6 @@ class MatrizOctaveProceso extends Model
 
     public function activos_informacion()
     {
-        return $this->belongsTo(ActivosInformacion::class, 'id_activos_informacion');
+        return $this->hasMany(ActivosInformacion::class, 'id_activos_informacion', 'id');
     }
 }

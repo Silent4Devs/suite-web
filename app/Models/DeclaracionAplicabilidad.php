@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class DeclaracionAplicabilidad extends Model
@@ -14,7 +15,7 @@ class DeclaracionAplicabilidad extends Model
     public $cacheFor = 3600;
     protected static $flushCacheOnUpdate = true;
     public $table = 'declaracion_aplicabilidad';
-
+    protected $appends = ['name', 'content'];
     protected $dates = [
         'created_at',
         'updated_at',
@@ -35,6 +36,16 @@ class DeclaracionAplicabilidad extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function getNameAttribute()
+    {
+        return $this->anexo_indice . ' ' . $this->nocontrolm_escenario;
+    }
+
+    public function getContentAttribute()
+    {
+        return Str::limit($this->anexo_politica, 50, '...') ? Str::limit($this->anexo_politica, 50, '...') : 'Sin Contenido';
+    }
 
     public function responsables()
     {
