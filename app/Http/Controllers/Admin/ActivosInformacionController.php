@@ -9,6 +9,7 @@ use App\Models\ActivoInformacion;
 use App\Models\activoIntegridad;
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\Grupo;
 use App\Models\MatrizOctaveContenedor;
 use App\Models\Proceso;
 use App\Models\User;
@@ -33,8 +34,9 @@ class ActivosInformacionController extends Controller
         $integridads = activoIntegridad::get();
         $disponibilidads = activoDisponibilidad::get();
         $contenedores = MatrizOctaveContenedor::get();
+        $grupos = Grupo::get();
 
-        return view('admin.ActivosInformacion.create', compact('empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores'));
+        return view('admin.ActivosInformacion.create', compact('grupos', 'empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores'));
     }
 
     public function store(Request $request)

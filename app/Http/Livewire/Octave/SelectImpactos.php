@@ -75,6 +75,7 @@ class SelectImpactos extends Component
             $this->tecnologicoId;
         $this->calcularReglaColoresTipo($this->valorId);
         $this->emit('impactoObtenido', $this->valorId);
+        $this->emit('procesoObtenido', $this->valorId);
     }
 
     private function calcularReglaColoresTipo($valor)

@@ -15,7 +15,7 @@
                         </div>
                     <div class="row">
                         <div class="form-group col-sm-3">
-                            <label for="identificador"><i class="fas fa-list-ol iconos-crear"></i>ID</label>
+                            <label for="identificador"><i class="fas fa-barcode iconos-crear"></i>ID</label>
                             <input class="form-control {{ $errors->has('banco') ? 'is-invalid' : '' }}" type="text" name="identificador" id="identificador" value="{{ old('identificador', $activos->identificador) }}">
                             <small id="identificador" class="text-danger"></small>
                         </div>
