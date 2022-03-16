@@ -125,3 +125,17 @@
         });
     })
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded',() => {
+        Livewire.on('procesoObtenido', valor => {
+            let promedio=document.getElementById('valor').value;
+            let final= valor*promedio
+            document.getElementById('nivel_riesgo').value= Math.round(final);
+
+        console.log(valor)
+        })
+    });
+
+
+</script>

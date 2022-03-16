@@ -6,24 +6,21 @@
 
 </style>
 
-    {{-- <h5 class="col-12 titulo_general_funcion">Registrar: Activo de Información</h5> --}}
-<div class="mt-5 card">
-    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong>Activo de Información</h3>
-    </div>
+    <h5 class="col-12 titulo_general_funcion">Registrar: Activo de Información</h5>
+<div class="mt-4 card">
+    <div class="card-body">
+    @include('admin.OCTAVE.menu')
+
     <form method="POST" action="{{ route("admin.activosInformacion.store")}}" enctype="multipart/form-data">
         @csrf
         {{-- Informacion General --}}
-        <div class="mt-5">
-            @include('admin.OCTAVE.menu')
-        </div>
         <div class="col-12">
                 <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     Información General
                 </div>
             <div class="row">
                 <div class="form-group col-sm-3">
-                    <label for="identificador"><i class="fas fa-list-ol iconos-crear"></i>ID</label>
+                    <label for="identificador"><i class="fas fa-barcode iconos-crear"></i>ID</label>
                     <input class="form-control" type="text" name="identificador" id="identificador" required>
                     <small id="validar-identificador"></small>
                     <small id="identificador1" class="text-danger"></small>
@@ -34,8 +31,8 @@
                         name="activo_informacion" id="activo_informacion">
                 </div>
                 <div class="form-group col-sm-12 multi_select_box">
-                    <label for="contenedores" class="required"><i class="fas fa-boxes iconos-crear"></i>Contenedor asociado al activo</label>
-                    <select class="multi_select select2 col-sm-12" multiple size="3" name="contenedores[]" required>
+                    <label for="contenedores"><i class="fas fa-boxes iconos-crear"></i>Contenedor(es) asociado(s) al</label>
+                    <select style="height:150px;" class="multi_select select2 col-sm-12" multiple size="3" name="contenedores[]">
                         @foreach ($contenedores as $contenedor)
                         <option value="{{$contenedor->id}}" data-riesgo="{{$contenedor->riesgo}}">{{$contenedor->nom_contenedor}}</option>
                         @endforeach
@@ -43,11 +40,14 @@
                 </div>
 
                 <div class="form-group col-sm-12">
-                    <label for="nombreVP"><i class="fas fa-list-ol iconos-crear"></i>Nombre VP</label>
-                    <select class="custom-select my-1 mr-sm-2" id="nombreVP" name="nombreVP">
-                        <option value="Vicepresidencia 1">Vicepresidencia 1</option>
-                        <option value="Vicepresidencia 2">Vicepresidencia 2</option>
-                        <option value="Vicepresidencia 3">Vicepresidencia 3</option>
+                    <label for="nombreVP"><i class="fas fa-street-view iconos-crear"></i>Nombre VP</label>
+                    <select class="custom-select my-1 mr-sm-2" id="nombredevp_id" name="nombredevp_id">
+                        @foreach ($grupos as $grupo)
+                            <option value="{{ $grupo->id }}"
+                                >
+                                {{ $grupo->nombre }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -166,7 +166,7 @@
         {{-- 1 Creas/Reccibes --}}
         <div class="col-12" x-data='{openCrea:false, openRecibe:false}'>
             <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
-                1. ¿A través de que medio CREAS al interno o RECIBES de un tercero el activo de información?
+                1. ¿ A través de que medio CREAS al interno o RECIBES de un tercero el activo de información?
             </div>
             <p style="text-align: center">
                 <button class="btn btn-primary" x-on:click.prevent='openCrea= !openCrea'>
@@ -331,11 +331,7 @@
             </div> --}}
             <div class="form-group">
                 <label for="nombre_aplicacion">Nombre aplicación (si aplica)</label>
-                <select class="custom-select my-1 mr-sm-2" id="nombre_aplicacion" name="nombre_aplicacion">
-                    <option value="Aplicación 1">Aplicación 1</option>
-                    <option value="Aplicación 2">Aplicación 2</option>
-                    <option value="Aplicación 3">Aplicación 3</option>
-                </select>
+                <input type="text" class="form-control" id="nombre_aplicacion" name="nombre_aplicacion" placeholder="...">
             </div>
             <div class="form-group">
                 <label for="carpeta_compartida">Nombre carpeta compartida (si aplica)</label>
@@ -382,25 +378,30 @@
                         <div class="row">
                             <div class="form-group col-sm-6">
                                 <label for="direccion_envio">Nombre Dirección</label>
-                                <select class="custom-select my-1 mr-sm-2" id="direccion_envio" name="direccion_envio">
-                                    <option value="1">Dirección 1</option>
-                                    <option value="2">Dirección 2</option>
-                                    <option value="3">Dirección 3</option>
+                                <select class="custom-select my-1 mr-sm-2" id="name_direccion_id" name="name_direccion_id">
+                                    @foreach ($area as $direccionname)
+                                        <option value="{{ $direccion->id }}">
+                                            {{ $direccionname->area }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="vp_envio"><i class="fas fa-list-ol iconos-crear"></i>Nombre VP</label>
-                                <select class="custom-select my-1 mr-sm-2" id="vp_envio" name="vp_envio">
-                                    <option value="1">Vicepresidencia 1</option>
-                                    <option value="2">Vicepresidencia 2</option>
-                                    <option value="3">Vicepresidencia 3</option>
+                                <select class="custom-select my-1 mr-sm-2" id="vp_id'" name="vp_id'">
+                                    @foreach ($grupos as $vp)
+                                        <option value="{{ $vp->id }}"
+                                            >
+                                            {{ $vp->nombre }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="card-body">
                                 <div class="mt-4 text-center form-group" style="background-color:rgb(224, 231, 236); border-radius: 100px; color: rgb(0, 0, 0);">
-                                    Envío digital
+                                    Envio digital
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="envio_digital" id="envio_digital" value="1">
@@ -439,7 +440,7 @@
                                     </label>
                                 </div><br>
                                 <div class="mt-4 text-center form-group" style="background-color:rgb(224, 231, 236); border-radius: 100px; color: rgb(0, 0, 0);">
-                                    Envío físico
+                                    Envio físico
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="envio_digital" id="envio_digital" value="7">
@@ -499,7 +500,7 @@
                         <div class="row">
                             <div class="card-body">
                                 <div class="mt-4 text-center form-group" style="background-color:rgb(224, 231, 236); border-radius: 100px; color: rgb(0, 0, 0);">
-                                    Envío digital
+                                    Envio digital
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="envio_ext" id="envio_ext" value="1">
@@ -538,7 +539,7 @@
                                     </label>
                                 </div><br>
                                 <div class="mt-4 text-center form-group" style="background-color:rgb(224, 231, 236); border-radius: 100px; color: rgb(0, 0, 0);">
-                                    Envío físico
+                                    Envio físico
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="envio_ext" id="envio_ext" value="7">
@@ -583,7 +584,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-sm-12">
-                                <label for="requiere_info"><i class="fas fa-folder-plus iconos-crear"></i>En caso de no tener acceso, ¿qué accesos se requieren?
+                                <label for="requiere_info"><i class="fas fa-folder-plus iconos-crear"></i>En caso que no, ¿cuáles se requieren?
                                 </label>
                                 <input class="form-control {{ $errors->has('requiere_info') ? 'is-invalid' : '' }}" type="text"
                                     name="requiere_info" id="requiere_info">
@@ -626,11 +627,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="almacenamiento_aplicacion">Nombre aplicación (si aplica)</label>
-                                <select class="custom-select my-1 mr-sm-2" id="almacenamiento_aplicacion" name="almacenamiento_aplicacion">
-                                    <option value="1">Aplicación 1</option>
-                                    <option value="2">Aplicación 2</option>
-                                    <option value="3">Aplicación 3</option>
-                                </select>
+                                <input type="text" class="form-control" id="almacenamiento_aplicacion" name="almacenamiento_aplicacion" placeholder="...">
+
                             </div>
                             <div class="form-group">
                                 <label for="carpeta_compartida_almacenamiento">Nombre carpeta compartida (si aplica)</label>
@@ -679,7 +677,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="acceso_requerido">En caso de no tener acceso, ¿qué accesos se requieren?</label>
+                                <label for="acceso_requerido">En caso que no, ¿cuáles se requieren?</label>
                                 <input type="text" class="form-control" id="acceso_requerido" name="acceso_requerido" placeholder="...">
                             </div>
                             <div class="form-group">
@@ -870,12 +868,17 @@
             </div>
 
             <div class="row">
-                <div class="form-group col-md-12" style="text-align: center !important;">
-                    <label for="valor_criticidad"  ><i class="fas fa-exclamation-triangle iconos-crear"></i>Criticidad del activo Suma de las dimensiones</label>
+                <div class="form-group col-md-6">
+                    <label for="valor_criticidad"><i class="fas fa-exclamation-triangle iconos-crear"></i>Nivel de Criticidad del AI</label>
+                    <div class="form-control" id="valorCriticidadTxt" ></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="valor_criticidad"><i class="fas fa-exclamation-triangle iconos-crear"></i>Valor de Criticidad del AI</label>
                     <i class="fas fa-info-circle" style="font-size:12pt; float: right;" title="Fecha de finalización de la
                     actividad" data-toggle="modal" data-target="#infoCriticidad"></i>
-                    <input class="form-control text-center" id="valor_criticidad" name="valor_criticidad" readonly/>
+                    <input class="form-control text-center"  id="valor_criticidad" name="valor_criticidad" readonly/>
                 </div>
+
             </div>
         </div>
         {{--  Guardar --}}
@@ -1034,6 +1037,7 @@
 
 
     </form>
+    </div>
 </div>
 </div>
 
@@ -1111,16 +1115,48 @@
             document.getElementById('area_custodio').innerHTML = area
         })
         function obtenerCriticidad(){
+            let contenedorTxt=document.getElementById('valorCriticidadTxt');
+            contenedorTxt.innerHTML=null;
+            let contenedorValor=document.getElementById('valor_criticidad');
+            contenedorValor.innerHTML=null;
             let sumatoria = 0;
             document.querySelectorAll('.sumatoria-select').forEach(element => {
             sumatoria= sumatoria+ Number(element.options[element.selectedIndex].value);
             });
+            let resultado="";
+            if (sumatoria <=4){
+                resultado="Baja"
+                contenedorTxt.style.background="green"
+                contenedorValor.style.background="green"
+                contenedorTxt.style.color="white"
+                contenedorValor.style.color="white"
+            }
+            if (sumatoria >=5){
+                resultado="Media"
+                contenedorTxt.style.background="yellow"
+                contenedorValor.style.background="yellow"
+                contenedorTxt.style.color="black"
+                contenedorValor.style.color="black"
+            }
+            if (sumatoria >=7){
+                resultado="Alta"
+                contenedorTxt.style.background="orange"
+                contenedorValor.style.background="orange"
+                contenedorTxt.style.color="white"
+                contenedorValor.style.color="white"
+
+            }
+            if (sumatoria >=10){
+                resultado="Crítica"
+                contenedorTxt.style.background="red"
+                contenedorValor.style.background="red"
+                contenedorTxt.style.color="white"
+                contenedorValor.style.color="white"
+
+            }
             document.getElementById('valor_criticidad').value= sumatoria;
+            document.getElementById('valorCriticidadTxt').innerHTML=resultado;
         }
-
-        $('.multi_select').selectpicker();
-
-
 
 
 

@@ -1,6 +1,13 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+    #tabla-contenedores tr td:nth-child(3){
+        background-color: green;
+        position: relative;
+        padding: 0;
+    }
+</style>
 
 <div class="mt-5 card">
     {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
@@ -30,7 +37,7 @@
 
             @include('admin.OCTAVE.menu')
 
-        <table class="table datatable-ConfSoporte tbl-contenedores " style="width: 100%">
+        <table class="table datatable-ConfSoporte tbl-contenedores " style="width: 100%" id="tabla-contenedores">
             <thead class="thead-dark dt-personalizada">
                 <tr>
                     <th>
@@ -38,6 +45,9 @@
                     </th>
                     <th>
                         Nombre Contenedor
+                    </th>
+                    <th>
+                        Nivel de Riesgo
                     </th>
                     <th style="min-width:200px;">
                         Descripción
@@ -200,9 +210,44 @@
                 columns: [{
                         data: 'identificador_contenedor',
                         name: 'identificador_contenedor',
-                    }, {
+                    },
+                    {
                         data: 'nom_contenedor',
                         name: 'nom_contenedor',
+                    },
+                    {
+                        data: 'riesgo',
+                        name: 'riesgo',
+                        render: function(data,type,row,meta){
+                            data=data==""?0:data
+                            let color = "green";
+                            let valor="";
+                            let texto="white";
+                            if(data <=0){
+                                color="gray";
+                                valor="Sin Valor";
+                            }
+                            if(data <=3){
+                                color="green";
+                                valor="Bajo";
+                            }
+                            if(data >=5){
+                                color="yellow";
+                                texto="black";
+                                valor="Media";
+                            }
+                            if(data >=7){
+                                color="orange";
+                                valor="Alta";
+                            }
+                            if(data >=10){
+                                color="red";
+                                valor="Crítica";
+                            }
+                            return `
+                            <div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background-color:${color}; color:${texto}">${data} - ${valor}</div>
+                            `
+                        }
                     },
                     {
                         data: 'descripcion',
