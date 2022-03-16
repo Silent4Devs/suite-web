@@ -1,5 +1,5 @@
 <div class="col-12" style="padding:0 !important">
-    <div class="row">
+    <div class="row col-12 mr-2">
         <div wire:ignore class="form-group col-sm-4 col-md-4 col-lg-4">
             <label for="operacional"><i class="fas fa-project-diagram iconos-crear"></i>Operacional</label><a id="btnAgregarTipo" onclick="event.preventDefault();"
             style="font-size:12pt; float: right;"data-toggle="modal" data-target="#marcaslec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
@@ -31,7 +31,7 @@
             </select>
         </div>
 
-        <div wire:ignore class="form-group col-sm-4 col-md-4 col-lg-4">
+        <div wire:ignore class="form-group col-sm-4 col-md-3 col-lg-4">
             <label for="legal"><i class="fas fa-gavel iconos-crear"></i>Legal</label>
             <a id="btnAgregarTipo" onclick="event.preventDefault();"
             style="font-size:12pt; float: right;"data-toggle="modal"  data-target="#legalec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
@@ -49,8 +49,8 @@
 
     </div>
 
-    <div class="row">
-        <div wire:ignore class="form-group col-sm-4 col-md-4 col-lg-4">
+    <div class="row col-12">
+        <div wire:ignore class="form-group col-sm-12 col-md-3 col-lg-3">
             <label for="reputacional"><i class="fas fa-newspaper iconos-crear"></i>Reputacional</label>
             <a id="btnAgregarTipo" onclick="event.preventDefault();"
             style="font-size:12pt; float: right;"data-toggle="modal"  data-target="#reputacionallec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
@@ -68,7 +68,7 @@
 
 
 
-        <div wire:ignore class="form-group col-sm-4 col-md-4 col-lg-4">
+        <div wire:ignore class="form-group col-sm-12 col-md-3 col-lg-3">
             <label for="tecnologico"><i class="fas fa-laptop iconos-crear"></i>Tecnológico</label>
             <a id="btnAgregarTipo" onclick="event.preventDefault();"
             style="font-size:12pt; float: right;"data-toggle="modal"  data-target="#tecnologialec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
@@ -84,8 +84,8 @@
             </select>
         </div>
 
-        <div wire:ignore.self class="form-group col-sm-4 col-md-4 col-lg-4">
-            <label for="valor"><i class="fas fa-bullseye iconos-crear"></i>Valor del impacto</label>
+        <div wire:ignore.self class="form-group col-sm-12 col-md-3 col-lg-3">
+            <label for="valor"><i class="fas fa-bullseye iconos-crear"></i>Nivel del impacto</label>
             <input class="form-control mt-2 {{ $errors->has('valor') ? 'is-invalid' : '' }}" type="number"
                 wire:model.defer='valorId' name="valor" value="{{ old('valor', '') }}" readonly
                 style="background: {{ $colorReglaTipo }};color:{{ $colorTextoTipo }};" id="valorImpacto">
@@ -94,6 +94,11 @@
                     {{ $errors->first('valor') }}
                 </div>
             @endif
+        </div>
+
+        <div  class="form-group col-sm-12 col-md-3 col-lg-3">
+            <label><i class="fas fa-bullseye iconos-crear"></i>Valor de Riesgo</label>
+           <div class="mt-2 form-control" id="valorImpactoTxt"></div>
         </div>
 
     </div>
@@ -132,8 +137,48 @@
             let promedio=document.getElementById('valor').value;
             let final= valor*promedio
             document.getElementById('nivel_riesgo').value= Math.round(final);
+            let contenedorTxt=document.getElementById('valorCriticidadTxt');
+            contenedorTxt.innerHTML=null;
+            let contenedorValor=document.getElementById('nivel_riesgo');
+            contenedorValor.innerHTML=null;
+            if (final <=5){
+                        resultado="Muy Bajo"
+                        contenedorTxt.style.background="green"
+                        contenedorValor.style.background="green"
+                        contenedorTxt.style.color="white"
+                        contenedorValor.style.color="white"
+                    }
+                    else if (final >5 && final<=20){
+                        resultado="Baja"
+                        contenedorTxt.style.background="rgb(50, 205, 63)"
+                        contenedorValor.style.background="rgb(50, 205, 63)"
+                        contenedorTxt.style.color="white"
+                        contenedorValor.style.color="white"
+                    }
+                    else if (final <=50){
+                        resultado="Medio"
+                        contenedorTxt.style.background="yellow"
+                        contenedorValor.style.background="yellow"
+                        contenedorTxt.style.color="black"
+                        contenedorValor.style.color="black"
+                    }
+                    else if (final <=80){
+                        resultado="Alta"
+                        contenedorTxt.style.background="orange"
+                        contenedorValor.style.background="orange"
+                        contenedorTxt.style.color="white"
+                        contenedorValor.style.color="white"
+                    }
+                    else{
+                        resultado="Crítica"
+                        contenedorTxt.style.background="red"
+                        contenedorValor.style.background="red"
+                        contenedorTxt.style.color="white"
+                        contenedorValor.style.color="white"
 
-        console.log(valor)
+                    }
+
+                    document.getElementById('valorCriticidadTxt').innerHTML=resultado;
         })
     });
 

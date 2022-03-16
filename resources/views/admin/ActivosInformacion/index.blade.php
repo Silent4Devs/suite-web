@@ -100,20 +100,20 @@
                             $valor="Crítica";
                         }
 
-                        if($activo->riesgo_activo <=2){
+                        if($activo->riesgo_activo <=5){
                             $colorRiesgo="green";
                             $resultado="Bajo";
                         }
-                        if($activo->riesgo_activo ==3){
+                        if($activo->riesgo_activo >=6){
                             $colorRiesgo="yellow";
-                            $texto="black";
+                            $textoColor="black";
                             $resultado="Media";
                         }
-                        if($activo->riesgo_activo ==4){
+                        if($activo->riesgo_activo >=11){
                             $colorRiesgo="orange";
                             $resultado="Alta";
                         }
-                        if($activo->riesgo_activo ==5){
+                        if($activo->riesgo_activo >=16){
                             $colorRiesgo="red";
                             $resultado="Crítica";
                         }
