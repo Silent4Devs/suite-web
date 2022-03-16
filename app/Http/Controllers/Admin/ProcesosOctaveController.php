@@ -5,11 +5,11 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\ActivoInformacion;
 use App\Models\Area;
-use App\Models\Proceso;
 use App\Models\MatrizOctaveProceso;
 use App\Models\MatrizOctaveServicio;
-use Yajra\DataTables\Facades\DataTables;
+use App\Models\Proceso;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProcesosOctaveController extends Controller
 {

@@ -73,10 +73,10 @@ class MatrizOctaveProceso extends Model
         return $this->belongsTo(Grupo::class, 'id_direccion');
     }
 
-	public function servicio()
-	{
-		return $this->belongsTo(MatrizOctaveServicio::class, 'servicio_id','id');
-	}
+    public function servicio()
+    {
+        return $this->belongsTo(MatrizOctaveServicio::class, 'servicio_id', 'id');
+    }
 
     public function activos_informacion()
     {
