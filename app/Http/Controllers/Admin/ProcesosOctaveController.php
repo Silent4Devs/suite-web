@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ActivoInformacion;
 use App\Models\Area;
-use App\Models\Proceso;
 use App\Models\MatrizOctaveProceso;
 use App\Models\MatrizOctaveServicio;
 use App\Models\Proceso;

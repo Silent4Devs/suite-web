@@ -26,7 +26,7 @@ class ContenedorMatrizOctaveController extends Controller
                 $viewGate = 'categorias_capacitaciones_show';
                 $editGate = 'categorias_capacitaciones_edit';
                 $deleteGate = 'categorias_capacitaciones_delete';
-                $crudRoutePart = 'categoria-capacitacion';
+                $crudRoutePart = 'contenedores';
 
                 return view('partials.datatablesActions', compact(
                     'viewGate',
@@ -42,6 +42,9 @@ class ContenedorMatrizOctaveController extends Controller
             });
             $table->editColumn('nom_contenedor', function ($row) {
                 return $row->nom_contenedor ? $row->nom_contenedor : '';
+            });
+            $table->editColumn('riesgo', function ($row) {
+                return $row->riesgo ? $row->riesgo : '';
             });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : '';
@@ -94,25 +97,25 @@ class ContenedorMatrizOctaveController extends Controller
         }, $request->controles);
 
         $request->validate([
-            'identificador_escenario'=>'required',
-            'nom_escenario'=>'required',
+            'identificador_escenario' => 'required',
+            'nom_escenario' => 'required',
         ]);
 
         $escenario = MatrizOctaveEscenario::create([
-            'identificador_escenario'=>$request->identificador_escenario,
-            'nom_escenario'=>$request->nom_escenario,
-            'descripcion'=>$request->descripcion,
-            'confidencialidad'=>$request->confidencialidad,
-            'integridad'=>$request->integridad,
-            'disponibilidad'=>$request->disponibilidad,
-            'id_octave_contenedor'=>$contenedor,
+            'identificador_escenario' => $request->identificador_escenario,
+            'nom_escenario' => $request->nom_escenario,
+            'descripcion' => $request->descripcion,
+            'confidencialidad' => $request->confidencialidad,
+            'integridad' => $request->integridad,
+            'disponibilidad' => $request->disponibilidad,
+            'id_octave_contenedor' => $contenedor,
         ]);
         $escenario->controles()->sync($controles);
         $sumatoria = $this->calcularRiesgo($contenedor);
         $contenedor = MatrizOctaveContenedor::find($contenedor);
-        $contenedor->update(['riesgo'=>$sumatoria]);
+        $contenedor->update(['riesgo' => $sumatoria]);
 
-        return response()->json(['estatus'=>200, 'riesgo'=>$sumatoria]);
+        return response()->json(['estatus' => 200, 'riesgo' => $sumatoria]);
     }
 
     public function calcularRiesgo($contenedor)
@@ -130,7 +133,7 @@ class ContenedorMatrizOctaveController extends Controller
 
     public function escenarios($contenedor)
     {
-        $escenarios = MatrizOctaveContenedor::with(['escenarios'=>function ($q) {
+        $escenarios = MatrizOctaveContenedor::with(['escenarios' => function ($q) {
             $q->with('controles');
         }])->find($contenedor)->escenarios;
 

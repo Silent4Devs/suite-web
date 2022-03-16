@@ -11,14 +11,19 @@
                         </div>
                     <div class="row">
                         <div class="form-group col-sm-3">
-                            <label for="identificador"><i class="fas fa-list-ol iconos-crear"></i>ID</label>
+                            <label for="identificador"><i class="fas fa-barcode iconos-crear"></i>ID</label>
                             <input class="form-control {{ $errors->has('banco') ? 'is-invalid' : '' }}" type="text" name="identificador" id="identificador" value="{{ old('identificador', $activos->identificador) }}">
                             <small id="identificador" class="text-danger"></small>
                         </div>
                         <div class="form-group col-sm-9">
-                            <label for="nombreVP"><i class="fas fa-list-ol iconos-crear"></i>Nombre VP</label>
-                            <input class="form-control {{ $errors->has('banco') ? 'is-invalid' : '' }}" type="text" name="nombreVP" id="nombreVP" value="{{ old('nombreVP', $activos->nombreVP) }}">
-                            <small id="nombreVP" class="text-danger"></small>
+                            <label for="nombreVP"><i class="fas fa-street-view iconos-crear"></i>Nombre VP</label>
+                            <select class="custom-select my-1 mr-sm-2" id="nombreVP" name="vicepresidencia_id">
+                                <option value="" selected disabled>Seleccione una opción</option>
+                                @foreach ($grupos as $grupo)
+                                    <option {{ old('vicepresidencia_id') == $grupo->id ? ' selected="selected"' : '' }}
+                                        value="{{ $grupo->id }}">{{ $grupo->nombre }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
