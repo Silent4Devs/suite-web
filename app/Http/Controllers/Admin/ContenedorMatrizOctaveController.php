@@ -146,11 +146,15 @@ class ContenedorMatrizOctaveController extends Controller
         return Datatables::of($escenarios)->make(true);
     }
 
-    public function massDestroy(MatrizOctaveContenedor $contenedor)
+    public function destroy($contenedor)
     {
-        abort_if(Gate::denies('categorias_capacitaciones_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $matrizOctaveContenedor->delete();
+        // dd($contenedor);
+        // abort_if(Gate::denies('categorias_capacitaciones_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // $matrizOctaveContenedor->delete();
 
-        return redirect()->route('admin.contenedores.index');
+        $activo = MatrizOctaveContenedor::find($contenedor);
+        $activo->delete();
+
+        return redirect()->route('admin.contenedores.index')->with('success', 'Eliminado con éxito');
     }
 }
