@@ -37,6 +37,7 @@ class MatrizOctaveProceso extends Model
         'impacto',
         'id_activos_informacion',
         'promedio',
+        'fecha_registro',
     ];
 
     public function proceso()
