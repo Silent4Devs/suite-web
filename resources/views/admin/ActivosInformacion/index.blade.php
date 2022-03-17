@@ -63,10 +63,11 @@
                     <tr>
                         <th style="min-width:75px;">ID</th>
                         <th style="min-width:220px;">Nombre del Activo Información</th>
-                        <th style="min-width:100px;">Riesgo AI</th>
+                        <th style="min-width:100px;">Criticidad del AI </th>
+                        <th style="min-width:120px;">Nivel de Riesgo AI</th>
                         <th style="min-width:100px;">Nombre VP</th>
                         <th style="min-width:200px;">Dueño AI Nombre del VP</th>
-                        <th style="min-width:150px;">Nombre Direccíon</th>
+                        <th style="min-width:150px;">Nombre Dirección</th>
                         <th style="min-width:200px;">Custodio AI Nombre Director</th >
                         <th style="min-width:50px;">Formato</th>
                         <th style="min-width:100px;">Opciones</th>
@@ -74,11 +75,65 @@
                 </thead>
                 <tbody>
                     @foreach ( $activos as $activo )
+                    @php
+                        $color="green";
+                        $colorRiesgo="green";
+                        $texto="white";
+                        $textoColor="white";
+                        $valor="";
+                        $resultado="";
+                        if($activo->valor_criticidad <=3){
+                            $color="green";
+                            $valor="Bajo";
+                        }
+                        if($activo->valor_criticidad >=5){
+                            $color="yellow";
+                            $texto="black";
+                            $valor="Media";
+                        }
+                        if($activo->valor_criticidad >=7){
+                            $color="orange";
+                            $valor="Alta";
+                        }
+                        if($activo->valor_criticidad >=10){
+                            $color="red";
+                            $valor="Crítica";
+                        }
+
+                        if($activo->riesgo_activo <=5){
+                            $colorRiesgo="green";
+                            $resultado="Bajo";
+                        }
+                        if($activo->riesgo_activo >=6){
+                            $colorRiesgo="yellow";
+                            $textoColor="black";
+                            $resultado="Media";
+                        }
+                        if($activo->riesgo_activo >=11){
+                            $colorRiesgo="orange";
+                            $resultado="Alta";
+                        }
+                        if($activo->riesgo_activo >=16){
+                            $colorRiesgo="red";
+                            $resultado="Crítica";
+                        }
+                    @endphp
+
                     <tr>
                         <td><div>{{$activo->identificador}}</div></td>
                         <td><div>{{$activo->activo_informacion}}</div></td>
-                        <td><div>{{$activo->riesgo_activo}}</div></td>
-                        <td><div>{{$activo->nombreVP}}</div></td>
+                        <td style="background-color:{{$color}};color:{{$texto}}">
+                            <div>
+                                {{$activo->valor_criticidad}} - {{$valor}}
+
+                            </div>
+                        </td>
+                        <td style="background-color:{{$colorRiesgo}};color:{{$textoColor}}">
+                            <div>
+                                {{$activo->riesgo_activo}} - {{$valor}}
+                            </div>
+                        </td>
+                        <td><div>{{$activo->vp ? $activo->vp->nombre : 'Sin definir'}}</div></td>
                         <td><div>{{$activo->dueno->name}}</div></td>
                         <td><div>{{$activo->nombre_direccion}}</div></td>
                         <td><div>{{$activo->custodio->name}}</div></td>

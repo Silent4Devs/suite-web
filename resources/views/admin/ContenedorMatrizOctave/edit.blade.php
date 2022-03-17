@@ -125,7 +125,7 @@
 
                     <div id="caja_select_color" class="form-group col-md-4 col-sm-12">
                         <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>Confidencialidad</label><br>
-                        <select class="form-control select2 {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}"
+                        <select class="form-control sumatoria-select select2 {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}"
                             name="confidencialidad" id="confidencialidad_informacion">
                             <option value="0">0 - Sin Impacto</option>
                             <option value="1">1 - Muy Bajo</option>
@@ -139,7 +139,7 @@
 
                     <div class="form-group col-md-4 col-sm-12 caja_select_color">
                         <label for="disponibilidad"><i class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label><br>
-                        <select class="form-control select2 {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}"
+                        <select class="form-control sumatoria-select select2 {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}"
                             name="disponibilidad" id="disponibilidad_informacion">
                             <option value="0">0 - Sin Impacto</option>
                             <option value="1">1 - Muy Bajo</option>
@@ -153,7 +153,7 @@
 
                     <div class="form-group col-md-4 col-sm-12 caja_select_color">
                         <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Integridad</label><br>
-                        <select class="form-control select2 {{ $errors->has('integridad') ? 'is-invalid' : '' }}"
+                        <select class="form-control sumatoria-select select2 {{ $errors->has('integridad') ? 'is-invalid' : '' }}"
                             name="integridad" id="integridad_informacion">
                             <option value="0">0 - Sin Impacto</option>
                             <option value="1">1 - Muy Bajo</option>
@@ -164,6 +164,17 @@
                         </select>
                         <small class="text-danger errores integridad_error"></small>
                     </div>
+
+                    <div class="form-group col-md-6 col-lg-6">
+                        <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Valor del CID</label><br>
+                        <div class="mt-2 form-control" id="valor_criticidad"></div>
+                    </div>
+
+                    <div class="form-group col-md-6 col-lg-6">
+                        <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Nivel del CID</label><br>
+                        <div class="mt-2 form-control" id="valorCriticidadTxt"></div>
+                    </div>
+
 
                     {{-- <div class="form-group col-md-4 col-lg-4 col-sm-12">
                     <label for="confidencialidad"><i class="fas fa-table iconos-crear"></i>Confidencialidad</label>
@@ -240,6 +251,7 @@
                                 <th style="min-width:300px;">Confidencialidad</th>
                                 <th style="min-width:300px;">Integridad</th>
                                 <th style="min-width:300px;">Disponibilidad</th>
+                                <th style="min-width:300px;">Promedio CID</th>
                                 <th style="min-width:300px;">Controles Aplicables</th>
                                 {{-- <th>Opciones</th> --}}
                             </tr>
@@ -294,6 +306,9 @@
                     },
                     {
                         data: 'disponibilidad'
+                    },
+                    {
+                        data: 'sumatoria'
                     },
                     {
                         data: 'controles',
@@ -372,7 +387,81 @@
                 });
             }
 
+            obtenerCriticidad()
+
+            let confidencial = document.getElementById('confidencialidad_informacion');
+            let integridad= document.getElementById('integridad_informacion');
+            let disponibilidad = document.getElementById('disponibilidad_informacion');
+            $('#confidencialidad_informacion').on('select2:select', function (e) {
+                e.preventDefault();
+                obtenerCriticidad();
+            });
+            $('#integridad_informacion').on('select2:select', function (e) {
+                e.preventDefault();
+                obtenerCriticidad();
+            });
+            $('#disponibilidad_informacion').on('select2:select', function (e) {
+                e.preventDefault();
+                obtenerCriticidad();
+            });
+
+
+            function obtenerCriticidad(){
+                console.log('criticidad');
+                let contenedorTxt=document.getElementById('valorCriticidadTxt');
+                contenedorTxt.innerHTML=null;
+                let contenedorValor=document.getElementById('valor_criticidad');
+                contenedorValor.innerHTML=null;
+                let sumatoria = 0;
+                document.querySelectorAll('.sumatoria-select').forEach(element => {
+                sumatoria= sumatoria+ Number(element.options[element.selectedIndex].value);
+                });
+                sumatoria= Math.round(sumatoria/3)
+                let resultado="";
+                if (sumatoria <=1){
+                resultado="Muy Bajo"
+                contenedorTxt.style.background="green"
+                contenedorValor.style.background="green"
+                contenedorTxt.style.color="white"
+                contenedorValor.style.color="white"
+            }
+                if (sumatoria ==2){
+                resultado="Baja"
+                contenedorTxt.style.background="rgb(50, 205, 63)"
+                contenedorValor.style.background="rgb(50, 205, 63)"
+                contenedorTxt.style.color="white"
+                contenedorValor.style.color="white"
+            }
+            if (sumatoria ==3){
+                resultado="Medio"
+                contenedorTxt.style.background="yellow"
+                contenedorValor.style.background="yellow"
+                contenedorTxt.style.color="black"
+                contenedorValor.style.color="black"
+            }
+            if (sumatoria ==4){
+                resultado="Alta"
+                contenedorTxt.style.background="orange"
+                contenedorValor.style.background="orange"
+                contenedorTxt.style.color="white"
+                contenedorValor.style.color="white"
+
+            }
+            if (sumatoria ==5){
+                resultado="Crítica"
+                contenedorTxt.style.background="red"
+                contenedorValor.style.background="red"
+                contenedorTxt.style.color="white"
+                contenedorValor.style.color="white"
+
+            }
+                console.log(sumatoria);
+                document.getElementById('valor_criticidad').innerHTML= sumatoria;
+                document.getElementById('valorCriticidadTxt').innerHTML=resultado;
+            }
 
         })
     </script>
+
+
 @endsection
