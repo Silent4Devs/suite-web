@@ -917,14 +917,12 @@ if (!is_null($organizacion)) {
                                         style="padding-top:17px !important; padding-bottom:17px !important;">
                                         <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge mr-2"></i>Mi
                                             Autoevaluación
-                                            @if (!is_null($mis_evaluaciones))
-                                                @if (count($mis_evaluaciones) > 0)
-                                                    @if (!$mis_evaluaciones->evaluado)
-                                                        <div class="circle-total-evaluaciones"
-                                                            style="top:-5px !important;">
-                                                            <span style="position: absolute;top: 3px;">1</span>
-                                                        </div>
-                                                    @endif
+                                            @if (!is_null($mis_evaluaciones) && is_object($mis_evaluaciones))
+                                                @if (!$mis_evaluaciones->evaluado)
+                                                    <div class="circle-total-evaluaciones"
+                                                        style="top:-5px !important;">
+                                                        <span style="position: absolute;top: 3px;">1</span>
+                                                    </div>
                                                 @endif
                                             @endif
                                         </h5>
