@@ -2,8 +2,9 @@
 @section('content')
 <style>
 
-
-
+.alert.alert-danger{
+    display: none !important;
+}
 </style>
 
     <h5 class="col-12 titulo_general_funcion">Registrar: Activo de Información</h5>
@@ -37,6 +38,11 @@
                         <option value="{{$contenedor->id}}" data-riesgo="{{$contenedor->riesgo}}">{{$contenedor->nom_contenedor}}</option>
                         @endforeach
                       </select>
+                      @error('contenedores')
+                      <span class="invalid-feedback d-block" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
                 </div>
 
                 <div class="form-group col-sm-12">
