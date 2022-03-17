@@ -67,7 +67,7 @@ class Ev360ResumenTabla extends Component
                 $sobresaliente++;
             }
         }
-        dd($evaluado);
+        // dd($evaluado);
         $calificaciones->push([
             'Inaceptable' => $inaceptable,
             'Mínimo Aceptable' => $minimo_aceptable,
@@ -169,11 +169,11 @@ class Ev360ResumenTabla extends Component
             if (count($lista_autoevaluacion->first()['evaluaciones'])) {
                 foreach ($lista_autoevaluacion->first()['evaluaciones'] as $evaluacion_b) {
                     foreach ($evaluacion_b['competencias'] as $competencia) {
-                        $calificacion += $competencia['porcentaje'];
+                        $calificacion += floatval($competencia['porcentaje']);
                     }
                 }
-                // $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
-                $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
+                // $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);                
+                $promedio_competencias_collect->push((($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100));
             }
 
             $lista_jefe_inmediato->push([
@@ -196,7 +196,7 @@ class Ev360ResumenTabla extends Component
                         $calificacion += $competencia['porcentaje'];
                     }
                 }
-                $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
+                $promedio_competencias_collect->push((($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_jefe_inmediato / 100));
             }
 
             $lista_equipo_a_cargo->push([
@@ -220,7 +220,7 @@ class Ev360ResumenTabla extends Component
                     }
                 }
 
-                $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
+                $promedio_competencias_collect->push((($calificacion * 100) / $cantidad_competencias_evaluadas) / ($evaluacion->peso_equipo / 100));
             }
 
             $lista_misma_area->push([
@@ -244,15 +244,14 @@ class Ev360ResumenTabla extends Component
                     }
                 }
 
-                $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
+                $promedio_competencias_collect->push((($calificacion * 100) / $cantidad_competencias_evaluadas) / ($evaluacion->peso_area / 100));
             }
 
             $cantidad_participantes = $promedio_competencias_collect->count();
-
             if ($this->empleadoTieneCompetenciasAsignadas($evaluado->id, $evaluacion->id)) {
-                $promedio_competencias = number_format($promedio_competencias_collect->sum(), 2);
-                dd($promedio_competencias);
-                $promedio_general_competencias = number_format(($promedio_competencias * ($evaluacion->peso_general_competencias / 100)) / $cantidad_participantes, 2);
+                $promedio_competencias = floatval(number_format($promedio_competencias_collect->sum(), 2));
+                $promedio_general_competencias = floatval(number_format(($promedio_competencias * ($evaluacion->peso_general_competencias / 100)), 2));
+
                 $calificacion_final += $promedio_general_competencias;
             } else {
                 $promedio_competencias = 1;
@@ -323,13 +322,13 @@ class Ev360ResumenTabla extends Component
                     ];
                 }),
             ]);
+            $cantidadObjetivosEvaluados = $objetivos_calificaciones_autoevaluacion->count();
 
             if ($this->empleadoTieneObjetivosAsignados($evaluado->id, $evaluacion->id)) {
-                $promedio_objetivos += (($calificacion_objetivos * 100) / 2) / 100;
-                $promedio_general_objetivos += $promedio_objetivos * $evaluacion->peso_general_objetivos;
-                $promedio_objetivos = number_format($promedio_objetivos, 2);
-                $promedio_general_objetivos = floatval(number_format($promedio_general_objetivos, 2));
-                $calificacion_final += $promedio_general_objetivos;
+
+                $promedio_objetivos = ($calificacion_objetivos * 100 / $cantidadObjetivosEvaluados);
+                $promedio_general_objetivos = $promedio_objetivos;
+                $calificacion_final += $promedio_general_objetivos * ($evaluacion->peso_general_objetivos / 100);
             } else {
                 $promedio_objetivos = 1;
                 $promedio_general_objetivos = 100 * ($evaluacion->peso_general_objetivos / 100);
@@ -337,7 +336,7 @@ class Ev360ResumenTabla extends Component
             }
         }
 
-        dd($promedio_competencias);
+        // dd($promedio_competencias);
 
         return [
             'peso_general_competencias' => $evaluacion->peso_general_competencias,
@@ -346,7 +345,7 @@ class Ev360ResumenTabla extends Component
             'lista_jefe_inmediato' => $lista_jefe_inmediato,
             'lista_equipo_a_cargo' => $lista_equipo_a_cargo,
             'lista_misma_area' => $lista_misma_area,
-            'promedio_competencias' => number_format(($promedio_competencias / 100) / $cantidad_competencias_evaluadas, 2),
+            'promedio_competencias' => $promedio_competencias,
             'promedio_general_competencias' => number_format($promedio_general_competencias, 2),
             'evaluadores_objetivos' => $evaluadores_objetivos,
             'promedio_objetivos' => $promedio_objetivos,
