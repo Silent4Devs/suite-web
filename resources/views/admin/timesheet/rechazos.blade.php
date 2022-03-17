@@ -49,7 +49,41 @@
                         @foreach ($rechazos as $rechazo)
                             <tr>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($rechazo->fecha_dia)->format("d/m/Y") }}
+                                    @if($rechazo->dia_semana == 'Domingo')
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->format("d/m/Y") }}
+                                         -  
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->addDay(6)->format("d/m/Y") }}
+                                    @endif
+                                    @if($rechazo->dia_semana == 'Lunes')
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->subDay(1)->format("d/m/Y") }}
+                                         -  
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->addDay(5)->format("d/m/Y") }}
+                                    @endif
+                                    @if($rechazo->dia_semana == 'Martes')
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->subDay(2)->format("d/m/Y") }}
+                                         -  
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->addDay(4)->format("d/m/Y") }}
+                                    @endif
+                                    @if($rechazo->dia_semana == 'Miércoles')
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->subDay(3)->format("d/m/Y") }}
+                                         -  
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->addDay(3)->format("d/m/Y") }}
+                                    @endif
+                                    @if($rechazo->dia_semana == 'Jueves')
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->subDay(4)->format("d/m/Y") }}
+                                         -  
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->addDay(2)->format("d/m/Y") }}
+                                    @endif
+                                    @if($rechazo->dia_semana == 'Viernes')
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->subDay(5)->format("d/m/Y") }}
+                                         -  
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->addDay(1)->format("d/m/Y") }}
+                                    @endif
+                                    @if($rechazo->dia_semana == 'Sábado')
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->subDay(6)->format("d/m/Y") }}
+                                         -  
+                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->format("d/m/Y") }}
+                                    @endif
 
                                 </td>
                                 <td>

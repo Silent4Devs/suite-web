@@ -29,7 +29,7 @@
                     <span class="help-block"></span>
                 </div>
 
-                    @livewire('categoria-subcategoria')
+                    @livewire('categoria-subcategoria',['categoriasSeleccionado'=>null, 'subcategoriaSeleccionado'=>null])
 
                 <div class="form-group col-12">
                     <label for="descripcion"><i

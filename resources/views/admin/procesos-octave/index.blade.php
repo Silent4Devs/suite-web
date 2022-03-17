@@ -39,6 +39,12 @@
 
     }
 
+    #tabla-procesos tr td:nth-child(3){
+        background-color: green;
+        position: relative;
+        padding: 0;
+    }
+
 </style>
 
     {{-- {{ Breadcrumbs::render('perfil-puesto') }} --}}
@@ -61,7 +67,7 @@
             <div class="row">
                 @include('admin.OCTAVE.menu')
                 <div class="datatable-fix mt-3 col-12">
-                    <table class="table table-bordered w-100 datatable-Carta">
+                    <table class="table table-bordered w-100 datatable-Carta" id="tabla-procesos">
                         <thead class="thead-dark">
                             <tr>
                                 <th>
@@ -245,9 +251,39 @@
                     },
                     {
                         data: 'nivel_riesgo',
-                        name: 'nivel_riesgo'
-                    },
-                    {
+                        name: 'nivel_riesgo',
+                        render: function(data,type,row,meta){
+                            data=data==""?0:data
+                            let color = "green";
+                            let valor="";
+                            let texto="white";
+                            if(data <=5){
+                                color="green";
+                                valor="Muy Bajo";
+                            }
+                            if(data >=6){
+                                color="rgb(50, 205, 63";
+                                valor="Bajo";
+                            }
+                            if(data >=21){
+                                color="yellow";
+                                texto="black";
+                                valor="Media";
+                            }
+                            if(data >=51){
+                                color="orange";
+                                valor="Alta";
+                            }
+                            if(data >=81){
+                                color="red";
+                                valor="Crítica";
+                            }
+
+                            return `
+                            <div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background-color:${color}; color:${texto}">${data} - ${valor}</div>
+                            `
+                        }
+                    },{
                         data: 'direccion',
                         name: 'direccion'
                     },

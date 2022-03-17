@@ -19,7 +19,10 @@
             border: 1px solid #ced4da;
             border-radius: 0.25rem;
             justify-content: ;
-        }    
+        } 
+        .flatpickr-disabled{
+            color: #FFC5C5 !important;
+        }   
     </style>
 
     {{ Breadcrumbs::render('timesheet-create') }}
@@ -89,9 +92,17 @@
                         return rdatedData.includes (toISODate(date));
                     }
                 ],
-                "locale": {
-                    "firstDayOfWeek": 1 // start week on Monday
-                }
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                      shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
+                    }, 
+                    months: {
+                      shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+                      longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    },
+                },
             });
         });
         

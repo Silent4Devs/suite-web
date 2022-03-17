@@ -196,7 +196,8 @@
             <div class="text-center form-group col-12" style="background-color:#345183; border-radius: 100px; color: white;">
                 DATOS DEL PROCESO
             </div>
-            <div class="form-group col-md-8 col-sm-12">
+            {{-- <input type="text" value="{{$id_matriz}}"> --}}
+            <div class="form-group col-md-6 col-sm-12">
                 <label for="id_proceso"><i class="fas fa-project-diagram iconos-crear"></i>Proceso a evaluar</label><br>
                 <select class="procesoSelect mt-2 form-control" name="id_proceso" id="proceso_activo">
                     <option value="" selected disabled>Seleccione una opción</option>
@@ -215,7 +216,7 @@
 
 
 
-            <div  class="form-group col-sm-4 col-md-4 col-lg-4">
+            <div  class="form-group col-sm-4 col-md-3 col-lg-3">
                 <label for="nivel_riesgo"><i class="fas fa-bullseye iconos-crear"></i>Nivel de Riesgo</label>
                 <input class="form-control mt-2 {{ $errors->has('nivel_riesgo') ? 'is-invalid' : '' }}" type="number" id="nivel_riesgo"
                    name="nivel_riesgo" value="{{ old('nivel_riesgo', '') }}" readonly>
@@ -224,6 +225,11 @@
                         {{ $errors->first('nivel_riesgo') }}
                     </div>
                 @endif
+            </div>
+
+            <div  class="form-group col-sm-4 col-md-3 col-lg-3">
+                <label for="nivel_riesgo"><i class="fas fa-bullseye iconos-crear"></i>Valor de Riesgo</label>
+               <div class="mt-2 form-control" id="valorCriticidadTxt"></div>
             </div>
 
             <div class="form-group col-md-6 col-sm-12">
@@ -750,7 +756,6 @@
     // document.getElementById('area_proceso').innerHTML = area_init;
 
     proceso.addEventListener('change', function(e){
-        console.log('hola')
         let proceso = e.target.options[e.target.selectedIndex].value;
         document.getElementById('valor').value=null;
         $.ajax({
@@ -763,6 +768,10 @@
             dataType: "json",
             success: function (response) {
                 let contenedor=document.getElementById('contenedorActivos');
+                let contenedorTxt=document.getElementById('valorCriticidadTxt');
+                contenedorTxt.innerHTML=null;
+                let contenedorValor=document.getElementById('nivel_riesgo');
+                contenedorValor.innerHTML=null;
                 let cantidadActivos=response.length>0?response.length:1;
                 let sumatoria=0;
                 let html = '<ul>';
@@ -770,12 +779,51 @@
                         sumatoria+=item.riesgo_activo;
                         html+=`<li>${item.activo_informacion}</li>`;
                     })
-                    sumatoria=sumatoria/cantidadActivos;
+                    sumatoria=Number(sumatoria/cantidadActivos);
                     html+='</ul>'
                     contenedor.innerHTML=html;
-                    document.getElementById('valor').value=sumatoria;
+                    let resultado="";
+                    document.getElementById('valor').value=Math.round(sumatoria);
                     let total = sumatoria * Number(document.getElementById('valorImpacto').value);
-                    document.getElementById('nivel_riesgo').value=total
+                    document.getElementById('nivel_riesgo').value=Math.round(total);
+                    if (total <=5){
+                        resultado="Muy Bajo"
+                        contenedorTxt.style.background="green"
+                        contenedorValor.style.background="green"
+                        contenedorTxt.style.color="white"
+                        contenedorValor.style.color="white"
+                    }
+                    else if (total >5 && total<=20){
+                        resultado="Baja"
+                        contenedorTxt.style.background="rgb(50, 205, 63)"
+                        contenedorValor.style.background="rgb(50, 205, 63)"
+                        contenedorTxt.style.color="white"
+                        contenedorValor.style.color="white"
+                    }
+                    else if (total <=50){
+                        resultado="Medio"
+                        contenedorTxt.style.background="yellow"
+                        contenedorValor.style.background="yellow"
+                        contenedorTxt.style.color="black"
+                        contenedorValor.style.color="black"
+                    }
+                    else if (total <=80){
+                        resultado="Alta"
+                        contenedorTxt.style.background="orange"
+                        contenedorValor.style.background="orange"
+                        contenedorTxt.style.color="white"
+                        contenedorValor.style.color="white"
+                    }
+                    else{
+                        resultado="Crítica"
+                        contenedorTxt.style.background="red"
+                        contenedorValor.style.background="red"
+                        contenedorTxt.style.color="white"
+                        contenedorValor.style.color="white"
+
+                    }
+                    document.getElementById('valorCriticidadTxt').innerHTML=resultado;
+
             }
         });
     })

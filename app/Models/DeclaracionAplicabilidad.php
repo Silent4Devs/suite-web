@@ -44,7 +44,7 @@ class DeclaracionAplicabilidad extends Model
 
     public function getContentAttribute()
     {
-        return Str::limit($this->descripcion_control, 20, '...') ? Str::limit($this->descripcion_control, 20, '...') : 'Sin Contenido';
+        return Str::limit($this->anexo_politica, 50, '...') ? Str::limit($this->anexo_politica, 50, '...') : 'Sin Contenido';
     }
 
     public function responsables()

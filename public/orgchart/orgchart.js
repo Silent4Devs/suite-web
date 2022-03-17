@@ -410,60 +410,31 @@ export default class OrgChart {
     let title_info = document.createElement('h3');
     title_info.classList.add('side');
     title_info.classList.add('title-info-nav');
-    title_info.innerText = `${dataSourceJSON.area}`;
+    title_info.innerText = `${dataSourceJSON.name}`;
 
 
     //photo
     let div_img = document.createElement('div');
-    div_img.style.borderBottom = `20px solid ${dataSourceJSON.color}`;
+    div_img.style.borderBottom = `8px solid ${dataSourceJSON.color}`;
     div_img.classList.add('container-img-nav');
-
-    let photo = "";
-    let photo_info = document.createElement('img');
-    if (dataSourceJSON.foto == null) {
-      if (dataSourceJSON.genero == 'H') {
-        photo = `${this.options.nodeRepositoryImages}/man.png`;
-      } else if (dataSourceJSON.genero == 'M') {
-        photo = `${this.options.nodeRepositoryImages}/woman.png`;
-      } else {
-        photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
-      }
-    }
-    else {
-      photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
-    }
-    // console.log(dataSourceJSON);
-    photo_info.classList.add('side');
-    photo_info.classList.add('img-nav');
-    photo_info.style.clipPath = "circle()"
-    photo_info.src = `${dataSourceJSON.foto_ruta}`
-    div_img.appendChild(photo_info);
-
     //title
     let title_info_text = document.createElement('p');
     title_info_text.classList.add('side');
-    title_info_text.classList.add('title-nav');
-    title_info_text.innerText = `${dataSourceJSON.grupo_name}`;
+    // title_info_text.classList.add('title-nav');
+    console.log(dataSourceJSON.color);
+    title_info_text.style.backgroundColor = `${dataSourceJSON.color}`;
+    title_info_text.innerText = ``;
 
     let c_more = document.createElement('div');
     title_info_text.classList.add('side');
     c_more.classList.add('c_more');
     let content_more = `
+      <div class="p-2">
         <h4>Descripción</h4>
-        <p class="text-justify mr-3" style="text-align: justify !important">${dataSourceJSON.descripcion}</p>
+        <p class="text-justify mr-3" style="text-align: justify !important">${dataSourceJSON.content}</p>
+      </div>
         `;
-    // console.log(dataSourceJSON.lider);
-    if (dataSourceJSON.lider != null) {
-      content_more += `
-                <div class="supervisor justify-content-center" style="text-align:center !important" >
-                <h4 class="supervisor-title">Responsable del área:</h4>
-                <img src="${dataSourceJSON.lider?.avatar_ruta}"
-                class="text-center img_empleado" title="${dataSourceJSON.lider?.name}" >
-                <p class="supervisor-name text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider ? dataSourceJSON.lider.name : 'sin definir'}</span></p>
-                <p class="supervisor-puesto text-center" class="mb-1 text-secondary"><span>${dataSourceJSON.lider?.puesto}</span></p>
-              </div>
-            `;
-    }
+
     c_more.innerHTML = content_more;
     chartContainer.appendChild(a_close);
     chartContainer.appendChild(div_img);
@@ -1161,6 +1132,8 @@ export default class OrgChart {
             symbol.setAttribute('class', 'fa fa-users symbol');
           } else if (this.options.typeOrgChart == 'area') {
             symbol.setAttribute('class', 'fa fa-sitemap symbol');
+          } else if (this.options.typeOrgChart == 'arbol-riesgos') {
+            symbol.setAttribute('class', 'fa fa-sitemap symbol');
           }
           // symbol.setAttribute('class', 'fa ' + opts.parentNodeSymbol + ' symbol');
           // node.querySelector(':scope > .title').appendChild(symbol);
@@ -1797,6 +1770,10 @@ export default class OrgChart {
             symbol.setAttribute('class', 'fa fa-users symbol');
           } else if (opts.typeOrgChart == 'area') {
             symbol.setAttribute('class', 'fa fa-sitemap symbol');
+          } else if (opts.typeOrgChart == 'arbol-riesgos') {
+            symbol.setAttribute('class', 'fa fa-sitemap symbol');
+            symbol.style.backgroundColor = `${nodeData.color}`;
+            symbol.style.color = `${nodeData.color}`;
           }
           //symbol.setAttribute('class', 'fa ' + opts.parentNodeSymbol + ' symbol');
           nodeDiv.appendChild(symbol);

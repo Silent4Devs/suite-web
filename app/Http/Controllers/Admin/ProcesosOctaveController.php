@@ -16,7 +16,7 @@ class ProcesosOctaveController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = MatrizOctaveProceso::get();
+            $query = MatrizOctaveProceso::with(['area'])->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -52,7 +52,7 @@ class ProcesosOctaveController extends Controller
             });
 
             $table->editColumn('direccion', function ($row) {
-                return $row->grupo ? $row->grupo->nombre : '';
+                return $row->area ? $row->area->area : '';
             });
 
             $table->editColumn('servicio', function ($row) {
@@ -63,7 +63,7 @@ class ProcesosOctaveController extends Controller
 
             return $table->make(true);
         }
-
+        // dd($request->all());
         return view('admin.procesos-octave.index');
     }
 

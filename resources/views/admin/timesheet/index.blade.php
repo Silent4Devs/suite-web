@@ -107,14 +107,17 @@
                                     @endif
     	                        </td>
     	                        <td>
-                                    <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+                                    <form method="DELETE" action="{{ route('admin.timesheet.destroy', $time->id) }}">    
+                                        @csrf
+                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
 
-                                    @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
-                                        <a href="{{ asset('admin/timesheet/edit') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    @endif
+                                        @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
+                                            <a href="{{ asset('admin/timesheet/edit') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        @endif
 
-                                    {{-- <a href="{{ route('admin.timesheet.destroy', $time->id) }}" class="btn" style="color:red;"><i class="fa-solid fa-trash-can"></i></a> --}}
-    							</td>	                    
+                                        <button class="btn" style="color:red;"><i class="fa-solid fa-trash-can"></i></button>
+    							     </form>
+                                </td>	                    
     						</tr>
                         @endforeach
 	                </tbody>
