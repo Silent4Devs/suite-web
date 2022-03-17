@@ -134,9 +134,11 @@ class ContenedorMatrizOctaveController extends Controller
     private function obtenerPromedio($escenario)
     {
         $promedio = ($escenario->confidencialidad ? $escenario->confidencialidad : 0) + ($escenario->integridad ? $escenario->integridad : 0) + ($escenario->disponibilidad ? $escenario->disponibilidad : 0);
-        $promedio = $promedio/3;
+        $promedio = $promedio / 3;
+
         return $promedio;
     }
+
     public function escenarios($contenedor)
     {
         $escenarios = MatrizOctaveContenedor::with(['escenarios' => function ($q) {

@@ -41,9 +41,8 @@ class ActivosInformacionController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
-           'contenedores' => 'required|array'
+           'contenedores' => 'required|array',
         ]);
 
         $contenedores = array_map(function ($value) {

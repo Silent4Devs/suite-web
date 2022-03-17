@@ -51,7 +51,7 @@ class MatrizOctaveProceso extends Model
 
     public function area()
     {
-        return $this->belongsTo(Area::class, 'id_direccion','id');
+        return $this->belongsTo(Area::class, 'id_direccion', 'id');
     }
 
     public function servicio()
