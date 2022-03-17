@@ -21,6 +21,8 @@ use App\Models\MatrizNist;
 //use Illuminate\Support\Facades\Request;
 use App\Models\MatrizOctave;
 use App\Models\MatrizoctaveActivosInfo;
+use App\Models\MatrizOctaveProceso;
+use App\Models\MatrizOctaveServicio;
 use App\Models\MatrizRiesgo;
 use App\Models\MatrizRiesgosControlesPivot;
 use App\Models\Organizacion;
@@ -1007,6 +1009,11 @@ class MatrizRiesgosController extends Controller
 
     public function graficas()
     {
-        return view('admin.OCTAVE.graficas');
+        $procesos = MatrizOctaveProceso::get();
+        $direcciones = Area::get();
+        $servicios = MatrizOctaveServicio::get();
+        $activos = ActivoInformacion::get();
+
+        return view('admin.OCTAVE.graficas', compact('procesos', 'direcciones', 'servicios', 'activos'));
     }
 }

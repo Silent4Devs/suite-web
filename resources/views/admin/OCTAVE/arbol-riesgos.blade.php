@@ -267,8 +267,8 @@
         }
 
         /* #shot_screen{
-                                                                                                                                                                                                                    width:100% !important;
-                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                width:100% !important;
+                                                                                                                                                                                                                                            } */
 
     </style>
     <style>
@@ -579,43 +579,39 @@
                 <img src="{{ asset('img/areas_fondo.jpg') }}" class="mt-3" style="height: 400px;">
             </div>
         @else
+            <div class="row">
+                <div class="col-10">
+                    <div class="m-0 range-slider h-100">
+                        <span class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
+                            <i class="mr-1 fas fa-search-plus"></i>
+                            Control de zoom
+                        </span>
+                        <div class="d-flex justify-content-center align-items-center"
+                            style="height: 75%; width:100% !important;">
+                            <input id="zoomer" class="range-slider__range" type="range" value="70" min="10" max="200">
+                            <span id="output" class="range-slider__value">70</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn_iconos_areas" id="export_csv"></div>
+                <div class="btn_iconos_areas" id="shot_screen"></div>
+                <div class="col-lg-1 col-sm-12" style="position: relative;">
+                    <div class="pl-0 col-3" style="position: absolute;top: 20px;left: 0;">
+                        <button class="btn btn-lg" id="reloadOrg" title="Recargar organigrama"
+                            style="font-size: 13pt;outline: none"><i class="fas fa-redo-alt"></i></button>
+                    </div>
+                </div>
+            </div>
             <div class="caja_caja_secciones">
                 <div class="caja_secciones">
-                    <section id="contenido1">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="m-0 range-slider h-100">
-                                    <span class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
-                                        <i class="mr-1 fas fa-search-plus"></i>
-                                        Control de zoom
-                                    </span>
-                                    <div class="d-flex justify-content-center align-items-center"
-                                        style="height: 75%; width:100% !important;">
-                                        <input id="zoomer" class="range-slider__range" type="range" value="70" min="10"
-                                            max="200">
-                                        <span id="output" class="range-slider__value">70</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="btn_iconos_areas" id="export_csv"></div>
-                            <div class="btn_iconos_areas" id="shot_screen"></div>
-                            <div class="col-lg-1 col-sm-12" style="position: relative;">
-                                <div class="pl-0 col-3" style="position: absolute;top: 20px;left: 0;">
-                                    <button class="btn btn-lg" id="reloadOrg" title="Recargar organigrama"
-                                        style="font-size: 13pt;outline: none"><i class="fas fa-redo-alt"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
                     <section id="contenido2" class="mt-4 caja_tab_reveldada">
-                        <div class="col-12 text-right">
+                        {{-- <div class="col-12 text-right">
                             <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i
                                     class="fas fa-file-csv" style="font-size:18pt;"></i></a>
                             <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-camera"
                                     style="font-size:18pt;"></i></a>
-                        </div>
+                        </div> --}}
                         <div id="chart-container" class="m-0" style="position: relative">
                             {{-- <div id="chart-side" class="sidenav" style="width: 0px"></div> --}}
                         </div>
@@ -697,7 +693,7 @@
                             'chartContainer': '#chart-container',
                             'zoomSlider': '#zoomer',
                             'data': arbol,
-                            'depth': 999,
+                            'depth': 2,
                             'nodeTitle': 'name',
                             'nodeContent': 'content',
                             'withImage': false,
