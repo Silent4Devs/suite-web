@@ -172,7 +172,7 @@ class Ev360ResumenTabla extends Component
                         $calificacion += floatval($competencia['porcentaje']);
                     }
                 }
-                // $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);                
+                // $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
                 $promedio_competencias_collect->push((($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100));
             }
 
@@ -325,7 +325,6 @@ class Ev360ResumenTabla extends Component
             $cantidadObjetivosEvaluados = $objetivos_calificaciones_autoevaluacion->count();
 
             if ($this->empleadoTieneObjetivosAsignados($evaluado->id, $evaluacion->id)) {
-
                 $promedio_objetivos = ($calificacion_objetivos * 100 / $cantidadObjetivosEvaluados);
                 $promedio_general_objetivos = $promedio_objetivos;
                 $calificacion_final += $promedio_general_objetivos * ($evaluacion->peso_general_objetivos / 100);
