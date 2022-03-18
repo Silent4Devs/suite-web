@@ -80,6 +80,13 @@
             height: 80px;
             border: 3px solid #fff;
         }
+
+        tbody.cod_colors span{
+            padding: 5px 12px;
+            border-radius: 4px;
+            color: #fff;
+            box-shadow: 0px 4px 5px 1px rgba(0, 0, 0, 0.2);
+        }
     </style>
 
     <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo</h5>
@@ -132,23 +139,40 @@
                         <tr>
                             <td bgcolor="#F1F120">
                                 <span> Riesgos a considerar</span>
+
+                                @foreach($procesos as $proceso)
+                                    @if(($proceso->nivel_riesgo >= 21) && ($proceso->nivel_riesgo <= 50))
+                                        <div class="circle-s direccion_id_{{ $proceso->id_direccion }} servicio_id_{{ $proceso->servicio_id }}" data-id="id_proceso_{{ $proceso->proceso->id }}" data-nombre="Proceso {{ $proceso->id_proceso }}">P{{ $proceso->id }}</div>
+                                    @endif
+                                @endforeach
                             </td>
                             <td bgcolor="#F15B5B">
                                 <span> Riesgos de prioridad</span>
-                                @foreach($activos as $activo)
-                                <div class="circle-s id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
-                            @endforeach
+
+                                @foreach($procesos as $proceso)
+                                    @if(($proceso->nivel_riesgo >= 81))
+                                        <div class="circle-s direccion_id_{{ $proceso->id_direccion }} servicio_id_{{ $proceso->servicio_id }}" data-id="id_proceso_{{ $proceso->proceso->id }}" data-nombre="Proceso {{ $proceso->id_proceso }}">P{{ $proceso->id }}</div>
+                                    @endif
+                                @endforeach
                             </td>
                         </tr>
                         <tr>
                             <td bgcolor="#7CCD30">
                                 <span> Riesgos a monitorear</span>
+
+                                @foreach($procesos as $proceso)
+                                    @if(($proceso->nivel_riesgo <= 20))
+                                        <div class="circle-s direccion_id_{{ $proceso->id_direccion }} servicio_id_{{ $proceso->servicio_id }}" data-id="id_proceso_{{ $proceso->proceso->id }}" data-nombre="Proceso {{ $proceso->id_proceso }}">P{{ $proceso->id }}</div>
+                                    @endif
+                                @endforeach
                             </td>
                             <td bgcolor="#F9AB10">
                                 <span> Riesgos relevantes</span>
 
                                 @foreach($procesos as $proceso)
-                                    <div class="circle-s direccion_id_{{ $proceso->id_direccion }} servicio_id_{{ $proceso->servicio_id }}" data-id="id_proceso_{{ $proceso->proceso->id }}" data-nombre="Proceso {{ $proceso->id_proceso }}">P{{ $proceso->id }}</div>
+                                    @if(($proceso->nivel_riesgo >= 51) && ($proceso->nivel_riesgo <= 80))
+                                        <div class="circle-s direccion_id_{{ $proceso->id_direccion }} servicio_id_{{ $proceso->servicio_id }}" data-id="id_proceso_{{ $proceso->proceso->id }}" data-nombre="Proceso {{ $proceso->id_proceso }}">P{{ $proceso->id }}</div>
+                                    @endif
                                 @endforeach
                             </td>
                         </tr>
@@ -159,24 +183,58 @@
             </div>
 
             <div class="col-12 mt-3">
-                <table class="table">
+                <table class="table table">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Riesgo</th>
                             <th scope="col">Probabilidad</th>
                             <th scope="col">Impacto</th>
                             <th scope="col">Nivel riesgo</th>
+                            <th scope="col">Riesgo</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="cod_colors">
                         @foreach($procesos as $proceso)
+                            @php
+                                if(($proceso->nivel_riesgo >= 21) && ($proceso->nivel_riesgo <= 50)){
+                                    $probabilidad = '<span style="background-color: #F15B5B;">Alta</span>';
+                                    $impacto = '<span style="background-color: #7CCD30;">Bajo</span>';
+
+                                    $nivel = '<span style="background-color: #F1F120; color: #000;">' . $proceso->nivel_riesgo . '%</span>';
+                                    $riesgo = '<span style="background-color: #F1F120; color: #000;">Bajo</span>';
+                                }
+                                if($proceso->nivel_riesgo >= 81){
+                                    $probabilidad = '<span style="background-color: #F15B5B;">Alta</span>';
+                                    $impacto = '<span style="background-color: #F15B5B;">Muy Alto</span>';
+
+                                    $nivel = '<span style="background-color: #F15B5B;">' . $proceso->nivel_riesgo . '%</span>';
+                                    $riesgo = '<span style="background-color: #F15B5B;">Alto</span>';
+                                }
+                                if($proceso->nivel_riesgo <= 20){
+                                    $probabilidad = '<span style="background-color: #7CCD30;">Baja</span>';
+                                    $impacto = '<span style="background-color: #7CCD30;">Bajo</span>';
+
+                                    $nivel = '<span style="background-color: #7CCD30;">' . $proceso->nivel_riesgo . '%</span>';
+                                    $riesgo = '<span style="background-color: #7CCD30;">Muy Bajo</span>';
+                                }
+                                if(($proceso->nivel_riesgo >= 51) && ($proceso->nivel_riesgo <= 80)){
+                                    $probabilidad = '<span style="background-color: #7CCD30;">Baja</span>';
+                                    $impacto = '<span style="background-color: #F15B5B;">Alto</span>';
+
+                                    $nivel = '<span style="background-color: #F1F120; color: #000;">' . $proceso->nivel_riesgo . '%</span>';
+                                    $riesgo = '<span style="background-color: #F9AB10;">Alto</span>';
+                                }
+
+                            @endphp
                             <tr class="direccion_id_{{ $proceso->id_direccion }} servicio_id_{{ $proceso->servicio_id }}">
-                                <td scope="col">Proceso: {{ $proceso->id_proceso }}</td>
-                                <td scope="col">{{ $proceso->nivel_riesgo }}</td>
-                                <td scope="col">{{ $proceso->id }}</td>
-                                <td scope="col">{{ $proceso->id }}</td>
-                                <td scope="col">{{ $proceso->nivel_riesgo }}</td>
+
+                                <td scope="col">
+                                    <strong>P{{ $proceso->id }}: </strong>{{ $proceso->proceso->name }}
+                                </td>
+                                <td scope="col">{!! $probabilidad !!}</td>
+                                <td scope="col">{!! $impacto !!}</td>
+                                <td scope="col">{!! $nivel !!}</td>
+                                <td scope="col">{!! $riesgo !!}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -194,7 +252,15 @@
                     <table class="tabla-grafica-2">
                         <tr>
                             <td class="info-td"><div class="vertical">Muy&nbsp;Probable</div></td>
-                            <td class="color-td td-amarillo"></td>
+                            <td class="color-td td-amarillo">
+                                @foreach($activos as $activo)
+                                    {{-- @if($activo->valor_criticidad == ) --}}
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">
+                                            A-{{ $activo->identificador }}
+                                        </div>
+                                    {{-- @endif --}}
+                                @endforeach
+                            </td>
                             <td class="color-td td-naranja"></td>
                             <td class="color-td td-naranja"></td>
                             <td class="color-td td-rojo"></td>
@@ -214,9 +280,7 @@
                             <td class="color-td td-amarillo"></td>
                             <td class="color-td td-amarillo"></td>
                             <td class="color-td td-naranja">
-                                {{-- @foreach($activos as $activo)
-                                    <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
-                                @endforeach --}}
+                                
                             </td>
                             <td class="color-td td-naranja"></td>
                         </tr>

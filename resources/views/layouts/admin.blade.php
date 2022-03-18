@@ -344,7 +344,7 @@
             border-bottom: 1px solid #7fabfd;
         }
 
-        table.dataTable thead {
+        table.dataTable thead, table.table thead {
             background: #788BAC !important;
             color: #fff !important;
         }
