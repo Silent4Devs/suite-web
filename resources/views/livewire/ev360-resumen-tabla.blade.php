@@ -121,10 +121,10 @@
                             <td>{{ $evaluado['informacion_evaluacion']['peso_general_objetivos'] }} %</td>
                             <td class="p-0" style="position: relative;">
                                 <div
-                                    style="width: {{ $evaluado['informacion_evaluacion']['promedio_general_competencias'] }}%;max-width: 100%;height: 100%;background: #3ebed2;">
+                                    style="width: {{ $evaluado['informacion_evaluacion']['promedio_competencias'] }}%;max-width: 100%;height: 100%;background: #3ebed2;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $evaluado['informacion_evaluacion']['promedio_general_competencias'] }}
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $evaluado['informacion_evaluacion']['promedio_competencias'] }}
                                     %</span>
                             </td>
                             <td class="p-0" style="position: relative;">
@@ -172,8 +172,8 @@
                                             })
                                             ->first();
                                         if ($calificacion_auto) {
-                                            $calificacion_auto_promedio = ($calificacion_auto['calificacion'] * 100) / $calificacion_auto['meta'];
-                                            $collect_calificaciones->push($calificacion_auto_promedio);
+                                            $calificacion_auto_promedio = ($calificacion_auto['calificacion'] / $calificacion_auto['meta']) * 100;
+                                            $collect_calificaciones->push($calificacion_auto_promedio * ($calificacion_auto['peso'] / 100));
                                         }
                                     }
                                     
@@ -185,8 +185,8 @@
                                             })
                                             ->first();
                                         if ($calificacion_jefe) {
-                                            $calificacion_jefe_promedio = ($calificacion_jefe['calificacion'] * 100) / $calificacion_jefe['meta'];
-                                            $collect_calificaciones->push($calificacion_jefe_promedio);
+                                            $calificacion_jefe_promedio = ($calificacion_jefe['calificacion'] / $calificacion_jefe['meta']) * 100;
+                                            $collect_calificaciones->push($calificacion_jefe_promedio * ($calificacion_auto['peso'] / 100));
                                         }
                                     }
                                     
@@ -198,8 +198,8 @@
                                             })
                                             ->first();
                                         if ($calificacion_equipo) {
-                                            $calificacion_equipo_promedio = ($calificacion_equipo['calificacion'] * 100) / $calificacion_equipo['meta'];
-                                            $collect_calificaciones->push($calificacion_equipo_promedio);
+                                            $calificacion_equipo_promedio = ($calificacion_equipo['calificacion'] / $calificacion_equipo['meta']) * 100;
+                                            $collect_calificaciones->push($calificacion_equipo_promedio * ($calificacion_auto['peso'] / 100));
                                         }
                                     }
                                     
@@ -211,16 +211,18 @@
                                             })
                                             ->first();
                                         if ($calificacion_area) {
-                                            $calificacion_area_promedio = ($calificacion_area['calificacion'] * 100) / $calificacion_area['meta'];
-                                            $collect_calificaciones->push($calificacion_area_promedio);
+                                            $calificacion_area_promedio = ($calificacion_area['calificacion'] / $calificacion_area['meta']) * 100;
+                                            $collect_calificaciones->push($calificacion_area_promedio * ($calificacion_auto['peso'] / 100));
                                         }
                                     }
+                                    
                                     $promedio = 0;
                                     foreach ($collect_calificaciones as $calif) {
                                         $promedio += $calif;
                                     }
+                                    
                                     if (count($collect_calificaciones)) {
-                                        $promedio = number_format($promedio / count($collect_calificaciones), 2);
+                                        $promedio = number_format($promedio, 2);
                                     } else {
                                         $promedio = number_format($promedio / 1, 2);
                                     }

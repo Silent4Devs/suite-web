@@ -98,7 +98,7 @@
 
         <div  class="form-group col-sm-12 col-md-3 col-lg-3">
             <label><i class="fas fa-bullseye iconos-crear"></i>Valor de Riesgo</label>
-           <div class="mt-2 form-control" id="valorImpactoTxt"></div>
+           <div class="mt-2 form-control" id="valorImpactoTxt" readonly></div>
         </div>
 
     </div>
