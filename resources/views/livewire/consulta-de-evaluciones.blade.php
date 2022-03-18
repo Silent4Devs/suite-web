@@ -40,13 +40,13 @@
                 <canvas id="radarCompetencias" width="400" height="400"></canvas>
             </div>
             <div class="col-6">
-                <canvas id="jefeGrafica" width="400" height="400"></canvas>
+                <canvas id="jefeGrafica" width="350" height="350"></canvas>
             </div>
             <div class="col-6">
-                <canvas id="equipoGrafica" width="400" height="400"></canvas>
+                <canvas id="equipoGrafica" width="350" height="350"></canvas>
             </div>
             <div class="col-6">
-                <canvas id="areaGrafica" width="400" height="400"></canvas>
+                <canvas id="areaGrafica" width="350" height="350"></canvas>
             </div>
             {{-- @dump($competencias_lista_nombre) --}}
         </div>
@@ -140,11 +140,12 @@
                 calificaciones_autoevaluacion_competencias_compare);
         });
         renderGraficas(@json($competencias_lista_nombre), @json($calificaciones_autoevaluacion_competencias), @json($calificaciones_jefe_competencias),
-            @json($calificaciones_equipo_competencias), @json($calificaciones_area_competencias));
+            @json($calificaciones_equipo_competencias), @json($calificaciones_area_competencias), @json($calificaciones_meta_competencias));
     });
 
     function renderGraficas(competencias_lista_nombre, calificaciones_autoevaluacion_competencias,
-        calificaciones_jefe_competencias, calificaciones_equipo_competencias, calificaciones_area_competencias) {
+        calificaciones_jefe_competencias, calificaciones_equipo_competencias, calificaciones_area_competencias,
+        calificaciones_meta_competencias) {
         let labels = competencias_lista_nombre;
         let data = {
             labels: labels,
@@ -158,16 +159,23 @@
                 backgroundColor: 'rgb(46, 106, 204)',
                 borderColor: 'rgb(46, 106, 204)',
                 data: calificaciones_jefe_competencias,
+            }, {
+                label: 'Meta',
+                backgroundColor: 'rgb(255, 77, 0)',
+                borderColor: 'rgb(255, 77, 0)',
+                data: calificaciones_jefe_competencias,
             }]
         };
         let config = {
             type: 'line',
             data: data,
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Autoevaluación vs Jefe Inmediato',
+                        text: 'Autoevaluación vs Jefe Inmediato vs Meta',
                     }
                 }
             }
@@ -195,16 +203,23 @@
                 backgroundColor: 'rgb(46, 106, 204)',
                 borderColor: 'rgb(46, 106, 204)',
                 data: calificaciones_equipo_competencias,
+            }, {
+                label: 'Meta',
+                backgroundColor: 'rgb(255, 77, 0)',
+                borderColor: 'rgb(255, 77, 0)',
+                data: calificaciones_jefe_competencias,
             }]
         };
         let configEquipo = {
             type: 'line',
             data: dataEquipo,
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Autoevaluación vs Subordinado',
+                        text: 'Autoevaluación vs Subordinado vs Meta',
                     }
                 }
             }
@@ -230,16 +245,23 @@
                 backgroundColor: 'rgb(46, 106, 204)',
                 borderColor: 'rgb(46, 106, 204)',
                 data: calificaciones_area_competencias,
+            }, {
+                label: 'Meta',
+                backgroundColor: 'rgb(255, 77, 0)',
+                borderColor: 'rgb(255, 77, 0)',
+                data: calificaciones_jefe_competencias,
             }]
         };
         let configArea = {
             type: 'line',
             data: dataArea,
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Autoevaluación vs Par',
+                        text: 'Autoevaluación vs Par vs Meta',
                     }
                 }
             }
@@ -258,33 +280,33 @@
                     label: 'Autoevaluación',
                     data: calificaciones_autoevaluacion_competencias,
                     fill: true,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    pointBackgroundColor: 'rgb(255, 99, 132)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgb(255, 99, 132)'
-                }, {
-                    label: 'Jefe Inmediato',
-                    data: calificaciones_jefe_competencias,
-                    fill: true,
-                    backgroundColor: 'rgba(192, 57, 43, 0.2)',
-                    borderColor: 'rgb(192, 57, 43)',
-                    pointBackgroundColor: 'rgb(192, 57, 43)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgb(192, 57, 43)'
-                },
-                {
-                    label: 'Subordinado',
-                    data: calificaciones_equipo_competencias,
-                    fill: true,
                     backgroundColor: 'rgba(46, 204, 65, 0.2)',
                     borderColor: 'rgb(46, 204, 65)',
                     pointBackgroundColor: 'rgb(46, 204, 65)',
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
                     pointHoverBorderColor: 'rgb(46, 204, 65)'
+                }, {
+                    label: 'Jefe Inmediato',
+                    data: calificaciones_jefe_competencias,
+                    fill: true,
+                    backgroundColor: 'rgba(0,128,255, 0.2)',
+                    borderColor: 'rgb(0,128,255)',
+                    pointBackgroundColor: 'rgb(0,128,255)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(0,128,255)'
+                },
+                {
+                    label: 'Subordinado',
+                    data: calificaciones_equipo_competencias,
+                    fill: true,
+                    backgroundColor: 'rgba(255,228,0, 0.2)',
+                    borderColor: 'rgb(255,228,0)',
+                    pointBackgroundColor: 'rgb(255,228,0)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(255,228,0)'
                 }, {
                     label: 'Par',
                     data: calificaciones_area_competencias,
@@ -295,6 +317,16 @@
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
                     pointHoverBorderColor: 'rgb(230, 126, 34)'
+                }, {
+                    label: 'Meta',
+                    data: calificaciones_meta_competencias,
+                    fill: true,
+                    backgroundColor: 'rgba(255,0,0, 0.2)',
+                    borderColor: 'rgb(255,0,0)',
+                    pointBackgroundColor: 'rgb(255,0,0)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(255,0,0)'
                 }
             ]
         };
@@ -302,20 +334,27 @@
             type: 'radar',
             data: dataRadar,
             options: {
-                responsive: false,
-                maintainAspectRatio: true,
-                elements: {
-                    line: {
-                        borderWidth: 3
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Autoevaluación vs Par',
-                        }
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
-                }
-            },
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Promedios'
+                    },
+                    legend: {
+                        display: true
+                    },
+                },
+                scale: {
+                    min: 0,
+                },
+            }
         };
         if (window.radarChart instanceof Chart) {
             window.radarChart.destroy();
@@ -348,6 +387,8 @@
             type: 'line',
             data: data,
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     title: {
                         display: true,
@@ -395,18 +436,27 @@
             type: 'radar',
             data: dataRadar,
             options: {
-                elements: {
-                    line: {
-                        borderWidth: 3
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Autoevaluación vs Misma área',
-                        }
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
-                }
-            },
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Promedios'
+                    },
+                    legend: {
+                        display: true
+                    },
+                },
+                scale: {
+                    min: 0,
+                },
+            }
         };
         if (window.radarChartCompare instanceof Chart) {
             window.radarChartCompare.destroy();
