@@ -164,7 +164,7 @@
             position: absolute;
             margin: auto;
             display: none;
-            top: 35px;
+            top: 10px;
             z-index: 3;
             height: calc(100% - 40px);
 
