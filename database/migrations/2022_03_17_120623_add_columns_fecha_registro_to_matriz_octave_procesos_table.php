@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DropFkToActivosTable extends Migration
+class AddColumnsFechaRegistroToMatrizOctaveProcesosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class DropFkToActivosTable extends Migration
      */
     public function up()
     {
-        Schema::table('activos', function (Blueprint $table) {
-            // $table->dropForeign('subtipo_fk_2474601');
+        Schema::table('matriz_octave_procesos', function (Blueprint $table) {
+            $table->date('fecha_registro')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class DropFkToActivosTable extends Migration
      */
     public function down()
     {
-        Schema::table('activos', function (Blueprint $table) {
+        Schema::table('matriz_octave_procesos', function (Blueprint $table) {
             //
         });
     }

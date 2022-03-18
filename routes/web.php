@@ -953,8 +953,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //ProcesosOctave
     Route::post('procesos-octave/activos', 'ProcesosOctaveController@activos')->name('procesos.octave.activos');
-    Route::delete('procesos-octave/destroy', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
-    Route::resource('procesos-octave', 'ProcesosOctaveController')->except('destroy');
+    // Route::delete('procesos-octave/destroy', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
+    Route::resource('procesos-octave', 'ProcesosOctaveController');
 
     //Servicios
     Route::delete('servicios/destroy', 'ServiciosController@destroy')->name('servicios.destroy');

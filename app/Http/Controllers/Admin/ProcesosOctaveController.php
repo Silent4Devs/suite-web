@@ -26,7 +26,7 @@ class ProcesosOctaveController extends Controller
                 $viewGate = 'analisis_de_riesgos_vulnerabilidades_edit';
                 $editGate = 'analisis_de_riesgos_vulnerabilidades_show';
                 $deleteGate = 'analisis_de_riesgos_vulnerabilidades_delete';
-                $crudRoutePart = 'carta-aceptacion';
+                $crudRoutePart = 'procesos-octave';
 
                 return view('partials.datatablesActions', compact(
                     'viewGate',
@@ -85,19 +85,30 @@ class ProcesosOctaveController extends Controller
         return redirect()->route('admin.procesos-octave.index');
     }
 
-    public function edit()
+    public function edit($procesosOctave)
     {
         $areas = Area::get();
         $procesos = Proceso::get();
         $activosInfo = ActivoInformacion::get();
         $servicios = MatrizOctaveServicio::get();
-
-        return view('admin.procesos-octave.edit', compact('areas', 'procesos', 'activosInfo', 'servicios'));
+        $procesosOctave = MatrizOctaveProceso::find( $procesosOctave);
+        $servicio_seleccionado = $procesosOctave->servicio_id;
+        // dd($procesosOctave->operacional);
+        $operacionalSeleccionado = $procesosOctave->operacional;
+        $cumplimientoSeleccionado = $procesosOctave->cumplimiento;
+        $legalSeleccionado = $procesosOctave->legal;
+        $reputacionalSeleccionado = $procesosOctave->reputacional;
+        $tecnologicoSeleccionado = $procesosOctave->tecnologico;
+        $riesgo=$procesosOctave->riesgo;
+        $model = Proceso::find($procesosOctave->id_proceso);
+        $activosProceso = $model->activosAI;
+        return view('admin.procesos-octave.edit', compact('activosProceso','riesgo','tecnologicoSeleccionado','reputacionalSeleccionado','legalSeleccionado','cumplimientoSeleccionado','operacionalSeleccionado','servicio_seleccionado','procesosOctave','areas', 'procesos', 'activosInfo', 'servicios'));
     }
 
     public function update(Request $request, MatrizOctaveProceso $procesosOctave)
     {
-        $procesosOctave = MatrizOctaveProceso::create($request->all());
+        // $procesosOctave = MatrizOctaveProceso::create($request->all());
+        $procesosOctave->update($request->all());
 
         return redirect()->route('admin.procesos-octave.index');
     }
@@ -114,4 +125,13 @@ class ProcesosOctaveController extends Controller
 
         return $activos;
     }
+
+    public function destroy($procesosOctave)
+    {
+       $procesosOctave=MatrizOctaveProceso::find($procesosOctave);
+        $procesosOctave->delete();
+
+        return back();
+    }
+
 }
