@@ -345,7 +345,7 @@
                     <div class="form-group col-12">
                         <label>Seleccione el dia de registro para los miembros de la organización</label>
                         <select class="form-control" name="dia_timesheet">
-                            <option value="{{ $organizacion->dia_timesheet }}">{{ $organizacion->dia_timesheet ? 'Actusal: ' : ''}}{{ $organizacion->dia_timesheet }}</option>
+                            <option value="{{ $organizacion->dia_timesheet }}">{{ $organizacion->dia_timesheet ? 'Actual: ' : ''}}{{ $organizacion->dia_timesheet }}</option>
                             <option value="Lunes">Lunes</option>
                             <option value="Martes">Martes</option>
                             <option value="Miércoles">Miércoles</option>
