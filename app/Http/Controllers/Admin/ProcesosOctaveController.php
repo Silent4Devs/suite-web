@@ -10,8 +10,8 @@ use App\Models\Proceso;
 use App\Models\MatrizOctaveProceso;
 use App\Models\MatrizOctaveServicio;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
+
+
 
 class ProcesosOctaveController extends Controller
 {
