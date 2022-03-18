@@ -774,8 +774,17 @@ class EV360EvaluacionesController extends Controller
 
     public function desglosarCalificaciones($informacion_obtenida)
     {
-        $calificaciones_autoevaluacion_competencias = collect();
         $competencias_lista_nombre = collect();
+        $calificaciones_meta_competencias = collect();
+        foreach ($informacion_obtenida['lista_autoevaluacion'] as $autoevaluacion_calificaciones) {
+            foreach ($autoevaluacion_calificaciones['evaluaciones'] as $evaluacion_auto) {
+                foreach ($evaluacion_auto['competencias'] as $competencia_auto) {
+                    $calificaciones_meta_competencias->push($competencia_auto['meta']);
+                }
+            }
+        }
+
+        $calificaciones_autoevaluacion_competencias = collect();
         foreach ($informacion_obtenida['lista_autoevaluacion'] as $autoevaluacion_calificaciones) {
             foreach ($autoevaluacion_calificaciones['evaluaciones'] as $evaluacion_auto) {
                 foreach ($evaluacion_auto['competencias'] as $competencia_auto) {
@@ -812,6 +821,7 @@ class EV360EvaluacionesController extends Controller
 
         return [
             'competencias_lista_nombre' => $competencias_lista_nombre,
+            'calificaciones_meta_competencias' => $calificaciones_meta_competencias,
             'calificaciones_autoevaluacion_competencias' => $calificaciones_autoevaluacion_competencias,
             'calificaciones_jefe_competencias' => $calificaciones_jefe_competencias,
             'calificaciones_equipo_competencias' => $calificaciones_equipo_competencias,
