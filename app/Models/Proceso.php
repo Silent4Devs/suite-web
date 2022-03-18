@@ -120,4 +120,9 @@ class Proceso extends Model
     {
         return $this->hasOne(MatrizOctaveProceso::class, 'id_proceso', 'id');
     }
+
+    public function procesosOctave()
+    {
+        return $this->hasMany(MatrizOctaveProceso::class, 'id_proceso', 'id');
+    }
 }

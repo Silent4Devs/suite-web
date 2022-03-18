@@ -1009,11 +1009,12 @@ class MatrizRiesgosController extends Controller
 
     public function graficas()
     {
-        $procesos = MatrizOctaveProceso::get();
+        $procesos = MatrizOctaveProceso::with('proceso')->get();
         $direcciones = Area::get();
         $servicios = MatrizOctaveServicio::get();
         $activos = ActivoInformacion::get();
+        $activos_contenedores = ActivoInformacion::get();
 
-        return view('admin.OCTAVE.graficas', compact('procesos', 'direcciones', 'servicios', 'activos'));
+        return view('admin.OCTAVE.graficas', compact('procesos', 'direcciones', 'servicios', 'activos', 'activos_contenedores'));
     }
 }
