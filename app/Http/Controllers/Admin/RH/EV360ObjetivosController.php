@@ -249,6 +249,17 @@ class EV360ObjetivosController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function definirNuevosObjetivos()
+    {
+        $objetivosAnteriores = ObjetivoEmpleado::where('en_curso', true)->get();
+        foreach ($objetivosAnteriores as $objetivoAnterior) {
+            $objetivoAnterior->update([
+                'en_curso' => false
+            ]);
+        }
+        return response()->json(['estatus' => 200]);
+    }
+
     public function destroy(ObjetivoEmpleado $objetivoEmpleado)
     {
         $objetivoEmpleado->delete();
