@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ActivoInformacion;
 use App\Models\Area;
-use App\Models\Proceso;
 use App\Models\MatrizOctaveProceso;
 use App\Models\MatrizOctaveServicio;
+use App\Models\Proceso;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-
-
 
 class ProcesosOctaveController extends Controller
 {
@@ -93,7 +91,7 @@ class ProcesosOctaveController extends Controller
         $procesos = Proceso::get();
         $activosInfo = ActivoInformacion::get();
         $servicios = MatrizOctaveServicio::get();
-        $procesosOctave = MatrizOctaveProceso::find( $procesosOctave);
+        $procesosOctave = MatrizOctaveProceso::find($procesosOctave);
         $servicio_seleccionado = $procesosOctave->servicio_id;
         // dd($procesosOctave->operacional);
         $operacionalSeleccionado = $procesosOctave->operacional;
@@ -101,10 +99,11 @@ class ProcesosOctaveController extends Controller
         $legalSeleccionado = $procesosOctave->legal;
         $reputacionalSeleccionado = $procesosOctave->reputacional;
         $tecnologicoSeleccionado = $procesosOctave->tecnologico;
-        $riesgo=$procesosOctave->riesgo;
+        $riesgo = $procesosOctave->riesgo;
         $model = Proceso::find($procesosOctave->id_proceso);
         $activosProceso = $model->activosAI;
-        return view('admin.procesos-octave.edit', compact('activosProceso','riesgo','tecnologicoSeleccionado','reputacionalSeleccionado','legalSeleccionado','cumplimientoSeleccionado','operacionalSeleccionado','servicio_seleccionado','procesosOctave','areas', 'procesos', 'activosInfo', 'servicios'));
+
+        return view('admin.procesos-octave.edit', compact('activosProceso', 'riesgo', 'tecnologicoSeleccionado', 'reputacionalSeleccionado', 'legalSeleccionado', 'cumplimientoSeleccionado', 'operacionalSeleccionado', 'servicio_seleccionado', 'procesosOctave', 'areas', 'procesos', 'activosInfo', 'servicios'));
     }
 
     public function update(Request $request, MatrizOctaveProceso $procesosOctave)
@@ -130,10 +129,9 @@ class ProcesosOctaveController extends Controller
 
     public function destroy($procesosOctave)
     {
-       $procesosOctave=MatrizOctaveProceso::find($procesosOctave);
+        $procesosOctave = MatrizOctaveProceso::find($procesosOctave);
         $procesosOctave->delete();
 
         return back();
     }
-
 }

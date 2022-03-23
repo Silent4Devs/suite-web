@@ -254,9 +254,10 @@ class EV360ObjetivosController extends Controller
         $objetivosAnteriores = ObjetivoEmpleado::where('en_curso', true)->get();
         foreach ($objetivosAnteriores as $objetivoAnterior) {
             $objetivoAnterior->update([
-                'en_curso' => false
+                'en_curso' => false,
             ]);
         }
+
         return response()->json(['estatus' => 200]);
     }
 
