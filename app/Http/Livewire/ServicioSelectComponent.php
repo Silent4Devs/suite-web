@@ -11,7 +11,7 @@ class ServicioSelectComponent extends Component
     public $servicios;
     public $servicio_seleccionado;
 
-    public function mount($servicio_seleccionado=null)
+    public function mount($servicio_seleccionado = null)
     {
         $this->servicio_seleccionado = $servicio_seleccionado;
         $this->servicios = [];
