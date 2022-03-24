@@ -24,8 +24,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+
                 @foreach($filas as $fila)
+            <tr>
                 <td>
                     {{$fila['tipo']}}
                 </td>
@@ -35,9 +36,9 @@
                 <td>
                     {{$fila['base']}}
                 </td>
+            </tr>
                 @endforeach
 
-            </tr>
         </tbody>
     </table>
 
