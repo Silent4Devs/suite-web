@@ -27,7 +27,12 @@
                     <button class="btn btn-primary" style="background-color: #aaa; border:none !important;" id="btn_papelera">Borrador</button>
                     <button class="btn btn-primary" style="background-color: #F48C16; border:none !important;" id="btn_pendiente">Pendientes</button>
                     <button class="btn btn-primary" style="background-color: #61CB5C; border:none !important;" id="btn_aprobado">Aprobados</button>
-                    <button class="btn btn-primary" style="background-color: #EA7777; border:none !important;" id="btn_rechazado">Rechazados</button>
+                    <button class="btn btn-primary" style="background-color: #EA7777; border:none !important; position: relative;" id="btn_rechazado">
+                        @if($rechazos_contador > 0)
+                            <span class="indicador_numero" style="filter: contrast(200%);">{{ $rechazos_contador }}</span>
+                        @endif
+                        Rechazados
+                    </button>
                 </div>
 			</div>
 
@@ -35,7 +40,8 @@
 	            <table id="datatable_timesheet" class="table w-100">
 	                <thead class="w-100">
 	                    <tr>
-	                        <th>Fin de semana </th>
+                            <th>Semana </th>
+	                        <th>Fecha de corte</th>
 	                        <th>Empleado</th>
 	                        <th>Responsable</th>
                             <th>Aprobación</th>
@@ -47,42 +53,11 @@
                         @foreach($times as $time)
     	                	<tr class="tr_{{  $time->estatus }}">
     	                        <td>
-                                    @if($time->dia_semana == 'Domingo')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->addDay(6)->format("d/m/Y") }}
-                                    @endif
-                                    @if($time->dia_semana == 'Lunes')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->subDay(1)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->addDay(5)->format("d/m/Y") }}
-                                    @endif
-                                    @if($time->dia_semana == 'Martes')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->subDay(2)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->addDay(4)->format("d/m/Y") }}
-                                    @endif
-                                    @if($time->dia_semana == 'Miércoles')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->subDay(3)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->addDay(3)->format("d/m/Y") }}
-                                    @endif
-                                    @if($time->dia_semana == 'Jueves')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->subDay(4)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->addDay(2)->format("d/m/Y") }}
-                                    @endif
-                                    @if($time->dia_semana == 'Viernes')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->subDay(5)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->addDay(1)->format("d/m/Y") }}
-                                    @endif
-                                    @if($time->dia_semana == 'Sábado')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->subDay(6)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->format("d/m/Y") }}
-                                    @endif
+                                    {!! $time->semana !!}
     	                        </td>
+                                <td>
+                                    {{ \Carbon\Carbon::parse($time->fecha_dia)->format("d/m/Y") }}
+                                </td>
     	                        <td>
     	                            {{ $time->empleado->name }}
     	                        </td>
@@ -95,7 +70,7 @@
                                     @endif
 
                                     @if($time->estatus == 'rechazado')
-                                        <span class="aprobado">Rechazada</span>
+                                        <span class="rechazado">Rechazada</span>
                                     @endif
 
                                     @if($time->estatus == 'pendiente')
@@ -107,16 +82,16 @@
                                     @endif
     	                        </td>
     	                        <td>
-                                    <form method="DELETE" action="{{ route('admin.timesheet.destroy', $time->id) }}">    
-                                        @csrf
-                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
 
-                                        @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
-                                            <a href="{{ asset('admin/timesheet/edit') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        @endif
+                                    @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
+                                        <a href="{{ asset('admin/timesheet/edit') }}/{{ $time->id }}" title="Editar" class="btn"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    @endif
 
-                                        <button class="btn" style="color:red;"><i class="fa-solid fa-trash-can"></i></button>
-    							     </form>
+                                    
+                                    @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
+                                        <button title="Eliminar" class="btn" style="color:red;" data-toggle="modal" data-target="#alert_time_delet_{{ $time->id }}"><i class="fa-solid fa-trash-can"></i></button>
+                                    @endif
                                 </td>	                    
     						</tr>
                         @endforeach
@@ -126,7 +101,29 @@
 
 		</div>
 	</div>
-	
+
+    @foreach($times as $time)
+        <div class="modal fade" id="alert_time_delet_{{ $time->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="delete">
+                            <i class="fa-solid fa-trash-can icono_delete"></i>
+                            <h1 class="mb-4">Eliminar</h1>
+                            <p class="parrafo">¿Esta seguro que desea eliminar este registro?</p>
+                            <div class="mt-4">
+                                    <div class="mr-4 cancelar btn btn-outline-secondary" data-dismiss="modal">
+                                        Cancelar</div>
+                                    <a href="{{ route('admin.timesheet-eliminar', $time->id) }}" class="eliminar btn btn-info" type="submit">Eliminar</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	@endforeach
+
 @endsection
 
 

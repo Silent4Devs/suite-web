@@ -795,15 +795,15 @@ Breadcrumbs::for('sugerencias-create-portal', function ($trail) {
 
 Breadcrumbs::for('timesheet-index', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
-    $trail->push('Mi Timesheet');
+    $trail->push('Mis Registros');
 });
 Breadcrumbs::for('timesheet-create', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
-    $trail->push('Llenar Horas');
+    $trail->push('Registrar Jornada Laboral');
 });
 Breadcrumbs::for('timesheet-edit', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
-    $trail->push('Llenar Horas');
+    $trail->push('Registrar Jornada Laboral');
 });
 Breadcrumbs::for('timesheet-proyectos', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
