@@ -416,7 +416,7 @@ class Empleado extends Model
 
     public function objetivos()
     {
-        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id');
+        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id')->where('en_curso', true);
     }
 
     public function perfil()
