@@ -73,6 +73,8 @@ class Organizacion extends Model
         'facebook',
         'twitter',
         'dia_timesheet',
+        'inicio_timesheet',
+        'fin_timesheet',
 
     ];
 

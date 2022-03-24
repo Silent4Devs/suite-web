@@ -438,6 +438,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('timesheet/show/{id}', 'TimesheetController@show')->name('timesheet-show');
     Route::get('timesheet/edit/{id}', 'TimesheetController@edit')->name('timesheet-edit');
     Route::get('timesheet/papelera', 'TimesheetController@papelera')->name('timesheet-papelera');
+    Route::get('timesheet/eliminar/{id}', 'TimesheetController@eliminar')->name('timesheet-eliminar');
     Route::get('timesheet/aprobaciones', 'TimesheetController@aprobaciones')->name('timesheet-aprobaciones');
     Route::get('timesheet/rechazos', 'TimesheetController@rechazos')->name('timesheet-rechazos');
     Route::post('timesheet/aprobar/{id}', 'TimesheetController@aprobar')->name('timesheet-aprobar');

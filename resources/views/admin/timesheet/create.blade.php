@@ -1,10 +1,11 @@
 @extends('layouts.admin')
 @section('content')
 	
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+
     <style type="text/css">
         .ingresar_horas{
-            width: 50px;
-            margin: auto;
+            width: 70px;
         }
         .table select{
             width: 100%;
@@ -27,7 +28,7 @@
 
     {{ Breadcrumbs::render('timesheet-create') }}
 
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Llenar Horas</font> </h5>
+	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font> </h5>
 
 	<div class="card card-body">
 		<div class="row">
@@ -100,12 +101,14 @@
                     }, 
                     months: {
                       shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
-                      longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                      longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                     },
                 },
             });
         });
         
     </script>
+
+    
 
 @endsection
