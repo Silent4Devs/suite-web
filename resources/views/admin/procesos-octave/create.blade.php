@@ -200,9 +200,7 @@
 
 
             <div class="col-12 row">
-                <div class="form-group col-md-8 col-lg-8" ></div>
-
-                <div class="form-group col-sm-12 col-md-4 col-lg-4" >
+                <div class="form-group col-sm-12 col-md-6 col-lg-6" >
                     <label for="fecha_registro"><i
                             class="fas fa-calendar-alt iconos-crear"></i>Fecha de registro<span class="text-danger">*</span></label>
                     <input class="form-control date" type="date" name="fecha_registro" id="fecha_registro"
@@ -212,6 +210,18 @@
                             {{ $errors->first('fecha_registro') }}
                         </span>
                     @endif
+                </div>
+
+                <div class="form-group col-md-6 col-sm-12">
+                    <label><i class="fas fa-handshake iconos-crear"></i>Servicio</label>
+                    <div style="float: right;">
+                    <button id="btnAgregarTipo" onclick="event.preventDefault();" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+                    data-toggle="modal" data-target="#tipoCompetenciaModal" data-whatever="@mdo" data-whatever="@mdo" title="Agregar Tipo Impacto"><i
+                        class="fas fa-plus"></i></button>
+                    </div>
+                    @livewire('servicio-component')
+
+                    @livewire('servicio-select-component',['servicio_seleccionado'=>$servicio_seleccionado])
                 </div>
             </div>
 
@@ -234,7 +244,7 @@
                 @endif
             </div>
             <div  class="form-group col-sm-4 col-md-3 col-lg-3">
-                <label for="nivel_riesgo"><i class="fas fa-bullseye iconos-crear"></i>Nivel de Riesgo</label>
+                <label for="nivel_riesgo"><i class="fas fa-bullseye iconos-crear"></i>Valor de Riesgo</label>
                 <input class="form-control mt-2 {{ $errors->has('nivel_riesgo') ? 'is-invalid' : '' }}" type="number" id="nivel_riesgo"
                 name="nivel_riesgo" value="{{ old('nivel_riesgo', '') }}" readonly>
                 @if ($errors->has('nivel_riesgo'))
@@ -245,7 +255,7 @@
             </div>
 
             <div  class="form-group col-sm-4 col-md-3 col-lg-3">
-                <label for="nivel_riesgo"><i class="fas fa-bullseye iconos-crear"></i>Valor de Riesgo</label>
+                <label for="nivel_riesgo"><i class="fas fa-bullseye iconos-crear"></i>Nivel de Riesgo</label>
                 <div class="mt-2 form-control" id="valorCriticidadTxt"></div>
             </div>
         </div>
@@ -267,18 +277,18 @@
                     </div>
                 @endif
             </div>
-            <div class="form-group col-md-6 col-sm-12">
-            <label><i class="fas fa-handshake iconos-crear"></i>Servicio</label>
-            <div style="float: right;">
-            <button id="btnAgregarTipo" onclick="event.preventDefault();" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
-            data-toggle="modal" data-target="#tipoCompetenciaModal" data-whatever="@mdo" data-whatever="@mdo" title="Agregar Tipo Impacto"><i
-                class="fas fa-plus"></i></button>
-            </div>
-            @livewire('servicio-component')
 
-            @livewire('servicio-select-component',['servicio_seleccionado'=>$servicio_seleccionado])
+            <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <label for="nombreVP"><i class="fas fa-street-view iconos-crear"></i>Nombre VP</label>
+                <select class="custom-select my-1 mr-sm-2" id="nombredevp_id" name="nombredevp_id">
+                    @foreach ($grupos as $grupo)
+                        <option value="{{ $grupo->id }}"
+                            >
+                            {{ $grupo->nombre }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
-
         </div>
 
             <div class="text-center form-group col-12" style="background-color:#345183; border-radius: 100px; color: white;">
@@ -309,7 +319,7 @@
                     @endif
                 </div>
                 <div  class="form-group col-sm-4 col-md-3 col-lg-3">
-                    <label for="valor"><i class="fas fa-bullseye iconos-crear"></i>Valor de Activos</label>
+                    <label for="valor"><i class="fas fa-bullseye iconos-crear"></i>Nivel de Activos</label>
                     <div class="form-control mt-2" readonly id="valorActivosText"></div>
                 </div>
             </div>
