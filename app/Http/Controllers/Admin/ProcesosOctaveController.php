@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Models\Grupo;
-use App\Models\ActivoInformacion;
 use App\Models\Area;
+use App\Models\Grupo;
+use App\Models\Proceso;
+use Illuminate\Http\Request;
+use App\Models\ActivoInformacion;
 use App\Models\MatrizOctaveProceso;
 use App\Http\Controllers\Controller;
 use App\Models\MatrizOctaveServicio;
@@ -78,7 +80,11 @@ class ProcesosOctaveController extends Controller
         $servicio_seleccionado = null;
         $grupos = Grupo::get();
 
+<<<<<<< HEAD
         return view('admin.procesos-octave.create', compact('grupos', 'areas', 'procesos', 'activosInfo', 'servicios', 'servicio_seleccionado'));
+=======
+        return view('admin.procesos-octave.create', compact('grupos','areas', 'procesos', 'activosInfo', 'servicios', 'servicio_seleccionado'));
+>>>>>>> bf97fee00579618c240141d4d7594edc901686f7
     }
 
     public function store(Request $request)
