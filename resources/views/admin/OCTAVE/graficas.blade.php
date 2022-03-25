@@ -89,7 +89,36 @@
             color: #fff;
             box-shadow: 0px 4px 5px 1px rgba(0, 0, 0, 0.2);
         }
+
+        .i_regreso{
+            font-size: 20pt;
+            cursor: pointer;
+            color: #007CA4;
+            animation: regreso 2s infinite;
+        }
+
+        @keyframes regreso{
+            0%{
+                margin-left: 0;
+            }
+            50%{
+                margin-right: -20px;
+            }
+            60%{
+                margin-right: 0px;
+            }
+            80%{
+                margin-right: -10px;
+            }
+            100%{
+                margin-right: 0px;
+            }
+        }
     </style>
+
+    @php
+        use App\Models\MatrizOctaveEscenario;
+    @endphp
 
     <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo</h5>
 
@@ -345,7 +374,7 @@
                 </div>
             </div>
 
-            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Evaluación de Activos <font id="nombre_proceso"></font></strong> <i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
+            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Evaluación de Activos <font id="nombre_proceso"></font></strong> <i class="fa-solid fa-arrow-left i_regreso regreso_gen"></i></h5>
 
             @php
                 $variable_medir_activo = '3,4';
@@ -620,7 +649,7 @@
 
         <div class="row caja-graf d-none" id="caja_graf_con">
 
-            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Mapa de Riesgos de Contenedor</strong><i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
+            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Mapa de Riesgos de Contenedor</strong><i class="fa-solid fa-arrow-left i_regreso regreso_contenedor"></i></h5>
 
             <div class="col-12 pb-5" style="overflow: auto;">
 
@@ -634,7 +663,7 @@
                                 @foreach($activos as $activo)
                                     @foreach($activo->contenedores as $contenedor)
                                         @if(($contenedor->riesgo >= 5) && ($contenedor->riesgo <= 6))
-                                            <div class="circle-s activo_id_{{ $activo->id }}">C{{ $contenedor->identificador_contenedor }}</div>
+                                            <div class="circle-s activo_id_{{ $activo->id }}" data-toggle="modal" data-target="#modal_content_es_{{ $contenedor->id }}">C{{ $contenedor->identificador_contenedor }}</div>
                                         @endif
                                     @endforeach
                                 @endforeach
@@ -645,7 +674,7 @@
                                 @foreach($activos as $activo)
                                     @foreach($activo->contenedores as $contenedor)
                                         @if($contenedor->riesgo >= 9)
-                                            <div class="circle-s activo_id_{{ $activo->id }}">C{{ $contenedor->identificador_contenedor }}</div>
+                                            <div class="circle-s activo_id_{{ $activo->id }}" data-toggle="modal" data-target="#modal_content_es_{{ $contenedor->id }}">C{{ $contenedor->identificador_contenedor }}</div>
                                         @endif
                                     @endforeach
                                 @endforeach
@@ -658,7 +687,7 @@
                                 @foreach($activos as $activo)
                                     @foreach($activo->contenedores as $contenedor)
                                         @if($contenedor->riesgo <= 4)
-                                            <div class="circle-s activo_id_{{ $activo->id }}">C{{ $contenedor->identificador_contenedor }}</div>
+                                            <div class="circle-s activo_id_{{ $activo->id }}" data-toggle="modal" data-target="#modal_content_es_{{ $contenedor->id }}">C{{ $contenedor->identificador_contenedor }}</div>
                                         @endif
                                     @endforeach
                                 @endforeach
@@ -669,7 +698,7 @@
                                 @foreach($activos as $activo)
                                     @foreach($activo->contenedores as $contenedor)
                                         @if(($contenedor->riesgo >= 7) && ($contenedor->riesgo <= 8))
-                                            <div class="circle-s activo_id_{{ $activo->id }}">C-{{ $contenedor->identificador_contenedor }}</div>
+                                            <div class="circle-s activo_id_{{ $activo->id }}" data-toggle="modal" data-target="#modal_content_es_{{ $contenedor->id }}">C-{{ $contenedor->identificador_contenedor }}</div>
                                         @endif
                                     @endforeach
                                 @endforeach
@@ -725,7 +754,6 @@
 
                                 @endphp
                                 <tr class=" d-none activo_id_{{ $activo->id }}">
-
                                     <td scope="col">
                                         <strong>C-</strong>{{ $contenedor->identificador_contenedor }}
                                     </td>
@@ -741,6 +769,54 @@
             </div>
         </div>
     </div>
+
+    {{-- matrix octave esenarios --}}
+    @foreach($activos as $activo)
+        @foreach($activo->contenedores as $contenedor)
+
+            @php
+
+                $escenarios = MatrizOctaveEscenario::where('id_octave_contenedor', $contenedor->id)->get();
+            @endphp
+            <div class="modal fade" id="modal_content_es_{{ $contenedor->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Escenarios de <strong style="text-decoration: underline;">C-{{ $contenedor->identificador_contenedor }}</strong></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-bordered" style="margin:auto;">
+                                    <thead class="">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th style="min-width: 150px;">Descripción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            @foreach($escenarios as $escenario)
+                                                <td>{{ $escenario->identificador_escenario }}</td>
+                                                <td>{{ $escenario->nom_escenario }}</td>
+                                                <td>{{ $escenario->descripcion }}</td>
+                                            @endforeach
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        @endforeach
+    @endforeach
 @endsection
 @section('scripts')
     @parent
@@ -758,6 +834,11 @@
         $('.regreso_gen').click(function(){
             $('.caja-graf').addClass('d-none');
             $('#caja_graf_ev').removeClass('d-none');
+        });
+
+        $('.regreso_contenedor').click(function(){
+            $('.caja-graf').addClass('d-none');
+            $('#caja_graf_act').removeClass('d-none');
         });
 
         // ______________________________________________________________________________________________
