@@ -24,17 +24,21 @@
             </tr>
         </thead>
         <tbody>
+
+                @foreach($filas as $fila)
             <tr>
                 <td>
-
+                    {{$fila['tipo']}}
                 </td>
                 <td>
-
+                    {{$fila['criterio']}}
                 </td>
                 <td>
-
+                    {{$fila['base']}}
                 </td>
             </tr>
+                @endforeach
+
         </tbody>
     </table>
 
@@ -90,7 +94,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="tipoimpactolec" id="exampleModalLabel">Nuevo Tipo Impacto</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -103,19 +107,19 @@
                     </div>
                     <div class="form-group col-12">
                         <label for="recipient-name" class="col-form-label">Criterio:</label>
-                        <textarea class="form-control" id="criterio" type="text"></textarea>
+                        <textarea class="form-control" wire:model='criterio' id="criterio" type="text"></textarea>
                         <span class="text-danger" id="criterio_error" class="criterio_error"></span>
                     </div>
                     <div class="form-group col-12">
                         <label for="recipient-name" class="col-form-label">Base:</label>
-                        <textarea type="text" class="form-control" id="base"></textarea>
+                        <textarea type="text" wire:model='base' class="form-control" id="base"></textarea>
                         <span class="text-danger" id="base_error" class="base_error"></span>
                     </div>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary" id="guardar_marca">Guardar</button>
+              <button type="button" class="btn btn-primary" id="guardar_marca" wire:click.prevent="addRow({{$indexRow}})">Guardar</button>
             </div>
           </div>
         </div>
@@ -128,6 +132,11 @@
         Livewire.on('cerrarModal',()=>{
         console.log('cerrarModal');
         $('#niveleslec').modal('hide');
+        document.querySelector('.modal-backdrop').style.display='none'
+         });
+        Livewire.on('cerrarModalImpacto',()=>{
+        console.log('cerrarModalImpacto');
+        $('#tipoimpactolec').modal('hide');
         document.querySelector('.modal-backdrop').style.display='none'
          });
     })

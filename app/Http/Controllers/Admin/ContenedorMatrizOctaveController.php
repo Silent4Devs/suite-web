@@ -55,6 +55,8 @@ class ContenedorMatrizOctaveController extends Controller
             return $table->make(true);
         }
 
+        // dd($request->all());
+
         return view('admin.ContenedorMatrizOctave.index');
     }
 
@@ -78,7 +80,7 @@ class ContenedorMatrizOctaveController extends Controller
         $contenedor = MatrizOctaveContenedor::find($contenedor);
         $sumatoria = $this->calcularRiesgo($contenedor->id);
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
-
+        // dd($contenedor->impacto_proceso);
         return view('admin.ContenedorMatrizOctave.edit', compact('contenedor', 'sumatoria', 'controles'));
     }
 
@@ -158,5 +160,14 @@ class ContenedorMatrizOctaveController extends Controller
         $activo->delete();
 
         return redirect()->route('admin.contenedores.index')->with('success', 'Eliminado con éxito');
+    }
+
+    public function eliminarEscenario(Request $request){
+
+
+        $escenario = MatrizOctaveEscenario::find($request->escenario);
+        $escenario->delete();
+        $sumatoria = $this->calcularRiesgo($request->contenedor);
+        return response()->json(['estatus' => 200, 'riesgo' => $sumatoria]);
     }
 }
