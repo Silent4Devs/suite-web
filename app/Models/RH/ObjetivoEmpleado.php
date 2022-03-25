@@ -12,7 +12,7 @@ class ObjetivoEmpleado extends Model
     public $cacheFor = 3600;
     protected static $flushCacheOnUpdate = true;
     protected $table = 'ev360_objetivo_empleados';
-    protected $fillable = ['empleado_id', 'objetivo_id', 'completado'];
+    protected $fillable = ['empleado_id', 'objetivo_id', 'completado', 'en_curso'];
 
     public function objetivo()
     {

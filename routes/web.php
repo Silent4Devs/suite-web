@@ -24,6 +24,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
     Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
     Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
+    Route::post('contenedores/escenarios/eliminar', 'ContenedorMatrizOctaveController@eliminarEscenario')->name('contenedores.escenarios.destroy');
+
 
     Route::get('octave/arbol-riesgos', 'ArbolRiesgosOctaveController@index')->name('octave.arbol-riesgos.index');
     Route::post('octave/arbol-riesgos', 'ArbolRiesgosOctaveController@obtenerArbol')->name('octave.arbol-riesgos.obtener');
@@ -158,6 +160,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@createByEmpleado')->name('ev360-objetivos-empleado.create');
     Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos/lista', 'RH\EV360ObjetivosController@show')->name('ev360-objetivos-empleado.show');
     Route::get('recursos-humanos/evaluacion-360/objetivos/{empleado}/copiar', 'RH\EV360ObjetivosController@indexCopiar')->name('ev360-objetivos-empleado.indexCopiar');
+    Route::post('recursos-humanos/evaluacion-360/objetivos/definir-nuevos', 'RH\EV360ObjetivosController@definirNuevosObjetivos')->name('ev360-objetivos-empleado.definir-nuevos');
     Route::post('recursos-humanos/evaluacion-360/objetivos/copiar', 'RH\EV360ObjetivosController@storeCopiaObjetivos')->name('ev360-objetivos-empleado.storeCopiaObjetivos');
     Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@storeByEmpleado')->name('ev360-objetivos-empleado.store');
 

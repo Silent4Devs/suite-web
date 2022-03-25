@@ -14,6 +14,7 @@ class SelectImpactos extends Component
     public $valorId;
     public $colorReglaTipo;
     public $colorTextoTipo;
+    public $nivelImpactoTxt;
 
     public function mount($operacionalId, $cumplimientoId, $legalId, $reputacionalId, $tecnologicoId)
     {
@@ -83,18 +84,25 @@ class SelectImpactos extends Component
         if ($valor <= 5) {
             $this->colorReglaTipo = '#6AA84F';
             $this->colorTextoTipo = '#fff';
+            $this->nivelImpactoTxt= 'Muy Bajo';
         } elseif ($valor <= 10) {
             $this->colorReglaTipo = '#00FF00';
             $this->colorTextoTipo = '#000';
+            $this->nivelImpactoTxt= 'Bajo';
         } elseif ($valor <= 15) {
             $this->colorReglaTipo = '#FFFF00';
             $this->colorTextoTipo = '#000';
+            $this->nivelImpactoTxt= 'Medio';
         } elseif ($valor <= 20) {
             $this->colorReglaTipo = '#FF9900';
             $this->colorTextoTipo = '#fff';
+            $this->nivelImpactoTxt= 'Alto';
         } else {
             $this->colorReglaTipo = '#FF0000';
             $this->colorTextoTipo = '#fff';
+            $this->nivelImpactoTxt= 'Critico';
         }
     }
+
+
 }
