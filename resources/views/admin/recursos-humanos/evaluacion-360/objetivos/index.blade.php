@@ -147,6 +147,9 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
                             url: "{{ route('admin.ev360-objetivos-empleado.definir-nuevos') }}",
                             beforeSend: function() {
                                 Swal.fire(
