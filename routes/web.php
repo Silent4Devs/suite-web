@@ -24,6 +24,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
     Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
     Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
+    Route::post('contenedores/escenarios/eliminar', 'ContenedorMatrizOctaveController@eliminarEscenario')->name('contenedores.escenarios.destroy');
+
 
     Route::get('octave/arbol-riesgos', 'ArbolRiesgosOctaveController@index')->name('octave.arbol-riesgos.index');
     Route::post('octave/arbol-riesgos', 'ArbolRiesgosOctaveController@obtenerArbol')->name('octave.arbol-riesgos.obtener');
@@ -436,6 +438,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('timesheet/show/{id}', 'TimesheetController@show')->name('timesheet-show');
     Route::get('timesheet/edit/{id}', 'TimesheetController@edit')->name('timesheet-edit');
     Route::get('timesheet/papelera', 'TimesheetController@papelera')->name('timesheet-papelera');
+    Route::get('timesheet/eliminar/{id}', 'TimesheetController@eliminar')->name('timesheet-eliminar');
     Route::get('timesheet/aprobaciones', 'TimesheetController@aprobaciones')->name('timesheet-aprobaciones');
     Route::get('timesheet/rechazos', 'TimesheetController@rechazos')->name('timesheet-rechazos');
     Route::post('timesheet/aprobar/{id}', 'TimesheetController@aprobar')->name('timesheet-aprobar');

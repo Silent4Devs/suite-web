@@ -3,7 +3,7 @@
     <form action="{{ route('admin.timesheet.store') }}" method="POST">
         @csrf
         <div class="form-group d-flex align-items-center" wire:ignore>
-            <label class="mt-3 mr-3"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha</label>
+            <label class="mt-3 mr-3"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin de jornada laboral</label>
 
             
             <input type="date" id="fecha_dia" name="fecha_dia" class="form-control" style="max-width:160px;" required>
@@ -15,13 +15,13 @@
                         <th style="min-width:200px;">Proyecto </th>
                         <th style="min-width:200px;">Tarea</th>
                         <th>Facturable</th>
-                        <th style="min-width:55px;">Lunes</th>
-                        <th style="min-width:55px;">Martes</th>
-                        <th style="min-width:55px;">Miercoles</th>
-                        <th style="min-width:55px;">Jueves</th>
-                        <th style="min-width:55px;">Viernes</th>
-                        <th style="min-width:55px;">Sabado</th>
-                        <th style="min-width:55px;">Domingo</th>
+                        <th style="min-width:55px; padding-left: 17px;">Lunes</th>
+                        <th style="min-width:55px; padding-left: 17px;">Martes</th>
+                        <th style="min-width:55px; padding-left: 17px;">Miércoles</th>
+                        <th style="min-width:55px; padding-left: 17px;">Jueves</th>
+                        <th style="min-width:55px; padding-left: 17px;">Viernes</th>
+                        <th style="min-width:55px; padding-left: 17px;">Sábado</th>
+                        <th style="min-width:55px; padding-left: 17px;">Domingo</th>
                         <th style="min-width:200px;">Descripción</th>
                     </tr>
                 </thead>
@@ -50,25 +50,25 @@
                                 <input type="checkbox" checked name="timesheet[{{ $i }}][facturable]" style="min-width: 50px;">
                             </td>
                             <td>
-                                <input type="" name="timesheet[{{ $i }}][lunes]" class="ingresar_horas form-control">
+                                <input  type="number" name="timesheet[{{ $i }}][lunes]" class="ingresar_horas form-control" min="0" max="24">
                             </td>
                             <td>
-                                <input type="" name="timesheet[{{ $i }}][martes]" class="ingresar_horas form-control">
+                                <input  type="number" name="timesheet[{{ $i }}][martes]" class="ingresar_horas form-control">
                             </td>
                             <td>
-                                <input type="" name="timesheet[{{ $i }}][miercoles]" class="ingresar_horas form-control">
+                                <input type="number" name="timesheet[{{ $i }}][miercoles]" class="ingresar_horas form-control">
                             </td>
                             <td>
-                                <input type="" name="timesheet[{{ $i }}][jueves]" class="ingresar_horas form-control">
+                                <input  type="number" name="timesheet[{{ $i }}][jueves]" class="ingresar_horas form-control">
                             </td>
                             <td>
-                                <input type="" name="timesheet[{{ $i }}][viernes]" class="ingresar_horas form-control">
+                                <input  type="number" name="timesheet[{{ $i }}][viernes]" class="ingresar_horas form-control">
                             </td>   
                             <td>
-                                <input type="" name="timesheet[{{ $i }}][sabado]" class="ingresar_horas form-control">
+                                <input  type="number" name="timesheet[{{ $i }}][sabado]" class="ingresar_horas form-control">
                             </td>   
                             <td>
-                                <input type="" name="timesheet[{{ $i }}][domingo]" class="ingresar_horas form-control">
+                                <input  type="number" name="timesheet[{{ $i }}][domingo]" class="ingresar_horas form-control">
                             </td> 
                             <td>
                                 <textarea name="timesheet[{{ $i }}][descripcion]" class="form-control" style="min-height:50px !important; resize: none;"></textarea>
@@ -85,20 +85,62 @@
         <div class="mt-4" style="display:flex; justify-content:space-between;">
             <button class="btn btn-secundario" wire:click.prevent="$set('contador', {{ $contador + 1 }})">Agregar fila</button>
             <div>
-                <button class="btn_cancelar" style="position:relative;">
+                <button class="btn btn_cancelar" style="position:relative;">
                     <input id="estatus_papelera" type="radio" name="estatus" value="papelera" style="opacity:0; position: absolute;">
                     <label for="estatus_papelera" style="width:100%; height: 100%; position:absolute; display:flex; justify-content: center; align-items: center; top:0; left:0;">
                         Guardar borrador
                     </label>
                 </button>
                     
-                <button class="btn btn-success" style="position: relative;">
+                <div class="btn btn-success" style="position: relative;" data-toggle="modal" data-target="#modal_aprobar_">
                     <input id="estatus_pendiente" type="radio" name="estatus" value="pendiente" style="opacity:0; position: absolute;">
                     <label for="estatus_pendiente" style="width:100%; height: 100%; position:absolute; display:flex; justify-content: center; align-items: center; top:0; left:0;">
-                        Enviar
+                        Registrar
                     </label>
-                </button>
+                </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modal_aprobar_" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="delete">
+                            <div class="text-center">
+                                <i class="fa-solid fa-calendar-plus" style="color: #2F96EB; font-size:60pt;"></i>
+                                <h1 class="my-4" style="font-size:14pt;">Registrar Jornada Laboral</h1>
+                                <p class="parrafo">¿Está seguro que desea enviar a aprobación este registro?</p>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <div class="col-12 text-center">
+                                    <div title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
+                                        Cancelar
+                                    </div>
+                                    <button title="Rechazar" class="btn btn-info" style="border:none; background-color:#2F96EB;">
+                                        Enviar a Aprobación
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </form>
+
+
+    
+
+
+    <script type="text/javascript">
+        
+        $('#mySelect2').on('select2:select', function (e) { 
+            var data = e.params.data; console.log(data); 
+             
+        });
+
+    </script>
 </div>

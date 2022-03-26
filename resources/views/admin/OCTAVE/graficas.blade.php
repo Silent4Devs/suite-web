@@ -89,7 +89,36 @@
             color: #fff;
             box-shadow: 0px 4px 5px 1px rgba(0, 0, 0, 0.2);
         }
+
+        .i_regreso{
+            font-size: 20pt;
+            cursor: pointer;
+            color: #007CA4;
+            animation: regreso 2s infinite;
+        }
+
+        @keyframes regreso{
+            0%{
+                margin-left: 0;
+            }
+            50%{
+                margin-right: -20px;
+            }
+            60%{
+                margin-right: 0px;
+            }
+            80%{
+                margin-right: -10px;
+            }
+            100%{
+                margin-right: 0px;
+            }
+        }
     </style>
+
+    @php
+        use App\Models\MatrizOctaveEscenario;
+    @endphp
 
     <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo</h5>
 
@@ -136,7 +165,7 @@
             </div>
 
 
-
+ 
 
 
 
@@ -345,65 +374,217 @@
                 </div>
             </div>
 
-            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Evaluación de Activos <font id="nombre_proceso"></font></strong> <i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
+            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Evaluación de Activos <font id="nombre_proceso"></font></strong> <i class="fa-solid fa-arrow-left i_regreso regreso_gen"></i></h5>
 
-            <div class="col-12 pb-5" style="overflow: auto;">
+            @php
+                $variable_medir_activo = '3,4';
+            @endphp
+            <div class="col-12 mb-5" style="overflow: auto;">
 
-                <div class="caja-grafica " style="width: 500px;">
+                <div class="caja-grafica py-5" style="width: 680px;">
                     <div class="info-grafica" style="transform: rotate(270deg); left:0; top:250px; margin-left:-50px;">Probabilidad</div>
-                    <table class="tabla-grafica-1">
+                    <table class="tabla-grafica-2">
                         <tr>
-                            <td bgcolor="#F1F120">
-                                <span> Riesgos a considerar</span>
-
+                            <td class="info-td"><div class="vertical">Muy&nbsp;Probable</div></td>
+                            <td class="color-td td-amarillo">
                                 @foreach($activos as $activo)
-                                    @if(($activo->valor_criticidad >= 5) && ($activo->valor_criticidad <= 6))
-                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">
-                                            A-{{ $activo->identificador }}
-                                        </div>
+                                    @if($variable_medir_activo == '1,5')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
-                            <td bgcolor="#F15B5B">
-                                <span> Riesgos de prioridad</span>
-
+                            <td class="color-td td-naranja">
                                 @foreach($activos as $activo)
-                                    @if($activo->valor_criticidad >= 10)
-                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">
-                                            A-{{ $activo->identificador }}
-                                        </div>
+                                    @if($variable_medir_activo == '2,5')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-naranja">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '3,5')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-rojo">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '4,5')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-rojo">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '5,5')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                         </tr>
                         <tr>
-                            <td bgcolor="#7CCD30">
-                                <span> Riesgos a monitorear</span>
-
+                            <td class="info-td"><div class="vertical">Probable</div></td>
+                            <td class="color-td td-amarillo">
                                 @foreach($activos as $activo)
-                                    @if($activo->valor_criticidad <= 4)
-                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">
-                                            A-{{ $activo->identificador }}
-                                        </div>
+                                    @if($variable_medir_activo == '1,4')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
-                            <td bgcolor="#F9AB10">
-                                <span> Riesgos relevantes</span>
-
+                            <td class="color-td td-amarillo">
                                 @foreach($activos as $activo)
-                                    @if(($activo->valor_criticidad >= 7) && ($activo->valor_criticidad <= 9))
-                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">
-                                            A-{{ $activo->identificador }}
-                                        </div>
+                                    @if($variable_medir_activo == '2,4')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
+                            <td class="color-td td-naranja">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '3,4')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-naranja">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '4,4')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-rojo">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '5,4')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="info-td"><div class="vertical">Posible</div></td>
+                            <td class="color-td td-verde">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '1,3')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-amarillo">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '2,3')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-amarillo">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '3,3')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-naranja">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '4,3')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-naranja">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '5,3')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="info-td"><div class="vertical">Poco&nbsp;Probable</div></td>
+                            <td class="color-td td-verde">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '1,2')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-verde">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '2,2')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-amarillo">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '3,2')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-amarillo">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '4,2')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-naranja">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '5,2')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="info-td"><div class="vertical">Improbable</div></td>
+                            <td class="color-td td-verde-o">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '1,1')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-verde">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '2,1')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-verde">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '3,1')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-verde">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '4,1')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="color-td td-amarillo">
+                                @foreach($activos as $activo)
+                                    @if($variable_medir_activo == '5,1')
+                                        <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
+                                    @endif
+                                @endforeach
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="info-td"></td>
+                            <td class="info-td">Muy Bajo</td>
+                            <td class="info-td">Bajo</td>
+                            <td class="info-td">Medio</td>
+                            <td class="info-td">Alto</td>
+                            <td class="info-td">Critico</td>
                         </tr>
                     </table>
-                    <div class="info-grafica" style="left:220px; margin-top: 20px;">Impacto</div>
+                    <div class="info-grafica" style="left:300px; margin-top: 20px;">Impacto  {{-- Criticidad --}}</div>
                 </div>
-
             </div>
 
             <div class="col-12 mt-3">
@@ -468,7 +649,7 @@
 
         <div class="row caja-graf d-none" id="caja_graf_con">
 
-            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Mapa de Riesgos de Contenedor</strong><i class="fa-solid fa-arrow-left regreso_gen"></i></h5>
+            <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Mapa de Riesgos de Contenedor</strong><i class="fa-solid fa-arrow-left i_regreso regreso_contenedor"></i></h5>
 
             <div class="col-12 pb-5" style="overflow: auto;">
 
@@ -482,7 +663,7 @@
                                 @foreach($activos as $activo)
                                     @foreach($activo->contenedores as $contenedor)
                                         @if(($contenedor->riesgo >= 5) && ($contenedor->riesgo <= 6))
-                                            <div class="circle-s activo_id_{{ $activo->id }}">C{{ $contenedor->identificador_contenedor }}</div>
+                                            <div class="circle-s activo_id_{{ $activo->id }}" data-toggle="modal" data-target="#modal_content_es_{{ $contenedor->id }}">C{{ $contenedor->identificador_contenedor }}</div>
                                         @endif
                                     @endforeach
                                 @endforeach
@@ -493,7 +674,7 @@
                                 @foreach($activos as $activo)
                                     @foreach($activo->contenedores as $contenedor)
                                         @if($contenedor->riesgo >= 9)
-                                            <div class="circle-s activo_id_{{ $activo->id }}">C{{ $contenedor->identificador_contenedor }}</div>
+                                            <div class="circle-s activo_id_{{ $activo->id }}" data-toggle="modal" data-target="#modal_content_es_{{ $contenedor->id }}">C{{ $contenedor->identificador_contenedor }}</div>
                                         @endif
                                     @endforeach
                                 @endforeach
@@ -506,7 +687,7 @@
                                 @foreach($activos as $activo)
                                     @foreach($activo->contenedores as $contenedor)
                                         @if($contenedor->riesgo <= 4)
-                                            <div class="circle-s activo_id_{{ $activo->id }}">C{{ $contenedor->identificador_contenedor }}</div>
+                                            <div class="circle-s activo_id_{{ $activo->id }}" data-toggle="modal" data-target="#modal_content_es_{{ $contenedor->id }}">C{{ $contenedor->identificador_contenedor }}</div>
                                         @endif
                                     @endforeach
                                 @endforeach
@@ -517,7 +698,7 @@
                                 @foreach($activos as $activo)
                                     @foreach($activo->contenedores as $contenedor)
                                         @if(($contenedor->riesgo >= 7) && ($contenedor->riesgo <= 8))
-                                            <div class="circle-s activo_id_{{ $activo->id }}">C-{{ $contenedor->identificador_contenedor }}</div>
+                                            <div class="circle-s activo_id_{{ $activo->id }}" data-toggle="modal" data-target="#modal_content_es_{{ $contenedor->id }}">C-{{ $contenedor->identificador_contenedor }}</div>
                                         @endif
                                     @endforeach
                                 @endforeach
@@ -573,7 +754,6 @@
 
                                 @endphp
                                 <tr class=" d-none activo_id_{{ $activo->id }}">
-
                                     <td scope="col">
                                         <strong>C-</strong>{{ $contenedor->identificador_contenedor }}
                                     </td>
@@ -589,6 +769,54 @@
             </div>
         </div>
     </div>
+
+    {{-- matrix octave esenarios --}}
+    @foreach($activos as $activo)
+        @foreach($activo->contenedores as $contenedor)
+
+            @php
+
+                $escenarios = MatrizOctaveEscenario::where('id_octave_contenedor', $contenedor->id)->get();
+            @endphp
+            <div class="modal fade" id="modal_content_es_{{ $contenedor->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Escenarios de <strong style="text-decoration: underline;">C-{{ $contenedor->identificador_contenedor }}</strong></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-bordered" style="margin:auto;">
+                                    <thead class="">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th style="min-width: 150px;">Descripción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            @foreach($escenarios as $escenario)
+                                                <td>{{ $escenario->identificador_escenario }}</td>
+                                                <td>{{ $escenario->nom_escenario }}</td>
+                                                <td>{{ $escenario->descripcion }}</td>
+                                            @endforeach
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        @endforeach
+    @endforeach
 @endsection
 @section('scripts')
     @parent
@@ -606,6 +834,11 @@
         $('.regreso_gen').click(function(){
             $('.caja-graf').addClass('d-none');
             $('#caja_graf_ev').removeClass('d-none');
+        });
+
+        $('.regreso_contenedor').click(function(){
+            $('.caja-graf').addClass('d-none');
+            $('#caja_graf_act').removeClass('d-none');
         });
 
         // ______________________________________________________________________________________________

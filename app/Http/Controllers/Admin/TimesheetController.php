@@ -24,7 +24,9 @@ class TimesheetController extends Controller
     {
         $times = timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
 
-        return view('admin.timesheet.index', compact('times'));
+        $rechazos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'rechazado')->count();
+
+        return view('admin.timesheet.index', compact('times', 'rechazos_contador'));
     }
 
     public function timesheetInicio()
@@ -33,7 +35,10 @@ class TimesheetController extends Controller
 
         $organizacion = Organizacion::first();
 
-        return view('admin.timesheet.timesheet-inicio', compact('organizacion'));
+        $rechazos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'rechazado')->count();
+        $aprobar_contador = Timesheet::where('aprobador_id', auth()->user()->empleado->id)->where('estatus', 'pendiente')->count();
+
+        return view('admin.timesheet.timesheet-inicio', compact('organizacion', 'rechazos_contador', 'aprobar_contador'));
     }
 
     public function actualizarDia(Request $request)
@@ -42,6 +47,7 @@ class TimesheetController extends Controller
 
         $organizacion->update([
             'dia_timesheet'=>$request->dia_timesheet,
+            'inicio_timesheet'=>$request->inicio_timesheet,
         ]);
 
         return redirect()->route('admin.timesheet-inicio')->with('success', 'Guardado con éxito');
@@ -123,6 +129,8 @@ class TimesheetController extends Controller
         $timesheet_nuevo = Timesheet::create([
             'fecha_dia' => $request->fecha_dia,
             'dia_semana' => $organizacion_semana->dia_timesheet,
+            'inicio_semana' => $organizacion_semana->inicio_timesheet,
+            'fin_semana' => $organizacion_semana->fin_timesheet,
             'empleado_id' => auth()->user()->empleado->id,
             'aprobador_id' => auth()->user()->empleado->supervisor_id,
             'estatus' => $request->estatus,
@@ -294,13 +302,16 @@ class TimesheetController extends Controller
      */
     public function destroy($id)
     {
-        $timesheet_borrado = Timesheet::find($id);
+        
+    }
 
-        $timesheet_borrado->delete();
+    public function eliminar($id)
+    {
+        $timesheet_eliminar = Timesheet::find($id);
 
-        if ($timesheet_borrado->delete()) {
-            dd('zd');
-        }
+        $timesheet_eliminar->delete();
+
+        return redirect()->back()->with('success', 'Eliminado con éxito');
     }
 
     public function proyectos()

@@ -22,3 +22,66 @@
     color: #fff;
     border-radius: 4px;
 }
+
+
+/*alerta*/
+.delete {
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.icono_delete {
+    margin: 40px 0px;
+    color: #FF0000;
+    opacity: 0.7;
+    font-size: 70pt;
+}
+
+.eliminar {
+    background-color: #FF0000;
+    opacity: 0.7;
+    border: none;
+}
+
+.eliminar:hover {
+    background-color: #FF0000;
+    opacity: 1;
+}
+
+body.c-dark-theme .delete {
+    background: #2a2b36;
+}
+
+body.c-dark-theme .btn-outline-secondary {
+    border: 1px solid #ccc;
+    color: #ccc;
+}
+
+.btn_archivar {
+    all: unset !important;
+}
+
+.indicador_numero {
+    position: absolute;
+    background-color: #3086AF;
+    color: #fff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50px;
+    top: 0;
+    right: 0;
+    margin-top: -10px;
+    font-size: 12px;
+    font-weight: bolder;
+}
+
+.flatpickr-monthDropdown-months{
+    width: 150px !important;
+}

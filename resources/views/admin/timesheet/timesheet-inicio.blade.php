@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 @section('content')
     {{-- menus horizontales --}}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+
     <style type="text/css">
         .caja_botones_menu {
             display: flex;
@@ -179,6 +182,8 @@
             margin-top: -35px;
         }
 
+        
+
     </style>
 
 
@@ -197,9 +202,13 @@
                     @if(auth()->user()->empleado)
                         @if(auth()->user()->empleado->es_supervisor)
                         <a class="nav-link" id="nav-gerente-tab" data-type="gerente" data-toggle="tab"
-                            href="#nav-gerente" role="tab" aria-controls="nav-gerente" aria-selected="false">
+                            href="#nav-gerente" role="tab" aria-controls="nav-gerente" aria-selected="false" style="position: relative;">
                             <i class="bi bi-person-video2"></i>
-                            Gerente
+                            Aprobador
+
+                            @if($aprobar_contador > 0)
+                                <span class="indicador_numero">{{ $aprobar_contador }}</span>
+                            @endif
                         </a>
                         @endif
                     @endif
@@ -244,6 +253,10 @@
                                     <div>
                                         <i class="bi bi-calendar4"></i><br>
                                         Mis Registros
+
+                                        @if($rechazos_contador > 0)
+                                            <span class="indicador_numero">{{ $rechazos_contador }}</span>
+                                        @endif
                                     </div>
                                 </a>
                             </li>
@@ -260,6 +273,10 @@
                                             <div>
                                                 <i class="bi bi-calendar2-check"></i><br>
                                                 Aprobaciones
+
+                                                @if($aprobar_contador > 0)
+                                                    <span class="indicador_numero">{{ $aprobar_contador }}</span>
+                                                @endif
                                             </div>
                                         </a>
                                     </li>
@@ -317,7 +334,7 @@
                                     <a href="#" data-toggle="modal" data-target="#dia_semana_modal">
                                         <div>
                                             <i class="bi bi-calendar2-event"></i><br>
-                                            Establecer Día
+                                            Establecer Jornada Laboral
                                         </div>
                                     </a>
                                 </li>
@@ -334,7 +351,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Día de Registro para la Organización</h5>
+                <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-calendar2-event iconos_formulario mr-3"></i> Establecer Jornada Laboral</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -343,16 +360,69 @@
                 <form method="POST" action="{{ route('admin.timesheet-acualizarDia') }}" class="row">
                     @csrf
                     <div class="form-group col-12">
-                        <label>Seleccione el dia de registro para los miembros de la organización</label>
+                        <label>Seleccione el día de inicio de la jornada laboral</label>
+                        <select class="form-control" name="inicio_timesheet">
+                            <option value="Lunes" {{ $organizacion->inicio_timesheet == 'Lunes' ? 'selected style="background-color: #eee;"' : ''}}>
+                                {{ $organizacion->inicio_timesheet == 'Lunes' ? 'Actual: ' : ''}}
+                                Lunes
+                            </option>
+                            <option value="Martes" {{ $organizacion->inicio_timesheet == 'Martes' ? 'selected' : ''}}>
+                                {{ $organizacion->inicio_timesheet == 'Martes' ? 'Actual: ' : ''}}
+                                Martes
+                            </option>
+                            <option value="Miércoles" {{ $organizacion->inicio_timesheet == 'Miércoles' ? 'selected' : ''}}>
+                                {{ $organizacion->inicio_timesheet == 'Miércoles' ? 'Actual: ' : ''}}
+                                Miércoles
+                            </option>
+                            <option value="Jueves" {{ $organizacion->inicio_timesheet == 'Jueves' ? 'selected' : ''}}>
+                                {{ $organizacion->inicio_timesheet == 'Jueves' ? 'Actual: ' : ''}}
+                                Jueves
+                            </option>
+                            <option value="Viernes" {{ $organizacion->inicio_timesheet == 'Viernes' ? 'selected' : ''}}>
+                                {{ $organizacion->inicio_timesheet == 'Viernes' ? 'Actual: ' : ''}}
+                                Viernes
+                            </option>
+                            <option value="Sábado" {{ $organizacion->inicio_timesheet == 'Sábado' ? 'selected' : ''}}>
+                                {{ $organizacion->inicio_timesheet == 'Sábado' ? 'Actual: ' : ''}}
+                                Sábado
+                            </option>
+                            <option value="Domingo" {{ $organizacion->inicio_timesheet == 'Domingo' ? 'selected' : ''}}>
+                                {{ $organizacion->inicio_timesheet == 'Domingo' ? 'Actual: ' : ''}}
+                                Domingo
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group col-12">
+                        <label>Seleccione el día de fin de la jornada laboral</label>
                         <select class="form-control" name="dia_timesheet">
-                            <option value="{{ $organizacion->dia_timesheet }}">{{ $organizacion->dia_timesheet ? 'Actual: ' : ''}}{{ $organizacion->dia_timesheet }}</option>
-                            <option value="Lunes">Lunes</option>
-                            <option value="Martes">Martes</option>
-                            <option value="Miércoles">Miércoles</option>
-                            <option value="Jueves">Jueves</option>
-                            <option value="Viernes">Viernes</option>
-                            <option value="Sábado">Sábado</option>
-                            <option value="Domingo">Domingo</option>
+                            <option value="Lunes" {{ $organizacion->dia_timesheet == 'Lunes' ? 'selected style="background-color: #eee;"' : ''}}>
+                                {{ $organizacion->dia_timesheet == 'Lunes' ? 'Actual: ' : ''}}
+                                Lunes
+                            </option>
+                            <option value="Martes" {{ $organizacion->dia_timesheet == 'Martes' ? 'selected' : ''}}>
+                                {{ $organizacion->dia_timesheet == 'Martes' ? 'Actual: ' : ''}}
+                                Martes
+                            </option>
+                            <option value="Miércoles" {{ $organizacion->dia_timesheet == 'Miércoles' ? 'selected' : ''}}>
+                                {{ $organizacion->dia_timesheet == 'Miércoles' ? 'Actual: ' : ''}}
+                                Miércoles
+                            </option>
+                            <option value="Jueves" {{ $organizacion->dia_timesheet == 'Jueves' ? 'selected' : ''}}>
+                                {{ $organizacion->dia_timesheet == 'Jueves' ? 'Actual: ' : ''}}
+                                Jueves
+                            </option>
+                            <option value="Viernes" {{ $organizacion->dia_timesheet == 'Viernes' ? 'selected' : ''}}>
+                                {{ $organizacion->dia_timesheet == 'Viernes' ? 'Actual: ' : ''}}
+                                Viernes
+                            </option>
+                            <option value="Sábado" {{ $organizacion->dia_timesheet == 'Sábado' ? 'selected' : ''}}>
+                                {{ $organizacion->dia_timesheet == 'Sábado' ? 'Actual: ' : ''}}
+                                Sábado
+                            </option>
+                            <option value="Domingo" {{ $organizacion->dia_timesheet == 'Domingo' ? 'selected' : ''}}>
+                                {{ $organizacion->dia_timesheet == 'Domingo' ? 'Actual: ' : ''}}
+                                Domingo
+                            </option>
                         </select>
                     </div>
                     <div class="col-12 text-right">
@@ -368,5 +438,17 @@
 
 
 @section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuActive = localStorage.getItem('menu-iso27001-active');
+            $(`#tabsIso27001 [data-type="${menuActive}"]`).tab('show');
 
+            $('#tabsIso27001 a').on('click', function(event) {
+                event.preventDefault()
+                $(this).tab('show')
+                const keyTab = this.getAttribute('data-type');
+                localStorage.setItem('menu-iso27001-active', keyTab);
+            });
+        });
+    </script>
 @endsection
