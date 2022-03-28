@@ -446,7 +446,9 @@
                 html += htmlMezcladas;
                 cardsMisCapacitaciones.innerHTML = html;
             } else {
-                document.getElementById('contadorDeCapacitaciones').innerText = 0;
+                if (document.getElementById('contadorDeCapacitaciones')) {
+                    document.getElementById('contadorDeCapacitaciones').innerText = 0;
+                }
                 cardsMisCapacitaciones.innerHTML = sinCapacitaciones(mensaje);
             }
         }
