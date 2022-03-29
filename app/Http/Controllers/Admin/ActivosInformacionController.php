@@ -71,6 +71,7 @@ class ActivosInformacionController extends Controller
     {
         $activos = ActivoInformacion::find($activos);
         $activos->update($request->all());
+        $activos->contenedores()->sync($request->contenedores);
 
         return redirect()->route('admin.activosInformacion.index');
     }

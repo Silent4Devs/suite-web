@@ -7,11 +7,12 @@
         // Iniciar con cards
         inicializarCapacitacionesGeneralesCards();
 
-
-        btnArchivoMeDebenAprobar.addEventListener('click', function(e) {
-            const url = this.getAttribute('data-url');
-            inicializarCapacitacionesGeneralesCards('Sin Aprobaciones Archivadas', 'todo', url);
-        })
+        if (btnArchivoMeDebenAprobar) {
+            btnArchivoMeDebenAprobar.addEventListener('click', function(e) {
+                const url = this.getAttribute('data-url');
+                inicializarCapacitacionesGeneralesCards('Sin Aprobaciones Archivadas', 'todo', url);
+            })
+        }
         btnPrincipalesMeDebenAprobar.addEventListener('click', function(e) {
             const url = this.getAttribute('data-url');
             inicializarCapacitacionesGeneralesCards('Sin Aprobaciones', 'todo', url);

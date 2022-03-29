@@ -64,7 +64,8 @@
                         <th style="min-width:75px;">ID</th>
                         <th style="min-width:220px;">Nombre del Activo Información</th>
                         <th style="min-width:100px;">Criticidad del AI </th>
-                        <th style="min-width:120px;">Nivel de Riesgo AI</th>
+                        <th style="min-width:120px;">Promedio Contenedor(es)</th>
+                        <th style="min-width:120px;">Nivel de riesgo AI</th>
                         <th style="min-width:100px;">Nombre VP</th>
                         <th style="min-width:200px;">Dueño AI Nombre del VP</th>
                         <th style="min-width:150px;">Nombre Dirección</th>
@@ -133,9 +134,10 @@
                                 {{$activo->riesgo_activo}} - {{$valor}}
                             </div>
                         </td>
+                        <td><div>{{$activo->nivel_riesgo_ai['riesgo']}} {{$activo->nivel_riesgo_ai['coordenada']}}</div></td>
                         <td><div>{{$activo->vp ? $activo->vp->nombre : 'Sin definir'}}</div></td>
                         <td><div>{{$activo->dueno->name}}</div></td>
-                        <td><div>{{$activo->nombre_direccion}}</div></td>
+                        <td><div>{{$activo->direccion->area}}</div></td>
                         <td><div>{{$activo->custodio->name}}</div></td>
                         <td><div>{{$activo->formato}}</td>
                         <td><div>
