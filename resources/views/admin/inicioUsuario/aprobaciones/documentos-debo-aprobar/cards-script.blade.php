@@ -58,7 +58,9 @@
             const documentos = await response.json();
             let html = "";
             if (documentos.length > 0) {
-                document.getElementById('contadorDeCapacitaciones').innerText = documentos.length;
+                if (document.getElementById('contadorDeCapacitaciones')) {
+                    document.getElementById('contadorDeCapacitaciones').innerText = documentos.length;
+                }
                 let htmlMezcladas = `<div class="col-12" id="mezcladas"><div class="row">`;
                 documentos.forEach(element => {
                     const icono = definirIconoParaCardPrincipal(element);
@@ -68,7 +70,9 @@
                 html += htmlMezcladas;
                 cardsMisCapacitaciones.innerHTML = html;
             } else {
-                document.getElementById('contadorDeCapacitaciones').innerText = 0;
+                if (document.getElementById('contadorDeCapacitaciones')) {
+                    document.getElementById('contadorDeCapacitaciones').innerText = 0;
+                }
                 cardsMisCapacitaciones.innerHTML = sinCapacitaciones(mensaje);
             }
         }
