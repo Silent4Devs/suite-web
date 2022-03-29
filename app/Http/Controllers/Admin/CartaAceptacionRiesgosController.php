@@ -7,6 +7,7 @@ use App\Models\CartaAceptacion;
 use App\Models\CartaAceptacionPivot;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\Empleado;
+use App\Models\MatrizOctaveProceso;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -87,11 +88,13 @@ class CartaAceptacionRiesgosController extends Controller
         $vicepresidentes = Empleado::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
+
         return view('admin.CartaAceptacionRiesgos.create', compact('controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
     }
 
     public function store(Request $request)
     {
+
         $cartaAceptacion = CartaAceptacion::create([
             'folio_riesgo'=> $request->folio_riesgo,
             'fecharegistro'=> $request->fecharegistro,
@@ -123,6 +126,8 @@ class CartaAceptacionRiesgosController extends Controller
             'fecha_aut_presidencia'=> $request->fecha_aut_presidencia,
             'vice_operaciones_id'=> $request->vice_operaciones_id,
             'fecha_aut_viceoperaciones'=> $request->fecha_aut_viceoperaciones,
+            'proceso_id'=> $request->proceso_id,
+            'hallazgos_auditoria'=> $request->hallazgos_auditoria,
         ]);
 
         foreach ($request->controles_id as $item) {

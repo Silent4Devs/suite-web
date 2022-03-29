@@ -50,12 +50,7 @@ class CartaAceptacion extends Model
 
     protected $casts = [
         'responsable_id' => 'int',
-        'legal' => 'int',
-        'cumplimiento' => 'int',
-        'operacional' => 'int',
-        'reputacional' => 'int',
-        'financiero' => 'int',
-        'tecnologico' => 'int',
+        'proceso_id' => 'int',
         'controles_id' => 'int',
         'director_resp_id' => 'int',
         'vp_responsable_id' => 'int',
@@ -77,26 +72,19 @@ class CartaAceptacion extends Model
         'fecharegistro',
         'fechaaprobacion',
         'responsable_id',
-        'activo_folio',
-        'nombre_activo',
-        'criticidad_activo',
-        'confidencialidad',
         'descripcion_negocio',
         'descripcion_tecnologico',
         'descripcion_riesgo',
-        'legal',
-        'cumplimiento',
-        'operacional',
-        'reputacional',
-        'financiero',
-        'tecnologico',
         'aceptacion_riesgo',
         'hallazgo',
         'controles_compensatorios',
         'recomendaciones',
         'director_resp_id',
+        'proceso_id',
         'fecha_aut_direct',
         'vp_responsable_id',
+        'responsable_id',
+        'hallazgos_auditoria',
         'fecha_vp_aut',
         'presidencia_id',
         'fecha_aut_presidencia',
@@ -132,6 +120,10 @@ class CartaAceptacion extends Model
     public function getFechaautdirectAttribute($value)
     {
         return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
+    public function proceso()
+    {
+        return $this->belongsTo(MatrizOctaveProceso::class, 'proceso_id', 'id');
     }
 
     public function responsables()
