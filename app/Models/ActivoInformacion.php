@@ -19,7 +19,7 @@ class ActivoInformacion extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends = ['riesgo_activo', 'name', 'content', 'color'];
+    protected $appends = ['riesgo_activo', 'name', 'content', 'color','nivel_riesgo_ai'];
 
     protected $fillable = [
     'identificador',
@@ -84,6 +84,35 @@ class ActivoInformacion extends Model
     'updated_at',
     'deleted_at',
     ];
+
+    public function getNivelRiesgoAiAttribute()
+    {
+
+        $criticidad = $this->traducirCriticidadARangoContenedor($this->valor_criticidad);
+        $contenedores = $this->riesgo_activo;
+        $riesgo =0;
+
+        $riesgo = $criticidad * $contenedores;
+        return [
+            'riesgo'=>$riesgo,
+            'coordenada'=>"{$criticidad},{$contenedores}"
+        ];
+
+    }
+    private function traducirCriticidadARangoContenedor($criticidad){
+        $valorCriticidad = 1;
+
+        if($criticidad == 3 || $criticidad == 4){
+            $valorCriticidad= 2;
+        }elseif($criticidad == 5 || $criticidad == 6){
+            $valorCriticidad= 3;
+        }elseif($criticidad == 7 || $criticidad == 8 || $criticidad == 9){
+            $valorCriticidad= 4;
+        }elseif($criticidad == 10 || $criticidad == 11 || $criticidad == 12){
+            $valorCriticidad= 5;
+        }
+        return $valorCriticidad;
+    }
 
     public function getNameAttribute()
     {
