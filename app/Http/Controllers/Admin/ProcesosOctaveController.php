@@ -77,7 +77,7 @@ class ProcesosOctaveController extends Controller
         $servicio_seleccionado = null;
         $grupos = Grupo::get();
 
-        return view('admin.procesos-octave.create', compact('grupos', 'areas', 'procesos', 'activosInfo', 'servicios', 'servicio_seleccionado'));
+        return view('admin.procesos-octave.create', compact('grupos','areas', 'procesos', 'activosInfo', 'servicios', 'servicio_seleccionado'));
     }
 
     public function store(Request $request)

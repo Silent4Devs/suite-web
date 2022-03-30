@@ -26,8 +26,7 @@
                 <div class="form-group col-12">
                     <label class="required" for="descripcion"><i class="fas fa-pencil-ruler iconos-crear"></i></i>
                         Contenido</label>
-                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"
-                        name="descripcion"
+                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion"
                         id="descripcion">{{ old('descripcion', $comunicacionSgi->descripcion) }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
@@ -42,8 +41,9 @@
                     <div class="custom-file">
                         <input type="file" name="files[]" multiple class="form-control" id="documento"
                             accept="application/pdf">
-                        @if (count($comunicacionSgi->documentos_comunicacion)>0)
-                        <small>Documento actual:{{ $comunicacionSgi->documentos_comunicacion[0]->documento }} </small><br>
+                        @if (count($comunicacionSgi->documentos_comunicacion) > 0)
+                            <small>Documento actual:{{ $comunicacionSgi->documentos_comunicacion[0]->documento }}
+                            </small><br>
                         @endif
 
                     </div>
@@ -52,9 +52,9 @@
                 <div class="form-group col-md-6">
                     <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
                     <input type="file" name="imagen" class="form-control" accept="image/*" value="{{ old('imagen') }}">
-                    @if (count($comunicacionSgi->imagenes_comunicacion)>0)
-                    <small>Imagen actual:{{ $comunicacionSgi->imagenes_comunicacion[0]->imagen }} </small><br>
-                    <small>Tamaño recomendado de la imagen 500px por 300px</small>
+                    @if (count($comunicacionSgi->imagenes_comunicacion) > 0)
+                        <small>Imagen actual:{{ $comunicacionSgi->imagenes_comunicacion[0]->imagen }} </small><br>
+                        <small>Tamaño recomendado de la imagen 500px por 300px</small>
                     @endif
                     @if ($errors->has('imagen'))
                         <div class="invalid-feedback">
@@ -70,7 +70,7 @@
                 </div>
                 <div class="mb-3 col-md-6">
                     <span type="button" data-toggle="modal" data-target="#imagenes_Modal">
-                        <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Descargar Imagen
+                        <i class="mr-2 fas fa-eye text-primary" style="font-size:14pt"></i>Visualizar Imagen
                     </span>
                 </div>
 
@@ -166,7 +166,6 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 @if (count($comunicacionSgi->documentos_comunicacion))
-
                                     <!-- carousel -->
                                     <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
                                         <ol class='carousel-indicators'>
@@ -174,105 +173,112 @@
                                                 <li data-target=#carouselExampleIndicators
                                                     data-slide-to={{ $idx }}>
                                                 </li>
-
                                             @endforeach
 
                                         </ol>
+
                                         <div class='carousel-inner'>
                                             @foreach ($comunicacionSgi->documentos_comunicacion as $idx => $documento)
-                                                <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                    <iframe style="width:100%;height:300px;" seamless class='img-size'
-                                                        src="{{ asset('storage/documento_comunicado_SGI') }}/{{ $documento->documento }}"></iframe>
-                                                </div>
-                                            @endforeach
+                                                @if (pathinfo($documento->documento, PATHINFO_EXTENSION) == 'pdf')
+                                                    <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                                            src="{{ asset('storage/documento_comunicado_SGI') }}/{{ $documento->documento }}"></iframe>
+                                                    </div>
+                                                    @else
+                                                        <div class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                            <a href="{{ asset('storage/documento_comunicado_SGI') }}/{{ $documento->documento }}">
+                                                                <i class="fas fa-file-download mr-2"
+                                                                    style="font-size:18px"></i>{{ $documento->documento }}</a>
+                                                        </div>
+                                                @endif
+
+                                @endforeach
 
 
-                                        </div>
-                                        <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
-                                            data-slide='prev'>
-                                            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-                                            <span class='sr-only'>Previous</span>
-                                        </a>
-                                        <a class='carousel-control-next' href='#carouselExampleIndicators' role='button'
-                                            data-slide='next'>
-                                            <span class='carousel-control-next-icon' aria-hidden='true'></span>
-                                            <span class='sr-only'>Next</span>
-                                        </a>
-                                    </div>
-                                @else
-                                    <div class="text-center">
-                                        <h3 style="text-align:center" class="mt-3">Sin
-                                            archivo agregado</h3>
-                                        <img src="{{ asset('img/undrawn.png') }}" class="img-fluid "
-                                            style="width:350px !important">
-                                    </div>
-                                @endif
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-
+                            <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
+                                data-slide='prev'>
+                                <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                <span class='sr-only'>Previous</span>
+                            </a>
+                            <a class='carousel-control-next' href='#carouselExampleIndicators' role='button'
+                                data-slide='next'>
+                                <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                <span class='sr-only'>Next</span>
+                            </a>
                         </div>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="imagenes_Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                @if (count($comunicacionSgi->imagenes_comunicacion))
-                                    <!-- carousel -->
-                                    <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
-                                        <ol class='carousel-indicators'>
-                                            @foreach ($comunicacionSgi->imagenes_comunicacion as $idx => $imagen)
-                                                <li data-target=#carouselExampleIndicators
-                                                    data-slide-to={{ $idx }}></li>
-
-                                            @endforeach
-
-                                        </ol>
-                                        <div class='carousel-inner'>
-                                            @foreach ($comunicacionSgi->imagenes_comunicacion as $idx => $imagen)
-                                                <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                    <img style="width:80%; margin-left: 10%;" class='img-size'
-                                                        src="{{ asset('storage/imagen_comunicado_SGI') }}/{{ $imagen->imagen }}" />
-                                                </div>
-                                            @endforeach
-
-
-                                        </div>
-                                        <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
-                                            data-slide='prev'>
-                                            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-                                            <span class='sr-only'>Previous</span>
-                                        </a>
-                                        <a class='carousel-control-next' href='#carouselExampleIndicators' role='button'
-                                            data-slide='next'>
-                                            <span class='carousel-control-next-icon' aria-hidden='true'></span>
-                                            <span class='sr-only'>Next</span>
-                                        </a>
-
-                                    </div>
-                                @else
-                                    <div class="text-center">
-                                        <h3 style="text-align:center" class="mt-3">Sin
-                                            archivo agregado</h3>
-                                        <img src="{{ asset('img/undrawn.png') }}" class="img-fluid "
-                                            style="width:350px !important">
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
+                    @else
+                        <div class="text-center">
+                            <h3 style="text-align:center" class="mt-3">Sin
+                                archivo agregado</h3>
+                            <img src="{{ asset('img/undrawn.png') }}" class="img-fluid "
+                                style="width:350px !important">
                         </div>
+                        @endif
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+
                 </div>
-
-
-            </form>
         </div>
+    </div>
+
+    <div class="modal fade" id="imagenes_Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    @if (count($comunicacionSgi->imagenes_comunicacion))
+                        <!-- carousel -->
+                        <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
+                            <ol class='carousel-indicators'>
+                                @foreach ($comunicacionSgi->imagenes_comunicacion as $idx => $imagen)
+                                    <li data-target=#carouselExampleIndicators data-slide-to={{ $idx }}></li>
+                                @endforeach
+
+                            </ol>
+                            <div class='carousel-inner'>
+                                @foreach ($comunicacionSgi->imagenes_comunicacion as $idx => $imagen)
+                                    <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                        <img style="width:80%; margin-left: 10%;" class='img-size'
+                                            src="{{ asset('storage/imagen_comunicado_SGI') }}/{{ $imagen->imagen }}" />
+                                    </div>
+                                @endforeach
+
+
+                            </div>
+                            <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
+                                data-slide='prev'>
+                                <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                <span class='sr-only'>Previous</span>
+                            </a>
+                            <a class='carousel-control-next' href='#carouselExampleIndicators' role='button'
+                                data-slide='next'>
+                                <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                <span class='sr-only'>Next</span>
+                            </a>
+
+                        </div>
+                    @else
+                        <div class="text-center">
+                            <h3 style="text-align:center" class="mt-3">Sin
+                                archivo agregado</h3>
+                            <img src="{{ asset('img/undrawn.png') }}" class="img-fluid "
+                                style="width:350px !important">
+                        </div>
+                    @endif
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </form>
+    </div>
     </div>
 
 
