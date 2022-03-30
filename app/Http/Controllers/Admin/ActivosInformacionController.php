@@ -17,14 +17,14 @@ use Illuminate\Http\Request;
 
 class ActivosInformacionController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $matriz)
     {
         $activos = ActivoInformacion::get();
 
-        return view('admin.ActivosInformacion.index', compact('activos'));
+        return view('admin.ActivosInformacion.index', compact('activos', 'matriz'));
     }
 
-    public function create()
+    public function create($matriz)
     {
         $empleados = Empleado::with('area')->get();
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -36,7 +36,7 @@ class ActivosInformacionController extends Controller
         $contenedores = MatrizOctaveContenedor::get();
         $grupos = Grupo::get();
 
-        return view('admin.ActivosInformacion.create', compact('grupos', 'empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores'));
+        return view('admin.ActivosInformacion.create', compact('grupos', 'empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores','matriz'));
     }
 
     public function store(Request $request)

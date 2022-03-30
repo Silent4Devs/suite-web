@@ -15,11 +15,11 @@ class TablaImpacto extends Component
     public $filas = [
         ['tipo'=>'Legal',
          'criterio'=>'criterio',
-         'base'=>'base'
+         'base'=>'base',
         ],
     ];
     public $criterio = 'criterio';
-    public $base= 'base';
+    public $base = 'base';
 
     public function addColumn($indexColumna)
     {
@@ -32,12 +32,11 @@ class TablaImpacto extends Component
 
     public function addRow($indexRow)
     {
-
         $this->indexRow = $indexRow;
         array_push($this->filas, [
             'tipo'=>'Financiera',
             'criterio'=>'criterio',
-            'base'=>'base'
+            'base'=>'base',
         ]);
         $this->emit('cerrarModalImpacto');
     }

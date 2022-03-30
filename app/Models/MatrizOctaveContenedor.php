@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\ActivoInformacion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -49,7 +48,6 @@ class MatrizOctaveContenedor extends Model
 
     public function getNameAttribute()
     {
-
         return $this->identificador_contenedor . ' ' . $this->nom_contenedor;
     }
 

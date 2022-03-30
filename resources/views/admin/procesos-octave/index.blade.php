@@ -212,7 +212,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.procesos-octave.index') }}",
+                ajax: "{{ route('admin.procesos-octave.index',$matriz) }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

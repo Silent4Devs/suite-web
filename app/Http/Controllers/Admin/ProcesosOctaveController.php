@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\ActivoInformacion;
 use App\Models\Area;
 use App\Models\Grupo;
+use App\Models\MatrizOctaveProceso;
+use App\Models\MatrizOctaveServicio;
 use App\Models\Proceso;
 use Illuminate\Http\Request;
-use App\Models\ActivoInformacion;
-use App\Models\MatrizOctaveProceso;
-use App\Http\Controllers\Controller;
-use App\Models\MatrizOctaveServicio;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProcesosOctaveController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $matriz)
     {
         if ($request->ajax()) {
             $query = MatrizOctaveProceso::with(['area'])->get();
@@ -65,7 +65,7 @@ class ProcesosOctaveController extends Controller
             return $table->make(true);
         }
         // dd($request->all());
-        return view('admin.procesos-octave.index');
+        return view('admin.procesos-octave.index', compact('matriz'));
     }
 
     public function create()

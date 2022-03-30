@@ -13,7 +13,7 @@ use Yajra\Datatables\Datatables;
 
 class ContenedorMatrizOctaveController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $matriz)
     {
         abort_if(Gate::denies('categorias_capacitaciones_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
@@ -57,7 +57,7 @@ class ContenedorMatrizOctaveController extends Controller
 
         // dd($request->all());
 
-        return view('admin.ContenedorMatrizOctave.index');
+        return view('admin.ContenedorMatrizOctave.index', compact('matriz'));
     }
 
     public function create()
@@ -162,12 +162,12 @@ class ContenedorMatrizOctaveController extends Controller
         return redirect()->route('admin.contenedores.index')->with('success', 'Eliminado con éxito');
     }
 
-    public function eliminarEscenario(Request $request){
-
-
+    public function eliminarEscenario(Request $request)
+    {
         $escenario = MatrizOctaveEscenario::find($request->escenario);
         $escenario->delete();
         $sumatoria = $this->calcularRiesgo($request->contenedor);
+
         return response()->json(['estatus' => 200, 'riesgo' => $sumatoria]);
     }
 }

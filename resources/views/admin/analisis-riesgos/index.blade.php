@@ -348,7 +348,7 @@
                             case 'OCTAVE':
                                 return `
                                 <div class="text-center w-100">
-                                    <a href="procesos-octave" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                                    <a href="procesos-octave/${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 </div>
                             `;
                             break;

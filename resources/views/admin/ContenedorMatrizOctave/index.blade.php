@@ -206,7 +206,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.contenedores.index') }}",
+                ajax: "{{ route('admin.contenedores.index',$matriz) }}",
                 columns: [{
                         data: 'identificador_contenedor',
                         name: 'identificador_contenedor',

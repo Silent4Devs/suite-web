@@ -121,6 +121,7 @@ class CartaAceptacion extends Model
     {
         return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
+
     public function proceso()
     {
         return $this->belongsTo(MatrizOctaveProceso::class, 'proceso_id', 'id');
