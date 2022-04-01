@@ -26,14 +26,9 @@
                         @php
                             use App\Models\Organizacion;
                             $organizacion = Organizacion::first();
-                            $logotipo = 'img/logo_policromatico_2.png';
-                            if ($organizacion) {
-                                if ($organizacion->logotipo) {
-                                    $logotipo = 'images/' . $organizacion->logotipo;
-                                }
-                            }
+                            
                         @endphp
-                        <img src="{{ asset($logotipo) }}" class="img-fluid" alt="" width="70">
+                        <img src="{{ $organizacion->logotipo }}" class="img-fluid" alt="" width="70">
                     </div>
                     <div class="border col-4">
                         <p class="m-0" style="font-size:13px">
@@ -144,7 +139,13 @@
                     <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['tipo'] }}</span>
                     <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['peso_general'] }}%</span>
                     @forelse ($lista_autoevaluacion->first()['evaluaciones'] as $evaluador)
-                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'autoevaluacion'])
+                        @include(
+                            'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
+                            [
+                                'tipo' =>
+                                    'autoevaluacion',
+                            ]
+                        )
                     @empty
                         <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
                             aplica
@@ -157,7 +158,10 @@
                     <span style="font-size: 11px">{{ $lista_jefe_inmediato->first()['tipo'] }}</span>
                     <span style="font-size: 11px">{{ $lista_jefe_inmediato->first()['peso_general'] }}%</span>
                     @forelse ($lista_jefe_inmediato->first()['evaluaciones'] as $evaluador)
-                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'jefe'])
+                        @include(
+                            'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
+                            ['tipo' => 'jefe']
+                        )
                     @empty
                         <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
                             aplica
@@ -170,7 +174,10 @@
                     <span style="font-size: 11px">Subordinado</span>
                     <span style="font-size: 11px">{{ $lista_equipo_a_cargo->first()['peso_general'] }}%</span>
                     @forelse ($lista_equipo_a_cargo->first()['evaluaciones'] as $evaluador)
-                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'equipo'])
+                        @include(
+                            'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
+                            ['tipo' => 'equipo']
+                        )
                     @empty
                         <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
                             aplica
@@ -183,7 +190,13 @@
                     <span style="font-size: 11px">Par</span>
                     <span style="font-size: 11px">{{ $lista_misma_area->first()['peso_general'] }}%</span>
                     @forelse ($lista_misma_area->first()['evaluaciones'] as $evaluador)
-                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'misma_area'])
+                        @include(
+                            'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
+                            [
+                                'tipo' =>
+                                    'misma_area',
+                            ]
+                        )
                     @empty
                         <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
                             aplica
@@ -200,11 +213,14 @@
                         <div class="col-12" style="font-size:11px">
                             <div class="row">
                                 <div class="border col-6">Promedio</div>
-                                <div class="border col-6">{{ $promedio_competencias }}</div>
+                                <div class="border col-6">
+                                    {{ number_format(($promedio_competencias * 100) / $peso_general_competencias / 100, 2) }}
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="border col-6">% Participación</div>
-                                <div class="border col-6">{{ $promedio_competencias * 100 }}%</div>
+                                <div class="border col-6">
+                                    {{ round(($promedio_competencias * 100) / $peso_general_competencias) }}%</div>
                             </div>
                         </div>
                     </div>
@@ -323,11 +339,11 @@
                         <div class="col-12">
                             <div class="row">
                                 <div class="border col-6">Promedio</div>
-                                <div class="border col-6">{{ $promedio_objetivos }}</div>
+                                <div class="border col-6">{{ $promedio_objetivos / 100 }}</div>
                             </div>
                             <div class="row">
                                 <div class="border col-6">% Participación</div>
-                                <div class="border col-6">{{ $promedio_objetivos * 100 }}%</div>
+                                <div class="border col-6">{{ $promedio_objetivos }}%</div>
                             </div>
                         </div>
                     </div>
@@ -353,7 +369,8 @@
                                 <p class="m-0 text-white">Competencias</p>
                             </div>
                             <div class="border col-6">
-                                <p class="m-0">{{ $promedio_general_competencias }}%</p>
+                                <p class="m-0">
+                                    {{ round(($promedio_competencias * 100) / $peso_general_competencias) }}%</p>
                             </div>
                         </div>
                     </div>
@@ -363,7 +380,7 @@
                                 <p class="m-0 text-white">Objetivos</p>
                             </div>
                             <div class="border col-6">
-                                <p class="m-0">{{ $promedio_general_objetivos }}%
+                                <p class="m-0">{{ $promedio_objetivos }}%
                                 </p>
                             </div>
                         </div>
@@ -524,12 +541,27 @@
                 type: 'radar',
                 data: dataRadar,
                 options: {
-                    elements: {
-                        line: {
-                            borderWidth: 3
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
-                    }
-                },
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Promedios'
+                        },
+                        legend: {
+                            display: true
+                        },
+                    },
+                    scale: {
+                        min: 0,
+                    },
+                }
             };
             let radarChart = new Chart(
                 document.getElementById('radarCompetencias'),
