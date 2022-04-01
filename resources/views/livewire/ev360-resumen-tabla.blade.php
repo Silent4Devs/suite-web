@@ -121,10 +121,10 @@
                             <td>{{ $evaluado['informacion_evaluacion']['peso_general_objetivos'] }} %</td>
                             <td class="p-0" style="position: relative;">
                                 <div
-                                    style="width: {{ $evaluado['informacion_evaluacion']['promedio_competencias'] }}%;max-width: 100%;height: 100%;background: #3ebed2;">
+                                    style="width: {{ round($evaluado['informacion_evaluacion']['promedio_competencias']) }}%;max-width: 100%;height: 100%;background: #3ebed2;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $evaluado['informacion_evaluacion']['promedio_competencias'] }}
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['promedio_competencias']) }}
                                     %</span>
                             </td>
                             <td class="p-0" style="position: relative;">
@@ -132,29 +132,29 @@
                                     style="width: {{ $evaluado['informacion_evaluacion']['promedio_general_objetivos'] }}%;max-width: 100%;height: 100%;background: #3ebed2;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $evaluado['informacion_evaluacion']['promedio_general_objetivos'] }}
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['promedio_general_objetivos']) }}
                                     %</span>
                             </td>
                             <td class="p-0" style="position: relative;">
                                 <div
-                                    style="width: {{ $evaluado['informacion_evaluacion']['calificacion_final'] }}%;max-width: 100%;height: 100%;background: #3ebed2;">
+                                    style="width: {{ round($evaluado['informacion_evaluacion']['calificacion_final']) }}%;max-width: 100%;height: 100%;background: #3ebed2;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $evaluado['informacion_evaluacion']['calificacion_final'] }}
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['calificacion_final']) }}
                                     %</span>
                             </td>
-                            @if ($evaluado['informacion_evaluacion']['calificacion_final'] <= 60)
+                            @if ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangos['inaceptable'])
                                 <td style="background-color:#ff4747;color:white;text-align: center !important"><i
                                         class="mr-1 fas fa-exclamation-triangle"></i>Inaceptable</td>
-                            @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= 80)
+                            @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangos['minimo_aceptable'])
                                 <td style="background-color:#e89036;color:white;text-align: center !important"><i
                                         class="mr-1 fas fa-exclamation-triangle"></i>Mínimo
                                     Aceptable</td>
-                            @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= 100)
+                            @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangos['aceptable'])
                                 <td style="background-color:#3e6cd2;color:white;text-align: center !important"><i
                                         class="mr-1 fas fa-check-circle"></i>Aceptable
                                 </td>
-                            @elseif($evaluado['informacion_evaluacion']['calificacion_final'] > 100)
+                            @elseif($evaluado['informacion_evaluacion']['calificacion_final'] > $rangos['sobresaliente'])
                                 <td style="background-color:#3ed257;color:white;text-align: center !important">
                                     <i class="mr-1 fas fa-check-circle"></i>
                                     Sobresaliente

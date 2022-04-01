@@ -797,13 +797,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($escenarios as $escenario)
                                         <tr>
-                                            @foreach($escenarios as $escenario)
-                                                <td>{{ $escenario->identificador_escenario }}</td>
-                                                <td>{{ $escenario->nom_escenario }}</td>
-                                                <td>{{ $escenario->descripcion }}</td>
-                                            @endforeach
+                                            <td>{{ $escenario->identificador_escenario }}</td>
+                                            <td>{{ $escenario->nom_escenario }}</td>
+                                            <td>{{ $escenario->descripcion }}</td>
                                         </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                                 
