@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
+use App\Http\Livewire\Ev360ResumenTabla;
 use App\Mail\RH\Evaluaciones\CitaEvaluadorEvaluado;
 use App\Mail\RH\Evaluaciones\RecordatorioEvaluadores;
 use App\Models\Area;
@@ -15,6 +16,7 @@ use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoRespuesta;
+use App\Models\RH\RangosResultado;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -743,14 +745,16 @@ class EV360EvaluacionesController extends Controller
     public function consultaPorEvaluado($evaluacion, $evaluado)
     {
         abort_if(Gate::denies('evaluacion_360_resumen_individual_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $informacion_obtenida = $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
+        $ev360ResumenTabla = new Ev360ResumenTabla();
+        $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
         $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
         $calificaciones_autoevaluacion_competencias = $calificaciones['calificaciones_autoevaluacion_competencias'];
         $calificaciones_jefe_competencias = $calificaciones['calificaciones_jefe_competencias'];
         $calificaciones_equipo_competencias = $calificaciones['calificaciones_equipo_competencias'];
         $calificaciones_area_competencias = $calificaciones['calificaciones_area_competencias'];
         $competencias_lista_nombre = $calificaciones['competencias_lista_nombre'];
-
+        $peso_general_competencias = $informacion_obtenida['peso_general_competencias'];
+        $peso_general_objetivos = $informacion_obtenida['peso_general_objetivos'];
         $lista_autoevaluacion = $informacion_obtenida['lista_autoevaluacion'];
         $lista_jefe_inmediato = $informacion_obtenida['lista_jefe_inmediato'];
         $lista_equipo_a_cargo = $informacion_obtenida['lista_equipo_a_cargo'];
@@ -769,7 +773,7 @@ class EV360EvaluacionesController extends Controller
             return $item->nivel_esperado;
         })->toArray();
         // dd($evaluadores_objetivos);
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final', 'competencias_lista_nombre', 'calificaciones_autoevaluacion_competencias', 'calificaciones_jefe_competencias', 'calificaciones_equipo_competencias', 'calificaciones_area_competencias', 'nivelesEsperadosCompetencias'));
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final', 'competencias_lista_nombre', 'calificaciones_autoevaluacion_competencias', 'calificaciones_jefe_competencias', 'calificaciones_equipo_competencias', 'calificaciones_area_competencias', 'nivelesEsperadosCompetencias', 'peso_general_competencias', 'peso_general_objetivos'));
     }
 
     public function desglosarCalificaciones($informacion_obtenida)
@@ -1062,6 +1066,8 @@ class EV360EvaluacionesController extends Controller
         }
 
         return [
+            'peso_general_competencias' => $evaluacion->peso_general_competencias,
+            'peso_general_objetivos' => $evaluacion->peso_general_objetivos,
             'lista_autoevaluacion' => $lista_autoevaluacion,
             'lista_jefe_inmediato' => $lista_jefe_inmediato,
             'lista_equipo_a_cargo' => $lista_equipo_a_cargo,
@@ -1096,6 +1102,7 @@ class EV360EvaluacionesController extends Controller
                 }
 
                 return [
+                    'id_competencia' => $competencia->competencia->id,
                     'competencia' => $competencia->competencia ? $competencia->competencia->nombre : 'Sin Nombre',
                     'tipo_competencia' => $competencia->competencia ? $competencia->competencia->tipo_competencia : 'Sin Tipo',
                     'calificacion' => $competencia->calificacion,
@@ -1121,25 +1128,36 @@ class EV360EvaluacionesController extends Controller
         $minimo_aceptable = 0;
         $aceptable = 0;
         $sobresaliente = 0;
-
+        $rangosResultados = RangosResultado::select('inaceptable', 'minimo_aceptable', 'aceptable', 'sobresaliente')->where('evaluacion_id', $evaluacion->id)->count();
+        if ($rangosResultados > 0) {
+            $rangosResultados = RangosResultado::select('inaceptable', 'minimo_aceptable', 'aceptable', 'sobresaliente')->where('evaluacion_id', $evaluacion->id)->first();
+        } else {
+            $rangosResultados = collect();
+            $rangosResultados->put('inaceptable', 60);
+            $rangosResultados->put('minimo_aceptable', 80);
+            $rangosResultados->put('aceptable', 100);
+            $rangosResultados->put('sobresaliente', 100);
+        }
+        $ev360ResumenTabla = new Ev360ResumenTabla();
         foreach ($evaluados as $evaluado) {
             // $evaluado->load('area');
             $lista_evaluados->push([
                 'evaluado' => $evaluado->name,
                 'puesto' => $evaluado->puesto,
                 'area' => $evaluado->area->area,
-                'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
+                'informacion_evaluacion' => $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
             ]);
         }
 
         foreach ($lista_evaluados as $evaluado) {
-            if ($evaluado['informacion_evaluacion']['calificacion_final'] <= 60) {
+            // dump($evaluado['informacion_evaluacion']['calificacion_final']);
+            if ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangosResultados['inaceptable']) {
                 $inaceptable++;
-            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= 80) {
+            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangosResultados['minimo_aceptable']) {
                 $minimo_aceptable++;
-            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= 100) {
+            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangosResultados['aceptable']) {
                 $aceptable++;
-            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] > 100) {
+            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] > $rangosResultados['sobresaliente']) {
                 $sobresaliente++;
             }
         }
@@ -1150,8 +1168,8 @@ class EV360EvaluacionesController extends Controller
             'Sobresaliente' => $sobresaliente,
         ]);
         $calificaciones = $calificaciones->first();
-
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('evaluacion', 'calificaciones'));
+        // dd($calificaciones);
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('evaluacion', 'calificaciones', 'rangosResultados'));
     }
 
     public function resumenJefe($evaluacion)
@@ -1169,13 +1187,14 @@ class EV360EvaluacionesController extends Controller
             $q->where('evaluado_id', $empleado->id);
         })->get();
         $lista_evaluaciones = collect();
+        $ev360ResumenTabla = new Ev360ResumenTabla();
         foreach ($evaluacione as $evaluacion) {
             $lista_evaluaciones->push([
                 'id' => $evaluacion->id,
                 'nombre' => $evaluacion->nombre,
                 'fecha_inicio' => Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y'),
                 'fecha_fin' => Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y'),
-                'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $empleado->id),
+                'informacion_evaluacion' => $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $empleado->id),
             ]);
         }
 
@@ -1288,6 +1307,29 @@ class EV360EvaluacionesController extends Controller
         $equipo = true;
         // dd($informacion_obtenida);
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.mis-evaluaciones', compact('evaluacion', 'evaluador', 'equipo', 'evaluado'));
+    }
+
+    public function normalizarResultados(Request $request, $evaluacion)
+    {
+        $normalizar = RangosResultado::where('evaluacion_id', $evaluacion)->exists();
+        if ($normalizar) {
+            $rangosResultados = RangosResultado::where('evaluacion_id', $evaluacion)->first();
+            $rangosResultados->update([
+                'inaceptable' => $request->inaceptable,
+                'minimo_aceptable' => $request->minimoAceptable,
+                'aceptable' => $request->aceptable,
+                'sobresaliente' => $request->sobresaliente,
+            ]);
+        } else {
+            RangosResultado::create([
+                'evaluacion_id' => $evaluacion,
+                'inaceptable' => $request->inaceptable,
+                'minimo_aceptable' => $request->minimoAceptable,
+                'aceptable' => $request->aceptable,
+                'sobresaliente' => $request->sobresaliente,
+            ]);
+        }
+        return redirect()->back();
     }
 
     public function destroy($evaluacion)

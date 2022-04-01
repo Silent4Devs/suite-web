@@ -42,7 +42,7 @@ class Organizacion extends Model
     public $cacheFor = 3600;
     protected static $flushCacheOnUpdate = true;
     protected $table = 'organizacions';
-
+    protected $appends = ['logotipo'];
     protected $casts = [
         'telefono' => 'int',
         'team_id' => 'int',

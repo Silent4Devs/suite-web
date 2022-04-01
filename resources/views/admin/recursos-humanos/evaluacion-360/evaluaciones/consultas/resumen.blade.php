@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('EV360-Evaluacion-Resumen', $evaluacion) }}
     <style>
         img.rounded-circle {
@@ -23,7 +22,55 @@
                 RESUMEN GENERAL
             </div>
         </div>
-        @livewire('ev360-resumen-tabla', ['evaluacion' => $evaluacion->id])
+        <div class="mt-3 col-12" style="text-align: end;">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#normalizarResultados">
+                <i class="fas fa-user-chart mr-2"></i>Normalizar Resultados
+            </button>
+        </div>
+        <div class="modal fade" id="normalizarResultados" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="normalizarResultadosLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="normalizarResultadosLabel">Normalizar resultados</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Está seguro de normalizar los resultados de la evaluación?</p>
+                        <form action="{{ route('admin.ev360-normalizar-resultados', $evaluacion) }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="">Inaceptable</label>
+                                <input type="number" class="form-control" id="inaceptable" name="inaceptable"
+                                    placeholder="Inaceptable" value="{{ $rangosResultados['inaceptable'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Mínimo Aceptable</label>
+                                <input type="number" class="form-control" id="minimoAceptable" name="minimoAceptable"
+                                    placeholder="Mínimo Aceptable" value="{{ $rangosResultados['minimo_aceptable'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Aceptable</label>
+                                <input type="number" class="form-control" id="aceptable" name="aceptable"
+                                    placeholder="Aceptable" value="{{ $rangosResultados['aceptable'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Sobresaliente</label>
+                                <input type="number" class="form-control" id="sobresaliente" name="sobresaliente"
+                                    placeholder="Sobresaliente" value="{{ $rangosResultados['sobresaliente'] }}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Normalizar</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @livewire('ev360-resumen-tabla', ['evaluacion' => $evaluacion->id,'rangos'=>$rangosResultados])
         <div class="mt-3 col-12">
             <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                 GRÁFICAS
@@ -60,7 +107,6 @@
         var resultadosGenerales = new Chart(ctx, {
             type: 'bar',
             data: {
-
                 datasets: [{
                     label: 'Resultados Generales',
                     data: @json($calificaciones),
