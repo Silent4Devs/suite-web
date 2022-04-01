@@ -273,13 +273,16 @@ class Ev360ResumenTabla extends Component
         $promedio_objetivos = 0;
         $promedio_general_objetivos = 0;
         $evaluadores_objetivos = collect();
+        $supervisorObjetivos = $evaluadores->filter(function ($item) {
+            return intval($item->tipo) == EvaluadoEvaluador::JEFE_INMEDIATO;
+        })->first();
         if ($evaluacion->include_objetivos) {
-            if ($evaluado->supervisor) {
+            if ($supervisorObjetivos) {
                 $objetivos_calificaciones = ObjetivoRespuesta::with(['objetivo' => function ($q) {
                     return $q->with('metrica');
                 }])->where('evaluacion_id', $evaluacion->id)
                     ->where('evaluado_id', $evaluado->id)
-                    ->where('evaluador_id', $evaluado->supervisor->id)
+                    ->where('evaluador_id', $supervisorObjetivos->evaluador_id)
                     ->get();
                 $evaluadores_objetivos->push([
                     'id' => $evaluado->supervisor->id, 'nombre' => $evaluado->supervisor->name,
