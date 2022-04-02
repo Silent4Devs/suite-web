@@ -45,6 +45,10 @@
             z-index: 2;
         }
 
+        div#tblResumen_wrapper div:nth-child(2) {
+            overflow: auto;
+        }
+
     </style>
     {{-- <div class="mt-3 ml-2 row align-items-center">
         <div class="pl-2 col-6">
@@ -70,7 +74,7 @@
             ...</span>
     </div>
     <div class="container">
-        <div wire:ignore class="container pl-0 datatable-fix" style="overflow: auto">
+        <div wire:ignore class="container pl-0 datatable-fix">
             <table class="table table-bordered w-100 datatable-Activo" id="tblResumen" style="font-size: 10px;">
                 <thead class="thead-dark">
                     <tr>
