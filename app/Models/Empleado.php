@@ -532,4 +532,9 @@ class Empleado extends Model
     {
         return $this->onlyChildren->count() > 0 ? true : false;
     }
+
+    public function timesheet()
+    {
+        return $this->hasMany(Timesheet::class, 'empleado_id', 'id')->orderBy('id');
+    }
 }
