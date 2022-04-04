@@ -17,8 +17,11 @@
                     Base
                 </th>
                 @foreach($columnas as $columna)
-                <th>
+                <th class="text-center" style="background:{{$columna['color']}}">
                     {{$columna['nivel']}}
+                    <div >
+                        {{$columna['clasificacion']}}
+                    </div>
                 </th>
                 @endforeach
             </tr>
@@ -63,19 +66,19 @@
                 <div class="row">
                     <div class="form-group col-8">
                         <label for="recipient-name" class="col-form-label">Nivel:</label>
-                        <input type="text" class="form-control" id="niveles" wire:model='indexColumna'>
+                        <input type="text" class="form-control" id="niveles" wire:model="nivelImpacto">
                         <span class="text-danger" id="niveles_error" class="nivel_error"></span>
                     </div>
                     <div class="form-group col-4">
                         <label for="recipient-name" class="col-form-label">Color:</label>
-                        <input class="form-control" id="color" type="color">
+                        <input class="form-control" id="color" type="color"  wire:model="colorImpacto">
                         <span class="text-danger" id="color_error" class="color_error"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="recipient-name" class="col-form-label">Clasificación:</label>
-                        <input wire:model='clasificacion' type="text" class="form-control" id="clasificacion">
+                        <input type="text" class="form-control" id="clasificacion" wire:model="clasificacionImpacto">
                         <span class="text-danger" id="clasificacion_error" class="clasificacion_error"></span>
                     </div>
                 </div>
@@ -102,17 +105,17 @@
               <form>
                     <div class="form-group col-12">
                         <label for="recipient-name" class="col-form-label">Tipo de Impacto:</label>
-                        <input type="text" class="form-control" id="nombre_impacto">
-                        <span class="text-danger" id="nombre_impacto_error" class="nombre_impactp_error"></span>
+                        <input type="text" class="form-control" id="nombre_impacto" wire:model="tipo">
+                        <span class="text-danger" id="nombre_impacto_error"  class="nombre_impacto_error"></span>
                     </div>
                     <div class="form-group col-12">
                         <label for="recipient-name" class="col-form-label">Criterio:</label>
-                        <textarea class="form-control" wire:model='criterio' id="criterio" type="text"></textarea>
+                        <textarea class="form-control" id="criterio" type="text" wire:model="criterio"></textarea>
                         <span class="text-danger" id="criterio_error" class="criterio_error"></span>
                     </div>
                     <div class="form-group col-12">
                         <label for="recipient-name" class="col-form-label">Base:</label>
-                        <textarea type="text" wire:model='base' class="form-control" id="base"></textarea>
+                        <textarea type="text" class="form-control" id="base" wire:model="base"></textarea>
                         <span class="text-danger" id="base_error" class="base_error"></span>
                     </div>
               </form>

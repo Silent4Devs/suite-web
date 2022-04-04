@@ -39,6 +39,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Modulo Capital Humano
     Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
 
+
+
     //Tipos de contratos
     Route::resource('recursos-humanos/tipos-contratos-empleados', 'RH\TipoContratoEmpleadoController');
     Route::resource('recursos-humanos/entidades-crediticias', 'RH\EntidadCrediticiaController');
@@ -47,7 +49,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('recursos-humanos/beneficiarios-empleados', 'RH\BeneficiariosEmpleadoController');
 
     // Evaluaciones 360
-    Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
+    Route::post('recursos-humanos/evaluacion-360/normalizar/{evaluacion}/resultados', 'RH\EV360EvaluacionesController@normalizarResultados')->name('ev360-normalizar-resultados');
+    Route::get('recursos-humanos/evaluacion-360', 'RH\EV360EvaluacionesController@index')->name('rh-evaluacion360.index');
 
     Route::get('tabla-calendario/index', 'TablaCalendarioController@index')->name('tabla-calendario.index');
     Route::resource('recursos-humanos/calendario', 'TablaCalendarioController')->names([
@@ -458,6 +461,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('timesheet/clientes/create', 'TimesheetController@clientesCreate')->name('timesheet-clientes-create');
     Route::post('timesheet/clientes/store', 'TimesheetController@clientesStore')->name('timesheet-clientes-store');
     Route::post('timesheet/clientes/delete/{id}', 'TimesheetController@clientesDelete')->name('timesheet-delete');
+
+    Route::get('timesheet/reportes', 'TimesheetController@reportes')->name('timesheet-reportes');
+    Route::get('timesheet/dashboard', 'TimesheetController@dashboard')->name('timesheet-dashboard');
 
     Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
 

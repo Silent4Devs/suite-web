@@ -148,7 +148,9 @@
                     </div>
 
                     <div id="caja_select_color" class="form-group col-md-4 col-sm-12">
-                        <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>Confidencialidad</label><br>
+                        <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>Confidencialidad</label><a id="btnAgregarTipo" onclick="event.preventDefault();"
+                        style="font-size:12pt; float: right;"data-toggle="modal" data-target="#marcaslec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
+                        <br>
                         <select class="form-control sumatoria-select select2 {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}"
                             name="confidencialidad" id="confidencialidad_informacion">
                             <option value="0">0 - Sin Impacto</option>
@@ -162,7 +164,10 @@
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12 caja_select_color">
-                        <label for="disponibilidad"><i class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label><br>
+                        <label for="disponibilidad"><i class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label><a id="btnAgregarTipo" onclick="event.preventDefault();"
+                        style="font-size:12pt; float: right;"data-toggle="modal"  data-target="#modelolec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
+                        </a>
+                        <br>
                         <select class="form-control sumatoria-select select2 {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}"
                             name="disponibilidad" id="disponibilidad_informacion">
                             <option value="0">0 - Sin Impacto</option>
@@ -200,7 +205,7 @@
                     </div>
 
                     <div id="omitir_color" class="form-group col-md-12 col-lg-12 col-sm-12">
-                        <label><i class="fa-solid fa-check-to-slot iconos-crear"></i>Controles Aplicables</label>
+                        <label><i class="fa-solid fa-check-to-slot iconos-crear"></i>Políticas/Control asociado al Riesgo</label>
                         <select class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
                         name="controles[]" id="controles" multiple="multiple">
                             <option value disabled>
@@ -255,6 +260,117 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="modal fade" id="marcaslec" tabindex="-1" aria-labelledby="marcaslecLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="marcaslec" id="exampleModalLabel">Impacto Operacional</h5>
+                          </div>
+                          <div class="modal-body">
+                              <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                  <div class="col-4" style="background-color: rgb(50, 205, 63)">
+                                      <strong style="color:#fff" class="text-center">2 - Bajo</strong>
+                                  </div>
+                                  <div class="col-8">
+                                      <span style="justify-content;">Pérdida de contratos de clientes no relevantes y acciones legales con poca afectación</span>
+                                  </div>
+                              </div>
+                              <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                  <div class="col-4" style="background-color: yellow;">
+                                      <strong  class="text-center">3 - Medio</strong>
+                                  </div>
+                                  <div class="col-8">
+                                      <span style="justify-content;">Operación con licencias restringidas sin afectar a los clientes sin llegar a demandas</span>
+                                  </div>
+                              </div>
+                              <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                  <div class="col-4" style="background-color: rgb(255, 136, 0);">
+                                      <strong style="color:#fff" class="text-center">4 - Alto</strong>
+                                  </div>
+                                  <div class="col-8">
+                                      <span style="justify-content;">Demandas y revocación de contratos de uno o varios clientes relevantes</span>
+                                  </div>
+                              </div>
+                              <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                  <div class="col-4" style="background-color: red;">
+                                      <strong style="color:#fff" class="text-center">5 - Crítico</strong>
+                                  </div>
+                                  <div class="col-8">
+                                      <span style="justify-content;">Cierre de negocios relevantes e incremento de demandas</span>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="modelolec" tabindex="-1" aria-labelledby="modelolecLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Impacto Cumplimiento</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color:#1168af;">
+                                    <strong style="color:#fff" class="text-center">0 - Sin Impacto</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">No se considera riesgo legal asociado al riesgo evaluado</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color: rgb(61, 114, 77);">
+                                    <strong style="color:#fff" class="text-center">1 - Muy Bajo</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Sin requerimientos y observaciones por él regulados</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color: rgb(50, 205, 63)">
+                                    <strong style="color:#fff" class="text-center">2 - Bajo</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Requerimientos de Información</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color: yellow;">
+                                    <strong  class="text-center">3 - Medio</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Visitas de Inspección con observaciones</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color: rgb(255, 136, 0);">
+                                    <strong style="color:#fff" class="text-center">4 - Alto</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Suspensión de operaciones > 1 día</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color: red;">
+                                    <strong style="color:#fff" class="text-center">5 - Crítico</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Revocación de concesiones y autorización de operación</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
             </form>
             <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>

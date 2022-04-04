@@ -658,8 +658,8 @@ class DocumentosController extends Controller
         $procesos = Proceso::pluck('nombre')->toArray();
         $macroprocesosAndProcesos = array_merge($macroprocesos, $procesos);
 
-        // $documentos = Documento::where('estatus', Documento::PUBLICADO)->get();
-        $documentos = Documento::get();
+        $documentos = Documento::where('estatus', Documento::PUBLICADO)->get();
+        // $documentos = Documento::get();
 
         return view('admin.documentos.list-published', compact('documentos', 'organizacion', 'macroprocesosAndProcesos'));
     }
