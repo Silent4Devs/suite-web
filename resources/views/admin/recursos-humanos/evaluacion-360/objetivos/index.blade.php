@@ -24,6 +24,16 @@
                                 inmediato de cada
                                 colaborador</small>
                         </p>
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                            Definir Nuevos Objetivos</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Para definir nuevos objetivos para
+                            una siguiente evaluación presione el botón "Definir nuevos objetivos" y de clic en "Aceptar"
+                            seguidamente
+                            <br>
+                            <small class="text-muted">Importante: Una vez que establezca nuevos objetivos tendrá que
+                                realizar la carga de objetivos nuevamente</small>
+                        </p>
+                        <button class="btn btn-success" id="btnNuevosObjetivos">Definir nuevos objetivos</button>
                     </div>
                 </div>
             </div>
@@ -123,6 +133,56 @@
 
     <script>
         $(function() {
+            document.getElementById('btnNuevosObjetivos').addEventListener('click', () => {
+                Swal.fire({
+                    title: '¿Quieres registrar nuevos objetivos?',
+                    text: "Registrar nuevos objetivos te permitirá evaluarlos en una nueva evaluación, los objetivos anteriores no se eliminaran pero no serán visibles para nuevas evaluaciones",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar',
+                    cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: "{{ route('admin.ev360-objetivos-empleado.definir-nuevos') }}",
+                            beforeSend: function() {
+                                Swal.fire(
+                                    'En proceso',
+                                    'Estamos preparando todo para que puedas definir nuevos objetivos',
+                                    'info'
+                                );
+                            },
+                            success: function(response) {
+                                if (response.estatus == 200) {
+                                    Swal.fire(
+                                        'Bien Hecho',
+                                        'Ahora puedes definir nuevos objetivos para los colaboradores',
+                                        'success'
+                                    );
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 1000);
+                                }
+                            },
+                            error: function(request, status, error) {
+                                Swal.fire(
+                                    'Error',
+                                    error,
+                                    'error'
+                                )
+                            }
+                        });
+                    }
+                })
+
+            })
+
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Objetivos ${new Date().toLocaleDateString().trim()}`,
@@ -453,5 +513,4 @@
             }
         });
     </script>
-
 @endsection

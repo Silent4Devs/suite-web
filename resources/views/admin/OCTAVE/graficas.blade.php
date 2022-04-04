@@ -124,7 +124,7 @@
 
     <div class="mt-5 card card-body">
         @include('admin.OCTAVE.menu')
-        
+
 
 
         <div class="row caja-graf" id="caja_graf_ev">
@@ -306,7 +306,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Probabilidad</th>
                             <th scope="col">Impacto</th>
-                            <th scope="col">Nivel riesgo</th>
+                            {{-- <th scope="col">Nivel riesgo</th> --}}
                             <th scope="col">Riesgo</th>
                         </tr>
                     </thead>
@@ -325,7 +325,7 @@
                                     $impacto = '<span style="background-color: #F15B5B;">Muy Alto</span>';
 
                                     $nivel = '<span style="background-color: #F15B5B;">' . $proceso->nivel_riesgo . '%</span>';
-                                    $riesgo = '<span style="background-color: #F15B5B;">Alto</span>';
+                                    $riesgo = '<span style="background-color: #F15B5B;">Muy Alto</span>';
                                 }
                                 if($proceso->nivel_riesgo <= 20){
                                     $probabilidad = '<span style="background-color: #7CCD30;">Baja</span>';
@@ -350,7 +350,7 @@
                                 </td>
                                 <td scope="col">{!! $probabilidad !!}</td>
                                 <td scope="col">{!! $impacto !!}</td>
-                                <td scope="col">{!! $nivel !!}</td>
+                                {{-- <td scope="col">{!! $nivel !!}</td> --}}
                                 <td scope="col">{!! $riesgo !!}</td>
                             </tr>
                         @endforeach
@@ -376,9 +376,7 @@
 
             <h5 class="col-12 my-5 d-flex justify-content-between"><strong>Evaluación de Activos <font id="nombre_proceso"></font></strong> <i class="fa-solid fa-arrow-left i_regreso regreso_gen"></i></h5>
 
-            @php
-                $variable_medir_activo = '3,4';
-            @endphp
+
             <div class="col-12 mb-5" style="overflow: auto;">
 
                 <div class="caja-grafica py-5" style="width: 680px;">
@@ -388,35 +386,35 @@
                             <td class="info-td"><div class="vertical">Muy&nbsp;Probable</div></td>
                             <td class="color-td td-amarillo">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '1,5')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '1,5')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-naranja">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '2,5')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '2,5')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-naranja">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '3,5')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '3,5')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-rojo">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '4,5')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '4,5')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-rojo">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '5,5')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '5,5')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
@@ -426,35 +424,35 @@
                             <td class="info-td"><div class="vertical">Probable</div></td>
                             <td class="color-td td-amarillo">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '1,4')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '1,4')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-amarillo">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '2,4')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '2,4')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-naranja">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '3,4')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '3,4')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-naranja">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '4,4')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '4,4')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-rojo">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '5,4')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '5,4')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
@@ -464,35 +462,35 @@
                             <td class="info-td"><div class="vertical">Posible</div></td>
                             <td class="color-td td-verde">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '1,3')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '1,3')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-amarillo">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '2,3')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '2,3')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-amarillo">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '3,3')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '3,3')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-naranja">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '4,3')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '4,3')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-naranja">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '5,3')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '5,3')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
@@ -502,35 +500,35 @@
                             <td class="info-td"><div class="vertical">Poco&nbsp;Probable</div></td>
                             <td class="color-td td-verde">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '1,2')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '1,2')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-verde">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '2,2')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '2,2')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-amarillo">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '3,2')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '3,2')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-amarillo">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '4,2')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '4,2')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-naranja">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '5,2')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '5,2')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
@@ -540,35 +538,35 @@
                             <td class="info-td"><div class="vertical">Improbable</div></td>
                             <td class="color-td td-verde-o">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '1,1')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '1,1')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-verde">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '2,1')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '2,1')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-verde">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '3,1')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '3,1')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-verde">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '4,1')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '4,1')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="color-td td-amarillo">
                                 @foreach($activos as $activo)
-                                    @if($variable_medir_activo == '5,1')
+                                    @if($activo->nivel_riesgo_ai['coordenada'] == '5,1')
                                         <div class="circle-s d-none id_proceso_{{ $activo->proceso_id }}" data-id="activo_id_{{ $activo->id }}">A{{ $activo->identificador }}</div>
                                     @endif
                                 @endforeach
@@ -799,13 +797,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($escenarios as $escenario)
                                         <tr>
-                                            @foreach($escenarios as $escenario)
-                                                <td>{{ $escenario->identificador_escenario }}</td>
-                                                <td>{{ $escenario->nom_escenario }}</td>
-                                                <td>{{ $escenario->descripcion }}</td>
-                                            @endforeach
+                                            <td>{{ $escenario->identificador_escenario }}</td>
+                                            <td>{{ $escenario->nom_escenario }}</td>
+                                            <td>{{ $escenario->descripcion }}</td>
                                         </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                                 

@@ -18,6 +18,7 @@ class ConsultaDeEvaluciones extends Component
     public $calificaciones_jefe_competencias;
     public $calificaciones_equipo_competencias;
     public $calificaciones_area_competencias;
+    public $calificaciones_meta_competencias;
     public $competencias_lista_nombre;
     public $competencias_lista_nombre_max;
     public $calificaciones;
@@ -48,6 +49,7 @@ class ConsultaDeEvaluciones extends Component
         $this->calificaciones_jefe_competencias = $this->calificaciones['calificaciones_jefe_competencias'];
         $this->calificaciones_equipo_competencias = $this->calificaciones['calificaciones_equipo_competencias'];
         $this->calificaciones_area_competencias = $this->calificaciones['calificaciones_area_competencias'];
+        $this->calificaciones_meta_competencias = $this->calificaciones['calificaciones_meta_competencias'];
         $this->competencias_lista_nombre = $this->calificaciones['competencias_lista_nombre'];
         $evaluaciones = Evaluacion::all();
         $this->emit('renderCharts');

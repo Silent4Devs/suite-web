@@ -67,4 +67,8 @@ class MatrizOctaveEscenario extends Model
     // {
     //     return $this->hasMany(MatrizOctaveContenedor::class, 'id_matriz_octave_escenarios');
     // }
+    public function contenedor()
+    {
+        return $this->belongsTo(MatrizOctaveContenedor::class, 'id_octave_contenedor', 'id');
+    }
 }

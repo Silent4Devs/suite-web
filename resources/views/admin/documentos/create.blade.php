@@ -5,7 +5,7 @@
             border: 2px solid red !important;
         }
 
-        .buscador-global{
+        .buscador-global {
             border: none !important;
             border-bottom: 1px solid #fff !important;
         }
@@ -98,11 +98,11 @@
                 @csrf
                 @include('admin.documentos._form')
                 <div class="text-right form-group col-12">
-                <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
-                <input type="submit" class="btn btn-danger" value="Guardar">
-                @can('documentos_publish')
-                    <button id="publicar" class="btn btn-danger">Publicar</button>
-                </div>
+                    <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
+                    <input type="submit" class="btn btn-danger" value="Guardar">
+                    @can('documentos_publish')
+                        <button id="publicar" class="btn btn-danger">Publicar</button>
+                    </div>
                 @endcan
             </form>
             <!-- Modal -->
@@ -118,8 +118,8 @@
                             </button>
                         </div> --}}
                         <div class="modal-body">
-                            <h5 class="titulo-modal">Publicar <button type="button" class="close" data-dismiss="modal"
-                                    aria-label="Close">
+                            <h5 class="titulo-modal">Publicar <button type="button" class="close"
+                                    data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button></h5>
                             <form action="{{ route('admin.documentos.publish') }}" id="formPublish"
@@ -180,15 +180,13 @@
                                             <div class="form-group select-revisores">
                                                 <label for="descripcion" class="labels-publicacion">Descripción
                                                     del cambio:</label>
-                                                <textarea class="form-control" id="descripcion" name="descripcion"
-                                                    rows="1"></textarea>
+                                                <textarea class="form-control" id="descripcion" name="descripcion" rows="1"></textarea>
                                                 <span class="text-danger" id="descripcion_error"></span>
                                             </div>
                                             <div class="form-group select-revisores">
                                                 <label for="comentarios" class="labels-publicacion">Comentarios
                                                     adicionales:</label>
-                                                <textarea class="form-control" id="comentarios" name="comentarios"
-                                                    rows="1"></textarea>
+                                                <textarea class="form-control" id="comentarios" name="comentarios" rows="1"></textarea>
                                                 <span class="text-danger" id="comentarios_error"></span>
                                             </div>
                                         </div>
@@ -197,7 +195,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                             <button type="button" id="finalizarPublicacion" class="btn btn-danger">Enviar</button>
                         </div>
                     </div>
@@ -208,7 +206,6 @@
     </div>
 @endsection
 @section('scripts')
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let guardarDocumento = null;
@@ -439,22 +436,23 @@
                                         },
                                         dataType: "JSON",
                                         success: function(response) {
-                                            console.log(response);
+                                            if (response.data.id) {
+                                                Swal.fire(
+                                                    'Enviado a revisión!',
+                                                    'Tu documento ha sido enviado a revisión, mantente al tanto de las actualizaciones',
+                                                    'success'
+                                                );
+                                                setTimeout(() => {
+                                                    window.location
+                                                        .href =
+                                                        "{{ route('admin.documentos.index') }}";
+                                                }, 2000);
+                                            }
                                             // $('#modalPublicar').modal('hide');
                                         }
                                     });
                                 }
                             });
-
-                            Swal.fire(
-                                'Enviado a revisión!',
-                                'Tu documento ha sido enviado a revisión, mantente al tanto de las actualizaciones',
-                                'success'
-                            );
-                            setTimeout(() => {
-                                window.location.href =
-                                    "{{ route('admin.documentos.index') }}";
-                            }, 1500);
                         }
                     })
                 }

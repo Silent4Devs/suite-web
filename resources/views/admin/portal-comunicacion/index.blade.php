@@ -522,7 +522,7 @@
                                     <div class="comunicado" style="position:relative;">
                                         @php
                                             if ($comunicacionSgi->first()->count()) {
-                                                if ($carrusel->imagenes_comunicacion->first()) {
+                                                if ($comunicacionSgi->imagenes_comunicacion->first()) {
                                                     $imagen = 'storage/imagen_comunicado_SGI/' . $comunicacionSgi->imagenes_comunicacion->first()->imagen;
                                                 }
                                             } else {

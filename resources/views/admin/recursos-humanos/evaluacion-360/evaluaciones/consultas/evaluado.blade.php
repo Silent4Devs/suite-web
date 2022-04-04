@@ -26,14 +26,9 @@
                         @php
                             use App\Models\Organizacion;
                             $organizacion = Organizacion::first();
-                            $logotipo = 'img/logo_policromatico_2.png';
-                            if ($organizacion) {
-                                if ($organizacion->logotipo) {
-                                    $logotipo = 'images/' . $organizacion->logotipo;
-                                }
-                            }
+                            
                         @endphp
-                        <img src="{{ asset($logotipo) }}" class="img-fluid" alt="" width="70">
+                        <img src="{{ $organizacion->logotipo }}" class="img-fluid" alt="" width="70">
                     </div>
                     <div class="border col-4">
                         <p class="m-0" style="font-size:13px">
@@ -90,7 +85,7 @@
                     {{-- <div class="p-1 text-center col-12" style="background: #3e3e3e">
                     <h6 class="m-0 text-white">Metodología utilizada</h6>
                 </div> --}}
-                    <div class="mt-2 text-center form-group col-12"
+                    {{-- <div class="mt-2 text-center form-group col-12"
                         style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
                         Metodología utilizada
                     </div>
@@ -123,13 +118,53 @@
                         Esta forma ayuda a reducir los desvíos a partir de proveer una retroalimentación equilibradadada
                         la
                         variedad de fuentes
-                    </p>
+                    </p> --}}
 
-                    <div class="mt-2 text-center form-group col-12"
-                        style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
-                        Resultado de la evaluación por competencias
+                    <div class="col-12">
+                        <div class="mt-1 row justify-content-between">
+                            <div class="mt-2 text-center form-group col-12"
+                                style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                                Resultados Generales obtenidos
+                            </div>
+                            <div class="col-4" style="font-size:12px">
+                                <div class="text-center row align-items-center">
+                                    <div class="border col-6" style="background: #3e3e3e">
+                                        <p class="m-0 text-white">Calificación Final</p>
+                                    </div>
+                                    <div class="border col-6">
+                                        <p class="m-0">{{ round($calificacion_final) }}%</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4" style="font-size:12px">
+                                <div class="text-center row align-items-center">
+                                    <div class="border col-6" style="background: #3e3e3e">
+                                        <p class="m-0 text-white">Competencias</p>
+                                    </div>
+                                    <div class="border col-6">
+                                        <p class="m-0">
+                                            {{ round(($promedio_competencias * 100) / $peso_general_competencias) }}%</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4" style="font-size:12px">
+                                <div class="text-center row align-items-center">
+                                    <div class="border col-6" style="background: #3e3e3e">
+                                        <p class="m-0 text-white">Objetivos</p>
+                                    </div>
+                                    <div class="border col-6">
+                                        <p class="m-0">{{ round($promedio_objetivos) }}%
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="mt-2 text-center form-group col-12"
+                style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                Resultado de la evaluación por competencias
             </div>
             <div class="col-12">
                 {{-- <div class="mt-2 row">
@@ -144,7 +179,13 @@
                     <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['tipo'] }}</span>
                     <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['peso_general'] }}%</span>
                     @forelse ($lista_autoevaluacion->first()['evaluaciones'] as $evaluador)
-                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'autoevaluacion'])
+                        @include(
+                            'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
+                            [
+                                'tipo' =>
+                                    'autoevaluacion',
+                            ]
+                        )
                     @empty
                         <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
                             aplica
@@ -157,7 +198,10 @@
                     <span style="font-size: 11px">{{ $lista_jefe_inmediato->first()['tipo'] }}</span>
                     <span style="font-size: 11px">{{ $lista_jefe_inmediato->first()['peso_general'] }}%</span>
                     @forelse ($lista_jefe_inmediato->first()['evaluaciones'] as $evaluador)
-                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'jefe'])
+                        @include(
+                            'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
+                            ['tipo' => 'jefe']
+                        )
                     @empty
                         <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
                             aplica
@@ -170,7 +214,10 @@
                     <span style="font-size: 11px">Subordinado</span>
                     <span style="font-size: 11px">{{ $lista_equipo_a_cargo->first()['peso_general'] }}%</span>
                     @forelse ($lista_equipo_a_cargo->first()['evaluaciones'] as $evaluador)
-                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'equipo'])
+                        @include(
+                            'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
+                            ['tipo' => 'equipo']
+                        )
                     @empty
                         <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
                             aplica
@@ -183,7 +230,13 @@
                     <span style="font-size: 11px">Par</span>
                     <span style="font-size: 11px">{{ $lista_misma_area->first()['peso_general'] }}%</span>
                     @forelse ($lista_misma_area->first()['evaluaciones'] as $evaluador)
-                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'misma_area'])
+                        @include(
+                            'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
+                            [
+                                'tipo' =>
+                                    'misma_area',
+                            ]
+                        )
                     @empty
                         <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
                             aplica
@@ -200,11 +253,14 @@
                         <div class="col-12" style="font-size:11px">
                             <div class="row">
                                 <div class="border col-6">Promedio</div>
-                                <div class="border col-6">{{ $promedio_competencias }}</div>
+                                <div class="border col-6">
+                                    {{ number_format(($promedio_competencias * 100) / $peso_general_competencias / 100, 2) }}
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="border col-6">% Participación</div>
-                                <div class="border col-6">{{ $promedio_competencias * 100 }}%</div>
+                                <div class="border col-6">
+                                    {{ round(($promedio_competencias * 100) / $peso_general_competencias) }}%</div>
                             </div>
                         </div>
                     </div>
@@ -212,10 +268,13 @@
             </div>
             <div class="mt-2 text-center form-group col-12"
                 style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
-                Gráficas
+                Gráficas Competencias
             </div>
             <div id="graficasCompetencias">
                 <div class="row">
+                    <div class="col-12">
+                        <canvas id="radarCompetencias" width="400" height="400"></canvas>
+                    </div>
                     <div class="col-4">
                         <canvas id="jefeGrafica" width="400" height="400"></canvas>
                     </div>
@@ -224,9 +283,6 @@
                     </div>
                     <div class="col-4">
                         <canvas id="areaGrafica" width="400" height="400"></canvas>
-                    </div>
-                    <div class="col-6">
-                        <canvas id="radarCompetencias" width="400" height="400"></canvas>
                     </div>
                 </div>
             </div>
@@ -323,52 +379,55 @@
                         <div class="col-12">
                             <div class="row">
                                 <div class="border col-6">Promedio</div>
-                                <div class="border col-6">{{ $promedio_objetivos }}</div>
+                                <div class="border col-6">{{ number_format($promedio_objetivos / 100, 2) }}</div>
                             </div>
                             <div class="row">
                                 <div class="border col-6">% Participación</div>
-                                <div class="border col-6">{{ $promedio_objetivos * 100 }}%</div>
+                                <div class="border col-6">{{ number_format($promedio_objetivos, 2) }}%</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="mt-1 row justify-content-between">
-                    <div class="mt-2 text-center form-group col-12"
-                        style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
-                        Resultados Generales obtenidos
-                    </div>
-                    <div class="col-4" style="font-size:12px">
-                        <div class="text-center row align-items-center">
-                            <div class="border col-6" style="background: #3e3e3e">
-                                <p class="m-0 text-white">Calificación Final</p>
-                            </div>
-                            <div class="border col-6">
-                                <p class="m-0">{{ $calificacion_final }}%</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4" style="font-size:12px">
-                        <div class="text-center row align-items-center">
-                            <div class="border col-6" style="background: #3e3e3e">
-                                <p class="m-0 text-white">Competencias</p>
-                            </div>
-                            <div class="border col-6">
-                                <p class="m-0">{{ $promedio_general_competencias }}%</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4" style="font-size:12px">
-                        <div class="text-center row align-items-center">
-                            <div class="border col-6" style="background: #3e3e3e">
-                                <p class="m-0 text-white">Objetivos</p>
-                            </div>
-                            <div class="border col-6">
-                                <p class="m-0">{{ $promedio_general_objetivos }}%
-                                </p>
-                            </div>
-                        </div>
+            </div>
+            <div class="mt-2 text-center form-group col-12"
+                style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                Gráficas Objetivos
+            </div>
+            <div id="graficasObjetivos">
+                <div class="row">
+                    <div class="col-12">
+                        <canvas id="objetivosGrafica"></canvas>
                     </div>
                 </div>
+            </div>
+            <div class="mt-2 text-center form-group col-12"
+                style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                Sección de Firmas
+            </div>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-3 border text-center">
+                        <img class="img-fluid" src="{{ asset($firmaAuto) }}"
+                            style="{{ !$existeFirmaAuto ? 'max-width:97px' : '' }}" />
+                        <h6 class="my-2">Firma Autoevaluación</h6>
+                    </div>
+                    <div class="col-3 border text-center">
+                        <img class="img-fluid" src="{{ asset($firmaJefe) }}"
+                            style="{{ !$existeFirmaJefe ? 'max-width:97px' : '' }}" />
+                        <h6 class="my-2">Firma Jefe Inmediato</h6>
+                    </div>
+                    <div class="col-3 border text-center">
+                        <img class="img-fluid" src="{{ asset($firmaEquipo) }}"
+                            style="{{ !$existeFirmaSubordinado ? 'max-width:97px' : '' }}" />
+                        <h6 class="my-2">Firma Subordinado</h6>
+                    </div>
+                    <div class="col-3 border text-center">
+                        <img class="img-fluid" src="{{ asset($firmaPar) }}"
+                            style="{{ !$existeFirmaPar ? 'max-width:97px' : '' }}" />
+                        <h6 class="my-2">Firma Par</h6>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -524,16 +583,87 @@
                 type: 'radar',
                 data: dataRadar,
                 options: {
-                    elements: {
-                        line: {
-                            borderWidth: 3
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
-                    }
-                },
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Promedios'
+                        },
+                        legend: {
+                            display: true
+                        },
+                    },
+                    scale: {
+                        min: 0,
+                    },
+                }
             };
             let radarChart = new Chart(
                 document.getElementById('radarCompetencias'),
                 configRadar
+            );
+            //OBJETIVOS
+            const dataRadarObjetivos = {
+                labels: @json($nombresObjetivos),
+                datasets: [{
+                    label: 'Meta',
+                    data: @json($metaObjetivos),
+                    fill: true,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    pointBackgroundColor: 'rgb(255, 99, 132)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(255, 99, 132)'
+                }, {
+                    label: 'Califiación Jefe',
+                    data: @json($calificacionObjetivos),
+                    fill: true,
+                    backgroundColor: 'rgba(46, 204, 65, 0.2)',
+                    borderColor: 'rgb(46, 204, 65)',
+                    pointBackgroundColor: 'rgb(46, 204, 65)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(46, 204, 65)'
+                }]
+            };
+            const configRadarObjetivos = {
+                type: 'radar',
+                data: dataRadarObjetivos,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Objetivos'
+                        },
+                        legend: {
+                            display: true
+                        },
+                    },
+                    scale: {
+                        min: 0,
+                    },
+                }
+            };
+
+            let objetivosChart = new Chart(
+                document.getElementById('objetivosGrafica'),
+                configRadarObjetivos
             );
         });
     </script>

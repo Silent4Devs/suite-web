@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\ActivoInformacion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -20,6 +21,17 @@ class MatrizOctaveContenedor extends Model
         'id_matriz_octave_escenarios',
     ];
 
+    // public function getImpactoProcesoAttribute()
+    // {
+    //     // dump($this->activoInformacion);
+    //     if(is_object($this->activoInformacion)){
+    //         if ($this->activoInformacion->count()>0){
+    //             return $this->activoInformacion;
+    //         }
+    //     }
+    //     return 0;
+    // }
+
     public function getColorAttribute()
     {
         if (intval($this->riesgo) <= 1) {
@@ -37,6 +49,7 @@ class MatrizOctaveContenedor extends Model
 
     public function getNameAttribute()
     {
+
         return $this->identificador_contenedor . ' ' . $this->nom_contenedor;
     }
 
@@ -53,5 +66,10 @@ class MatrizOctaveContenedor extends Model
     public function children()
     {
         return $this->hasMany(MatrizOctaveEscenario::class, 'id_octave_contenedor', 'id')->with('children');
+    }
+
+    public function activoInformacion()
+    {
+        return $this->belongsToMany(ActivoInformacion::class, 'activos_contenedores', 'contenedor_id', 'activo_id');
     }
 }

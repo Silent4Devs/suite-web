@@ -1,6 +1,35 @@
 @extends('layouts.admin')
 @section('content')
     @include('admin.ContenedorMatrizOctave.styles')
+    <style>
+        #contenedores tr td:nth-child(4){
+            background-color: green;
+            position: relative;
+            padding: 0;
+        }
+        #contenedores tr td:nth-child(5){
+            background-color: green;
+            position: relative;
+            padding: 0;
+        }
+        #contenedores tr td:nth-child(6){
+            background-color: green;
+            position: relative;
+            padding: 0;
+        }
+        #contenedores tr td:nth-child(7){
+            background-color: green;
+            position: relative;
+            padding: 0;
+        }
+
+        /* #contenedores tr td:nth-child(8){
+            background-color: green;
+            position: relative;
+            padding: 0;
+        } */
+    </style>
+
 
 
 
@@ -33,7 +62,7 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-md-8 col-lg-8 col-sm-12">
+                    <div class="form-group col-md-10 col-lg-10 col-sm-12">
                         <label for="nom_contenedor"><i class="fas fa-box-open iconos-crear"></i>Nombre del Contenedor</label>
                         <input class="form-control {{ $errors->has('nom_contenedor') ? 'is-invalid' : '' }}" type="text"
                             name="nom_contenedor" id="nom_contenedor"
@@ -45,8 +74,8 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-md-2 col-lg-2 col-sm-12">
-                        <label for="riesgo"><i class="fas fa-bullseye iconos-crear"></i>Riesgo</label>
+                    <div class="form-group col-md-6 col-lg-6 col-sm-12">
+                        <label for="riesgo"><i class="fas fa-bullseye iconos-crear"></i>Valor del Riesgo</label>
                         <input class="form-control {{ $errors->has('riesgo') ? 'is-invalid' : '' }}" type="text"
                             name="riesgo" id="riesgo" value="{{ old('riesgo', $contenedor->riesgo) }}" readonly>
                         @if ($errors->has('riesgo'))
@@ -56,16 +85,11 @@
                         @endif
                     </div>
 
-                    {{-- <div class="form-group col-md-3 col-lg-3 col-sm-12">
-                    <label for="vinculado_ai"><i class="fas fa-table iconos-crear"></i>Vinculado al AI</label>
-                    <input class="form-control {{ $errors->has('vinculado_ai') ? 'is-invalid' : '' }}" type="text"
-                        name="vinculado_ai" id="vinculado_ai" value="{{ old('vinculado_ai', '') }}">
-                    @if ($errors->has('vinculado_ai'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('vinculado_ai') }}
-                        </div>
-                    @endif
-                </div> --}}
+                    <div class="form-group col-md-6 col-lg-6 col-sm-12">
+                        <label for="riesgo"><i class="fas fa-bullseye iconos-crear"></i>Nivel del Riesgo</label>
+                        <input class="form-control" id="nivelRiesgoText" readonly>
+                    </div>
+
 
                     <div class="form-group col-md-12 col-lg-12 col-sm-12">
                         <label for="descripcion"><i class="far fa-file-alt iconos-crear"></i>Descripción</label>
@@ -124,7 +148,9 @@
                     </div>
 
                     <div id="caja_select_color" class="form-group col-md-4 col-sm-12">
-                        <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>Confidencialidad</label><br>
+                        <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>Confidencialidad</label><a id="btnAgregarTipo" onclick="event.preventDefault();"
+                        style="font-size:12pt; float: right;"data-toggle="modal" data-target="#marcaslec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
+                        <br>
                         <select class="form-control sumatoria-select select2 {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}"
                             name="confidencialidad" id="confidencialidad_informacion">
                             <option value="0">0 - Sin Impacto</option>
@@ -138,7 +164,10 @@
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12 caja_select_color">
-                        <label for="disponibilidad"><i class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label><br>
+                        <label for="disponibilidad"><i class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label><a id="btnAgregarTipo" onclick="event.preventDefault();"
+                        style="font-size:12pt; float: right;"data-toggle="modal"  data-target="#modelolec" data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i class="fas fa-info-circle" ></i></a>
+                        </a>
+                        <br>
                         <select class="form-control sumatoria-select select2 {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}"
                             name="disponibilidad" id="disponibilidad_informacion">
                             <option value="0">0 - Sin Impacto</option>
@@ -166,48 +195,17 @@
                     </div>
 
                     <div class="form-group col-md-6 col-lg-6">
-                        <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Valor del CID</label><br>
+                        <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Valor Promedio del CID</label><br>
                         <div class="mt-2 form-control" id="valor_criticidad"></div>
                     </div>
 
                     <div class="form-group col-md-6 col-lg-6">
-                        <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Nivel del CID</label><br>
+                        <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Nivel Promedio del CID</label><br>
                         <div class="mt-2 form-control" id="valorCriticidadTxt"></div>
                     </div>
 
-
-                    {{-- <div class="form-group col-md-4 col-lg-4 col-sm-12">
-                    <label for="confidencialidad"><i class="fas fa-table iconos-crear"></i>Confidencialidad</label>
-                    <input class="form-control {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}" type="text"
-                        name="confidencialidad" id="confidencialidad" value="{{ old('confidencialidad', '') }}">
-                    @if ($errors->has('confidencialidad'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('confidencialidad') }}
-                        </div>
-                    @endif
-                </div>
-                <div class="form-group col-md-4 col-lg-4 col-sm-12">
-                    <label for="integridad"><i class="fas fa-table iconos-crear"></i>Integridad</label>
-                    <input class="form-control {{ $errors->has('integridad') ? 'is-invalid' : '' }}" type="text"
-                        name="integridad" id="integridad" value="{{ old('integridad', '') }}">
-                    @if ($errors->has('integridad'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('integridad') }}
-                        </div>
-                    @endif
-                </div>
-                <div class="form-group col-md-4 col-lg-4 col-sm-12">
-                    <label for="disponibilidad"><i class="fas fa-table iconos-crear"></i>Disponibilidad</label>
-                    <input class="form-control {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}" type="text"
-                        name="disponibilidad" id="disponibilidad" value="{{ old('disponibilidad', '') }}">
-                    @if ($errors->has('disponibilidad'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('disponibilidad') }}
-                        </div>
-                    @endif
-                </div> --}}
                     <div id="omitir_color" class="form-group col-md-12 col-lg-12 col-sm-12">
-                        <label><i class="fa-solid fa-check-to-slot iconos-crear"></i>Controles Aplicables</label>
+                        <label><i class="fa-solid fa-check-to-slot iconos-crear"></i>Políticas/Control asociado al Riesgo</label>
                         <select class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
                         name="controles[]" id="controles" multiple="multiple">
                             <option value disabled>
@@ -253,6 +251,7 @@
                                 <th style="min-width:300px;">Disponibilidad</th>
                                 <th style="min-width:300px;">Promedio CID</th>
                                 <th style="min-width:300px;">Controles Aplicables</th>
+                                <th>Opciones</th>
                                 {{-- <th>Opciones</th> --}}
                             </tr>
                         </thead>
@@ -261,6 +260,117 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="modal fade" id="marcaslec" tabindex="-1" aria-labelledby="marcaslecLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="marcaslec" id="exampleModalLabel">Impacto Operacional</h5>
+                          </div>
+                          <div class="modal-body">
+                              <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                  <div class="col-4" style="background-color: rgb(50, 205, 63)">
+                                      <strong style="color:#fff" class="text-center">2 - Bajo</strong>
+                                  </div>
+                                  <div class="col-8">
+                                      <span style="justify-content;">Pérdida de contratos de clientes no relevantes y acciones legales con poca afectación</span>
+                                  </div>
+                              </div>
+                              <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                  <div class="col-4" style="background-color: yellow;">
+                                      <strong  class="text-center">3 - Medio</strong>
+                                  </div>
+                                  <div class="col-8">
+                                      <span style="justify-content;">Operación con licencias restringidas sin afectar a los clientes sin llegar a demandas</span>
+                                  </div>
+                              </div>
+                              <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                  <div class="col-4" style="background-color: rgb(255, 136, 0);">
+                                      <strong style="color:#fff" class="text-center">4 - Alto</strong>
+                                  </div>
+                                  <div class="col-8">
+                                      <span style="justify-content;">Demandas y revocación de contratos de uno o varios clientes relevantes</span>
+                                  </div>
+                              </div>
+                              <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                  <div class="col-4" style="background-color: red;">
+                                      <strong style="color:#fff" class="text-center">5 - Crítico</strong>
+                                  </div>
+                                  <div class="col-8">
+                                      <span style="justify-content;">Cierre de negocios relevantes e incremento de demandas</span>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="modelolec" tabindex="-1" aria-labelledby="modelolecLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Impacto Cumplimiento</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color:#1168af;">
+                                    <strong style="color:#fff" class="text-center">0 - Sin Impacto</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">No se considera riesgo legal asociado al riesgo evaluado</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color: rgb(61, 114, 77);">
+                                    <strong style="color:#fff" class="text-center">1 - Muy Bajo</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Sin requerimientos y observaciones por él regulados</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color: rgb(50, 205, 63)">
+                                    <strong style="color:#fff" class="text-center">2 - Bajo</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Requerimientos de Información</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color: yellow;">
+                                    <strong  class="text-center">3 - Medio</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Visitas de Inspección con observaciones</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color: rgb(255, 136, 0);">
+                                    <strong style="color:#fff" class="text-center">4 - Alto</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Suspensión de operaciones > 1 día</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color: red;">
+                                    <strong style="color:#fff" class="text-center">5 - Crítico</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Revocación de concesiones y autorización de operación</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
             </form>
             <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
@@ -287,6 +397,7 @@
                 e.preventDefault();
                 document.getElementById('form_edit').submit();
             })
+
             let contenedores = $('#contenedores').DataTable({
                 ajax: '{{ route('admin.contenedores.escenarios.get', $contenedor) }}',
                 columns: [{
@@ -297,19 +408,53 @@
                     },
                     {
                         data: 'descripcion'
+
                     },
                     {
-                        data: 'confidencialidad'
+                        data: 'confidencialidad',
+                        render:function(data, type, row, meta) {
+                            let {texto,contenedor}=obtenerColorCid(data);
+                            return `<div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background-color:${contenedor}; color:${texto}">${data} - ${obtenerNivel(data)}
+                                </div>`
+                            }
                     },
                     {
-                        data: 'integridad'
+                        data: 'integridad',
+                        render:function(data, type, row, meta) {
+                            let {texto,contenedor}=obtenerColorCid(data);
+                            return `<div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background-color:${contenedor}; color:${texto}">${data} - ${obtenerNivel(data)}
+                                </div>`
+                            }
                     },
                     {
-                        data: 'disponibilidad'
+                        data: 'disponibilidad',
+                        render:function(data, type, row, meta) {
+                            let {texto,contenedor}=obtenerColorCid(data);
+                            return `<div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background-color:${contenedor}; color:${texto}">${data} - ${obtenerNivel(data)}
+                                </div>`
+                            }
                     },
                     {
-                        data: 'sumatoria'
+                        data: 'sumatoria',
+                        render:function(data, type, row, meta) {
+                            let {texto,contenedor}=obtenerColorCid(data);
+                            return `<div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background-color:${contenedor}; color:${texto}">${data} - ${obtenerNivel(data)}
+                                </div>`
+                            }
                     },
+                    // {
+                    //     data: 'impactoProceso',
+                    //     render:function(data, type, row, meta) {
+                    //         if(data == null){
+                    //             return `<div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background-color:#F5F5F5; color:black">Sin evaluar </div>`;
+                    //         }else{
+                    //             let {texto,contenedor}=obtenerColorImpacto(data);
+                    //             return `<div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background-color:${contenedor}; color:${texto}">${data} - ${obtenerNivelImpacto(data)}
+                    //                 </div>`
+                    //             }
+                    //         }
+
+                    // },
                     {
                         data: 'controles',
                         render:function(data, type, row, meta) {
@@ -317,7 +462,7 @@
                             if (row.controles.length > 0) {
                                 let html = '<ul>'
                                     row.controles.forEach(item=>{
-                                        html+=`<li>${item.anexo_politica}</li>`;
+                                        html+=`<li>${item.anexo_indice} - ${item.anexo_politica}</li>`;
                                     })
                                 html+='</ul>'
                                 return html;
@@ -327,11 +472,141 @@
 
                         }
                     },
+                    {
+                        data:'id',
+                        render: function(data, type, row, meta){
+                            let contenedor= @json($contenedor);
+                            let html = `
+                            <button onclick="event.preventDefault();eliminarEscenario('${data}','${contenedor.id}')" class="btn text-danger"><i class="fas fa-trash-alt"></i></button>
+                            `
+                            return html
+                        }
+
+                    },
                 ],
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
                 }
             })
+            window.eliminarEscenario=(escenario, contenedor)=>{
+                Swal.fire({
+                title: '¿Desea eliminar este escenario?',
+                text: "No podrás revertir esto",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar!',
+                cancelButtonText:'Cancelar'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                   type: "POST",
+                   headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                   url: "{{route('admin.contenedores.escenarios.destroy')}}",
+                   data: {escenario,contenedor},
+                   dataType: "json",
+                   success: function (response) {
+                   toastr.success('Escenario eliminado con éxito')
+                   calcularRiesgo(response.riesgo);
+                   contenedores.ajax.reload();
+                   }
+                });
+                }
+                })
+
+            }
+            window.obtenerNivel=(sumatoria)=>{
+                let resultado = "";
+                    if (sumatoria <=1){
+                    resultado="Muy Bajo"
+                }
+                    if (sumatoria ==2){
+                    resultado="Baja"
+                }
+                if (sumatoria ==3){
+                    resultado="Medio"
+                }
+                if (sumatoria ==4){
+                    resultado="Alta"
+                }
+                if (sumatoria ==5){
+                    resultado="Crítica"
+                }
+                return resultado;
+            }
+
+            window.obtenerColorCid=(sumatoria)=>{
+                let colores = {texto:"",contenedor:""};
+                    if (sumatoria <=1){
+                    colores.texto="white";
+                    colores.contenedor="green";
+                }
+                    if (sumatoria ==2){
+                    colores.texto="white";
+                    colores.contenedor="rgb(50, 205, 63)";
+                }
+                if (sumatoria ==3){
+                    colores.texto="black";
+                    colores.contenedor="yellow";
+                }
+                if (sumatoria ==4){
+                    colores.texto="white";
+                    colores.contenedor="orange";
+                }
+                if (sumatoria ==5){
+                    colores.texto="white";
+                    colores.contenedor="red";
+                }
+                return colores;
+            }
+
+            window.obtenerNivelImpacto=(sumatoria)=>{
+                let resultado = "";
+                    if (sumatoria <= 5){
+                    resultado="Muy Bajo"
+                }
+                    if (sumatoria <= 10){
+                    resultado="Baja"
+                }
+                if (sumatoria <= 15){
+                    resultado="Medio"
+                }
+                if (sumatoria <= 20){
+                    resultado="Alta"
+                }
+                if (sumatoria <= 25){
+                    resultado="Crítica"
+                }
+                return resultado;
+            }
+
+            window.obtenerColorImpacto=(sumatoria)=>{
+                let colores = {texto:"",contenedor:""};
+                    if (sumatoria <= 5){
+                    colores.texto="white";
+                    colores.contenedor="green";
+                }
+                    if (sumatoria <= 10){
+                    colores.texto="white";
+                    colores.contenedor="rgb(50, 205, 63)";
+                }
+                if (sumatoria <= 15){
+                    colores.texto="black";
+                    colores.contenedor="yellow";
+                }
+                if (sumatoria <= 20){
+                    colores.texto="white";
+                    colores.contenedor="orange";
+                }
+                if (sumatoria <= 25){
+                    colores.texto="white";
+                    colores.contenedor="red";
+                }
+                return colores;
+            }
             document.getElementById('agregarEscenario').addEventListener('click', (e) => {
                 e.preventDefault();
                 limpiarErrores();
@@ -369,6 +644,8 @@
                 });
             })
 
+
+
             function limpiarFormulario(formulario) {
                 formulario.reset();
                 $('#confidencialidad_informacion').val('0').trigger('change');
@@ -377,9 +654,42 @@
                 $('#controles').val([]).trigger('change');
             }
 
-            function calcularRiesgo(valorCalculado) {
+            function calcularRiesgo(valorCalculado){
                 let riesgo = document.getElementById('riesgo');
                 riesgo.value = valorCalculado;
+                let nivelRiesgoText = document.getElementById('nivelRiesgoText');
+                let texto="";
+                let colores = {texto:"",contenedor:""};
+                    if (valorCalculado <=1){
+                    colores.texto="white";
+                    colores.contenedor="green";
+                    texto="Muy Bajo";
+                }
+                    if (valorCalculado ==2){
+                    colores.texto="white";
+                    colores.contenedor="rgb(50, 205, 63)";
+                    texto="Bajo";
+                }
+                if (valorCalculado ==3){
+                    colores.texto="black";
+                    colores.contenedor="yellow";
+                    texto="Medio";
+                }
+                if (valorCalculado ==4){
+                    colores.texto="white";
+                    colores.contenedor="orange";
+                    texto="Alto";
+                }
+                if (valorCalculado ==5){
+                    colores.texto="white";
+                    colores.contenedor="red";
+                    texto="Crítico";
+                }
+                riesgo.style.backgroundColor=colores.contenedor;
+                riesgo.style.color=colores.texto;
+                nivelRiesgoText.style.backgroundColor=colores.contenedor;
+                nivelRiesgoText.style.color=colores.texto;
+                nivelRiesgoText.value=texto;
             }
             function limpiarErrores(){
                 document.querySelectorAll('.errores').forEach(element => {
