@@ -198,7 +198,7 @@
             </div>
             {{-- <input type="text" value="{{$id_matriz}}"> --}}
 
-
+            <input type="hidden" name="matriz_id" value="{{$matriz}}"/>
             <div class="col-12 row">
                 <div class="form-group col-sm-12 col-md-6 col-lg-6" >
                     <label for="fecha_registro"><i

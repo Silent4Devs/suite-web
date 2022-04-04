@@ -172,7 +172,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar proceso',
-                url: "{{ route('admin.procesos-octave.create') }}",
+                url: "{{ route('admin.procesos-octave.create',$matriz) }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -212,7 +212,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.procesos-octave.index') }}",
+                ajax: "{{ route('admin.procesos-octave.index',$matriz) }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -264,8 +264,18 @@
                         name: 'servicio'
                     },
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let proceso = data;
+                            let matriz = @json($matriz);
+                            let html = `
+                            <a class="btn" href="/admin/procesos-octave/${matriz}/edit/${proceso}"><i class="fas fa-edit"></i></a>
+                            <button class="btn text-danger" onclick='event.preventDefault();Eliminar("/admin/procesos-octave/${proceso}")'><i class="fas fa-trash-alt"></i></button>
+
+                            `
+
+                            return html;
+                        }
                     }
                 ],
                 orderCellsTop: true,
@@ -274,6 +284,39 @@
                 ]
             };
             let table = $('.datatable-Carta').DataTable(dtOverrideGlobals);
+            window.Eliminar = (url) => {
+                console.log(url);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "delete",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: url,
+                            dataType: "Json",
+                            success: function(response) {
+                                table.ajax.reload();
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                            }
+                        });
+
+                    }
+                })
+
+            }
             $('#lista_areas').on('change', function() {
                 console.log(this.value);
                 if (this.value != null && this.value != "") {

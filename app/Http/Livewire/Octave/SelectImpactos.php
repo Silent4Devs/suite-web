@@ -84,25 +84,23 @@ class SelectImpactos extends Component
         if ($valor <= 5) {
             $this->colorReglaTipo = '#6AA84F';
             $this->colorTextoTipo = '#fff';
-            $this->nivelImpactoTxt= 'Muy Bajo';
+            $this->nivelImpactoTxt = 'Muy Bajo';
         } elseif ($valor <= 10) {
             $this->colorReglaTipo = '#00FF00';
             $this->colorTextoTipo = '#000';
-            $this->nivelImpactoTxt= 'Bajo';
+            $this->nivelImpactoTxt = 'Bajo';
         } elseif ($valor <= 15) {
             $this->colorReglaTipo = '#FFFF00';
             $this->colorTextoTipo = '#000';
-            $this->nivelImpactoTxt= 'Medio';
+            $this->nivelImpactoTxt = 'Medio';
         } elseif ($valor <= 20) {
             $this->colorReglaTipo = '#FF9900';
             $this->colorTextoTipo = '#fff';
-            $this->nivelImpactoTxt= 'Alto';
+            $this->nivelImpactoTxt = 'Alto';
         } else {
             $this->colorReglaTipo = '#FF0000';
             $this->colorTextoTipo = '#fff';
-            $this->nivelImpactoTxt= 'Critico';
+            $this->nivelImpactoTxt = 'Critico';
         }
     }
-
-
 }

@@ -1007,7 +1007,7 @@ class MatrizRiesgosController extends Controller
         }
     }
 
-    public function graficas()
+    public function graficas(Request $request, $matriz)
     {
         $procesos = MatrizOctaveProceso::with('proceso')->get();
         $direcciones = Area::get();
@@ -1015,6 +1015,6 @@ class MatrizRiesgosController extends Controller
         $activos = ActivoInformacion::get();
         $activos_contenedores = ActivoInformacion::get();
 
-        return view('admin.OCTAVE.graficas', compact('procesos', 'direcciones', 'servicios', 'activos', 'activos_contenedores'));
+        return view('admin.OCTAVE.graficas', compact('procesos', 'direcciones', 'servicios', 'activos', 'activos_contenedores','matriz'));
     }
 }

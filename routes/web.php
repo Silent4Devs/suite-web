@@ -26,10 +26,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
     Route::post('contenedores/escenarios/eliminar', 'ContenedorMatrizOctaveController@eliminarEscenario')->name('contenedores.escenarios.destroy');
 
-
-    Route::get('octave/arbol-riesgos', 'ArbolRiesgosOctaveController@index')->name('octave.arbol-riesgos.index');
+    Route::get('octave/arbol-riesgos/{matriz}', 'ArbolRiesgosOctaveController@index')->name('octave.arbol-riesgos.index');
     Route::post('octave/arbol-riesgos', 'ArbolRiesgosOctaveController@obtenerArbol')->name('octave.arbol-riesgos.obtener');
-    Route::resource('contenedores', 'ContenedorMatrizOctaveController');
+    Route::get('contenedores/{matriz}', 'ContenedorMatrizOctaveController@index')->name('contenedores.index');
+    Route::get('contenedores/create/{matriz}', 'ContenedorMatrizOctaveController@create')->name('contenedores.create');
+    Route::get('contenedores/{contenedor}/edit/{matriz}', 'ContenedorMatrizOctaveController@edit')->name('contenedores.edit');
+    Route::delete('contenedores/{contenedor}', 'ContenedorMatrizOctaveController@destroy')->name('contenedores.destroy');
+    Route::resource('contenedores', 'ContenedorMatrizOctaveController')->except(['index','create','edit','destroy']);
 
     Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
 
@@ -691,14 +694,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('activosInformacion/validacion', 'ActivosInformacionController@validacion')->name('activosInformacion.validacion');
     Route::get('activosInformacion/descargar', 'ActivosInformacionController@DescargaFormato')->name('activosInformacion.descargar');
     Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
-    Route::get('activosInformacion/create', 'ActivosInformacionController@create')->name('activosInformacion.create');
-    Route::get('activosInformacion/{activo}', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
+    Route::get('activosInformacion/create/{matriz}', 'ActivosInformacionController@create')->name('activosInformacion.create');
+    Route::get('activosInformacion/{matriz}', 'ActivosInformacionController@index')->name('activosInformacion.index');
+    Route::get('activosInformacion/{matriz}/{activo}/edit', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
     Route::resource('activosInformacion', 'ActivosInformacionController')->names([
-        'index' => 'activosInformacion.index',
         'store' => 'activosInformacion.store',
         'show' => 'activosInformacion.show',
         'update' => 'activosInformacion.update',
-    ])->except('edit', 'create');
+    ])->except(['edit', 'create', 'index']);
 
     // Marca
     Route::get('marcas/get-marcas', 'MarcaController@getMarcas')->name('marcas.getMarcas');
@@ -959,12 +962,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
     Route::get('matriz-octavemapa', 'MatrizRiesgosController@MapaCalorOctave')->name('matriz-octavemapa');
     Route::get('controles-get', 'MatrizRiesgosController@ControlesGet')->name('controles-get');
-    Route::get('octave/graficas', 'MatrizRiesgosController@graficas')->name('octave-graficas');
+    Route::get('octave/graficas/{matriz}', 'MatrizRiesgosController@graficas')->name('octave-graficas');
 
     //ProcesosOctave
     Route::post('procesos-octave/activos', 'ProcesosOctaveController@activos')->name('procesos.octave.activos');
     // Route::delete('procesos-octave/destroy', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
-    Route::resource('procesos-octave', 'ProcesosOctaveController');
+    Route::get('procesos-octave/{matriz}', 'ProcesosOctaveController@index')->name('procesos-octave.index');
+    Route::get('procesos-octave/{matriz}/create', 'ProcesosOctaveController@create')->name('procesos-octave.create');
+    Route::delete('procesos-octave/{proceso}', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
+    Route::get('procesos-octave/{matriz}/edit/{proceso}', 'ProcesosOctaveController@edit')->name('procesos-octave.edit');
+    Route::resource('procesos-octave', 'ProcesosOctaveController')->except(['index','create','edit','destroy']);
 
     //Servicios
     Route::delete('servicios/destroy', 'ServiciosController@destroy')->name('servicios.destroy');

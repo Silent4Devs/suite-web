@@ -1,65 +1,65 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        #tabla-contenedores tr td:nth-child(3) {
+            background-color: green;
+            position: relative;
+            padding: 0;
+        }
 
-<style>
-    #tabla-contenedores tr td:nth-child(3){
-        background-color: green;
-        position: relative;
-        padding: 0;
-    }
-</style>
+    </style>
 
-<div class="mt-5 card">
-    {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+    <div class="mt-5 card">
+        {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
     <div class="col-lg-12">
         @include('csvImport.modalpartesinteresadas', ['model' => 'Amenaza', 'route' => 'admin.amenazas.parseCsvImport'])
     </div>
     </div> --}}
 
-    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong>Contenedor</h3>
-    </div>
+        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong>Contenedor</h3>
+        </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-2">
-            </div>
-            <div class="col-sm-8 align-content-center">
-                @include('layouts.errors')
-                @include('flash::message')
-            </div>
-            <div class="col-sm-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8 align-content-center">
+                    @include('layouts.errors')
+                    @include('flash::message')
+                </div>
+                <div class="col-sm-2">
+                </div>
             </div>
         </div>
-    </div>
-    @include('partials.flashMessages')
-    <div class="card-body datatable-fix">
+        @include('partials.flashMessages')
+        <div class="card-body datatable-fix">
 
             @include('admin.OCTAVE.menu')
 
-        <table class="table datatable-ConfSoporte tbl-contenedores " style="width: 100%" id="tabla-contenedores">
-            <thead class="thead-dark dt-personalizada">
-                <tr>
-                    <th>
-                        ID
-                    </th>
-                    <th>
-                        Nombre Contenedor
-                    </th>
-                    <th>
-                        Nivel de Riesgo
-                    </th>
-                    <th style="min-width:200px;">
-                        Descripción
-                    </th>
-                    <th>
-                        Opciones
-                    </th>
-                </tr>
-            </thead>
-        </table>
+            <table class="table datatable-ConfSoporte tbl-contenedores " style="width: 100%" id="tabla-contenedores">
+                <thead class="thead-dark dt-personalizada">
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Nombre Contenedor
+                        </th>
+                        <th>
+                            Nivel de Riesgo
+                        </th>
+                        <th style="min-width:200px;">
+                            Descripción
+                        </th>
+                        <th>
+                            Opciones
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div>
-</div>
 @endsection
 @section('scripts')
     @parent
@@ -137,7 +137,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar curso y capacitación',
-                url: "{{ route('admin.contenedores.create') }}",
+                url: "{{ route('admin.contenedores.create', $matriz) }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -164,7 +164,7 @@
                 // $('#xlsxImportModal').modal('show');
                 // }
                 // };
-
+            
                 dtButtons.push(btnAgregar);
                 // dtButtons.push(btnExport);
                 // dtButtons.push(btnImport);
@@ -180,13 +180,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -206,7 +206,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.contenedores.index') }}",
+                ajax: "{{ route('admin.contenedores.index', $matriz) }}",
                 columns: [{
                         data: 'identificador_contenedor',
                         name: 'identificador_contenedor',
@@ -218,31 +218,31 @@
                     {
                         data: 'riesgo',
                         name: 'riesgo',
-                        render: function(data,type,row,meta){
-                            data=data==""?0:data
+                        render: function(data, type, row, meta) {
+                            data = data == "" ? 0 : data
                             let color = "green";
-                            let valor="";
-                            let texto="white";
-                            if(data <=0){
-                                color="gray";
-                                valor="Sin Valor";
+                            let valor = "";
+                            let texto = "white";
+                            if (data <= 0) {
+                                color = "gray";
+                                valor = "Sin Valor";
                             }
-                            if(data <=3){
-                                color="green";
-                                valor="Bajo";
+                            if (data <= 3) {
+                                color = "green";
+                                valor = "Bajo";
                             }
-                            if(data >=5){
-                                color="yellow";
-                                texto="black";
-                                valor="Media";
+                            if (data >= 5) {
+                                color = "yellow";
+                                texto = "black";
+                                valor = "Media";
                             }
-                            if(data >=7){
-                                color="orange";
-                                valor="Alta";
+                            if (data >= 7) {
+                                color = "orange";
+                                valor = "Alta";
                             }
-                            if(data >=10){
-                                color="red";
-                                valor="Crítica";
+                            if (data >= 10) {
+                                color = "red";
+                                valor = "Crítica";
                             }
                             return `
                             <div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background-color:${color}; color:${texto}">${data} - ${valor}</div>
@@ -254,8 +254,19 @@
                         name: 'descripcion'
                     },
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let contenedor = data;
+                            let matriz = @json($matriz);
+                            let html = `
+                            <a class="btn" href="/admin/contenedores/${contenedor}/edit/${matriz}"><i class="fas fa-edit"></i></a>
+                            <button class="btn text-danger" onclick='event.preventDefault();Eliminar("/admin/contenedores/${contenedor}")'><i class="fas fa-trash-alt"></i></button>
+
+                            `
+
+                            return html;
+                        }
+
                     }
                 ],
                 orderCellsTop: true,
@@ -264,7 +275,39 @@
                 ]
             };
             let table = $('.tbl-contenedores').DataTable(dtOverrideGlobals);
+            window.Eliminar = (url) => {
+                console.log(url);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "delete",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: url,
+                            dataType: "Json",
+                            success: function(response) {
+                                table.ajax.reload();
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                            }
+                        });
 
+                    }
+                })
+
+            }
         });
     </script>
 @endsection

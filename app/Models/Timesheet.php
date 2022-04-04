@@ -54,7 +54,7 @@ class Timesheet extends Model
             <font style="font-weight: bolder !important;">' . $fin_dia . '<font>
 
             ';
-        
+
         return $semana_rango;
     }
 

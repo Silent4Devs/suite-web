@@ -202,8 +202,8 @@
                         </div>
                     </div>
 
-                    <div class="col-12">
-                        <div class="form-group col-md-4 col-lg-4 col-sm-12">
+                    <div class="col-12 form-group">
+                        <div class=" col-md-4 col-lg-4 col-sm-12">
                             <label for="folio_riesgo"><i class="fas fa-ticket-alt iconos-crear"></i>ID del Riesgo
                             </label>
                             <input class="form-control {{ $errors->has('folio_riesgo') ? 'is-invalid' : '' }}"

@@ -142,7 +142,7 @@
                         <td><div>{{$activo->formato}}</td>
                         <td><div>
                             <form action="{{ route('admin.activosInformacion.destroy', $activo->id) }}" method="POST">
-                                <a href="{{ route('admin.activosInformacion.edit',$activo->id )}}"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.activosInformacion.edit',[$activo->id, $matriz] )}}"><i class="fas fa-edit"></i></a>
                                 {{-- <a href="{{ route('admin.activosInformacion.show',$activo->id )}}"><i class="fas fa-eye"></i></a> --}}
                                     @csrf
                                     @method('DELETE')
@@ -233,7 +233,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar inventario de activos',
-                url: "{{ route('admin.activosInformacion.create') }}",
+                url: "{{ route('admin.activosInformacion.create',$matriz) }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config){
                 let {url} = config;
