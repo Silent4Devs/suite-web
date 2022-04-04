@@ -79,6 +79,7 @@ class ActivoInformacion extends Model
     'valor_criticidad',
     'nombredevp_id',
     'name_direccion_id',
+    'matriz_id',
     'vp_id',
     'created_at',
     'updated_at',

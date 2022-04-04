@@ -19,7 +19,7 @@ class ActivosInformacionController extends Controller
 {
     public function index(Request $request, $matriz)
     {
-        $activos = ActivoInformacion::get();
+        $activos = ActivoInformacion::where('matriz_id', '=', $matriz)->get();
 
         return view('admin.ActivosInformacion.index', compact('activos', 'matriz'));
     }
@@ -50,11 +50,13 @@ class ActivosInformacionController extends Controller
         }, $request->contenedores);
         $activos = ActivoInformacion::create($request->all());
         $activos->contenedores()->sync($contenedores);
+        $matriz = $request->matriz_id;
+        return redirect()->route('admin.activosInformacion.index',['matriz'=>$matriz])->with('success', 'Guardado con éxito');
 
-        return redirect()->route('admin.activosInformacion.index')->with('success', 'Guardado con éxito');
+       
     }
 
-    public function edit($activos)
+    public function edit(Request $request, $activos, $matriz)
     {
         $activos = ActivoInformacion::find($activos);
         $empleados = Empleado::with('area')->get();
@@ -63,8 +65,10 @@ class ActivosInformacionController extends Controller
         $integridads = activoIntegridad::get();
         $disponibilidads = activoDisponibilidad::get();
         $contenedores = MatrizOctaveContenedor::get();
+     
+      
 
-        return view('admin.ActivosInformacion.edit', compact('activos', 'empleados', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores'));
+        return view('admin.ActivosInformacion.edit', compact('activos', 'empleados', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores','matriz'));
     }
 
     public function update(Request $request, $activos)
@@ -72,8 +76,9 @@ class ActivosInformacionController extends Controller
         $activos = ActivoInformacion::find($activos);
         $activos->update($request->all());
         $activos->contenedores()->sync($request->contenedores);
+        $matriz = $request->matriz_id;
+        return redirect()->route('admin.activosInformacion.index',['matriz'=>$matriz]);
 
-        return redirect()->route('admin.activosInformacion.index');
     }
 
     public function destroy($id)

@@ -142,7 +142,7 @@
                         <td><div>{{$activo->formato}}</td>
                         <td><div>
                             <form action="{{ route('admin.activosInformacion.destroy', $activo->id) }}" method="POST">
-                                <a href="{{ route('admin.activosInformacion.edit',$activo->id )}}"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.activosInformacion.edit',[$activo->id, $matriz] )}}"><i class="fas fa-edit"></i></a>
                                 {{-- <a href="{{ route('admin.activosInformacion.show',$activo->id )}}"><i class="fas fa-eye"></i></a> --}}
                                     @csrf
                                     @method('DELETE')
