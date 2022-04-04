@@ -459,6 +459,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('timesheet/clientes/store', 'TimesheetController@clientesStore')->name('timesheet-clientes-store');
     Route::post('timesheet/clientes/delete/{id}', 'TimesheetController@clientesDelete')->name('timesheet-delete');
 
+    Route::get('timesheet/reportes', 'TimesheetController@reportes')->name('timesheet-reportes');
+    Route::get('timesheet/dashboard', 'TimesheetController@dashboard')->name('timesheet-dashboard');
+
     Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
 
     //Competencia Tipo

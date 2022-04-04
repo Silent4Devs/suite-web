@@ -9,7 +9,7 @@
             <input type="date" id="fecha_dia" name="fecha_dia" class="form-control" style="max-width:160px;" required>
         </div>
         <div class="datatable-fix">
-            <table id="datatable_timesheet_create" class="table w-100">
+            <table id="datatable_timesheet_create" class="table table-responsive dataTables_scrollBody">
                 <thead class="w-100">
                     <tr>
                         <th style="min-width:200px;">Proyecto </th>
@@ -23,13 +23,15 @@
                         <th style="min-width:55px; padding-left: 17px;">Sábado</th>
                         <th style="min-width:55px; padding-left: 17px;">Domingo</th>
                         <th style="min-width:200px;">Descripción</th>
+                        <th style="">Opciones</th>
+                        <th>Horas&nbsp;totales</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {{-- {{ $contador }} --}}
                     @for($i=1; $i<=$contador; $i++)
-                        <tr>
+                        <tr id="tr_time_{{ $i }}">
                             <td>
                                 <select name="timesheet[{{ $i }}][proyecto]" class="select2">
                                     <option selected disabled>Seleccione proyecto</option>   
@@ -50,31 +52,50 @@
                                 <input type="checkbox" checked name="timesheet[{{ $i }}][facturable]" style="min-width: 50px;">
                             </td>
                             <td>
-                                <input  type="number" name="timesheet[{{ $i }}][lunes]" class="ingresar_horas form-control" min="0" max="24">
+                                <input  type="number" name="timesheet[{{ $i }}][lunes]" data-dia="lunes" data-i="{{ $i }}" id="ingresar_hora_lunes_{{ $i }}" class="ingresar_horas  form-control" min="0" max="24">
                             </td>
                             <td>
-                                <input  type="number" name="timesheet[{{ $i }}][martes]" class="ingresar_horas form-control">
+                                <input  type="number" name="timesheet[{{ $i }}][martes]" data-dia="martes" data-i="{{ $i }}" id="ingresar_hora_martes_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
                             </td>
                             <td>
-                                <input type="number" name="timesheet[{{ $i }}][miercoles]" class="ingresar_horas form-control">
+                                <input type="number" name="timesheet[{{ $i }}][miercoles]" data-dia="miercoles" data-i="{{ $i }}" id="ingresar_hora_miercoles_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
                             </td>
                             <td>
-                                <input  type="number" name="timesheet[{{ $i }}][jueves]" class="ingresar_horas form-control">
+                                <input  type="number" name="timesheet[{{ $i }}][jueves]" data-dia="jueves" data-i="{{ $i }}" id="ingresar_hora_jueves_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
                             </td>
                             <td>
-                                <input  type="number" name="timesheet[{{ $i }}][viernes]" class="ingresar_horas form-control">
+                                <input  type="number" name="timesheet[{{ $i }}][viernes]" data-dia="viernes" data-i="{{ $i }}" id="ingresar_hora_viernes_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
                             </td>   
                             <td>
-                                <input  type="number" name="timesheet[{{ $i }}][sabado]" class="ingresar_horas form-control">
+                                <input  type="number" name="timesheet[{{ $i }}][sabado]" data-dia="sabado" data-i="{{ $i }}" id="ingresar_hora_sabado_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
                             </td>   
                             <td>
-                                <input  type="number" name="timesheet[{{ $i }}][domingo]" class="ingresar_horas form-control">
+                                <input  type="number" name="timesheet[{{ $i }}][domingo]" data-dia="domingo" data-i="{{ $i }}" id="ingresar_hora_domingo_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
                             </td> 
                             <td>
                                 <textarea name="timesheet[{{ $i }}][descripcion]" class="form-control" style="min-height:50px !important; resize: none;"></textarea>
-                            </td>                           
+                            </td>    
+                            <td class="td_opciones">
+                                @if($i > 1)
+                                    <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}" style="color:red; font-size:20px;" title="Eliminar fila"><i class="fa-solid fa-trash-can"></i></div>
+                                @endif
+                            </td>  
+                            {{-- <td>
+                                <label id="suma_horas_fila_{{ $i }}"></label>
+                            </td> --}}                     
                         </tr>
                     @endfor
+                    <tr>
+                        <td colspan="3"></td>
+                        <td><label id="suma_dia_lunes"></label></td>
+                        <td><label id="suma_dia_martes"></label></td>
+                        <td><label id="suma_dia_miercoles"></label></td>
+                        <td><label id="suma_dia_jueves"></label></td>
+                        <td><label id="suma_dia_viernes"></label></td>
+                        <td><label id="suma_dia_sabado"></label></td>
+                        <td><label id="suma_dia_domingo"></label></td>
+                        <td colspan="3"></td>
+                    </tr>
                 </tbody>
             </table>
             

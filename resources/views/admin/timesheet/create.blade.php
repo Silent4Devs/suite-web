@@ -6,6 +6,9 @@
     <style type="text/css">
         .ingresar_horas{
             width: 70px;
+            -webkit-appearance: textfield !important;
+            margin: 0;
+            -moz-appearance:textfield !important;
         }
         .table select{
             width: 100%;
@@ -106,9 +109,41 @@
                 },
             });
         });
-        
+
+        // ---------------------------------------------------
+
+        $('.btn_destroy_tr').click(function(){
+            let tr_seleccionado = '#' + $('.btn_destroy_tr:hover').attr('data-tr');
+
+            console.log(tr_seleccionado);
+
+            $(tr_seleccionado).remove();
+        }); 
+
+        // --------------------------------------------------------
+
+        $('.ingresar_horas').focus(function(){
+            let input_hora = $('.ingresar_horas:focus').attr('id');
+
+            let input = document.getElementById(input_hora);
+
+            input.addEventListener('input', updateValue);
+        });
+
+        function updateValue(e) {
+
+            const suma_horas =  Number($('#ingresar_hora_lunes_' + e.srcElement.getAttribute('data-i')).val())+
+                                Number($('#ingresar_hora_martes_' + e.srcElement.getAttribute('data-i')).val())+
+                                Number($('#ingresar_hora_miercoles_' + e.srcElement.getAttribute('data-i')).val())+
+                                Number($('#ingresar_hora_jueves_' + e.srcElement.getAttribute('data-i')).val())+
+                                Number($('#ingresar_hora_viernes_' + e.srcElement.getAttribute('data-i')).val())+
+                                Number($('#ingresar_hora_sabado_' + e.srcElement.getAttribute('data-i')).val())+
+                                Number($('#ingresar_hora_domingo_' + e.srcElement.getAttribute('data-i')).val());
+
+
+            document.getElementById('suma_horas_fila_' + e.srcElement.getAttribute('data-i')).textContent = suma_horas + ' h';
+
+            let horas_semana =   [$(' [data-dia="' + e.srcElement.getAttribute('data-dia') + '"] ')];
+        }
     </script>
-
-    
-
 @endsection
