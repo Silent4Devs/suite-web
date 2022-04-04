@@ -6,7 +6,7 @@
             <form method="POST" action="{{ route('admin.activos.store') }}" enctype="multipart/form-data" class="row">
                 @csrf
                 <div class="form-group col-md-3">
-                    <label class="required " for="identificador"><i class="fa-solid fa-list-ol iconos-crear"></i>ID</label>
+                    <label class="required" for="identificador"><i class="fa-solid fa-list-ol iconos-crear"></i>ID</label>
                     <input class="form-control select2 {{ $errors->has('identificador') ? 'is-invalid' : '' }}"
                         name="identificador" id="identificador" required>
                     @if ($errors->has('identificador'))
