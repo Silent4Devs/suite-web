@@ -9,6 +9,7 @@ use App\Models\Grupo;
 use App\Models\MatrizOctaveProceso;
 use App\Models\MatrizOctaveServicio;
 use App\Models\Proceso;
+use App\Models\ProcesosOctaveHistoricos;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -72,6 +73,14 @@ class ProcesosOctaveController extends Controller
     {
         $areas = Area::get();
         $procesos = Proceso::get();
+     
+        $proceso_octave = MatrizOctaveProceso::where('matriz_id',$matriz)->pluck('id_proceso')->toArray();
+        $procesos = $procesos->filter(function($item)use($proceso_octave){
+            if (!in_array($item->id,$proceso_octave)){
+                return $item;
+            }
+        });
+       
         $activosInfo = ActivoInformacion::get();
         $servicios = MatrizOctaveServicio::get();
         $servicio_seleccionado = null;
@@ -112,11 +121,31 @@ class ProcesosOctaveController extends Controller
 
     public function update(Request $request, MatrizOctaveProceso $procesosOctave)
     {
-        // $procesosOctave = MatrizOctaveProceso::create($request->all());
+        
         $procesosOctave->update($request->all());
-
         $matriz = $request->matriz_id;
+        $old_proceso = $this->obtenerRamas($procesosOctave);
+        ProcesosOctaveHistoricos::create([
+            'proceso_id'=>$procesosOctave->id,
+            'matriz_id'=>$matriz,
+            'historico'=>$old_proceso,
+        ]);
+
+
         return redirect()->route('admin.procesos-octave.index',['matriz'=>$matriz])->with('success', 'Guardado con éxito');
+    }
+
+    public function obtenerRamas($proceso)
+    {
+        $procesos= collect();
+        if (MatrizOctaveProceso::where('id',$proceso->id)->with(['children'])->count() > 0) {
+            foreach (MatrizOctaveProceso::where('id',$proceso->id)->with(['children'])->get() as $procesoOctave) {
+                $procesos->push($procesoOctave->children);
+            }
+        }
+      return $procesos[0]->toJson();
+
+       
     }
 
     public function show()

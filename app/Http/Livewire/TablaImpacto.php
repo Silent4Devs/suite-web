@@ -111,7 +111,7 @@ class TablaImpacto extends Component
             'clasificacion' => $this->clasificacionImpacto,
             'color' => $this->colorImpacto,
         ];
-         dd($columna);
+        //  dd($columna);
         // $indexColumna=$indexColumna+1;
         $this->indexColumna = $indexColumna;
         array_push($this->columnas, $columna);
