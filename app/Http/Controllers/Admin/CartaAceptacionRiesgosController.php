@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\CartaAceptacion;
-use App\Models\CartaAceptacionPivot;
-use App\Models\DeclaracionAplicabilidad;
 use App\Models\Empleado;
-use App\Models\MatrizOctaveProceso;
 use Illuminate\Http\Request;
+use App\Models\CartaAceptacion;
+use App\Mail\CartaAceptacionEmail;
+use App\Models\MatrizOctaveProceso;
+use App\Http\Controllers\Controller;
+use App\Models\CartaAceptacionPivot;
+use Illuminate\Support\Facades\Mail;
+use App\Models\DeclaracionAplicabilidad;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\CartaAceptacionAprobacione;
 
 class CartaAceptacionRiesgosController extends Controller
 {
@@ -88,12 +91,27 @@ class CartaAceptacionRiesgosController extends Controller
         $vicepresidentes = Empleado::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
-
         return view('admin.CartaAceptacionRiesgos.create', compact('controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
     }
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'responsable_id' => 'required',
+            'director_resp_id' => 'required',
+            'vp_responsable_id' => 'required',
+            'vice_operaciones_id' => 'required',
+            'presidencia_id' => 'required',
+            'folio_riesgo'=> 'required',
+            'fecharegistro'=> 'required',
+            'proceso_id'=> 'required',
+            'descripcion_negocio'=> 'required',
+            'descripcion_riesgo'=> 'required',
+            'descripcion_tecnologico'=> 'required',
+            'aceptacion_riesgo'=> 'required',
+
+        ]);
 
         $cartaAceptacion = CartaAceptacion::create([
             'folio_riesgo'=> $request->folio_riesgo,
@@ -137,7 +155,8 @@ class CartaAceptacionRiesgosController extends Controller
             $control->save();
         }
 
-        // dd($request->all());
+       $this->enviarCorreos($request, $cartaAceptacion);
+        // // dd($request->all());
         return redirect(route('admin.carta-aceptacion.index'));
     }
 
@@ -173,9 +192,13 @@ class CartaAceptacionRiesgosController extends Controller
         $presidencias = Empleado::get();
         $vicepresidentesOperaciones = Empleado::get();
         $vicepresidentes = Empleado::get();
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
-
-        return view('admin.CartaAceptacionRiesgos.show', compact('cartaAceptacion', 'controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
+        $controles = CartaAceptacionPivot::with('declaracion_aplicabilidad')->where('carta_id', $cartaAceptacion->id)->get();
+        // dd($controles);
+        $aprobadores=CartaAceptacionAprobacione::where('carta_id',$cartaAceptacion->id)->pluck('aprobador_id')->toArray();
+        // dd($aprobadores);
+        $esAprobador=in_array(auth()->user()->empleado->id,$aprobadores);
+        // dd($esAprobador);
+        return view('admin.CartaAceptacionRiesgos.show', compact('esAprobador','aprobadores','cartaAceptacion', 'controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
     }
 
     public function destroy(CartaAceptacion $cartaAceptacion)
@@ -183,5 +206,55 @@ class CartaAceptacionRiesgosController extends Controller
         $cartaAceptacion->delete();
 
         return back();
+    }
+
+    public function enviarCorreos($request, $cartaAceptacion)
+    {
+        CartaAceptacionAprobacione::create([
+            'autoridad'=>'Dueño del Proceso',
+            'aprobador_id'=>$request->responsable_id,
+            'carta_id'=>$cartaAceptacion->id
+
+        ]);
+        $dueno=Empleado::select('id','name','email','genero','foto')->find($request->responsable_id);
+        Mail::to($dueno->email)->send(new CartaAceptacionEmail($dueno,$cartaAceptacion));
+
+
+        CartaAceptacionAprobacione::create([
+            'autoridad'=>'Director Responsable del Proceso',
+            'aprobador_id'=>$request->director_resp_id,
+            'carta_id'=>$cartaAceptacion->id
+        ]);
+
+        $director=Empleado::select('id','name','email','genero','foto')->find($request->director_resp_id);
+        Mail::to($director->email)->send(new CartaAceptacionEmail($director,$cartaAceptacion));
+
+        CartaAceptacionAprobacione::create([
+            'autoridad'=>'VP Responsable del Riesgo',
+            'aprobador_id'=>$request->vp_responsable_id,
+            'carta_id'=>$cartaAceptacion->id
+        ]);
+
+        $vpResponsable=Empleado::select('id','name','email','genero','foto')->find($request->vp_responsable_id);
+        Mail::to($vpResponsable->email)->send(new CartaAceptacionEmail($vpResponsable,$cartaAceptacion));
+
+        CartaAceptacionAprobacione::create([
+            'autoridad'=>'VP de Operaciones',
+            'aprobador_id'=>$request->vice_operaciones_id,
+            'carta_id'=>$cartaAceptacion->id
+        ]);
+
+        $vpOperaciones=Empleado::select('id','name','email','genero','foto')->find($request->vice_operaciones_id);
+        Mail::to($vpOperaciones->email)->send(new CartaAceptacionEmail($vpOperaciones,$cartaAceptacion));
+
+        CartaAceptacionAprobacione::create([
+            'autoridad'=>'Presidencia',
+            'aprobador_id'=>$request->presidencia_id,
+            'carta_id'=>$cartaAceptacion->id
+        ]);
+
+        $presidencia=Empleado::select('id','name','email','genero','foto')->find($request->presidencia_id);
+        Mail::to($presidencia->email)->send(new CartaAceptacionEmail($presidencia,$cartaAceptacion));
+
     }
 }

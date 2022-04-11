@@ -11,7 +11,7 @@ class Timesheet extends Model
 
     protected $table = 'timesheet';
 
-    protected $appends = ['semana'];
+    protected $appends = ['semana', 'proyectos'];
 
     protected $fillable = [
         'fecha_semana',
@@ -54,7 +54,7 @@ class Timesheet extends Model
             <font style="font-weight: bolder !important;">' . $fin_dia . '<font>
 
             ';
-        
+
         return $semana_rango;
     }
 
@@ -82,5 +82,24 @@ class Timesheet extends Model
         }
 
         return $dia;
+    }
+
+    public function horas()
+    {
+        return $this->hasMany(TimesheetHoras::class, 'timesheet_id', 'id')->orderBy('id');
+    }
+
+    public function getProyectosAttribute()
+    {
+        $horas_id_proyectos = TimesheetHoras::where('timesheet_id', $this->id)->get();
+
+        $proyectos = collect();
+        foreach($horas_id_proyectos as $id_proyect){
+            $proyecto = TimesheetProyecto::find($id_proyect->proyecto_id);
+
+            $proyectos->push($proyecto);
+        }
+
+        return $proyectos;
     }
 }

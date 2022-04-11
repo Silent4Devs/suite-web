@@ -38,6 +38,7 @@ class MatrizOctaveProceso extends Model
         'id_activos_informacion',
         'promedio',
         'fecha_registro',
+        'matriz_id',
     ];
 
     public function proceso()

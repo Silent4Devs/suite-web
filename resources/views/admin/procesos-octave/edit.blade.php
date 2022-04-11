@@ -198,7 +198,7 @@
                 DATOS DEL PROCESO
             </div>
             {{-- <input type="text" value="{{$id_matriz}}"> --}}
-
+            <input type="hidden" name="matriz_id" value="{{$matriz}}"/>
             <div class="col-12 row">
                 <div class="form-group col-md-8 col-lg-8"></div>
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">

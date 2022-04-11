@@ -20,7 +20,7 @@
             </div> --}}
 
 
-
+            <input type="hidden" name="matriz_id" value="{{$matriz}}"/>
             <div class="row">
                 <div class="form-group col-md-2 col-lg-2 col-sm-12">
                     <label for="identificador_contenedor"><i class="fas fa-barcode iconos-crear"></i>ID</label>

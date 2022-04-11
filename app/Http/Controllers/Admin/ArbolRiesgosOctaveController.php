@@ -5,17 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\MatrizOctaveProceso;
 use App\Models\Organizacion;
+use Composer\DependencyResolver\Request;
 
 class ArbolRiesgosOctaveController extends Controller
 {
-    public function index()
+    public function index(Request $request, $matriz)
     {
         $procesosTree = $this->obtenerRamas();
         $organizacion = Organizacion::first();
         $existeArbol = $procesosTree['children']->count() > 0;
         $rutaImagenes = asset('storage/empleados/imagenes/');
 
-        return view('admin.OCTAVE.arbol-riesgos', compact('procesosTree', 'organizacion', 'existeArbol', 'rutaImagenes'));
+        return view('admin.OCTAVE.arbol-riesgos', compact('procesosTree', 'organizacion', 'existeArbol', 'rutaImagenes','matriz'));
     }
 
     public function obtenerRamas()

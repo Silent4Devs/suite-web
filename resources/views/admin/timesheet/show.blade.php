@@ -44,7 +44,10 @@
 	<div class="card card-body">
 		<div class="row">
 			<div class="datatable-fix col-12" style="margin:auto;">
-				<div  class="col-12 mb-4"><strong>Fecha: </strong> {{ \Carbon\Carbon::parse($timesheet->fecha_dia)->format("d/m/Y") }}</div>
+				<div class="col-12 d-flex justify-content-between mb-4">
+					<div  class=""><strong>Fecha: </strong> {{ \Carbon\Carbon::parse($timesheet->fecha_dia)->format("d/m/Y") }}</div>
+					<button class="btn btn-secundario" onclick="window.print()"><i class="fa-solid fa-print iconos_crear"></i> Imprimir</button>
+				</div>
 		        <table id="datatable_timesheet_create" class="table table-responsive w-100">
 		            <thead>
 		                <tr>

@@ -20,6 +20,7 @@
                     Información General
                 </div>
             <div class="row">
+                <input type="hidden" name="matriz_id" value="{{$matriz}}"/>
                 <div class="form-group col-sm-3">
                     <label for="identificador"><i class="fas fa-barcode iconos-crear"></i>ID</label>
                     <input class="form-control" type="text" name="identificador" id="identificador" required>

@@ -17,8 +17,6 @@ class RemoveResponsableFromCartaAceptacion extends Migration
             $table->dropColumn('responsable_riesgo');
             $table->unsignedBigInteger('proceso_id')->nullable();
             $table->foreign('proceso_id')->references('id')->on('matriz_octave_procesos');
-
-
         });
     }
 

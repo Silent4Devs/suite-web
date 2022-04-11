@@ -9,7 +9,7 @@
     </ol> --}}
 
 
-    <style>
+    {{-- <style>
         .select2-results__option {
             position: relative;
             padding-left: 30px !important;
@@ -187,7 +187,7 @@
             margin-top: 11px;
         }
 
-    </style>
+    </style> --}}
     <h5 class="col-12 titulo_general_funcion"> Registrar: Carta de Aceptación de Riesgos</h5>
     <div class="mt-4 card">
         <div class="card-body">
@@ -202,24 +202,30 @@
                         </div>
                     </div>
 
-                    <div class="col-12">
-                        <div class="form-group col-md-4 col-lg-4 col-sm-12">
-                            <label for="folio_riesgo"><i class="fas fa-ticket-alt iconos-crear"></i>ID del Riesgo
-                            </label>
-                            <input class="form-control {{ $errors->has('folio_riesgo') ? 'is-invalid' : '' }}"
-                                name="folio_riesgo" id="folio_riesgo" {{ old('folio_riesgo') }}>
-                            @if ($errors->has('folio_riesgo'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('folio_riesgo') }}
-                                </div>
-                            @endif
-                        </div>
+
+                    <div class="form-group col-md-4 col-lg-4 col-sm-12">
+                        <label class="required" for="folio_riesgo"><i class="fas fa-ticket-alt iconos-crear"></i>ID del Riesgo
+                        </label>
+                        <input class="form-control {{ $errors->has('folio_riesgo') ? 'is-invalid' : '' }}"
+                            name="folio_riesgo" id="folio_riesgo" {{ old('folio_riesgo') }} required>
+                        @if ($errors->has('folio_riesgo'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('folio_riesgo') }}
+                            </div>
+                        @endif
                     </div>
 
+                    <div class="form-group col-md-4 col-lg-4 col-sm-12">
+                    </div>
+
+                    <div class="form-group col-md-4 col-lg-4 col-sm-12">
+                    </div>
+
+
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label for="responsable_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
+                        <label class="required" for="responsable_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
                         <select class="form-control {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
-                            name="responsable_id" id="responsable_id">
+                            name="responsable_id" id="responsable_id" required>
                             <option value="" selected disabled>
                                 -- Selecciona el nombre del empleado --
                             </option>
@@ -248,11 +254,11 @@
                     @livewire('body-carta-aceptacion')
 
                     <div class="form-group col-md-12 col-lg-12 col-sm-12">
-                        <label for="descripcion_riesgo"><i class="far fa-file-alt iconos-crear"></i>Descripción del
+                        <label class="required" for="descripcion_riesgo"><i class="far fa-file-alt iconos-crear"></i>Descripción del
                             Riesgo Aceptado
                         </label>
                         <textarea class="form-control {{ $errors->has('descripcion_riesgo') ? 'is-invalid' : '' }}" name="descripcion_riesgo"
-                            id="descripcion_riesgo">
+                            id="descripcion_riesgo" required>
                             {{ old('descripcion_riesgo') }}</textarea>
                         @if ($errors->has('descripcion_riesgo'))
                             <div class="invalid-feedback">
@@ -262,11 +268,11 @@
                     </div>
 
                     <div class="form-group col-md-6 col-lg-6 col-sm-12">
-                        <label for="descripcion_negocio"><i class="far fa-file-alt iconos-crear"></i>Descripción del
+                        <label class="required" for="descripcion_negocio"><i class="far fa-file-alt iconos-crear"></i>Descripción del
                             Impacto al Negocio
                         </label>
                         <textarea class="form-control {{ $errors->has('descripcion_negocio') ? 'is-invalid' : '' }}"
-                            name="descripcion_negocio" id="descripcion_negocio">
+                            name="descripcion_negocio" id="descripcion_negocio" required>
                             {{ old('descripcion_negocio') }}</textarea>
                         @if ($errors->has('descripcion_negocio'))
                             <div class="invalid-feedback">
@@ -276,11 +282,11 @@
                     </div>
 
                     <div class="form-group col-md-6 col-lg-6 col-sm-12">
-                        <label for="descripcion_tecnologico"><i class="far fa-file-alt iconos-crear"></i>Descripción del
+                        <label class="required" for="descripcion_tecnologico"><i class="far fa-file-alt iconos-crear"></i>Descripción del
                             Impacto Tecnológico
                         </label>
                         <textarea class="form-control {{ $errors->has('descripcion_tecnologico') ? 'is-invalid' : '' }}"
-                            name="descripcion_tecnologico" id="descripcion_tecnologico">
+                            name="descripcion_tecnologico" id="descripcion_tecnologico" required>
                             {{ old('descripcion_tecnologico') }}</textarea>
                         @if ($errors->has('descripcion_tecnologico'))
                             <div class="invalid-feedback">
@@ -290,11 +296,11 @@
                     </div>
 
                     <div class="form-group col-md-12 col-lg-12 col-sm-12">
-                        <label for="aceptacion_riesgo"><i class="fas fa-exclamation-triangle iconos-crear"></i>Razón por
+                        <label class="required" for="aceptacion_riesgo"><i class="fas fa-exclamation-triangle iconos-crear"></i>Razón por
                             la que se debe aceptar el riesgo
                         </label>
                         <input class="form-control {{ $errors->has('aceptacion_riesgo') ? 'is-invalid' : '' }}"
-                            name="aceptacion_riesgo" id="aceptacion_riesgo" {{ old('aceptacion_riesgo') }}>
+                            name="aceptacion_riesgo" id="aceptacion_riesgo" {{ old('aceptacion_riesgo') }} required>
                         @if ($errors->has('aceptacion_riesgo'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('aceptacion_riesgo') }}
@@ -303,11 +309,11 @@
                     </div>
 
                     <div class="form-group col-md-12 col-lg-12 col-sm-12">
-                        <label for="controles_compensatorios"><i class="fas fa-lock iconos-crear"></i>Controles
+                        <label class="required" for="controles_compensatorios"><i class="fas fa-lock iconos-crear"></i>Controles
                             compensatorios
                         </label>
                         <textarea class="form-control {{ $errors->has('controles_compensatorios') ? 'is-invalid' : '' }}"
-                            name="controles_compensatorios" id="controles_compensatorios">
+                            name="controles_compensatorios" id="controles_compensatorios" required>
                             {{ old('controles_compensatorios') }}</textarea>
                         @if ($errors->has('controles_compensatorios'))
                             <div class="invalid-feedback">
@@ -324,12 +330,12 @@
                     </div>
 
                     <div class="form-group col-md-12 col-lg-12 col-sm-12 mb-4">
-                        <label for="controles_id" style="margin-left: 15px; margin-bottom:5px; margin-right: 0px;"><i
-                                class="fas fa-lock iconos-crear"></i></label>
+                        {{-- <label for="controles_id" style="margin-left: 15px; margin-bottom:5px; margin-right: 0px;"><i
+                                class="fas fa-lock iconos-crear"></i></label> --}}
 
                         <select
-                            class="form-control js-example-basic-multiple select2  {{ $errors->has('controles_id') ? 'is-invalid' : '' }}"
-                            name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
+                            class="form-control js-example-basic-multiple controles-select {{ $errors->has('controles_id') ? 'is-invalid' : '' }}"
+                            name="controles_id[]" id="controles" multiple="multiple">
                             <option>Selecciona una opción</option>
                             @foreach ($controles as $control)
                                 <option value="{{ $control->id }}">
@@ -373,10 +379,10 @@
                     </div>
 
                     <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                        <label for="director_resp_id"><i class="fas fa-user-tie iconos-crear"></i>Director Responsable
+                        <label class="required" for="director_resp_id"><i class="fas fa-user-tie iconos-crear"></i>Director Responsable
                             del Riesgo</label>
                         <select class="form-control {{ $errors->has('director_resp_id') ? 'is-invalid' : '' }}"
-                            name="director_resp_id" id="director_resp_id">
+                            name="director_resp_id" id="director_resp_id" required>
                             <option value="" selected disabled>
                                 -- Selecciona el nombre del empleado --
                             </option>
@@ -393,24 +399,13 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                        <label for="fecha_aut_direct"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de
-                            Autorización</label>
-                        <input class="form-control date {{ $errors->has('fecha_aut_direct') ? 'is-invalid' : '' }}"
-                            type="date" name="fecha_aut_direct" id="fecha_aut_direct"
-                            value="{{ old('fecha_aut_direct') }}">
-                        @if ($errors->has('fecha_aut_direct'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fecha_aut_direct') }}
-                            </div>
-                        @endif
-                    </div>
+
 
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="vp_responsable_id"><i class="fas fa-user-tie iconos-crear"></i>VP Responsable del
+                        <label class="required" for="vp_responsable_id"><i class="fas fa-user-tie iconos-crear"></i>VP Responsable del
                             Riesgo</label>
                         <select class="form-control {{ $errors->has('vp_responsable_id') ? 'is-invalid' : '' }}"
-                            name="vp_responsable_id" id="vp_responsable_id">
+                            name="vp_responsable_id" id="vp_responsable_id" required>
                             <option value="" selected disabled>
                                 -- Selecciona el nombre del empleado --
                             </option>
@@ -427,22 +422,12 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                        <label for="fecha_vp_aut"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de
-                            Autorización</label>
-                        <input class="form-control date {{ $errors->has('fecha_vp_aut') ? 'is-invalid' : '' }}"
-                            type="date" name="fecha_vp_aut" id="fecha_vp_aut" value="{{ old('fecha_vp_aut') }}">
-                        @if ($errors->has('fecha_vp_aut'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fecha_vp_aut') }}
-                            </div>
-                        @endif
-                    </div>
+
 
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label><i class="fas fa-user-tie iconos-crear"></i>Presidencia</label>
+                        <label class="required"><i class="fas fa-user-tie iconos-crear"></i>Presidencia</label>
                         <select class="form-control {{ $errors->has('presidencia_id') ? 'is-invalid' : '' }}"
-                            name="presidencia_id">
+                            name="presidencia_id" required>
                             <option value="" selected disabled>
                                 -- Selecciona el nombre del empleado --
                             </option>
@@ -459,24 +444,12 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                        <label for="fecha_aut_presidencia"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de
-                            Autorización</label>
-                        <input class="form-control date {{ $errors->has('fecha_aut_presidencia') ? 'is-invalid' : '' }}"
-                            type="datetime-local" name="fecha_aut_presidencia" id="fecha_aut_presidencia"
-                            value="{{ old('fecha_aut_presidencia') }}">
-                        @if ($errors->has('fecha_aut_presidencia'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fecha_aut_presidencia') }}
-                            </div>
-                        @endif
-                    </div>
 
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="vice_operaciones_id"><i class="fas fa-user-tie iconos-crear"></i>Vicepresidencia de
+                        <label class="required" for="vice_operaciones_id"><i class="fas fa-user-tie iconos-crear"></i>Vicepresidencia de
                             Operaciones</label>
                         <select class="form-control {{ $errors->has('vice_operaciones_id') ? 'is-invalid' : '' }}"
-                            name="vice_operaciones_id" id="vice_operaciones_id">
+                            name="vice_operaciones_id" id="vice_operaciones_id" required>
                             <option value="" selected disabled>
                                 -- Selecciona el nombre del empleado --
                             </option>
@@ -493,19 +466,7 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                        <label for="fecha_aut_viceoperaciones"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha
-                            de Autorización</label>
-                        <input
-                            class="form-control date {{ $errors->has('fecha_aut_viceoperaciones') ? 'is-invalid' : '' }}"
-                            type="datetime-local" name="fecha_aut_viceoperaciones" id="fecha_aut_viceoperaciones"
-                            value="{{ old('fecha_aut_viceoperaciones') }}">
-                        @if ($errors->has('fecha_aut_viceoperaciones'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fecha_aut_viceoperaciones') }}
-                            </div>
-                        @endif
-                    </div>
+
                     {{-- 6. Recomendaciones mandatorias de seguridad --}}
                     <div class="col-12">
                         <div class="text-center form-group"
@@ -810,4 +771,15 @@
             initSelect2();
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            $('.controles-select').select2({
+                'theme': 'bootstrap4'
+            });
+        })
+    </script>
+
+
 @endsection

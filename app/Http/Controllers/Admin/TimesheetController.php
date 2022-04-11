@@ -24,9 +24,13 @@ class TimesheetController extends Controller
     {
         $times = timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
 
+        $todos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->count();
+        $borrador_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'papelera')->count();
+        $pendientes_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'pendiente')->count();
+        $aprobados_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'aprobado')->count();
         $rechazos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'rechazado')->count();
 
-        return view('admin.timesheet.index', compact('times', 'rechazos_contador'));
+        return view('admin.timesheet.index', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador'));
     }
 
     public function timesheetInicio()
@@ -302,7 +306,6 @@ class TimesheetController extends Controller
      */
     public function destroy($id)
     {
-        
     }
 
     public function eliminar($id)
@@ -426,5 +429,23 @@ class TimesheetController extends Controller
         $cliente_borrado = TimesheetCliente::create($id);
 
         return redirect()->route('admin.timesheet-clientes')->with('success', 'Eliminado');
+    }
+
+    public function dashboard()
+    {
+        
+
+        return view('admin.timesheet.dashboard');
+    }
+
+    public function reportes()
+    {
+        $clientes = TimesheetCliente::get();
+
+        $proyectos = TimesheetProyecto::get();
+
+        $tareas = TimesheetTarea::get();
+
+        return view('admin.timesheet.reportes', compact('clientes', 'proyectos', 'tareas'));
     }
 }

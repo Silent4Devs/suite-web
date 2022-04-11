@@ -595,13 +595,13 @@
                                             <font class="letra_blanca"> Inventario</font>
                                         </a>
                                     </li>
-                                    <li class="c-sidebar-nav-item">
-                                        <a href="{{ route('admin.activosInformacion.index') }}"
+                                    {{-- <li class="c-sidebar-nav-item">
+                                        <a href="{{ route('admin.activosInformacion.index', $matriz) }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/activos') || request()->is('admin/activos/*') ? 'active' : '' }}">
                                             <i class="far fa-hdd iconos_menu letra_blanca"></i>
                                             <font class="letra_blanca"> Inventario AI</font>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                 @endcan
                             </ul>
                         </li>
@@ -739,7 +739,7 @@
                             </ul>
                         </li>
                     {{-- @endcan --}}
-                    
+
                     @can('configuracion_empleados_access')
                         {{-- <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.empleados.index') }}"
