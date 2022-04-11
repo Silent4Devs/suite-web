@@ -318,6 +318,9 @@
                 $.ajax({
                     type: "POST",
                     url: "{{ route('admin.documentos.store') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     data: data,
                     processData: false,
                     contentType: false,
@@ -413,6 +416,10 @@
                             let datosRevisores = $(formReviewers).serialize();
                             $.ajax({
                                 type: "POST",
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
                                 url: "{{ route('admin.documentos.storeDocumentWhenPublish') }}",
                                 data: guardarDocumento,
                                 processData: false,
