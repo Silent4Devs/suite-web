@@ -333,7 +333,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12" id="tblObjetivosSupervisor">
                             @forelse ($evaluador['objetivos'] as $idx => $objetivo)
                                 <div class="row">
                                     <div class="text-white col-2"
@@ -437,6 +437,22 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
+            document.querySelectorAll("table tr:nth-child(2) td").forEach(function(node) {
+                node.ondblclick = function() {
+                    var val = this.innerHTML;
+                    var input = document.createElement("input");
+                    input.value = val;
+                    input.onblur = function() {
+                        var val = this.value;
+                        this.parentNode.innerHTML = val;
+                    }
+                    this.innerHTML = "";
+                    this.appendChild(input);
+                    input.focus();
+                }
+            });
+
             let labels = @json($competencias_lista_nombre);
             let data = {
                 labels: labels,
