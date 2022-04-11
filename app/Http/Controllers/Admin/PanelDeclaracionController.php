@@ -71,7 +71,7 @@ class PanelDeclaracionController extends Controller
 
         $empleados = Empleado::select('id', 'name', 'genero', 'foto')->get();
 
-        return view('admin.paneldeclaracion.index', compact('empleados'));
+        return view('admin.panelDeclaracion.index', compact('empleados'));
     }
 
     public function create()
@@ -79,7 +79,7 @@ class PanelDeclaracionController extends Controller
         $empleados = Empleado::get();
         $controles = DeclaracionAplicabilidad::OrderBy('id')->get();
 
-        return view('admin.paneldeclaracion.create', compact('empleados', 'controles'));
+        return view('admin.panelDeclaracion.create', compact('empleados', 'controles'));
     }
 
     public function store(Request $request, $id)
@@ -99,7 +99,7 @@ class PanelDeclaracionController extends Controller
         $declaracion->aprobadores()->sync($aprobadores);
         // }
 
-        return redirect()->route('admin.paneldeclaracion.index');
+        return redirect()->route('admin.panelDeclaracion.index');
     }
 
     public function show(DeclaracionAplicabilidad $controles)
@@ -112,7 +112,7 @@ class PanelDeclaracionController extends Controller
         $empleados = Empleado::get();
         $controles = DeclaracionAplicabilidad::get();
 
-        return view('admin.paneldeclaracion.edit', compact('empleados', 'controles'));
+        return view('admin.panelDeclaracion.edit', compact('empleados', 'controles'));
     }
 
     public function update(Request $request, $id)
@@ -126,7 +126,7 @@ class PanelDeclaracionController extends Controller
         $aprobadores = $request->aprobadores;
         $declaracion->aprobadores()->sync($aprobadores);
 
-        return redirect()->route('admin.paneldeclaracion.index')->with('success', 'Editado con éxito');
+        return redirect()->route('admin.panelDeclaracion.index')->with('success', 'Editado con éxito');
     }
 
     //Ruta donde vamos a guardar el responsable a traves del script
@@ -138,30 +138,30 @@ class PanelDeclaracionController extends Controller
 
         $isReasignable = DeclaracionAplicabilidadResponsable::select('declaracion_id')->where('declaracion_id', $declaracion)->whereNull('empleado_id')->exists();
         $readyExistResponsable = DeclaracionAplicabilidadAprobadores::select('declaracion_id')
-        ->where('declaracion_id', $declaracion)->where('aprobadores_id', $responsable)->exists();
+            ->where('declaracion_id', $declaracion)->where('aprobadores_id', $responsable)->exists();
         if ($readyExistResponsable) {
-            return response()->json(['estatus'=>'ya_es_aprobador', 'message'=>'Ya fue asignado aprobador'], 200);
+            return response()->json(['estatus' => 'ya_es_aprobador', 'message' => 'Ya fue asignado aprobador'], 200);
         } else {
             if (!$existResponsable) {
                 $exists = DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
                 if (!$exists) {
                     // dd($responsable);
                     DeclaracionAplicabilidadResponsable::create([
-                    'declaracion_id' => $declaracion,
-                    'empleado_id'=>$responsable,
-                ]);
+                        'declaracion_id' => $declaracion,
+                        'empleado_id' => $responsable,
+                    ]);
 
-                    return response()->json(['estatus'=>'asignado', 'message'=>'Responsable asignado'], 200);
+                    return response()->json(['estatus' => 'asignado', 'message' => 'Responsable asignado'], 200);
                 } else {
-                    return response()->json(['estatus'=>'ya_asignado', 'message'=>'Este responsable ya ha sido asignado'], 200);
+                    return response()->json(['estatus' => 'ya_asignado', 'message' => 'Este responsable ya ha sido asignado'], 200);
                 }
             } else {
                 if ($isReasignable) {
-                    DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->update(['empleado_id'=>$responsable]);
+                    DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->update(['empleado_id' => $responsable]);
 
-                    return response()->json(['estatus'=>'asignado', 'message'=>'Responsable asignado'], 200);
+                    return response()->json(['estatus' => 'asignado', 'message' => 'Responsable asignado'], 200);
                 } else {
-                    return response()->json(['estatus'=>'limite_alcanzado', 'message'=>'Limite de responsables alcanzado'], 200);
+                    return response()->json(['estatus' => 'limite_alcanzado', 'message' => 'Limite de responsables alcanzado'], 200);
                 }
             }
         }
@@ -176,11 +176,11 @@ class PanelDeclaracionController extends Controller
 
         $exists = $registro->exists();
         if ($exists) {
-            $registro = DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->update(['empleado_id'=>null]);
+            $registro = DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->update(['empleado_id' => null]);
 
-            return response()->json(['message'=>'Responsable desasignado', 'request'=>$request->all()], 200);
+            return response()->json(['message' => 'Responsable desasignado', 'request' => $request->all()], 200);
             // } else {
-        //     return response()->json(['message'=>'Este responsable no ha sido asignado'], 200);
+            //     return response()->json(['message'=>'Este responsable no ha sido asignado'], 200);
         }
     }
 
@@ -192,22 +192,22 @@ class PanelDeclaracionController extends Controller
         $existAprobador = DeclaracionAplicabilidadAprobadores::select('declaracion_id')->where('declaracion_id', $declaracion)->exists();
         $readyExistResponsable = DeclaracionAplicabilidadResponsable::select('declaracion_id')->where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->exists();
         if ($readyExistResponsable) {
-            return response()->json(['estatus'=>'ya_es_responsable', 'message'=>'Ya fue asignado responsable'], 200);
+            return response()->json(['estatus' => 'ya_es_responsable', 'message' => 'Ya fue asignado responsable'], 200);
         } else {
             if (!$existAprobador) {
                 $exists = DeclaracionAplicabilidadAprobadores::where('declaracion_id', $declaracion)->where('aprobadores_id', $aprobador)->exists();
                 if (!$exists) {
                     DeclaracionAplicabilidadAprobadores::create([
-                    'declaracion_id' => $declaracion,
-                    'aprobadores_id'=>$aprobador,
-                ]);
+                        'declaracion_id' => $declaracion,
+                        'aprobadores_id' => $aprobador,
+                    ]);
 
-                    return response()->json(['estatus'=>'asignado', 'message'=>'Aprobador asignado'], 200);
+                    return response()->json(['estatus' => 'asignado', 'message' => 'Aprobador asignado'], 200);
                 } else {
-                    return response()->json(['estatus'=>'ya_asignado', 'message'=>'Este aprobador ya ha sido asignado'], 200);
+                    return response()->json(['estatus' => 'ya_asignado', 'message' => 'Este aprobador ya ha sido asignado'], 200);
                 }
             } else {
-                return response()->json(['estatus'=>'limite_alcanzado', 'message'=>'Limite de responsables alcanzado'], 200);
+                return response()->json(['estatus' => 'limite_alcanzado', 'message' => 'Limite de responsables alcanzado'], 200);
             }
         }
     }
@@ -222,9 +222,9 @@ class PanelDeclaracionController extends Controller
         if ($exists) {
             $registro->first()->delete();
 
-            return response()->json(['message'=>'Aprobador desasignado'], 200);
+            return response()->json(['message' => 'Aprobador desasignado'], 200);
         } else {
-            return response()->json(['message'=>'Este aprobador no ha sido asignado'], 200);
+            return response()->json(['message' => 'Este aprobador no ha sido asignado'], 200);
         }
     }
 
@@ -263,6 +263,6 @@ class PanelDeclaracionController extends Controller
             });
         }
 
-        return response()->json(['message'=>'Correo enviado'], 200);
+        return response()->json(['message' => 'Correo enviado'], 200);
     }
 }
