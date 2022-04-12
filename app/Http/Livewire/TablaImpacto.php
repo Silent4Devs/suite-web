@@ -28,7 +28,7 @@ class TablaImpacto extends Component
     public $criterioImpacto;
     public $baseImpacto;
     public $tablaImpactoId = 1;
-    public $contenidos =[];
+    // public $contenidos =[];
 
 
     public function mount()
@@ -39,12 +39,12 @@ class TablaImpacto extends Component
         {
             // array_push($this->contenidos,["i{$impacto->id}"=>[]]);
             // dd($this->contenidos);
-            foreach($tipos as $tipo)
-            {
-                $contenido = $this->obtenerContenido($tipo->id, $impacto->id);
-                // array_push($this->contenidos[$impacto->id],['contenido'=>$contenido]);
-                $this->contenidos["i{$impacto->id}"]["t{$tipo->id}"]=['contenido'=>$contenido];
-            }
+            // foreach($tipos as $tipo)
+            // {
+            //     $contenido = $this->obtenerContenido($tipo->id, $impacto->id);
+            //     // array_push($this->contenidos[$impacto->id],['contenido'=>$contenido]);
+            //     // $this->contenidos["i{$impacto->id}"]["t{$tipo->id}"]=['contenido'=>$contenido];
+            // }
             $columna = [
                 'id'=>$impacto->id,
                 'nivel'=>$impacto->nivel,
@@ -186,7 +186,7 @@ class TablaImpacto extends Component
         if($contenido == null){
             return null;
         }
-        return $contenido->contenido;
+        return $contenido;
     }
 
 

@@ -925,7 +925,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Route::get('carta-aceptacion/riesgos', 'CartadeAceptacionController@ISO31000')->name('matriz-seguridad.ISO31000');
     Route::delete('carta-aceptacion/destroy', 'CartaAceptacionRiesgosController@destroy')->name('carta-aceptacion.destroy');
     Route::resource('carta-aceptacion', 'CartaAceptacionRiesgosController')->except('destroy');
-
+    Route::post('carta-aceptacion/aprobacion','CartaAceptacionRiesgosController@aprobacionAutoridad')->name('cartaaceptacion.aprobacion');
     //Tabla de impactos
     Route::resource('tabla-impacto', 'TablaImpactoController');
 
