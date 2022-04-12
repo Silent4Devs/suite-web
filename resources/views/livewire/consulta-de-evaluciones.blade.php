@@ -27,7 +27,7 @@
         @endif
     </div>
 
-    <div x-data="{show:true}">
+    <div x-data="{ show: true }">
         <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
             Resultados
             <a style="cursor: pointer" @click="show=!show">
@@ -36,8 +36,21 @@
             </a>
         </div>
         <div class="row" x-show="show" x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
-            <div class="col-12" style="width:100px !important;">
-                <canvas id="radarCompetencias" width="400" height="400"></canvas>
+            <div class="col-12" x-data="{ show: false }" style="width:100px !important;">
+                <div style="display: flex;justify-content: end">
+                    <button title="Gráfica Radar" @click="show=true" class="btn btn-sm"
+                        x-bind:style="show?'background:blue;color:white':'backgrond:white'"><i
+                            class="fas fa-chart-area"></i></button>
+                    <button title="Gráfica de Barras" @click="show=false" class="btn btn-sm"
+                        x-bind:style="!show?'background:blue;color:white':'backgrond:white'"><i
+                            class="fas fa-chart-bar"></i></button>
+                </div>
+                <div x-show="show" x-transition>
+                    <canvas id="radarCompetencias" width="400" height="400"></canvas>
+                </div>
+                <div x-show="!show" x-transition>
+                    <canvas id="barCompetencias" width="400" height="400"></canvas>
+                </div>
             </div>
             <div class="col-6">
                 <canvas id="jefeGrafica" width="350" height="350"></canvas>
@@ -92,7 +105,7 @@
         <div class="col-2">
             <button class="h-100 btn btn-sm btn-primary" wire:click="compararEvaluaciones">Comparar</button>
         </div>
-        <div class="col-12" x-data="{show:$wire.showCompare}">
+        <div class="col-12" x-data="{ show: $wire.showCompare }">
             <div class="row">
                 <div class="col-12">
                     <p class="m-0 mt-2">
@@ -104,11 +117,11 @@
                 </div>
                 <div class="col-6" x-show="show" x-transition:enter.duration.500ms
                     x-transition:leave.duration.400ms>
-                    <canvas id="autoevaluacionGraficaCompare" width="400" height="400"></canvas>
-                </div>
-                <div class="col-12" x-show="show" x-transition:enter.duration.500ms
-                    x-transition:leave.duration.400ms>
                     <canvas id="radarCompetenciasCompare" width="400" height="400"></canvas>
+                </div>
+                <div class="col-6" x-show="show" x-transition:enter.duration.500ms
+                    x-transition:leave.duration.400ms>
+                    <canvas id="autoevaluacionGraficaCompare" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>
@@ -124,9 +137,14 @@
             let calificaciones_jefe_competencias = @this.get('calificaciones_jefe_competencias');
             let calificaciones_equipo_competencias = @this.get('calificaciones_equipo_competencias');
             let calificaciones_area_competencias = @this.get('calificaciones_area_competencias');
-            console.log(competencias_lista_nombre);
-            renderGraficas(competencias_lista_nombre, calificaciones_autoevaluacion_competencias,
-                calificaciones_jefe_competencias, calificaciones_equipo_competencias);
+            let calificaciones_meta_competencias = @this.get('calificaciones_meta_competencias');
+            console.log(calificaciones_meta_competencias);
+            renderGraficas(competencias_lista_nombre,
+                calificaciones_autoevaluacion_competencias,
+                calificaciones_jefe_competencias,
+                calificaciones_equipo_competencias,
+                calificaciones_area_competencias,
+                calificaciones_meta_competencias);
         });
 
         window.livewire.on('renderCharts', () => {
@@ -139,8 +157,12 @@
             compararGraficas(competencias_lista_nombre, calificaciones_autoevaluacion_competencias,
                 calificaciones_autoevaluacion_competencias_compare);
         });
-        renderGraficas(@json($competencias_lista_nombre), @json($calificaciones_autoevaluacion_competencias), @json($calificaciones_jefe_competencias),
-            @json($calificaciones_equipo_competencias), @json($calificaciones_area_competencias), @json($calificaciones_meta_competencias));
+        renderGraficas(@json($competencias_lista_nombre),
+            @json($calificaciones_autoevaluacion_competencias),
+            @json($calificaciones_jefe_competencias),
+            @json($calificaciones_equipo_competencias),
+            @json($calificaciones_area_competencias),
+            @json($calificaciones_meta_competencias));
     });
 
     function renderGraficas(competencias_lista_nombre, calificaciones_autoevaluacion_competencias,
@@ -356,14 +378,48 @@
                 },
             }
         };
+        const configBarChart = {
+            type: 'bar',
+            data: dataRadar,
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Promedios'
+                    },
+                    legend: {
+                        display: true
+                    },
+                },
+                scale: {
+                    min: 0,
+                },
+            }
+        };
         if (window.radarChart instanceof Chart) {
             window.radarChart.destroy();
+        }
+        if (window.barChart instanceof Chart) {
+            window.barChart.destroy();
         }
         window.radarChart = new Chart(
             document.getElementById('radarCompetencias'),
             configRadar
         );
+        window.barChart = new Chart(
+            document.getElementById('barCompetencias'),
+            configBarChart
+        );
         radarChart.resize();
+        barChart.resize();
     }
 
     function compararGraficas(competencias_lista_nombre, calificaciones_autoevaluacion_competencias,
@@ -424,12 +480,12 @@
                 label: 'Evaluación 2',
                 data: calificaciones_autoevaluacion_competencias_compare,
                 fill: true,
-                backgroundColor: 'rgba(192, 57, 43, 0.2)',
-                borderColor: 'rgb(192, 57, 43)',
-                pointBackgroundColor: 'rgb(192, 57, 43)',
+                backgroundColor: 'rgba(46, 106, 204, 0.2)',
+                borderColor: 'rgb(46, 106, 204)',
+                pointBackgroundColor: 'rgb(46, 106, 204)',
                 pointBorderColor: '#fff',
                 pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(192, 57, 43)'
+                pointHoverBorderColor: 'rgb(46, 106, 204)'
             }]
         };
         const configRadar = {

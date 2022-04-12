@@ -344,7 +344,8 @@
             border-bottom: 1px solid #7fabfd;
         }
 
-        table.dataTable thead, table.table thead {
+        table.dataTable thead,
+        table.table thead {
             background: #788BAC !important;
             color: #fff !important;
         }
@@ -1192,7 +1193,9 @@
     {{-- @include('partials.footer') --}}
     </div>
     {{-- daterangepicker --}}
-
+    <script>
+        window.NotificationUser = {!! json_encode(['user' => auth()->check() ? auth()->user()->empleado->id : null]) !!};
+    </script>
     {{-- Librerías para visualizar en campo el dolar --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.min.js"></script>
@@ -1244,15 +1247,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
-
-
-    <script>
-        window.Laravel.user = {!! json_encode([
-    'user' => auth()->check() ? auth()->user()->id : null,
-]) !!};
-    </script>
     <script src="//unpkg.com/alpinejs" defer></script>
-
     <script src="{{ asset('js/main.js') }}"></script>
 
     <!-- x editable -->
@@ -1261,7 +1256,7 @@
     <script>
         $(document).ready(function() {
             $('.c-sidebar-nav').animate({
-                scrollTop: $(".c-active").offset().top - 350
+                scrollTop: $(".c-active").offset()?.top - 350
             }, 0);
         });
         $(function() {
@@ -1635,8 +1630,8 @@
 
     <script src="{{ asset('/sw.js') }}"></script>
     <script>
-        if (!navigator.serviceWorker.controller) {
-            navigator.serviceWorker.register("/sw.js").then(function(reg) {
+        if (!navigator.serviceWorker?.controller) {
+            navigator.serviceWorker?.register("/sw.js").then(function(reg) {
                 console.log("Service worker has been registered for scope: " + reg.scope);
             });
         }
