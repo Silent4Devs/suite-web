@@ -760,8 +760,7 @@ class EV360EvaluacionesController extends Controller
                     array_push($calificacionObjetivos, $objetivo['calificacion']);
                 }
             }
-        };
-
+        }
 
         $calificaciones_autoevaluacion_competencias = $calificaciones['calificaciones_autoevaluacion_competencias'];
         $calificaciones_jefe_competencias = $calificaciones['calificaciones_jefe_competencias'];
@@ -820,7 +819,7 @@ class EV360EvaluacionesController extends Controller
     {
         $objetivo = ObjetivoCalificacion::find(intval($request->id));
         $objetivo->update([
-            'calificacion' => $request->calificacion
+            'calificacion' => $request->calificacion,
         ]);
 
         return response()->json(['success' => 'true']);
@@ -1381,6 +1380,7 @@ class EV360EvaluacionesController extends Controller
                 'sobresaliente' => $request->sobresaliente,
             ]);
         }
+
         return redirect()->back();
     }
 

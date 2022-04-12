@@ -319,7 +319,7 @@
                                     Evaluación realizada por:
                                     <strong> {{ $evaluador['nombre'] }}</strong>
                                     @if ($evaluador['esAutoevaluacion'])
-                                        <span class="badge badge-primary">Meta</span>
+                                        <span class="badge badge-primary">Autoevaluación</span>
                                     @endif
                                     @if ($evaluador['esSupervisor'])
                                         <span class="badge badge-success">Supervisor</span>
@@ -333,7 +333,8 @@
                                     style="background: #3e3e3e; border: 1px solid #fff; font-size:11px"><small>KPI</small>
                                 </div>
                                 <div class="text-center text-white col-1"
-                                    style="background: #3e3e3e; border: 1px solid #fff; font-size:11px"><small>Meta</small>
+                                    style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
+                                    <small>Puesto</small>
                                 </div>
                                 <div class="text-center text-white col-1"
                                     style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
@@ -529,7 +530,7 @@
             let data = {
                 labels: labels,
                 datasets: [{
-                    label: 'Meta',
+                    label: 'Puesto',
                     backgroundColor: 'rgb(46, 204, 65)',
                     borderColor: 'rgb(46, 204, 65)',
                     data: @json($nivelesEsperadosCompetencias),
@@ -547,7 +548,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Meta vs Calificación Jefe Inmediato',
+                            text: 'Puesto vs Calificación Jefe Inmediato',
                         }
                     }
                 }
@@ -561,7 +562,7 @@
             let dataEquipo = {
                 labels: labelsEquipo,
                 datasets: [{
-                    label: 'Meta',
+                    label: 'Puesto',
                     backgroundColor: 'rgb(46, 204, 65)',
                     borderColor: 'rgb(46, 204, 65)',
                     data: @json($nivelesEsperadosCompetencias),
@@ -579,7 +580,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Meta vs Calificación Subordinado',
+                            text: 'Puesto vs Calificación Subordinado',
                         }
                     }
                 }
@@ -593,7 +594,7 @@
             let dataArea = {
                 labels: labelsArea,
                 datasets: [{
-                    label: 'Meta',
+                    label: 'Puesto',
                     backgroundColor: 'rgb(46, 204, 65)',
                     borderColor: 'rgb(46, 204, 65)',
                     data: @json($nivelesEsperadosCompetencias),
@@ -611,7 +612,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Meta vs Calificación Par',
+                            text: 'Puesto vs Calificación Par',
                         }
                     }
                 }
@@ -624,7 +625,7 @@
             const dataRadar = {
                 labels: @json($competencias_lista_nombre),
                 datasets: [{
-                        label: 'Meta',
+                        label: 'Puesto',
                         data: @json($nivelesEsperadosCompetencias),
                         fill: true,
                         backgroundColor: 'rgba(51,109,255, 0.5)',
@@ -731,7 +732,7 @@
             const dataRadarObjetivos = {
                 labels: @json($nombresObjetivos),
                 datasets: [{
-                    label: 'Meta',
+                    label: 'Puesto',
                     data: @json($metaObjetivos),
                     fill: true,
                     backgroundColor: 'rgba(51,109,255, 0.5)',

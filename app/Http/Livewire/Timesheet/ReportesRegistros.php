@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use Livewire\Component;
 use App\Models\Timesheet;
+use Livewire\Component;
 
 class ReportesRegistros extends Component
-{ 
+{
     public $todos_contador;
     public $borrador_contador;
     public $pendientes_contador;
@@ -17,7 +17,6 @@ class ReportesRegistros extends Component
     public function mount()
     {
         $this->times = Timesheet::get();
-
     }
 
     public function render()

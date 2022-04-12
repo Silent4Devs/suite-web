@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Models;
+
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class TipoNivelImpacto
+ * Class TipoNivelImpacto.
  *
  * @property int $id
  * @property int|null $tabla_impacto_id
@@ -16,31 +17,29 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property TablaImpacto|null $tabla_impacto
  * @property NivelesImpacto|null $niveles_impacto
- *
- * @package App\Models
  */
 class TipoNivelImpacto extends Model
 {
-	protected $table = 'tipo_nivel_impacto';
+    protected $table = 'tipo_nivel_impacto';
 
-	protected $casts = [
-		'tipo_impacto_id' => 'int',
-		'niveles_impacto_id' => 'int'
-	];
+    protected $casts = [
+        'tipo_impacto_id' => 'int',
+        'niveles_impacto_id' => 'int',
+    ];
 
-	protected $fillable = [
-		'tipo_impacto_id',
-		'niveles_impacto_id',
-		'contenido'
-	];
+    protected $fillable = [
+        'tipo_impacto_id',
+        'niveles_impacto_id',
+        'contenido',
+    ];
 
-	public function tipo_impacto()
-	{
-		return $this->belongsTo(TipoImpacto::class);
-	}
+    public function tipo_impacto()
+    {
+        return $this->belongsTo(TipoImpacto::class);
+    }
 
-	public function niveles_impacto()
-	{
-		return $this->belongsTo(NivelesImpacto::class);
-	}
+    public function niveles_impacto()
+    {
+        return $this->belongsTo(NivelesImpacto::class);
+    }
 }

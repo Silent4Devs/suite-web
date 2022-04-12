@@ -112,6 +112,7 @@ class Ev360ResumenTabla extends Component
         } else {
             $competencias = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)->pluck('competencia_id')->unique()->toArray();
         }
+
         return $competencias;
     }
 
@@ -355,7 +356,6 @@ class Ev360ResumenTabla extends Component
                 $calificacion_final += $evaluacion->peso_general_objetivos;
             }
         }
-
 
         return [
             'peso_general_competencias' => $evaluacion->peso_general_competencias,

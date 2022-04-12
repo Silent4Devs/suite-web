@@ -18,7 +18,7 @@ class MatrizOctaveContenedor extends Model
         'riesgo',
         'descripcion',
         'id_matriz_octave_escenarios',
-        'matriz_id'
+        'matriz_id',
     ];
 
     // public function getImpactoProcesoAttribute()

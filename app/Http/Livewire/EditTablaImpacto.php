@@ -6,12 +6,8 @@ use Livewire\Component;
 
 class EditTablaImpacto extends Component
 {
-
-
-
-    public function mount(){
-
-
+    public function mount()
+    {
     }
 
     public function render()
