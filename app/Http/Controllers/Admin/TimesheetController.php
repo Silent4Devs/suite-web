@@ -433,8 +433,6 @@ class TimesheetController extends Controller
 
     public function dashboard()
     {
-        
-
         return view('admin.timesheet.dashboard');
     }
 

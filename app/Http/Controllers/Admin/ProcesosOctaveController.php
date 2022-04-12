@@ -73,29 +73,28 @@ class ProcesosOctaveController extends Controller
     {
         $areas = Area::get();
         $procesos = Proceso::get();
-     
-        $proceso_octave = MatrizOctaveProceso::where('matriz_id',$matriz)->pluck('id_proceso')->toArray();
-        $procesos = $procesos->filter(function($item)use($proceso_octave){
-            if (!in_array($item->id,$proceso_octave)){
+
+        $proceso_octave = MatrizOctaveProceso::where('matriz_id', $matriz)->pluck('id_proceso')->toArray();
+        $procesos = $procesos->filter(function ($item) use ($proceso_octave) {
+            if (!in_array($item->id, $proceso_octave)) {
                 return $item;
             }
         });
-       
+
         $activosInfo = ActivoInformacion::get();
         $servicios = MatrizOctaveServicio::get();
         $servicio_seleccionado = null;
         $grupos = Grupo::get();
 
-        return view('admin.procesos-octave.create', compact('grupos', 'areas', 'procesos', 'activosInfo', 'servicios', 'servicio_seleccionado','matriz'));
+        return view('admin.procesos-octave.create', compact('grupos', 'areas', 'procesos', 'activosInfo', 'servicios', 'servicio_seleccionado', 'matriz'));
     }
 
     public function store(Request $request)
     {
         $procesosOctave = MatrizOctaveProceso::create($request->all());
         $matriz = $request->matriz_id;
-        return redirect()->route('admin.procesos-octave.index',['matriz'=>$matriz])->with('success', 'Guardado con éxito');
 
-     
+        return redirect()->route('admin.procesos-octave.index', ['matriz'=>$matriz])->with('success', 'Guardado con éxito');
     }
 
     public function edit($procesosOctave, $matriz)
@@ -116,12 +115,11 @@ class ProcesosOctaveController extends Controller
         $model = Proceso::find($procesosOctave->id_proceso);
         $activosProceso = $model->activosAI;
 
-        return view('admin.procesos-octave.edit', compact('activosProceso', 'riesgo', 'tecnologicoSeleccionado', 'reputacionalSeleccionado', 'legalSeleccionado', 'cumplimientoSeleccionado', 'operacionalSeleccionado', 'servicio_seleccionado', 'procesosOctave', 'areas', 'procesos', 'activosInfo', 'servicios','matriz'));
+        return view('admin.procesos-octave.edit', compact('activosProceso', 'riesgo', 'tecnologicoSeleccionado', 'reputacionalSeleccionado', 'legalSeleccionado', 'cumplimientoSeleccionado', 'operacionalSeleccionado', 'servicio_seleccionado', 'procesosOctave', 'areas', 'procesos', 'activosInfo', 'servicios', 'matriz'));
     }
 
     public function update(Request $request, MatrizOctaveProceso $procesosOctave)
     {
-        
         $procesosOctave->update($request->all());
         $matriz = $request->matriz_id;
         $old_proceso = $this->obtenerRamas($procesosOctave);
@@ -131,21 +129,19 @@ class ProcesosOctaveController extends Controller
             'historico'=>$old_proceso,
         ]);
 
-
-        return redirect()->route('admin.procesos-octave.index',['matriz'=>$matriz])->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.procesos-octave.index', ['matriz'=>$matriz])->with('success', 'Guardado con éxito');
     }
 
     public function obtenerRamas($proceso)
     {
-        $procesos= collect();
-        if (MatrizOctaveProceso::where('id',$proceso->id)->with(['children'])->count() > 0) {
-            foreach (MatrizOctaveProceso::where('id',$proceso->id)->with(['children'])->get() as $procesoOctave) {
+        $procesos = collect();
+        if (MatrizOctaveProceso::where('id', $proceso->id)->with(['children'])->count() > 0) {
+            foreach (MatrizOctaveProceso::where('id', $proceso->id)->with(['children'])->get() as $procesoOctave) {
                 $procesos->push($procesoOctave->children);
             }
         }
-      return $procesos[0]->toJson();
 
-       
+        return $procesos[0]->toJson();
     }
 
     public function show()

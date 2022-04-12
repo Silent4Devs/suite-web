@@ -43,7 +43,8 @@ class ConsultaDeEvaluciones extends Component
     public function render()
     {
         $evaluacionController = new EV360EvaluacionesController;
-        $this->informacion_obtenida = $evaluacionController->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion, $this->evaluado);
+        $ev360ResumenTabla = new Ev360ResumenTabla();
+        $this->informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion, $this->evaluado);
         $this->calificaciones = $evaluacionController->desglosarCalificaciones($this->informacion_obtenida);
         $this->calificaciones_autoevaluacion_competencias = $this->calificaciones['calificaciones_autoevaluacion_competencias'];
         $this->calificaciones_jefe_competencias = $this->calificaciones['calificaciones_jefe_competencias'];
@@ -56,7 +57,7 @@ class ConsultaDeEvaluciones extends Component
 
         if ($this->equipo) {
             $jefe = Empleado::select('id', 'name')->with('children')->find($this->evaluador);
-            $equipo_a_cargo = $evaluacionController->obtenerEquipoACargo($jefe->children);
+            $equipo_a_cargo = $ev360ResumenTabla->obtenerEquipoACargo($jefe->children);
             $equipo_a_cargo = Empleado::select('id', 'name')->find($equipo_a_cargo);
 
             return view('livewire.consulta-de-evaluciones', [
@@ -77,9 +78,10 @@ class ConsultaDeEvaluciones extends Component
             'evaluacion2' => 'required',
         ]);
         // dd($this->evaluacion1);
+        $ev360ResumenTabla = new Ev360ResumenTabla();
         $evaluacionController = new EV360EvaluacionesController;
-        $this->informacion_obtenida_compare_first = $evaluacionController->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion1, $this->evaluado);
-        $this->informacion_obtenida_compare = $evaluacionController->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion2, $this->evaluado);
+        $this->informacion_obtenida_compare_first = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion1, $this->evaluado);
+        $this->informacion_obtenida_compare = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion2, $this->evaluado);
 
         $this->calificaciones_compare_first = $evaluacionController->desglosarCalificaciones($this->informacion_obtenida_compare_first);
         $this->calificaciones_autoevaluacion_competencias_compare_first = $this->calificaciones_compare_first['calificaciones_autoevaluacion_competencias'];
