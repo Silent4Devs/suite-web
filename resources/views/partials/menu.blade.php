@@ -711,33 +711,34 @@
                         </li>
                     @endcan
                     {{-- @can('configuracion_area_access') --}}
-                        <li class="c-sidebar-nav-dropdown">
-                            <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="bi bi-person-video3 iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca ">Capacitaciones</font>
-                            </a>
-                            <ul class="c-sidebar-nav-dropdown-items">
-                                {{-- @can('configuracion_grupoarea_create') --}}
-                                    <li class="c-sidebar-nav-item">
-                                        <a href="{{ asset('admin/categoria-capacitacion')}}"
-                                            class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
-                                            <i class="ml-2 bi bi-mortarboard iconos_menu letra_blanca" style="font-size:12pt;"></i>
-                                            <font class="letra_blanca"> Crear Categorías </font>
-                                        </a>
-                                    </li>
-                                {{-- @endcan --}}
-                                {{-- @can('configuracion_area_create') --}}
-                                    <li class="c-sidebar-nav-item">
-                                        <a href="{{ asset('admin/recursos') }}"
-                                            class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') || request()->is('admin/recursos/create')? 'active': '' }}">
+                    <li class="c-sidebar-nav-dropdown">
+                        <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                            <i class="bi bi-person-video3 iconos_menu letra_blanca"></i>
+                            <font class="letra_blanca ">Capacitaciones</font>
+                        </a>
+                        <ul class="c-sidebar-nav-dropdown-items">
+                            {{-- @can('configuracion_grupoarea_create') --}}
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ asset('admin/categoria-capacitacion') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*')? 'active': '' }}">
+                                    <i class="ml-2 bi bi-mortarboard iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                    <font class="letra_blanca"> Crear Categorías </font>
+                                </a>
+                            </li>
+                            {{-- @endcan --}}
+                            {{-- @can('configuracion_area_create') --}}
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ asset('admin/recursos') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/recursos') ||request()->is('admin/recursos/*') ||request()->is('admin/recursos/create')? 'active': '' }}">
 
-                                            <i class="ml-2 bi bi-person-video3 iconos_menu letra_blanca" style="font-size:12pt;"></i>
-                                            <font class="letra_blanca"> Crear Capacitación</font>
-                                        </a>
-                                    </li>
-                                {{-- @endcan --}}
-                            </ul>
-                        </li>
+                                    <i class="ml-2 bi bi-person-video3 iconos_menu letra_blanca"
+                                        style="font-size:12pt;"></i>
+                                    <font class="letra_blanca"> Crear Capacitación</font>
+                                </a>
+                            </li>
+                            {{-- @endcan --}}
+                        </ul>
+                    </li>
                     {{-- @endcan --}}
 
                     @can('configuracion_empleados_access')
@@ -1062,33 +1063,31 @@
     for (var i = 0; i < ida.length; i++)
         ida[i].id += "seleccionado";
 
-
-
-    document.getElementById('seleccionado').parentNode.classList.add('c-show');
-
-    document.getElementById('seleccionado').parentNode.parentNode.classList.add('c-show');
-
-    document.getElementById('seleccionado').parentNode.parentNode.parentNode.classList.add('c-show');
-
-    document.getElementById('seleccionado').parentNode.parentNode.parentNode.parentNode.classList.add('c-show');
-
-    document.getElementById('seleccionado').parentNode.parentNode.parentNode.parentNode.parentNode.classList.add(
-        'c-show');
+    let seleccionadoItem = document.getElementById('seleccionado');
+    if (seleccionadoItem) {
+        document.getElementById('seleccionado').parentNode.classList.add('c-show');
+        document.getElementById('seleccionado').parentNode.parentNode.classList.add('c-show');
+        document.getElementById('seleccionado').parentNode.parentNode.parentNode.classList.add('c-show');
+        document.getElementById('seleccionado').parentNode.parentNode.parentNode.parentNode.classList.add('c-show');
+        document.getElementById('seleccionado').parentNode.parentNode.parentNode.parentNode.parentNode.classList.add(
+            'c-show');
+    }
 </script>
 
 
 <script>
     const btn_desplegar_menu = document.querySelector('#btn_desplegar_menu');
+    if (btn_desplegar_menu) {
+        btn_desplegar_menu.addEventListener('click', () => {
+            document.body.classList.toggle('c-dark-theme');
 
-    btn_desplegar_menu.addEventListener('click', () => {
-        document.body.classList.toggle('c-dark-theme');
-
-        if (document.body.classList.contains('c-dark-theme')) {
-            localStorage.setItem('dark-mode', 'true');
-        } else {
-            localStorage.setItem('dark-mode', 'false');
-        }
-    });
+            if (document.body.classList.contains('c-dark-theme')) {
+                localStorage.setItem('dark-mode', 'true');
+            } else {
+                localStorage.setItem('dark-mode', 'false');
+            }
+        });
+    }
 
     if (localStorage.getItem('dark-mode') === 'true') {
         document.body.classList.add('c-dark-theme');

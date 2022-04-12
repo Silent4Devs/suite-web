@@ -163,7 +163,7 @@ class Ev360ResumenTabla extends Component
             $cantidad_competencias_evaluadas = count($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id, $evaluado->id)) ? count($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id, $evaluado->id)) : 1;
             $lista_autoevaluacion->push([
                 'tipo' => 'Autoevaluación',
-                'firma' => $locacionFirmas . $filtro_autoevaluacion->first()->firma_evaluador,
+                'firma' => $filtro_autoevaluacion->first() ? $locacionFirmas . $filtro_autoevaluacion->first()->firma_evaluador : null,
                 'peso_general' => $evaluacion->peso_autoevaluacion,
                 'evaluaciones' => $filtro_autoevaluacion->map(function ($evaluador) use ($evaluacion, $evaluado) {
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
@@ -189,7 +189,7 @@ class Ev360ResumenTabla extends Component
 
             $lista_jefe_inmediato->push([
                 'tipo' => 'Jefe Inmediato',
-                'firma' => $locacionFirmas . $filtro_jefe_inmediato->first()->firma_evaluador,
+                'firma' => $filtro_jefe_inmediato->first() ? $locacionFirmas . $filtro_jefe_inmediato->first()->firma_evaluador : null,
                 'peso_general' => $evaluacion->peso_jefe_inmediato,
                 'evaluaciones' => $filtro_jefe_inmediato->map(function ($evaluador) use ($evaluacion, $evaluado) {
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
@@ -214,7 +214,7 @@ class Ev360ResumenTabla extends Component
 
             $lista_equipo_a_cargo->push([
                 'tipo' => 'Equipo a cargo',
-                'firma' => $locacionFirmas . $filtro_equipo_a_cargo->first()->firma_evaluador,
+                'firma' => $filtro_equipo_a_cargo->first() ? $locacionFirmas . $filtro_equipo_a_cargo->first()->firma_evaluador : null,
                 'peso_general' => $evaluacion->peso_equipo,
                 'evaluaciones' => $filtro_equipo_a_cargo->map(function ($evaluador) use ($evaluacion, $evaluado) {
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
@@ -238,7 +238,7 @@ class Ev360ResumenTabla extends Component
 
             $lista_misma_area->push([
                 'tipo' => 'Misma área',
-                'firma' => $locacionFirmas . $filtro_misma_area->first()->firma_evaluador,
+                'firma' => $filtro_misma_area->first() ? $locacionFirmas . $filtro_misma_area->first()->firma_evaluador : null,
                 'peso_general' => $evaluacion->peso_area,
                 'evaluaciones' => $filtro_misma_area->map(function ($evaluador) use ($evaluacion, $evaluado) {
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
@@ -290,13 +290,14 @@ class Ev360ResumenTabla extends Component
                 }])->where('evaluacion_id', $evaluacion->id)
                     ->where('evaluado_id', $evaluado->id)
                     ->where('evaluador_id', $supervisorObjetivos->evaluador_id)
-                    ->get();
+                    ->orderBy('id')->get();
                 $evaluadores_objetivos->push([
                     'id' => $evaluado->supervisor->id, 'nombre' => $evaluado->supervisor->name,
                     'esSupervisor' => true,
                     'esAutoevaluacion' => false,
                     'objetivos' => $objetivos_calificaciones->map(function ($objetivo) {
                         return [
+                            'objetivo_calificacion_id' => $objetivo->id,
                             'nombre' => $objetivo->objetivo->nombre,
                             'KPI' => $objetivo->objetivo->KPI,
                             'meta' => $objetivo->objetivo->meta,
@@ -322,7 +323,7 @@ class Ev360ResumenTabla extends Component
             }])->where('evaluacion_id', $evaluacion->id)
                 ->where('evaluado_id', $evaluado->id)
                 ->where('evaluador_id', $evaluado->id)
-                ->get();
+                ->orderBy('id')->get();
 
             $evaluadores_objetivos->push([
                 'id' => $evaluado->id, 'nombre' => $evaluado->name,
@@ -330,6 +331,7 @@ class Ev360ResumenTabla extends Component
                 'esAutoevaluacion' => true,
                 'objetivos' => $objetivos_calificaciones_autoevaluacion->map(function ($objetivo) {
                     return [
+                        'objetivo_calificacion_id' => $objetivo->id,
                         'nombre' => $objetivo->objetivo->nombre,
                         'KPI' => $objetivo->objetivo->KPI,
                         'meta' => $objetivo->objetivo->meta,
