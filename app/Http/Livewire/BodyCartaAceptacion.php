@@ -38,20 +38,22 @@ class BodyCartaAceptacion extends Component
     public $promedioConfidencialidad = [];
     public $coordenada_tabla = '4,5';
     public $tipo = 'create';
-    public $cartaAceptacion;
+    public $cartaAceptacion ;
+    public $aprobadores;
 
-    public function mount($proceso = 0, $tipo = 'create', $cartaAceptacion = null)
-    {
-        if ($proceso > 0) {
+    public function mount($proceso = 0, $tipo = 'create', $cartaAceptacion = null, $aprobadores = null){
+        if($proceso >0 ){
             // dd($proceso);
 
             $procesoModel = $this->buscarProceso($proceso);
             // dd($procesoModel);
             $this->printTable($procesoModel);
         }
-        $this->tipo = $tipo;
-        $this->cartaAceptacion = $cartaAceptacion;
+        $this->tipo=$tipo;
+        $this->cartaAceptacion=$cartaAceptacion;
+        $this->aprobadores=$aprobadores;
     }
+
 
     public function render()
     {

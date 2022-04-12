@@ -47,16 +47,31 @@
                 </p>
             </div>
         </div>
+
         <div class="col-4 px-2">
             <strong style="font-size:12px; color:#345183">Fecha de riesgo levantado</strong>
             <p style="font-size:12px; color:#345183">{{ $cartaAceptacion->fecharegistro }}</p>
-            <div class="">
-                <strong style="font-size:12px; color:#345183">Fecha de aprobación del
-                    riesgo</strong>
-                <p></p>
-            </div>
+                <strong style="font-size:12px; color:#345183">
+                    @if($cartaAceptacion->fechaaprobacion !=null)
+                        @if($cartaAceptacion->aceptado)
+                            Fecha de aprobación del riesgo
+                            @else
+                            Fecha de rechazo del riesgo
+                        @endif
+                        @else
+                        Fecha de aprobación del riesgo
+                    @endif
+                    </strong>
+            <br>
             <span style="font-size:12px; color:#345183">{{ $cartaAceptacion->fechaaprobacion }}</span>
             <br>
+            @if($cartaAceptacion->fechaaprobacion !=null)
+                 @if($cartaAceptacion->aceptado)
+                 <span style="font-size:12px; color:#32ba4d">Aceptado</span>
+                 @else
+                 <span style="font-size:12px; color:#d83232">Rechazado</span>
+                @endif
+            @endif
         </div>
     </div>
     <table class="table mt-4 w-100 p-0 m-0" id="contactos_table">
@@ -257,51 +272,96 @@
         </tbody>
     </table>
 
+    <form id="activosAprobaciones">
+        <table class="table">
+            <thead>
+                <tr style="background-color:#cccccc;">
+                    <th  style="color:#345183; font-size:12px; min-width: 100px;">ID Activo</th>
+                    <th  style="color:#345183; font-size:12px; min-width: 300px;">Nombre</th>
+                    <th  style="color:#345183; font-size:12px; min-width: 150px;">Criticidad</th>
+                    <th  style="color:#345183; font-size:12px; min-width: 150px;">Confidencialidad</th>
+                    <th  style="color:#345183; font-size:12px; min-width: 100px;">Revisión</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                $rechazado = false;
+                $contestado = false;
+                @endphp
 
-    <table class="table">
-        <thead>
-            <tr style="background-color:#cccccc;">
-                <th  style="color:#345183; font-size:12px; min-width: 100px;">ID Activo</th>
-                <th  style="color:#345183; font-size:12px; min-width: 300px;">Nombre</th>
-                <th  style="color:#345183; font-size:12px; min-width: 150px;">Criticidad</th>
-                <th  style="color:#345183; font-size:12px; min-width: 150px;">Confidencialidad</th>
-                <th  style="color:#345183; font-size:12px; min-width: 100px;">Revisión</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (is_array($activos) || is_object($activos))
-                @foreach ($activos as $activo)
-                    <tr>
-                        {{-- @if(is_null($activo->aceptado))
-                        <th  scope="row"><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>{{ $activo->identificador }}
-                        </th>
-                        @else
-                        <th  scope="row">{{ $activo->identificador }}</th>
-                        @endif --}}
+                @if (is_array($activos) || is_object($activos))
+                    @foreach ($activos as $activo)
+                         @foreach ( $aprobadores as $aprobador )
+                            @foreach ($aprobador->aprobacionesActivo as $aprobacion)
+                            @php
+                            if($activo->id == $aprobacion->activoInformacion_id){
+                                if(!$aprobacion->aceptado){
+                                    $rechazado=true;
+                                    break;
 
-                        <th  scope="row"><i class="text-danger fas fa-times-circle mr-1" style="font-size:12pt;" title=""></i>{{ $activo->identificador }}</th>
-                        <td>{{ $activo->activo_informacion }}</td>
-                        <td>{{ $activo->valor_criticidad }}</td>
-                        <td>{{ $activo->confidencialidad_id }} - {{$activo->confidencialidad->confidencialidad}}</td>
-                        <td >
-                            <div class="form-check">
-                                <input class="form-check-input " type="radio" name="aceptado" id="aceptado1-{{$activo->id}}" value="option1" checked>
-                                <label class="form-check-label text-success" for="aceptado1-{{$activo->id}}">
-                                  <i style="font-size:10px;" class="fas fa-check mr-1"></i>Aceptar
-                                </label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input " type="radio" name="aceptado" id="aceptado2-{{$activo->id}}" value="option2">
-                                <label class="form-check-label text-danger" for="aceptado2-{{$activo->id}}">
-                                    <i style="font-size:10px;" class="fas fa-times mr-1"></i>Rechazar
-                                </label>
-                              </div>
-                        </td>
-                    </tr>
-                @endforeach
-            @endif
-        </tbody>
-    </table>
+                                }else {
+                                    $rechazado = false;
+                                }
+                            }
+                            @endphp
+                            @endforeach
+                            @php
+                                if($aprobador->aprobador_id == auth()->user()->empleado->id){
+                                   if($aprobador->estado>0){
+                                    $contestado=true;
+                                   }
+                                }
+
+                            @endphp
+
+                    @endforeach
+
+                        <tr>
+                            {{-- @if(is_null($activo->aceptado))
+                            <th  scope="row"><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>{{ $activo->identificador }}
+                            </th>
+                            @else
+                            <th  scope="row">{{ $activo->identificador }}</th>
+                            @endif --}}
+
+                            <th  scope="row">
+
+                                {{ $activo->identificador }}
+
+                            </th>
+                            <td>{{ $activo->activo_informacion }}</td>
+                            <td>{{ $activo->valor_criticidad }}</td>
+                            <td>{{ $activo->confidencialidad_id }} - {{$activo->confidencialidad->confidencialidad}}</td>
+
+                            <td >
+                                @if(!$rechazado)
+                                <div class="form-check">
+                                    <input {{$contestado ? 'disabled': ''}} class="form-check-input " type="radio" name="aceptado{{$activo->id}}" id="aceptado1-{{$activo->id}}" value="true-{{$activo->id}}" checked>
+                                    <label class="form-check-label text-success" for="aceptado1-{{$activo->id}}">
+                                    <i style="font-size:10px;" class="fas fa-check mr-1"></i>Aceptar
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input {{$contestado ? 'disabled': ''}} class="form-check-input " type="radio" name="aceptado{{$activo->id}}" id="aceptado2-{{$activo->id}}" value="false-{{$activo->id}}">
+                                    <label class="form-check-label text-danger" for="aceptado2-{{$activo->id}}">
+                                        <i style="font-size:10px;" class="fas fa-times mr-1"></i>Rechazar
+                                    </label>
+                                </div>
+                                @else
+                                     <i class="text-danger fas fa-times-circle mr-1" style="font-size:12pt;" title=""></i>Rechazado
+                                @endif
+
+                                {{-- <div>
+                                    <button>Show</button>
+                                    <h1>Result</h1>
+                                </div> --}}
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </form>
 
     <table class="table w-100 mt-4 " id="contactos_table" style="width:100%">
         <thead>
@@ -931,6 +991,16 @@
             return color;
         }
 
+        // let btnShow = document.querySelector('button');
+        // let result = document.querySelector('h1');
+        // btnShow.addEventListener('click', () =>{
+        //     let selected = document.querySelector('input[type="radio"]:checked');
+        //     result.innerText = selected.value;
+        // });
 
     })
+
+
 </script>
+
+
