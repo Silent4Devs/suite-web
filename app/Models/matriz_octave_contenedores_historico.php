@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -19,7 +18,7 @@ class matriz_octave_contenedores_historico extends Model
         'riesgo',
         'descripcion',
         'id_matriz_octave_escenarios',
-        'matriz_id'
+        'matriz_id',
     ];
 
     // public function getImpactoProcesoAttribute()

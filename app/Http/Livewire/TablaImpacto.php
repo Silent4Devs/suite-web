@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-use App\Models\TipoImpacto;
 use App\Models\NivelesImpacto;
+use App\Models\TipoImpacto;
 use App\Models\TipoNivelImpacto;
+use Livewire\Component;
 
 class TablaImpacto extends Component
 {
@@ -15,7 +15,7 @@ class TablaImpacto extends Component
     public $clasificacionImpacto;
     public $nivelImpacto;
     public $colorImpacto;
-    public $tablaImpacto =1;
+    public $tablaImpacto = 1;
     protected $rules = [
         'nivelImpacto' => 'required|numeric|min:0',
         'clasificacionImpacto' => 'required|string|max:255',
@@ -30,13 +30,11 @@ class TablaImpacto extends Component
     public $tablaImpactoId = 1;
     // public $contenidos =[];
 
-
     public function mount()
     {
-        $tipos= TipoImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
-        $impactos= NivelesImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
-        foreach($impactos as $index=>$impacto)
-        {
+        $tipos = TipoImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
+        $impactos = NivelesImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
+        foreach ($impactos as $index=>$impacto) {
             // array_push($this->contenidos,["i{$impacto->id}"=>[]]);
             // dd($this->contenidos);
             // foreach($tipos as $tipo)
@@ -53,11 +51,9 @@ class TablaImpacto extends Component
             ];
 
             array_push($this->columnas, $columna);
-
         }
         // dd($this->contenidos);
-        foreach($tipos as $tipo)
-        {
+        foreach ($tipos as $tipo) {
             $fila = [
                 'id'=>$tipo->id,
                 'nombre_impacto'=>$tipo->nombre_impacto,
@@ -67,7 +63,6 @@ class TablaImpacto extends Component
 
             array_push($this->filas, $fila);
         }
-
     }
 
     // public function addColumn($indexColumna)
@@ -104,7 +99,7 @@ class TablaImpacto extends Component
     {
         // dd($this->colorImpacto);
         $this->validate();
-        $nivelCreado= $this->crearNivel($this->nivelImpacto, $this->clasificacionImpacto, $this->colorImpacto, $this->tablaImpacto);
+        $nivelCreado = $this->crearNivel($this->nivelImpacto, $this->clasificacionImpacto, $this->colorImpacto, $this->tablaImpacto);
         $columna = [
             'id'=>$nivelCreado->id,
             'nivel'=>$this->nivelImpacto,
@@ -116,13 +111,12 @@ class TablaImpacto extends Component
         $this->indexColumna = $indexColumna;
         array_push($this->columnas, $columna);
         $this->emit('cerrarModal');
-        $this->reset(['nivelImpacto', 'clasificacionImpacto','colorImpacto']);
-
+        $this->reset(['nivelImpacto', 'clasificacionImpacto', 'colorImpacto']);
     }
 
     public function crearNivel($nivel, $clasificacion, $color, $tabla_impacto)
     {
-        $nivelImpacto=NivelesImpacto::create([
+        $nivelImpacto = NivelesImpacto::create([
             'nivel'=>$nivel,
             'clasificacion' =>$clasificacion,
             'color'=>$color,
@@ -134,15 +128,12 @@ class TablaImpacto extends Component
 
     public function addRow($indexRow)
     {
-
         $tipoCreado = $this->crearTipo($this->nombreImpacto, $this->criterioImpacto, $this->baseImpacto, $this->tablaImpactoId);
 
         // dd($fila);
-        $impactos= NivelesImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
-        foreach ($impactos as $impacto)
-        {
-            $this->contenidos["i{$impacto->id}"]["t{$tipoCreado->id}"]=['contenido'=>''];
-
+        $impactos = NivelesImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
+        foreach ($impactos as $impacto) {
+            $this->contenidos["i{$impacto->id}"]["t{$tipoCreado->id}"] = ['contenido'=>''];
         }
         $fila = [
             'id'=>$tipoCreado->id,
@@ -154,14 +145,12 @@ class TablaImpacto extends Component
         array_push($this->filas, $fila);
 
         $this->emit('cerrarModalImpacto');
-        $this->reset(['nombreImpacto', 'criterioImpacto','baseImpacto']);
-
+        $this->reset(['nombreImpacto', 'criterioImpacto', 'baseImpacto']);
     }
 
-    public function crearTipo($nombre, $criterio, $base,$tabla_impacto)
+    public function crearTipo($nombre, $criterio, $base, $tabla_impacto)
     {
-
-        $tipoImpacto=TipoImpacto::create([
+        $tipoImpacto = TipoImpacto::create([
             'nombre_impacto'=>$nombre,
             'criterio'=> $criterio,
             'base'=>$base,
@@ -169,6 +158,7 @@ class TablaImpacto extends Component
 
         ]);
         $this->emit('cerrarModalImpacto');
+
         return $tipoImpacto;
     }
 
@@ -180,20 +170,17 @@ class TablaImpacto extends Component
         return $tipoNivel;
     }
 
-
-    public function obtenerContenido($tipo, $nivel){
-        $contenido = TipoNivelImpacto::select('id', 'contenido')->where('tipo_impacto_id',$tipo)->where('niveles_impacto_id',$nivel)->first();
-        if($contenido == null){
+    public function obtenerContenido($tipo, $nivel)
+    {
+        $contenido = TipoNivelImpacto::select('id', 'contenido')->where('tipo_impacto_id', $tipo)->where('niveles_impacto_id', $nivel)->first();
+        if ($contenido == null) {
             return null;
         }
         return $contenido;
     }
 
-
-
     public function render()
     {
-
         return view('livewire.tabla-impacto');
     }
 }

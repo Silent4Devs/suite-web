@@ -9,10 +9,16 @@ use App\Models\CartaAceptacion;
 use App\Mail\CartaAceptacionEmail;
 use App\Models\MatrizOctaveProceso;
 use App\Http\Controllers\Controller;
+use App\Mail\CartaAceptacionEmail;
+use App\Models\CartaAceptacion;
+use App\Models\CartaAceptacionAprobacione;
 use App\Models\CartaAceptacionPivot;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\DeclaracionAplicabilidad;
+use App\Models\Empleado;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\CartaAceptacionAprobacione;
 use App\Models\ActivosInformacionAprobacione;
@@ -158,7 +164,7 @@ class CartaAceptacionRiesgosController extends Controller
             $control->save();
         }
 
-       $this->enviarCorreos($request, $cartaAceptacion);
+        $this->enviarCorreos($request, $cartaAceptacion);
         // // dd($request->all());
 
         return redirect(route('admin.carta-aceptacion.index'));
@@ -199,7 +205,7 @@ class CartaAceptacionRiesgosController extends Controller
         $vicepresidentes = Empleado::get();
         $controles = CartaAceptacionPivot::with('declaracion_aplicabilidad')->where('carta_id', $cartaAceptacion->id)->get();
         // dd($controles);
-        $aprobadores=CartaAceptacionAprobacione::where('carta_id',$cartaAceptacion->id)->pluck('aprobador_id')->toArray();
+        $aprobadores = CartaAceptacionAprobacione::where('carta_id', $cartaAceptacion->id)->pluck('aprobador_id')->toArray();
         // dd($aprobadores);
         $esAprobador=in_array(auth()->user()->empleado->id,$aprobadores);
         $miAprobacion=$cartaAceptacion->aprobaciones->filter(function($item){
@@ -229,9 +235,8 @@ class CartaAceptacionRiesgosController extends Controller
             'carta_id'=>$cartaAceptacion->id,
             'nivel'=>1,
         ]);
-        $dueno=Empleado::select('id','name','email','genero','foto')->find($request->responsable_id);
-        Mail::to($dueno->email)->send(new CartaAceptacionEmail($dueno,$cartaAceptacion));
-
+        $dueno = Empleado::select('id', 'name', 'email', 'genero', 'foto')->find($request->responsable_id);
+        Mail::to($dueno->email)->send(new CartaAceptacionEmail($dueno, $cartaAceptacion));
 
         CartaAceptacionAprobacione::create([
             'autoridad'=>'Director Responsable del Riesgo',

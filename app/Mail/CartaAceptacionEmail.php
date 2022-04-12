@@ -2,12 +2,11 @@
 
 namespace App\Mail;
 
+use App\Models\CartaAceptacion;
 use App\Models\Empleado;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use App\Models\CartaAceptacion;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class CartaAceptacionEmail extends Mailable
 {
@@ -18,14 +17,13 @@ class CartaAceptacionEmail extends Mailable
      *
      * @return void
      */
-
     public $carta;
     public $empleado;
 
-     public function __construct(Empleado $empleado, CartaAceptacion $carta)
+    public function __construct(Empleado $empleado, CartaAceptacion $carta)
     {
-        $this->carta= $carta;
-        $this->empleado =$empleado;
+        $this->carta = $carta;
+        $this->empleado = $empleado;
     }
 
     /**
