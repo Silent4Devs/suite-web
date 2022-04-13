@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\EntendimientoOrganizacion;
 use App\Models\FortalezasEntendimientoOrganizacion;
+use Livewire\Component;
 
 class FortalezasComponent extends Component
 {
@@ -22,7 +22,7 @@ class FortalezasComponent extends Component
 
     public function render()
     {
-        $fortalezas = FortalezasEntendimientoOrganizacion::where('foda_id',$this->foda_id)->orderBy('id')->get();
+        $fortalezas = FortalezasEntendimientoOrganizacion::where('foda_id', $this->foda_id)->orderBy('id')->get();
 
         return view('livewire.fortalezas-component', compact('fortalezas'));
     }
@@ -30,14 +30,13 @@ class FortalezasComponent extends Component
     public function destroy($id)
     {
         FortalezasEntendimientoOrganizacion::destroy($id);
-
     }
 
     public function save()
     {
         // $foda = EntendimientoOrganizacion::find($this->foda_id);
 
-           FortalezasEntendimientoOrganizacion::create([
+        FortalezasEntendimientoOrganizacion::create([
             'foda_id' => $this->foda_id,
             'fortaleza' => $this->fortaleza,
             'riesgo' => $this->riesgo,
@@ -49,7 +48,6 @@ class FortalezasComponent extends Component
         $this->default();
     }
 
-
     public function edit($id)
     {
         $fortalezaEncontrada = FortalezasEntendimientoOrganizacion::find($id);
@@ -59,7 +57,6 @@ class FortalezasComponent extends Component
         $this->fortaleza = $fortalezaEncontrada->fortaleza;
         $this->riesgo = $fortalezaEncontrada->riesgo;
         $this->view = 'edit';
-
     }
 
     public function update()
@@ -74,10 +71,7 @@ class FortalezasComponent extends Component
 
         $this->default();
         $this->dispatchBrowserEvent('contentChanged');
-
     }
-
-
 
     public function default()
     {
@@ -86,6 +80,4 @@ class FortalezasComponent extends Component
         $this->dispatchBrowserEvent('contentChanged');
         $this->view = 'create';
     }
-
-
 }

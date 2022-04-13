@@ -2,37 +2,32 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\AmenazasEntendimientoOrganizacion;
+use Livewire\Component;
 
 class AmenazasComponent extends Component
 {
-
     public $foda_id;
     public $amenaza;
     public $riesgo;
     public $nombre;
     public $view = 'create';
 
-
     public function mount($foda_id)
     {
         $this->foda_id = $foda_id;
     }
 
-
     public function render()
     {
-        $amenazas = AmenazasEntendimientoOrganizacion::where('foda_id',$this->foda_id)->orderBy('id')->get();
+        $amenazas = AmenazasEntendimientoOrganizacion::where('foda_id', $this->foda_id)->orderBy('id')->get();
 
-        return view('livewire.amenazas-component',compact('amenazas'));
+        return view('livewire.amenazas-component', compact('amenazas'));
     }
-
 
     public function destroy($id)
     {
         AmenazasEntendimientoOrganizacion::destroy($id);
-
     }
 
     public function save()
@@ -51,7 +46,6 @@ class AmenazasComponent extends Component
         $this->default();
     }
 
-
     public function edit($id)
     {
         $amenazaEncontrada = AmenazasEntendimientoOrganizacion::find($id);
@@ -61,7 +55,6 @@ class AmenazasComponent extends Component
         $this->amenaza = $amenazaEncontrada->amenaza;
         $this->riesgo = $amenazaEncontrada->riesgo;
         $this->view = 'edit';
-
     }
 
     public function update()
@@ -76,10 +69,7 @@ class AmenazasComponent extends Component
 
         $this->default();
         $this->dispatchBrowserEvent('contentChanged');
-
     }
-
-
 
     public function default()
     {

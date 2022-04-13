@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class OportunidadesEntendimientoOrganizacion
+ * Class OportunidadesEntendimientoOrganizacion.
  *
  * @property int $id
  * @property string|null $oportunidad
@@ -16,25 +16,23 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  *
  * @property EntendimientoOrganizacion|null $entendimiento_organizacion
- *
- * @package App\Models
  */
 class OportunidadesEntendimientoOrganizacion extends Model
 {
-	protected $table = 'oportunidades_entendimiento_organizacion';
+    protected $table = 'oportunidades_entendimiento_organizacion';
 
-	protected $casts = [
-		'foda_id' => 'int'
-	];
+    protected $casts = [
+        'foda_id' => 'int',
+    ];
 
-	protected $fillable = [
-		'oportunidad',
-		'riesgo',
-		'foda_id'
-	];
+    protected $fillable = [
+        'oportunidad',
+        'riesgo',
+        'foda_id',
+    ];
 
-	public function entendimiento_organizacion()
-	{
-		return $this->belongsTo(EntendimientoOrganizacion::class, 'foda_id');
-	}
+    public function entendimiento_organizacion()
+    {
+        return $this->belongsTo(EntendimientoOrganizacion::class, 'foda_id');
+    }
 }

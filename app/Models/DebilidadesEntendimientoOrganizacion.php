@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class DebilidadesEntendimientoOrganizacion
+ * Class DebilidadesEntendimientoOrganizacion.
  *
  * @property int $id
  * @property string|null $debilidad
@@ -16,25 +16,23 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  *
  * @property EntendimientoOrganizacion|null $entendimiento_organizacion
- *
- * @package App\Models
  */
 class DebilidadesEntendimientoOrganizacion extends Model
 {
-	protected $table = 'debilidades_entendimiento_organizacion';
+    protected $table = 'debilidades_entendimiento_organizacion';
 
-	protected $casts = [
-		'foda_id' => 'int'
-	];
+    protected $casts = [
+        'foda_id' => 'int',
+    ];
 
-	protected $fillable = [
-		'debilidad',
-		'riesgo',
-		'foda_id'
-	];
+    protected $fillable = [
+        'debilidad',
+        'riesgo',
+        'foda_id',
+    ];
 
-	public function entendimiento_organizacion()
-	{
-		return $this->belongsTo(EntendimientoOrganizacion::class, 'foda_id');
-	}
+    public function entendimiento_organizacion()
+    {
+        return $this->belongsTo(EntendimientoOrganizacion::class, 'foda_id');
+    }
 }

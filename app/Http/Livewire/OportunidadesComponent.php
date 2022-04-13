@@ -2,12 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\OportunidadesEntendimientoOrganizacion;
+use Livewire\Component;
 
 class OportunidadesComponent extends Component
 {
-
     public $foda_id;
     public $oportunidad;
     public $riesgo;
@@ -19,18 +18,16 @@ class OportunidadesComponent extends Component
         $this->foda_id = $foda_id;
     }
 
-
     public function render()
     {
-        $oportunidades = OportunidadesEntendimientoOrganizacion::where('foda_id',$this->foda_id)->orderBy('id')->get();
+        $oportunidades = OportunidadesEntendimientoOrganizacion::where('foda_id', $this->foda_id)->orderBy('id')->get();
 
-        return view('livewire.oportunidades-component',compact('oportunidades'));
+        return view('livewire.oportunidades-component', compact('oportunidades'));
     }
 
     public function destroy($id)
     {
         OportunidadesEntendimientoOrganizacion::destroy($id);
-
     }
 
     public function save()
@@ -49,7 +46,6 @@ class OportunidadesComponent extends Component
         $this->default();
     }
 
-
     public function edit($id)
     {
         $oportunidadEncontrada = OportunidadesEntendimientoOrganizacion::find($id);
@@ -59,7 +55,6 @@ class OportunidadesComponent extends Component
         $this->oportunidad = $oportunidadEncontrada->oportunidad;
         $this->riesgo = $oportunidadEncontrada->riesgo;
         $this->view = 'edit';
-
     }
 
     public function update()
@@ -74,10 +69,7 @@ class OportunidadesComponent extends Component
 
         $this->default();
         $this->dispatchBrowserEvent('contentChanged');
-
     }
-
-
 
     public function default()
     {
@@ -86,5 +78,4 @@ class OportunidadesComponent extends Component
         $this->dispatchBrowserEvent('contentChanged');
         $this->view = 'create';
     }
-
 }

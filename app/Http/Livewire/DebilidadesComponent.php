@@ -2,18 +2,16 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\DebilidadesEntendimientoOrganizacion;
+use Livewire\Component;
 
 class DebilidadesComponent extends Component
 {
-
     public $foda_id;
     public $debilidad;
     public $riesgo;
     public $nombre;
     public $view = 'create';
-
 
     public function mount($foda_id)
     {
@@ -22,23 +20,21 @@ class DebilidadesComponent extends Component
 
     public function render()
     {
-        $debilidades = DebilidadesEntendimientoOrganizacion::where('foda_id',$this->foda_id)->orderBy('id')->get();
+        $debilidades = DebilidadesEntendimientoOrganizacion::where('foda_id', $this->foda_id)->orderBy('id')->get();
 
         return view('livewire.debilidades-component', compact('debilidades'));
     }
 
-
     public function destroy($id)
     {
         DebilidadesEntendimientoOrganizacion::destroy($id);
-
     }
 
     public function save()
     {
         // $foda = EntendimientoOrganizacion::find($this->foda_id);
 
-           DebilidadesEntendimientoOrganizacion::create([
+        DebilidadesEntendimientoOrganizacion::create([
             'foda_id' => $this->foda_id,
             'debilidad' => $this->debilidad,
             'riesgo' => $this->riesgo,
@@ -50,7 +46,6 @@ class DebilidadesComponent extends Component
         $this->default();
     }
 
-
     public function edit($id)
     {
         $debilidadEncontrada = DebilidadesEntendimientoOrganizacion::find($id);
@@ -60,7 +55,6 @@ class DebilidadesComponent extends Component
         $this->debilidad = $debilidadEncontrada->debilidad;
         $this->riesgo = $debilidadEncontrada->riesgo;
         $this->view = 'edit';
-
     }
 
     public function update()
@@ -75,10 +69,7 @@ class DebilidadesComponent extends Component
 
         $this->default();
         $this->dispatchBrowserEvent('contentChanged');
-
     }
-
-
 
     public function default()
     {
@@ -87,5 +78,4 @@ class DebilidadesComponent extends Component
         $this->dispatchBrowserEvent('contentChanged');
         $this->view = 'create';
     }
-
 }

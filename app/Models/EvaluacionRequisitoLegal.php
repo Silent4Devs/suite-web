@@ -29,14 +29,17 @@ class EvaluacionRequisitoLegal extends Model
         'id_reviso',
 
     ];
+
     public function evaluador()
     {
-        return $this->belongsTo(Empleado::class, 'id_reviso', 'id','puestoRelacionado');
+        return $this->belongsTo(Empleado::class, 'id_reviso', 'id', 'puestoRelacionado');
     }
+
     public function requisito()
     {
         return $this->belongsTo(MatrizRequisitoLegale::class, 'id_matriz', 'id');
     }
+
     public function evidencias_matriz()
     {
         return $this->hasMany(EvidenciaMatrizRequisitoLegale::class, 'id_matriz_requisito');
@@ -46,6 +49,4 @@ class EvaluacionRequisitoLegal extends Model
     {
         return $this->morphToMany(PlanImplementacion::class, 'plan_implementacionable');
     }
-    
-   
 }

@@ -90,6 +90,7 @@ class AlcanceSgsi extends Model
     {
         return $this->belongsTo(Norma::class);
     }
+
     public function normas()
     {
         return $this->belongsToMany(Norma::class, 'normas_alcance_sgsi', 'alcance_id', 'norma_id');
