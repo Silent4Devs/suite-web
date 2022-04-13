@@ -51,6 +51,7 @@ class AlcanceSgsi extends Model
     ];
 
     protected $fillable = [
+        'nombre',
         'alcancesgsi',
         'team_id',
         'fecha_publicacion',
@@ -88,5 +89,9 @@ class AlcanceSgsi extends Model
     public function norma()
     {
         return $this->belongsTo(Norma::class);
+    }
+    public function normas()
+    {
+        return $this->belongsToMany(Norma::class, 'normas_alcance_sgsi', 'alcance_id', 'norma_id');
     }
 }

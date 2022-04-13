@@ -84,33 +84,27 @@
     </style>
     <h5 class="col-12 titulo_general_funcion">Editar Documento</h5>
     <div class="card">
-        <div class="card-body">
+        <div class="card-body" style="position: relative">
             <form id="formEditarDocumento" data-id-documento="{{ $documentoActual->id }}" method="POST"
                 action="{{ route('admin.documentos.update', $documentoActual) }}" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
                 @include('admin.documentos._form')
                 <div class="text-right form-group col-12">
-                <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
-                <input type="submit" class="btn btn-danger" value="Actualizar">
-                @can('documentos_publish')
-                    <button id="publicar" class="btn btn-danger">Publicar</button>
-                </div>
+                    <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
+                    <input type="submit" class="btn btn-danger" value="Actualizar">
+                    @can('documentos_publish')
+                        <button id="publicar" class="btn btn-danger">Publicar</button>
+                    </div>
                 @endcan
             </form>
 
             <!-- Modal -->
             <div class="modal fade" id="modalPublicar" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                aria-labelledby="modalPublicarLabel" aria-hidden="true">
+                aria-labelledby="modalPublicarLabel" aria-hidden="true" style="position: relative;">
                 <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
-                        {{-- <div class="modal-header">
-                            <h5 class="modal-title" id="modalPublicarLabel">Configuración de revisores (antes de solicitud
-                                de aprobación)</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div> --}}
+
                         <div class="modal-body">
                             <h5 class="titulo-modal">Publicar
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -175,15 +169,13 @@
                                             <div class="form-group select-revisores">
                                                 <label for="descripcion" class="labels-publicacion">Descripción
                                                     del cambio:</label>
-                                                <textarea class="form-control" id="descripcion" name="descripcion"
-                                                    rows="1"></textarea>
+                                                <textarea class="form-control" id="descripcion" name="descripcion" rows="1"></textarea>
                                                 <span class="text-danger" id="descripcion_error"></span>
                                             </div>
                                             <div class="form-group select-revisores">
                                                 <label for="comentarios" class="labels-publicacion">Comentarios
                                                     adicionales:</label>
-                                                <textarea class="form-control" id="comentarios" name="comentarios"
-                                                    rows="1"></textarea>
+                                                <textarea class="form-control" id="comentarios" name="comentarios" rows="1"></textarea>
                                                 <span class="text-danger" id="comentarios_error"></span </div>
                                             </div>
                                         </div>
@@ -191,9 +183,12 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                             <button type="button" id="finalizarPublicacion" class="btn btn-danger">Enviar</button>
                         </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="modalPublicar" data-backdrop="static" data-keyboard="false" tabindex="-1"
                     </div>
                 </div>
             </div>

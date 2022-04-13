@@ -78,6 +78,7 @@ class MatrizRequisitoLegale extends Model
         'alcance',
         'metodo',
         'comentarios',
+        'cumplimiento_organizacion',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -138,5 +139,9 @@ class MatrizRequisitoLegale extends Model
     public function planes()
     {
         return $this->morphToMany(PlanImplementacion::class, 'plan_implementacionable');
+    }
+    public function evaluaciones()
+    {
+        return $this->hasMany(EvaluacionRequisitoLegal::class, 'id_matriz', 'id')->orderByDesc('id');
     }
 }

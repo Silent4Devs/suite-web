@@ -45,15 +45,15 @@ class AlcanceSgsiController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
+            $table->editColumn('nombre', function ($row) {
+                return $row->nombre ? strip_tags($row->nombre) : '';
+            });
             $table->editColumn('alcancesgsi', function ($row) {
                 return $row->alcancesgsi ? strip_tags($row->alcancesgsi) : '';
             });
 
             $table->editColumn('norma', function ($row) {
-                $iso = substr($row->norma->norma, 0, 3);
-                $num = substr($row->norma->norma, 3);
-
-                return $row->norma ? strtoupper($iso . ' ' . $num) : '';
+                return $row->normas ? $row->normas : '';
             });
 
             $table->editColumn('fecha_publicacion', function ($row) {
@@ -98,7 +98,15 @@ class AlcanceSgsiController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'normas' => 'required|array',
+         ]);
+ 
+         $normas = array_map(function ($value) {
+             return intval($value);
+         }, $request->normas);
         $alcanceSgsi = AlcanceSgsi::create($request->all());
+        $alcanceSgsi->normas()->sync($normas);
 
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Guardado con éxito');
     }
@@ -126,8 +134,9 @@ class AlcanceSgsiController extends Controller
         abort_if(Gate::denies('alcance_sgsi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $alcanceSgsi->load('team');
+        $normas = Norma::get();
 
-        return view('admin.alcanceSgsis.show', compact('alcanceSgsi'));
+        return view('admin.alcanceSgsis.show', compact('alcanceSgsi','normas'));
     }
 
     public function destroy(AlcanceSgsi $alcanceSgsi)

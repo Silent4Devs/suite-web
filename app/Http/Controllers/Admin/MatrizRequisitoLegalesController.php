@@ -7,9 +7,11 @@ use App\Http\Requests\MassDestroyMatrizRequisitoLegaleRequest;
 use App\Http\Requests\StoreMatrizRequisitoLegaleRequest;
 use App\Http\Requests\UpdateMatrizRequisitoLegaleRequest;
 use App\Models\Empleado;
+use App\Models\EvaluacionRequisitoLegal;
 use App\Models\EvidenciaMatrizRequisitoLegale;
 use App\Models\MatrizRequisitoLegale;
 use App\Models\PlanImplementacion;
+use App\Models\RH\Evaluacion;
 use App\Models\Team;
 use Carbon\Carbon;
 use Gate;
@@ -23,93 +25,10 @@ class MatrizRequisitoLegalesController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('matriz_requisito_legale_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($query = MatrizRequisitoLegale::with(['team','evidencias_matriz','empleado'])->get());
-        // dd(MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado')->get());
+      
         if ($request->ajax()) {
-            // $query = MatrizRequisitoLegale::with(['team','evidencias_matriz','empleado'])->select(sprintf('%s.*', (new MatrizRequisitoLegale)->table));
-            // $table = Datatables::of($query);
-
-            // // $table->addColumn('placeholder', '&nbsp;');
-            // // $table->addColumn('actions', '&nbsp;');
-
-            // // $table->editColumn('actions', function ($row) {
-            // //     $viewGate      = 'matriz_requisito_legale_show';
-            // //     $editGate      = 'matriz_requisito_legale_edit';
-            // //     $deleteGate    = 'matriz_requisito_legale_delete';
-            // //     $crudRoutePart = 'matriz-requisito-legales';
-
-            // //     return view('partials.datatablesActions', compact(
-            // //         'viewGate',
-            // //         'editGate',
-            // //         'deleteGate',
-            // //         'crudRoutePart',
-            // //         'row'
-            // //     ));
-            // // });
-
-            // $table->editColumn('id', function ($row) {
-            //     return $row->id ? $row->id : "";
-            // });
-            // $table->editColumn('tipo', function ($row) {
-            //     return $row->tipo ? $row->tipo : "";
-            // });
-            // $table->editColumn('nombrerequisito', function ($row) {
-            //     return $row->nombrerequisito ? $row->nombrerequisito : "";
-            // });
-            // $table->editColumn('formacumple', function ($row) {
-            //     return $row->formacumple ? $row->formacumple : "";
-            // });
-            // $table->editColumn('requisitoacumplir', function ($row) {
-            //     return $row->requisitoacumplir ? $row->requisitoacumplir : "";
-            // });
-            // $table->editColumn('alcance', function ($row) {
-            //     return $row->alcance ? $row->alcance : "";
-            // });
-            // $table->editColumn('medio', function ($row) {
-            //     return $row->medio ? $row->medio : "";
-            // });
-            // $table->editColumn('fechaexpedicion', function ($row) {
-            //     return $row->fechaexpedicion ? $row->fechaexpedicion : "";
-            // });
-            // $table->editColumn('fechavigor', function ($row) {
-            //     return $row->fechavigor ? $row->fechavigor : "";
-            // });
-            // $table->editColumn('periodicidad_cumplimiento', function ($row) {
-            //     return $row->periodicidad_cumplimiento ? $row->periodicidad_cumplimiento : "";
-            // });
-            // $table->editColumn('cumplerequisito', function ($row) {
-            //     return $row->cumplerequisito ? MatrizRequisitoLegale::CUMPLEREQUISITO_SELECT[$row->cumplerequisito] : '';
-            // });
-            // $table->editColumn('metodo', function ($row) {
-            //     return $row->metodo ? $row->metodo : "";
-            // });
-            // $table->editColumn('descripcion_cumplimiento', function ($row) {
-            //     return $row->descripcion_cumplimiento ? $row->descripcion_cumplimiento : "";
-            // });
-            // $table->editColumn('evidencia', function ($row) {
-            //     return $row->evidencias_matriz ? $row->evidencias_matriz : "";
-            // });
-
-            // $table->editColumn('reviso', function ($row) {
-            //     return $row->empleado ? $row->empleado->name : "";
-            // });
-
-            // $table->editColumn('puesto', function ($row) {
-            //     return $row->empleado ? $row->empleado->puesto : "";
-            // });
-
-            // $table->editColumn('area', function ($row) {
-            //     return $row->empleado ? $row->empleado->area->area : "";
-            // });
-
-            // $table->editColumn('comentarios', function ($row) {
-            //     return $row->comentarios ? $row->comentarios : "";
-            // });
-
-            // $table->rawColumns(['actions', 'placeholder']);
-
-            // return $table->make(true);
-            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado')->orderBy('id')->get();
+     
+            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado','evaluaciones')->orderBy('id')->get();
 
             return datatables()->of($matrizRequisitoLegales)->toJson();
         }
@@ -199,8 +118,12 @@ class MatrizRequisitoLegalesController extends Controller
         abort_if(Gate::denies('matriz_requisito_legale_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $matrizRequisitoLegale->load('team', 'planes');
+        $requisito = $matrizRequisitoLegale->id;
+        
+        $evaluaciones = EvaluacionRequisitoLegal::with('evaluador')->where('id_matriz', '=', $requisito)->get();
+        $result = EvaluacionRequisitoLegal::where('id_matriz', '=', $requisito)->exists();
 
-        return view('admin.matrizRequisitoLegales.show', compact('matrizRequisitoLegale'));
+        return view('admin.matrizRequisitoLegales.show', compact('matrizRequisitoLegale','evaluaciones','result'));
     }
 
     public function destroy(Request $request, MatrizRequisitoLegale $matrizRequisitoLegale)
@@ -236,6 +159,8 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function storePlanAccion(Request $request, MatrizRequisitoLegale $id)
     {
+
+        dd($request->all());
         $request->validate([
             'parent' => 'required|string',
             'norma' => 'required|string',
@@ -247,6 +172,7 @@ class MatrizRequisitoLegalesController extends Controller
             'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
             'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
         ]);
+       
 
         $matrizRequisitoLegal = $id;
         $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
@@ -287,4 +213,38 @@ class MatrizRequisitoLegalesController extends Controller
 
         return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
     }
+
+    public function evaluar(MatrizRequisitoLegale $id)
+    {   
+        
+        $empleados = Empleado::with('area')->get();
+        $requisito = $id;
+        $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
+       
+        return view('admin.matrizRequisitoLegales.evaluar', compact('requisito','empleados','planes_implementacion'));
+    }
+    public function evaluarStore(Request $request, MatrizRequisitoLegale $id)
+    {      
+        // dd($request->all());
+        $matrizRequisitoLegale = EvaluacionRequisitoLegal::create($request->all());
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/matriz_evidencias', $file, $file->getClientOriginalName())) {
+                    EvidenciaMatrizRequisitoLegale::create([
+                        'evidencia' => $file->getClientOriginalName(),
+                        'id_matriz_requisito' => $matrizRequisitoLegale->id_matriz,
+                    ]);
+                }
+            }
+        }
+
+        if (isset($request->plan_accion)) {
+            // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+            $matrizRequisitoLegale->planes()->sync($request->plan_accion);
+        }
+
+        return redirect()->route('admin.matriz-requisito-legales.index');
+    }
+    
 }

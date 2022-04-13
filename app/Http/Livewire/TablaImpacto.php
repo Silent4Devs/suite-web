@@ -176,6 +176,7 @@ class TablaImpacto extends Component
         if ($contenido == null) {
             return null;
         }
+
         return $contenido;
     }
 
