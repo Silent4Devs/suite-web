@@ -5,16 +5,16 @@ $(document).ready(function () {
     week: { dow: 1 } // Monday is the first day of the week
   })
 
-  // $('.date').datetimepicker({
-  //   format: 'DD-MM-YYYY',
-  //   locale: 'en',
-  //   icons: {
-  //     up: 'fas fa-chevron-up',
-  //     down: 'fas fa-chevron-down',
-  //     previous: 'fas fa-chevron-left',
-  //     next: 'fas fa-chevron-right'
-  //   }
-  // })
+  $('.date').datetimepicker({
+    format: 'DD-MM-YYYY',
+    locale: 'en',
+    icons: {
+      up: 'fas fa-chevron-up',
+      down: 'fas fa-chevron-down',
+      previous: 'fas fa-chevron-left',
+      next: 'fas fa-chevron-right'
+    }
+  })
 
   // $('.datetime').datetimepicker({
   //   format: 'DD-MM-YYYY HH:mm:ss',
