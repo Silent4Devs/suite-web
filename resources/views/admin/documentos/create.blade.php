@@ -89,7 +89,7 @@
     </style>
     <h5 class="col-12 titulo_general_funcion">Crear Documento</h5>
     <div class="card">
-        <div class="card-body">
+        <div class="card-body" style="position: relative">
             {{-- <div class="mb-4 text-center" style="background: #098f94; border-radius: 5px;">
                 <h5 class="p-2 text-white">Crear Documento</h5>
             </div> --}}
@@ -107,16 +107,9 @@
             </form>
             <!-- Modal -->
             <div class="modal fade" id="modalPublicar" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                aria-labelledby="modalPublicarLabel" aria-hidden="true">
+                aria-labelledby="modalPublicarLabel" aria-hidden="true" style="position: relative;">
                 <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
-                        {{-- <div class="modal-header">
-                            <h5 class="modal-title" id="modalPublicarLabel">Configuración de revisores (antes de solicitud
-                                de aprobación)</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div> --}}
                         <div class="modal-body">
                             <h5 class="titulo-modal">Publicar <button type="button" class="close"
                                     data-dismiss="modal" aria-label="Close">
@@ -200,9 +193,16 @@
                         </div>
                     </div>
                 </div>
+                <div id="cargando-window-modal"
+                    style="display:none !important;position: absolute; top: 0;left: 0;width: 100%; background: rgba(77, 77, 77, 0.384);height: 100%;z-index: 1;align-items: center;display: flex;justify-content: center;">
+                    <h5 style="color:black"><i class="fas fa-circle-notch fa-spin"></i> Espere un momento...</h5>
+                </div>
+            </div>
+            <div id="cargando-window"
+                style="display:none !important;position: absolute; top: 0;left: 0;width: 100%; background: rgba(77, 77, 77, 0.384);height: 100%;z-index: 1;align-items: center;display: flex;justify-content: center;">
+                <h5 style="color:black"><i class="fas fa-circle-notch fa-spin"></i> Espere un momento...</h5>
             </div>
         </div>
-
     </div>
 @endsection
 @section('scripts')
@@ -318,14 +318,20 @@
                 $.ajax({
                     type: "POST",
                     url: "{{ route('admin.documentos.store') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     data: data,
                     processData: false,
                     contentType: false,
                     dataType: "JSON",
+                    beforeSend: function() {
+                        document.getElementById('cargando-window').style.display = 'flex';
+                    },
                     success: function(response) {
-                        console.log(response);
-                        // console.log("#formCrearDocumento");
+                        document.getElementById('cargando-window').style.display = 'none';
                         if (response.success) {
+
                             let errores = document.querySelectorAll('span.error-ajax');
                             errores.forEach(element => {
                                 element.innerHTML = "";
@@ -334,27 +340,16 @@
                             let reviso_id = document.getElementById('reviso_id').value;
                             let aprobo_id = document.getElementById('aprobo_id').value;
                             $('#revisores1').val([reviso_id]);
-                            // document.querySelectorAll("#revisores1 option[data-id-empleado]")
-                            //     .forEach(element => {
-                            //         if (Number(element.value) == Number(reviso_id)) {
-                            //             console.log(element);
-                            //             element.setAttribute('disabled', 'disabled');
-                            //         }
-                            //     });
+
                             $('#revisores1').trigger(
                                 'change'); // Notify any JS components that the value changed
                             $('#revisores2').val([aprobo_id]);
-                            // document.querySelectorAll("#revisores2 option[data-id-empleado]")
-                            //     .forEach(element => {
-                            //         if (Number(element.value) == Number(aprobo_id)) {
-                            //             console.log(element);
-                            //             element.setAttribute('disabled', 'disabled');
-                            //         }
-                            //     });
+
                             $('#revisores2').trigger('change');
                         }
                     },
                     error: function(request, status, error) {
+                        document.getElementById('cargando-window').style.display = 'none';
                         let errores = document.querySelectorAll('span.error-ajax');
                         errores.forEach(element => {
                             element.innerHTML = "";
@@ -413,13 +408,25 @@
                             let datosRevisores = $(formReviewers).serialize();
                             $.ajax({
                                 type: "POST",
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
                                 url: "{{ route('admin.documentos.storeDocumentWhenPublish') }}",
                                 data: guardarDocumento,
                                 processData: false,
                                 contentType: false,
                                 dataType: "JSON",
+                                beforeSend: function() {
+                                    document.getElementById('cargando-window-modal')
+                                        .style
+                                        .display = 'flex';
+                                },
                                 success: function(response) {
                                     console.log(response);
+                                    document.getElementById('cargando-window-modal')
+                                        .style
+                                        .display = 'none';
                                     documentoCreado = response.documento_id;
                                     $.ajax({
                                         type: "POST",
@@ -435,7 +442,17 @@
                                             documentoCreado
                                         },
                                         dataType: "JSON",
+                                        beforeSend: function() {
+                                            document.getElementById(
+                                                    'cargando-window-modal')
+                                                .style
+                                                .display = 'flex';
+                                        },
                                         success: function(response) {
+                                            document.getElementById(
+                                                    'cargando-window-modal')
+                                                .style
+                                                .display = 'none';
                                             if (response.data.id) {
                                                 Swal.fire(
                                                     'Enviado a revisión!',
@@ -449,8 +466,19 @@
                                                 }, 2000);
                                             }
                                             // $('#modalPublicar').modal('hide');
+                                        },
+                                        error: function(request, status,
+                                            error) {
+                                            document.getElementById(
+                                                    'cargando-window-modal')
+                                                .style
+                                                .display = 'none';
+                                            toastr.error(error);
                                         }
                                     });
+                                },
+                                error: function(request, status, error) {
+                                    toastr.error(error);
                                 }
                             });
                         }

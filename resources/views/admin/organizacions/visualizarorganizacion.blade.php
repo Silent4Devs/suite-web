@@ -95,7 +95,7 @@
                             <h5 class="" style="font-size: 18px;">DATOS GENERALES</h5>
                         @endif
                     </div>
-                    <div class="p-0 col-12 " style="">
+                    <div class="p-0 col-12 mt-5 " style="">
                         <div class="row">
                             <div class="col-{{ $panel_rules->logotipo ? '4' : '12' }}">
                                 @if ($panel_rules->logotipo)

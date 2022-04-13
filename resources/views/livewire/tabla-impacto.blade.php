@@ -47,7 +47,7 @@
                     </td>
                     @foreach($columnas as $i=>$columna)
                     <td style="width:100px;">
-                        <textarea wire:key="_{{$i}}_{{$index}}" wire:model="contenidos.i{{$columna['id']}}.t{{$fila['id']}}.contenido" type="text" class="form-control contenido-impactos" data-tipo="{{$fila['id']}}" data-nivel="{{$columna['id']}}"></textarea>
+                        <textarea  type="text" class="form-control contenido-impactos" data-tipo="{{$fila['id']}}" data-nivel="{{$columna['id']}}"></textarea>
                     </td>
                     @endforeach
                 </tr>
@@ -171,13 +171,14 @@
                 @this.guardarContenido(tipo,nivel, contenido);
             }
          })
-        //  obtenerContenidoImpactos();
+         obtenerContenidoImpactos();
          function obtenerContenidoImpactos(){
             document.querySelectorAll('.contenido-impactos').forEach(async (item)=>{
             // item.innerHTML =`<i class="fas fa-circle-notch fa-spin"></i> Cargando`;
             let tipo = item.getAttribute('data-tipo');
             let nivel = item.getAttribute('data-nivel');
                let contenido = await @this.obtenerContenido(tipo,nivel);
+               console.log(contenido);
                item.innerHTML = contenido;
             })
          }

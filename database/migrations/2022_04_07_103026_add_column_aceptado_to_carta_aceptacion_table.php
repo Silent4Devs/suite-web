@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterAnalisisDeRiesgoTable extends Migration
+class AddColumnAceptadoToCartaAceptacionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterAnalisisDeRiesgoTable extends Migration
      */
     public function up()
     {
-        Schema::table('analisis_de_riesgo', function (Blueprint $table) {
-            // $table->renameColumn('id_empleado', 'id_elaboro');
+        Schema::table('carta_aceptacion', function (Blueprint $table) {
+            $table->boolean('aceptado')->default(false);
         });
     }
 
@@ -25,7 +25,7 @@ class AlterAnalisisDeRiesgoTable extends Migration
      */
     public function down()
     {
-        Schema::table('analisis_de_riesgo', function (Blueprint $table) {
+        Schema::table('carta_aceptacion', function (Blueprint $table) {
             //
         });
     }

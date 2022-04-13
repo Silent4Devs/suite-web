@@ -272,8 +272,21 @@
             </div>
             <div id="graficasCompetencias">
                 <div class="row">
-                    <div class="col-12">
-                        <canvas id="radarCompetencias" width="400" height="400"></canvas>
+                    <div class="col-12" x-data="{ show: false }">
+                        <div style="display: flex;justify-content: end">
+                            <button title="Gráfica Radar" @click="show=true" class="btn btn-sm"
+                                x-bind:style="show?'background:blue;color:white':'backgrond:white'"><i
+                                    class="fas fa-chart-area"></i></button>
+                            <button title="Gráfica de Barras" @click="show=false" class="btn btn-sm"
+                                x-bind:style="!show?'background:blue;color:white':'backgrond:white'"><i
+                                    class="fas fa-chart-bar"></i></button>
+                        </div>
+                        <div x-show="show" x-transition>
+                            <canvas id="radarCompetencias" width="400" height="400"></canvas>
+                        </div>
+                        <div x-show="!show" x-transition>
+                            <canvas id="barCompetencias" width="400" height="400"></canvas>
+                        </div>
                     </div>
                     <div class="col-4">
                         <canvas id="jefeGrafica" width="400" height="400"></canvas>
@@ -295,6 +308,9 @@
                 </div>
             </div>
             <div class="col-12">
+                <small><i class="fas fa-info mr-1"></i> Para editar la columna "logrado" se debe posicionar sobre el
+                    número y dar doble clic, se habilitará un input y podrá realizar la edición.
+                    Una vez que termine de editar recargue la página para que se vean reflejados los cambios. </small>
                 @forelse ($evaluadores_objetivos as $evaluador)
                     <div class="row">
                         <div class="col-12">
@@ -303,7 +319,7 @@
                                     Evaluación realizada por:
                                     <strong> {{ $evaluador['nombre'] }}</strong>
                                     @if ($evaluador['esAutoevaluacion'])
-                                        <span class="badge badge-primary">Meta</span>
+                                        <span class="badge badge-primary">Autoevaluación</span>
                                     @endif
                                     @if ($evaluador['esSupervisor'])
                                         <span class="badge badge-success">Supervisor</span>
@@ -317,7 +333,8 @@
                                     style="background: #3e3e3e; border: 1px solid #fff; font-size:11px"><small>KPI</small>
                                 </div>
                                 <div class="text-center text-white col-1"
-                                    style="background: #3e3e3e; border: 1px solid #fff; font-size:11px"><small>Meta</small>
+                                    style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
+                                    <small>Puesto</small>
                                 </div>
                                 <div class="text-center text-white col-1"
                                     style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
@@ -333,7 +350,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12" id="tblObjetivosSupervisor">
                             @forelse ($evaluador['objetivos'] as $idx => $objetivo)
                                 <div class="row">
                                     <div class="text-white col-2"
@@ -347,7 +364,9 @@
                                         {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
                                     </div>
                                     <div class="text-center border col-1" style="font-size:10px">
-                                        {{ $objetivo['calificacion'] }} {{ $objetivo['metrica'] }}
+                                        <span
+                                            data-objetivo-calificacion="{{ $objetivo['objetivo_calificacion_id'] }}">{{ $objetivo['calificacion'] }}</span>
+                                        {{ $objetivo['metrica'] }}
                                     </div>
                                     <div class="text-center border col-2" style="font-size:10px">
                                         {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
@@ -395,8 +414,21 @@
             </div>
             <div id="graficasObjetivos">
                 <div class="row">
-                    <div class="col-12">
-                        <canvas id="objetivosGrafica"></canvas>
+                    <div class="col-12" x-data="{ show: false }">
+                        <div style="display: flex;justify-content: end">
+                            <button title="Gráfica Radar" @click="show=true" class="btn btn-sm"
+                                x-bind:style="show?'background:blue;color:white':'backgrond:white'"><i
+                                    class="fas fa-chart-area"></i></button>
+                            <button title="Gráfica de Barras" @click="show=false" class="btn btn-sm"
+                                x-bind:style="!show?'background:blue;color:white':'backgrond:white'"><i
+                                    class="fas fa-chart-bar"></i></button>
+                        </div>
+                        <div x-show="show" x-transition>
+                            <canvas id="objetivosGrafica" height="500"></canvas>
+                        </div>
+                        <div x-show="!show" x-transition>
+                            <canvas id="barObjetivos" width="400" height="400"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -437,11 +469,68 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('si');
+            document.querySelectorAll("#tblObjetivosSupervisor div:nth-child(4) span").forEach(function(node) {
+                node.style.cursor = "pointer";
+                node.ondblclick = function() {
+                    let span = this;
+                    var oldVal = span.innerHTML;
+                    var input = document.createElement("input")
+                    input.setAttribute("type", "number");
+                    input.style.width = "40px";
+                    input.style.outline = "none";
+                    input.value = oldVal;
+                    input.onblur = function(e) {
+                        let newVal = e.target.value;
+                        if (oldVal != newVal) {
+                            let data = {
+                                id: e.target.parentNode.getAttribute(
+                                    'data-objetivo-calificacion'),
+                                calificacion: newVal
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('admin.ev360-evaluaciones.normalizar.objetivo') }}",
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                data: data,
+                                dataType: "JSON",
+                                beforeSend: function() {
+                                    e.target.closest('span').innerHTML =
+                                        `<strong style="font-size:7px"><i style="font-size:5px" class="fas fa-circle-notch fa-spin"></i> Guardando</strong>`;
+                                },
+                                success: function(response) {
+
+                                    if (response.success) {
+                                        span.innerHTML =
+                                            `<i class="fas fa-check text-success"></i> ${newVal}`;
+                                        setTimeout(() => {
+                                            span.innerHTML = newVal;
+                                        }, 2000);
+
+                                    }
+                                },
+                                error: function(request, status, error) {
+                                    toastr.error(error);
+                                }
+                            });
+                        } else {
+                            span.innerHTML = oldVal;
+                        }
+                    }
+                    span.innerHTML = "";
+                    span.appendChild(input);
+                    input.focus();
+                }
+            });
+
             let labels = @json($competencias_lista_nombre);
             let data = {
                 labels: labels,
                 datasets: [{
-                    label: 'Meta',
+                    label: 'Puesto',
                     backgroundColor: 'rgb(46, 204, 65)',
                     borderColor: 'rgb(46, 204, 65)',
                     data: @json($nivelesEsperadosCompetencias),
@@ -459,7 +548,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Meta vs Calificación Jefe Inmediato',
+                            text: 'Puesto vs Calificación Jefe Inmediato',
                         }
                     }
                 }
@@ -473,7 +562,7 @@
             let dataEquipo = {
                 labels: labelsEquipo,
                 datasets: [{
-                    label: 'Meta',
+                    label: 'Puesto',
                     backgroundColor: 'rgb(46, 204, 65)',
                     borderColor: 'rgb(46, 204, 65)',
                     data: @json($nivelesEsperadosCompetencias),
@@ -491,7 +580,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Meta vs Calificación Subordinado',
+                            text: 'Puesto vs Calificación Subordinado',
                         }
                     }
                 }
@@ -505,7 +594,7 @@
             let dataArea = {
                 labels: labelsArea,
                 datasets: [{
-                    label: 'Meta',
+                    label: 'Puesto',
                     backgroundColor: 'rgb(46, 204, 65)',
                     borderColor: 'rgb(46, 204, 65)',
                     data: @json($nivelesEsperadosCompetencias),
@@ -523,7 +612,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Meta vs Calificación Par',
+                            text: 'Puesto vs Calificación Par',
                         }
                     }
                 }
@@ -536,20 +625,20 @@
             const dataRadar = {
                 labels: @json($competencias_lista_nombre),
                 datasets: [{
-                        label: 'Meta',
+                        label: 'Puesto',
                         data: @json($nivelesEsperadosCompetencias),
                         fill: true,
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        pointBackgroundColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(51,109,255, 0.5)',
+                        borderColor: 'rgb(51,109,255)',
+                        pointBackgroundColor: 'rgb(51,109,255)',
                         pointBorderColor: '#fff',
                         pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgb(255, 99, 132)'
+                        pointHoverBorderColor: 'rgb(51,109,255)'
                     }, {
                         label: 'Jefe Inmediato',
                         data: @json($calificaciones_jefe_competencias),
                         fill: true,
-                        backgroundColor: 'rgba(192, 57, 43, 0.2)',
+                        backgroundColor: 'rgba(192, 57, 43, 0.5)',
                         borderColor: 'rgb(192, 57, 43)',
                         pointBackgroundColor: 'rgb(192, 57, 43)',
                         pointBorderColor: '#fff',
@@ -560,7 +649,7 @@
                         label: 'Subordinado',
                         data: @json($calificaciones_equipo_competencias),
                         fill: true,
-                        backgroundColor: 'rgba(46, 204, 65, 0.2)',
+                        backgroundColor: 'rgba(46, 204, 65, 0.5)',
                         borderColor: 'rgb(46, 204, 65)',
                         pointBackgroundColor: 'rgb(46, 204, 65)',
                         pointBorderColor: '#fff',
@@ -570,12 +659,12 @@
                         label: 'Par',
                         data: @json($calificaciones_area_competencias),
                         fill: true,
-                        backgroundColor: 'rgba(230, 126, 34, 0.2)',
-                        borderColor: 'rgb(230, 126, 34)',
-                        pointBackgroundColor: 'rgb(230, 126, 34)',
+                        backgroundColor: 'rgba(250, 0, 53 , 0.5)',
+                        borderColor: 'rgb(250, 0, 53 )',
+                        pointBackgroundColor: 'rgb(250, 0, 53 )',
                         pointBorderColor: '#fff',
                         pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgb(230, 126, 34)'
+                        pointHoverBorderColor: 'rgb(250, 0, 53 )'
                     }
                 ]
             };
@@ -609,24 +698,54 @@
                 document.getElementById('radarCompetencias'),
                 configRadar
             );
+            const configBarCompetenciasChart = {
+                type: 'bar',
+                data: dataRadar,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Promedios'
+                        },
+                        legend: {
+                            display: true
+                        },
+                    },
+                    scale: {
+                        min: 0,
+                    },
+                }
+            };
+            let barCompetenciasChart = new Chart(
+                document.getElementById('barCompetencias'),
+                configBarCompetenciasChart
+            );
             //OBJETIVOS
             const dataRadarObjetivos = {
                 labels: @json($nombresObjetivos),
                 datasets: [{
-                    label: 'Meta',
+                    label: 'Puesto',
                     data: @json($metaObjetivos),
                     fill: true,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    pointBackgroundColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(51,109,255, 0.5)',
+                    borderColor: 'rgb(51,109,255)',
+                    pointBackgroundColor: 'rgb(51,109,255)',
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgb(255, 99, 132)'
+                    pointHoverBorderColor: 'rgb(51,109,255)'
                 }, {
                     label: 'Califiación Jefe',
                     data: @json($calificacionObjetivos),
                     fill: true,
-                    backgroundColor: 'rgba(46, 204, 65, 0.2)',
+                    backgroundColor: 'rgba(46, 204, 65, 0.5)',
                     borderColor: 'rgb(46, 204, 65)',
                     pointBackgroundColor: 'rgb(46, 204, 65)',
                     pointBorderColor: '#fff',
@@ -664,6 +783,37 @@
             let objetivosChart = new Chart(
                 document.getElementById('objetivosGrafica'),
                 configRadarObjetivos
+            );
+            const configBarObjetivos = {
+                type: 'bar',
+                data: dataRadarObjetivos,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Objetivos'
+                        },
+                        legend: {
+                            display: true
+                        },
+                    },
+                    scale: {
+                        min: 0,
+                    },
+                }
+            };
+
+            let objetivosBarChart = new Chart(
+                document.getElementById('barObjetivos'),
+                configBarObjetivos
             );
         });
     </script>
