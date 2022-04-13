@@ -146,8 +146,20 @@
                         </div>
                     @endif
                 </div>
+                <div class="form-group col-sm-12">
+                    <label for="cumplimiento_organizacion"><i class="fas fa-clipboard-check iconos-crear"></i> Forma en que la
+                        organización cumple con el requisito</label><i class="fas fa-info-circle"
+                        style="font-size:12pt; float: right;" title="Especificar"></i>
+                    <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}" type="text"
+                        name="cumplimiento_organizacion" id="cumplimiento_organizacion">{{ old('cumplimiento_organizacion', $matrizRequisitoLegale->cumplimiento_organizacion) }}</textarea>
+                    @if ($errors->has('alcance'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('cumplimiento_organizacion') }}
+                        </div>
+                    @endif
+                </div>
 
-
+{{-- 
                 <div class="form-group" style="margin-top:15px; width:100%; height:25px; background-color:#345183">
                     <p class="text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
                         Verificación del Requisito</p>
@@ -217,7 +229,7 @@
                 </div>
 
 
-                {{-- INICIO PLAN ACCIÓN --}}
+              
                 <div class="row w-100 align-items-center" style="margin-left: 1px;">
                     @livewire('planes-implementacion-select',['planes_seleccionados'=>$planes_seleccionados])
                     <div class="pl-0 ml-0 col-2">
@@ -229,7 +241,7 @@
                     @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de Requisitos
                     Legales'])
                 </div>
-                {{-- FIN PLAN ACCIÓN --}}
+             
 
 
                 <div class="mb-3 col-sm-12">
@@ -302,7 +314,7 @@
                             {{ $errors->first('comentarios') }}
                         </div>
                     @endif
-                </div>
+                </div> --}}
 
 
                 <div class="text-right form-group col-12">

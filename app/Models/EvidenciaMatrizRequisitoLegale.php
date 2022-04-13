@@ -30,6 +30,8 @@ class EvidenciaMatrizRequisitoLegale extends Model
     protected $fillable = [
         'id_matriz_requisito',
         'evidencia',
+        'id_evaluacion',
+
 
     ];
 

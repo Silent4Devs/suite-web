@@ -169,52 +169,21 @@
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table table-bordered datatable-AlcanceSgsi" style="width: 100%">
+            <table class="table table-bordered datatable-AlcanceSgsi" >
                 <thead class="thead-dark">
                     <tr>
-                        <th>
-                            {{ trans('cruds.alcanceSgsi.fields.id') }}
-                        </th>
-                        <th style="text-align: center !important">
-                            Alcance
-                        </th>
-                        <th>
-                            Norma&nbsp;
-                        </th>
-                        <th>
-                            Fecha de publicación
-                        </th>
-                        <th>
-                            Fecha&nbsp;de&nbsp;entrada en&nbsp;vigor
-                        </th>
-                        <th>
-                            Revisó
-                        </th>
-                        <th>
-                            Puesto
-                        </th>
-                        <th>
-                            Área
-                        </th>
-                        <th>
-                            Fecha&nbsp;de revisión
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
+                        <th style="min-width:75px;">{{ trans('cruds.alcanceSgsi.fields.id') }}</th>
+                        <th style="min-width:75px !importantimportant;">Nombre del Alcance</th>
+                        <th style="min-width:200px;">Descripción</th>
+                        <th>Norma</th>
+                        <th style="min-width:100px;">Fecha de publicación</th>
+                        <th style="min-width:100px;">Fecha de entrada en vigor</th>
+                        <th style="min-width:100px;">Revisó</th>
+                        <th style="min-width:100px;">Puesto</th>
+                        <th style="min-width:100px;">Área</th>
+                        <th style="min-width:100px;">Fecha de revisión</th>
+                        <th style="min-width:100px;">Opciones</th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
@@ -370,7 +339,11 @@
                 ajax: "{{ route('admin.alcance-sgsis.index') }}",
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                    },
+                    {
+                        data: 'nombre',
+                        name: 'nombre',
                     },
                     {
                         data: 'alcancesgsi',
@@ -378,7 +351,15 @@
                     },
                     {
                         data: 'norma',
-                        name: 'norma'
+                       render:function(data,type,row,meta){
+                         data=JSON.parse(data);
+                          let HTML = `<ul>`
+                            data.forEach(element => {
+                                HTML +=`<li>${element.norma}</li>`
+                            });
+                            HTML += `</ul>`
+                            return HTML;
+                       }
                     },
                     {
                         data: 'fecha_publicacion',

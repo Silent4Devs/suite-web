@@ -19,7 +19,7 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.alcanceSgsi.fields.id') }}
+                            ID
                         </th>
                         <td>
                             {{ $alcanceSgsi->id }}
@@ -27,10 +27,58 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.alcanceSgsi.fields.alcancesgsi') }}
+                           Nombre de Alcance
                         </th>
                         <td>
-                            {{ $alcanceSgsi->alcancesgsi }}
+                            {{ $alcanceSgsi->nombre }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Descripción de Alcance
+                        </th>
+                        <td>
+                            {{ $alcanceSgsi->alcancesgsi}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Apróbo
+                        </th>
+                        <td>
+                            {{ $alcanceSgsi->empleado->name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Fecha de publicación
+                        </th>
+                        <td>
+                            {{ $alcanceSgsi->fecha_publicacion }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Fecha de entrada en vigor
+                        </th>
+                        <td>
+                            {{ $alcanceSgsi->fecha_entrada}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Fecha de revisión
+                        </th>
+                        <td>
+                            {{ $alcanceSgsi->fecha_revision }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Normas
+                        </th>
+                        <td>
+                            {{ $alcanceSgsi->normas }}
                         </td>
                     </tr>
                 </tbody>
