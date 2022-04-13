@@ -32,7 +32,6 @@ class EvidenciaMatrizRequisitoLegale extends Model
         'evidencia',
         'id_evaluacion',
 
-
     ];
 
     public function matriz_requisito()

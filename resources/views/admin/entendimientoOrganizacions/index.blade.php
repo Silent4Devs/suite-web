@@ -68,7 +68,7 @@
                             Fecha Creación
                         </th>
                         <th>
-                            Elaboró
+                            Realizó
                         </th>
 
                         <th>

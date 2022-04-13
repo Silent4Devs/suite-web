@@ -82,7 +82,11 @@
     @endif
 
 
-
+    @if (Request::route()->getName() == 'admin.entendimiento-organizacions.index')
+    <a class="mr-2 rounded btn btn-sm" href="">
+        {{-- {{ trans('global.view') }} --}}<i class="fas fa-copy" title="Duplicar FODA"></i>
+    </a>
+    @endif
 
     @can($viewGate)
         <a class="mr-2 rounded btn btn-sm" href="{{ route('admin.' . $crudRoutePart . '.show', $row->id) }}">
@@ -101,6 +105,7 @@
             {{-- {{ trans('global.view') }} --}} <i class="fas fa-envelope" title="Enviar Correo"></i>
         </a>
     @endif
+
     @can($editGate)
         <a class="mr-2 rounded btn btn-sm" href="{{ route('admin.' . $crudRoutePart . '.edit', $row->id) }}">
             {{-- {{ trans('global.edit') }} --}} <i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i>
