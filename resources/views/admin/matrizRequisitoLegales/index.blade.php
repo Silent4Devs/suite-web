@@ -94,66 +94,24 @@
             <table class="table datatable-MatrizRequisitoLegale">
                 <thead class="thead-dark">
                     <tr>
-                        {{-- <th>
-
-                        </th> --}}
-                        <th>
-                            {{ trans('cruds.matrizRequisitoLegale.fields.id') }}
-                        </th>
-                        <th>
-                            Tipo&nbsp;de&nbsp;requisito
-                        </th>
-                        <th style="min-width: 250px;">
-                            Fundamento
-                        </th>
-                        <th style="min-width: 250px;">
-                            Apartado&nbsp;
-                        </th>
-                        <th style="min-width: 600px;">
-                            Requisito(s)&nbsp;a&nbsp;cumplir&nbsp;
-                        </th>
-                        <th>
-                            Alcance&nbsp;y&nbsp;grado&nbsp;de&nbsp;aplicabilidad
-                        </th>
-                        <th style="min-width: 200px;">
-                            Medio&nbsp;de&nbsp;publicación
-                        </th>
-                        <th>
-                            Fecha&nbsp;de publicación
-                        </th>
-                        <th>
-                            Fecha&nbsp;de&nbsp;entrada en&nbsp;vigor
-                        </th>
-                        <th>
-                            Periodicidad&nbsp;de cumplimiento
-                        </th>
-                        <th>
-                            ¿En&nbsp;cumplimiento?
-                        </th>
-                        <th>
-                            Descripción&nbsp;del&nbsp;cumplimiento/incumplimiento
-                        </th>
-                        <th>
-                            Método&nbsp;utilizado&nbsp;de&nbsp;verificación
-                        </th>
-                        <th style="text-align:center;">
-                            Evidencia
-                        </th>
-                        <th>
-                            Revisó&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor
-                        </th>
-                        <th>
-                            Puesto&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor
-                        </th>
-                        <th>
-                            Área&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor
-                        </th>
-                        <th>
-                            Comentarios&nbsp;@for ($i = 0; $i < 70; $i++)&nbsp;@endfor
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
+                        <th>{{ trans('cruds.matrizRequisitoLegale.fields.id') }}</th>
+                        <th style="min-width: 250px;">Nombre del requisito</th>
+                        <th style="min-width: 250px;">Obligación del cumplimiento</th>
+                        <th>Alcance&nbsp;y&nbsp;grado&nbsp;de&nbsp;aplicabilidad</th>
+                        {{-- <th style="min-width: 200px;">Medio&nbsp;de&nbsp;publicación</th>
+                        <th>Fecha&nbsp;de publicación</th>
+                        <th>Fecha&nbsp;de&nbsp;entrada en&nbsp;vigor</th> --}}
+                        <th  style="min-width: 250px;">¿Cómo&nbsp;cumple?</th>
+                        <th>Periodicidad&nbsp;de&nbsp;cumplimiento</th>
+                        <th>¿En&nbsp;cumplimiento?</th>
+                        {{-- <th>Descripción&nbsp;del&nbsp;cumplimiento/incumplimiento</th> --}}
+                        <th>Método&nbsp;utilizado&nbsp;de&nbsp;verificación</th>
+                        {{-- <th style="text-align:center;">Evidencia</th>
+                        <th>Revisó&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor</th>
+                        <th>Puesto&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor</th>
+                        <th>Área&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor</th>
+                        <th>Comentarios&nbsp;@for ($i = 0; $i < 70; $i++)&nbsp;@endfor</th> --}}
+                        <th>Opciones</th>
                     </tr>
                 </thead>
             </table>
@@ -279,17 +237,10 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.matriz-requisito-legales.index') }}",
-                columnDefs: [{
-                    targets: [5, 12, 11, 17],
-                    visible: false
-                }],
-                columns: [{
+                columns: [
+                    {
                         data: 'id',
                         name: 'id'
-                    },
-                    {
-                        data: 'tipo',
-                        name: 'tipo'
                     },
                     {
                         data: 'nombrerequisito',
@@ -300,24 +251,24 @@
                         name: 'formacumple'
                     },
                     {
-                        data: 'requisitoacumplir',
-                        name: 'requisitoacumplir'
-                    },
-                    {
                         data: 'alcance',
                         name: 'alcance'
                     },
+                    // {
+                    //     data: 'medio',
+                    //     name: 'medio'
+                    // },
+                    // {
+                    //     data: 'fechaexpedicion',
+                    //     name: 'fechaexpedicion'
+                    // },
+                    // {
+                    //     data: 'fechavigor',
+                    //     name: 'fechavigor'
+                    // },
                     {
-                        data: 'medio',
-                        name: 'medio'
-                    },
-                    {
-                        data: 'fechaexpedicion',
-                        name: 'fechaexpedicion'
-                    },
-                    {
-                        data: 'fechavigor',
-                        name: 'fechavigor'
+                        data: 'cumplimiento_organizacion',
+                        name: 'cumplimiento_organizacion'
                     },
                     {
                         data: 'periodicidad_cumplimiento',
@@ -325,137 +276,149 @@
                     },
                     {
                         data: 'cumplerequisito',
-                        name: 'cumplerequisito'
+                        render:function(data,type,row,meta){
+                           if(row.evaluaciones[0]){
+                               return row.evaluaciones[0].cumplerequisito;
+                           }
+                            return 'No evaluado';
+                        }
                     },
                     {
                         data: 'metodo',
-                        name: 'metodo'
-                    },
-                    {
-                        data: 'descripcion_cumplimiento',
-                        name: 'descripcion_cumplimiento'
-                    },
-                    {
-                        data: 'evidencia',
-                        name: 'evidencia',
-                        render: function(data, type, row, meta) {
-                            let archivo = "";
-                            let archivos = row.evidencias_matriz;
-                            console.log(archivos)
-                            archivo = ` <div class="container">
-
-                                    <div class="mb-4 row">
-                                    <div class="text-center col">
-                                        <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
-                                    </div>
-                                    </div>
-
-                                    <!-- modal -->
-                                    <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                        <div class="modal-body">`;
-                            if (archivos.length > 0) {
-                                archivo += `
-                                                <!-- carousel -->
-                                            <div
-                                                id='carouselExampleIndicators${row.id}'
-                                                class='carousel slide'
-                                                data-ride='carousel'
-                                                >
-                                            <ol class='carousel-indicators'>
-                                                    ${archivos?.map((archivo,idx)=>{
-                                                        return `
-                                                            <li
-                                                            data-target='#carouselExampleIndicators${row.id}'
-                                                            data-slide-to='${idx}'
-                                                            ></li>`
-                                                    })}
-                                            </ol>
-                                            <div class='carousel-inner'>
-                                                    ${archivos?.map((archivo,idx)=>{
-                                                        return `
-                                                            <div class='carousel-item ${idx==0?"active":""}'>
-                                                                <iframe seamless class='img-size' src='{{ asset('storage/matriz_evidencias') }}/${archivo.evidencia}'></iframe>
-                                                            </div>`
-                                                    })}
-
-                                            </div>
-
-                                            </div>`;
-                            } else {
-                                archivo += `
-                                                <div class="text-center">
-                                                    <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
-                                                    <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:500px !important">
-                                                    </div>
-                                                `
-                            }
-                            archivo += `</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                           ${archivos.length==0?`
-                                                    <a
-                                                        class='carousel-control-prev'
-                                                        href='#carouselExampleIndicators${row.id}'
-                                                        role='button'
-                                                        data-slide='prev'
-                                                        >
-                                                        <span class='carousel-control-prev-icon'
-                                                            aria-hidden='true'
-                                                            ></span>
-                                                        <span class='sr-only'>Previous</span>
-                                                    </a>
-                                                    <a
-                                                        class='carousel-control-next'
-                                                        href='#carouselExampleIndicators${row.id}'
-                                                        role='button'
-                                                        data-slide='next'
-                                                        >
-                                                        <span
-                                                            class='carousel-control-next-icon'
-                                                            aria-hidden='true'
-                                                            ></span>
-                                                        <span class='sr-only'>Next</span>
-                                                    </a>`:""}
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </div>`
-                            return archivo;
+                        render:function(data,type,row,meta){
+                           if(row.evaluaciones[0]){
+                               return row.evaluaciones[0].metodo;
+                           }
+                            return 'No evaluado';
                         }
                     },
+                    // {
+                    //     data: 'descripcion_cumplimiento',
+                    //     name: 'descripcion_cumplimiento'
+                    // },
+                    // {
+                    //     data: 'evidencia',
+                    //     name: 'evidencia',
+                    //     render: function(data, type, row, meta) {
+                    //         let archivo = "";
+                    //         let archivos = row.evidencias_matriz;
+                    //         console.log(archivos)
+                    //         archivo = ` <div class="container">
+
+                    //                 <div class="mb-4 row">
+                    //                 <div class="text-center col">
+                    //                     <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                    //                 </div>
+                    //                 </div>
+
+                    //                 <!-- modal -->
+                    //                 <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                    //                 <div class="modal-dialog modal-lg">
+                    //                     <div class="modal-content">
+                    //                     <div class="modal-body">`;
+                    //         if (archivos.length > 0) {
+                    //             archivo += `
+                    //                             <!-- carousel -->
+                    //                         <div
+                    //                             id='carouselExampleIndicators${row.id}'
+                    //                             class='carousel slide'
+                    //                             data-ride='carousel'
+                    //                             >
+                    //                         <ol class='carousel-indicators'>
+                    //                                 ${archivos?.map((archivo,idx)=>{
+                    //                                     return `
+                    //                                         <li
+                    //                                         data-target='#carouselExampleIndicators${row.id}'
+                    //                                         data-slide-to='${idx}'
+                    //                                         ></li>`
+                    //                                 })}
+                    //                         </ol>
+                    //                         <div class='carousel-inner'>
+                    //                                 ${archivos?.map((archivo,idx)=>{
+                    //                                     return `
+                    //                                         <div class='carousel-item ${idx==0?"active":""}'>
+                    //                                             <iframe seamless class='img-size' src='{{ asset('storage/matriz_evidencias') }}/${archivo.evidencia}'></iframe>
+                    //                                         </div>`
+                    //                                 })}
+
+                    //                         </div>
+
+                    //                         </div>`;
+                    //         } else {
+                    //             archivo += `
+                    //                             <div class="text-center">
+                    //                                 <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
+                    //                                 <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:500px !important">
+                    //                                 </div>
+                    //                             `
+                    //         }
+                    //         archivo += `</div>
+                    //                     <div class="modal-footer">
+                    //                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    //                        ${archivos.length==0?`
+                    //                                 <a
+                    //                                     class='carousel-control-prev'
+                    //                                     href='#carouselExampleIndicators${row.id}'
+                    //                                     role='button'
+                    //                                     data-slide='prev'
+                    //                                     >
+                    //                                     <span class='carousel-control-prev-icon'
+                    //                                         aria-hidden='true'
+                    //                                         ></span>
+                    //                                     <span class='sr-only'>Previous</span>
+                    //                                 </a>
+                    //                                 <a
+                    //                                     class='carousel-control-next'
+                    //                                     href='#carouselExampleIndicators${row.id}'
+                    //                                     role='button'
+                    //                                     data-slide='next'
+                    //                                     >
+                    //                                     <span
+                    //                                         class='carousel-control-next-icon'
+                    //                                         aria-hidden='true'
+                    //                                         ></span>
+                    //                                     <span class='sr-only'>Next</span>
+                    //                                 </a>`:""}
+                    //                     </div>
+                    //                     </div>
+                    //                 </div>
+                    //                 </div>`
+                    //         return archivo;
+                    //     }
+                    // },
+                    // {
+                    //     data: 'id',
+                    //     render: function(data, type, row, meta) {
+                    //         console.log(row)
+                    //         let html =
+                    //             `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.empleado?.avatar}" title="${row.empleado?.name}"></img>`;
+
+                    //         return `${row.empleado ? html: ''}`;
+                    //     }
+                    // },
+                    // {
+                    //     data: 'puesto',
+                    //     name: 'puesto',
+                    //     render: function(data, type, row, meta) {
+                    //         return row.empleado?.puesto;
+                    //     }
+                    // },
+                    // {
+                    //     data: 'area',
+                    //     name: 'area',
+                    //     render: function(data, type, row, meta) {
+                    //         return row.empleado?.area?.area;
+                    //     }
+                    // },
+                    // {
+                    //     data: 'comentarios',
+                    //     name: 'comentarios'
+                    // },
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-                            console.log(row)
-                            let html =
-                                `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.empleado?.avatar}" title="${row.empleado?.name}"></img>`;
-
-                            return `${row.empleado ? html: ''}`;
-                        }
-                    },
-                    {
-                        data: 'puesto',
-                        name: 'puesto',
-                        render: function(data, type, row, meta) {
-                            return row.empleado?.puesto;
-                        }
-                    },
-                    {
-                        data: 'area',
-                        name: 'area',
-                        render: function(data, type, row, meta) {
-                            return row.empleado?.area?.area;
-                        }
-                    },
-                    {
-                        data: 'comentarios',
-                        name: 'comentarios'
-                    },
-                    {
-                        data: 'id',
-                        render: function(data, type, row, meta) {
+                            let urlEvaluarMatriz =
+                                `/admin/matriz-requisito-legales/${data}/evaluar`;
                             let urlVerMatrizRequisitoLegal =
                                 `/admin/matriz-requisito-legales/${data}`;
                             let urlEditarMatrizRequisitoLegal =
@@ -468,27 +431,11 @@
                                 `/admin/matriz-requisito-legales/planes-de-accion/create/${data}`;
                             let botones = `
                             <div class="btn-group">
-                                <a class="btn btn-sm" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm" href="${urlVerMatrizRequisitoLegal}" title="Visualizar Matríz de Requisito Legal"><i class="fas fa-eye"></i></a>
-                                ${row.planes ? `
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-stream"></i>
-                                                </a>
-
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="${urlCrearPlanAccion}" title="Crear Plan de Acción para: ${row.nombrerequisito}"><i class="mr-1 fas fa-stream"></i>Crear y vincular plan de acción</a>
-                                                        <div class="dropdown-divider"></div>
-                                                    <span class="ml-4 badge badge-dark">Planes de acción asociados</span>
-                                                   ${row.planes.map(plan => {
-                                                       return `
-                                                <a class="dropdown-item" href="/admin/planes-de-accion/${plan.id}"><i class="mr-1 fas fa-search"></i>${plan.parent} ${plan.tasks?.find(t=>Number(t.level) == 0) != undefined ? `<span class="badge badge-primary">${plan.tasks?.find(t=>Number(t.level) == 0).progress} %</span>` : `<span class="badge badge-primary">0 %</span>`}<a>
-                                               `;
-                                                   })}
-                                                </div>
-                                            </div>
-                                            `:''}
-                                 <button class="btn btn-sm" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i></button>
+                                <a class="btn btn-sm" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-sm" style="color:#77C64F;" href="${urlEvaluarMatriz}" title="Evaluar Requisito Legal"><i class="fas fa-calendar-check"></i></a>
+                    
+                                <button class="btn btn-sm" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i></button>
                             </div>
                              `;
                             return botones;
