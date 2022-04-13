@@ -10,11 +10,8 @@ use App\Models\MatrizOctaveProceso;
 use App\Http\Controllers\Controller;
 use App\Mail\CartaAceptacionEmail;
 use App\Models\CartaAceptacionAprobacione;
-use App\Models\CartaAceptacionAprobacione;
 use App\Models\CartaAceptacionPivot;
-use Illuminate\Support\Facades\Storage;
 use App\Models\DeclaracionAplicabilidad;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -108,49 +105,49 @@ class CartaAceptacionRiesgosController extends Controller
             'vp_responsable_id' => 'required',
             'vice_operaciones_id' => 'required',
             'presidencia_id' => 'required',
-            'folio_riesgo'=> 'required',
-            'fecharegistro'=> 'required',
-            'proceso_id'=> 'required',
-            'descripcion_negocio'=> 'required',
-            'descripcion_riesgo'=> 'required',
-            'descripcion_tecnologico'=> 'required',
-            'aceptacion_riesgo'=> 'required',
+            'folio_riesgo' => 'required',
+            'fecharegistro' => 'required',
+            'proceso_id' => 'required',
+            'descripcion_negocio' => 'required',
+            'descripcion_riesgo' => 'required',
+            'descripcion_tecnologico' => 'required',
+            'aceptacion_riesgo' => 'required',
 
         ]);
 
         $cartaAceptacion = CartaAceptacion::create([
-            'folio_riesgo'=> $request->folio_riesgo,
-            'fecharegistro'=> $request->fecharegistro,
-            'fechaaprobacion'=> $request->fechaaprobacion,
-            'responsable_id'=> $request->responsable_id,
-            'activo_folio'=> $request->activo_folio,
-            'nombre_activo'=> $request->nombre_activo,
-            'criticidad_activo'=> $request->criticidad_activo,
-            'confidencialidad'=> $request->confidencialidad,
-            'descripcion_negocio'=> $request->descripcion_negocio,
-            'descripcion_riesgo'=> $request->descripcion_riesgo,
-            'descripcion_tecnologico'=> $request->descripcion_tecnologico,
-            'legal'=> $request->legal,
-            'cumplimiento'=> $request->cumplimiento,
-            'reputacional'=> $request->reputacional,
-            'operacional'=> $request->operacional,
-            'financiero'=> $request->financiero,
-            'tecnologico'=> $request->tecnologico,
-            'aceptacion_riesgo'=> $request->aceptacion_riesgo,
-            'hallazgo'=> $request->hallazgo,
-            'controles_compensatorios'=> $request->controles_compensatorios,
-            'recomendaciones'=> $request->recomendaciones,
-            'controles_id'=> $request->controles_id,
-            'director_resp_id'=> $request->director_resp_id,
-            'fecha_aut_direct'=> $request->fecha_aut_direct,
-            'vp_responsable_id'=> $request->vp_responsable_id,
-            'fecha_vp_aut'=> $request->fecha_vp_aut,
-            'presidencia_id'=> $request->presidencia_id,
-            'fecha_aut_presidencia'=> $request->fecha_aut_presidencia,
-            'vice_operaciones_id'=> $request->vice_operaciones_id,
-            'fecha_aut_viceoperaciones'=> $request->fecha_aut_viceoperaciones,
-            'proceso_id'=> $request->proceso_id,
-            'hallazgos_auditoria'=> $request->hallazgos_auditoria,
+            'folio_riesgo' => $request->folio_riesgo,
+            'fecharegistro' => $request->fecharegistro,
+            'fechaaprobacion' => $request->fechaaprobacion,
+            'responsable_id' => $request->responsable_id,
+            'activo_folio' => $request->activo_folio,
+            'nombre_activo' => $request->nombre_activo,
+            'criticidad_activo' => $request->criticidad_activo,
+            'confidencialidad' => $request->confidencialidad,
+            'descripcion_negocio' => $request->descripcion_negocio,
+            'descripcion_riesgo' => $request->descripcion_riesgo,
+            'descripcion_tecnologico' => $request->descripcion_tecnologico,
+            'legal' => $request->legal,
+            'cumplimiento' => $request->cumplimiento,
+            'reputacional' => $request->reputacional,
+            'operacional' => $request->operacional,
+            'financiero' => $request->financiero,
+            'tecnologico' => $request->tecnologico,
+            'aceptacion_riesgo' => $request->aceptacion_riesgo,
+            'hallazgo' => $request->hallazgo,
+            'controles_compensatorios' => $request->controles_compensatorios,
+            'recomendaciones' => $request->recomendaciones,
+            'controles_id' => $request->controles_id,
+            'director_resp_id' => $request->director_resp_id,
+            'fecha_aut_direct' => $request->fecha_aut_direct,
+            'vp_responsable_id' => $request->vp_responsable_id,
+            'fecha_vp_aut' => $request->fecha_vp_aut,
+            'presidencia_id' => $request->presidencia_id,
+            'fecha_aut_presidencia' => $request->fecha_aut_presidencia,
+            'vice_operaciones_id' => $request->vice_operaciones_id,
+            'fecha_aut_viceoperaciones' => $request->fecha_aut_viceoperaciones,
+            'proceso_id' => $request->proceso_id,
+            'hallazgos_auditoria' => $request->hallazgos_auditoria,
         ]);
 
         foreach ($request->controles_id as $item) {
@@ -191,7 +188,7 @@ class CartaAceptacionRiesgosController extends Controller
     {
 
         // $controles =DeclaracionAplicabilidad::where('carta_id','=',$cartaAceptacion->id)->get();
-        $cartaAceptacion = CartaAceptacion::with(['aprobaciones'=>function ($query) {
+        $cartaAceptacion = CartaAceptacion::with(['aprobaciones' => function ($query) {
             $query->with('empleado', 'aprobacionesActivo')->orderBy('nivel');
         }])->find($cartaAceptacion);
         $responsables = Empleado::get();
@@ -224,40 +221,40 @@ class CartaAceptacionRiesgosController extends Controller
     public function enviarCorreos($request, $cartaAceptacion)
     {
         CartaAceptacionAprobacione::create([
-            'autoridad'=>'Dueño del Riesgo',
-            'aprobador_id'=>$request->responsable_id,
-            'carta_id'=>$cartaAceptacion->id,
-            'nivel'=>1,
+            'autoridad' => 'Dueño del Riesgo',
+            'aprobador_id' => $request->responsable_id,
+            'carta_id' => $cartaAceptacion->id,
+            'nivel' => 1,
         ]);
         $dueno = Empleado::select('id', 'name', 'email', 'genero', 'foto')->find($request->responsable_id);
         Mail::to($dueno->email)->send(new CartaAceptacionEmail($dueno, $cartaAceptacion));
 
         CartaAceptacionAprobacione::create([
-            'autoridad'=>'Director Responsable del Riesgo',
-            'aprobador_id'=>$request->director_resp_id,
-            'carta_id'=>$cartaAceptacion->id,
-            'nivel'=>2,
+            'autoridad' => 'Director Responsable del Riesgo',
+            'aprobador_id' => $request->director_resp_id,
+            'carta_id' => $cartaAceptacion->id,
+            'nivel' => 2,
         ]);
 
         CartaAceptacionAprobacione::create([
-            'autoridad'=>'VP Responsable del Riesgo',
-            'aprobador_id'=>$request->vp_responsable_id,
-            'carta_id'=>$cartaAceptacion->id,
-            'nivel'=>3,
+            'autoridad' => 'VP Responsable del Riesgo',
+            'aprobador_id' => $request->vp_responsable_id,
+            'carta_id' => $cartaAceptacion->id,
+            'nivel' => 3,
         ]);
 
         CartaAceptacionAprobacione::create([
-            'autoridad'=>'VP de Operaciones',
-            'aprobador_id'=>$request->vice_operaciones_id,
-            'carta_id'=>$cartaAceptacion->id,
-            'nivel'=>4,
+            'autoridad' => 'VP de Operaciones',
+            'aprobador_id' => $request->vice_operaciones_id,
+            'carta_id' => $cartaAceptacion->id,
+            'nivel' => 4,
         ]);
 
         CartaAceptacionAprobacione::create([
-            'autoridad'=>'Presidencia',
-            'aprobador_id'=>$request->presidencia_id,
-            'carta_id'=>$cartaAceptacion->id,
-            'nivel'=>5,
+            'autoridad' => 'Presidencia',
+            'aprobador_id' => $request->presidencia_id,
+            'carta_id' => $cartaAceptacion->id,
+            'nivel' => 5,
         ]);
     }
 
@@ -279,10 +276,10 @@ class CartaAceptacionRiesgosController extends Controller
                 $route = 'public/cartasAceptacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->carta_id) . '/' . $new_name_image;
                 Storage::put($route, $value);
                 $cartaAceptacion->update([
-                    'comentarios'=>$request->comentarios,
-                    'firma'=>$image,
-                    'estado'=>1,
-                    'fecha_aprobacion'=>Carbon::now(),
+                    'comentarios' => $request->comentarios,
+                    'firma' => $image,
+                    'estado' => 1,
+                    'fecha_aprobacion' => Carbon::now(),
                 ]);
             }
             $activos = json_decode($request->activos, true);
@@ -290,18 +287,18 @@ class CartaAceptacionRiesgosController extends Controller
                 $aceptado = $activo['aceptado'] == 'true' ? true : false;
                 $activoId = $activo['id'];
                 ActivosInformacionAprobacione::create([
-                    'aceptado'=>$aceptado,
-                    'persona_califico_id'=> auth()->user()->empleado->id,
-                    'activoInformacion_id'=>$activoId,
-                    'carta_aceptacion_aprobacion_id'=>$cartaAceptacion->id,
+                    'aceptado' => $aceptado,
+                    'persona_califico_id' => auth()->user()->empleado->id,
+                    'activoInformacion_id' => $activoId,
+                    'carta_aceptacion_aprobacion_id' => $cartaAceptacion->id,
                 ]);
             }
 
-            $cartaAceptacionModel = CartaAceptacion::with(['proceso'=>function ($q) {
-                $q->with(['proceso'=>function ($q) {
+            $cartaAceptacionModel = CartaAceptacion::with(['proceso' => function ($q) {
+                $q->with(['proceso' => function ($q) {
                     $q->with('activosAI');
                 }]);
-            }, 'aprobaciones'=>function ($query) {
+            }, 'aprobaciones' => function ($query) {
                 $query->with('empleado', 'aprobacionesActivo')->orderBy('nivel');
             }])->find($cartaAceptacion->carta_id);
 
@@ -329,20 +326,20 @@ class CartaAceptacionRiesgosController extends Controller
                     Mail::to($empleado->email)->send(new CartaAceptacionEmail($empleado, $carta));
                 } else {
                     $cartaAceptacionModel->update([
-                        'aceptado'=>true,
-                        'fechaaprobacion'=>Carbon::now(),
+                        'aceptado' => true,
+                        'fechaaprobacion' => Carbon::now(),
 
-                     ]);
+                    ]);
                 }
             } else {
                 $cartaAceptacionModel->update([
-                   'aceptado'=>false,
-                   'fechaaprobacion'=>Carbon::now(),
+                    'aceptado' => false,
+                    'fechaaprobacion' => Carbon::now(),
 
                 ]);
             }
         }
 
-        return response()->json(['status'=>200]);
+        return response()->json(['status' => 200]);
     }
 }
