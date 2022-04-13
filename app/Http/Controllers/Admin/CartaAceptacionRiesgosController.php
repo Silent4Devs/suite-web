@@ -6,21 +6,15 @@ use Carbon\Carbon;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use App\Models\CartaAceptacion;
-use App\Mail\CartaAceptacionEmail;
 use App\Models\MatrizOctaveProceso;
 use App\Http\Controllers\Controller;
 use App\Mail\CartaAceptacionEmail;
-use App\Models\CartaAceptacion;
 use App\Models\CartaAceptacionAprobacione;
 use App\Models\CartaAceptacionPivot;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\DeclaracionAplicabilidad;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\CartaAceptacionAprobacione;
 use App\Models\ActivosInformacionAprobacione;
 
 class CartaAceptacionRiesgosController extends Controller

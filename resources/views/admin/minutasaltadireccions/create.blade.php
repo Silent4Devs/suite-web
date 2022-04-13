@@ -348,9 +348,8 @@
     <script>
         $(document).ready(function() {
             if (!@json($esta_vinculado)) {
-                 $('#alertaVinculacion').modal('show')
-            }
-
+             $('#alertaVinculacion').modal('show')
+        }
             window.tblParticipantes = $('#tbl-participantes').DataTable({
                 buttons: []
             })
@@ -398,6 +397,12 @@
             })
 
             document.getElementById('btnGuardar').addEventListener('click', function(e) {
+                // e.preventDefault();
+                enviarParticipantes();
+                enviarActividades();
+            })
+
+            document.getElementById('btnUpdateAndReview').addEventListener('click', function(e) {
                 // e.preventDefault();
                 enviarParticipantes();
                 enviarActividades();
