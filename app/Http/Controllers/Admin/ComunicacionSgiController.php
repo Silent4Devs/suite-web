@@ -160,8 +160,10 @@ class ComunicacionSgiController extends Controller
             } else {
                 $evaluados = GruposEvaluado::find(intval($evaluados_objetivo))->empleados->pluck('id')->toArray();
             }
+
             return $evaluados;
         }
+
         return [];
     }
 
