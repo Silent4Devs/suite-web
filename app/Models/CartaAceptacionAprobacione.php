@@ -39,6 +39,7 @@ class CartaAceptacionAprobacione extends Model
         'estado',
         'carta_id',
         'fecha_aprobacion',
+        'nivel',
     ];
 
     public function empleado()
@@ -49,5 +50,10 @@ class CartaAceptacionAprobacione extends Model
     public function carta()
     {
         return $this->belongsTo(CartaAceptacion::class, 'carta_id');
+    }
+
+    public function aprobacionesActivo()
+    {
+        return $this->hasMany(ActivosInformacionAprobacione::class, 'carta_aceptacion_aprobacion_id');
     }
 }

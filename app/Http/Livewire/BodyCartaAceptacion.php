@@ -39,8 +39,9 @@ class BodyCartaAceptacion extends Component
     public $coordenada_tabla = '4,5';
     public $tipo = 'create';
     public $cartaAceptacion;
+    public $aprobadores;
 
-    public function mount($proceso = 0, $tipo = 'create', $cartaAceptacion = null)
+    public function mount($proceso = 0, $tipo = 'create', $cartaAceptacion = null, $aprobadores = null)
     {
         if ($proceso > 0) {
             // dd($proceso);
@@ -51,6 +52,7 @@ class BodyCartaAceptacion extends Component
         }
         $this->tipo = $tipo;
         $this->cartaAceptacion = $cartaAceptacion;
+        $this->aprobadores = $aprobadores;
     }
 
     public function render()
