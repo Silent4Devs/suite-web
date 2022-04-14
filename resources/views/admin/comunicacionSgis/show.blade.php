@@ -1,133 +1,137 @@
 @extends('layouts.admin')
 @section('content')
 
-    @section('styles')
+@section('styles')
+    <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
 
-        <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
+    <style type="text/css">
+        .img_comunicado {
+            width: 400px;
+            height: 290px;
+            margin: auto;
 
-         <style type="text/css">
-            .img_comunicado{
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: all;
+        }
+
+        .documentos_sgis i {
+            font-size: 50pt;
+            color: #B30909;
+            transition: 0.1s;
+        }
+
+        .documentos_sgis a:hover>i {
+            transform: scale(1.07);
+            filter: brightness(1.5);
+        }
+
+        .documentos_sgis a {
+            display: inline-block;
+            text-align: center;
+            margin: 7px;
+        }
+
+        @media print {
+            .img_comunicado {
                 width: 400px;
                 height: 290px;
-                margin:auto;
 
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
                 background-attachment: all;
             }
-            .documentos_sgis i{
+
+            .documentos_sgis i {
                 font-size: 50pt;
                 color: #B30909;
                 transition: 0.1s;
             }
-            .documentos_sgis a:hover > i{
+
+            .documentos_sgis a:hover>i {
                 transform: scale(1.07);
                 filter: brightness(1.5);
             }
-            .documentos_sgis a{
+
+            .documentos_sgis a {
                 display: inline-block;
                 text-align: center;
                 margin: 7px;
             }
+        }
 
-            @media print {
-                .img_comunicado{
-                    width: 400px;
-                    height: 290px;
+    </style>
+@endsection
 
-                    background-size: cover;
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-attachment: all;
-                }
-                .documentos_sgis i{
-                    font-size: 50pt;
-                    color: #B30909;
-                    transition: 0.1s;
-                }
-                .documentos_sgis a:hover > i{
-                    transform: scale(1.07);
-                    filter: brightness(1.5);
-                }
-                .documentos_sgis a{
-                    display: inline-block;
-                    text-align: center;
-                    margin: 7px;
-                }
-            }
-        </style>
-    @endsection
-
-    {{ Breadcrumbs::render('admin.comunicacion-sgis.show') }}
+{{ Breadcrumbs::render('admin.comunicacion-sgis.show') }}
 
 
-    <h5 class="col-12 titulo_general_funcion">Comunicados</h5>
-    <div class="mt-5 card" style="">
+<h5 class="col-12 titulo_general_funcion">Comunicados</h5>
+<div class="mt-5 card" style="">
 
-        <div class=" card-body" style="">
+    <div class=" card-body" style="">
 
-            <div class="row" style="position: relative; height:35px;">
-                <button class="btn btn-danger" style="position: absolute; right:20px;" onclick="printJS({
+        <div class="row" style="position: relative; height:35px;">
+            <button class="btn btn-danger" style="position: absolute; right:20px;" onclick="printJS({
                     printable: 'impreso_row',
                     type: 'html',
                     css: '{{ asset('css/print_comunicados.css') }}',})">
-                    <i class="fas fa-print"></i>
-                    Imprimir
-                </button>
+                <i class="fas fa-print"></i>
+                Imprimir
+            </button>
+        </div>
+
+        <div class="row" id="impreso_row">
+            <div class="col-12">
+                <h1 style="color:#345183;">{{ $comunicacionSgi->titulo }}</h1>
             </div>
-
-            <div class="row" id="impreso_row">
-                <div class="col-12">
-                    <h1 style="color:#345183;">{{ $comunicacionSgi->titulo }}</h1>
-                </div>
-                <div class="mt-3 col-lg-12" >
-                    @php
-                    if(($comunicacionSgi->first()->count())){
-                        $imagen= 'storage/imagen_comunicado_SGI/'.$comunicacionSgi->imagenes_comunicacion->first()->imagen;
+            <div class="mt-3 col-lg-12">
+                @php
+                    if ($comunicacionSgi->first()->count()) {
+                        $imagen = 'storage/imagen_comunicado_SGI/' . $comunicacionSgi->imagenes_comunicacion->first()->imagen;
+                    } else {
+                        $imagen = 'img/portal_404.png';
                     }
-                    else{
-                        $imagen= 'img/portal_404.png';
-                    }
+                    
+                @endphp
 
-                    @endphp
+                <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');"></div>
+            </div>
+            <div class="mt-3 col-lg-12" style="display: flex; align-items:center;">
+                <div>
+                    {!! $comunicacionSgi->descripcion !!}
 
-                    <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');"></div>
-                </div>
-                <div class="mt-3 col-lg-12" style="display: flex; align-items:center;">
-                    <div>
-                        {!! $comunicacionSgi->descripcion !!}
+                    <p>
+                        {{ \Carbon\Carbon::parse($comunicacionSgi->fecha_publicacion)->format('d-m-Y') }}
+                        &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;
+                        <a href="{{ $comunicacionSgi->link }}" target="_blank">{{ $comunicacionSgi->link }}</a>
+                        &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                        Publicado en: {{ $comunicacionSgi->publicar_en }}
+                    </p>
 
-                        <p>
-                            {{ \Carbon\Carbon::parse($comunicacionSgi->fecha_publicacion)->format('d-m-Y') }}
-                            &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;
-                            <a href="{{$comunicacionSgi->link}}" target="_blank">{{$comunicacionSgi->link}}</a>
-                            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                            Publicado en: {{$comunicacionSgi->publicar_en}}
-                        </p>
-
-                        <div class="documentos_sgis">
-                            @forelse($comunicacionSgi->documentos_comunicacion as $doc)
-                                <a href="{{ asset('storage/documento_comunicado_SGI/'.$doc->documento) }}" target="_blank">
-                                    <i class="fas fa-file-pdf"></i><br>
-                                    <span>{{ $doc->documento }}</span>
-                                </a>
-                                @empty
-                                <p>Sin documentos registrados</p>
-                            @endforelse
-                        </div>
+                    <div class="documentos_sgis">
+                        @forelse($comunicacionSgi->documentos_comunicacion as $doc)
+                            <a href="{{ asset('storage/documento_comunicado_SGI/' . $doc->documento) }}"
+                                target="_blank">
+                                <i class="fas fa-file-pdf"></i><br>
+                                <span>{{ $doc->documento }}</span>
+                            </a>
+                        @empty
+                            <p>Sin documentos registrados</p>
+                        @endforelse
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
 @endsection
 
 @section('scripts')
-
-    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-
+<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 @endsection
