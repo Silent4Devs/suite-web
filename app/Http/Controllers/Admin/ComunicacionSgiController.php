@@ -149,18 +149,22 @@ class ComunicacionSgiController extends Controller
 
     public function obtenerPublicoObjetivo($evaluados_objetivo, $opts)
     {
-        if ($evaluados_objetivo == 'all') {
-            $evaluados = Empleado::pluck('id')->toArray();
-        } elseif ($evaluados_objetivo == 'area') {
-            $evaluados_area = intval($opts);
-            $evaluados = Empleado::where('area_id', $evaluados_area)->pluck('id')->toArray();
-        } elseif ($evaluados_objetivo == 'manual') {
-            $evaluados = $opts;
-        } else {
-            $evaluados = GruposEvaluado::find(intval($evaluados_objetivo))->empleados->pluck('id')->toArray();
+        if ($evaluados_objetivo != null) {
+            if ($evaluados_objetivo == 'all') {
+                $evaluados = Empleado::pluck('id')->toArray();
+            } elseif ($evaluados_objetivo == 'area') {
+                $evaluados_area = intval($opts);
+                $evaluados = Empleado::where('area_id', $evaluados_area)->pluck('id')->toArray();
+            } elseif ($evaluados_objetivo == 'manual') {
+                $evaluados = $opts;
+            } else {
+                $evaluados = GruposEvaluado::find(intval($evaluados_objetivo))->empleados->pluck('id')->toArray();
+            }
+
+            return $evaluados;
         }
 
-        return $evaluados;
+        return [];
     }
 
     public function edit(ComunicacionSgi $comunicacionSgi)

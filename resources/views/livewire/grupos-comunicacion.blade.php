@@ -3,10 +3,10 @@
         <div class="row justify-content-center align-items-center">
             <div class="col-9">
                 <label class="mb-0" for="descripcion">
-                    <i class="fas fa-users iconos-crear"></i> Público objetivo <small class="text-danger">*</small>
+                    <i class="fas fa-users iconos-crear"></i> Público objetivo <small class="text-danger"></small>
                 </label>
                 <select class="mt-2 form-control {{ $errors->has('evaluados_objetivo') ? 'is-invalid' : '' }}"
-                    wire:model="evaluados_objetivo" id="evaluados_objetivo" name="evaluados_objetivo[]"
+                    wire:model="evaluados_objetivo" id="evaluados_objetivo" name="evaluados_objetivo"
                     wire:change="habilitarSelectAlternativo()">
                     <option value="" selected>-- Seleciona una opción --</option>
                     <option value="all">Toda la empresa</option>
@@ -48,7 +48,7 @@
                     <label class="m-0 mt-2" for="">Selecciona a los empleados a
                         evaluar</label>
                     <select class="mt-3 form-control {{ $errors->has('by_manual') ? 'is-invalid' : '' }}" multiple
-                        id="by_manual" wire:model.defer="by_manual" name="by_manual">
+                        id="by_manual" wire:model.defer="by_manual" name="by_manual[]">
                         @foreach ($empleados as $empleado)
                             <option value="{{ $empleado->id }}">
                                 {{ $empleado->name }}
