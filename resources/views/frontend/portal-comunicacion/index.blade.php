@@ -107,10 +107,11 @@
             padding-top: 0 !important;
         }
 
-        .caja_btn_silent{
+        .caja_btn_silent {
             position: relative;
         }
-        .btn-silent{
+
+        .btn-silent {
             display: block;
             width: 100%;
             position: relative;
@@ -119,7 +120,8 @@
             padding: 10px 0;
             cursor: pointer;
         }
-        .btn-silent:before{
+
+        .btn-silent:before {
             content: "";
             position: absolute;
             width: 0%;
@@ -129,7 +131,8 @@
             transition: 0.3s;
             z-index: 1;
         }
-        .btn-silent:after{
+
+        .btn-silent:after {
             content: "";
             position: absolute;
             width: 100%;
@@ -140,26 +143,31 @@
             left: 0;
             z-index: 0;
         }
-        .btn-silent:hover:before{
+
+        .btn-silent:hover:before {
             width: 100%;
         }
-        .btn-silent i{
+
+        .btn-silent i {
             font-size: 15pt;
         }
-        .btn-silent span{
+
+        .btn-silent span {
             position: absolute;
             left: 50px;
         }
-        .btn-silent:hover{
+
+        .btn-silent:hover {
             color: #345183 !important;
         }
 
     </style>
     <style type="text/css">
-        body{
+        body {
             background-color: #fff !important;
         }
-        .titulo-seccion{
+
+        .titulo-seccion {
             font-weight: bolder;
             font-size: 15pt;
             margin-bottom: 0px;
@@ -168,33 +176,37 @@
             padding-bottom: 7px;
             padding-left: 20px;
         }
-        .titulo-seccion i{
+
+        .titulo-seccion i {
             margin-left: -18px;
             font-size: 17pt;
         }
 
 
-        .carousel-item{
+        .carousel-item {
             text-align: center;
             background-color: #f1f1f1;
         }
-        .img_carrusel{
+
+        .img_carrusel {
             height: 300px !important;
             opacity: 0.8;
 
-            background-size: cover;
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: all;
         }
-        .carousel-caption{
+
+        .carousel-caption {
             z-index: 3;
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
         }
-        .carousel-inner h5{
+
+        .carousel-inner h5 {
             text-shadow: 0px 0px 3px #000 !important;
             text-align: left;
             z-index: 1;
@@ -208,54 +220,64 @@
             transition: 0.2s;
             text-align: center;
         }
-        .carousel-inner:hover h5{
+
+        .carousel-inner:hover h5 {
             opacity: 1;
         }
-        .carousel-inner p{
+
+        .carousel-inner p {
             display: none;
         }
-        .carousel-control-prev, .carousel-control-next{
+
+        .carousel-control-prev,
+        .carousel-control-next {
             opacity: 1 !important;
             z-index: 3;
         }
-        .carousel-indicators li{
+
+        .carousel-indicators li {
             opacity: 1 !important;
         }
-        .carousel-indicators li.active{
+
+        .carousel-indicators li.active {
             opacity: 1 !important;
             background-color: #345183 !important;
         }
 
 
-        .comunicado{
+        .comunicado {
             display: flex;
             height: 200px;
             align-items: center;
             justify-content: space-between;
         }
-        .comunicado{
+
+        .comunicado {
             margin-top: 10px;
         }
-        .img_comunicado{
+
+        .img_comunicado {
             width: 33.3%;
             height: 200px;
 
-            background-size: cover;
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: all;
         }
-        .text_comunicado{
+
+        .text_comunicado {
             width: calc(100% - 200px);
             padding: 0 20px;
 
         }
-        .text_comunicado p{
+
+        .text_comunicado p {
             text-align: justify;
         }
 
 
-        .doc_publicado{
+        .doc_publicado {
             display: flex;
             align-items: center;
             position: relative;
@@ -265,33 +287,41 @@
             box-sizing: border-box;
             border-radius: 7px;
         }
-        .doc_publicado{
+
+        .doc_publicado {
             margin-top: 20px;
         }
-        .icon_doc{
+
+        .icon_doc {
             display: flex;
             align-items: center;
             width: 10%;
         }
-        .icon_doc i{
+
+        .icon_doc i {
             font-size: 50pt;
             color: #B30909;
             transition: 0.1s;
         }
-        .icon_doc i:hover{
+
+        .icon_doc i:hover {
             transform: scale(1.1);
             filter: brightness(1.5);
         }
-        .text_doc{
+
+        .text_doc {
             width: 70%;
         }
-        .text_doc h5{
+
+        .text_doc h5 {
             font-weight: bold;
         }
-        .opciones_doc{
+
+        .opciones_doc {
             width: 20%;
         }
-        .img_empleado{
+
+        .img_empleado {
             height: 40px;
             width: auto;
             clip-path: circle(20px at 50% 50%);
@@ -299,58 +329,62 @@
 
 
 
-        .cuadro_empleados{
+        .cuadro_empleados {
             position: sticky;
             top: 56px;
-            height: 600px ;
+            height: 600px;
             overflow-y: auto;
         }
 
-        @media(max-with: 1000px){
-            .cuadro_empleados{
+        @media(max-with: 1000px) {
+            .cuadro_empleados {
                 position: relative !important;
                 height: auto !important;
             }
         }
 
 
-        .caja_nuevo{
-        }
+        .caja_nuevo {}
 
-        .nuevo{
+        .nuevo {
             text-align: center;
             background-color: #f3f3f3;
             border-left: 2px solid #345183;
             margin-top: 10px;
             padding: 10px;
         }
-        .nombre_nuevo{
+
+        .nombre_nuevo {
             font-size: 12pt;
             text-align: center;
             width: 100%;
             margin-top: 10px;
             font-weight: bold;
         }
-        .img_nuevo{
+
+        .img_nuevo {
             width: 100%;
             text-align: center;
         }
-        .img_nuevo img{
 
-        }
-        .datos_nuevo{
+        .img_nuevo img {}
+
+        .datos_nuevo {
             width: 100%;
         }
-        .datos_nuevo h6{
+
+        .datos_nuevo h6 {
             margin: 0;
             font-weight: bold;
         }
-        .datos_nuevo p{
+
+        .datos_nuevo p {
             margin: 0;
             margin-bottom: 4px;
             line-height: 20px;
             margin-top: -5px;
         }
+
     </style>
 
 
@@ -367,8 +401,10 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-12 col-12 col-lg-3">
-                    <div class="p-2" id="clima" style="border-left: solid 2px #345183; background-color: #e6e6e6;"></div>
-                    <div class="p-3" style=" margin-top: 20px; border-left: solid 2px #345183;  background-color: #f3f3f3;">
+                    <div class="p-2" id="clima"
+                        style="border-left: solid 2px #345183; background-color: #e6e6e6;"></div>
+                    <div class="p-3"
+                        style=" margin-top: 20px; border-left: solid 2px #345183;  background-color: #f3f3f3;">
                         <div class="calendar calendar-first" id="calendar_first">
                             <div class="calendar_header">
                                 <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
@@ -383,33 +419,36 @@
                 <div class="col-sm-12 col-12 col-lg-6">
                     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            @foreach($comunicacionSgis_carrusel as $idx=>$carrusel)
-                                <li data-target="#carouselExampleCaptions" data-slide-to="{{$idx}}" class="{{ $idx == 0 ? 'active' : ''}}"></li>
+                            @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
+                                <li data-target="#carouselExampleCaptions" data-slide-to="{{ $idx }}"
+                                    class="{{ $idx == 0 ? 'active' : '' }}"></li>
                             @endforeach
                         </ol>
                         <div class="carousel-inner">
                             @forelse($comunicacionSgis_carrusel as $idx=>$carrusel)
                                 @php
-                                    if(($carrusel->first()->count())){
-                                        if($carrusel->imagenes_comunicacion->first()){
-                                            $imagen= 'storage/imagen_comunicado_SGI/'.$carrusel->imagenes_comunicacion->first()->imagen;
+                                    if ($carrusel->first()->count()) {
+                                        if ($carrusel->imagenes_comunicacion->first()) {
+                                            $imagen = 'storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen;
                                         }
+                                    } else {
+                                        $imagen = 'img/tabantaj_fondo_blanco.png';
                                     }
-                                    else{
-                                        $imagen= 'img/tabantaj_fondo_blanco.png';
-                                    }
-
+                                    
                                 @endphp
-                                <div class="carousel-item {{ $idx == 0 ? 'active' : ''}}">
-                                    <div class="img_carrusel" style="background-image: url('{{asset($imagen)}}');"></div>
+                                <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}">
+                                    <div class="img_carrusel" style="background-image: url('{{ asset($imagen) }}');">
+                                    </div>
                                     <div class="carousel-caption d-none d-md-block">
-                                        <h5>{{$carrusel->titulo}}</h5>
+                                        <h5>{{ $carrusel->titulo }}</h5>
                                         {!! Str::limit($carrusel->descripcion, 100, '...') !!}
                                     </div>
                                 </div>
                             @empty
                                 <div class="carousel-item active">
-                                    <div class="img_carrusel" style="background-image: url('{{asset('img/tabantaj_fondo_blanco.png')}}');"></div>
+                                    <div class="img_carrusel"
+                                        style="background-image: url('{{ asset('img/tabantaj_fondo_blanco.png') }}');">
+                                    </div>
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5>Sin Comunicados</h5>
                                         <p></p>
@@ -431,13 +470,20 @@
                     </div>
                 </div>
                 <div class="col-lg-3 caja_btn_silent">
-                    <a class="btn-silent" href="{{ asset('organizacions') }}"><i class="mr-2 fas fa-gopuram"></i> <span>Organización</span></a>
-                    <a class="btn-silent" href="{{ asset('organigrama') }}"><i class="mr-2 fas fa-sitemap"></i> <span>Organigrama</span></a>
-                    <a class="btn-silent" href="{{ asset('documentos/publicados') }}"><i class="mr-2 fas fa-folder"></i> <span>Documentos</span></a>
-                    <a class="btn-silent" href="{{ asset('politica-sgsis/visualizacion') }}"><i class="mr-2 fas fa-file"></i> <span>Política SGSI</span></a>
-                    <a class="btn-silent" href="{{ asset('comiteseguridads/visualizacion') }}"><i class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
-                    <a class="btn-silent" href="{{ asset('sedes/organizacion') }}"><i class="mr-2 fas fa-map-marked-alt "></i> <span>Sedes</span></a>
-                    <a class="btn-silent" href="{{ asset('portal-comunicacion/reportes') }}"><i class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
+                    <a class="btn-silent" href="{{ asset('organizacions') }}"><i class="mr-2 fas fa-gopuram"></i>
+                        <span>Organización</span></a>
+                    <a class="btn-silent" href="{{ asset('organigrama') }}"><i class="mr-2 fas fa-sitemap"></i>
+                        <span>Organigrama</span></a>
+                    <a class="btn-silent" href="{{ asset('documentos/publicados') }}"><i
+                            class="mr-2 fas fa-folder"></i> <span>Documentos</span></a>
+                    <a class="btn-silent" href="{{ asset('politica-sgsis/visualizacion') }}"><i
+                            class="mr-2 fas fa-file"></i> <span>Política SGSI</span></a>
+                    <a class="btn-silent" href="{{ asset('comiteseguridads/visualizacion') }}"><i
+                            class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
+                    <a class="btn-silent" href="{{ asset('sedes/organizacion') }}"><i
+                            class="mr-2 fas fa-map-marked-alt "></i> <span>Sedes</span></a>
+                    <a class="btn-silent" href="{{ asset('portal-comunicacion/reportes') }}"><i
+                            class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
                 </div>
 
 
@@ -448,31 +494,31 @@
                     @forelse($comunicacionSgis as $comunicacionSgi)
                         <div class="comunicado" style="position:relative;">
                             @php
-                            if(($comunicacionSgi->first()->count())){
-                                if($carrusel->imagenes_comunicacion->first()){
-                                    $imagen= 'storage/imagen_comunicado_SGI/'.$comunicacionSgi->imagenes_comunicacion->first()->imagen;
-                                }        
-                            }
-                            else{
-                                $imagen= 'img/portal_404.png';
-                            }
-
+                                if ($comunicacionSgi->first()->count()) {
+                                    if ($carrusel->imagenes_comunicacion->first()) {
+                                        $imagen = 'storage/imagen_comunicado_SGI/' . $comunicacionSgi->imagenes_comunicacion->first()->imagen;
+                                    }
+                                } else {
+                                    $imagen = 'img/portal_404.png';
+                                }
+                                
                             @endphp
 
                             {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
 
                             <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');"></div>
                             <div class="text_comunicado">
-                                <h4 class="w-100">{{$comunicacionSgi->titulo}}</h4>
+                                <h4 class="w-100">{{ $comunicacionSgi->titulo }}</h4>
                                 <p class="w-100" style="text-align: justify;">
                                     {!! Str::limit($comunicacionSgi->descripcion, 200, '...') !!}
                                 </p>
-                                <a href="{{ asset('comunicacion-sgis/'.$comunicacionSgi->id) }}">Leer más</a>
+                                <a href="{{ asset('comunicacion-sgis/' . $comunicacionSgi->id) }}">Leer más</a>
                             </div>
                         </div>
-                        @empty
+                    @empty
                         <div class="comunicado" style="position:relative;">
-                            <div class="img_comunicado" style="background-image: url('{{ asset('img/portal_404.png') }}');"></div>
+                            <div class="img_comunicado"
+                                style="background-image: url('{{ asset('img/portal_404.png') }}');"></div>
                             <div class="text_comunicado">
                                 <h4 class="w-100">Sin comunicados que mostar</h4>
                                 <p class="w-100">
@@ -509,14 +555,17 @@
                     @forelse($documentos_publicados as $documento)
                         <div class="doc_publicado">
                             <div class="icon_doc">
-                                <a href="{{ route('documentos.renderViewDocument', $documento->id) }}" title="Ver documento">
+                                <a href="{{ route('documentos.renderViewDocument', $documento->id) }}"
+                                    title="Ver documento">
                                     <i class="fas fa-file-pdf"></i>
                                 </a>
                             </div>
                             <div class="text_doc">
-                                <h5>{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}</h5>
+                                <h5>{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
+                                </h5>
                                 <p>
-                                    Se ha publicado el documento {{$documento->codigo}} {{$documento->nombre}} el 10/10/21.
+                                    Se ha publicado el documento {{ $documento->codigo }} {{ $documento->nombre }} el
+                                    10/10/21.
                                 </p>
                                 <p>
                                     <span class="badge badge-dark"
@@ -529,17 +578,19 @@
                                         <span class="badge badge-success"
                                             style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
                                     @endif
-                                    <span style="color:red; margin-left:20px;"><i class="fas fa-eye"></i> <strong>{{ $documento->no_vistas }}</strong></span>
+                                    <span style="color:red; margin-left:20px;"><i class="fas fa-eye"></i>
+                                        <strong>{{ $documento->no_vistas }}</strong></span>
                                 </p>
                             </div>
                             <div class="opciones_doc">
                                 <h6><strong>Responsable:</strong></h6>
-                                <img src="{{asset('storage/empleados/imagenes/'.$documento->responsable->foto)}}" class="img_empleado" title="{{$documento->responsable->name}}"><br/>
+                                <img src="{{ asset('storage/empleados/imagenes/' . $documento->responsable->foto) }}"
+                                    class="img_empleado" title="{{ $documento->responsable->name }}"><br />
                                 <a href="{{ route('documentos.renderViewDocument', $documento->id) }}">Ver documento</a>
                             </div>
                         </div>
 
-                        @empty
+                    @empty
                         <p>Sin documentos registrados</p>
                     @endforelse
                 </div>
@@ -555,26 +606,28 @@
                             @forelse($nuevos as $nuevo)
                                 <div class="nuevo">
                                     <div class="img_nuevo">
-                                        @if(is_null($nuevo->foto))
-                                            <img src="{{asset('storage/empleados/imagenes/usuario_no_cargado.png')}}" class="img_empleado">
+                                        @if (is_null($nuevo->foto))
+                                            <img src="{{ asset('storage/empleados/imagenes/usuario_no_cargado.png') }}"
+                                                class="img_empleado">
                                         @else
-                                             <img src="{{asset('storage/empleados/imagenes/'.$nuevo->foto)}}" class="img_empleado">
+                                            <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->foto) }}"
+                                                class="img_empleado">
                                         @endif
                                     </div>
-                                    <h5 class="nombre_nuevo">{{$nuevo->name}}</h5>
+                                    <h5 class="nombre_nuevo">{{ $nuevo->name }}</h5>
                                     <div class="datos_nuevo">
-                                        <p>{{$nuevo->puesto}}<br>
-                                            @if(is_null($nuevo->area->area))
+                                        <p>{{ $nuevo->puesto }}<br>
+                                            @if (is_null($nuevo->area->area))
                                                 No hay Area
                                             @else
-                                                {{$nuevo->area->area}}
+                                                {{ $nuevo->area->area }}
                                             @endif
-                                            </p>
+                                        </p>
                                         <h6 class="mt-3">Fecha de ingreso</h6>
                                         <span>{{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}</span>
                                     </div>
                                 </div>
-                                @empty
+                            @empty
                                 <div class="nuevo">No hay nuevos ingresos registrados en este mes.</div>
                             @endforelse
 
@@ -587,26 +640,28 @@
                             @forelse($cumpleaños as $cumple)
                                 <div class="nuevo">
                                     <div class="img_nuevo">
-                                        @if(is_null($cumple->foto))
-                                            <img src="{{asset('storage/empleados/imagenes/usuario_no_cargado.png')}}" class="img_empleado">
+                                        @if (is_null($cumple->foto))
+                                            <img src="{{ asset('storage/empleados/imagenes/usuario_no_cargado.png') }}"
+                                                class="img_empleado">
                                         @else
-                                             <img src="{{asset('storage/empleados/imagenes/'.$cumple->foto)}}" class="img_empleado">
+                                            <img src="{{ asset('storage/empleados/imagenes/' . $cumple->foto) }}"
+                                                class="img_empleado">
                                         @endif
                                     </div>
-                                    <h5 class="nombre_nuevo">{{$cumple->name}}</h5>
+                                    <h5 class="nombre_nuevo">{{ $cumple->name }}</h5>
                                     <div class="datos_nuevo">
-                                        <p>{{$cumple->puesto}}<br>
-                                            @if(is_null($cumple->area->area))
+                                        <p>{{ $cumple->puesto }}<br>
+                                            @if (is_null($cumple->area->area))
                                                 No hay Area
                                             @else
-                                                {{$cumple->area->area}}
+                                                {{ $cumple->area->area }}
                                             @endif
-                                            </p>
+                                        </p>
                                         <h6 class="mt-3">Fecha de cumpleaños</h6>
                                         <span>{{ \Carbon\Carbon::parse($cumple->cumpleaños)->format('d-m-Y') }}</span>
                                     </div>
                                 </div>
-                                @empty
+                            @empty
                                 <div class="nuevo">No hay cumpleaños registrados en este mes.</div>
                             @endforelse
                         </div>
@@ -617,32 +672,34 @@
                         <div class="caja_nuevo">
                             <div class="caja_nuevo">
                                 @forelse($aniversarios as $aniversario)
-
-                                    @if((\Carbon\Carbon::parse($aniversario->antiguedad)->format('Y')) < $hoy->format('Y'))
+                                    @if (\Carbon\Carbon::parse($aniversario->antiguedad)->format('Y') < $hoy->format('Y'))
                                         <div class="nuevo">
                                             <div class="img_nuevo">
-                                                @if(is_null($aniversario->foto))
-                                                    <img src="{{asset('storage/empleados/imagenes/usuario_no_cargado.png')}}" class="img_empleado">
+                                                @if (is_null($aniversario->foto))
+                                                    <img src="{{ asset('storage/empleados/imagenes/usuario_no_cargado.png') }}"
+                                                        class="img_empleado">
                                                 @else
-                                                     <img src="{{asset('storage/empleados/imagenes/'.$aniversario->foto)}}" class="img_empleado">
+                                                    <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->foto) }}"
+                                                        class="img_empleado">
                                                 @endif
                                             </div>
-                                            <h5 class="nombre_nuevo">{{$aniversario->name}}</h5>
+                                            <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
                                             <div class="datos_nuevo">
-                                                <p>{{$aniversario->puesto}}<br>
-                                                    @if(is_null($aniversario->area->area))
+                                                <p>{{ $aniversario->puesto }}<br>
+                                                    @if (is_null($aniversario->area->area))
                                                         No hay Area
                                                     @else
-                                                        {{$aniversario->area->area}}
+                                                        {{ $aniversario->area->area }}
                                                     @endif
                                                 </p>
                                                 <h6 class="mt-3">Antigüedad</h6>
-                                                <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }} año(s)
+                                                <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }}
+                                                    año(s)
                                                 </span>
                                             </div>
                                         </div>
                                     @endif
-                                    @empty
+                                @empty
                                     <div class="nuevo">No hay aniversarios registrados en este mes.</div>
                                 @endforelse
                             </div>

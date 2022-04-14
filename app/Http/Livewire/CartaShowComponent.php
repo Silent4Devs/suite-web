@@ -6,8 +6,8 @@ use Livewire\Component;
 
 class CartaShowComponent extends Component
 {
-    public $procesoId ;
-    public $proceso_data ;
+    public $procesoId;
+    public $proceso_data;
     public $operacional;
     public $legal;
     public $cumplimiento;
@@ -22,11 +22,10 @@ class CartaShowComponent extends Component
     public $tecnologicoTxt;
     public $impacto;
     public $probabilidad;
-    public $promedioDisponibilidad = [] ;
+    public $promedioDisponibilidad = [];
     public $promedioIntegridad = [];
-    public $promedioConfidencialidad= [];
-    public $coordenada_tabla= '4,5';
-
+    public $promedioConfidencialidad = [];
+    public $coordenada_tabla = '4,5';
 
     public function render()
     {

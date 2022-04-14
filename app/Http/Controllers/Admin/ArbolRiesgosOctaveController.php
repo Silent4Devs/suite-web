@@ -16,7 +16,7 @@ class ArbolRiesgosOctaveController extends Controller
         $existeArbol = $procesosTree['children']->count() > 0;
         $rutaImagenes = asset('storage/empleados/imagenes/');
 
-        return view('admin.OCTAVE.arbol-riesgos', compact('procesosTree', 'organizacion', 'existeArbol', 'rutaImagenes','matriz'));
+        return view('admin.OCTAVE.arbol-riesgos', compact('procesosTree', 'organizacion', 'existeArbol', 'rutaImagenes', 'matriz'));
     }
 
     public function obtenerRamas()

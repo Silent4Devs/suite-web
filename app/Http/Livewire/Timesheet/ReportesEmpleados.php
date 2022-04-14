@@ -2,12 +2,9 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use Livewire\Component;
-use App\Models\Timesheet;
-use App\Models\TimesheetHoras;
-use App\Models\TimesheetProyecto;
-use App\Models\TimesheetTarea;
 use App\Models\Empleado;
+use App\Models\Timesheet;
+use Livewire\Component;
 
 class ReportesEmpleados extends Component
 {
@@ -27,7 +24,6 @@ class ReportesEmpleados extends Component
 
     public function mount()
     {
-         
     }
 
     public function render()

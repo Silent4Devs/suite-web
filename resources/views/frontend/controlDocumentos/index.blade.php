@@ -236,6 +236,7 @@
         ];
 
         let table = $('#tbl_documentos_control').DataTable({
+            destroy: true,
             buttons: dtButtons,
         });
     });

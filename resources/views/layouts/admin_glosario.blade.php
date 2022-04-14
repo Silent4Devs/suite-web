@@ -940,20 +940,21 @@
         }
 
         /*iconos de alertas azules*/
-        .w-100 .bi.bi-info.mr-3{
+        .w-100 .bi.bi-info.mr-3 {
             margin-right: 0px !important;
             margin-left: 20px !important;
             font-size: 20px;
         }
 
-        .nav.nav-tabs{
+        .nav.nav-tabs {
             margin-bottom: 30px !important;
         }
 
-        .nav.nav-tabs .nav-link.active{
+        .nav.nav-tabs .nav-link.active {
             background-color: #345183 !important;
             color: #fff !important;
         }
+
     </style>
 
     @yield('styles')
@@ -1017,7 +1018,8 @@
                             @foreach (config('panel.available_languages') as $langLocale => $langName)
                                 <a class="dropdown-item"
                                     href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
-                                    ({{ $langName }})</a>
+                                    ({{ $langName }})
+                                </a>
                             @endforeach
                         </div>
                     </li>
@@ -1090,14 +1092,12 @@
                             <div class="px-3 mt-1 d-flex justify-content-center">
                                 @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                                     @can('profile_password_edit')
-
                                         <a style="all: unset; color: #747474; cursor: pointer;"
                                             class=" {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
                                             href="{{ route('profile.password.edit') }}">
                                             <i class="bi bi-gear"></i>
                                             Configurar Perfil
                                         </a>
-
                                     @endcan
                                 @endif
                                 &nbsp;&nbsp;&nbsp;&nbsp;<font style="color: #747474;">|</font>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1205,7 +1205,8 @@
 
     <script>
         window.Laravel.user = {!! json_encode([
-        'user' => auth()->check() ? auth()->user()->id : null,]) !!};
+    'user' => auth()->check() ? auth()->user()->id : null,
+]) !!};
     </script>
     <script src="//unpkg.com/alpinejs" defer></script>
 
@@ -1217,7 +1218,7 @@
     <script>
         $(document).ready(function() {
             $('.c-sidebar-nav').animate({
-                scrollTop: $(".c-active").offset().top - 350
+                scrollTop: $(".c-active").offset()?.top - 350
             }, 0);
         });
         $(function() {
@@ -1591,8 +1592,8 @@
 
     <script src="{{ asset('/sw.js') }}"></script>
     <script>
-        if (!navigator.serviceWorker.controller) {
-            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+        if (!navigator.serviceWorker?.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function(reg) {
                 console.log("Service worker has been registered for scope: " + reg.scope);
             });
         }

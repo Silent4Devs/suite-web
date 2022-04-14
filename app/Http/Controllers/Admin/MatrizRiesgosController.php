@@ -1015,6 +1015,6 @@ class MatrizRiesgosController extends Controller
         $activos = ActivoInformacion::get();
         $activos_contenedores = ActivoInformacion::get();
 
-        return view('admin.OCTAVE.graficas', compact('procesos', 'direcciones', 'servicios', 'activos', 'activos_contenedores','matriz'));
+        return view('admin.OCTAVE.graficas', compact('procesos', 'direcciones', 'servicios', 'activos', 'activos_contenedores', 'matriz'));
     }
 }

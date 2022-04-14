@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class CartaAceptacionAprobacione
+ * Class CartaAceptacionAprobacione.
  *
  * @property int $id
  * @property int $aprobador_id
@@ -20,36 +20,40 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  *
  * @property Empleado $empleado
- *
- * @package App\Models
  */
 class CartaAceptacionAprobacione extends Model
 {
-	use SoftDeletes;
-	protected $table = 'carta_aceptacion_aprobaciones';
+    use SoftDeletes;
+    protected $table = 'carta_aceptacion_aprobaciones';
 
-	protected $casts = [
-		'aprobador_id' => 'int',
-		'estado' => 'int'
-	];
+    protected $casts = [
+        'aprobador_id' => 'int',
+        'estado' => 'int',
+    ];
 
-	protected $fillable = [
-		'aprobador_id',
-		'autoridad',
-		'comentarios',
-		'firma',
-		'estado',
+    protected $fillable = [
+        'aprobador_id',
+        'autoridad',
+        'comentarios',
+        'firma',
+        'estado',
         'carta_id',
-        'fecha_aprobacion'
-	];
+        'fecha_aprobacion',
+        'nivel',
+    ];
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class, 'aprobador_id');
-	}
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'aprobador_id');
+    }
 
     public function carta()
-	{
-		return $this->belongsTo(CartaAceptacion::class, 'carta_id');
-	}
+    {
+        return $this->belongsTo(CartaAceptacion::class, 'carta_id');
+    }
+
+    public function aprobacionesActivo()
+    {
+        return $this->hasMany(ActivosInformacionAprobacione::class, 'carta_aceptacion_aprobacion_id');
+    }
 }
