@@ -115,9 +115,9 @@ class EntendimientoOrganizacionController extends Controller
 
     public function vincularParticipantes($participantesA, $model)
     {
-        if(is_array($participantesA)){
+        if (is_array($participantesA)) {
             $participantes = $participantesA;
-        }else{
+        } else {
             $arrstrParticipantes = explode(',', $participantesA);
             $participantes = array_map(function ($valor) {
                 return intval($valor);
@@ -167,10 +167,10 @@ class EntendimientoOrganizacionController extends Controller
 
         $empleados = Empleado::get();
         $obtener_FODA = $entendimientoOrganizacion;
-        $fortalezas = FortalezasEntendimientoOrganizacion::where('foda_id',$entendimientoOrganizacion->id)->get();
-        $oportunidades = OportunidadesEntendimientoOrganizacion::where('foda_id',$entendimientoOrganizacion->id)->get();
-        $amenazas = AmenazasEntendimientoOrganizacion::where('foda_id',$entendimientoOrganizacion->id)->get();
-        $debilidades = DebilidadesEntendimientoOrganizacion::where('foda_id',$entendimientoOrganizacion->id)->get();
+        $fortalezas = FortalezasEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
+        $oportunidades = OportunidadesEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
+        $amenazas = AmenazasEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
+        $debilidades = DebilidadesEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
 
         return view('admin.entendimientoOrganizacions.show', compact('fortalezas', 'oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA'));
     }
@@ -191,14 +191,14 @@ class EntendimientoOrganizacionController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function duplicarFoda(Request $request){
-
-        $fodaOld = EntendimientoOrganizacion::with('participantes','fodafortalezas','fodaoportunidades','fodadebilidades','fodamenazas')->find($request->id);
+    public function duplicarFoda(Request $request)
+    {
+        $fodaOld = EntendimientoOrganizacion::with('participantes', 'fodafortalezas', 'fodaoportunidades', 'fodadebilidades', 'fodamenazas')->find($request->id);
         $participantes = $fodaOld->participantes->pluck('id')->toArray();
-        $fortalezas=$fodaOld->fodafortalezas;
-        $oportunidades=$fodaOld->fodaoportunidades;
-        $debilidades=$fodaOld->fodadebilidades;
-        $amenazas=$fodaOld->fodamenazas;
+        $fortalezas = $fodaOld->fodafortalezas;
+        $oportunidades = $fodaOld->fodaoportunidades;
+        $debilidades = $fodaOld->fodadebilidades;
+        $amenazas = $fodaOld->fodamenazas;
 
         $foda = EntendimientoOrganizacion::create([
             'analisis'=>$fodaOld->analisis,
@@ -207,7 +207,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         // Almacenamiento de participantes relacionados
         $this->vincularParticipantes($participantes, $foda);
-        foreach($fortalezas as $fortaleza){
+        foreach ($fortalezas as $fortaleza) {
             FortalezasEntendimientoOrganizacion::create([
                 'foda_id' => $foda->id,
                 'fortaleza' => $fortaleza->fortaleza,
@@ -215,7 +215,7 @@ class EntendimientoOrganizacionController extends Controller
             ]);
         }
 
-        foreach($oportunidades as $oportunidad){
+        foreach ($oportunidades as $oportunidad) {
             OportunidadesEntendimientoOrganizacion::create([
                 'foda_id' => $foda->id,
                 'oportunidad' => $oportunidad->oportunidad,
@@ -223,7 +223,7 @@ class EntendimientoOrganizacionController extends Controller
             ]);
         }
 
-        foreach($debilidades as $debilidad){
+        foreach ($debilidades as $debilidad) {
             DebilidadesEntendimientoOrganizacion::create([
                 'foda_id' => $foda->id,
                 'debilidad' => $debilidad->debilidad,
@@ -231,7 +231,7 @@ class EntendimientoOrganizacionController extends Controller
             ]);
         }
 
-        foreach($amenazas as $amenaza){
+        foreach ($amenazas as $amenaza) {
             AmenazasEntendimientoOrganizacion::create([
                 'foda_id' => $foda->id,
                 'amenaza' => $amenaza->amenaza,
@@ -239,7 +239,7 @@ class EntendimientoOrganizacionController extends Controller
             ]);
         }
 
-        return response()->json(['success' => true,'id'=>$foda->id]);
+        return response()->json(['success' => true, 'id'=>$foda->id]);
     }
 
     // public function edit()
