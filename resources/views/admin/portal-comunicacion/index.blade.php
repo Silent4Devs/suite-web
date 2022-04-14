@@ -130,14 +130,14 @@
 
         .btn-silent:after {
             /*content: "";
-                position: absolute;
-                width: 100%;
-                height: 2px;
-                bottom: 5px;
-                background-color: #e6e6e6;
-                transition: 0.4s;
-                left: 0;
-                z-index: 0;*/
+                    position: absolute;
+                    width: 100%;
+                    height: 2px;
+                    bottom: 5px;
+                    background-color: #e6e6e6;
+                    transition: 0.4s;
+                    left: 0;
+                    z-index: 0;*/
         }
 
         .btn-silent:hover:before {
@@ -182,7 +182,7 @@
             height: 320px !important;
             opacity: 0.8;
 
-            background-size: cover;
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: all;
