@@ -83,9 +83,9 @@
 
 
     @if (Request::route()->getName() == 'admin.entendimiento-organizacions.index')
-    <a class="mr-2 rounded btn btn-sm" href="">
-        {{-- {{ trans('global.view') }} --}}<i class="fas fa-copy" title="Duplicar FODA"></i>
-    </a>
+    <button class="mr-2 rounded btn btn-sm" >
+        <i class="fas fa-copy" title="Duplicar FODA" data-type="copiaFoda" data-id="{{$row->id}}"></i>
+    </button>
     @endif
 
     @can($viewGate)

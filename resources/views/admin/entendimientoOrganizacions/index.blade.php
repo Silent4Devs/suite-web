@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .btn_cargar {
             border-radius: 100px !important;
@@ -47,15 +46,17 @@
             </div> --}}
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modalentendimientoorganizacions', ['model' => 'Amenaza', 'route' =>
-                    'admin.amenazas.parseCsvImport'])
+                    @include('csvImport.modalentendimientoorganizacions', [
+                        'model' => 'Amenaza',
+                        'route' => 'admin.amenazas.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-EntendimientoOrganizacion">
+            <table class="table table-bordered w-100 datatable-EntendimientoOrganizacion" id="tblFoda">
                 <thead class="thead-dark">
                     <tr>
                         <th>
@@ -203,7 +204,6 @@
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
-
             @endcan
             @can('entendimiento_organizacion_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
@@ -270,6 +270,59 @@
             };
 
             let table = $('.datatable-EntendimientoOrganizacion').DataTable(dtOverrideGlobals);
+            document.getElementById('tblFoda').addEventListener('click', function(e) {
+
+                if (e.target.getAttribute('data-type') == 'copiaFoda') {
+                    e.preventDefault();
+                    let id = e.target.getAttribute('data-id');
+                    Swal.fire({
+                        title: '¿Desea duplicar el análisis FODA?',
+                        text: "Toda la información generada para este análisis se repetira",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Duplicar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                headers: {
+
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+
+                                },
+                                url: "{{ route('admin.entendimiento-organizacions.duplicarFoda') }}",
+                                data: {
+                                    id
+                                },
+                                dataType: "json",
+                                beforeSend: function() {
+                                    toastr.info('Duplicando Foda, espere un momento');
+                                },
+                                success: function(response) {
+                                    if (response.success) {
+                                        toastr.success('Foda Duplicado');
+                                        setTimeout(() => {
+                                            window.location.href =
+                                                `/admin/entendimiento-organizacions/${response.id}/edit`
+                                        }, 1500);
+                                    }
+                                },
+                                error: function(request, status, error) {
+
+                                    console.log(error);
+
+                                    toastr.error('Ocurrio un error al guardar: ' +
+                                        request.responseText);
+
+                                }
+                            });
+                        }
+                    })
+                }
+            })
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();

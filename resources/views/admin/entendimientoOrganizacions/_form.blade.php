@@ -30,7 +30,7 @@
                 <option value="">Seleccione una opción</option>
                 @foreach ($empleados as $empleado)
                     <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
-                        data-area="{{ $empleado->area->area }}">
+                        data-area="{{ $empleado->area->area }}"  {{ old('id_elabora', $entendimientoOrganizacion->id_elabora) == $empleado->id ? 'selected' : '' }}>
                         {{ $empleado->name }}
                     </option>
                 @endforeach
