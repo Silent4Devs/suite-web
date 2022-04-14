@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.comunicacion-sgis.create') }}
 
     <style type="text/css">
@@ -36,8 +35,8 @@
                 <div class="form-group col-12">
                     <label class="required" for="descripcion"><i class="fas fa-pencil-ruler iconos-crear"></i>
                         Contenido</label>
-                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                        name="descripcion" id="descripcion" required>{{ old('descripcion') }}</textarea>
+                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
+                        id="descripcion" required>{{ old('descripcion') }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -105,9 +104,9 @@
 
 
                 <div class="col-sm-12 col-md-6 form-group">
-                    <label class="required" for="link"><i class="fas fa-link iconos-crear"></i>Link</label>
-                    <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="text" name="link"
-                        id="link" value="{{ old('link') }}" required>
+                    <label class="" for="link"><i class="fas fa-link iconos-crear"></i>Link</label>
+                    <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="link" name="link"
+                        placeholder="http://" id="link" value="{{ old('link') }}">
                     @if ($errors->has('link'))
                         <div class="invalid-feedback">
                             {{ $errors->first('link') }}
@@ -151,9 +150,6 @@
             </form>
         </div>
     </div>
-
-
-
 @endsection
 
 @section('scripts')
