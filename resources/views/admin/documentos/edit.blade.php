@@ -183,15 +183,20 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button type="button" id="finalizarPublicacion" class="btn btn-danger">Enviar</button>
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="modalPublicar" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                    </div>
+                <div id="cargando-window-modal"
+                    style="display:none !important;position: absolute; top: 0;left: 0;width: 100%; background: rgba(77, 77, 77, 0.384);height: 100%;z-index: 1;align-items: center;display: flex;justify-content: center;">
+                    <h5 style="color:black"><i class="fas fa-circle-notch fa-spin"></i> Espere un momento...</h5>
                 </div>
             </div>
+        </div>
+        <div id="cargando-window"
+            style="display:none!important;position: absolute; top: 0;left: 0;width: 100%; background: rgba(77, 77, 77, 0.384);height: 100%;z-index: 1;align-items: center;display: flex;justify-content: center;">
+            <h5 style="color:black"><i class="fas fa-circle-notch fa-spin"></i> Espere un momento...</h5>
         </div>
     </div>
 @endsection
@@ -235,9 +240,12 @@
                     processData: false,
                     contentType: false,
                     dataType: "JSON",
+                    beforeSend: function() {
+                        document.getElementById('cargando-window').style.display = 'flex';
+                    },
                     success: function(response) {
                         console.log(response);
-                        // console.log("#formCrearDocumento");
+                        document.getElementById('cargando-window').style.display = 'none';
                         if (response.success) {
                             let errores = document.querySelectorAll('span.error-ajax');
                             errores.forEach(element => {
@@ -247,27 +255,16 @@
                             let reviso_id = document.getElementById('reviso_id').value;
                             let aprobo_id = document.getElementById('aprobo_id').value;
                             $('#revisores1').val([reviso_id]);
-                            // document.querySelectorAll("#revisores1 option[data-id-empleado]")
-                            //     .forEach(element => {
-                            //         if (Number(element.value) == Number(reviso_id)) {
-                            //             console.log(element);
-                            //             element.setAttribute('disabled', 'disabled');
-                            //         }
-                            //     });
+
                             $('#revisores1').trigger(
                                 'change'); // Notify any JS components that the value changed
                             $('#revisores2').val([aprobo_id]);
-                            // document.querySelectorAll("#revisores2 option[data-id-empleado]")
-                            //     .forEach(element => {
-                            //         if (Number(element.value) == Number(aprobo_id)) {
-                            //             console.log(element);
-                            //             element.setAttribute('disabled', 'disabled');
-                            //         }
-                            //     });
+
                             $('#revisores2').trigger('change');
                         }
                     },
                     error: function(request, status, error) {
+                        document.getElementById('cargando-window').style.display = 'none';
                         let errores = document.querySelectorAll('span.error-ajax');
                         errores.forEach(element => {
                             element.innerHTML = "";
@@ -334,8 +331,16 @@
                                 processData: false,
                                 contentType: false,
                                 dataType: "JSON",
+                                beforeSend: function() {
+                                    document.getElementById('cargando-window-modal')
+                                        .style
+                                        .display = 'flex';
+                                },
                                 success: function(response) {
                                     console.log(response);
+                                    document.getElementById('cargando-window-modal')
+                                        .style
+                                        .display = 'none';
                                     documentoCreado = response.documento_id;
                                     $.ajax({
                                         type: "POST",
@@ -351,23 +356,31 @@
                                             documentoCreado
                                         },
                                         dataType: "JSON",
+                                        beforeSend: function() {
+                                            document.getElementById(
+                                                    'cargando-window-modal')
+                                                .style
+                                                .display = 'flex';
+                                        },
                                         success: function(response) {
-                                            console.log(response);
-                                            // $('#modalPublicar').modal('hide');
+                                            document.getElementById(
+                                                    'cargando-window-modal')
+                                                .style
+                                                .display = 'none';
+                                            Swal.fire(
+                                                'Enviado a revisión!',
+                                                'Tu documento ha sido enviado a revisión, mantente al tanto de las actualizaciones',
+                                                'success'
+                                            );
+                                            setTimeout(() => {
+                                                window.location
+                                                    .href =
+                                                    "{{ route('admin.documentos.index') }}";
+                                            }, 1500);
                                         }
                                     });
                                 }
                             });
-
-                            Swal.fire(
-                                'Enviado a revisión!',
-                                'Tu documento ha sido enviado a revisión, mantente al tanto de las actualizaciones',
-                                'success'
-                            );
-                            setTimeout(() => {
-                                window.location.href =
-                                    "{{ route('admin.documentos.index') }}";
-                            }, 1500);
                         }
                     })
                 }
