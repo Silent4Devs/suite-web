@@ -192,7 +192,7 @@
             height: 300px !important;
             opacity: 0.8;
 
-            background-size: cover;
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: all;
