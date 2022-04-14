@@ -60,7 +60,6 @@
                             <div class="col-9 mt-4">
                                 <h2 class="mb-2 text-center" style="color:#345183"><strong>CARTA DE ACEPTACIÓN DE
                                         RIESGOS</strong></h2>
-
                             </div>
 
                             <div class="row">

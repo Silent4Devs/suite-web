@@ -108,17 +108,22 @@ class EntendimientoOrganizacionController extends Controller
 
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
-        $this->vincularParticipantes($request, $foda);
+        $this->vincularParticipantes($request->participantes, $foda);
 
         return redirect()->route('admin.entendimiento-organizacions.edit', $foda)->with('success', 'Análisis FODA creado correctamente');
     }
 
-    public function vincularParticipantes($request, $model)
+    public function vincularParticipantes($participantesA, $model)
     {
-        $arrstrParticipantes = explode(',', $request->participantes);
-        $participantes = array_map(function ($valor) {
-            return intval($valor);
-        }, $arrstrParticipantes);
+        if(is_array($participantesA)){
+            $participantes = $participantesA;
+        }else{
+            $arrstrParticipantes = explode(',', $participantesA);
+            $participantes = array_map(function ($valor) {
+                return intval($valor);
+            }, $arrstrParticipantes);
+        }
+
         // dd($participantes);
         $model->participantes()->sync($participantes);
     }
@@ -151,7 +156,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        $this->vincularParticipantes($request, $entendimientoOrganizacion);
+        $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
 
         return redirect()->route('admin.entendimiento-organizacions.index')->with('success', 'Análisis FODA actualizado correctamente');
     }
@@ -162,10 +167,10 @@ class EntendimientoOrganizacionController extends Controller
 
         $empleados = Empleado::get();
         $obtener_FODA = $entendimientoOrganizacion;
-        $fortalezas = FortalezasEntendimientoOrganizacion::get();
-        $oportunidades = OportunidadesEntendimientoOrganizacion::get();
-        $amenazas = AmenazasEntendimientoOrganizacion::get();
-        $debilidades = DebilidadesEntendimientoOrganizacion::get();
+        $fortalezas = FortalezasEntendimientoOrganizacion::where('foda_id',$entendimientoOrganizacion->id)->get();
+        $oportunidades = OportunidadesEntendimientoOrganizacion::where('foda_id',$entendimientoOrganizacion->id)->get();
+        $amenazas = AmenazasEntendimientoOrganizacion::where('foda_id',$entendimientoOrganizacion->id)->get();
+        $debilidades = DebilidadesEntendimientoOrganizacion::where('foda_id',$entendimientoOrganizacion->id)->get();
 
         return view('admin.entendimientoOrganizacions.show', compact('fortalezas', 'oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA'));
     }
@@ -184,6 +189,57 @@ class EntendimientoOrganizacionController extends Controller
         EntendimientoOrganizacion::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function duplicarFoda(Request $request){
+
+        $fodaOld = EntendimientoOrganizacion::with('participantes','fodafortalezas','fodaoportunidades','fodadebilidades','fodamenazas')->find($request->id);
+        $participantes = $fodaOld->participantes->pluck('id')->toArray();
+        $fortalezas=$fodaOld->fodafortalezas;
+        $oportunidades=$fodaOld->fodaoportunidades;
+        $debilidades=$fodaOld->fodadebilidades;
+        $amenazas=$fodaOld->fodamenazas;
+
+        $foda = EntendimientoOrganizacion::create([
+            'analisis'=>$fodaOld->analisis,
+            'fecha'=>$fodaOld->fecha,
+            'id_elabora'=>$fodaOld->id_elabora,
+        ]);
+        // Almacenamiento de participantes relacionados
+        $this->vincularParticipantes($participantes, $foda);
+        foreach($fortalezas as $fortaleza){
+            FortalezasEntendimientoOrganizacion::create([
+                'foda_id' => $foda->id,
+                'fortaleza' => $fortaleza->fortaleza,
+                'riesgo' => $fortaleza->riesgo,
+            ]);
+        }
+
+        foreach($oportunidades as $oportunidad){
+            OportunidadesEntendimientoOrganizacion::create([
+                'foda_id' => $foda->id,
+                'oportunidad' => $oportunidad->oportunidad,
+                'riesgo' => $oportunidad->riesgo,
+            ]);
+        }
+
+        foreach($debilidades as $debilidad){
+            DebilidadesEntendimientoOrganizacion::create([
+                'foda_id' => $foda->id,
+                'debilidad' => $debilidad->debilidad,
+                'riesgo' => $debilidad->riesgo,
+            ]);
+        }
+
+        foreach($amenazas as $amenaza){
+            AmenazasEntendimientoOrganizacion::create([
+                'foda_id' => $foda->id,
+                'amenaza' => $amenaza->amenaza,
+                'riesgo' => $amenaza->riesgo,
+            ]);
+        }
+
+        return response()->json(['success' => true,'id'=>$foda->id]);
     }
 
     // public function edit()
