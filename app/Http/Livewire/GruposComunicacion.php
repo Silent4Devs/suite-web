@@ -4,10 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Area;
 use App\Models\Empleado;
-use App\Models\RH\Competencia;
-use App\Models\RH\Evaluacion;
 use App\Models\RH\GruposEvaluado;
-use App\Models\RH\TipoCompetencia;
 use Livewire\Component;
 
 class GruposComunicacion extends Component
