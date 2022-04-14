@@ -25,7 +25,7 @@ class GruposComunicacion extends Component
         $areas = Area::all();
         $empleados = Empleado::all();
 
-        return view('livewire.grupos-comunicacion', ['grupos_evaluados'=>$grupos_evaluados, 'areas'=>$areas, 'empleados'=>$empleados]);
+        return view('livewire.grupos-comunicacion', ['grupos_evaluados' => $grupos_evaluados, 'areas' => $areas, 'empleados' => $empleados]);
     }
 
     public function habilitarSelectAlternativo()
@@ -41,16 +41,4 @@ class GruposComunicacion extends Component
             $this->habilitarSelectAreas = false;
         }
     }
-    // public function render()
-    // {
-    //     $evaluacion = new Evaluacion();
-    //     $areas = Area::all();
-    //     $empleados = Empleado::all();
-    //     $grupos_evaluados = GruposEvaluado::all();
-
-    //     $competencias = Competencia::search($this->search)->simplePaginate($this->perPage);
-    //     $tipos = TipoCompetencia::select('id', 'nombre')->get();
-
-    //     return view('livewire.multi-step-form', ['evaluacion' => $evaluacion, 'areas' => $areas, 'empleados' => $empleados, 'grupos_evaluados' => $grupos_evaluados, 'competencias' => $competencias, 'tipos' => $tipos]);
-    // }
 }

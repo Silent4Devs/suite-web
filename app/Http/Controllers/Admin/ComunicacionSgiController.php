@@ -10,6 +10,7 @@ use App\Models\ComunicacionSgi;
 use App\Models\DocumentoComunicacionSgis;
 use App\Models\Empleado;
 use App\Models\ImagenesComunicacionSgis;
+use App\Models\RH\GruposEvaluado;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
@@ -85,9 +86,16 @@ class ComunicacionSgiController extends Controller
             'descripcion' => 'required',
             'imagen' => 'required|mimetypes:image/jpeg,image/bmp,image/png',
             'publicar_en' => 'required',
-            'link' => 'required|url',
+            'link' => 'nullable|url',
             'fecha_programable' => 'required',
         ]);
+        if ($request->by_area) {
+            $opts = $request->by_area;
+        } else {
+            $opts = $request->by_manual;
+        }
+
+        $publicoObjetivo = $this->obtenerPublicoObjetivo($request->evaluados_objetivo, $opts);
 
         $comunicacionSgi = ComunicacionSgi::create($request->all());
 
@@ -126,7 +134,7 @@ class ComunicacionSgiController extends Controller
                 }
             }
         }
-        $comunicacionSgi->empleados()->sync($request->empleados);
+        $comunicacionSgi->empleados()->sync($publicoObjetivo);
 
         if ($request->input('archivo', false)) {
             $comunicacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
@@ -137,6 +145,23 @@ class ComunicacionSgiController extends Controller
         }
 
         return redirect()->route('admin.comunicacion-sgis.index')->with('success', 'Guardado con éxito');
+    }
+
+    public function obtenerPublicoObjetivo($evaluados_objetivo, $opts)
+    {
+        if ($evaluados_objetivo == 'all') {
+            $evaluados = Empleado::pluck('id')->toArray();
+        } elseif ($evaluados_objetivo == 'area') {
+            $evaluados_area = intval($opts);
+            $evaluados = Empleado::where('area_id', $evaluados_area)->pluck('id')->toArray();
+        } elseif ($evaluados_objetivo == 'manual') {
+            $evaluados = $opts;
+        } else {
+            $evaluados = GruposEvaluado::find(intval($evaluados_objetivo))->empleados->pluck('id')->toArray();
+        }
+
+
+        return $evaluados;
     }
 
     public function edit(ComunicacionSgi $comunicacionSgi)
@@ -155,10 +180,15 @@ class ComunicacionSgiController extends Controller
         $request->validate([
             'descripcion' => 'required',
             'publicar_en' => 'required',
-            'link' => 'required',
+            'link' => 'nullable|url',
             'fecha_programable' => 'required',
         ]);
-
+        if ($request->by_area) {
+            $opts = $request->by_area;
+        } else {
+            $opts = $request->by_manual;
+        }
+        $publicoObjetivo = $this->obtenerPublicoObjetivo($request->evaluados_objetivo, $opts);
         $comunicacionSgi->update($request->all());
         // $image = $comunicacionSgi->imagen;
         if ($request->file('imagen') != null or !empty($request->file('imagen'))) {
@@ -202,7 +232,7 @@ class ComunicacionSgiController extends Controller
                 }
             }
         }
-        $comunicacionSgi->empleados()->sync($request->empleados);
+        $comunicacionSgi->empleados()->sync($publicoObjetivo);
 
         if ($request->input('archivo', false)) {
             if (!$comunicacionSgi->archivo || $request->input('archivo') !== $comunicacionSgi->archivo->file_name) {
