@@ -61,7 +61,7 @@
                             {{ trans('cruds.matrizRequisitoLegale.fields.cumplerequisito') }}
                         </th>
                         <td>
-                            {{ App\Models\MatrizRequisitoLegale::CUMPLEREQUISITO_SELECT[$matrizRequisitoLegale->cumplerequisito] ?? '' }}
+                            {{ $matrizRequisitoLegale->evaluaciones[0]->cumplerequisito }}
                         </td>
                     </tr>
                     <tr>
@@ -100,7 +100,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            {{-- <th scope="col">#</th> --}}
                             <th scope="col">Fecha de verificacion</th>
                             <th scope="col">Cumple</th>
                             <th scope="col">Reviso</th>
@@ -112,7 +112,7 @@
                     <tbody>
                         @foreach ($evaluaciones as $evaluacion)
                             <tr>
-                                <th scope="row">{{ $evaluacion->id }}</th>
+                                {{-- <th scope="row">{{ $evaluacion->id }}</th> --}}
                                 <td>{{ $evaluacion->fechaverificacion }}</td>
                                 <td>{{ $evaluacion->cumplerequisito }}</td>
                                 <td>{{ $evaluacion->evaluador->name }}</td>

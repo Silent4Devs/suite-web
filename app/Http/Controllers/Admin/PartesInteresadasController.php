@@ -85,27 +85,29 @@ class PartesInteresadasController extends Controller
         return view('admin.partesInteresadas.create', compact('clausulas'));
     }
 
-    public function store(StorePartesInteresadaRequest $request)
+    public function store(Request $request)
     {
-        $partesInteresada = PartesInteresada::create($request->all());
-        $partesInteresada->clausulas()->sync($request->clausulas);
-        //dd($request['pdf-value'], $request->all());
-        //  $generar = new GeneratePdf();
-        //$generar->Generate($request['pdf-value'], $request);
-        //  $generar->Generate($request['pdf-value'], $partesInteresada);
-        return redirect()->route('admin.partes-interesadas.index')->with('success', 'Guardado con éxito');
+        $partes = PartesInteresada::create($request->all());
+        if (array_key_exists('ajax', $request->all())) {
+            return response()->json(['success'=>true, 'activo'=>$partes]);
+        }
+       
+
+        return redirect()->route('admin.partes-interesadas.edit',['id'=>$partes]);
     }
 
-    public function edit(PartesInteresada $partesInteresada)
+    public function edit(Request $request,$id)
     {
         abort_if(Gate::denies('partes_interesada_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $partesInteresada = PartesInteresada::find($id);
         $clausulas = Clausula::get();
         $partesInteresada->load('team');
-
-        return view('admin.partesInteresadas.edit', compact('partesInteresada', 'clausulas'));
+       
+       
+        return view('admin.partesInteresadas.edit',['id'=>$partesInteresada], compact('partesInteresada', 'clausulas'));
     }
 
-    public function update(UpdatePartesInteresadaRequest $request, PartesInteresada $partesInteresada)
+    public function update(Request $request, PartesInteresada $partesInteresada)
     {
         $partesInteresada->update($request->all());
         $clausulas = Clausula::get();
