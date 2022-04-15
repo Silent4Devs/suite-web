@@ -143,6 +143,6 @@ class MatrizRequisitoLegale extends Model
 
     public function evaluaciones()
     {
-        return $this->hasMany(EvaluacionRequisitoLegal::class, 'id_matriz', 'id')->orderByDesc('id');
+        return $this->hasMany(EvaluacionRequisitoLegal::class, 'id_matriz', 'id')->orderByDesc('fechaverificacion');
     }
 }

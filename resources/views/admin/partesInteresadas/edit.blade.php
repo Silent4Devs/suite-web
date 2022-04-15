@@ -7,7 +7,7 @@
 
         <div class="card-body">
             <form method="POST" class="row"
-                action="{{ route('admin.partes-interesadas.update', [$partesInteresada->id]) }}"
+                action="{{ route('admin.partes-interesadas.update', ['id' => $partesInteresada]) }}"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
@@ -25,7 +25,14 @@
                     <span
                         class="help-block">{{ trans('cruds.partesInteresada.fields.parteinteresada_helper') }}</span>
                 </div>
-                <div class="form-group col-md-12">
+
+                @livewire('show-partes-interesadas',['id_interesado'=>$partesInteresada->id])
+
+
+
+
+
+                {{-- <div class="form-group col-md-12">
                     <label class="required" for="requisitos"><i
                             class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.partesInteresada.fields.requisitos') }}</label>
                     <textarea class="form-control {{ $errors->has('requisitos') ? 'is-invalid' : '' }}" name="requisitos"
@@ -36,9 +43,9 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.partesInteresada.fields.requisitos_helper') }}</span>
-                </div>
+                </div> --}}
 
-                <div class="form-group col-md-12 col-sm-12">
+                {{-- <div class="form-group col-md-12 col-sm-12">
                     <label for="clausala"><i class="far fa-file iconos-crear"></i> Cláusula(s)</label>
                     <select class="form-control {{ $errors->has('clausala') ? 'is-invalid' : '' }}" name="clausala"
                         id="clausala" class="select2" multiple>
@@ -56,7 +63,7 @@
                             {{ $errors->first('clausala') }}
                         </div>
                     @endif
-                </div>
+                </div> --}}
 
 
                 <div class="text-right form-group col-12">
@@ -82,65 +89,65 @@
             });
         });
 
-        $(document).ready(function() {
-            CKEDITOR.replace('requisitos', {
-                toolbar: [{
-                        name: 'styles',
-                        items: ['Styles', 'Format', 'Font', 'FontSize']
-                    },
-                    {
-                        name: 'colors',
-                        items: ['TextColor', 'BGColor']
-                    },
-                    {
-                        name: 'editing',
-                        groups: ['find', 'selection', 'spellchecker'],
-                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
-                    }, {
-                        name: 'clipboard',
-                        groups: ['undo'],
-                        items: ['Undo', 'Redo']
-                    },
-                    {
-                        name: 'tools',
-                        items: ['Maximize']
-                    },
-                    {
-                        name: 'basicstyles',
-                        groups: ['basicstyles', 'cleanup'],
-                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
-                            '-',
-                            'CopyFormatting', 'RemoveFormat'
-                        ]
-                    },
-                    {
-                        name: 'paragraph',
-                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
-                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                            'Blockquote',
-                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
-                        ]
-                    },
-                    {
-                        name: 'links',
-                        items: ['Link', 'Unlink']
-                    },
-                    {
-                        name: 'insert',
-                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
-                    },
-                    '/',
+        // $(document).ready(function() {
+        //     CKEDITOR.replace('requisitos', {
+        //         toolbar: [{
+        //                 name: 'styles',
+        //                 items: ['Styles', 'Format', 'Font', 'FontSize']
+        //             },
+        //             {
+        //                 name: 'colors',
+        //                 items: ['TextColor', 'BGColor']
+        //             },
+        //             {
+        //                 name: 'editing',
+        //                 groups: ['find', 'selection', 'spellchecker'],
+        //                 items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+        //             }, {
+        //                 name: 'clipboard',
+        //                 groups: ['undo'],
+        //                 items: ['Undo', 'Redo']
+        //             },
+        //             {
+        //                 name: 'tools',
+        //                 items: ['Maximize']
+        //             },
+        //             {
+        //                 name: 'basicstyles',
+        //                 groups: ['basicstyles', 'cleanup'],
+        //                 items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+        //                     '-',
+        //                     'CopyFormatting', 'RemoveFormat'
+        //                 ]
+        //             },
+        //             {
+        //                 name: 'paragraph',
+        //                 groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+        //                 items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+        //                     'Blockquote',
+        //                     '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+        //                     'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+        //                 ]
+        //             },
+        //             {
+        //                 name: 'links',
+        //                 items: ['Link', 'Unlink']
+        //             },
+        //             {
+        //                 name: 'insert',
+        //                 items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+        //             },
+        //             '/',
 
 
-                    // {
-                    //     name: 'others',
-                    //     items: ['-']
-                    // }
-                ]
-            });
+        //             // {
+        //             //     name: 'others',
+        //             //     items: ['-']
+        //             // }
+        //         ]
+        //     });
 
-        });
+        // });
     </script>
 
 
