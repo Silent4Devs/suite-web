@@ -90,6 +90,7 @@ class CartaAceptacion extends Model
         'fecha_aut_presidencia',
         'vice_operaciones_id',
         'fecha_aut_viceoperaciones',
+        'aceptado',
     ];
 
     public function getFecharegistroAttribute($value)
@@ -155,5 +156,10 @@ class CartaAceptacion extends Model
     public function controles()
     {
         return $this->hasMany(CartaAceptacionPivot::class, 'carta_id', 'id');
+    }
+
+    public function aprobaciones()
+    {
+        return $this->hasMany(CartaAceptacionAprobacione::class, 'carta_id', 'id');
     }
 }

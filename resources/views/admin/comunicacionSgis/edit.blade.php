@@ -104,8 +104,7 @@
                     <div class="form-control">{{ $comunicacionSgi->created_at }}</div>
                 </div>
 
-
-                <div class="col-sm-12 col-md-6">
+                {{-- <div class="col-sm-12 col-md-6">
                     <label for="publico"><i class="fas fa-people-arrows iconos-crear"></i>Público Objetivo</label>
                     <select name="empleados[]" class="select2" multiple>
                         @foreach ($empleados as $empleado)
@@ -115,12 +114,13 @@
                             @endforeach
                         @endforeach
                     </select>
-                </div>
+                </div> --}}
+                @livewire("grupos-comunicacion")
 
                 <div class="col-sm-12 col-md-6">
-                    <label class="required" for="link"><i class="fas fa-link iconos-crear"></i>Link</label>
-                    <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="text" name="link"
-                        id="link" value="{{ old('link', $comunicacionSgi->link) }}" required>
+                    <label class="" for="link"><i class="fas fa-link iconos-crear"></i>Link</label>
+                    <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="link" name="link"
+                        placeholder="http://" id="link" value="{{ old('link', $comunicacionSgi->link) }}">
                     @if ($errors->has('link'))
                         <div class="invalid-feedback">
                             {{ $errors->first('link') }}
@@ -184,101 +184,103 @@
                                                         <iframe style="width:100%;height:300px;" seamless class='img-size'
                                                             src="{{ asset('storage/documento_comunicado_SGI') }}/{{ $documento->documento }}"></iframe>
                                                     </div>
-                                                    @else
-                                                        <div class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                            <a href="{{ asset('storage/documento_comunicado_SGI') }}/{{ $documento->documento }}">
-                                                                <i class="fas fa-file-download mr-2"
-                                                                    style="font-size:18px"></i>{{ $documento->documento }}</a>
-                                                        </div>
+                                                @else
+                                                    <div
+                                                        class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <a
+                                                            href="{{ asset('storage/documento_comunicado_SGI') }}/{{ $documento->documento }}">
+                                                            <i class="fas fa-file-download mr-2"
+                                                                style="font-size:18px"></i>{{ $documento->documento }}</a>
+                                                    </div>
                                                 @endif
+                                            @endforeach
 
-                                @endforeach
 
-
-                            </div>
-                            <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
-                                data-slide='prev'>
-                                <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-                                <span class='sr-only'>Previous</span>
-                            </a>
-                            <a class='carousel-control-next' href='#carouselExampleIndicators' role='button'
-                                data-slide='next'>
-                                <span class='carousel-control-next-icon' aria-hidden='true'></span>
-                                <span class='sr-only'>Next</span>
-                            </a>
-                        </div>
-                    @else
-                        <div class="text-center">
-                            <h3 style="text-align:center" class="mt-3">Sin
-                                archivo agregado</h3>
-                            <img src="{{ asset('img/undrawn.png') }}" class="img-fluid "
-                                style="width:350px !important">
-                        </div>
-                        @endif
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    </div>
-
-                </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="imagenes_Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-body">
-                    @if (count($comunicacionSgi->imagenes_comunicacion))
-                        <!-- carousel -->
-                        <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
-                            <ol class='carousel-indicators'>
-                                @foreach ($comunicacionSgi->imagenes_comunicacion as $idx => $imagen)
-                                    <li data-target=#carouselExampleIndicators data-slide-to={{ $idx }}></li>
-                                @endforeach
-
-                            </ol>
-                            <div class='carousel-inner'>
-                                @foreach ($comunicacionSgi->imagenes_comunicacion as $idx => $imagen)
-                                    <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                        <img style="width:80%; margin-left: 10%;" class='img-size'
-                                            src="{{ asset('storage/imagen_comunicado_SGI') }}/{{ $imagen->imagen }}" />
+                                        </div>
+                                        <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
+                                            data-slide='prev'>
+                                            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                            <span class='sr-only'>Previous</span>
+                                        </a>
+                                        <a class='carousel-control-next' href='#carouselExampleIndicators' role='button'
+                                            data-slide='next'>
+                                            <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                            <span class='sr-only'>Next</span>
+                                        </a>
                                     </div>
-                                @endforeach
-
-
+                                @else
+                                    <div class="text-center">
+                                        <h3 style="text-align:center" class="mt-3">Sin
+                                            archivo agregado</h3>
+                                        <img src="{{ asset('img/undrawn.png') }}" class="img-fluid "
+                                            style="width:350px !important">
+                                    </div>
+                                @endif
                             </div>
-                            <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
-                                data-slide='prev'>
-                                <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-                                <span class='sr-only'>Previous</span>
-                            </a>
-                            <a class='carousel-control-next' href='#carouselExampleIndicators' role='button'
-                                data-slide='next'>
-                                <span class='carousel-control-next-icon' aria-hidden='true'></span>
-                                <span class='sr-only'>Next</span>
-                            </a>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            </div>
 
                         </div>
-                    @else
-                        <div class="text-center">
-                            <h3 style="text-align:center" class="mt-3">Sin
-                                archivo agregado</h3>
-                            <img src="{{ asset('img/undrawn.png') }}" class="img-fluid "
-                                style="width:350px !important">
+                    </div>
+                </div>
+
+                <div class="modal fade" id="imagenes_Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                @if (count($comunicacionSgi->imagenes_comunicacion))
+                                    <!-- carousel -->
+                                    <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
+                                        <ol class='carousel-indicators'>
+                                            @foreach ($comunicacionSgi->imagenes_comunicacion as $idx => $imagen)
+                                                <li data-target=#carouselExampleIndicators
+                                                    data-slide-to={{ $idx }}></li>
+                                            @endforeach
+
+                                        </ol>
+                                        <div class='carousel-inner'>
+                                            @foreach ($comunicacionSgi->imagenes_comunicacion as $idx => $imagen)
+                                                <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                    <img style="width:80%; margin-left: 10%;" class='img-size'
+                                                        src="{{ asset('storage/imagen_comunicado_SGI') }}/{{ $imagen->imagen }}" />
+                                                </div>
+                                            @endforeach
+
+
+                                        </div>
+                                        <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
+                                            data-slide='prev'>
+                                            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                            <span class='sr-only'>Previous</span>
+                                        </a>
+                                        <a class='carousel-control-next' href='#carouselExampleIndicators' role='button'
+                                            data-slide='next'>
+                                            <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                            <span class='sr-only'>Next</span>
+                                        </a>
+
+                                    </div>
+                                @else
+                                    <div class="text-center">
+                                        <h3 style="text-align:center" class="mt-3">Sin
+                                            archivo agregado</h3>
+                                        <img src="{{ asset('img/undrawn.png') }}" class="img-fluid "
+                                            style="width:350px !important">
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            </div>
                         </div>
-                    @endif
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
+
+
+            </form>
         </div>
-    </div>
-
-
-    </form>
-    </div>
     </div>
 
 

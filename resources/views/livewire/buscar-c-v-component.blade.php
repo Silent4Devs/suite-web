@@ -184,7 +184,7 @@
             </div>
         @endif
         <div class="{{ $isPersonal ? 'col-sm-12 col-md-12 col-12' : 'col-sm-9 col-md-9 col-9' }}"
-            x-data="{open:true}">
+            x-data="{ open: true }">
             @if ($empleadosCV->count())
                 @if (!$isPersonal)
                     <div class="text-center" wire:loading>
@@ -314,13 +314,13 @@
                                             Resumen</span>
                                     </div>
                                     <p style="text-align:justify">
-                                        {{ $empleadoModel->resumen }}
+                                        {{ $empleadoModel->resumen ? $empleadoModel->resumen : 'No hay resumen' }}
                                     </p>
                                     <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Experiencia Profesional</span>
                                     </div>
-                                    @foreach ($empleadoModel->empleado_experiencia as $experiencia)
+                                    @forelse ($empleadoModel->empleado_experiencia as $experiencia)
                                         <div>
                                             <strong style="color:#00A57E;text-transform: uppercase">
                                                 {{ $experiencia->empresa }}</strong>
@@ -330,9 +330,9 @@
                                             </span>
                                             <br>
                                             <span>
-                                                Del
+                                                De
                                                 <strong>{{ $experiencia->inicio_mes }}</strong>
-                                                al
+                                                a
                                                 @if (!$experiencia->fin_mes)
                                                     <strong>día de hoy</strong>
                                                 @else
@@ -344,13 +344,17 @@
                                                 <br>
                                                 <p style="text-align:justify">{{ $experiencia->descripcion }}</p>
                                         </div>
-                                    @endforeach
+                                    @empty
+                                        <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay información
+                                            registrada
+                                        </p>
+                                    @endforelse
 
                                     <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Certificaciones</span>
                                     </div>
-                                    @foreach ($empleadoModel->empleado_certificaciones as $certificaciones)
+                                    @forelse ($empleadoModel->empleado_certificaciones as $certificaciones)
                                         <div>
                                             <strong style="color:#00A57E;text-transform: uppercase">
                                                 {{ $certificaciones->nombre }}</strong>
@@ -364,13 +368,17 @@
                                                 <span>Permanente - Sin Vigencia</span>
                                             @endif
                                         </div>
-                                    @endforeach
+                                    @empty
+                                        <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay información
+                                            registrada
+                                        </p>
+                                    @endforelse
 
                                     <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Capacitaciones</span>
                                     </div>
-                                    @foreach ($empleadoModel->empleado_cursos as $cursos)
+                                    @forelse ($empleadoModel->empleado_cursos as $cursos)
                                         <div>
                                             <strong class="font-weight-bold"
                                                 style="color:#00A57E;text-transform: uppercase">
@@ -385,13 +393,17 @@
                                             <br>
                                             <span>{{ $cursos->duracion }} Día(s)</span>
                                         </div>
-                                    @endforeach
+                                    @empty
+                                        <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay información
+                                            registrada
+                                        </p>
+                                    @endforelse
 
                                     <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Educación Académica</span>
                                     </div>
-                                    @foreach ($empleadoModel->empleado_educacion as $educacion)
+                                    @forelse ($empleadoModel->empleado_educacion as $educacion)
                                         <div>
                                             <strong class="font-weight-bold"
                                                 style="color:#00A57E;text-transform: uppercase">
@@ -400,29 +412,32 @@
                                             <span style="text-transform:capitalize">{{ $educacion->nivel }}</span>
                                             <br>
                                             <span>
-                                                Del
-                                                <strong>{{ \Carbon\Carbon::parse($educacion->año_inicio)->format('d/m/Y') }}</strong>
-                                                al
+                                                De
+                                                <strong>{{ $educacion->año_inicio }}</strong>
+                                                a
                                                 @if (!$educacion->año_fin)
                                                     <strong>día de hoy</strong>
                                                 @else
-                                                    <strong>{{ \Carbon\Carbon::parse($educacion->año_fin)->format('d/m/Y') }}</strong>
+                                                    <strong>{{ $educacion->año_fin }}</strong>
                                                 @endif
 
                                                 {{-- <strong>{{ \Carbon\Carbon::parse($educacion->año_fin)->format('d/m/Y') }}</strong> --}}
                                             </span>
                                         </div>
-                                    @endforeach
+                                    @empty
+                                        <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay información
+                                            registrada
+                                        </p>
+                                    @endforelse
                                     <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Idiomas</span>
                                     </div>
-                                    @foreach ($empleadoModel->idiomas as $idioma)
-
+                                    @forelse ($empleadoModel->idiomas as $idioma)
                                         <div>
                                             <strong class="font-weight-bold"
                                                 style="color:#00A57E;text-transform: uppercase">
-                                                {{$idioma->language ? $idioma->language->idioma : 'Sin definir' }}</strong>
+                                                {{ $idioma->language ? $idioma->language->idioma : 'Sin definir' }}</strong>
                                             <br>
                                             <span style="text-transform:capitalize">
                                                 <strong>Nivel:</strong> {{ $idioma->nivel }}
@@ -432,7 +447,11 @@
                                                 <strong>Porcentaje:</strong> {{ $idioma->porcentaje }} %
                                             </span>
                                         </div>
-                                    @endforeach
+                                    @empty
+                                        <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay información
+                                            registrada
+                                        </p>
+                                    @endforelse
                                     </ul>
                                 </div>
                                 <div class="mt-4 col-md-4 datos_der_cv">
@@ -453,14 +472,16 @@
                                             <span>{{ $empleadoModel->sede ? $empleadoModel->sede->direccion : 'Dato no definido' }}</span>
                                         </div>
                                         <br>
-                                        <strong class="text-white"><i class="ml-2 mr-2 text-white fas fa-phone-alt"></i>Número de
+                                        <strong class="text-white"><i
+                                                class="ml-2 mr-2 text-white fas fa-phone-alt"></i>Número de
                                             Teléfono</strong>
                                         <br>
                                         <div class="text-white" style="margin-left:28px;">
                                             <span>{{ $empleadoModel->telefono }}</span>
                                         </div>
                                         <br>
-                                        <strong class="text-white"><i class="ml-2 mr-2 text-white fas fa-envelope"></i>Correo
+                                        <strong class="text-white"><i
+                                                class="ml-2 mr-2 text-white fas fa-envelope"></i>Correo
                                             Electrónico</strong>
                                         <br>
                                         <div class="text-white" style="margin-left:28px;">
@@ -634,7 +655,7 @@
                             </div>
                         </div>
                     </div> --}}
-                    <div class="col-sm-12 col-md-6 col-sm-6 pt-3" x-data="{open:false}">
+                    <div class="col-sm-12 col-md-6 col-sm-6 pt-3" x-data="{ open: false }">
                         <div class="row justify-content-center">
                             <div class="col-11 shadow-sm rounded border p-4">
                                 <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
@@ -677,7 +698,7 @@
                                                 <form
                                                     action="{{ route('admin.cargarCertificacion', $empleadoModel) }}"
                                                     method="POST" id="formCargarCertificacion" class="form-group m-0">
-                                                    <div class="row" x-data = "{open:false}">
+                                                    <div class="row" x-data="{ open: false }">
                                                         <div class="form-group col-sm-12 col-lg-12 col-md-12">
                                                             <label for="nombre"><i
                                                                     class="fas fa-file-signature iconos-crear"></i>Nombre</label>
@@ -749,7 +770,7 @@
                                 <div x-show="open" x-transition>
                                     @if ($isPersonal)
                                         @can('subir_certificaciones_empleados')
-                                            <div x-data="{open:false}">
+                                            <div x-data="{ open: false }">
                                                 <div class="text-center">
                                                     <label type="button" onclick="event.preventDefault();return false;"
                                                         data-toggle="modal" data-target="#modalCertificaciones"
@@ -796,7 +817,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-sm-6 pt-3" x-data="{open:false}">
+                    <div class="col-sm-12 col-md-6 col-sm-6 pt-3" x-data="{ open: false }">
                         <div class="row justify-content-center">
                             <div class="col-11 shadow-sm rounded border p-4">
                                 <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
@@ -898,7 +919,11 @@
                                                                     aria-describedby="inputGroupFileAddon01">
                                                                 <div class="">
                                                                     <label for="cargarCurso" style="cursor: pointer;"
-                                                                        class="text-center m-0"><i class="fas fa-upload text-success" style="font-size: 15px"></i>Subir Certificado <small id="infoSelectedCurso"></small></label>
+                                                                        class="text-center m-0"><i
+                                                                            class="fas fa-upload text-success"
+                                                                            style="font-size: 15px"></i>Subir
+                                                                        Certificado <small
+                                                                            id="infoSelectedCurso"></small></label>
                                                                 </div>
                                                                 <span class="errors file_error text-danger"></span>
                                                             </div>
@@ -921,7 +946,7 @@
                                 <div x-show="open" x-transition>
                                     @if ($isPersonal)
                                         @can('subir_capacitaciones_empleados')
-                                            <div x-data="{open:false}">
+                                            <div x-data="{ open: false }">
                                                 <div class="text-center">
                                                     <label type="button" onclick="event.preventDefault();return false;"
                                                         data-toggle="modal" data-target="#modalcursoIt"

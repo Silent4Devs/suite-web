@@ -14,7 +14,7 @@ class AlterAnalisisDeRiesgoTable extends Migration
     public function up()
     {
         Schema::table('analisis_de_riesgo', function (Blueprint $table) {
-            $table->renameColumn('id_empleado', 'id_elaboro');
+            // $table->renameColumn('id_empleado', 'id_elaboro');
         });
     }
 

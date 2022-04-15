@@ -140,6 +140,7 @@ class MatrizRequisitoLegale extends Model
     {
         return $this->morphToMany(PlanImplementacion::class, 'plan_implementacionable');
     }
+
     public function evaluaciones()
     {
         return $this->hasMany(EvaluacionRequisitoLegal::class, 'id_matriz', 'id')->orderByDesc('fechaverificacion');

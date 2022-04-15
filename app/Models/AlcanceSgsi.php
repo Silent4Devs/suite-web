@@ -83,13 +83,14 @@ class AlcanceSgsi extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_reviso_alcance');
+        return $this->belongsTo(Empleado::class, 'id_reviso_alcance')->with('area');
     }
 
     public function norma()
     {
         return $this->belongsTo(Norma::class);
     }
+
     public function normas()
     {
         return $this->belongsToMany(Norma::class, 'normas_alcance_sgsi', 'alcance_id', 'norma_id');

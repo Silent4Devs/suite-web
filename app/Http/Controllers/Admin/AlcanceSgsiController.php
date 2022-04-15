@@ -101,10 +101,10 @@ class AlcanceSgsiController extends Controller
         $request->validate([
             'normas' => 'required|array',
          ]);
- 
-         $normas = array_map(function ($value) {
-             return intval($value);
-         }, $request->normas);
+
+        $normas = array_map(function ($value) {
+            return intval($value);
+        }, $request->normas);
         $alcanceSgsi = AlcanceSgsi::create($request->all());
         $alcanceSgsi->normas()->sync($normas);
 
@@ -136,7 +136,7 @@ class AlcanceSgsiController extends Controller
         $alcanceSgsi->load('team');
         $normas = Norma::get();
 
-        return view('admin.alcanceSgsis.show', compact('alcanceSgsi','normas'));
+        return view('admin.alcanceSgsis.show', compact('alcanceSgsi', 'normas'));
     }
 
     public function destroy(AlcanceSgsi $alcanceSgsi)

@@ -11,24 +11,21 @@ use App\Models\EvaluacionRequisitoLegal;
 use App\Models\EvidenciaMatrizRequisitoLegale;
 use App\Models\MatrizRequisitoLegale;
 use App\Models\PlanImplementacion;
-use App\Models\RH\Evaluacion;
 use App\Models\Team;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class MatrizRequisitoLegalesController extends Controller
 {
     public function index(Request $request)
     {
         abort_if(Gate::denies('matriz_requisito_legale_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-      
+
         if ($request->ajax()) {
-     
-            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado','evaluaciones')->orderBy('id')->get();
+            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado', 'evaluaciones')->orderBy('id')->get();
 
             return datatables()->of($matrizRequisitoLegales)->toJson();
         }
@@ -123,7 +120,7 @@ class MatrizRequisitoLegalesController extends Controller
         $evaluaciones = EvaluacionRequisitoLegal::with('evaluador')->where('id_matriz', '=', $requisito)->orderByDesc('fechaverificacion')->get();
         $result = EvaluacionRequisitoLegal::where('id_matriz', '=', $requisito)->exists();
 
-        return view('admin.matrizRequisitoLegales.show', compact('matrizRequisitoLegale','evaluaciones','result'));
+        return view('admin.matrizRequisitoLegales.show', compact('matrizRequisitoLegale', 'evaluaciones', 'result'));
     }
 
     public function destroy(Request $request, MatrizRequisitoLegale $matrizRequisitoLegale)
@@ -159,7 +156,6 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function storePlanAccion(Request $request, MatrizRequisitoLegale $id)
     {
-
         dd($request->all());
         $request->validate([
             'parent' => 'required|string',
@@ -172,7 +168,6 @@ class MatrizRequisitoLegalesController extends Controller
             'modulo_origen.required' => 'Debes de definir un módulo de origen para el plan de acción',
             'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
         ]);
-       
 
         $matrizRequisitoLegal = $id;
         $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
@@ -215,16 +210,16 @@ class MatrizRequisitoLegalesController extends Controller
     }
 
     public function evaluar(MatrizRequisitoLegale $id)
-    {   
-        
+    {
         $empleados = Empleado::with('area')->get();
         $requisito = $id;
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
-       
-        return view('admin.matrizRequisitoLegales.evaluar', compact('requisito','empleados','planes_implementacion'));
+
+        return view('admin.matrizRequisitoLegales.evaluar', compact('requisito', 'empleados', 'planes_implementacion'));
     }
+
     public function evaluarStore(Request $request, MatrizRequisitoLegale $id)
-    {      
+    {
         // dd($request->all());
         $matrizRequisitoLegale = EvaluacionRequisitoLegal::create($request->all());
         if ($request->hasFile('files')) {
@@ -246,5 +241,4 @@ class MatrizRequisitoLegalesController extends Controller
 
         return redirect()->route('admin.matriz-requisito-legales.index');
     }
-    
 }
