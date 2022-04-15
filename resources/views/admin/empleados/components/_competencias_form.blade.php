@@ -6,8 +6,8 @@
                     <span style="font-size: 17px; font-weight: bold;">
                         Resumen</span>
                 </div>
-                <textarea class="form-control {{ $errors->has('resumen') ? 'is-invalid' : '' }}" type="text"
-                    name="resumen" id="resumen">{{ old('resumen', $empleado->resumen) }}</textarea>
+                <textarea class="form-control {{ $errors->has('resumen') ? 'is-invalid' : '' }}" type="text" name="resumen"
+                    id="resumen">{{ old('resumen', $empleado->resumen) }}</textarea>
                 @if ($errors->has('resumen'))
                     <div class="invalid-feedback">
                         {{ $errors->first('resumen') }}
@@ -27,7 +27,7 @@
     </div>
 
     <div method="POST" action="{{ route('admin.empleados.storeCertificaciones', [$empleado->id]) }}"
-        id="formCertificaciones" enctype="multipart/form-data" x-data="{open:false}">
+        id="formCertificaciones" enctype="multipart/form-data" x-data="{ open: false }">
         <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" />
         <div class="row">
             <div class="form-group col-sm-12 col-lg-12 col-md-12">
@@ -232,8 +232,8 @@
             <b>Periodo laboral:</b>
         </div>
 
-	    <div class="col-12 form-group p-0">
-            <div class="form-check" >
+        <div class="col-12 form-group p-0">
+            <div class="form-check">
                 <input class="form-check-input" name="trabactualmente" type="checkbox" id="trabactualmente"
                     x-on:change="open = !open">
                 <label class="form-check-label" for="trabactualmente">
@@ -245,8 +245,8 @@
         <div class="row">
             <div class="form-group col-sm-6">
                 <label for="inicio_mes"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
-                <input class="yearpicker form-control {{ $errors->has('inicio_mes') ? 'is-invalid' : '' }}" type="text"
-                    name="inicio_mes"  id="inicio_mes" >
+                <input class="fecha_flatpickr form-control {{ $errors->has('inicio_mes') ? 'is-invalid' : '' }}"
+                    type="text" name="inicio_mes" id="inicio_mes">
                 <span class="errors inicio_mes_error text-danger"></span>
             </div>
 
@@ -254,8 +254,8 @@
 
             <div class="form-group col-sm-6" id="fin_mes_contenedor">
                 <label for="fin_mes"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
-                <input class="yearpicker form-control {{ $errors->has('fin_mes') ? 'is-invalid' : '' }}" type="text"
-                name="fin_mes" id="fin_mes" value="{{ old('fin_mes', '') }}">
+                <input class="fecha_flatpickr form-control {{ $errors->has('fin_mes') ? 'is-invalid' : '' }}"
+                    type="text" name="fin_mes" id="fin_mes" value="{{ old('fin_mes', '') }}">
                 <span class="errors fin_mes_error text-danger"></span>
             </div>
 
@@ -264,8 +264,8 @@
         <div class="row">
             <div class="form-group col-sm-12">
                 <label for="descripcion"><i class="fas fa-clipboard-list iconos-crear"></i>Descripción</label>
-                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"
-                    name="descripcion" id="descripcion_exp"> {{ old('descripcion', '') }}</textarea>
+                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion"
+                    id="descripcion_exp"> {{ old('descripcion', '') }}</textarea>
                 <span class="errors descripcion_error text-danger"></span>
             </div>
 
@@ -287,8 +287,8 @@
         <table class="table w-100" id="tbl-experiencia">
             <thead>
                 <tr>
-                    <th  style="min-width:150px;">Empresa</th>
-                    <th  style="min-width:150px;">Puesto</th>
+                    <th style="min-width:150px;">Empresa</th>
+                    <th style="min-width:150px;">Puesto</th>
                     <th style="min-width:300px;">Descripción</th>
                     <th style="min-width:80px;">Inicio</th>
                     <th style="min-width:80px;">Fin</th>
@@ -342,7 +342,7 @@
             </div>
         </div>
         <div class="col-12 form-group p-0">
-            <div class="form-check" >
+            <div class="form-check">
                 <input class="form-check-input" name="estudactualmente" type="checkbox" id="estudactualmente"
                     x-on:change="open = !open">
                 <label class="form-check-label" for="estudactualmente">
@@ -353,14 +353,14 @@
         <div class="row">
             <div class="form-group col-sm-6">
                 <label for="año_inicio"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
-                <input class="form-control {{ $errors->has('año_inicio') ? 'is-invalid' : '' }}" type="date"
-                    name="año_inicio" id="año_inicio_inst" value="{{ old('año_inicio', '') }}">
+                <input class="form-control fecha_flatpickr {{ $errors->has('año_inicio') ? 'is-invalid' : '' }}"
+                    type="text" name="año_inicio" id="año_inicio_inst" value="{{ old('año_inicio', '') }}">
                 <span class="errors año_inicio_error text-danger"></span>
             </div>
             <div class="form-group col-sm-6" id="año_fin_contenedor">
                 <label for="año_fin"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
-                <input class="form-control {{ $errors->has('año_fin') ? 'is-invalid' : '' }}" type="date"
-                    name="año_fin" id="año_fin_inst" value="{{ old('año_fin', '') }}">
+                <input class="form-control fecha_flatpickr {{ $errors->has('año_fin') ? 'is-invalid' : '' }}"
+                    type="text" name="año_fin" id="año_fin_inst" value="{{ old('año_fin', '') }}">
                 <span class="errors año_fin_error text-danger"></span>
             </div>
         </div>
@@ -402,12 +402,12 @@
                 <label for="id_language"><i class="fas fa-school iconos-crear"></i>Nombre</label>
                 <select class="form-control {{ $errors->has('id_language') ? 'is-invalid' : '' }}"
                     name="id_language" id="nombre_idioma" value="{{ old('id_language', '') }}">
-                <option value="">Seleccione una opción</option>
-                @foreach ($idiomas as $id => $idioma)
-                <option  value="{{ $idioma->id }}">
-                    {{ $idioma->idioma }}
-                </option>
-                @endforeach
+                    <option value="">Seleccione una opción</option>
+                    @foreach ($idiomas as $id => $idioma)
+                        <option value="{{ $idioma->id }}">
+                            {{ $idioma->idioma }}
+                        </option>
+                    @endforeach
                 </select>
                 <span class="errors nombre_error text-danger"></span>
             </div>
