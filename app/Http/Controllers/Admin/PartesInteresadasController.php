@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPartesInteresadaRequest;
-use App\Http\Requests\StorePartesInteresadaRequest;
-use App\Http\Requests\UpdatePartesInteresadaRequest;
 use App\Models\Clausula;
 use App\Models\PartesInteresada;
 use App\Models\Team;
@@ -91,20 +88,18 @@ class PartesInteresadasController extends Controller
         if (array_key_exists('ajax', $request->all())) {
             return response()->json(['success'=>true, 'activo'=>$partes]);
         }
-       
 
-        return redirect()->route('admin.partes-interesadas.edit',['id'=>$partes]);
+        return redirect()->route('admin.partes-interesadas.edit', ['id'=>$partes]);
     }
 
-    public function edit(Request $request,$id)
+    public function edit(Request $request, $id)
     {
         abort_if(Gate::denies('partes_interesada_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $partesInteresada = PartesInteresada::find($id);
         $clausulas = Clausula::get();
         $partesInteresada->load('team');
-       
-       
-        return view('admin.partesInteresadas.edit',['id'=>$partesInteresada], compact('partesInteresada', 'clausulas'));
+
+        return view('admin.partesInteresadas.edit', ['id'=>$partesInteresada], compact('partesInteresada', 'clausulas'));
     }
 
     public function update(Request $request, PartesInteresada $partesInteresada)

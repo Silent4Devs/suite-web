@@ -34,8 +34,9 @@ class ParteInteresadaExpectativaNecesidad extends Model
     {
         return $this->belongsTo(PartesInteresada::class, 'id_interesada', 'id');
     }
+
     public function normas()
     {
-        return $this->belongsToMany(Norma::class, 'normas_nececidades_expectativas', 'id_necesidad_expectativa' ,'id_norma' );
+        return $this->belongsToMany(Norma::class, 'normas_nececidades_expectativas', 'id_necesidad_expectativa', 'id_norma');
     }
 }

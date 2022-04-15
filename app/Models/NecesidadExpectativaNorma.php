@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class NecesidadExpectativaNorma extends Model
@@ -14,7 +13,7 @@ class NecesidadExpectativaNorma extends Model
         'updated_at',
         'deleted_at',
     ];
-    
+
     protected $fillable = [
     'id_norma',
     'id_necesidad_expectativa',
@@ -22,5 +21,4 @@ class NecesidadExpectativaNorma extends Model
     'updated_at',
     'deleted_at',
     ];
-    
 }

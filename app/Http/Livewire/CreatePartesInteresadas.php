@@ -7,92 +7,98 @@ use App\Models\ParteInteresadaExpectativaNecesidad;
 use Livewire\Component;
 
 class CreatePartesInteresadas extends Component
+{
+    public $expectativas;
 
-
-{   
-    public $expectativas, $necesidades;
+    public $necesidades;
     public $id_interesado;
     public $parteInteresadaIdEN;
-    public $view='create';
+    public $view = 'create';
     public $normasModel = [];
-    protected $listeners =['editarParteInteresada'=>'edit','eliminarParteInteresada'=>'destroy','agregarNormas'];
+    protected $listeners = ['editarParteInteresada'=>'edit', 'eliminarParteInteresada'=>'destroy', 'agregarNormas'];
 
-    public function validarParteInteresada(){
+    public function validarParteInteresada()
+    {
         $this->validate([
             'necesidades' => 'required|max:255',
             'expectativas' => 'required|max:255',
         ]);
     }
+
     public function save()
     {
         $this->validarParteInteresada();
         ParteInteresadaExpectativaNecesidad::create([
             'necesidades' => $this->necesidades,
             'expectativas' => $this->expectativas,
-            'id_interesada' => $this->id_interesado
+            'id_interesada' => $this->id_interesado,
         ]);
-        $this->reset('necesidades','expectativas');
+        $this->reset('necesidades', 'expectativas');
         $this->emit('render');
         $this->emit('cerrar-modal', ['editar'=>false]);
-      
     }
+
     public function edit($id)
     {
-        $this->view='edit';
-        $model=ParteInteresadaExpectativaNecesidad::find($id);
+        $this->view = 'edit';
+        $model = ParteInteresadaExpectativaNecesidad::find($id);
         $this->necesidades = $model->necesidades;
         $this->expectativas = $model->expectativas;
         $this->id_interesado = $model->id_interesada;
-        $this->parteInteresadaIdEN =$model->id;
+        $this->parteInteresadaIdEN = $model->id;
         $this->emit('abrir-modal');
     }
+
     public function default()
     {
         $this->necesidades = '';
         $this->expectativas = '';
         $this->view = 'create';
-
     }
+
     public function update()
-    {   
+    {
         $this->validarParteInteresada();
-        $model=ParteInteresadaExpectativaNecesidad::find($this->parteInteresadaIdEN);
+        $model = ParteInteresadaExpectativaNecesidad::find($this->parteInteresadaIdEN);
         $model->update([
             'necesidades' => $this->necesidades,
             'expectativas' => $this->expectativas,
-            'id_interesada' => $this->id_interesado
+            'id_interesada' => $this->id_interesado,
         ]);
         $this->emit('cerrar-modal', ['editar'=>true]);
         $this->default();
         $this->emit('render');
-
     }
-    public function destroy($id){
-        $model=ParteInteresadaExpectativaNecesidad::find($id);
+
+    public function destroy($id)
+    {
+        $model = ParteInteresadaExpectativaNecesidad::find($id);
         $model->delete();
         $this->emit('render');
     }
-    public function agregarNormas($id){
+
+    public function agregarNormas($id)
+    {
         $this->parteInteresadaIdEN = $id;
-        $model=ParteInteresadaExpectativaNecesidad::with('normas')->find($id);
-        $this->normasModel=$model->normas->pluck('id')->toArray();
+        $model = ParteInteresadaExpectativaNecesidad::with('normas')->find($id);
+        $this->normasModel = $model->normas->pluck('id')->toArray();
 
         $this->emit('abrirModalPartesInteresadas');
     }
- 
-    public function saveNorma($id){
-       
-        $model=ParteInteresadaExpectativaNecesidad::with('normas')->find($this->parteInteresadaIdEN);
+
+    public function saveNorma($id)
+    {
+        $model = ParteInteresadaExpectativaNecesidad::with('normas')->find($this->parteInteresadaIdEN);
         $model->normas()->sync($this->normasModel);
         $this->emit('cerrarModalPartesInteresadas');
         $this->emit('render');
-        $this->normasModel=[];
-    }
-    
-    public function render()
-    {   
-        $normas =Norma::all();
-        return view('livewire.create-partes-interesadas',compact('normas'));
+        $this->normasModel = [];
     }
 
+    public function render()
+    {
+        $normas = Norma::all();
+
+        return view('livewire.create-partes-interesadas', compact('normas'));
+    }
 }
