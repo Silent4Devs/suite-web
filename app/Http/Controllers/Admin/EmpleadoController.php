@@ -23,6 +23,7 @@ use App\Models\RH\DependientesEconomicosEmpleados;
 use App\Models\RH\EntidadCrediticia;
 use App\Models\RH\TipoContratoEmpleado;
 use App\Models\Sede;
+use App\Rules\MonthAfterOrEqual;
 use Barryvdh\DomPDF\Facade as PDF;
 use Gate;
 use Illuminate\Http\Request;
@@ -782,16 +783,17 @@ class EmpleadoController extends Controller
 
     public function storeExperiencia(Request $request, $empleado)
     {
-        // dd($request->all());
         // dd($request->trabactualmente);
         $request->validate([
             'empresa' => 'required|string|max:255',
             'puesto' => 'required|string|max:255',
             'inicio_mes' => 'required',
+            'fin_mes' => ['nullable', new MonthAfterOrEqual($request->inicio_mes, $request->fin_mes)],
             'descripcion' => 'required',
             'empleado_id' => 'required|exists:empleados,id',
 
         ]);
+
         $fechaFin = null;
         if ($request->trabactualmente == 'false') {
             $request->validate(['fin_mes' => 'required']);
@@ -845,15 +847,14 @@ class EmpleadoController extends Controller
         }
         if (array_key_exists('inicio_mes', $request->all())) {
             $request->validate([
-                'inicio_mes' => 'required',
+                'inicio_mes' => ['required', new MonthAfterOrEqual($request->inicio_mes, $experiencia->fin_mes)],
             ]);
         }
-
-        if ($request->trabactualmente == 'false') {
+        if ($request->trabactualmente == 'false' || $request->trabactualmente == null) {
             if (array_key_exists('fin_mes', $request->all())) {
                 if ($request->fin_mes != 'undefided') {
                     $request->validate([
-                        'fin_mes' => 'required',
+                        'fin_mes' => ['required', new MonthAfterOrEqual($experiencia->inicio_mes, $request->fin_mes)],
                     ]);
                 }
             }
@@ -866,16 +867,18 @@ class EmpleadoController extends Controller
 
     public function storeEducacion(Request $request, $empleado)
     {
+
         $request->validate([
             'institucion' => 'required|string|max:255',
             'nivel' => 'required',
-            'año_inicio' => 'required|date',
+            'año_inicio' => ['required', new MonthAfterOrEqual($request->año_inicio, $request->año_fin)],
+            'año_fin' => ['nullable', new MonthAfterOrEqual($request->año_inicio, $request->año_fin)],
             'empleado_id' => 'required|exists:empleados,id',
             'titulo_obtenido' => 'required|string|max:255',
         ]);
         $fechaFin = null;
-        if ($request->trabactualmente == 'false') {
-            $request->validate(['año_fin' => 'required|date']);
+        if ($request->estudactualmente == 'false') {
+            $request->validate(['año_fin' => ['required', new MonthAfterOrEqual($request->año_inicio, $request->año_fin)]]);
             $fechaFin = $request->año_fin;
         }
         // dd($request->all());
@@ -901,6 +904,7 @@ class EmpleadoController extends Controller
 
     public function updateEducacion(Request $request, EducacionEmpleados $educacion)
     {
+
         if (array_key_exists('estudactualmente', $request->all())) {
             if ($request->estudactualmente == 'true') {
                 $isEstdActualmente = true;
@@ -921,14 +925,14 @@ class EmpleadoController extends Controller
         }
         if (array_key_exists('año_inicio', $request->all())) {
             $request->validate([
-                'año_inicio' => 'required|date',
+                'año_inicio' => ['required', new MonthAfterOrEqual($request->año_inicio, $educacion->año_fin)],
             ]);
         }
-        if ($request->estudactualmente == 'false') {
+        if ($request->estudactualmente == 'false' || $request->estudactualmente == null) {
             if (array_key_exists('año_fin', $request->all())) {
                 if ($request->año_fin != 'undefided') {
                     $request->validate([
-                        'año_fin' => 'required|date',
+                        'año_fin' => ['required', new MonthAfterOrEqual($educacion->año_inicio, $request->año_fin)],
                     ]);
                 }
             }
@@ -1028,14 +1032,14 @@ class EmpleadoController extends Controller
                 $doc_empleado_id = null;
             }
             $lista_docs->push((object) [
-                'id'=>$doc->id,
-                'documento'=>$doc->documento,
-                'tipo'=>$doc->tipo,
-                'empleado'=>$documentos_empleado,
-                'ruta_documento'=>$doc_viejo,
-                'nombre_doc'=>$nombre_doc,
-                'documento_versiones'=>$documento_versiones,
-                'evidencia_viejo_id'=>$doc_empleado_id,
+                'id' => $doc->id,
+                'documento' => $doc->documento,
+                'tipo' => $doc->tipo,
+                'empleado' => $documentos_empleado,
+                'ruta_documento' => $doc_viejo,
+                'nombre_doc' => $nombre_doc,
+                'documento_versiones' => $documento_versiones,
+                'evidencia_viejo_id' => $doc_empleado_id,
             ]);
         }
 
@@ -1052,31 +1056,31 @@ class EmpleadoController extends Controller
             // dd($request->file('value'));
             $empleado = Empleado::find($request->empleadoId);
             $request->file('value')->storeAs('public/expedientes/' . Str::slug($empleado->name), $fileName);
-            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id'=>$request->empleadoId, 'lista_documentos_empleados_id'=>$request->documentoId], [$request->name => $request->value]);
+            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
 
             $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();
             if ($doc_viejo) {
                 $doc_viejo->update([
-                    'archivado'=>true,
+                    'archivado' => true,
                 ]);
             }
 
             $archivo = EvidenciaDocumentoEmpleadoArchivo::create([
-                'evidencias_documentos_empleados_id'=>$expediente->id,
-                'documento'=>$fileName,
-                'archivado'=>false,
+                'evidencias_documentos_empleados_id' => $expediente->id,
+                'documento' => $fileName,
+                'archivado' => false,
             ]);
 
-            return response()->json(['status'=>201, 'message'=>'Registro Actualizado']);
+            return response()->json(['status' => 201, 'message' => 'Registro Actualizado']);
         } else {
-            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id'=>$request->empleadoId, 'lista_documentos_empleados_id'=>$request->documentoId], [$request->name => $request->value]);
+            $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
         }
 
         // $expediente->update([
         //     $request->name => $request->value,
         // ]);
 
-        return response()->json(['status'=>200, 'message'=>'Registro Actualizado']);
+        return response()->json(['status' => 200, 'message' => 'Registro Actualizado']);
     }
 
     public function expedienteRestaurar(Request $request)
@@ -1084,15 +1088,15 @@ class EmpleadoController extends Controller
         $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $request->expediente_id)->where('archivado', false)->first();
         if ($doc_viejo) {
             $doc_viejo->update([
-                'archivado'=>true,
+                'archivado' => true,
             ]);
         }
         $evidencia_doc_archivo = EvidenciaDocumentoEmpleadoArchivo::find($request->id);
         $evidencia_doc_archivo->update([
-            'archivado'=>false,
+            'archivado' => false,
         ]);
 
-        return response()->json(['status'=>200, 'message'=>'Registro Actualizado']);
+        return response()->json(['status' => 200, 'message' => 'Registro Actualizado']);
     }
 
     /**
