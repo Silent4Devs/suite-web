@@ -867,7 +867,6 @@ class EmpleadoController extends Controller
 
     public function storeEducacion(Request $request, $empleado)
     {
-
         $request->validate([
             'institucion' => 'required|string|max:255',
             'nivel' => 'required',
@@ -904,7 +903,6 @@ class EmpleadoController extends Controller
 
     public function updateEducacion(Request $request, EducacionEmpleados $educacion)
     {
-
         if (array_key_exists('estudactualmente', $request->all())) {
             if ($request->estudactualmente == 'true') {
                 $isEstdActualmente = true;

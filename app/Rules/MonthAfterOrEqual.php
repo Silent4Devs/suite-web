@@ -13,6 +13,7 @@ class MonthAfterOrEqual implements Rule
      */
     public $inicio;
     public $fin;
+
     public function __construct($inicio, $fin)
     {
         $this->inicio = $inicio;
@@ -33,10 +34,10 @@ class MonthAfterOrEqual implements Rule
         }
         $fechaInicio = explode(' ', $this->inicio);
         $mesInicio = $this->getNumberMonth($fechaInicio[0]);
-        $yearInicio = (int)$fechaInicio[1];
+        $yearInicio = (int) $fechaInicio[1];
         $fechaFin = explode(' ', $this->fin);
         $mesFin = $this->getNumberMonth($fechaFin[0]);
-        $yearFin = (int)$fechaFin[1];
+        $yearFin = (int) $fechaFin[1];
 
         if ($yearFin > $yearInicio) {
             return true;
