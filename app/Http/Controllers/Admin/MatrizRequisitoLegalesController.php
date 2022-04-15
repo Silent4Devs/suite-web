@@ -114,10 +114,10 @@ class MatrizRequisitoLegalesController extends Controller
     {
         abort_if(Gate::denies('matriz_requisito_legale_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $matrizRequisitoLegale->load('team', 'planes');
+        $matrizRequisitoLegale->load('team', 'planes', 'evaluaciones');
         $requisito = $matrizRequisitoLegale->id;
 
-        $evaluaciones = EvaluacionRequisitoLegal::with('evaluador')->where('id_matriz', '=', $requisito)->get();
+        $evaluaciones = EvaluacionRequisitoLegal::with('evaluador')->where('id_matriz', '=', $requisito)->orderByDesc('fechaverificacion')->get();
         $result = EvaluacionRequisitoLegal::where('id_matriz', '=', $requisito)->exists();
 
         return view('admin.matrizRequisitoLegales.show', compact('matrizRequisitoLegale', 'evaluaciones', 'result'));
