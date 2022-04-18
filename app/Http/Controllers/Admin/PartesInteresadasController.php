@@ -19,7 +19,7 @@ class PartesInteresadasController extends Controller
         abort_if(Gate::denies('partes_interesada_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PartesInteresada::with('clausulas')->select('*')->orderByDesc('id');
+            $query = PartesInteresada::with('clausulas', 'expectativasNecesidadesWithNormas')->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -40,28 +40,8 @@ class PartesInteresadasController extends Controller
                 ));
             });
 
-            // $table->editColumn('id', function ($row) {
-            //     return $row->id ? $row->id : '';
-            // });
-            $table->editColumn('parteinteresada', function ($row) {
-                return $row->parteinteresada ? $row->parteinteresada : '';
-            });
-            $table->editColumn('requisitos', function ($row) {
-                return $row->requisitos ? strip_tags($row->requisitos) : '';
-            });
-            $table->editColumn('clausala', function ($row) {
-                return $row->clausulas ? $row->clausulas : '';
-            });
-
-            $table->editColumn('norma', function ($row) {
-                if (count($row->clausulas)) {
-                    $iso = substr($row->clausulas[0]->modulo, 0, 3);
-                    $num = substr($row->clausulas[0]->modulo, 3);
-
-                    return $row->clausulas ? strtoupper($iso . ' ' . $num) : '';
-                }
-
-                return 'sin clausula';
+            $table->editColumn('expectativas', function ($row) {
+                return $row->expectativasNecesidadesWithNormas ? $row->expectativasNecesidadesWithNormas : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -86,10 +66,10 @@ class PartesInteresadasController extends Controller
     {
         $partes = PartesInteresada::create($request->all());
         if (array_key_exists('ajax', $request->all())) {
-            return response()->json(['success'=>true, 'activo'=>$partes]);
+            return response()->json(['success' => true, 'activo' => $partes]);
         }
 
-        return redirect()->route('admin.partes-interesadas.edit', ['id'=>$partes]);
+        return redirect()->route('admin.partes-interesadas.edit', ['id' => $partes]);
     }
 
     public function edit(Request $request, $id)
@@ -99,11 +79,12 @@ class PartesInteresadasController extends Controller
         $clausulas = Clausula::get();
         $partesInteresada->load('team');
 
-        return view('admin.partesInteresadas.edit', ['id'=>$partesInteresada], compact('partesInteresada', 'clausulas'));
+        return view('admin.partesInteresadas.edit', ['id' => $partesInteresada], compact('partesInteresada', 'clausulas'));
     }
 
-    public function update(Request $request, PartesInteresada $partesInteresada)
+    public function update(Request $request, $partesInteresada)
     {
+        $partesInteresada = PartesInteresada::find($partesInteresada);
         $partesInteresada->update($request->all());
         $clausulas = Clausula::get();
 
