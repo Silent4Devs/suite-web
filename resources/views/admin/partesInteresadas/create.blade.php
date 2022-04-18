@@ -1,13 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-
-
     {{ Breadcrumbs::render('admin.partes-interesadas.create') }}
 
-   
+
     <h5 class="col-12 titulo_general_funcion">Registrar: Partes Interesadas</h5>
     <div class="mt-4 card">
- 
+
         <div class="card-body">
             <form method="POST" action="{{ route('admin.partes-interesadas.store') }}" enctype="multipart/form-data"
                 class="row">
@@ -24,12 +22,10 @@
                             {{ $errors->first('parteinteresada') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.partesInteresada.fields.parteinteresada_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.partesInteresada.fields.parteinteresada_helper') }}</span>
                 </div>
 
-{{-- 
-                @livewire('show-partes-interesadas')
+                {{-- @livewire('show-partes-interesadas')
 
                 <div wire:ignore>
                     <div class="form-group col-md-12">
@@ -46,15 +42,11 @@
                         <span
                             class="help-block">{{ trans('cruds.partesInteresada.fields.requisitos_helper') }}</span>
                     </div>
-                </div>
-
-              --}}
-{{-- 
-
-                @livewire('partes-interesadas-component') --}}
+                </div> --}}
+                {{-- @livewire('partes-interesadas-component') --}}
 
                 <div class="text-right form-group col-md-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.partes-interesadas.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -62,7 +54,6 @@
             </form>
         </div>
     </div>
-
 @endsection
 
 
@@ -139,6 +130,4 @@
     </script>
 
     <script src="{{ asset('js/dark_mode.js') }}"></script>
-
-
 @endsection

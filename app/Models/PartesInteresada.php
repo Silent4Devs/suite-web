@@ -103,4 +103,14 @@ class PartesInteresada extends Model
             ->withPivot('id')
             ->withTimestamps();
     }
+
+    public function expectativasNecesidades()
+    {
+        return $this->hasMany(ParteInteresadaExpectativaNecesidad::class, 'id_interesada', 'id');
+    }
+
+    public function expectativasNecesidadesWithNormas()
+    {
+        return $this->hasMany(ParteInteresadaExpectativaNecesidad::class, 'id_interesada', 'id')->with('normas');
+    }
 }
