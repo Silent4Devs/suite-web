@@ -17,11 +17,10 @@
         <tbody>
             @foreach ($datas as $data)
                 <tr>
-                    <th style="min-width:180px;">{{ $data->necesidades }}</th>
-                    <td style="min-width:180px;">{{ $data->expectativas }}</td>
+                    <th style="min-width:130px;">{{ $data->necesidades }}</th>
+                    <td style="min-width:100px;">{{ $data->expectativas }}</td>
                     <td style="min-width:40px; position:relative">
                         @if (!is_null($data->normas))
-                            
                             <ul>
                                 @forelse ($data->normas as $norma)
                                     <li> {{ $norma->norma }}</li>
@@ -34,8 +33,8 @@
                     <td style="min-width:40px;">
                         <i class="fas fa-edit"
                             wire:click.prevent="$emit('editarParteInteresada',{{ $data->id }})"> </i>
-                        <i class="fas fa-project-diagram"
-                            wire:click.prevent="$emit('agregarNormas',{{ $data->id }})"> </i>
+                        {{-- <i class="fas fa-project-diagram"
+                            wire:click.prevent="$emit('agregarNormas',{{ $data->id }})"> </i> --}}
                         <i class="fas fa-trash-alt text-danger"
                             wire:click.prevent="$emit('eliminarParteInteresada',{{ $data->id }})"> </i>
                     </td>
@@ -62,6 +61,9 @@
         })
         Livewire.on('abrir-modal', () => {
             $('#exampleModal').modal('show');
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            });
 
         })
         Livewire.on('abrirModalPartesInteresadas', () => {

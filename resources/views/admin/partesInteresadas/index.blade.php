@@ -131,10 +131,12 @@
                         {{-- <th>
                             {{ trans('cruds.partesInteresada.fields.id') }}
                         </th> --}}
-                        <th style="word-break:keep-all;" style="min-width: 20% !important">
+                        <th style="min-width:190px;">
                             {{ trans('cruds.partesInteresada.fields.parteinteresada') }}
                         </th>
-                        <th style="min-width:500px!important">Expectativas / Necesidades</th>
+                        <th style="min-width:210px!important">Expectativas</th>
+                        <th style="min-width:210px!important">Necesidades</th>
+                        {{-- <th style="min-width:150px!important">Norma(s)</th> --}}
                         <th>
                             Opciones
                         </th>
@@ -302,22 +304,30 @@
                         data: 'expectativas',
                         render: function(data, type, row) {
                             data = JSON.parse(data);
-                            let html = '<div class="row w-100" style="min-width:500px!important">';
+                            let html = '<div class="row w-100">';
                             data.forEach(element => {
                                 html += `
-                                <div class="col-8">
-                                    <p class="mb-0">${element.expectativas} / ${element.necesidades}</p>
-                                </div>
-                                <div class="col-4"><ul>`;
-                                element.normas.forEach(norma => {
-                                    html += ` <li class="mb-0">${norma.norma}</li>`;
-                                });
-                                html += `</ul></div>`;
+                                    <p class="mb-0">${element.expectativas}</p>
+                               `;
                             });
                             html += '</div>';
                             return html;
                         },
-                    }, {
+                    },
+                    {
+                        data: 'expectativas',
+                        render: function(data, type, row) {
+                            data = JSON.parse(data);
+                            let html = '<div class="row w-100">';
+                            data.forEach(element => {
+                                html += `
+                                    <p class="mb-0">${element.necesidades}</p>
+                                `;
+                            });
+                            html += '</div>';
+                            return html;
+                        },
+                    },{
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
                     }
