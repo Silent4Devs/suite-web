@@ -124,6 +124,7 @@ class RolesController extends Controller
             $permissions = $request->permissions;
             $role->update(['title' => $nombre_rol]);
             $role->permissions()->sync($permissions);
+
             return response()->json(['success' => true]);
         }
     }
