@@ -19,6 +19,7 @@
                             {{ $errors->first('title') }}
                         </div>
                     @endif
+                    <span class="nombre_rol_error text-danger errors"></span>
                     <span class="help-block">{{ trans('cruds.role.fields.title_helper') }}</span>
                 </div>
                 {{-- <div class="form-group">
@@ -73,13 +74,13 @@
                     <input type="hidden" id="role_id" value="{{ $role->id }}">
                 @endif
                 <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit" id="btnEnviarPermisos">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
+        </div>
+        <div class="form-group">
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+            <button class="btn btn-danger" type="submit" id="btnEnviarPermisos">
+                {{ trans('global.save') }}
+            </button>
+        </div>
         </form>
     </div>
 @endsection
@@ -137,8 +138,15 @@
                             window.location.href = '/admin/roles';
                         }, 1500);
                     },
-                    error: function(err) {
-                        console.log(err);
+                    error: function(request, status, error) {
+                        console.log(error)
+                        $.each(request.responseJSON.errors, function(indexInArray,
+                            valueOfElement) {
+                            console.log(valueOfElement, indexInArray);
+                            $(`span.${indexInArray}_error`).text(
+                                valueOfElement[0]);
+
+                        });
                     }
                 });
             });
