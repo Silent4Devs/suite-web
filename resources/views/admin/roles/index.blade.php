@@ -293,7 +293,8 @@
                                     method: 'POST',
                                     headers: {
                                         'X-CSRF-TOKEN': _token,
-                                        'Content-Type': 'application/json'
+                                        'Content-Type': 'application/json',
+                                        Accept: 'application/json'
                                     },
                                     body: JSON.stringify({
                                         nombre_rol: login
@@ -306,6 +307,10 @@
                                     return response.json()
                                 })
                                 .catch(error => {
+                                    if (error.statusCode === 422) {
+                                        error = error.errors.title[0];
+                                    }
+                                    console.log(error);
                                     Swal.showValidationMessage(
                                         `Request failed: ${error}`
                                     )
