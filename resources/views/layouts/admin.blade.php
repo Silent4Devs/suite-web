@@ -989,6 +989,9 @@
         .dt-button-collection.dropdown-menu::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.5);
         }
+        .table.table-striped tr{
+            background-color: white !important;
+        }
 
     </style>
 
@@ -998,7 +1001,7 @@
 
 <body class="">
     @include('partials.menu')
-    <div class=" c-wrapper">
+    <div class="c-wrapper" id="contenido_body_general_wrapper">
         <header class="px-3 c-header c-header-fixed" style="border: none;">
             <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
@@ -1192,6 +1195,33 @@
     <!-- incluir de footer -->
     {{-- @include('partials.footer') --}}
     </div>
+    <style>
+        @media print{
+            .vista_print{
+                display: none !important;
+            }
+        }
+    </style>
+    <div id="elementos_imprimir" class="d-none">
+        <div id="contenido_imprimir">
+
+        </div>
+    </div>
+    <script>
+        function imprimirElemento(elemento) {
+            let elemento_seleccionado = document.getElementById(elemento);
+            let contenido_imprimir = document.getElementById('contenido_imprimir').innerHTML = elemento_seleccionado.innerHTML;
+            console.log(elemento_seleccionado.innerHTML);
+
+
+            document.querySelector('#elementos_imprimir').classList.remove('d-none');
+            document.querySelector('#contenido_body_general_wrapper').classList.add('vista_print');
+            print();
+            document.querySelector('#elementos_imprimir').classList.add('d-none');
+            document.querySelector('#contenido_body_general_wrapper').classList.remove('vista_print');
+        }
+    </script>
+
     {{-- daterangepicker --}}
     <script>
         window.NotificationUser = {!! json_encode(['user' => auth()->check() ? auth()->user()->empleado->id : null]) !!};
@@ -1244,11 +1274,16 @@
     <script src="https://cdn.datatables.net/fixedcolumns/4.0.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css" integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/plugins/monthSelect/style.min.css" integrity="sha512-V7B1IY1DE/QzU/pIChM690dnl44vAMXBidRNgpw0mD+hhgcgbxHAycRpOCoLQVayXGyrbC+HdAONVsF+4DgrZA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
+        integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/plugins/monthSelect/style.min.css"
+        integrity="sha512-V7B1IY1DE/QzU/pIChM690dnl44vAMXBidRNgpw0mD+hhgcgbxHAycRpOCoLQVayXGyrbC+HdAONVsF+4DgrZA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
-    
+
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
@@ -1643,5 +1678,6 @@
     </script>
 
 </body>
+
 
 </html>

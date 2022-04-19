@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
+use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,7 +79,7 @@ class RolesController extends Controller
     public function validateRol(Request $request)
     {
         $request->validate([
-            'nombre_rol' => 'required|string',
+            'title' => 'required|string',
             'permissions.*' => 'integer',
             'permissions' => 'required|array',
         ]);
@@ -86,6 +87,9 @@ class RolesController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre_rol' => 'required|string|min:3|max:255|unique:roles,title',
+        ]);
         if ($request->ajax()) {
             // $this->validateRol($request);
             $nombre_rol = $request->nombre_rol;
@@ -112,19 +116,16 @@ class RolesController extends Controller
 
     public function update(Request $request, Role $role)
     {
-        // dd($request->all());
+        $request->validate([
+            'nombre_rol' => 'required|string|min:3|max:255|unique:roles,title,' . $role->id,
+        ]);
         if ($request->ajax()) {
-            //$this->validateRol($request);
             $nombre_rol = $request->nombre_rol;
             $permissions = $request->permissions;
             $role->update(['title' => $nombre_rol]);
             $role->permissions()->sync($permissions);
-
             return response()->json(['success' => true]);
         }
-        // $role->update($request->all());
-        // $role->permissions()->sync($request->input('permissions', []));
-        // return redirect()->route('admin.roles.index');
     }
 
     public function show(Role $role)
@@ -141,6 +142,22 @@ class RolesController extends Controller
         $role->delete();
 
         return back();
+    }
+
+    public function copiarRol(Role $role, Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|min:3|max:255|unique:roles,title',
+        ]);
+        $nombre_rol = $request->nombre_rol;
+        $rol_copiar = $role->replicate();
+        $rol_copiar->title = $nombre_rol;
+        $rol_copiar->created_at = Carbon::now();
+        $rol_copiar->updated_at = Carbon::now();
+        $rol_copiar->save();
+        $rol_copiar->permissions()->sync($role->permissions);
+
+        return response()->json(['success' => true, 'rol_creado' => $rol_copiar]);
     }
 
     public function massDestroy(MassDestroyRoleRequest $request)

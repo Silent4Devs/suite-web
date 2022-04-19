@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .btn_cargar {
             border-radius: 100px !important;
@@ -37,8 +36,6 @@
 
     </style>
     @can('role_create')
-
-
         <h5 class="col-12 titulo_general_funcion">Roles</h5>
         <div class="mt-5 card">
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -46,7 +43,10 @@
             </div> --}}
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modalroles', ['model' => 'Role', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
+                    @include('csvImport.modalroles', [
+                        'model' => 'Role',
+                        'route' => 'admin.vulnerabilidads.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -192,11 +192,10 @@
                 $('#xlsxImportModal').modal('show');
                 }
                 };
-
+            
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
-
             @endcan
             @can('role_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
@@ -208,13 +207,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -249,7 +248,14 @@
                     // },
                     {
                         data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        render: function(data, type, row) {
+                            return `
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-copy text-dark mr-2" title="Copiar" style="cursor:pointer" data-action="copy" data-id="${row.id}"></i>    
+                                ${data}
+                            </div>
+                            `;
+                        }
                     }
                 ],
                 orderCellsTop: true,
@@ -258,18 +264,72 @@
                 ]
             };
             let table = $('.datatable-Role').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+            document.querySelector('.dataTables_scrollBody').addEventListener('click', function(event) {
+                console.log(event);
+                if (event.target.tagName === 'I' && event.target.getAttribute('data-action') === 'copy') {
+                    let id = event.target.dataset.id;
+                    let url = `{{ route('admin.roles.copy', ':id') }}`;
+                    url = url.replace(':id', id);
+                    Swal.fire({
+                        title: '¿Desea copiar el rol?',
+                        text: 'El rol será copiado con el nombre ingresado',
+                        icon: 'question',
+                        input: 'text',
+                        inputAttributes: {
+                            autocapitalize: 'off'
+                        },
+                        inputValidator: (value) => {
+                            if (value.trim().length < 3) {
+                                return 'El nombre del rol debe tener al menos 3 caracteres'
+                            }
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'Copiar',
+                        cancelButtonText: 'Cancelar',
+                        showLoaderOnConfirm: true,
+                        preConfirm: (login) => {
+                            console.log(login);
+                            return fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRF-TOKEN': _token,
+                                        'Content-Type': 'application/json',
+                                        Accept: 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        nombre_rol: login
+                                    })
+                                })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(response.statusText)
+                                    }
+                                    return response.json()
+                                })
+                                .catch(error => {
+                                    if (error.statusCode === 422) {
+                                        error = error.errors.title[0];
+                                    }
+                                    console.log(error);
+                                    Swal.showValidationMessage(
+                                        `Request failed: ${error}`
+                                    )
+                                })
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Rol copiado',
+                                text: `El rol ${result.value.rol_creado.title} ha sido creado con éxito`,
+                                type: 'success'
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        }
+                    })
+                }
+            });
         });
     </script>
 @endsection
