@@ -16,11 +16,12 @@ class CreatePartesInteresadas extends Component
     public $view = 'create';
     public $normasModel = [];
     protected $listeners = ['editarParteInteresada'=>'edit', 'eliminarParteInteresada'=>'destroy', 'agregarNormas'];
-   
-    public function hydrate(){
+
+    public function hydrate()
+    {
         $this->emit('select2');
     }
-    
+
     public function validarParteInteresada()
     {
         $this->validate([
@@ -29,7 +30,8 @@ class CreatePartesInteresadas extends Component
         ]);
     }
 
-    public function create(){
+    public function create()
+    {
         $this->default();
         $this->emit('abrir-modal');
     }
@@ -37,7 +39,7 @@ class CreatePartesInteresadas extends Component
     public function save()
     {
         $this->validarParteInteresada();
-        $model= ParteInteresadaExpectativaNecesidad::create([
+        $model = ParteInteresadaExpectativaNecesidad::create([
             'necesidades' => $this->necesidades,
             'expectativas' => $this->expectativas,
             'id_interesada' => $this->id_interesado,
