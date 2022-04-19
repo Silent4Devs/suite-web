@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
+use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -141,6 +142,18 @@ class RolesController extends Controller
         $role->delete();
 
         return back();
+    }
+    public function copiarRol(Role $role, Request $request)
+    {
+        $nombre_rol = $request->nombre_rol;
+        $rol_copiar = $role->replicate();
+        $rol_copiar->title = $nombre_rol;
+        $rol_copiar->created_at = Carbon::now();
+        $rol_copiar->updated_at = Carbon::now();
+        $rol_copiar->save();
+        $rol_copiar->permissions()->sync($role->permissions);
+
+        return response()->json(['success' => true, 'rol_creado' => $rol_copiar]);
     }
 
     public function massDestroy(MassDestroyRoleRequest $request)

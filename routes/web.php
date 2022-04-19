@@ -368,6 +368,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('gantt/update', 'GanttController@update');
 
     // Roles
+    Route::post('roles/{role}/copiar', 'RolesController@copiarRol')->name('roles.copy');
     Route::get('roles/{role}/permisos', 'RolesController@getPermissions')->name('roles.getPermissions');
     Route::patch('roles/{role}/edit', 'RolesController@update')->name('roles.patch');
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
