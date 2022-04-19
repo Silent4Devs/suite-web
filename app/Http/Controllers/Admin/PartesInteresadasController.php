@@ -98,9 +98,10 @@ class PartesInteresadasController extends Controller
 
         $partesInteresada->load('clausulas');
 
-        $requisitos = ParteInteresadaExpectativaNecesidad::with('normas')->where('id_interesada','=',$partesInteresada->id)->get();
-        $result = ParteInteresadaExpectativaNecesidad::where('id_interesada','=',$partesInteresada->id)->exists();
-        return view('admin.partesInteresadas.show', compact('partesInteresada','requisitos','result'));
+        $requisitos = ParteInteresadaExpectativaNecesidad::with('normas')->where('id_interesada', '=', $partesInteresada->id)->get();
+        $result = ParteInteresadaExpectativaNecesidad::where('id_interesada', '=', $partesInteresada->id)->exists();
+
+        return view('admin.partesInteresadas.show', compact('partesInteresada', 'requisitos', 'result'));
     }
 
     public function destroy(PartesInteresada $partesInteresada)
