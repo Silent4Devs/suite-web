@@ -1,5 +1,7 @@
 <div>
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
+
     <style>
         .timeline-header .userimage {
             float: inherit;
@@ -254,7 +256,7 @@
                             <button class="btn btn-sm btn_cancelar" x-on:click="open = true"><i
                                     class="fas fa-arrow-left"></i> Regresar</button>
 
-                            <button onclick="javascript:imprim1(imp1);" class="btn btn-sm btn-success">
+                            <button onclick="imprimirElemento('imp1');" class="btn btn-sm btn-success">
                                 <i class="mr-2 fas fa-print"></i>
                                 Imprimir
                             </button>
@@ -515,7 +517,7 @@
                                 </div>
 
 
-                                
+
                                 <div class="modal fade" id="modalDocumentos" data-backdrop="static"
                                     data-keyboard="false" tabindex="-1" aria-labelledby="modalDocumentosLabel"
                                     aria-hidden="true">
@@ -537,7 +539,7 @@
                                                         <div class="form-group col-sm-6 col-lg-6 col-md-6">
                                                             <label for="nombre"><i
                                                                     class="fas fa-file-signature iconos-crear"></i>Nombre</label>
-                   
+
 
                                                                 <select class="form-control" name="nombre" id="nombre_documento">
                                                                     <option value="" selected disabled>Selecciones documento</option>
@@ -1320,18 +1322,7 @@
     })
 </script>
 
-<script>
-    function imprim1(imp1) {
-        var printContents = document.getElementById('imp1').innerHTML;
-        w = window.open();
-        w.document.write(printContents);
-        w.document.close(); // necessary for IE >= 10
-        w.focus(); // necessary for IE >= 10
-        w.print();
-        w.close();
-        return true;
-    }
-</script>
+
 @section('scripts')
     <script type="text/javascript">
         $(document).on('change', '#nombre_documento', function(event) {
