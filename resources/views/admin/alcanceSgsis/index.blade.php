@@ -173,14 +173,14 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width:75px;">{{ trans('cruds.alcanceSgsi.fields.id') }}</th>
-                        <th style="min-width:75px !importantimportant;">Nombre del Alcance</th>
+                        <th style="min-width:150px !important;">Nombre del Alcance</th>
                         <th style="min-width:200px;">Descripción</th>
                         <th>Norma</th>
                         <th style="min-width:100px;">Fecha de publicación</th>
                         <th style="min-width:100px;">Fecha de entrada en vigor</th>
                         <th style="min-width:100px;">Revisó</th>
-                        <th style="min-width:100px;">Puesto</th>
-                        <th style="min-width:100px;">Área</th>
+                        <th style="min-width:150px !important;;">Puesto</th>
+                        <th style="min-width:150px;">Área</th>
                         <th style="min-width:100px;">Fecha de revisión</th>
                         <th style="min-width:100px;">Opciones</th>
                     </tr>

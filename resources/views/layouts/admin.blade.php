@@ -989,6 +989,9 @@
         .dt-button-collection.dropdown-menu::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.5);
         }
+        .table.table-striped tr{
+            background-color: white !important;
+        }
 
     </style>
 

@@ -16,23 +16,33 @@ class CreatePartesInteresadas extends Component
     public $view = 'create';
     public $normasModel = [];
     protected $listeners = ['editarParteInteresada'=>'edit', 'eliminarParteInteresada'=>'destroy', 'agregarNormas'];
-
+   
+    public function hydrate(){
+        $this->emit('select2');
+    }
+    
     public function validarParteInteresada()
     {
         $this->validate([
-            'necesidades' => 'required|max:255',
-            'expectativas' => 'required|max:255',
+            'necesidades' => 'required|max:1250',
+            'expectativas' => 'required|max:1250',
         ]);
+    }
+
+    public function create(){
+        $this->default();
+        $this->emit('abrir-modal');
     }
 
     public function save()
     {
         $this->validarParteInteresada();
-        ParteInteresadaExpectativaNecesidad::create([
+        $model= ParteInteresadaExpectativaNecesidad::create([
             'necesidades' => $this->necesidades,
             'expectativas' => $this->expectativas,
             'id_interesada' => $this->id_interesado,
         ]);
+        $model->normas()->sync($this->normasModel);
         $this->reset('necesidades', 'expectativas');
         $this->emit('render');
         $this->emit('cerrar-modal', ['editar'=>false]);
@@ -41,7 +51,8 @@ class CreatePartesInteresadas extends Component
     public function edit($id)
     {
         $this->view = 'edit';
-        $model = ParteInteresadaExpectativaNecesidad::find($id);
+        $model = ParteInteresadaExpectativaNecesidad::with('normas')->find($id);
+        $this->normasModel = $model->normas->pluck('id')->toArray();
         $this->necesidades = $model->necesidades;
         $this->expectativas = $model->expectativas;
         $this->id_interesado = $model->id_interesada;
@@ -53,6 +64,7 @@ class CreatePartesInteresadas extends Component
     {
         $this->necesidades = '';
         $this->expectativas = '';
+        $this->normasModel = [];
         $this->view = 'create';
     }
 
@@ -65,6 +77,7 @@ class CreatePartesInteresadas extends Component
             'expectativas' => $this->expectativas,
             'id_interesada' => $this->id_interesado,
         ]);
+        $model->normas()->sync($this->normasModel);
         $this->emit('cerrar-modal', ['editar'=>true]);
         $this->default();
         $this->emit('render');
