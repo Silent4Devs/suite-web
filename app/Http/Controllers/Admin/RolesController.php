@@ -143,6 +143,7 @@ class RolesController extends Controller
 
         return back();
     }
+
     public function copiarRol(Role $role, Request $request)
     {
         $nombre_rol = $request->nombre_rol;
