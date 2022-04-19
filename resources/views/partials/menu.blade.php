@@ -449,7 +449,7 @@
                     : '' }}"
                     href="{{ route('admin.iso27001.index') }}#contexto">
                     <i class="bi bi-globe2 iconos_menu letra_blanca"></i>
-                    <font class="letra_blanca"> ISO 27001 </font>
+                    <font class="letra_blanca">Sistema de Gestión</font>
                 </a>
             </li>
         @endcan

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPartesInteresadaRequest;
 use App\Models\Clausula;
+use App\Models\ParteInteresadaExpectativaNecesidad;
 use App\Models\PartesInteresada;
 use App\Models\Team;
 use Gate;
@@ -97,7 +98,10 @@ class PartesInteresadasController extends Controller
 
         $partesInteresada->load('clausulas');
 
-        return view('admin.partesInteresadas.show', compact('partesInteresada'));
+        $requisitos = ParteInteresadaExpectativaNecesidad::with('normas')->where('id_interesada', '=', $partesInteresada->id)->get();
+        $result = ParteInteresadaExpectativaNecesidad::where('id_interesada', '=', $partesInteresada->id)->exists();
+
+        return view('admin.partesInteresadas.show', compact('partesInteresada', 'requisitos', 'result'));
     }
 
     public function destroy(PartesInteresada $partesInteresada)

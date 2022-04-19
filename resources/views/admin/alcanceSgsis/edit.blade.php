@@ -111,8 +111,8 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="norma"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma</label>
+                    <div class="form-group col-md-12">
+                        <label for="norma"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>
                         <select class="form-control select2 {{ $errors->has('norma') ? 'is-invalid' : '' }}"
                             name="norma_id" id="norma">
                             <option disabled selected>Seleccionar norma</option>

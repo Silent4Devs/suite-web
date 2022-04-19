@@ -10,7 +10,7 @@
         <li><a href="{{ route('admin.minutasaltadireccions.index') }}">
                 <div>
                     <i class="bi bi-file-earmark-text"></i>  <br>
-                    Minutas de sesiones con alta dirección
+                    Revisión por dirección
                 </div>
             </a></li>
         <li><a href="{{ route('admin.evidencias-sgsis.index') }}">
@@ -22,7 +22,7 @@
         <li><a href="{{ route('admin.politica-sgsis.index') }}">
                 <div>
                     <i class="bi bi-bank"></i> <br>
-                    Política SGSI
+                    Política del Sistema de Gestión
                 </div>
             </a></li>
     </ul>
