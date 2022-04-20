@@ -1324,24 +1324,24 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'indicadorincidentessi_access',
             ],
             [
-                'name' => 'Crear Incidente de Seguridad',
-                'title' => 'incidentes_de_seguridad_create',
+                'name' => 'Crear Activo de Incidente de Seguridad',
+                'title' => 'activo_incidentes_de_seguridad_create',
             ],
             [
-                'name' => 'Editar Incidente de Seguridad',
-                'title' => 'incidentes_de_seguridad_edit',
+                'name' => 'Editar Activo de Incidente de Seguridad',
+                'title' => 'activo_incidentes_de_seguridad_edit',
             ],
             [
-                'name' => 'Visualizar Incidente de Seguridad',
-                'title' => 'incidentes_de_seguridad_show',
+                'name' => 'Visualizar Activo de Incidente de Seguridad',
+                'title' => 'activo_incidentes_de_seguridad_show',
             ],
             [
-                'name' => 'Eliminar Incidente de Seguridad',
-                'title' => 'incidentes_de_seguridad_delete',
+                'name' => 'Eliminar Activo de Incidente de Seguridad',
+                'title' => 'activo_incidentes_de_seguridad_delete',
             ],
             [
-                'name' => 'Acceder Incidente de Seguridad',
-                'title' => 'incidentes_de_seguridad_access',
+                'name' => 'Acceder Activo de Incidente de Seguridad',
+                'title' => 'activo_incidentes_de_seguridad_access',
             ],
             [
                 'name' => 'Crear Auditoria Anual',

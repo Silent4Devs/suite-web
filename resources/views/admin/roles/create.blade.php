@@ -11,12 +11,13 @@
                     <label class="required" for="title"><i
                             class="fas fa-briefcase iconos-crear"></i>{{ trans('cruds.role.fields.title') }}</label>
                     <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title"
-                        id="title" value="{{ old('title', '') }}" required>
+                        id="title" value="{{ old('title', '') }}">
                     @if ($errors->has('title'))
                         <div class="invalid-feedback">
                             {{ $errors->first('title') }}
                         </div>
                     @endif
+                    <span class="nombre_rol_error text-danger errors"></span>
                     <span class="help-block">{{ trans('cruds.role.fields.title_helper') }}</span>
                 </div>
                 {{-- <div class="form-group">
@@ -67,15 +68,16 @@
                             </tbody>
                         </table>
                     </div>
-                <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
-            </div>
-            <div class="form-group col-12 text-right"  style="margin-left:15px;">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit" id="btnEnviarPermisos">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+                    <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
+                </div>
+                <div class="form-group col-12 text-right" style="margin-left:15px;">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <button class="btn btn-danger" type="submit" id="btnEnviarPermisos">
+                        {{ trans('global.save') }}
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 @endsection
 
@@ -98,6 +100,7 @@
 
             $("#btnEnviarPermisos").click(function(e) {
                 e.preventDefault();
+                limpiarErrores();
                 let tblPermissions = $("#tblPermissions").DataTable();
                 let permissionsArray = tblPermissions.rows({
                     selected: true
@@ -131,12 +134,24 @@
                             window.location.href = '/admin/roles';
                         }, 1500);
                     },
-                    error: function(err) {
-                        console.log(err);
+                    error: function(request, status, error) {
+                        console.log(error)
+                        $.each(request.responseJSON.errors, function(indexInArray,
+                            valueOfElement) {
+                            console.log(valueOfElement, indexInArray);
+                            $(`span.${indexInArray}_error`).text(
+                                valueOfElement[0]);
+
+                        });
                     }
                 });
             });
 
+            function limpiarErrores() {
+                document.querySelectorAll(".errors").forEach(function(element) {
+                    element.innerHTML = "";
+                });
+            }
         });
     </script>
 @endsection
