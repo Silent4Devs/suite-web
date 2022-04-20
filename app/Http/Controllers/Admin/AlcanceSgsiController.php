@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAlcanceSgsiRequest;
-use App\Http\Requests\UpdateAlcanceSgsiRequest;
 use App\Models\AlcanceSgsi;
 use App\Models\Empleado;
 use App\Models\Norma;
@@ -116,12 +115,12 @@ class AlcanceSgsiController extends Controller
         abort_if(Gate::denies('alcance_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $alcanceSgsi->load('normas');
-        $normas_seleccionadas= $alcanceSgsi->normas->pluck('id')->toArray();
-     
+        $normas_seleccionadas = $alcanceSgsi->normas->pluck('id')->toArray();
+
         $normas = Norma::get();
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados', 'normas','normas_seleccionadas'));
+        return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados', 'normas', 'normas_seleccionadas'));
     }
 
     public function update(Request $request, AlcanceSgsi $alcanceSgsi)
@@ -130,7 +129,7 @@ class AlcanceSgsiController extends Controller
         $request->validate([
             'normas' => 'required|array',
          ]);
-       
+
         $alcanceSgsi->update($request->all());
         $normas = array_map(function ($value) {
             return intval($value);
