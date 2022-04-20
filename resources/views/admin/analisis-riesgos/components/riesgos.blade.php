@@ -39,7 +39,7 @@
             </a>
         </li>
 
-        <li>
+        {{-- <li>
             <a href="{{ route('admin.tabla-impacto.index') }}">
                 <div>
                 <i class="fa-solid fa-chart-line"></i>
@@ -47,6 +47,6 @@
                     Tabla de impacto
                 </div>
             </a>
-        </li>
+        </li> --}}
 
 </ul>

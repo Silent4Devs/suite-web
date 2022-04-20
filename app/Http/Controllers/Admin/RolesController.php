@@ -19,7 +19,7 @@ class RolesController extends Controller
         abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Role::with(['permissions'])->select(sprintf('%s.*', (new Role)->table));
+            $query = Role::with(['permissions'])->orderBy('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -88,7 +88,7 @@ class RolesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_rol' => 'required|string|min:3|max:255|unique:roles,title',
+            'nombre_rol' => 'required|string|min:3|max:255|unique:roles,title,NULL,id,deleted_at,NULL',
         ]);
         if ($request->ajax()) {
             // $this->validateRol($request);
@@ -117,7 +117,7 @@ class RolesController extends Controller
     public function update(Request $request, Role $role)
     {
         $request->validate([
-            'nombre_rol' => 'required|string|min:3|max:255|unique:roles,title,' . $role->id,
+            'nombre_rol' => "required|string|min:3|max:255|unique:roles,title,{$role->id},id,deleted_at,NULL",
         ]);
         if ($request->ajax()) {
             $nombre_rol = $request->nombre_rol;
@@ -148,7 +148,7 @@ class RolesController extends Controller
     public function copiarRol(Role $role, Request $request)
     {
         $request->validate([
-            'title' => 'required|string|min:3|max:255|unique:roles,title',
+            'nombre_rol' => 'required|string|min:3|max:255|unique:roles,title,NULL,id,deleted_at,NULL',
         ]);
         $nombre_rol = $request->nombre_rol;
         $rol_copiar = $role->replicate();

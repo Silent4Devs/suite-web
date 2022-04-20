@@ -8,7 +8,7 @@
 </style>
 
 
-<div class="container w-100">
+<div class="container w-100 form-group col-12">
     <div class="mb-2 row">
         <div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px #345183;">
             <span class="ml-1" style="font-size: 17px; font-weight: bold;">

@@ -46,7 +46,7 @@
 
     @can('minutasaltadireccion_create')
 
-        <h5 class="col-12 titulo_general_funcion">Minutas de Sesiones con Alta Dirección</h5>
+        <h5 class="col-12 titulo_general_funcion">Revisión por dirección</h5>
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
