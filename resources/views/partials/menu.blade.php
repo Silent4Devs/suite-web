@@ -791,15 +791,15 @@
                     <font class="letra_blanca"> Ajustes de Usuario </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
-                    {{-- @can('permission_access')
+                    @can('permission_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.permissions.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.permisos.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/permisos') || request()->is('admin/permisos/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-unlock-alt iconos_menu letra_blanca"></i>
                                 <font class="letra_blanca"> {{ trans('cruds.permission.title') }} </font>
                             </a>
                         </li>
-                    @endcan --}}
+                    @endcan
                     @can('role_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.roles.index') }}"

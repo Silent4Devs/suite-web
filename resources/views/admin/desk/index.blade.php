@@ -37,25 +37,31 @@
             color: #212529;
         }
 
-        .cdr-celeste{
+        .cdr-celeste {
             background: #4A98FF;
         }
-        .cdr-amarillo{
+
+        .cdr-amarillo {
             background: #FFCB63;
         }
-        .cdr-morado{
+
+        .cdr-morado {
             background: #AC84FF;
         }
-        .cdr-azul{
+
+        .cdr-azul {
             background: #6863FF;
         }
-        .cdr-verde{
+
+        .cdr-verde {
             background: #6DC866;
         }
-        .cdr-rojo{
+
+        .cdr-rojo {
             background: #FF417B;
         }
-        .caja_secciones section{
+
+        .caja_secciones section {
             overflow: unset !important;
         }
 
@@ -70,31 +76,43 @@
         <div class="caja_botones_secciones">
 
             <div class="caja_botones_menu">
-                <a  href="#" data-tabs="incidentes" class="btn_activo">
-                    <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
-                </a>
-                <a  href="#" data-tabs="riesgos">
-                    <i class="fas fa-shield-alt"></i> Riesgos
-                </a>
-                <a  href="#" data-tabs="quejas">
-                    <i class="fas fa-frown"></i> Quejas
-                </a>
-                <a  href="#" data-tabs="denuncias">
-                    <i class="fas fa-hand-paper"></i> Denuncias
-                </a>
-                <a  href="#" data-tabs="mejoras">
-                    <i class="fas fa-rocket"></i> Mejoras
-                </a>
-                <a  href="#" data-tabs="sugerencias">
-                    <i class="fas fa-lightbulb"></i> Sugerencias
-                </a>
-
+                @can('incidentes_seguridad_access')
+                    <a href="#" data-tabs="incidentes" class="btn_activo">
+                        <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
+                    </a>
+                @endcan
+                @can('riesgos_access')
+                    <a href="#" data-tabs="riesgos">
+                        <i class="fas fa-shield-alt"></i> Riesgos
+                    </a>
+                @endcan
+                @can('quejas_access')
+                    <a href="#" data-tabs="quejas">
+                        <i class="fas fa-frown"></i> Quejas
+                    </a>
+                @endcan
+                @can('denuncias_access')
+                    <a href="#" data-tabs="denuncias">
+                        <i class="fas fa-hand-paper"></i> Denuncias
+                    </a>
+                @endcan
+                @can('mejoras_access')
+                    <a href="#" data-tabs="mejoras">
+                        <i class="fas fa-rocket"></i> Mejoras
+                    </a>
+                @endcan
+                @can('sugerencias_access')
+                    <a href="#" data-tabs="sugerencias">
+                        <i class="fas fa-lightbulb"></i> Sugerencias
+                    </a>
+                @endcan
             </div>
 
             <div class="caja_caja_secciones">
 
                 <div class="caja_secciones">
-                    <section id="incidentes" class="caja_tab_reveldada">
+                    <section id="incidentes"
+                        class="{{ Auth::user()->can('incidentes_seguridad_access') ? 'caja_tab_reveldada' : '' }}">
                         @include('admin.desk.seguridad.seguridad')
                     </section>
                     <section id="riesgos">
@@ -114,15 +132,15 @@
                     </section>
 
 
-                    <div class="text-center">
+                    {{-- <div class="text-center">
                         @can('incidentes_seguridad_access')
                             <section id="incidentes">
                                 @include('admin.desk.seguridad.seguridad')
                             </section>
                         @else
-                            <div class="mt-5 row" style="margin-left: -10px">
+                            <div class="mt-5 row" style="top:0;">
                                 <div class="mb-3 col-12">
-                                    <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                                    <img src="{{ asset('img/not_access.svg') }}" width="400" />
                                 </div>
                                 <div class="col-12">
                                     <strong style="font-size:12pt">
@@ -134,7 +152,8 @@
                             </div>
                         @endcan
                         @can('riesgos_access')
-                            <section id="riesgos">
+                            <section id="riesgos" class="caja_tab_reveldada">
+                                @include('admin.desk.riesgos.riesgos')
                             </section>
                         @else
                             <div class="mt-5 row" style="margin-left: -10px">
@@ -152,6 +171,7 @@
                         @endcan
                         @can('quejas_access')
                             <section id="quejas">
+                                @include('admin.desk.quejas.quejas')
                             </section>
                         @else
                             <div class="mt-5 row" style="margin-left: -10px">
@@ -169,6 +189,7 @@
                         @endcan
                         @can('denuncias_access')
                             <section id="denuncias">
+                                @include('admin.desk.denuncias.denuncias')
                             </section>
                         @else
                             <div class="mt-5 row" style="margin-left: -10px">
@@ -186,6 +207,7 @@
                         @endcan
                         @can('mejoras_access')
                             <section id="mejoras">
+                                @include('admin.desk.mejoras.mejoras')
                             </section>
                         @else
                             <div class="mt-5 row" style="margin-left: -10px">
@@ -203,6 +225,7 @@
                         @endcan
                         @can('sugerencias_access')
                             <section id="sugerencias">
+                                @include('admin.desk.sugerencias.sugerencias')
                             </section>
                         @else
                             <div class="mt-5 row" style="margin-left: -10px">
@@ -218,35 +241,65 @@
                                 </div>
                             </div>
                         @endcan
-                    </div>
+                    </div> --}}
 
                 </div>
 
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 
-    @section('scripts')
-
+@section('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded',function(){
-            const menu=localStorage.getItem('menu-desk')?localStorage.getItem('menu-desk'):'incidentes';
-            document.querySelector('.caja_tab_reveldada').classList.remove('caja_tab_reveldada');
-            document.querySelector('.btn_activo').classList.remove('btn_activo');
-            document.getElementById(menu).classList.add('caja_tab_reveldada');
-            document.querySelector(`[data-tabs=${menu}]`).classList.add('btn_activo');
-            document.querySelector('.caja_botones_menu').addEventListener('click',function(e){
+        document.addEventListener('DOMContentLoaded', function() {
+            let menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'incidentes';
+            const permisoIncidente = @json(Auth::user()->can('incidentes_seguridad_access'));
+            const permisoRiesgo = @json(Auth::user()->can('riesgos_access'));
+            const permisoQueja = @json(Auth::user()->can('quejas_access'));
+            const permisoDenuncia = @json(Auth::user()->can('denuncias_access'));
+            const permisoMejora = @json(Auth::user()->can('mejoras_access'));
+            const permisoSugerencia = @json(Auth::user()->can('sugerencias_access'));
 
-                if(e.target.getAttribute('data-tabs')){
-                    localStorage.setItem('menu-desk',e.target.getAttribute('data-tabs'))
+            if (permisoIncidente) {
+                localStorage.setItem('menu-desk', 'incidentes');
+                menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'incidentes';
+            } else if (permisoRiesgo) {
+                localStorage.setItem('menu-desk', 'riesgos');
+                menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'riesgos';
+            } else if (permisoQueja) {
+                localStorage.setItem('menu-desk', 'quejas');
+                menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'quejas';
+            } else if (permisoDenuncia) {
+                localStorage.setItem('menu-desk', 'denuncias');
+                menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'denuncias';
+            } else if (permisoMejora) {
+                localStorage.setItem('menu-desk', 'mejoras');
+                menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'mejoras';
+            } else if (permisoSugerencia) {
+                localStorage.setItem('menu-desk', 'sugerencias');
+                menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'sugerencias';
+            }
+
+
+            if (document.querySelector('.caja_tab_reveldada')) {
+                document.querySelector('.caja_tab_reveldada').classList.remove('caja_tab_reveldada');
+            }
+            if (document.querySelector('.btn_activo')) {
+                document.querySelector('.btn_activo').classList.remove('btn_activo');
+            }
+            if (document.querySelector(`[data-tabs=${menu}]`)) {
+                document.getElementById(menu).classList.add('caja_tab_reveldada');
+                document.querySelector(`[data-tabs=${menu}]`).classList.add('btn_activo');
+            }
+            document.querySelector('.caja_botones_menu').addEventListener('click', function(e) {
+                if (e.target.getAttribute('data-tabs')) {
+                    localStorage.setItem('menu-desk', e.target.getAttribute('data-tabs'))
                 }
             })
-            window.menuActive=function(item){
-                localStorage.setItem('menu-desk',item)
+            window.menuActive = function(item) {
+                localStorage.setItem('menu-desk', item)
             }
         })
-
     </script>
-    @endsection
-
-
+@endsection

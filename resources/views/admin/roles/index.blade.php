@@ -324,7 +324,8 @@
                                 text: `El rol ${result.value.rol_creado.title} ha sido creado con éxito`,
                                 type: 'success'
                             }).then(() => {
-                                window.location.reload();
+                                // window.location.reload();
+                                table.ajax.reload();
                             });
                         }
                     })

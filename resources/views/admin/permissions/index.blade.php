@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 @section('content')
     @can('permission_create')
-
-
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Permisos</strong></h3>
@@ -19,7 +17,7 @@
                             {{ trans('cruds.permission.fields.title') }}
                         </th>
                         <th>
-                            Opciones
+                            Descripción
                         </th>
                     </tr>
                     {{-- <tr>
@@ -112,46 +110,52 @@
             ];
             @can('permission_create')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar permiso',
-                url: "{{ route('admin.permissions.create') }}",
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Actualizar Lista Permisos',
+                titleAttr: 'Actualizar Lista de Permisos',
+                url: "{{ route('admin.permisos.actualizar') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
-                window.location.href = url;
+                SweetAlert.fire({
+                title: '¿Estás seguro?',
+                text: 'Esta acción actualizará la lista de permisos',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, actualizar',
+                cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                if (result.value) {
+                $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                if (data.success) {
+                Swal.fire(
+                'Listo!',
+                'La lista de permisos ha sido actualizada',
+                'success'
+                ).then(() => {
+                table.ajax.reload();
+                });
+                } else {
+                Swal.fire(
+                'Error!',
+                'La lista de permisos no ha podido ser actualizada',
+                'error'
+                )
+                }
+                }
+                });
+                }
+                });
                 }
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('permission_delete')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-                let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.permissions.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
-            
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-            
-                return
-                }
-            
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
-                }
-                //dtButtons.push(deleteButton)
-            @endcan
+
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -169,9 +173,9 @@
                         name: 'title'
                     },
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
+                        data: 'name',
+                        name: 'name'
+                    },
                 ],
                 orderCellsTop: true,
                 order: [
@@ -192,6 +196,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection
