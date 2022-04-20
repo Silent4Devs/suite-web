@@ -10,7 +10,7 @@
     </style>
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}
-    <h5 class="col-12 titulo_general_funcion">Registrar: Minutas de Sesiones de Alta Dirección</h5>
+    <h5 class="col-12 titulo_general_funcion">Registrar: Revisión por dirección</h5>
     <div class="mt-4 card">
         <div class="card-body">
             <form method="POST" action="{{ route('admin.minutasaltadireccions.store') }}" enctype="multipart/form-data"
@@ -150,13 +150,13 @@
                     </table>
                 </div>
                 <input type="hidden" name="participantes" value="" id="participantes">
-                {{-- <div class="mt-3 col-sm-12 form-group">
+                 {{-- <div class="mt-3 col-sm-12 form-group">
                     <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documento</label>
                     <div class="custom-file">
                         <input type="file" name="files[]" multiple class="form-control" id="evidencia">
 
                     </div>
-                </div> --}}
+                </div>  --}}
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
                     <label for="tema_tratado"><i class="fas fa-file-alt iconos-crear"></i>Temas tratados<span class="text-danger">*</span></label>
                     <textarea class="form-control date" type="text" name="tema_tratado" id="temas">
@@ -167,7 +167,8 @@
                             {{ $errors->first('tema_tratado') }}
                         </span>
                     @endif
-                </div>
+                </div><br>
+               
                 {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
                 @include('admin.planesDeAccion.actividades.tabla',[
                 'empleados'=>$responsablereunions

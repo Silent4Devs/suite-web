@@ -115,16 +115,27 @@ class AlcanceSgsiController extends Controller
     {
         abort_if(Gate::denies('alcance_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $alcanceSgsi->load('norma');
+        $alcanceSgsi->load('normas');
+        $normas_seleccionadas= $alcanceSgsi->normas->pluck('id')->toArray();
+     
         $normas = Norma::get();
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados', 'normas'));
+        return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados', 'normas','normas_seleccionadas'));
     }
 
-    public function update(UpdateAlcanceSgsiRequest $request, AlcanceSgsi $alcanceSgsi)
+    public function update(Request $request, AlcanceSgsi $alcanceSgsi)
     {
+        // dd($request->all());
+        $request->validate([
+            'normas' => 'required|array',
+         ]);
+       
         $alcanceSgsi->update($request->all());
+        $normas = array_map(function ($value) {
+            return intval($value);
+        }, $request->normas);
+        $alcanceSgsi->normas()->sync($normas);
 
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Editado con éxito');
     }
