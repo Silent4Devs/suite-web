@@ -120,6 +120,18 @@ class MinutasaltadireccionController extends Controller
         //Creación Minuta
         $minutasaltadireccion = Minutasaltadireccion::create($request->all());
 
+        // if ($request->hasFile('files')) {
+        //     $files = $request->file('files');
+        //     foreach ($files as $file) {
+        //         if (Storage::putFileAs('public/evidencias_sgsi', $file, $file->getClientOriginalName())) {
+        //             EvidenciaSgsiPdf::create([
+        //                 'evidencia' => $file->getClientOriginalName(),
+        //                 'id_evidencias_sgsis' => $evidenciasSgsi->id,
+        //             ]);
+        //         }
+        //     }
+        // }
+
         if ($request->input('archivo', false)) {
             $minutasaltadireccion->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
         }
