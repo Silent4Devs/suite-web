@@ -110,6 +110,7 @@ class RolesController extends Controller
         abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $permissions = Permission::all();
         $role->load('permissions');
+
         return view('admin.roles.edit', compact('permissions', 'role'));
     }
 
@@ -123,6 +124,7 @@ class RolesController extends Controller
             $permissions = $request->permissions;
             $role->update(['title' => $nombre_rol]);
             $role->permissions()->sync($permissions);
+
             return response()->json(['success' => true]);
         }
     }
@@ -146,7 +148,7 @@ class RolesController extends Controller
     public function copiarRol(Role $role, Request $request)
     {
         $request->validate([
-            'nombre_rol' => "required|string|min:3|max:255|unique:roles,title,NULL,id,deleted_at,NULL",
+            'nombre_rol' => 'required|string|min:3|max:255|unique:roles,title,NULL,id,deleted_at,NULL',
         ]);
         $nombre_rol = $request->nombre_rol;
         $rol_copiar = $role->replicate();
