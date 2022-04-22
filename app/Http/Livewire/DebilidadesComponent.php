@@ -13,6 +13,10 @@ class DebilidadesComponent extends Component
     public $nombre;
     public $view = 'create';
 
+    protected $rules = [
+        'debilidad' => 'required|max:1050',
+    ];
+
     public function mount($foda_id)
     {
         $this->foda_id = $foda_id;
@@ -32,8 +36,7 @@ class DebilidadesComponent extends Component
 
     public function save()
     {
-        // $foda = EntendimientoOrganizacion::find($this->foda_id);
-
+        $this->validate();
         DebilidadesEntendimientoOrganizacion::create([
             'foda_id' => $this->foda_id,
             'debilidad' => $this->debilidad,
@@ -59,6 +62,7 @@ class DebilidadesComponent extends Component
 
     public function update()
     {
+        $this->validate();
         $debilidadEncontrada = DebilidadesEntendimientoOrganizacion::find($this->debilidad_id);
         // dd($this->fortaleza_id);
         $debilidadEncontrada->update([

@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('EV360-Evaluaciones-Evaluacion', $evaluacion) }}
     <style>
         .nav-pills .nav-link.active,
@@ -87,12 +86,6 @@
                                 INFORMACIÓN GENERAL
                             </div>
                             <div style="float: right">
-                                @can('evaluacion_360_recordatorio_send')
-                                    <button id="btnEnviarRecordatorio" class="btn btn-sm"
-                                        style="background: #99faa6;color: rgb(54, 54, 54);"><i
-                                            class="mr-2 fas fa-envelope-open-text"></i>Enviar
-                                        recordatorio a evaluadores</button>
-                                @endcan
                                 @if ($evaluacion->estatus == App\Models\RH\Evaluacion::DRAFT)
                                     @can('evaluacion_360_start')
                                         <button id="btnIniciarEvaluacion" class="btn btn-sm"
@@ -108,6 +101,12 @@
                                             nueva fecha de finalización</button>
                                     @endcan
                                 @else
+                                    @can('evaluacion_360_recordatorio_send')
+                                        <button id="btnEnviarRecordatorio" class="btn btn-sm"
+                                            style="background: #99faa6;color: rgb(54, 54, 54);"><i
+                                                class="mr-2 fas fa-envelope-open-text"></i>Enviar
+                                            recordatorio a evaluadores</button>
+                                    @endcan
                                     @can('evaluacion_360_close')
                                         <button id="btnCerrarEvaluacion"
                                             onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('admin.ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
@@ -194,7 +193,9 @@
                                     <form id="formIniciarEvaluacion"
                                         action="{{ route('admin.ev360-evaluaciones.iniciarEvaluacion', $evaluacion) }}"
                                         method="POST">
-                                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form')
+                                        @include(
+                                            'admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form'
+                                        )
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -222,7 +223,9 @@
                                     <form id="formPostergarEvaluacion"
                                         action="{{ route('admin.ev360-evaluaciones.postergarEvaluacion', $evaluacion) }}"
                                         method="POST">
-                                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form_postergar')
+                                        @include(
+                                            'admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form_postergar'
+                                        )
                                     </form>
                                 </div>
                                 <div class="modal-footer">
