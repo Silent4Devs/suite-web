@@ -5,21 +5,26 @@
     </div>
 
     <div class="mt-2">
-        <label for="contacto"><i class="fas fa-lightbulb iconos-crear"></i>Nombre</label>
-        <input class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" wire:model.defer="oportunidad">
+        <label for="oportunidad"><i class="fas fa-lightbulb iconos-crear"></i>Nombre</label>
+        <input class="form-control {{ $errors->has('oportunidad') ? 'is-invalid' : '' }}"
+            wire:model.defer="oportunidad">
+        @error('oportunidad')
+            <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
+        @enderror
         <small class="text-danger errores descripcion_contacto_error"></small>
     </div>
 
     <div class="mt-2">
         <label for="contacto"><i class="fas fa-clipboard-list iconos-crear"></i>Riesgo Asociado</label>
-        <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" wire:model.defer="riesgo">{{ old('riesgo') }}</textarea>
+        <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}"
+            wire:model.defer="riesgo">{{ old('riesgo') }}</textarea>
         <small class="text-danger errores descripcion_contacto_error"></small>
     </div>
 
 
     <div class="mb-3 col-12 mt-4 " style="text-align: end">
-        <button type="button" wire:click.prevent="{{$view =='create' ? 'save':'update'}}"
-        class="btn btn-success">Agregar</button>
+        <button type="button" wire:click.prevent="{{ $view == 'create' ? 'save' : 'update' }}"
+            class="btn btn-success">Agregar</button>
     </div>
 
 
@@ -32,20 +37,20 @@
                     <th>Opciones</th>
                 </tr>
             </thead>
-            <tbody >
+            <tbody>
                 @foreach ($oportunidades as $oportunidad)
-                <tr>
-                    <td>
-                        {{$oportunidad->oportunidad}}
-                    </td>
-                    <td>
-                        {{$oportunidad->riesgo}}
-                    </td>
-                    <td>
-                        <i wire:click="destroy({{ $oportunidad->id }})" class="fas fa-trash-alt text-danger"></i>
-                        <i class="fas fa-edit text-primary ml-4" wire:click="edit({{ $oportunidad->id }})"></i>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            {{ $oportunidad->oportunidad }}
+                        </td>
+                        <td>
+                            {{ $oportunidad->riesgo }}
+                        </td>
+                        <td>
+                            <i wire:click="destroy({{ $oportunidad->id }})" class="fas fa-trash-alt text-danger"></i>
+                            <i class="fas fa-edit text-primary ml-4" wire:click="edit({{ $oportunidad->id }})"></i>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
