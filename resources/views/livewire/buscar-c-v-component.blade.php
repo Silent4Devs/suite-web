@@ -285,6 +285,7 @@
                                     .medidas {
                                         display: flex;
                                         justify-content: space-between;
+                                        overflow: unset !important;
                                     }
 
                                     .datos_iz_cv {

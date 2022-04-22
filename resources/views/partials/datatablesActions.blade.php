@@ -84,7 +84,8 @@
 
     @if (Request::route()->getName() == 'admin.entendimiento-organizacions.index')
     <button class="mr-2 rounded btn btn-sm" >
-        <i class="fas fa-copy" title="Duplicar FODA" data-type="copiaFoda" data-id="{{$row->id}}"></i>
+        <i class="fas fa-copy" title="Duplicar FODA" data-action="copiaFoda" data-id="{{$row->id}}"></i>
+
     </button>
     @endif
 

@@ -60,10 +60,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class MatrizRiesgo extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'matriz_riesgos';
 
     protected $dates = [
