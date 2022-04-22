@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\EntendimientoOrganizacion;
 use App\Models\FortalezasEntendimientoOrganizacion;
 use Livewire\Component;
 

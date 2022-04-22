@@ -385,7 +385,6 @@ class EV360EvaluacionesController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.cuestionario', compact('evaluacion', 'preguntas', 'evaluado', 'evaluador', 'total_preguntas', 'preguntas_contestadas', 'preguntas_no_contestadas', 'progreso', 'finalizo_tiempo', 'objetivos', 'progreso_objetivos', 'objetivos_evaluados', 'objetivos_no_evaluados', 'esta_evaluado', 'competencias_por_puesto_nivel_esperado', 'isJefeInmediato'));
     }
 
-
     public function evaluacion(Evaluacion $evaluacion)
     {
         abort_if(Gate::denies('evaluacion_360_configuracion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
