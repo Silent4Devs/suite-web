@@ -15,6 +15,10 @@ class FortalezasComponent extends Component
     public $view = 'create';
     public $fortaleza_id;
 
+    protected $rules = [
+        'fortaleza' => 'required|max:15',
+    ];
+
     public function mount($foda_id)
     {
         $this->foda_id = $foda_id;
@@ -34,8 +38,7 @@ class FortalezasComponent extends Component
 
     public function save()
     {
-        // $foda = EntendimientoOrganizacion::find($this->foda_id);
-
+        $this->validate();
         FortalezasEntendimientoOrganizacion::create([
             'foda_id' => $this->foda_id,
             'fortaleza' => $this->fortaleza,
@@ -61,6 +64,7 @@ class FortalezasComponent extends Component
 
     public function update()
     {
+        $this->validate();
         $fortalezaEncontrada = FortalezasEntendimientoOrganizacion::find($this->fortaleza_id);
         // dd($this->fortaleza_id);
         $fortalezaEncontrada->update([

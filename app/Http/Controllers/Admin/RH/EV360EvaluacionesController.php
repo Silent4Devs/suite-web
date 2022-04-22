@@ -259,20 +259,19 @@ class EV360EvaluacionesController extends Controller
         }
     }
 
-    public function cerrarEvaluacion(Request $request, $evaluacion)
+    public function cerrarEvaluacion($evaluacion)
     {
         $evaluacion = Evaluacion::find(intval($evaluacion));
-        if ($request->ajax()) {
-            $evaluacion_u = $evaluacion->update([
-                'fecha_fin' => Carbon::now(),
-                'estatus' => Evaluacion::CLOSED,
-            ]);
 
-            if ($evaluacion_u) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['error' => true]);
-            }
+        $evaluacion_u = $evaluacion->update([
+            'fecha_fin' => Carbon::now(),
+            'estatus' => Evaluacion::CLOSED,
+        ]);
+
+        if ($evaluacion_u) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => true]);
         }
     }
 
@@ -386,10 +385,18 @@ class EV360EvaluacionesController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.cuestionario', compact('evaluacion', 'preguntas', 'evaluado', 'evaluador', 'total_preguntas', 'preguntas_contestadas', 'preguntas_no_contestadas', 'progreso', 'finalizo_tiempo', 'objetivos', 'progreso_objetivos', 'objetivos_evaluados', 'objetivos_no_evaluados', 'esta_evaluado', 'competencias_por_puesto_nivel_esperado', 'isJefeInmediato'));
     }
 
+
     public function evaluacion(Evaluacion $evaluacion)
     {
         abort_if(Gate::denies('evaluacion_360_configuracion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion->load('autor');
+        //close evaluation if the end date is passed and if the evaluation is not closed
+        if ($evaluacion->estatus == Evaluacion::ACTIVE) {
+            if (Carbon::now()->diffInDays(Carbon::parse($evaluacion->fecha_fin), false) + 1 <= 0) {
+                $this->cerrarEvaluacion($evaluacion->id);
+            }
+        }
+
         $competencias = Competencia::select('id', 'nombre')->get();
         $objetivos = Objetivo::select('id', 'nombre')->get();
         $competencias_seleccionadas = EvaluacionCompetencia::where('evaluacion_id', $evaluacion->id)->pluck('competencia_id')->toArray();

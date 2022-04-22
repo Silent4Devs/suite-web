@@ -5,21 +5,24 @@
     </div>
 
     <div class="mt-2">
-        <label for="contacto"><i class="fas fa-thumbs-down iconos-crear"></i>Nombre</label>
-        <input class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" wire:model.defer="debilidad">
-        <small class="text-danger errores descripcion_contacto_error"></small>
+        <label for="debilidad"><i class="fas fa-thumbs-down iconos-crear"></i>Nombre</label>
+        <input class="form-control {{ $errors->has('debilidad') ? 'is-invalid' : '' }}" wire:model.defer="debilidad">
+        @error('debilidad')
+            <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
+        @enderror
     </div>
 
     <div class="mt-2">
         <label for="contacto"><i class="fas fa-clipboard-list iconos-crear"></i>Riesgo Asociado</label>
-        <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" wire:model.defer="riesgo">{{ old('riesgo') }}</textarea>
+        <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}"
+            wire:model.defer="riesgo">{{ old('riesgo') }}</textarea>
         <small class="text-danger errores descripcion_contacto_error"></small>
     </div>
 
 
     <div class="mb-3 col-12 mt-4 " style="text-align: end">
-        <button type="button" wire:click.prevent="{{$view =='create' ? 'save':'update'}}"
-        class="btn btn-success">Agregar</button>
+        <button type="button" wire:click.prevent="{{ $view == 'create' ? 'save' : 'update' }}"
+            class="btn btn-success">Agregar</button>
     </div>
 
 
@@ -32,20 +35,20 @@
                     <th>Opciones</th>
                 </tr>
             </thead>
-            <tbody >
+            <tbody>
                 @foreach ($debilidades as $debilidad)
-                <tr>
-                    <td>
-                        {{$debilidad->debilidad}}
-                    </td>
-                    <td>
-                        {{$debilidad->riesgo}}
-                    </td>
-                    <td>
-                        <i wire:click="destroy({{ $debilidad->id }})" class="fas fa-trash-alt text-danger"></i>
-                        <i class="fas fa-edit text-primary ml-4" wire:click="edit({{ $debilidad->id }})"></i>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            {{ $debilidad->debilidad }}
+                        </td>
+                        <td>
+                            {{ $debilidad->riesgo }}
+                        </td>
+                        <td>
+                            <i wire:click="destroy({{ $debilidad->id }})" class="fas fa-trash-alt text-danger"></i>
+                            <i class="fas fa-edit text-primary ml-4" wire:click="edit({{ $debilidad->id }})"></i>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
