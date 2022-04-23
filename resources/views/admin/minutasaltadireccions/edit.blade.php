@@ -24,7 +24,8 @@
                             {{ $errors->first('fechareunion') }}
                         </span>
                     @endif
-                    <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
+                    <span
+                        class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
                 </div>
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
                     <label for="hora_inicio"><i class="fas fa-clock iconos-crear"></i>Horario de inicio</label>
@@ -35,7 +36,8 @@
                             {{ $errors->first('hora_inicio') }}
                         </span>
                     @endif
-                    <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
+                    <span
+                        class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
                 </div>
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
                     <label for="responsable_id"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
@@ -162,7 +164,7 @@
                         <input type="file" name="files[]" multiple class="form-control" id="evidencia">
                     </div>
                 </div> --}}
-                <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group col-sm-12 col-md-12 col-lg-12 mt-4">
                     <label for="tema_tratado"><i class="fas fa-file-alt iconos-crear"></i>Temas tratados</label>
                     <textarea class="form-control date" type="text" name="tema_tratado"
                         id="temas">{{ old('tema_tratado', $minutasaltadireccion->tema_tratado) }}</textarea>
@@ -172,11 +174,18 @@
                         </span>
                     @endif
                 </div>
+
+                @livewire('file-revision-direecion-component',['minutas' => $minutasaltadireccion])
+             
+
+
+
                 {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-                @include('admin.planesDeAccion.actividades.tabla',[
-                'empleados'=>$responsablereunions,
-                'actividades'=>$actividades,
+                @include('admin.planesDeAccion.actividades.tabla', [
+                    'empleados' => $responsablereunions,
+                    'actividades' => $actividades,
                 ])
+
                 {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
 
                 <div class="text-right form-group col-12">
@@ -311,15 +320,18 @@
                         $("#cargando_participantes").show();
                     },
                     success: function(data) {
-                        let lista ="<ul class='list-group id=empleados-lista' >";
-                        $.each(data.usuarios, function (ind, usuario) {
+                        let lista = "<ul class='list-group id=empleados-lista' >";
+                        $.each(data.usuarios, function(ind, usuario) {
                             var result = `{"id":"${usuario.id}",
                                 "name":"${usuario.name}",
                                 "email":"${usuario.email}",
                                 "puesto":"${usuario.puesto}",
                                 "area":"${usuario.area.area}"
                                 }`;
-                            lista += "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario("+result+")' ><i class='mr-2 fas fa-user-circle'></i>"+usuario.name+"</button>";
+                            lista +=
+                                "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
+                                result + ")' ><i class='mr-2 fas fa-user-circle'></i>" +
+                                usuario.name + "</button>";
                         });
                         lista += "</ul>";
 
@@ -530,6 +542,4 @@
             console.log(arrParticipantes);
         }
     </script> --}}
-
-
 @endsection

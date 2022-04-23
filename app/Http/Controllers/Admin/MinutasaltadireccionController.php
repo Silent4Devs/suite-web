@@ -10,6 +10,7 @@ use App\Mail\Minutas\MinutaConfirmacionSolicitud;
 use App\Mail\Minutas\MinutaRechazoPorEdicion;
 use App\Mail\Minutas\SolicitudDeAprobacion;
 use App\Models\Empleado;
+use App\Models\FilesRevisonDireccion;
 use App\Models\HistoralRevisionMinuta;
 use App\Models\Minutasaltadireccion;
 use App\Models\PlanImplementacion;
@@ -103,7 +104,7 @@ class MinutasaltadireccionController extends Controller
         return view('admin.minutasaltadireccions.create', compact('responsablereunions', 'esta_vinculado'));
     }
 
-    public function store(StoreMinutasaltadireccionRequest $request)
+    public function store(Request $request)
     {
         $request->validate([
             'objetivoreunion' => 'required',
@@ -115,22 +116,23 @@ class MinutasaltadireccionController extends Controller
             'tema_tratado' => 'required',
             'actividades' => new ActividadesPlanAccionRule,
             'participantes' => new ParticipantesMinutasAltaDireccionRule,
+    
         ]);
-
-        //Creación Minuta
+       
         $minutasaltadireccion = Minutasaltadireccion::create($request->all());
-
-        // if ($request->hasFile('files')) {
-        //     $files = $request->file('files');
-        //     foreach ($files as $file) {
-        //         if (Storage::putFileAs('public/evidencias_sgsi', $file, $file->getClientOriginalName())) {
-        //             EvidenciaSgsiPdf::create([
-        //                 'evidencia' => $file->getClientOriginalName(),
-        //                 'id_evidencias_sgsis' => $evidenciasSgsi->id,
-        //             ]);
-        //         }
-        //     }
-        // }
+       
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/FilesRevisionDireccion', $file, $file->getClientOriginalName())) {
+                    FilesRevisonDireccion::create([
+                        'name' => $file->getClientOriginalName(),
+                        'revision_id' => $minutasaltadireccion->id,
+                    ]);
+                }
+            }
+        }
+        //Creación Minuta
 
         if ($request->input('archivo', false)) {
             $minutasaltadireccion->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
@@ -147,11 +149,11 @@ class MinutasaltadireccionController extends Controller
         $this->vincularParticipantes($request, $minutasaltadireccion);
 
         //Creación del PDF
-        $actividades = json_decode($request->actividades);
-        $this->createPDF($minutasaltadireccion, $actividades);
+        // $actividades = json_decode($request->actividades);
+        // $this->createPDF($minutasaltadireccion, $actividades);
 
-        // Revisiones
-        $this->initReviews($minutasaltadireccion);
+        // // Revisiones
+        // $this->initReviews($minutasaltadireccion);
 
         return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Guardado con éxito');
     }
@@ -310,7 +312,8 @@ class MinutasaltadireccionController extends Controller
     public function edit(Minutasaltadireccion $minutasaltadireccion)
     {
         abort_if(Gate::denies('minutasaltadireccion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $minutasaltadireccion->load('participantes', 'planes');
+        $minutasaltadireccion->load('participantes', 'planes','documentos');
+        // dd($minutasaltadireccion);
         $actividades = $minutasaltadireccion->planes->first()->tasks;
         $actividades = array_filter($actividades, function ($actividad) {
             return intval($actividad->level) > 0;
@@ -349,6 +352,17 @@ class MinutasaltadireccionController extends Controller
     public function update(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {
         $this->processUpdate($request, $minutasaltadireccion, true);
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/FilesRevisionDireccion', $file, $file->getClientOriginalName())) {
+                    FilesRevisonDireccion::create([
+                        'name' => $file->getClientOriginalName(),
+                        'revision_id' => $minutasaltadireccion->id,
+                    ]);
+                }
+            }
+        }
 
         if ($request->input('archivo', false)) {
             if (!$minutasaltadireccion->archivo || $request->input('archivo') !== $minutasaltadireccion->archivo->file_name) {
