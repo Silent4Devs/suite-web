@@ -134,8 +134,7 @@
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción
                                     del
                                     riesgo identificado<sup>*</sup></label>
-                                <textarea name="descripcion"
-                                    class="form-control" required>{{ $quejas->descripcion }}</textarea>
+                                <textarea name="descripcion" class="form-control" required>{{ $quejas->descripcion }}</textarea>
                             </div>
                             <div class="mt-4 text-center form-group col-12">
                                 <div class="container">
@@ -168,9 +167,6 @@
                                                                         <iframe class='img-size'
                                                                             src='{{ asset('storage/evidencias_quejas' . '/' . $evidencia->evidencia) }}'></iframe>
                                                                     </div>
-
-
-
                                                                 @endforeach
                                                             </div>
                                                             <a class='carousel-control-prev'
@@ -225,8 +221,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <textarea name="area_quejado"
-                                    class="form-control">{{ $quejas->area_quejado }}</textarea>
+                                <textarea name="area_quejado" class="form-control">{{ $quejas->area_quejado }}</textarea>
                             </div>
 
                             <div class="mt-4 form-group col-3 multiselect_empleados">
@@ -240,8 +235,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <textarea name="colaborador_quejado"
-                                    class="form-control">{{ $quejas->colaborador_quejado }}</textarea>
+                                <textarea name="colaborador_quejado" class="form-control">{{ $quejas->colaborador_quejado }}</textarea>
                             </div>
 
                             <div class="mt-4 form-group col-3 multiselect_procesos">
@@ -255,23 +249,20 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <textarea name="proceso_quejado"
-                                    class="form-control">{{ $quejas->proceso_quejado }}</textarea>
+                                <textarea name="proceso_quejado" class="form-control">{{ $quejas->proceso_quejado }}</textarea>
                             </div>
 
                             <div class="mt-4 form-group col-3">
                                 <label class="form-label"><i
                                         class="fas fa-user-plus iconos-crear"></i>Externo(s)</label>
-                                <textarea name="externo_quejado"
-                                    class="form-control">{{ $quejas->externo_quejado }}</textarea>
+                                <textarea name="externo_quejado" class="form-control">{{ $quejas->externo_quejado }}</textarea>
                             </div>
 
                             <div class="mt-2 form-group col-12">
                                 <label class="form-label"><i
                                         class="fas fa-comment-dots iconos-crear"></i>Comentarios
                                     del receptor</label>
-                                <textarea name="comentarios"
-                                    class="form-control">{{ $quejas->comentarios }}</textarea>
+                                <textarea name="comentarios" class="form-control">{{ $quejas->comentarios }}</textarea>
                             </div>
 
 
@@ -286,7 +277,6 @@
 
 
                             @if ($quejas->anonimo == 'no')
-
                                 <div class="mt-2 form-group col-12">
                                     <label class="form-label">
                                         <strong>Queja emitida por:</strong>
@@ -296,7 +286,8 @@
                                 <div class="mt-2 form-group col-4">
                                     <label class="form-label"><i
                                             class="fas fa-user iconos-crear"></i>Nombre</label>
-                                    <div class="form-control">{{ Str::limit($quejas->quejo->name, 30, '...')  }}</div>
+                                    <div class="form-control">{{ Str::limit($quejas->quejo->name, 30, '...') }}
+                                    </div>
                                 </div>
 
                                 <div class="mt-2 form-group col-4">
@@ -382,14 +373,12 @@
                                     <div id="ideas" class="caja_oculta_dinamica row">
                                         <div class="form-group col-12">
                                             <label>Ideas</label>
-                                            <textarea class="form-control"
-                                                name="ideas">{{ $analisis->ideas }}</textarea>
+                                            <textarea class="form-control" name="ideas">{{ $analisis->ideas }}</textarea>
                                         </div>
 
                                         <div class="form-group col-12">
                                             <label>Causa Raíz</label>
-                                            <textarea class="form-control"
-                                                name="causa_ideas">{{ $analisis->causa_ideas }}</textarea>
+                                            <textarea class="form-control" name="causa_ideas">{{ $analisis->causa_ideas }}</textarea>
                                         </div>
                                     </div>
 
@@ -397,8 +386,8 @@
 
                                     <div id="porque" class="caja_oculta_dinamica row">
                                         <div class="form-group col-12">
-                                            Problema: <textarea class="form-control"
-                                                name="problema_porque">{{ $analisis->problema_porque }}</textarea>
+                                            Problema:
+                                            <textarea class="form-control" name="problema_porque">{{ $analisis->problema_porque }}</textarea>
                                         </div>
                                         <div class="form-group col-12">
                                             <label>1er porqué:</label>
@@ -418,51 +407,73 @@
                                                 value="{{ $analisis->porque_5 }}">
                                         </div>
                                         <div class="form-group col-12">
-                                            Causa Raíz: <textarea class="form-control"
-                                                name="causa_porque">{{ $analisis->causa_porque }}</textarea>
+                                            Causa Raíz:
+                                            <textarea class="form-control" name="causa_porque">{{ $analisis->causa_porque }}</textarea>
                                         </div>
                                     </div>
 
 
 
                                     <div id="digrama" class="caja_oculta_dinamica">
-                                        <div class="mt-5 col-12" style="overflow: auto;">
-                                            <div style="width: 100%; min-width:930px; position: relative;">
+                                        <div class="mt-5 col-md-12" style="overflow: auto;">
+                                            <div style="width: 100%; min-width:980px; margin-left:80px;">
                                                 <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
-                                                    style="width:100%">
-
-                                                <textarea name="control_a"
-                                                    class="politicas_txtarea">{{ $analisis->control_a }}</textarea>
-                                                <textarea name="control_b"
-                                                    class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis->control_b }}</textarea>
-
-                                                <textarea name="proceso_a"
-                                                    class="procesos_txtarea">{{ $analisis->proceso_a }}</textarea>
-                                                <textarea name="proceso_b"
-                                                    class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis->proceso_b }}</textarea>
-
-                                                <textarea name="personas_a"
-                                                    class="personas_txtarea">{{ $analisis->personas_a }}</textarea>
-                                                <textarea name="personas_b"
-                                                    class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea>
-
-                                                <textarea name="tecnologia_a"
-                                                    class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
-                                                <textarea name="tecnologia_b"
-                                                    class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea>
-
-                                                <textarea name="metodos_a"
-                                                    class="metodos_txtarea txt_obj_secundarios_b">{{ $analisis->metodos_a }}</textarea>
-                                                <textarea name="metodos_b"
-                                                    class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea>
-
-                                                <textarea name="ambiente_a"
-                                                    class="ambiente_txtarea txt_obj_secundarios_b">{{ $analisis->ambiente_a }}</textarea>
-                                                <textarea name="ambiente_b"
-                                                    class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea>
-
-                                                <textarea name="problema_diagrama"
-                                                    class="problemas_txtarea">{{ $analisis->problema_diagrama }}</textarea>
+                                                    style="width:190%; margin-top:20px;">
+                                                <div
+                                                    style="top:0px;left:150px; position: absolute;height:35px; width:150px;  background-color:#63e4e4; border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Control</strong>
+                                                </div>
+                                                <div
+                                                style="top:0px; left:680px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                <span ><i
+                                                        class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Proceso</strong>
+                                                </div>
+                                                <div
+                                                style="top:0px; left:1200px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                <span ><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-users" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Personas</strong>
+                                                </div>
+                                                <div
+                                                style="buttom:0px; left:410px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                <span ><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Tecnología</strong>
+                                                </div>
+                                                <div
+                                                style="buttom:0px; left:920px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                <span ><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Métodos</strong>
+                                                </div>
+                                                <div
+                                                style="buttom:0px;left:1450px; position: absolute;height:35px; width:150px; background-color:#63e4e4;border-radius:15px;">
+                                                <span ><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-chalkboard" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Recursos</strong>
+                                                </div>
+                                                <div class="col-6" style="top:55px; left:290px; position: absolute; height:30px !important;">
+                                                    <textarea name="control_a" class="politicas_txtarea" id="analisisControl">{{ $analisis->control_a }}</textarea>
+                                                </div>
+                                                    {{-- <textarea name="control_b" class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis->control_b }}</textarea> --}}
+                                                <div class="col-6" style="top:55px; left:810px; position: absolute; height:30px !important;">
+                                                    <textarea name="proceso_a" class="procesos_txtarea" id="analisisProceso">{{ $analisis->proceso_a }}</textarea>
+                                                </div>
+                                                    {{-- <textarea name="proceso_b" class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis->proceso_b }}</textarea> --}}
+                                                <div class="col-6" style="top:55px; left:1315px; position: absolute; height:30px !important;">
+                                                    <textarea name="personas_a" class="personas_txtarea" id="analisisPersona">{{ $analisis->personas_a }}</textarea>
+                                                </div>
+                                                    {{-- <textarea name="personas_b" class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea> --}}
+                                                <div class="col-6" style="bottom:5px; right:480px; position: absolute;">
+                                                    <textarea name="tecnologia_a" id="analisisTecnologia"
+                                                        class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="tecnologia_b" class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea> --}}
+                                                <div class="col-6" style="bottom:5px; left:540px; position: absolute;">
+                                                     <textarea name="metodos_a" class="metodos_txtarea txt_obj_secundarios_b" id="analisisMetodos">{{ $analisis->metodos_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="metodos_b" class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea> --}}
+                                                <div class="col-6" style="bottom:5px; left:1060px; position: absolute;">
+                                                    <textarea name="ambiente_a" class="ambiente_txtarea txt_obj_secundarios_b" id="analisisAmbiente">{{ $analisis->ambiente_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="ambiente_b" class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea> --}}
+                                                <div class="col-6" style="bottom:5px; left:1600px; position: absolute;">
+                                                     <textarea name="problema_diagrama" class="problemas_txtarea" id="analisisProblema">{{ $analisis->problema_diagrama }}</textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -579,8 +590,7 @@
                                         <div class="form-group col-md-12">
                                             <label class="form-label"><i
                                                     class="fas fa-comments iconos-crear"></i>Comentarios</label>
-                                            <textarea class="form-control" name="comentarios"
-                                                id="comentarios"></textarea>
+                                            <textarea class="form-control" name="comentarios" id="comentarios"></textarea>
                                             <span class="text-danger error_comentarios errors"></span>
                                         </div>
                                         <div class="text-right form-group col-md-12">
@@ -603,7 +613,6 @@
 
 
 @section('scripts')
-
 <script type="text/javascript">
     const formatDate = (current_datetime) => {
         let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
@@ -777,4 +786,106 @@
     });
 </script>
 
+<script>
+    $(document).ready(function() {
+        CKEDITOR.replace('analisisControl', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisProceso', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisPersona', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisTecnologia', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisMetodos', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisAmbiente', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisProblema', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+    });
+</script>
 @endsection

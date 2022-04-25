@@ -22,7 +22,7 @@
         <li><a href="{{ route('admin.politica-sgsis.index') }}">
                 <div>
                     <i class="fas fa-landmark"></i>
-                    Política SGSI
+                    Política del Sistema de Gestión
                 </div>
             </a></li>
     </ul>
