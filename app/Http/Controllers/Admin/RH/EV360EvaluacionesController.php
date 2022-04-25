@@ -1143,6 +1143,7 @@ class EV360EvaluacionesController extends Controller
     {
         $esSupervisor = intval($evaluador->tipo) == EvaluadoEvaluador::JEFE_INMEDIATO;
         $competencias = $this->obtenerCompetenciasDelPuestoDelEvaluadoEnLaEvaluacion($evaluacion->id, $evaluado->id);
+
         return [
             'id' => $evaluador_empleado->id, 'nombre' => $evaluador_empleado->name,
             'esSupervisor' => $esSupervisor,

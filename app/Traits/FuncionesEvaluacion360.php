@@ -1,6 +1,7 @@
 <?php
 
 //make a trait to use in the model
+
 namespace App\Traits;
 
 use App\Models\Puesto;
