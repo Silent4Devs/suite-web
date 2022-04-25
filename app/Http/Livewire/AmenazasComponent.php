@@ -13,6 +13,10 @@ class AmenazasComponent extends Component
     public $nombre;
     public $view = 'create';
 
+    protected $rules = [
+        'amenaza' => 'required|max:1050',
+    ];
+
     public function mount($foda_id)
     {
         $this->foda_id = $foda_id;
@@ -32,8 +36,7 @@ class AmenazasComponent extends Component
 
     public function save()
     {
-        // $foda = EntendimientoOrganizacion::find($this->foda_id);
-
+        $this->validate();
         AmenazasEntendimientoOrganizacion::create([
             'foda_id' => $this->foda_id,
             'amenaza' => $this->amenaza,
@@ -59,8 +62,8 @@ class AmenazasComponent extends Component
 
     public function update()
     {
+        $this->validate();
         $amenazaEncontrada = AmenazasEntendimientoOrganizacion::find($this->amenaza_id);
-        // dd($this->fortaleza_id);
         $amenazaEncontrada->update([
             'foda_id' => $this->foda_id,
             'amenaza' => $this->amenaza,
