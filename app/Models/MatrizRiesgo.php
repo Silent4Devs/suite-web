@@ -179,7 +179,7 @@ class MatrizRiesgo extends Model
 
     public function activo()
     {
-        return $this->belongsTo(Activo::class);
+        return $this->belongsTo(SubcategoriaActivo::class);
     }
 
     public function amenaza()

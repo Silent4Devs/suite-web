@@ -58,6 +58,7 @@ class AnalisisDeRiesgo extends Model
         'OCTAVE' => 'OCTAVE',
         'NIST'=> 'NIST',
         'ISO 31000' => 'ISO 31000',
+        // 'Sistema de Gestión' => 'Sistema de Gestión',
     ];
 
     const EstatusSelect = [
