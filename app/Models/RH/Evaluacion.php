@@ -84,7 +84,7 @@ class Evaluacion extends Model
 
     public function evaluados()
     {
-        return $this->belongsToMany('App\Models\Empleado', 'ev360_evaluaciones_evaluados', 'evaluacion_id', 'evaluado_id');
+        return $this->belongsToMany('App\Models\Empleado', 'ev360_evaluaciones_evaluados', 'evaluacion_id', 'evaluado_id')->withPivot('puesto_id');
     }
 
     public function competencias()
