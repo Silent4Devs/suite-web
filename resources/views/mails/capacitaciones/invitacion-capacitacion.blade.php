@@ -73,7 +73,7 @@
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p>Descripción:</p>
                                             <p>Buen día {{ $empleado->name }}, </p>
-                                            <p>le informamos que usted ha sido invitado a tomar la capacitación
+                                            <p>Le informamos que usted ha sido invitado a tomar la capacitación
                                                 {{ $recurso->cursoscapacitaciones }}.
                                             </p>
                                             <p>Tienes cómo Fecha Limite el

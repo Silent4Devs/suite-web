@@ -189,7 +189,6 @@
     <h5 class="col-12 titulo_general_funcion">Editar: Empleado - {{ $empleado->name }}</h5>
     <div class="mt-4 card">
         @if ($isEditAdmin)
-
             <div class="card-body">
                 <nav>
                     <div class="nav nav-tabs" id="tabsEmpleado" role="tablist">
@@ -225,24 +224,34 @@
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-general" role="tabpanel"
                             aria-labelledby="nav-general-tab">
-                            @include('admin.empleados.form_components.general')
+                            @include(
+                                'admin.empleados.form_components.general'
+                            )
                         </div>
                         <div class="tab-pane fade" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
-                            @include('admin.empleados.form_components.personal')
+                            @include(
+                                'admin.empleados.form_components.personal'
+                            )
 
                         </div>
                         <div class="tab-pane fade" id="nav-financiera" role="tabpanel"
                             aria-labelledby="nav-financiera-tab">
-                            @include('admin.empleados.form_components.financiera')
+                            @include(
+                                'admin.empleados.form_components.financiera'
+                            )
 
                         </div>
                         <div class="tab-pane fade" id="nav-competencias" role="tabpanel"
                             aria-labelledby="nav-competencias-tab">
-                            @include('admin.empleados.components._competencias_form')
+                            @include(
+                                'admin.empleados.components._competencias_form'
+                            )
                         </div>
                         <div class="tab-pane fade" id="nav-documentos" role="tabpanel"
                             aria-labelledby="nav-documentos-tab">
-                            @include('admin.empleados.form_components.documentos')
+                            @include(
+                                'admin.empleados.form_components.documentos'
+                            )
                         </div>
 
                     </div>
@@ -262,7 +271,9 @@
                 </div>
                 <label id="urlFormEmpleados"
                     data-url="{{ route('admin.empleados.updateFromCurriculum', $empleado) }}"></label>
-                @include('admin.empleados.components._competencias_form')
+                @include(
+                    'admin.empleados.components._competencias_form'
+                )
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.miCurriculum', $empleado) }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit" id="btnGuardar">
@@ -486,7 +497,8 @@
                 templateSelection: customizeNationalitySelect
             });
 
-            window.lenguajes=@json($idiomas);
+            window.lenguajes = @json($idiomas);
+
             function customizeNationalitySelect(opt) {
                 if (!opt.id) {
                     return opt.text;
@@ -698,11 +710,8 @@
             })
             window.tblExperiencia = $('#tbl-experiencia').DataTable({
                 "autoWidth": false,
-                initComplete: function(settings,json){
-                    $(document).ready(function() {
-                     $(".yearpicker").yearpicker()
-
-                    });
+                initComplete: function(settings, json) {
+                    renderizarFlatPickr();
                 },
                 buttons: [],
                 processing: true,
@@ -749,11 +758,11 @@
                         render: function(data, type, row, meta) {
                             console.log(row)
                             if (data) {
-                                return `<input class=" form-control" type="text" value="${data}" data-name-input="inicio_mes" data-experiencia-id="${row.id}" />
+                                return `<input class="fecha_flatpickr form-control" type="text" value="${data}" data-name-input="inicio_mes" data-experiencia-id="${row.id}" />
                                 <span class="errors inicio_mes_error text-danger"></span>`;
 
                             } else {
-                                return `<input class="form-control" type="text" value="" data-name-input="inicio_mes"  data-experiencia-id="${row.id}" />
+                                return `<input class="fecha_flatpickr form-control" type="text" value="" data-name-input="inicio_mes"  data-experiencia-id="${row.id}" />
                                 <span class="errors inicio_mes_error text-danger"></span>`;
                             }
                         }
@@ -762,18 +771,19 @@
                         data: 'fin_mes',
                         name: 'fin_mes',
                         render: function(data, type, row, meta) {
-
+                            console.log(row.trabactualmente);
                             if (row.trabactualmente) {
                                 return `Trabajo actual
                                 <input class="form-group" type="checkbox" ${row.trabactualmente ? 'checked': ''} data-name-input="trabactualmente" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>
                                 `;
-                            }else if (data) {
-                                return `<input class="form-control"  type="text" value="${data}" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
+                            }
+                            if (data) {
+                                return `<input class="form-control fecha_flatpickr"  type="text" value="${data}" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>`;
 
                             } else {
-                                return `<input class="form-control"  type="text" value="" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
+                                return `<input class="form-control fecha_flatpickr"  type="text" value="" data-name-input="fin_mes" data-experiencia-id="${row.id}" />
                                 <span class="errors fin_mes_error text-danger"></span>`;
                             }
                         }
@@ -796,42 +806,62 @@
 
             //Eventos para editar registros
             document.getElementById('tbl-experiencia').addEventListener('change', async function(e) {
-                console.log(e.target);
-
-                if (e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') {
+                console.log(e.tagName);
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA' || e.target.tagName ==
+                    'SELECT') {
                     console.log(e.target.type)
                     if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
-                        'number' || e.target.type == 'checkbox') {
+                        'number' || e.target.type == 'checkbox' || e.target.classList.contains(
+                            'fecha_flatpickr')) {
                         const experienciaId = e.target.getAttribute('data-experiencia-id');
                         const typeInput = e.target.getAttribute('data-name-input');
                         let value = e.target.value;
                         // Funcion del cambio de javascript
                         if (e.target.type == 'checkbox') {
                             value = e.target.checked;
-                            tblExperiencia.ajax.reload()
+                            tblExperiencia.ajax.reload(() => {
+                                renderizarFlatPickr();
+                            });
                         }
                         console.log(experienciaId);
                         const formData = new FormData();
                         formData.append(typeInput, value);
-                        const url =
-                            `/admin/empleados/update/${experienciaId}/competencias-experiencia`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                            },
-                        })
-                        const data = await response.json();
-                        console.log(data);
+                        let oldValue = e.target.value;
+                        try {
+                            const url =
+                                `/admin/empleados/update/${experienciaId}/competencias-experiencia`;
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            console.log(data);
+                            if (data.status == 'success') {
+                                mostrarEstadoExitoso(e.target);
+                            }
+                            if (data.errors) {
+                                let errorN = e.target.getAttribute('data-name-input');
+                                data.errors[errorN].forEach(element => {
+                                    toastr.error(element);
+                                });
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
                     }
                 }
             });
 
             document.getElementById('tbl-experiencia').addEventListener('keyup', async function(e) {
-                if (e.target.tagName == 'INPUT') {
-                    if (e.target.type == 'text' || e.target.type == 'number') {
+                console.log(e.target.tagName);
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
+                    if (e.target.type == 'text' || e.target.type == 'textarea' || e.target.type ==
+                        'number') {
                         const experienciaId = e.target.getAttribute('data-experiencia-id');
                         const typeInput = e.target.getAttribute('data-name-input');
                         const value = e.target.value;
@@ -840,16 +870,29 @@
                         formData.append(typeInput, value);
                         const url =
                             `/admin/empleados/update/${experienciaId}/competencias-experiencia`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                            },
-                        })
-                        const data = await response.json();
-                        console.log(data);
+                        try {
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.status == 'success') {
+                                mostrarEstadoExitoso(e.target);
+                            }
+                            if (data.errors) {
+                                let errorN = e.target.getAttribute('data-name-input');
+                                data.errors[errorN].forEach(element => {
+                                    toastr.error(element);
+                                });
+                            }
+                        } catch (error) {
+                            console.log(errror);
+                        }
                     }
                 }
             });
@@ -878,7 +921,9 @@
                             success: function(response) {
                                 if (response.success) {
                                     toastr.success("Experiencia laboral eliminada");
-                                    tblExperiencia.ajax.reload();
+                                    tblExperiencia.ajax.reload(() => {
+                                        renderizarFlatPickr();
+                                    });
                                 }
                             },
                             error: function(request, status, error) {
@@ -898,6 +943,9 @@
             }
 
             window.tblEducacion = $('#tbl-educacion').DataTable({
+                initComplete: function(settings, json) {
+                    renderizarFlatPickr();
+                },
                 buttons: [],
                 processing: true,
                 serverSide: true,
@@ -958,35 +1006,35 @@
                         }
                     },
                     {
-                        data: 'year_inicio_ymd',
-                        name: 'year_inicio_ymd',
+                        data: 'año_inicio',
+                        name: 'año_inicio',
                         render: function(data, type, row, meta) {
                             if (data) {
-                                return `<input class="form-control" type="date" value="${data}" data-name-input="año_inicio" data-educacion-id="${row.id}" />
+                                return `<input class="fecha_flatpickr form-control" type="text" value="${data}" data-name-input="año_inicio" data-educacion-id="${row.id}" />
                                 <span class="errors año_inicio_error text-danger"></span>`;
 
                             } else {
-                                return `<input class="form-control" type="date" value="" data-name-input="año_inicio" data-educacion-id="${row.id}" />
+                                return `<input class="fecha_flatpickr form-control" type="text" value="" data-name-input="año_inicio" data-educacion-id="${row.id}" />
                                 <span class="errors año_inicio_error text-danger"></span>`;
                             }
                         }
                     },
                     {
-                        data: 'year_fin_ymd',
-                        name: 'year_fin_ymd',
+                        data: 'año_fin',
+                        name: 'año_fin',
                         render: function(data, type, row, meta) {
                             if (row.estudactualmente) {
                                 return `estudiando actualmente
-                                <input class="form-group" type="checkbox" ${row.estudactualmente ? 'checked': ''} data-name-input="estudactualmente" data-experiencia-id="${row.id}" />
+                                <input class="form-group" type="checkbox" ${row.estudactualmente ? 'checked': ''} data-name-input="estudactualmente" data-educacion-id="${row.id}" />
                                 <span class="errors año_fin_error text-danger"></span>
                                 `;
                             }
                             if (data) {
-                                return `<input class="form-control" type="date" value="${data}" data-name-input="año_fin" data-educacion-id="${row.id}" />
+                                return `<input class="fecha_flatpickr form-control" type="text" value="${data}" data-name-input="año_fin" data-educacion-id="${row.id}" />
                                 <span class="errors año_fin_error text-danger"></span>`;
 
                             } else {
-                                return `<input class="form-control" type="date" value="" data-name-input="año_fin" data-educacion-id="${row.id}" />
+                                return `<input class="fecha_flatpickr form-control" type="text" value="" data-name-input="año_fin" data-educacion-id="${row.id}" />
                                 <span class="errors año_fin_error text-danger"></span>`;
                             }
                         }
@@ -1008,38 +1056,56 @@
             })
 
             document.getElementById('tbl-educacion').addEventListener('change', async function(e) {
-                if (e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA' || e.target.tagName ==
+                    'SELECT') {
                     if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
-                        'number'|| e.target.type == 'checkbox') {
+                        'number' || e.target.type == 'checkbox' || e.target.classList.contains(
+                            'fecha_flatpickr')) {
                         const educacionId = e.target.getAttribute('data-educacion-id');
                         const typeInput = e.target.getAttribute('data-name-input');
                         let value = e.target.value;
                         if (e.target.type == 'checkbox') {
                             value = e.target.checked;
-                            tblEducacion.ajax.reload()
+                            tblEducacion.ajax.reload(() => {
+                                renderizarFlatPickr();
+                            });
                         }
                         console.log(educacionId);
                         const formData = new FormData();
                         formData.append(typeInput, value);
                         const url =
                             `/admin/empleados/update/${educacionId}/competencias-educacion`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                            },
-                        })
-                        const data = await response.json();
-                        console.log(data);
+                        try {
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.status == 'success') {
+                                mostrarEstadoExitoso(e.target);
+                            }
+                            if (data.errors) {
+                                let errorN = e.target.getAttribute('data-name-input');
+                                data.errors[errorN].forEach(element => {
+                                    toastr.error(element);
+                                });
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
                     }
                 }
             });
 
             document.getElementById('tbl-educacion').addEventListener('keyup', async function(e) {
-                if (e.target.tagName == 'INPUT') {
-                    if (e.target.type == 'text' || e.target.type == 'number') {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
+                    if (e.target.type == 'text' || e.target.type == 'textarea' || e.target.type ==
+                        'number') {
                         const educacionId = e.target.getAttribute('data-educacion-id');
                         const typeInput = e.target.getAttribute('data-name-input');
                         const value = e.target.value;
@@ -1048,16 +1114,29 @@
                         formData.append(typeInput, value);
                         const url =
                             `/admin/empleados/update/${educacionId}/competencias-educacion`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                            },
-                        })
-                        const data = await response.json();
-                        console.log(data);
+                        try {
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.status == 'success') {
+                                mostrarEstadoExitoso(e.target);
+                            }
+                            if (data.errors) {
+                                let errorN = e.target.getAttribute('data-name-input');
+                                data.errors[errorN].forEach(element => {
+                                    toastr.error(element);
+                                });
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
                     }
                 }
             });
@@ -1086,7 +1165,9 @@
                             success: function(response) {
                                 if (response.success) {
                                     toastr.success("Educación eliminada");
-                                    tblEducacion.ajax.reload();
+                                    tblEducacion.ajax.reload(() => {
+                                        renderizarFlatPickr();
+                                    });
                                 }
                             },
                             error: function(request, status, error) {
@@ -1249,7 +1330,8 @@
             })
             //Eventos para editar registros
             document.getElementById('tbl-cursos').addEventListener('change', async function(e) {
-                if (e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA' || e.target.tagName ==
+                    'SELECT') {
                     if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
                         'number') {
                         const cursoId = e.target.getAttribute('data-curso-id');
@@ -1260,21 +1342,34 @@
                         formData.append(typeInput, value);
                         const url =
                             `/admin/empleados/update/${cursoId}/competencias-curso`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                            },
-                        })
-                        const data = await response.json();
-                        console.log(data);
-                        if (e.target.type == 'date') {
-                            let elemento_duracion = document.querySelector(
-                                `div[data-name-input-id="duracion${cursoId}"]`)
-                            elemento_duracion.innerHTML =
-                                `<small>${data.curso.duracion} Día(s)</small>`;
+                        try {
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.status == 'success') {
+                                mostrarEstadoExitoso(e.target);
+                            }
+                            if (data.errors) {
+                                let errorN = e.target.getAttribute('data-name-input');
+                                data.errors[errorN].forEach(element => {
+                                    toastr.error(element);
+                                });
+                            }
+                            if (e.target.type == 'date') {
+                                let elemento_duracion = document.querySelector(
+                                    `div[data-name-input-id="duracion${cursoId}"]`)
+                                elemento_duracion.innerHTML =
+                                    `<small>${data.curso.duracion} Día(s)</small>`;
+                            }
+                        } catch (error) {
+                            console.log(error);
                         }
                     } else if (e.target.type == 'file') {
                         const cursoId = e.target.getAttribute('data-curso-id');
@@ -1299,8 +1394,9 @@
                 }
             });
             document.getElementById('tbl-cursos').addEventListener('keyup', async function(e) {
-                if (e.target.tagName == 'INPUT') {
-                    if (e.target.type == 'text' || e.target.type == 'number') {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
+                    if (e.target.type == 'text' || e.target.type == 'textarea' || e.target.type ==
+                        'number') {
                         const cursoId = e.target.getAttribute('data-curso-id');
                         const typeInput = e.target.getAttribute('data-name-input');
                         const value = e.target.value;
@@ -1309,16 +1405,29 @@
                         formData.append(typeInput, value);
                         const url =
                             `/admin/empleados/update/${cursoId}/competencias-curso`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                            },
-                        })
-                        const data = await response.json();
-                        console.log(data);
+                        try {
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.status == 'success') {
+                                mostrarEstadoExitoso(e.target);
+                            }
+                            if (data.errors) {
+                                let errorN = e.target.getAttribute('data-name-input');
+                                data.errors[errorN].forEach(element => {
+                                    toastr.error(element);
+                                });
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
                     }
                 }
             });
@@ -1340,18 +1449,30 @@
                             if (result.isConfirmed) {
                                 const url =
                                     `/admin/empleados/${cursoId}/delete-file-curso`;
-                                const response = await fetch(url, {
-                                    method: 'DELETE',
-                                    headers: {
-                                        Accept: "application/json",
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                            .attr(
-                                                'content'),
-                                    },
-                                })
-                                const data = await response.json();
-                                console.log(data);
-                                tblCurso.ajax.reload();
+                                try {
+                                    const response = await fetch(url, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            Accept: "application/json",
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                                .attr(
+                                                    'content'),
+                                        },
+                                    })
+                                    const data = await response.json();
+                                    if (data.status == 'success') {
+                                        mostrarEstadoExitoso(e.target);
+                                    }
+                                    if (data.errors) {
+                                        let errorN = e.target.getAttribute('data-name-input');
+                                        data.errors[errorN].forEach(element => {
+                                            toastr.error(element);
+                                        });
+                                    }
+                                    tblCurso.ajax.reload();
+                                } catch (error) {
+                                    console.log(error);
+                                }
                             }
                         })
 
@@ -1493,7 +1614,7 @@
             })
             //Eventos para editar registros
             document.getElementById('tbl-certificados').addEventListener('change', async function(e) {
-                if (e.target.tagName == 'INPUT') {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
                     if (e.target.type == 'date') {
                         const certificadoId = e.target.getAttribute('data-certificacion-id');
                         const vigencia = e.target.value;
@@ -1514,17 +1635,30 @@
                         formData.append('estatus', estatusName);
                         const url =
                             `/admin/empleados/update/${certificadoId}/competencias-certificaciones`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                    'content'),
-                            },
-                        })
-                        const data = await response.json();
-                        console.log(data);
+                        try {
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.status == 'success') {
+                                mostrarEstadoExitoso(e.target);
+                            }
+                            if (data.errors) {
+                                let errorN = e.target.getAttribute('data-name-input');
+                                data.errors[errorN].forEach(element => {
+                                    toastr.error(element);
+                                });
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
+
                     } else if (e.target.type == 'file') {
                         const certificadoId = e.target.getAttribute('data-certificacion-id');
                         const formData = new FormData();
@@ -1533,21 +1667,25 @@
                         });
                         const url =
                             `/admin/empleados/update/${certificadoId}/competencias-certificaciones`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                    'content'),
-                            },
-                        })
-                        tblCertificado.ajax.reload();
+                        try {
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            tblCertificado.ajax.reload();
+                        } catch (error) {
+                            console.log(error);
+                        }
                     }
                 }
             });
             document.getElementById('tbl-certificados').addEventListener('keyup', async function(e) {
-                if (e.target.tagName == 'INPUT') {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
                     if (e.target.type == 'text') {
                         const certificadoId = e.target.getAttribute('data-certificacion-id');
                         const certificadoName = e.target.value;
@@ -1555,17 +1693,29 @@
                         formData.append('nombre', certificadoName);
                         const url =
                             `/admin/empleados/update/${certificadoId}/competencias-certificaciones`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                    'content'),
-                            },
-                        })
-                        const data = await response.json();
-                        console.log(data);
+                        try {
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.status == 'success') {
+                                mostrarEstadoExitoso(e.target);
+                            }
+                            if (data.errors) {
+                                let errorN = e.target.getAttribute('data-name-input');
+                                data.errors[errorN].forEach(element => {
+                                    toastr.error(element);
+                                });
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
                     }
                 }
             });
@@ -1587,18 +1737,30 @@
                             if (result.isConfirmed) {
                                 const url =
                                     `/admin/empleados/${certificadoId}/delete-file-certificacion`;
-                                const response = await fetch(url, {
-                                    method: 'DELETE',
-                                    headers: {
-                                        Accept: "application/json",
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                            .attr(
-                                                'content'),
-                                    },
-                                })
-                                const data = await response.json();
-                                console.log(data);
-                                tblCertificado.ajax.reload();
+                                try {
+                                    const response = await fetch(url, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            Accept: "application/json",
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                                .attr(
+                                                    'content'),
+                                        },
+                                    })
+                                    const data = await response.json();
+                                    if (data.status == 'success') {
+                                        mostrarEstadoExitoso(e.target);
+                                    }
+                                    if (data.errors) {
+                                        let errorN = e.target.getAttribute('data-name-input');
+                                        data.errors[errorN].forEach(element => {
+                                            toastr.error(element);
+                                        });
+                                    }
+                                    tblCertificado.ajax.reload();
+                                } catch (error) {
+                                    console.log(error);
+                                }
                             }
                         })
 
@@ -1678,12 +1840,13 @@
                         data: 'id_language',
                         name: 'id_language',
                         render: function(data, type, row, meta) {
-                           html= `
+                            html = `
                             <select class="form-control" data-idioma-id="${row.id}" data-name-input="id_language" >`
-                                lenguajes.forEach(lenguaje=>{
-                                    html += `<option value="${lenguaje.id}" ${data ==  lenguaje.id ? "selected":''}>${lenguaje.idioma}</option>`
-                         })
-                            html+=`</select>
+                            lenguajes.forEach(lenguaje => {
+                                html +=
+                                    `<option value="${lenguaje.id}" ${data ==  lenguaje.id ? "selected":''}>${lenguaje.idioma}</option>`
+                            })
+                            html += `</select>
                             `;
 
                             return html;
@@ -1778,7 +1941,8 @@
             })
             //Eventos para editar registros
             document.getElementById('tbl-idiomas').addEventListener('change', async function(e) {
-                if (e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA' || e.target.tagName ==
+                    'SELECT') {
                     if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
                         'number') {
                         const idiomaID = e.target.getAttribute('data-idioma-id');
@@ -1789,16 +1953,29 @@
                         formData.append(typeInput, value);
                         const url =
                             `/admin/competencia/${idiomaID}/idiomas`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                            },
-                        })
-                        const data = await response.json();
-                        console.log(data);
+                        try {
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.status == 'success') {
+                                mostrarEstadoExitoso(e.target);
+                            }
+                            if (data.errors) {
+                                let errorN = e.target.getAttribute('data-name-input');
+                                data.errors[errorN].forEach(element => {
+                                    toastr.error(element);
+                                });
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
                     } else if (e.target.type == 'file') {
                         const idiomaID = e.target.getAttribute('data-idioma-id');
                         console.log(idiomaID);
@@ -1822,8 +1999,9 @@
                 }
             });
             document.getElementById('tbl-idiomas').addEventListener('keyup', async function(e) {
-                if (e.target.tagName == 'INPUT') {
-                    if (e.target.type == 'text' || e.target.type == 'number') {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
+                    if (e.target.type == 'text' || e.target.type == 'textarea' || e.target.type ==
+                        'number') {
                         const idiomaID = e.target.getAttribute('data-idioma-id');
                         const typeInput = e.target.getAttribute('data-name-input');
                         const value = e.target.value;
@@ -1831,15 +2009,28 @@
                         formData.append(typeInput, value);
                         const url =
                             `/admin/competencia/${idiomaID}/idiomas`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                            },
-                        })
-                        const data = await response.json();
-                        console.log(data);
+                        try {
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            if (data.status == 'success') {
+                                mostrarEstadoExitoso(e.target);
+                            }
+                            if (data.errors) {
+                                let errorN = e.target.getAttribute('data-name-input');
+                                data.errors[errorN].forEach(element => {
+                                    toastr.error(element);
+                                });
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
                     }
                 }
             });
@@ -1860,18 +2051,30 @@
                             if (result.isConfirmed) {
                                 const url =
                                     `/admin/competencia/${idiomaID}/idiomas-delete-certificado`;
-                                const response = await fetch(url, {
-                                    method: 'DELETE',
-                                    headers: {
-                                        Accept: "application/json",
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                            .attr(
-                                                'content'),
-                                    },
-                                })
-                                const data = await response.json();
-                                console.log(data);
-                                tblIdiomas.ajax.reload();
+                                try {
+                                    const response = await fetch(url, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            Accept: "application/json",
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                                .attr(
+                                                    'content'),
+                                        },
+                                    })
+                                    const data = await response.json();
+                                    if (data.status == 'success') {
+                                        mostrarEstadoExitoso(e.target);
+                                    }
+                                    if (data.errors) {
+                                        let errorN = e.target.getAttribute('data-name-input');
+                                        data.errors[errorN].forEach(element => {
+                                            toastr.error(element);
+                                        });
+                                    }
+                                    tblIdiomas.ajax.reload();
+                                } catch (error) {
+                                    console.log(error);
+                                }
                             }
                         })
 
@@ -2059,7 +2262,7 @@
             //Eventos para editar registros
             if (document.getElementById('tbl-documentos')) {
                 document.getElementById('tbl-documentos').addEventListener('change', async function(e) {
-                    if (e.target.tagName == 'INPUT') {
+                    if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
                         if (e.target.type == 'file') {
                             const documentoId = e.target.getAttribute('data-documento-id');
                             const typeInput = e.target.getAttribute('data-name-input');
@@ -2090,7 +2293,7 @@
                     }
                 });
                 document.getElementById('tbl-documentos').addEventListener('keyup', async function(e) {
-                    if (e.target.tagName == 'INPUT') {
+                    if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
                         if (e.target.type == 'text') {
                             const documentoId = e.target.getAttribute('data-documento-id');
                             const typeInput = e.target.getAttribute('data-name-input');
@@ -2327,7 +2530,9 @@
                     if (response.success) {
                         toastr.success("Experiencia profesional guardada");
                         limpiarCamposExperiencia();
-                        tblExperiencia.ajax.reload();
+                        tblExperiencia.ajax.reload(() => {
+                            renderizarFlatPickr();
+                        });
                     }
                 },
                 error: function(request, status, error) {
@@ -2341,6 +2546,39 @@
                     });
                 }
             });
+        }
+
+        function renderizarFlatPickr() {
+            $(".fecha_flatpickr").flatpickr({
+                locale: {
+                    months: {
+                        shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May',
+                            'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov',
+                            'Dic'
+                        ],
+                        longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril',
+                            'Mayo', 'Junio', 'Julio', 'Agosto',
+                            'Septiembre', 'Octubre', 'Noviembre',
+                            'Diciembre'
+                        ],
+                    },
+                },
+                plugins: [
+                    new monthSelectPlugin({
+                        shorthand: true, //defaults to false
+                        dateFormat: "F Y", //defaults to "F Y"
+                        altFormat: "F Y", //defaults to "F Y"
+                        theme: "light" // defaults to "light"
+                    })
+                ]
+            });
+        }
+
+        function mostrarEstadoExitoso(item) {
+            item.style.border = "2px solid #00FA34";
+            setTimeout(() => {
+                item.style.border = "1px solid #d0d5db";
+            }, 1500);
         }
 
         function limpiarCamposExperiencia() {
@@ -2401,7 +2639,9 @@
                     if (response.success) {
                         toastr.success("Educación guardada");
                         limpiarCamposEducacion();
-                        tblEducacion.ajax.reload();
+                        tblEducacion.ajax.reload(() => {
+                            renderizarFlatPickr();
+                        });
                     }
                 },
                 error: function(request, status, error) {
@@ -2652,46 +2892,45 @@
     </script>
     {{-- Evento de trabactualmente habilita y deshabilita los inputs --}}
     <script>
-        $(document).ready(function(){
-        $('#trabactualmente').on('change',function(){
-            if (this.checked) {
-            $("#fin_mes_contenedor").hide();
-            } else {
-            $("#fin_mes_contenedor").show();
-            }
+        $(document).ready(function() {
+            $('#trabactualmente').on('change', function() {
+                if (this.checked) {
+                    $("#fin_mes_contenedor").hide();
+                } else {
+                    $("#fin_mes_contenedor").show();
+                }
 
-        })
+            })
         });
     </script>
     <script>
-        $(document).ready(function(){
-        $('#estudactualmente').on('change',function(){
-            if (this.checked) {
-            $("#año_fin_contenedor").hide();
-            } else {
-            $("#año_fin_contenedor").show();
-            }
-        })
+        $(document).ready(function() {
+            $('#estudactualmente').on('change', function() {
+                if (this.checked) {
+                    $("#año_fin_contenedor").hide();
+                } else {
+                    $("#año_fin_contenedor").show();
+                }
+            })
         });
     </script>
 
 
-        <script>
-            $(document).ready(function() {
-                $(".yearpicker").yearpicker()
+    <script>
+        $(document).ready(function() {
+            $(".yearpicker").yearpicker()
 
-            });
+        });
+    </script>
 
-        </script>
-
-        <script>
-            $(".datepicker").datepicker({
+    <script>
+        $(".datepicker").datepicker({
             format: "yyyy",
             viewMode: "years",
             minViewMode: "years",
-            autoclose:true //to close picker once year is selected
+            autoclose: true //to close picker once year is selected
         });
-        </script>
+    </script>
 
     <script type="text/javascript">
         $(document).on('change', '#nombre_doc', function(event) {
@@ -2701,7 +2940,7 @@
                 $('#group_numero_activo').addClass('d-block');
                 $('#group_numero_activo').removeClass('d-none');
             }
-            if (op_select == 'no'){
+            if (op_select == 'no') {
                 $('#group_numero_activo').addClass('d-none');
                 $('#group_numero_activo').removeClass('d-block');
             }
@@ -2802,23 +3041,23 @@
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
-                order:[
-                            [0,'desc']
-                        ],
+                order: [
+                    [0, 'desc']
+                ],
                 pageLength: 20,
             };
             let table = $('#tabla_docs').DataTable(dtOverrideGlobals);
 
-            document.getElementById('tabla_docs').addEventListener('keyup', async function(e){
-                if (e.target.tagName == 'INPUT') {
-                    try{
+            document.getElementById('tabla_docs').addEventListener('keyup', async function(e) {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
+                    try {
                         let formData = new FormData();
                         formData.append('name', e.target.getAttribute('name'));
                         formData.append('value', e.target.value);
                         formData.append('documentoId', e.target.getAttribute('data-id'));
                         formData.append('empleadoId', e.target.getAttribute('data-empleado'));
-                        const url = '{{ route("admin.inicio-Usuario.expediente-update") }}';
-                        formData.forEach(item=>console.log(item));
+                        const url = '{{ route('admin.inicio-Usuario.expediente-update') }}';
+                        formData.forEach(item => console.log(item));
                         const response = await fetch(url, {
                             method: 'POST',
                             body: formData,
@@ -2830,28 +3069,28 @@
 
                         const data = await response.json()
                         console.log(data);
-                    } catch(error){
+                    } catch (error) {
                         toastr.error(error);
                     }
                 }
             });
 
             // file
-            document.getElementById('tabla_docs').addEventListener('change', async function(e){
-                if (e.target.tagName == 'INPUT') {
-                    try{
+            document.getElementById('tabla_docs').addEventListener('change', async function(e) {
+                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
+                    try {
                         console.log(e.target.files);
                         let formData = new FormData();
                         formData.append('name', e.target.getAttribute('name'));
                         if (e.target.getAttribute('name') == 'file') {
                             formData.append('value', e.target.files[0]);
-                        }else{
+                        } else {
                             formData.append('value', e.target.value);
                         }
                         formData.append('documentoId', e.target.getAttribute('data-id'));
                         formData.append('empleadoId', e.target.getAttribute('data-empleado'));
-                        const url = '{{ route("admin.empleado.edit.expediente-update") }}';
-                        formData.forEach(item=>console.log(item));
+                        const url = '{{ route('admin.empleado.edit.expediente-update') }}';
+                        formData.forEach(item => console.log(item));
                         const response = await fetch(url, {
                             method: 'POST',
                             body: formData,
@@ -2865,16 +3104,15 @@
                         console.log(data);
                         if (data.status == 201) {
                             toastr.success(data.message);
-                            setTimeout(()=>{
+                            setTimeout(() => {
                                 window.location.reload();
-                            },800);
+                            }, 800);
                         }
-                    } catch(error){
+                    } catch (error) {
                         toastr.error(error);
                     }
                 }
             });
         });
     </script>
-
 @endsection

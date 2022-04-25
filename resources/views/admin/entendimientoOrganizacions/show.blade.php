@@ -6,29 +6,29 @@
 <style>
 
 .circulo {
-	width: 60px;
-	height: 60px;
+	width: 45px;
+	height: 45px;
 	border-radius: 50%;
 	display: flex !important;
     justify-content:center;
     align-items:center;
     position:absolute;
-    top:10px;
+    top:20px;
     left:0px;
 
 
 }
 
 .circulo2 {
-	width: 30px;
-	height: 30px;
+	width: 45px;
+	height: 45px;
 	border-radius: 50%;
 	display: flex !important;
     justify-content:center;
     align-items:center;
     position:absolute;
-    top:10px;
-    left:0px;
+    top:20px;
+    right:0px;
 
 
 }
@@ -47,33 +47,58 @@
     position:absolute;
 }
 
+    @media print{
+        .print-none{
+            display: none !important;
+        }
+    }
 
 </style>
 
-  {{ Breadcrumbs::render('admin.entendimiento-organizacions.index') }}
 
+<div class="print-none">
+  {{ Breadcrumbs::render('admin.entendimiento-organizacions.index') }}
+</div>
 
 
     <div class="mt-5 card p-2">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+        {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Entendimiento de Organización (FODA)</strong></h3>
-        </div>
+        </div> --}}
 
-        <button class="btn btn-danger" style="position: absolute; right:20px;" onclick="javascript:window.print()">
+        <button class="btn btn-danger print-none" style="position: absolute; right:20px;" onclick="javascript:window.print()">
             <i class="fas fa-print"></i>
             Imprimir
         </button>
 
-        <div id="impreso_row">
-            <div style="text-align:right; margin-top:20px;" class="mr-4">
-                {{$obtener_FODA->fecha}}
-            </div>
-            <div class="tit">
-                <h5><strong>
 
-                    {{$obtener_FODA->analisis}}
-                </strong></h5>
+        @php
+            use App\Models\Organizacion;
+            $organizacion = Organizacion::first();
+            $logotipo = $organizacion->logotipo;
+            $empresa = $organizacion->empresa;
+        @endphp
+
+        <div class="row mt-5 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+            <div class="col-2 pl-0" style="border-right: 2px solid #ccc">
+                <img src="{{ asset($logotipo) }}" class="mt-2 mb-2 ml-4" style="width:100px;">
             </div>
+            <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                <span style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
+                <br>
+                <span style="color:#345183; font-size:15px;"><strong>Entendimiento de Organización:
+                        {{$obtener_FODA->analisis}}</strong></span>
+
+            </div>
+            <div class="col-3 p-2">
+                <span style="color:#345183;">Fecha:
+                    {{$obtener_FODA->fecha ? \Carbon\Carbon::parse($obtener_FODA->fecha)->format('d-m-Y') : 'sin registro' }}
+                </span>
+            </div>
+        </div>
+
+        <div id="impreso_row">
+
             <div class="card-body">
                 @if (session('success'))
                     <div class="mb-3 row">
@@ -99,23 +124,29 @@
                     <div class="p-0 text-center col-md-5 col-sm-5"
                         style="border-right: solid 8px rgb(255, 104, 4); border-bottom: solid 10px #2bd1b0; min-height: 150px">
                        <div class="row">
-                           <div class="col-sm-1">
                                 <div class="circulo" style="background: #2bd1b0"><i class="fas fa-dumbbell" style="color: #fff; font-size:25px;"></i></div>
-                           </div>
                            <div class="pl-3 col-sm-11">
                                 <h5>
                                     <strong style="color: #18A98B">FORTALEZAS</strong>
-                                    <button class="mr-2 btn btn-xs" type="button" data-toggle="modal" data-target="#fortalezas_modal"
+                                    <button class="mr-2 btn btn-xs print-none" type="button" data-toggle="modal" data-target="#fortalezas_modal"
                                         style="float: right;">
                                         <i class="fas fa-question-circle" style="font-size: 13px"></i>
                                     </button>
                                 </h5>
-                                <div style="text-align:justify" class="px-3">
-                                    @if ($obtener_FODA)
-                                        {!! $obtener_FODA->fortalezas !!}
-                                    @else
-                                        Sin analizar
-                                    @endif
+                                <div style="text-align:justify;" class="px-4">
+                                    <ul>
+                                        @foreach ($obtener_FODA->fodafortalezas as $fortaleza)
+                                        <li>
+
+                                            @if($fortaleza->tiene_riesgos_asociados)
+                                            <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo Asociado"></i>{{$fortaleza->fortaleza}}
+                                            @else
+                                                {{$fortaleza->fortaleza}}
+                                            @endif
+
+                                        </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             </div>
                        </div>
@@ -129,24 +160,29 @@
                                         DEBILIDADES
                                     </strong>
 
-                                    <button class="mr-2 btn btn-xs" type="button" data-toggle="modal" data-target="#debilidades_modal"
+                                    <button class="mr-2 btn btn-xs print-none" type="button" data-toggle="modal" data-target="#debilidades_modal"
                                         style="float: right;">
                                         <i class="fas fa-question-circle" style="font-size: 13px"></i>
                                     </button>
                                 </h5>
 
 
-                                <div style="text-align: justify" class="px-3">
-                                    @if ($obtener_FODA)
-                                        {!! $obtener_FODA->debilidades !!}
-                                    @else
-                                        Sin analizar
-                                    @endif
+                                <div class="pr-3">
+                                    <ul>
+                                        @foreach ($obtener_FODA->fodadebilidades as $debilidad)
+                                        <li style="text-align:justify;" >
+                                            @if($debilidad->tiene_riesgos_asociados)
+                                            <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo Asociado"></i>{{$debilidad->debilidad}}
+                                            @else
+                                                {{$debilidad->debilidad}}
+                                            @endif
+                                        </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="col-sm-1">
-                                <div class="circulo" style="background: rgb(255, 104, 4);"><i class="fas fa-thumbs-down" style="color: #fff; font-size:25px;"></i></div>
-                            </div>
+
+                                <div class="circulo2" style=" background: rgb(255, 104, 4);"><i class="fas fa-thumbs-down" style="color: #fff; font-size:25px;"></i></div>
                         </div>
                     </div>
                 </div>
@@ -157,23 +193,27 @@
                     <div class="p-0 text-center col-md-5 col-12 col-sm-5"
                         style="border-right: solid 8px rgb(77, 184, 255); min-height: 150px">
                         <div class="row">
-                            <div class="col-sm-1">
-                                <div class="circulo" style="background:rgb(77, 184, 255)"><i class="fas fa-handshake" style="color: #fff; font-size:25px;"></i></div>
-                            </div>
+                                <div class="circulo" style="margin-top:20px; background:rgb(77, 184, 255)"><i class="fas fa-handshake" style="color: #fff; font-size:25px;"></i></div>
                             <div class="pl-3 col-sm-11">
                                 <h5 class="mt-3">
                                     <strong style="color: rgb(77, 184, 255)">OPORTUNIDADES</strong>
-                                    <button class="mr-2 btn btn-xs" type="button" data-toggle="modal" data-target="#oportunidades_modal"
+                                    <button class="mr-2 btn btn-xs print-none" type="button" data-toggle="modal" data-target="#oportunidades_modal"
                                         style="float: right;">
                                         <i class="fas fa-question-circle" style="font-size: 13px"></i>
                                     </button>
                                 </h5>
-                                <div style="text-align: justify" class="px-3">
-                                    @if ($obtener_FODA)
-                                        {!! $obtener_FODA->oportunidades !!}
-                                    @else
-                                        Sin analizar
-                                    @endif
+                                <div style="text-align: justify" class="px-4">
+                                    <ul>
+                                        @foreach ($obtener_FODA->fodaoportunidades as $oportunidad)
+                                            <li>
+                                                @if($oportunidad->tiene_riesgos_asociados)
+                                                <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo Asociado"></i>{{$oportunidad->oportunidad}}
+                                                @else
+                                                    {{$oportunidad->oportunidad}}
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -183,22 +223,26 @@
                             <div class="pl-3 col-sm-11">
                                 <h5 class="mt-3">
                                     <strong style="color:rgb(255, 89, 77)">AMENAZAS</strong>
-                                    <button class="mr-2 btn btn-xs" type="button" data-toggle="modal" data-target="#amenazas_modal"
+                                    <button class="mr-2 btn btn-xs print-none" type="button" data-toggle="modal" data-target="#amenazas_modal"
                                         style="float: right;">
                                         <i class="fas fa-question-circle" style="font-size: 13px"></i>
                                     </button>
                                 </h5>
-                                <div style="text-align: justify" class="px-3">
-                                    @if ($obtener_FODA)
-                                        {!! $obtener_FODA->amenazas !!}
-                                    @else
-                                        Sin analizar
-                                    @endif
+                                <div style="text-align: justify" class="pr-3">
+                                    <ul>
+                                        @foreach ($obtener_FODA->fodamenazas as $amenaza)
+                                            <li>
+                                                @if($amenaza->tiene_riesgos_asociados)
+                                                <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo Asociado"></i>{{$amenaza->amenaza}}
+                                                @else
+                                                     {{$amenaza->amenaza}}
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="col-sm-1">
-                                <div class="circulo" style="background:rgb(255, 89, 77)"><i class=" fas fa-bomb" style="color: #fff; font-size:25px;"></i></div>
-                            </div>
+                                <div class="circulo2" style="margin-top:20px; background:rgb(255, 89, 77)"><i class=" fas fa-bomb" style="color: #fff; font-size:25px;"></i></div>
                         </div>
                     </div>
                 </div>
@@ -213,6 +257,11 @@
 
                     @endif
                 </div> --}}
+
+                <div class="text-right form-group col-12"><br>
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar print-none" >Salir</a>
+                </div>
+
             </div>
         </div>
     </div>
@@ -317,11 +366,14 @@
             </div>
         </div>
     </div>
+
+
 @endsection
 
 
 @section('scripts')
 
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
 
 @endsection

@@ -94,7 +94,7 @@ class Timesheet extends Model
         $horas_id_proyectos = TimesheetHoras::where('timesheet_id', $this->id)->get();
 
         $proyectos = collect();
-        foreach($horas_id_proyectos as $id_proyect){
+        foreach ($horas_id_proyectos as $id_proyect) {
             $proyecto = TimesheetProyecto::find($id_proyect->proyecto_id);
 
             $proyectos->push($proyecto);

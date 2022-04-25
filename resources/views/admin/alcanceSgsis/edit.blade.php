@@ -30,7 +30,7 @@
                             publicación</label>
                         <input class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
                             type="date" name="fecha_publicacion" id="fecha_publicacion"
-                            value="{{ old('fecha_publicacion', \Carbon\Carbon::parse($alcanceSgsi->fecha_publicacion))->format('Y-m-d') }}">
+                            value="{{ old('fecha_publicacion', \Carbon\Carbon::parse($alcanceSgsi->fecha_publicacion)->format('Y-m-d')) }}">
                         @if ($errors->has('fecha_publicacion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_publicacion') }}
@@ -45,7 +45,7 @@
                             entrada</label>
                         <input class="form-control {{ $errors->has('fecha_entrada') ? 'is-invalid' : '' }}" type="date"
                             name="fecha_entrada" id="fecha_entrada"
-                            value="{{ old('fecha_entrada', \Carbon\Carbon::parse($alcanceSgsi->fecha_entrada))->format('Y-m-d') }}">
+                            value="{{ old('fecha_entrada', \Carbon\Carbon::parse($alcanceSgsi->fecha_entrada)->format('Y-m-d')) }}">
                         @if ($errors->has('fecha_entrada'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_entrada') }}
@@ -58,7 +58,7 @@
                             revisión</label>
                         <input class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}" type="date"
                             name="fecha_revision" id="fecha_revision"
-                            value="{{ old('fecha_revision', \Carbon\Carbon::parse($alcanceSgsi->fecha_revision))->format('Y-m-d') }}">
+                            value="{{ old('fecha_revision', \Carbon\Carbon::parse($alcanceSgsi->fecha_revision)->format('Y-m-d')) }}">
                         @if ($errors->has('fecha_revision'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_revision') }}
@@ -110,15 +110,15 @@
 
                 </div>
 
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="norma"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma</label>
+                {{-- <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="norma"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>
                         <select class="form-control select2 {{ $errors->has('norma') ? 'is-invalid' : '' }}"
                             name="norma_id" id="norma">
                             <option disabled selected>Seleccionar norma</option>
                             @foreach ($normas as $norma)
                                 <option value="{{ $norma->id }}" data-area="{{ $norma->norma }}"
-                                    {{ old('norma', $norma->id) == $alcanceSgsi->norma_id ? ' selected="selected"' : '' }}>
+                                    {{ old('normas[]', $norma->id) == $alcanceSgsi->norma_id ? ' selected="selected"' : '' }}>
                                     {{ $norma->norma }}
                                 </option>
                             @endforeach
@@ -128,6 +128,29 @@
                                 {{ $errors->first('norma') }}
                             </div>
                         @endif
+                    </div>
+                </div> --}}
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>  
+                        <select
+                        class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
+                        name="normas[]" id="controles" multiple="multiple">
+                        <option value disabled>
+                            Selecciona una opción</option>
+                        @foreach ($normas as $norma)
+                        <option value="{{ $norma->id }}" data-area="{{ $norma->norma }}"
+                            {{ old('normas',in_array($norma->id,$normas_seleccionadas)) ? ' selected="selected"' : '' }}>
+                            {{ $norma->norma }}
+                        </option>
+                        @endforeach
+                        </select>
+                            @if ($errors->has('norma'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('normas') }}
+                                </div>
+                            @endif
                     </div>
                 </div>
 
@@ -207,6 +230,9 @@
                     //     items: ['-']
                     // }
                 ]
+            });
+            $('.controles-select').select2({
+                'theme': 'bootstrap4'
             });
 
         });

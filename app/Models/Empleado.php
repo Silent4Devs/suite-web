@@ -368,6 +368,11 @@ class Empleado extends Model
         return $this->belongsToMany(Minutasaltadireccion::class, 'minuta_id');
     }
 
+    public function entendimiento()
+    {
+        return $this->belongsToMany(EntendimientoOrganizacion::class, 'foda_id');
+    }
+
     public function empleado_experiencia()
     {
         return $this->hasMany(ExperienciaEmpleados::class)->orderByDesc('inicio_mes');

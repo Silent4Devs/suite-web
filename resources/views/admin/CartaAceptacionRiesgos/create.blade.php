@@ -204,7 +204,8 @@
 
 
                     <div class="form-group col-md-4 col-lg-4 col-sm-12">
-                        <label class="required" for="folio_riesgo"><i class="fas fa-ticket-alt iconos-crear"></i>ID del Riesgo
+                        <label class="required" for="folio_riesgo"><i class="fas fa-ticket-alt iconos-crear"></i>ID del
+                            Riesgo
                         </label>
                         <input class="form-control {{ $errors->has('folio_riesgo') ? 'is-invalid' : '' }}"
                             name="folio_riesgo" id="folio_riesgo" {{ old('folio_riesgo') }} required>
@@ -223,7 +224,8 @@
 
 
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                        <label class="required" for="responsable_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
+                        <label class="required" for="responsable_id"><i
+                                class="fas fa-user-tie iconos-crear"></i>Responsable</label>
                         <select class="form-control {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
                             name="responsable_id" id="responsable_id" required>
                             <option value="" selected disabled>
@@ -254,7 +256,8 @@
                     @livewire('body-carta-aceptacion')
 
                     <div class="form-group col-md-12 col-lg-12 col-sm-12">
-                        <label class="required" for="descripcion_riesgo"><i class="far fa-file-alt iconos-crear"></i>Descripción del
+                        <label class="required" for="descripcion_riesgo"><i
+                                class="far fa-file-alt iconos-crear"></i>Descripción del
                             Riesgo Aceptado
                         </label>
                         <textarea class="form-control {{ $errors->has('descripcion_riesgo') ? 'is-invalid' : '' }}" name="descripcion_riesgo"
@@ -268,7 +271,8 @@
                     </div>
 
                     <div class="form-group col-md-6 col-lg-6 col-sm-12">
-                        <label class="required" for="descripcion_negocio"><i class="far fa-file-alt iconos-crear"></i>Descripción del
+                        <label class="required" for="descripcion_negocio"><i
+                                class="far fa-file-alt iconos-crear"></i>Descripción del
                             Impacto al Negocio
                         </label>
                         <textarea class="form-control {{ $errors->has('descripcion_negocio') ? 'is-invalid' : '' }}"
@@ -282,7 +286,8 @@
                     </div>
 
                     <div class="form-group col-md-6 col-lg-6 col-sm-12">
-                        <label class="required" for="descripcion_tecnologico"><i class="far fa-file-alt iconos-crear"></i>Descripción del
+                        <label class="required" for="descripcion_tecnologico"><i
+                                class="far fa-file-alt iconos-crear"></i>Descripción del
                             Impacto Tecnológico
                         </label>
                         <textarea class="form-control {{ $errors->has('descripcion_tecnologico') ? 'is-invalid' : '' }}"
@@ -296,7 +301,8 @@
                     </div>
 
                     <div class="form-group col-md-12 col-lg-12 col-sm-12">
-                        <label class="required" for="aceptacion_riesgo"><i class="fas fa-exclamation-triangle iconos-crear"></i>Razón por
+                        <label class="required" for="aceptacion_riesgo"><i
+                                class="fas fa-exclamation-triangle iconos-crear"></i>Razón por
                             la que se debe aceptar el riesgo
                         </label>
                         <input class="form-control {{ $errors->has('aceptacion_riesgo') ? 'is-invalid' : '' }}"
@@ -309,7 +315,8 @@
                     </div>
 
                     <div class="form-group col-md-12 col-lg-12 col-sm-12">
-                        <label class="required" for="controles_compensatorios"><i class="fas fa-lock iconos-crear"></i>Controles
+                        <label class="required" for="controles_compensatorios"><i
+                                class="fas fa-lock iconos-crear"></i>Controles
                             compensatorios
                         </label>
                         <textarea class="form-control {{ $errors->has('controles_compensatorios') ? 'is-invalid' : '' }}"
@@ -359,7 +366,8 @@
                     </div>
 
                     <div class="form-group col-md-12 col-lg-12 col-sm-12">
-                        <label for="hallazgos_auditoria"><i class="fas fa-lock iconos-crear"></i>Hallazgos de auditoría interna / externa
+                        <label for="hallazgos_auditoria"><i class="fas fa-lock iconos-crear"></i>Hallazgos de auditoría
+                            interna / externa
                         </label>
                         <textarea class="form-control {{ $errors->has('hallazgos_auditoria') ? 'is-invalid' : '' }}"
                             name="hallazgos_auditoria" id="hallazgos_auditoria">
@@ -379,7 +387,8 @@
                     </div>
 
                     <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                        <label class="required" for="director_resp_id"><i class="fas fa-user-tie iconos-crear"></i>Director Responsable
+                        <label class="required" for="director_resp_id"><i
+                                class="fas fa-user-tie iconos-crear"></i>Director Responsable
                             del Riesgo</label>
                         <select class="form-control {{ $errors->has('director_resp_id') ? 'is-invalid' : '' }}"
                             name="director_resp_id" id="director_resp_id" required>
@@ -402,7 +411,8 @@
 
 
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label class="required" for="vp_responsable_id"><i class="fas fa-user-tie iconos-crear"></i>VP Responsable del
+                        <label class="required" for="vp_responsable_id"><i class="fas fa-user-tie iconos-crear"></i>VP
+                            Responsable del
                             Riesgo</label>
                         <select class="form-control {{ $errors->has('vp_responsable_id') ? 'is-invalid' : '' }}"
                             name="vp_responsable_id" id="vp_responsable_id" required>
@@ -427,7 +437,7 @@
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                         <label class="required"><i class="fas fa-user-tie iconos-crear"></i>Presidencia</label>
                         <select class="form-control {{ $errors->has('presidencia_id') ? 'is-invalid' : '' }}"
-                            name="presidencia_id" required>
+                            name="presidencia_id" id="presidencia_id" required>
                             <option value="" selected disabled>
                                 -- Selecciona el nombre del empleado --
                             </option>
@@ -446,7 +456,8 @@
 
 
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label class="required" for="vice_operaciones_id"><i class="fas fa-user-tie iconos-crear"></i>Vicepresidencia de
+                        <label class="required" for="vice_operaciones_id"><i
+                                class="fas fa-user-tie iconos-crear"></i>Vicepresidencia de
                             Operaciones</label>
                         <select class="form-control {{ $errors->has('vice_operaciones_id') ? 'is-invalid' : '' }}"
                             name="vice_operaciones_id" id="vice_operaciones_id" required>
@@ -781,5 +792,79 @@
         })
     </script>
 
+    <script>
+        $(document).on('change', '#director_resp_id', function(event) {
+            let empleadoSeleccionado = $("#director_resp_id option:selected").val();
+            $('#vp_responsable_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
+            $('#vp_responsable_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'director_resp_id');
+            $('#vp_responsable_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
+            $('#vp_responsable_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
 
+            $('#vice_operaciones_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
+            $('#vice_operaciones_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'director_resp_id');
+            $('#vice_operaciones_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
+            $('#vice_operaciones_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+
+
+            $('#presidencia_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
+            $('#presidencia_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'director_resp_id');
+            $('#presidencia_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
+            $('#presidencia_id option[data-o="director_resp_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+        });
+
+        $(document).on('change', '#vp_responsable_id', function(event) {
+            let empleadoSeleccionado = $("#vp_responsable_id option:selected").val();
+            $('#vice_operaciones_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
+            $('#vice_operaciones_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'vp_responsable_id');
+            $('#vice_operaciones_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
+            $('#vice_operaciones_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+
+            $('#director_resp_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
+            $('#director_resp_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'vp_responsable_id');
+            $('#director_resp_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
+            $('#director_resp_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+
+            $('#presidencia_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
+            $('#presidencia_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'vp_responsable_id');
+            $('#presidencia_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
+            $('#presidencia_id option[data-o="vp_responsable_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+        });
+
+        $(document).on('change', '#presidencia_id', function(event) {
+            let empleadoSeleccionado = $("#presidencia_id option:selected").val();
+            $('#vice_operaciones_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
+            $('#vice_operaciones_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'presidencia_id');
+            $('#vice_operaciones_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
+            $('#vice_operaciones_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+
+            $('#director_resp_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
+            $('#director_resp_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'presidencia_id');
+            $('#director_resp_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
+            $('#director_resp_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+
+            $('#vp_responsable_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
+            $('#vp_responsable_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'presidencia_id');
+            $('#vp_responsable_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
+            $('#vp_responsable_id option[data-o="presidencia_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+
+        });
+
+        $(document).on('change', '#vice_operaciones_id', function(event) {
+            let empleadoSeleccionado = $("#vice_operaciones_id option:selected").val();
+            $('#presidencia_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
+            $('#presidencia_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'vice_operaciones_id');
+            $('#presidencia_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
+            $('#presidencia_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+
+            $('#director_resp_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
+            $('#director_resp_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'vice_operaciones_id');
+            $('#director_resp_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
+            $('#director_resp_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+
+            $('#vp_responsable_id [value="' + empleadoSeleccionado + '"]').attr('disabled', true);
+            $('#vp_responsable_id [value="' + empleadoSeleccionado + '"]').attr('data-o', 'vice_operaciones_id');
+            $('#vp_responsable_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])').attr('disabled', false);
+            $('#vp_responsable_id option[data-o="vice_operaciones_id"]:not([value="' + empleadoSeleccionado + '"])').attr('data-o', '');
+        });
+    </script>
 @endsection

@@ -1055,8 +1055,8 @@
     </div>
     <script src="{{ asset('/sw.js') }}"></script>
     <script>
-        if (!navigator.serviceWorker.controller) {
-            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+        if (!navigator.serviceWorker?.controller) {
+            navigator.serviceWorker?.register("/sw.js").then(function(reg) {
                 console.log("Service worker has been registered for scope: " + reg.scope);
             });
         }
@@ -1120,7 +1120,7 @@ defer></script>
 <script>
     $(document).ready(function() {
         $('.c-sidebar-nav').animate({
-            scrollTop: $(".c-active").offset().top - 350
+            scrollTop: $(".c-active").offset()?.top - 350
         }, 0);
     });
     $(function() {

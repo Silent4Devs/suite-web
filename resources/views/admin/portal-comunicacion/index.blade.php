@@ -130,14 +130,14 @@
 
         .btn-silent:after {
             /*content: "";
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: 5px;
-            background-color: #e6e6e6;
-            transition: 0.4s;
-            left: 0;
-            z-index: 0;*/
+                    position: absolute;
+                    width: 100%;
+                    height: 2px;
+                    bottom: 5px;
+                    background-color: #e6e6e6;
+                    transition: 0.4s;
+                    left: 0;
+                    z-index: 0;*/
         }
 
         .btn-silent:hover:before {
@@ -159,8 +159,6 @@
 
     </style>
     <style type="text/css">
-
-
         .titulo-seccion {
             font-size: 20px;
             margin-bottom: 0px;
@@ -184,7 +182,7 @@
             height: 320px !important;
             opacity: 0.8;
 
-            background-size: cover;
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: all;
@@ -252,7 +250,7 @@
             width: 33.3%;
             height: 160px;
 
-            background-size: cover;
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: all;
@@ -307,10 +305,12 @@
         .text_doc h5 {
             font-size: 16px;
         }
-        .text_doc p{
+
+        .text_doc p {
             font-size: 12px;
         }
-        .text_doc .badge{
+
+        .text_doc .badge {
             background-color: #1E94A8;
             color: #fff;
         }
@@ -319,6 +319,7 @@
             width: 20%;
             text-align: right;
         }
+
         .opciones_doc {
             font-size: 12px;
         }
@@ -402,20 +403,22 @@
             transition: 0.09;
         }
 
-        .opciones_felicitar{
+        .opciones_felicitar {
             display: flex;
             justify-content: space-between;
         }
-        .opciones_felicitar i{
+
+        .opciones_felicitar i {
             color: #345183;
             font-size: 15pt;
             cursor: pointer;
         }
 
-        .modal-backdrop.fade.show{
+        .modal-backdrop.fade.show {
             display: none !important;
         }
-        .modal-dialog{
+
+        .modal-dialog {
             margin-top: 200px !important;
         }
 
@@ -434,11 +437,12 @@
                 <div class="col-sm-9">
                     <div class="row">
                         <div class="col-sm-12 col-12 col-lg-4">
-                            <div class="card" id="clima" style="padding:5px !important; background-color: #FFF9F0 !important;"></div>
-                            <div class="card" style="position: relative; padding: 5px !important; background-color:#DFECFF !important;">
-                                <a href="{{ asset('admin/system-calendar') }}" class="btn_link_agenda"
-                                    style="" title="Agenda organizacional"><i
-                                        class="fas fa-calendar-alt"></i></a>
+                            <div class="card" id="clima"
+                                style="padding:5px !important; background-color: #FFF9F0 !important;"></div>
+                            <div class="card"
+                                style="position: relative; padding: 5px !important; background-color:#DFECFF !important;">
+                                <a href="{{ asset('admin/system-calendar') }}" class="btn_link_agenda" style=""
+                                    title="Agenda organizacional"><i class="fas fa-calendar-alt"></i></a>
                                 <div class="calendar calendar-first" id="calendar_first" style="">
                                     <div class="calendar_header">
                                         <button class="switch-month switch-left"> <i
@@ -478,7 +482,7 @@
                                             } else {
                                                 $imagen = 'img/tabantaj_fondo_blanco.png';
                                             }
-
+                                            
                                         @endphp
                                         <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}">
                                             <div class="img_carrusel"
@@ -517,7 +521,8 @@
                         </div>
                         <div class="mt-5 col-lg-12">
                             <div class="card card-body">
-                                <h2 class="titulo-seccion mb-3" style="font-weight:normal;"><i class="mr-3 far fa-newspaper"></i>Comunicados</h2>
+                                <h2 class="titulo-seccion mb-3" style="font-weight:normal;"><i
+                                        class="mr-3 far fa-newspaper"></i>Comunicados</h2>
                                 @forelse($comunicacionSgis as $comunicacionSgi)
                                     <div class="comunicado" style="position:relative;">
                                         @php
@@ -528,21 +533,24 @@
                                             } else {
                                                 $imagen = 'img/portal_404.png';
                                             }
-
+                                            
                                         @endphp
 
                                         {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
 
-                                        <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');">
+                                        <div class="img_comunicado"
+                                            style="background-image: url('{{ asset($imagen) }}');">
                                         </div>
                                         <div class="text_comunicado">
-                                            <h4 class="w-100 mb-4" style="font-size:16px;">{{ $comunicacionSgi->titulo }}</h4>
+                                            <h4 class="w-100 mb-4" style="font-size:16px;">
+                                                {{ $comunicacionSgi->titulo }}</h4>
 
                                             <div
                                                 style="text-align:left !important; overflow:hidden; height:100px !important;  padding:0px; display:block !important; justify-content:start !important;">
                                                 {!! $comunicacionSgi->descripcion !!}
                                             </div>
-                                            <a href="{{ asset('admin/comunicacion-sgis/' . $comunicacionSgi->id) }}" style="font-size:12px;">Leer
+                                            <a href="{{ asset('admin/comunicacion-sgis/' . $comunicacionSgi->id) }}"
+                                                style="font-size:12px;">Leer
                                                 más</a>
                                         </div>
                                     </div>
@@ -563,8 +571,9 @@
                                 @endforelse
                             </div>
 
-                                <div class="card card-body">
-                                <h2 class="titulo-seccion" style="font-weight:normal;"><i class="mr-3 far fa-file-alt"></i>Documentos publicados </h2>
+                            <div class="card card-body">
+                                <h2 class="titulo-seccion" style="font-weight:normal;"><i
+                                        class="mr-3 far fa-file-alt"></i>Documentos publicados </h2>
                                 @forelse($documentos_publicados as $documento)
                                     <div class="doc_publicado">
                                         <div class="icon_doc">
@@ -592,7 +601,8 @@
                                                     <span class="badge"
                                                         style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
                                                 @endif
-                                                <span style="color:#1E94A8; margin-left:20px;"><i class="fas fa-eye"></i>
+                                                <span style="color:#1E94A8; margin-left:20px;"><i
+                                                        class="fas fa-eye"></i>
                                                     <strong>{{ $documento->no_vistas }}</strong></span>
                                             </p>
                                         </div>
@@ -619,9 +629,6 @@
                                         </div>
 
                                     </div>
-
-
-
                                 @endforelse
                             </div>
                         </div>

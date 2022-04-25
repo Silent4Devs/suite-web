@@ -63,7 +63,7 @@
                                             style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">
                                             Información de la carta:
                                         <ul>
-                                            <li>ID del riesgo<strong>{{$carta->folio_riesgo}}</strong></li>
+                                            <li>ID del riesgo:<strong>{{$carta->folio_riesgo}}</strong></li>
                                             <li>Fecha de Riesgo levantado:<strong>{{$carta->fecharegistro}}</strong></li>
 
                                         </ul>
@@ -73,9 +73,9 @@
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p>Descripción:</p>
                                             <p>Buen día {{$empleado->name}}, </p>
-                                            <p>Le informamos que la Carta de Aceptación de Riesgos {{$carta->folio_riesgo}}<strong
-                                                    style="color: currentColor; text-transform: uppercase;">
-                                                    se ha enviado a</strong>revisión y aprobación</p>
+                                            <p>Le informamos que la Carta de Aceptación de Riesgos <strong
+                                                style="color: currentColor; text-transform: uppercase;">{{$carta->folio_riesgo}}</strong>
+                                                    se ha enviado a su revisión y aprobación</p>
                                             <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-file-earmark-richtext"
                                                     viewBox="0 0 16 16">

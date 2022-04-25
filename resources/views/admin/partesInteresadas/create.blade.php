@@ -1,13 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-
-
     {{ Breadcrumbs::render('admin.partes-interesadas.create') }}
 
-   
+
     <h5 class="col-12 titulo_general_funcion">Registrar: Partes Interesadas</h5>
     <div class="mt-4 card">
- 
+
         <div class="card-body">
             <form method="POST" action="{{ route('admin.partes-interesadas.store') }}" enctype="multipart/form-data"
                 class="row">
@@ -24,9 +22,11 @@
                             {{ $errors->first('parteinteresada') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.partesInteresada.fields.parteinteresada_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.partesInteresada.fields.parteinteresada_helper') }}</span>
                 </div>
+
+                {{-- @livewire('show-partes-interesadas')
+
                 <div wire:ignore>
                     <div class="form-group col-md-12">
                         <label class="required" for="requisitos"> <i class="fas fa-clipboard-list iconos-crear"></i>
@@ -42,28 +42,11 @@
                         <span
                             class="help-block">{{ trans('cruds.partesInteresada.fields.requisitos_helper') }}</span>
                     </div>
-                </div>
-
-
-                {{-- <div class="form-group col-sm-12">
-                    <label for="clausala"><i class="far fa-file iconos-crear"></i> Cláusula(s)</label>
-                    <select class="form-control {{ $errors->has('clausala') ? 'is-invalid' : '' }}" name="clausala"
-                        id="clausala" class="select2" multiple>
-                        <option value disabled >
-                            Selecciona una opción</option>
-                        @foreach (App\Models\PartesInteresada::CLAUSULA_SELECT as $id => $clausula)
-                            <option value="{{ $id }}"
-                                {{ (old('clausala') ? old('clausala') : $clausula->clausala ?? '') == $id ? 'selected' : '' }}>
-                                {{ $clausula }} </option>
-                        @endforeach
-                    </select>
-                    <span class="errors tipo_error"></span>
                 </div> --}}
-
-                @livewire('partes-interesadas-component')
+                {{-- @livewire('partes-interesadas-component') --}}
 
                 <div class="text-right form-group col-md-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.partes-interesadas.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -71,7 +54,6 @@
             </form>
         </div>
     </div>
-
 @endsection
 
 
@@ -148,6 +130,4 @@
     </script>
 
     <script src="{{ asset('js/dark_mode.js') }}"></script>
-
-
 @endsection

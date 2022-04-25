@@ -9,6 +9,11 @@
             <form method="POST" action="{{ route('admin.alcance-sgsis.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
+                    <div class="form-group">
+                        <label for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre de Alcance</label>
+                        <input type="text" class="form-control" id="nombre"  name="nombre" required>
+                    </div>
+
                     <label for="alcancesgsi"> <i class="fas fa-shield-alt iconos-crear"></i>Alcance </label><i
                         class="fas fa-info-circle" style="font-size:12pt; float: right;"
                         title="Actividad clave que determina la base necesaria para las actividades de implementación del SGSI."></i>
@@ -104,23 +109,25 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="norma"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma</label>
-                        <select class="form-control select2 {{ $errors->has('norma') ? 'is-invalid' : '' }}"
-                            name="norma_id" id="norma">
-                            <option disabled selected>Seleccionar norma</option>
-                            @foreach ($normas as $norma)
-                                <option value="{{ $norma->id }}" data-area="{{ $norma->norma }}"
-                                    {{ old('norma') == $norma->id ? ' selected="selected"' : '' }}>
-                                    {{ $norma->norma }}
-                                </option>
-                            @endforeach
+                    <div class="form-group col-md-12">
+                        <label for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>  
+                        <select
+                        class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
+                        name="normas[]" id="controles" multiple="multiple">
+                        <option value disabled>
+                            Selecciona una opción</option>
+                        @foreach ($normas as $norma)
+                        <option value="{{ $norma->id }}" data-area="{{ $norma->norma }}"
+                            {{ old('norma') == $norma->id ? ' selected="selected"' : '' }}>
+                            {{ $norma->norma }}
+                        </option>
+                        @endforeach
                         </select>
-                        @if ($errors->has('norma'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('norma') }}
-                            </div>
-                        @endif
+                            @if ($errors->has('norma'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('normas') }}
+                                </div>
+                            @endif
                     </div>
                 </div>
 
@@ -197,6 +204,9 @@
                     //     items: ['-']
                     // }
                 ]
+            });
+            $('.controles-select').select2({
+                'theme': 'bootstrap4'
             });
 
         });

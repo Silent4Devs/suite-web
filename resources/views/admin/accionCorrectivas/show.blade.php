@@ -1,86 +1,103 @@
 @extends('layouts.admin')
 @section('content')
-
     <style type="text/css">
-
-        .datos_der_cv{
+        .datos_der_cv {
             color: #fff;
 
         }
-        .tabla_verde{
+
+        .tabla_verde {
             color: #fff !important;
         }
 
-        .tabla_verde.table-striped tbody tr:nth-of-type(odd), table.table tbody tr:nth-child(even) {
+        .tabla_verde.table-striped tbody tr:nth-of-type(odd),
+        table.table tbody tr:nth-child(even) {
             background-color: rgba(0, 0, 0, 0);
         }
-        .tabla_verde th{
-            background-color:rgb(0, 0, 0, 0) !important;
+
+        .tabla_verde th {
+            background-color: rgb(0, 0, 0, 0) !important;
         }
-        @media print{
-            header{
-                display:none !important;
+
+        @media print {
+            header {
+                display: none !important;
             }
-            .ps__rail-y{
-                display:none !important;
+
+            .ps__rail-y {
+                display: none !important;
             }
-            .ps__thumb-y{
-                display:none !important;
+
+            .ps__thumb-y {
+                display: none !important;
             }
-            .titulo_general_funcion{
-                display:none !important;
+
+            .titulo_general_funcion {
+                display: none !important;
             }
-            #sidebar{
-                display:none !important;
+
+            #sidebar {
+                display: none !important;
             }
-            body{
+
+            body {
                 background-color: #fff !important;
             }
-            #but{
-                display:none !important;
+
+            #but {
+                display: none !important;
             }
-            .datos_der_cv{
+
+            .datos_der_cv {
                 margin-right: -50px !important;
 
 
             }
+
             .table th td:nth-child(1) {
                 min-width: 100px;
             }
+            .print-none{
+            display: none !important;
+            }
         }
+
     </style>
 
 
     <div>
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
-                <div class="card-body" id="imp1">
+                <div class="card-body">
 
-                    {{-- <div class="col-md-4"> --}}
-                        {{-- <div class="mb-4 d-flex" style="margin-left: 70%;position: absolute;top: 4%;" >
-                            <a class="btn btn-danger" href="javascript:window.print()" id="but" >Imprimir</a>
-                        </div> --}}
-
-
-                    {{-- </div> --}}
+                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;" onclick="javascript:window.print()">
+                        <i class="fas fa-print"></i>
+                        Imprimir
+                    </button>
 
                     @php
                         use App\Models\Organizacion;
                         $organizacion = Organizacion::first();
                         $logotipo = $organizacion->logotipo;
+                        $empresa = $organizacion->empresa;
                     @endphp
 
-                    <div class="caja_img_logo">
-                        <div class="row">
-                            <div class="col-4">
-                                <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width:100px;">
+                    <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                        <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                            <img src="{{ asset($logotipo) }}" class="mt-2" style="width:90px;">
+                        </div>
+                        <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                            <span
+                                style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
+                            <br>
+                            <span style="color:#345183; font-size:15px;"><strong>Acción Correctiva:
+                                    {{ $accionCorrectiva->tema ?? 'sin registro' }}</strong></span>
 
-                            </div>
-
-                            <div class="col-8 mt-5">
-                                <h5 class="col-12 titulo_general_funcion">Acción Correctiva</h5>
-
-                            </div>
+                        </div>
+                        <div class="col-3 p-2">
+                            <span style="color:#345183;">Fecha:
+                                {{ \Carbon\Carbon::parse($accionCorrectiva->created_at)->format('d-m-Y') }}
+                            </span>
                         </div>
                     </div>
 
@@ -160,19 +177,18 @@
                         </div>
                     </div> --}}
 
-                    <div class="mb-4 d-flex" style="margin-left: 70%;position: absolute;" >
-                        <div  style="width:60px; border: 1px solid #ccc; border-radius: 3px;">
+                    <div class="mb-5 d-flex" style="margin-left: 70%;position: absolute;">
+                        <div style="width:60px; border: 1px solid #ccc; border-radius: 3px;">
                             <span class="p-2" style="text-align:center; color:#0CA193">Folio</span>
                         </div>
-                        <div  style="margin-left:-3px; width:90px; background-color:#0CA193;border: 1px solid #0CA193; border-radius: 3px;">
-                            <span class="p-2" style="color:#fff">{{ $accionCorrectiva->folio ?? 'sin registro' }}</span>
+                        <div
+                            style="margin-left:-3px; width:90px; background-color:#0CA193;border: 1px solid #0CA193; border-radius: 3px;">
+                            <span class="p-2"
+                                style="color:#fff">{{ $accionCorrectiva->folio ?? 'sin registro' }}</span>
                         </div>
                     </div>
 
-                    <div class="mt-5">
-                        <h5 class="col-12 text-center" style="font-size:13pt;"><strong>{{$accionCorrectiva->tema ?? 'sin registro'}}</strong></h5>
-                    </div>
-
+                    <br>
                     <div class="row ml-2 mt-5 p-2" style="border: 2px solid #ccc; border-radius: 3px;">
                         <div class="col-6">
                             <div class="row">
@@ -228,7 +244,7 @@
                                 </div>
                                 <div class="col-6">
                                     <span style="color:#345183">
-                                        {{$accionCorrectiva->fecharegistro ? \Carbon\Carbon::parse($accionCorrectiva->fecharegistro)->format('d-m-Y') : 'sin registro' }}
+                                        {{ $accionCorrectiva->fecharegistro? \Carbon\Carbon::parse($accionCorrectiva->fecharegistro)->format('d-m-Y'): 'sin registro' }}
                                     </span>
                                 </div>
                             </div>
@@ -239,7 +255,7 @@
                                 </div>
                                 <div class="col-6">
                                     <span style="color:#345183">
-                                        {{$accionCorrectiva->causaorigen ?? 'sin registro' }}
+                                        {{ $accionCorrectiva->causaorigen ?? 'sin registro' }}
                                     </span>
                                 </div>
                             </div>
@@ -253,26 +269,31 @@
                                         {{$accionCorrectiva->estatus ?? 'sin registro' }}
                                     </span> --}}
                                     @switch ($accionCorrectiva->estatus)
-                                    @case(1)
-                                    <div class="cuadro_verdelimon">{{$accionCorrectiva->estatus}}</div>
+                                        @case(1)
+                                            <div class="cuadro_verdelimon">{{ $accionCorrectiva->estatus }}</div>
                                         @break
-                                    @case(2)
-                                    <div class="cuadro_verde">{{$accionCorrectiva->estatus}}</div>
-                                        @break
-                                    @case(3)
-                                    <div class="cuadro_amarillo">{{$accionCorrectiva->estatus}}</div>
-                                        @break
-                                    @case(4)
-                                    <div class="cuadro_naranja">{{$accionCorrectiva->estatus}}</div>
 
+                                        @case(2)
+                                            <div class="cuadro_verde">{{ $accionCorrectiva->estatus }}</div>
                                         @break
-                                    @case(5)
-                                    <div class="cuadro_rojo">{{$accionCorrectiva->estatus}}</div>
 
-                                        @break;
-                                    @default
-                                        <span>No hay registro</span>
-                                @endswitch
+                                        @case(3)
+                                            <div class="cuadro_amarillo">{{ $accionCorrectiva->estatus }}</div>
+                                        @break
+
+                                        @case(4)
+                                            <div class="cuadro_naranja">{{ $accionCorrectiva->estatus }}</div>
+                                        @break
+
+                                        @case(5)
+                                            <div class="cuadro_rojo">{{ $accionCorrectiva->estatus }}</div>
+                                        @break
+
+                                        ;
+
+                                        @default
+                                            <span>No hay registro</span>
+                                    @endswitch
                                 </div>
                             </div>
                         </div>
@@ -290,7 +311,7 @@
                                     Descripción</span>
                             </div>
                             <div class="form-group ml-4">
-                                <span style="text-align: justify;">{!!$accionCorrectiva->descripcion ?? 'sin registro' !!}  </span>
+                                <span style="text-align: justify;">{!! $accionCorrectiva->descripcion ?? 'sin registro' !!} </span>
                             </div>
                             <div class="ml-4 mt-2 mb-3  dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold; ml-4">
@@ -299,15 +320,17 @@
 
                             </div>
 
-                            @foreach($accionCorrectiva->analisis as $analisis)
-                            <span class="ml-5" style="font-size:11pt;color:#0CA193"><strong>{{$analisis->metodo ?? 'sin registro'}}</strong></span>
-                            <br>
-                            <br>
-                            <div class="ml-4" style="text-align: justify !important;">
-                                <span style="font-size:11pt; text-align: justify !important;">{!!$analisis->ideas ?? 'sin registro'!!}</span>
+                            @foreach ($accionCorrectiva->analisis as $analisis)
+                                <span class="ml-5"
+                                    style="font-size:11pt;color:#0CA193"><strong>{{ $analisis->metodo ?? 'sin registro' }}</strong></span>
+                                <br>
+                                <br>
+                                <div class="ml-4" style="text-align: justify !important;">
+                                    <span
+                                        style="font-size:11pt; text-align: justify !important;">{!! $analisis->ideas ?? 'sin registro' !!}</span>
 
-                            </div>
-                            <br>
+                                </div>
+                                <br>
                             @endforeach
 
 
@@ -321,7 +344,8 @@
                             <div class="row ml-2">
                                 <div class="col-sm-12 col-lg-12 col-md-12">
                                     <div class="col-12">
-                                        <span class="p-2" style="text-align:center;"><strong style="color:#0CA193">Fecha de cierre</strong>
+                                        <span class="p-2" style="text-align:center;"><strong
+                                                style="color:#0CA193">Fecha de cierre</strong>
                                             {{ $accionCorrectiva->fecha_cierre ?? 'Sin registro' }}
                                         </span>
                                     </div>
@@ -347,22 +371,23 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($actividades as $actividad)
-                                        <tr>
-                                            <td>{{$actividad->actividad}}</td>
-                                            <td>{{$actividad->fecha_inicio}}</td>
-                                            <td>{{$actividad->fecha_fin}}</td>
-                                            <td>{{$actividad->prioridad}}</td>
-                                            <td>{{$actividad->tipo}}</td>
-                                            <td>
-                                                <ul>
-                                                @foreach($actividad->responsables as $responsable)
-                                                    <li>{{$responsable->name}}</li>
-                                                @endforeach
-                                            </ul>
-                                            </td>
-                                            <td>{{!is_null($actividad->comentarios) ? $actividad->comentarios : 'Sin comentarios'}}</td>
-                                        </tr>
+                                        @foreach ($actividades as $actividad)
+                                            <tr>
+                                                <td>{{ $actividad->actividad }}</td>
+                                                <td>{{ $actividad->fecha_inicio }}</td>
+                                                <td>{{ $actividad->fecha_fin }}</td>
+                                                <td>{{ $actividad->prioridad }}</td>
+                                                <td>{{ $actividad->tipo }}</td>
+                                                <td>
+                                                    <ul>
+                                                        @foreach ($actividad->responsables as $responsable)
+                                                            <li>{{ $responsable->name }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </td>
+                                                <td>{{ !is_null($actividad->comentarios) ? $actividad->comentarios : 'Sin comentarios' }}
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -424,20 +449,17 @@
                                 </tr>
                             </tbody>
                         </table> --}}
-                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
     </div>
 
-
-
+    </div>
 @endsection
 @section('scripts')
-{{-- <script>
+    {{-- <script>
     function imprim1(imp1) {
         var printContents = document.getElementById('imp1').innerHTML;
         w = window.open();

@@ -60,7 +60,6 @@
                             <div class="col-9 mt-4">
                                 <h2 class="mb-2 text-center" style="color:#345183"><strong>CARTA DE ACEPTACIÓN DE
                                         RIESGOS</strong></h2>
-
                             </div>
 
                             <div class="row">
@@ -76,7 +75,7 @@
 
 
                                 @livewire('body-carta-aceptacion',['proceso'=>$cartaAceptacion->proceso_id,'tipo'=>'show',
-                                'cartaAceptacion'=>$cartaAceptacion])
+                                'cartaAceptacion'=>$cartaAceptacion,'aprobadores'=>$aprobadores])
 
                                 <div class="row col-12 mt-2 pl-0 ml-2">
                                     <div class="col-4" style="color:#345183;background-color: rgb(220, 255, 255);">
@@ -124,266 +123,91 @@
                                             interna / externa</strong>
                                     </div>
                                     <div class="col-5 p-4">
-                                        <span style="font-size:12px; width:100%;color:#345183;"></span>
+                                        <span style="font-size:12px; width:100%;color:#345183;">{!!$cartaAceptacion->hallazgos_auditoria!!}</span>
                                     </div>
 
                                 </div>
                                 <div>
-                                    <table class="table mt-4 w-100 p-0 m-0" id="contactos_table">
-                                        <thead>
-                                            <tr class="negras">
-                                                <th class="text-center"
-                                                    style="font-size:12px; color:#345183; background-color:#cccccc;"
-                                                    colspan="5">
-                                                    <div>
-                                                        5. Autorización de Aceptación de Riesgo
-                                                        (Nombre, Comentarios, Firma, Fecha)
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td rowspan="{{$esAprobador?2:1}}"
-                                                    style="min-width:200px; color:#345183;background-color: rgb(220, 255, 255);">
-                                                    <strong style="font-size:12px; color:#345183;">Dueño del Riesgo</strong>
-                                                </td>
-                                                <td style="min-width:200px;">
-                                                    <span
-                                                        style="font-size:12px; width:100%;color:#345183;">{{ $cartaAceptacion->responsables ? $cartaAceptacion->responsables->name : 'Sin registrar' }}</span>
-                                                </td>
-                                                <td style="min-width:250px;">
-                                                    @if ($esAprobador)
-                                                    <textarea id="comentarios-dueno" class="form-control"></textarea>
-                                                    @endif
-                                                </td>
-                                                <td style="min-width:90px;">
-                                                    <span style="font-size:12px; width:100%;color:#345183;">
-                                                        @if(!is_null($cartaAceptacion->fecha_aprobacion))
-                                                            {{ \Carbon\Carbon::parse($cartaAceptacion->fecha_aprobacion)->format('d-m-Y') }}
-                                                        @endif
-                                                    </span>
-                                                </td>
-                                                <td style="min-width:90px;">
-                                                    @if ($esAprobador)
-                                                    <i style="font-size:20px; cursor:pointer"
-                                                        class="text-success fas fa-check-circle"></i>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @if ($esAprobador)
-                                            <tr>
-                                                <td colspan="4">
-                                                    <div class="row">
-                                                        <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
-                                                            <canvas style="background-color:#fff" id="sig-dueno-canvas">
-                                                                Navegador no compatible
-                                                            </canvas>
+                                    <form id="formularioAutorizacion">
+                                        <table class="table mt-4 w-100 p-0 m-0" id="contactos_table">
+                                            <thead>
+                                                <tr class="negras">
+                                                    <th class="text-center"
+                                                        style="font-size:12px; color:#345183; background-color:#cccccc;"
+                                                        colspan="5">
+                                                        <div>
+                                                            5. Autorización de Aceptación de Riesgo
+                                                            (Nombre, Comentarios, Firma, Fecha)
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
-                                                        <button class="btn btn-sm" id="sig-dueno-clearBtn"><i
-                                                            class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            @endif
-                                            <tr>
-                                                <td rowspan="{{$esAprobador?2:1}}"
-                                                    style="min-width:200px; color:#345183;background-color: rgb(220, 255, 255);">
-                                                    <strong style="font-size:12px; color:#345183;">Director Responsable del
-                                                        Riesgo</strong>
-                                                </td>
-                                                <td style="min-width:200px;">
-                                                    <span
-                                                        style="font-size:12px; width:100%;color:#345183;">{{ $cartaAceptacion->directores ? $cartaAceptacion->directores->name : 'Sin registrar' }}
-                                                    </span>
-                                                </td>
-                                                <td style="min-width:250px;">
-                                                    @if ($esAprobador)
-                                                    <textarea id="comentarios-director" class="form-control"></textarea>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($aprobadores as $aprobador)
+                                                    <tr>
+                                                        <td rowspan="{{ $aprobador->empleado->id == auth()->user()->empleado->id ? 2 : 1 }}"
+                                                            style="min-width:200px; color:#345183;background-color: rgb(220, 255, 255);">
+                                                            <strong
+                                                                style="font-size:12px; color:#345183;">{{ $aprobador->autoridad }}</strong>
+                                                        </td>
+                                                        <td style="min-width:200px;">
+                                                            <span
+                                                                style="font-size:12px; width:100%;color:#345183;">{{ $aprobador->empleado ? $aprobador->empleado->name : 'Sin registrar' }}</span>
+                                                        </td>
+                                                        <td style="min-width:250px;">
+                                                            <textarea {{ $aprobador->empleado->id == auth()->user()->empleado->id ? '' : 'disabled' }} {{ $aprobador->estado>0 ? 'disabled' : '' }} name="comentarios" id="comentarios-{{ $aprobador->nivel }}" class="form-control">{{$aprobador->comentarios}}</textarea>
+                                                        </td>
+                                                        <td style="min-width:90px;">
+                                                            <span style="font-size:12px; width:100%;color:#345183;">
+                                                                @if (!is_null($cartaAceptacion->fecha_aprobacion))
+                                                                    {{ \Carbon\Carbon::parse($cartaAceptacion->fecha_aprobacion)->format('d-m-Y') }}
+                                                                @endif
+                                                            </span>
+                                                        </td>
+                                                        <td style="min-width:90px;">
+                                                            @if ($aprobador->empleado->id == auth()->user()->empleado->id)
+                                                                @if($aprobador->estado == 0)
+                                                                <i style="font-size:20px; cursor:pointer"
+                                                                id="btnEnviarRespuesta{{ $aprobador->nivel }}"
+                                                                class="text-success fas fa-check-circle"></i>
+                                                                @endif
+
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                    @if ($aprobador->empleado->id == auth()->user()->empleado->id)
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <div class="row">
+                                                                    <div class="col-md-12"
+                                                                        style="display: flex;align-items: center;justify-content: center;">
+                                                                    @if($aprobador->firma == null)
+                                                                        <canvas style="background-color:#fff"
+                                                                            id="sig-{{ $aprobador->nivel }}-canvas">
+                                                                            Navegador no compatible
+                                                                        </canvas>
+                                                                    @else
+                                                                    <img src="{{asset($route.$aprobador->firma)}}"></img>
+                                                                    @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12"
+                                                                        style="display: flex;align-items: center;justify-content: center;">
+                                                                        @if($aprobador->estado == 0)
+                                                                            <button class="btn btn-sm"
+                                                                            id="sig-{{ $aprobador->nivel }}-clearBtn"><i
+                                                                                class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                     @endif
-                                                </td>
-                                                <td style="min-width:90px;">
-                                                    <span style="font-size:12px; width:100%;color:#345183;">
-                                                        @if(!is_null($cartaAceptacion->fecha_aprobacion))
-                                                            {{ \Carbon\Carbon::parse($cartaAceptacion->fecha_aprobacion)->format('d-m-Y') }}
-                                                        @endif
-                                                    </span>
-                                                </td>
-                                                <td style="min-width:90px;">
-                                                    @if ($esAprobador)
-                                                    <i style="font-size:20px; cursor:pointer"
-                                                        class="text-success fas fa-check-circle"></i>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @if ($esAprobador)
-                                            <tr>
-                                                <td colspan="4">
-                                                <div class="row">
-                                                    <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
-                                                        <canvas style="background-color:#fff" id="sig-director-canvas">
-                                                            Navegador no compatible
-                                                        </canvas>
-                                                    </div>
-                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
-                                                    <button class="btn btn-sm" id="sig-director-clearBtn"><i
-                                                        class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
-                                                    </div>
-                                                </div>
-                                                </td>
-                                            </tr>
-                                            @endif
-                                            <tr>
-                                                <td rowspan="{{$esAprobador?2:1}}"
-                                                    style="min-width:200px; color:#345183;background-color: rgb(220, 255, 255);">
-                                                    <strong style="font-size:12px; color:#345183;">VP Responsable del
-                                                        Riesgo</strong>
-                                                </td>
-                                                <td style="min-width:200px;">
-                                                    <span
-                                                        style="font-size:12px; width:100%;color:#345183;">{{ $cartaAceptacion->vicepresidentes ? $cartaAceptacion->vicepresidentes->name : 'Sin registrar' }}</span>
-                                                </td>
-                                                <td style="min-width:250px;">
-                                                    @if ($esAprobador)
-                                                    <textarea id="comentarios-vp-director" class="form-control"></textarea>
-                                                    @endif
-                                                </td>
-                                                <td style="min-width:90px;">
-                                                    <span style="font-size:12px; width:100%;color:#345183;">
-                                                        @if(!is_null($cartaAceptacion->fecha_aprobacion))
-                                                            {{ \Carbon\Carbon::parse($cartaAceptacion->fecha_aprobacion)->format('d-m-Y') }}
-                                                        @endif
-                                                    </span>
-                                                </td>
-                                                <td style="min-width:90px;">
-                                                    @if ($esAprobador)
-                                                    <i style="font-size:20px; cursor:pointer"
-                                                        class="text-success fas fa-check-circle"></i>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @if ($esAprobador)
-                                            <tr>
-                                                <td colspan="4">
-                                                <div class="row">
-                                                    <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
-                                                        <canvas style="background-color:#fff" id="sig-vpresponsable-canvas">
-                                                            Navegador no compatible
-                                                        </canvas>
-                                                    </div>
-                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
-                                                    <button class="btn btn-sm" id="sig-vpresponsable-clearBtn"><i
-                                                        class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
-                                                    </div>
-                                                </div>
-                                                </td>
-                                            </tr>
-                                            @endif
-                                            <tr>
-                                                <td rowspan="{{$esAprobador?2:1}}"
-                                                    style="min-width:200px; color:#345183;background-color: rgb(220, 255, 255);">
-                                                    <strong style="font-size:12px; color:#345183;">Vicepresidente de
-                                                        Operaciones</strong>
-                                                </td>
-                                                <td style="min-width:200px;">
-                                                    <span
-                                                        style="font-size:12px; width:100%;color:#345183;">{{ $cartaAceptacion->vicepresidentesOperaciones? $cartaAceptacion->vicepresidentesOperaciones->name: 'Sin registrar' }}</span>
-                                                </td>
-                                                <td style="min-width:250px;">
-                                                    @if ($esAprobador)
-                                                    <textarea id="comentarios-vpoperaciones" class="form-control"></textarea>
-                                                    @endif
-                                                </td>
-                                                <td style="min-width:90px;">
-                                                    <span style="font-size:12px; width:100%;color:#345183;">
-                                                        @if(!is_null($cartaAceptacion->fecha_aprobacion))
-                                                            {{ \Carbon\Carbon::parse($cartaAceptacion->fecha_aprobacion)->format('d-m-Y') }}
-                                                        @endif
-                                                    </span>
-                                                </td>
-                                                <td style="min-width:90px;">
-                                                    @if ($esAprobador)
-                                                    <i style="font-size:20px; cursor:pointer"
-                                                        class="text-success fas fa-check-circle"></i>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @if ($esAprobador)
-                                            <tr>
-                                                <td colspan="4">
-                                                <div class="row">
-                                                    <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
-                                                        <canvas style="background-color:#fff" id="sig-vpoperaciones-canvas">
-                                                            Navegador no compatible
-                                                        </canvas>
-                                                    </div>
-                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
-                                                    <button class="btn btn-sm" id="sig-vpoperaciones-clearBtn"><i
-                                                        class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
-                                                    </div>
-                                                </div>
-                                                </td>
-                                            </tr>
-                                            @endif
-                                            <tr>
-                                                <td rowspan="{{$esAprobador?2:1}}"
-                                                    style="min-width:200px; color:#345183;background-color: rgb(220, 255, 255);">
-                                                    <strong style="font-size:12px; color:#345183;">Presidencia</strong>
-                                                </td>
-                                                <td style="min-width:200px;">
-                                                    <span
-                                                        style="font-size:12px; width:100%;color:#345183;">{{ $cartaAceptacion->presidentes ? $cartaAceptacion->presidentes->name : 'Sin registrar' }}</span>
-                                                </td>
-                                                <td style="min-width:250px;">
-                                                    @if ($esAprobador)
-                                                    <textarea id="comentarios-presidente" class="form-control"></textarea>
-                                                    @endif
-                                                </td>
-                                                <td style="min-width:90px;">
-                                                    <span style="font-size:12px; width:100%;color:#345183;">
-                                                        @if(!is_null($cartaAceptacion->fecha_aprobacion))
-                                                            {{ \Carbon\Carbon::parse($cartaAceptacion->fecha_aprobacion)->format('d-m-Y') }}
-                                                        @endif
-                                                    </span>
-                                                </td>
-                                                <td style="min-width:90px;">
-                                                    @if ($esAprobador)
-                                                    <i style="font-size:20px; cursor:pointer"
-                                                        class="text-success fas fa-check-circle"></i>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @if ($esAprobador)
-                                            <tr>
-                                                <td colspan="4">
-                                                <div class="row">
-                                                    <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
-                                                        <canvas style="background-color:#fff" id="sig-presidencia-canvas">
-                                                            Navegador no compatible
-                                                        </canvas>
-                                                    </div>
-                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
-                                                    <button class="btn btn-sm" id="sig-presidencia-clearBtn"><i
-                                                        class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
-                                                    </div>
-                                                </div>
-                                                </td>
-                                            </tr>
-                                            @endif
-                                        </tbody>
-                                    </table>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </form>
                                 </div>
 
 
@@ -604,7 +428,7 @@
 
 @section('scripts')
     <script>
-         (function() {
+        (function() {
 
             window.requestAnimFrame = (function(callback) {
                 return window.requestAnimationFrame ||
@@ -619,121 +443,172 @@
 
 
         })();
-        document.addEventListener('DOMContentLoaded', function(){
-        renderCanvas('sig-dueno-canvas','sig-dueno-clearBtn');
-        renderCanvas('sig-director-canvas','sig-director-clearBtn');
-        renderCanvas('sig-vpresponsable-canvas','sig-vpresponsable-clearBtn');
-        renderCanvas('sig-presidencia-canvas','sig-presidencia-clearBtn');
-        renderCanvas('sig-vpoperaciones-canvas','sig-vpoperaciones-clearBtn');
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.getElementById('sig-1-canvas')) {
+                renderCanvas('sig-1-canvas', 'sig-1-clearBtn');
+            }
+            if (document.getElementById('sig-2-canvas')) {
+                renderCanvas('sig-2-canvas', 'sig-2-clearBtn');
 
+            }
+            if (document.getElementById('sig-3-canvas')) {
+                renderCanvas('sig-3-canvas', 'sig-3-clearBtn');
 
-        function renderCanvas(contenedor, clearBtnCanvas) {
-            var canvas = document.getElementById(contenedor);
-            var ctx = canvas.getContext("2d");
-            ctx.strokeStyle = "#222222";
-            ctx.lineWidth = 1;
+            }
+            if (document.getElementById('sig-5-canvas')) {
+                renderCanvas('sig-5-canvas', 'sig-5-clearBtn');
 
-            var drawing = false;
-            var mousePos = {
-                x: 0,
-                y: 0
-            };
-            var lastPos = mousePos;
+            }
+            if (document.getElementById('sig-4-canvas')) {
+                renderCanvas('sig-4-canvas', 'sig-4-clearBtn');
 
-            canvas.addEventListener("mousedown", function(e) {
-                drawing = true;
-                lastPos = getMousePos(canvas, e);
-            }, false);
-
-            canvas.addEventListener("mouseup", function(e) {
-                drawing = false;
-            }, false);
-
-            canvas.addEventListener("mousemove", function(e) {
-                mousePos = getMousePos(canvas, e);
-            }, false);
-
-            // Add touch event support for mobile
-            canvas.addEventListener("touchstart", function(e) {
-
-            }, false);
-
-            canvas.addEventListener("touchmove", function(e) {
-                var touch = e.touches[0];
-                var me = new MouseEvent("mousemove", {
-                    clientX: touch.clientX,
-                    clientY: touch.clientY
-                });
-                canvas.dispatchEvent(me);
-            }, false);
-
-            canvas.addEventListener("touchstart", function(e) {
-                mousePos = getTouchPos(canvas, e);
-                var touch = e.touches[0];
-                var me = new MouseEvent("mousedown", {
-                    clientX: touch.clientX,
-                    clientY: touch.clientY
-                });
-                canvas.dispatchEvent(me);
-            }, false);
-
-            canvas.addEventListener("touchend", function(e) {
-                var me = new MouseEvent("mouseup", {});
-                canvas.dispatchEvent(me);
-            }, false);
-
-            function getMousePos(canvasDom, mouseEvent) {
-                var rect = canvasDom.getBoundingClientRect();
-                return {
-                    x: mouseEvent.clientX - rect.left,
-                    y: mouseEvent.clientY - rect.top
-                }
             }
 
-            function getTouchPos(canvasDom, touchEvent) {
-                var rect = canvasDom.getBoundingClientRect();
-                return {
-                    x: touchEvent.touches[0].clientX - rect.left,
-                    y: touchEvent.touches[0].clientY - rect.top
+
+            function renderCanvas(contenedor, clearBtnCanvas) {
+                var canvas = document.getElementById(contenedor);
+                var ctx = canvas.getContext("2d");
+                ctx.strokeStyle = "#222222";
+                ctx.lineWidth = 1;
+
+                var drawing = false;
+                var mousePos = {
+                    x: 0,
+                    y: 0
+                };
+                var lastPos = mousePos;
+
+                canvas.addEventListener("mousedown", function(e) {
+                    drawing = true;
+                    lastPos = getMousePos(canvas, e);
+                }, false);
+
+                canvas.addEventListener("mouseup", function(e) {
+                    drawing = false;
+                }, false);
+
+                canvas.addEventListener("mousemove", function(e) {
+                    mousePos = getMousePos(canvas, e);
+                }, false);
+
+                // Add touch event support for mobile
+                canvas.addEventListener("touchstart", function(e) {
+
+                }, false);
+
+                canvas.addEventListener("touchmove", function(e) {
+                    var touch = e.touches[0];
+                    var me = new MouseEvent("mousemove", {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    canvas.dispatchEvent(me);
+                }, false);
+
+                canvas.addEventListener("touchstart", function(e) {
+                    mousePos = getTouchPos(canvas, e);
+                    var touch = e.touches[0];
+                    var me = new MouseEvent("mousedown", {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    canvas.dispatchEvent(me);
+                }, false);
+
+                canvas.addEventListener("touchend", function(e) {
+                    var me = new MouseEvent("mouseup", {});
+                    canvas.dispatchEvent(me);
+                }, false);
+
+                function getMousePos(canvasDom, mouseEvent) {
+                    var rect = canvasDom.getBoundingClientRect();
+                    return {
+                        x: mouseEvent.clientX - rect.left,
+                        y: mouseEvent.clientY - rect.top
+                    }
                 }
+
+                function getTouchPos(canvasDom, touchEvent) {
+                    var rect = canvasDom.getBoundingClientRect();
+                    return {
+                        x: touchEvent.touches[0].clientX - rect.left,
+                        y: touchEvent.touches[0].clientY - rect.top
+                    }
+                }
+
+                function renderCanvas() {
+                    if (drawing) {
+                        ctx.moveTo(lastPos.x, lastPos.y);
+                        ctx.lineTo(mousePos.x, mousePos.y);
+                        ctx.stroke();
+                        lastPos = mousePos;
+                    }
+                }
+
+                // Prevent scrolling when touching the canvas
+                document.body.addEventListener("touchstart", function(e) {
+                    if (e.target == canvas) {
+                        e.preventDefault();
+                    }
+                }, false);
+                document.body.addEventListener("touchend", function(e) {
+                    if (e.target == canvas) {
+                        e.preventDefault();
+                    }
+                }, false);
+                document.body.addEventListener("touchmove", function(e) {
+                    if (e.target == canvas) {
+                        e.preventDefault();
+                    }
+                }, false);
+
+                (function drawLoop() {
+                    requestAnimFrame(drawLoop);
+                    renderCanvas();
+                })();
+
+                function clearCanvas() {
+                    canvas.width = canvas.width;
+                }
+
+                function isCanvasBlank() {
+                    const context = canvas.getContext('2d');
+
+                    const pixelBuffer = new Uint32Array(
+                        context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+                    );
+
+                    return !pixelBuffer.some(color => color !== 0);
+                }
+
+                // Set up the UI
+                // var sigText = document.getElementById(dataBaseCanvas);
+                // var sigImage = document.getElementById(imageCanvas);
+                var clearBtn = document.getElementById(clearBtnCanvas);
+                // var submitBtn = document.getElementById(submitBtnCanvas);
+                clearBtn.addEventListener("click", function(e) {
+                    clearCanvas();
+                    // sigText.innerHTML = "Data URL for your signature will go here!";
+                    // sigImage.setAttribute("src", "");
+                }, false);
+                // submitBtn.addEventListener("click", function(e) {
+                //     const blank = isCanvasBlank();
+                //     if (!blank) {
+                //         // var dataUrl = canvas.toDataURL();
+                //         // sigText.innerHTML = dataUrl;
+                //         // sigImage.setAttribute("src", dataUrl);
+                //     } else {
+                //         if (toastr) {
+                //             toastr.info('No has firmado en el canvas');
+                //         } else {
+                //             alert('No has firmado en el canvas');
+                //         }
+                //     }
+                // }, false);
+
             }
 
-            function renderCanvas() {
-                if (drawing) {
-                    ctx.moveTo(lastPos.x, lastPos.y);
-                    ctx.lineTo(mousePos.x, mousePos.y);
-                    ctx.stroke();
-                    lastPos = mousePos;
-                }
-            }
-
-            // Prevent scrolling when touching the canvas
-            document.body.addEventListener("touchstart", function(e) {
-                if (e.target == canvas) {
-                    e.preventDefault();
-                }
-            }, false);
-            document.body.addEventListener("touchend", function(e) {
-                if (e.target == canvas) {
-                    e.preventDefault();
-                }
-            }, false);
-            document.body.addEventListener("touchmove", function(e) {
-                if (e.target == canvas) {
-                    e.preventDefault();
-                }
-            }, false);
-
-            (function drawLoop() {
-                requestAnimFrame(drawLoop);
-                renderCanvas();
-            })();
-
-            function clearCanvas() {
-                canvas.width = canvas.width;
-            }
-
-            function isCanvasBlank() {
+            function isCanvasEmpty(canvas) {
                 const context = canvas.getContext('2d');
 
                 const pixelBuffer = new Uint32Array(
@@ -742,43 +617,324 @@
 
                 return !pixelBuffer.some(color => color !== 0);
             }
+            if (document.getElementById('btnEnviarRespuesta1')) {
+                document.getElementById('btnEnviarRespuesta1').addEventListener('click', (e) => {
+                    let formulario = document.getElementById('activosAprobaciones');
+                    let formData = new FormData(formulario);
+                    let formDataAutorizacion = new FormData();
+                    let activos = [];
+                    formData.forEach(element => {
+                        let respuesta = element.split('-');
+                        let id = respuesta[1];
+                        let aceptado = respuesta[0];
+                        activos.push({
+                            id,
+                            aceptado,
+                        })
+                    });
+                    let comentarios = document.getElementById('comentarios-1').value;
+                    let firma = document.getElementById('sig-1-canvas').toDataURL();
+                    formDataAutorizacion.append('activos', JSON.stringify(activos));
+                    formDataAutorizacion.append('comentarios', comentarios);
+                    formDataAutorizacion.append('firma', firma);
+                    formDataAutorizacion.append('autoridad', 'Dueño del Riesgo');
+                    formDataAutorizacion.append('cartaId', @json($cartaAceptacion->id));
+                    formDataAutorizacion.forEach(element => {
+                        console.log(element);
+                    });
+                    Swal.fire({
+                        title: 'Estás seguro de realizar la acción?',
+                        text: "No podrá revertirse!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, aceptar!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('admin.cartaaceptacion.aprobacion') }}",
+                                data: formDataAutorizacion,
+                                dataType: "JSON",
+                                processData: false,
+                                contentType: false,
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                success: function(response) {
+                                    if(response.status == 200){
+                                        toastr.success('Respuesta enviada con éxito')
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 1500);
+                                    }else{
+                                        toastr.error('Ocurrio un error');
+                                    }
+                                }
+                            });
+                        }
+                    })
 
-            // Set up the UI
-            // var sigText = document.getElementById(dataBaseCanvas);
-            // var sigImage = document.getElementById(imageCanvas);
-            var clearBtn = document.getElementById(clearBtnCanvas);
-            // var submitBtn = document.getElementById(submitBtnCanvas);
-            clearBtn.addEventListener("click", function(e) {
-                clearCanvas();
-                // sigText.innerHTML = "Data URL for your signature will go here!";
-                // sigImage.setAttribute("src", "");
-            }, false);
-            // submitBtn.addEventListener("click", function(e) {
-            //     const blank = isCanvasBlank();
-            //     if (!blank) {
-            //         // var dataUrl = canvas.toDataURL();
-            //         // sigText.innerHTML = dataUrl;
-            //         // sigImage.setAttribute("src", dataUrl);
-            //     } else {
-            //         if (toastr) {
-            //             toastr.info('No has firmado en el canvas');
-            //         } else {
-            //             alert('No has firmado en el canvas');
-            //         }
-            //     }
-            // }, false);
+                })
+            }
 
-        }
 
-        function isCanvasEmpty(canvas) {
-            const context = canvas.getContext('2d');
 
-            const pixelBuffer = new Uint32Array(
-                context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
-            );
+            if (document.getElementById('btnEnviarRespuesta2')) {
+                document.getElementById('btnEnviarRespuesta2').addEventListener('click', (e) => {
+                    let formulario = document.getElementById('activosAprobaciones');
+                    let formData = new FormData(formulario);
+                    let formDataAutorizacion = new FormData();
+                    let activos = [];
+                    formData.forEach(element => {
+                        console.log(element);
+                        let respuesta = element.split('-');
+                        let id = respuesta[1];
+                        let aceptado = respuesta[0];
+                        activos.push({
+                            id,
+                            aceptado,
+                        })
+                    });
+                    let comentarios = document.getElementById('comentarios-2').value;
+                    let firma = document.getElementById('sig-2-canvas').toDataURL();
+                    formDataAutorizacion.append('activos', JSON.stringify(activos));
+                    formDataAutorizacion.append('comentarios', comentarios);
+                    formDataAutorizacion.append('firma', firma);
+                    formDataAutorizacion.append('autoridad', 'Director Responsable del Riesgo');
+                    formDataAutorizacion.append('cartaId', @json($cartaAceptacion->id));
+                    formDataAutorizacion.forEach(element => {
+                        console.log(element);
+                    });
+                    Swal.fire({
+                        title: 'Estás seguro de realizar la acción?',
+                        text: "No podrá revertirse!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, aceptar!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('admin.cartaaceptacion.aprobacion') }}",
+                                data: formDataAutorizacion,
+                                dataType: "JSON",
+                                processData: false,
+                                contentType: false,
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                success: function(response) {
+                                    if(response.status == 200){
+                                        toastr.success('Respuesta enviada con éxito')
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 1500);
+                                    }else{
+                                        toastr.error('Ocurrio un error');
+                                    }
+                                }
+                            });
+                        }
+                    })
 
-            return !pixelBuffer.some(color => color !== 0);
-        }
-    })
+                })
+            }
+
+            if (document.getElementById('btnEnviarRespuesta3')) {
+                document.getElementById('btnEnviarRespuesta3').addEventListener('click', (e) => {
+                    let formulario = document.getElementById('activosAprobaciones');
+                    let formData = new FormData(formulario);
+                    let formDataAutorizacion = new FormData();
+                    let activos = [];
+                    formData.forEach(element => {
+                        let respuesta = element.split('-');
+                        let id = respuesta[1];
+                        let aceptado = respuesta[0];
+                        activos.push({
+                            id,
+                            aceptado,
+                        })
+                    });
+                    let comentarios = document.getElementById('comentarios-3').value;
+                    let firma = document.getElementById('sig-3-canvas').toDataURL();
+                    formDataAutorizacion.append('activos', JSON.stringify(activos));
+                    formDataAutorizacion.append('comentarios', comentarios);
+                    formDataAutorizacion.append('firma', firma);
+                    formDataAutorizacion.append('autoridad', 'VP Responsable del Riesgo');
+                    formDataAutorizacion.append('cartaId', @json($cartaAceptacion->id));
+                    formDataAutorizacion.forEach(element => {
+                        console.log(element);
+                    });
+                    Swal.fire({
+                        title: 'Estás seguro de realizar la acción?',
+                        text: "No podrá revertirse!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, aceptar!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('admin.cartaaceptacion.aprobacion') }}",
+                                data: formDataAutorizacion,
+                                dataType: "JSON",
+                                processData: false,
+                                contentType: false,
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                success: function(response) {
+                                    if(response.status == 200){
+                                        toastr.success('Respuesta enviada con éxito')
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 1500);
+                                    }else{
+                                        toastr.error('Ocurrio un error');
+                                    }
+                                }
+                            });
+                        }
+                    })
+
+                })
+            }
+
+            if (document.getElementById('btnEnviarRespuesta4')) {
+                document.getElementById('btnEnviarRespuesta4').addEventListener('click', (
+                    e) => {
+                    let formulario = document.getElementById('activosAprobaciones');
+                    let formData = new FormData(formulario);
+                    let formDataAutorizacion = new FormData();
+                    let activos = [];
+                    formData.forEach(element => {
+                        let respuesta = element.split('-');
+                        let id = respuesta[1];
+                        let aceptado = respuesta[0];
+                        activos.push({
+                            id,
+                            aceptado,
+                        })
+                    });
+                    let comentarios = document.getElementById('comentarios-4').value;
+                    let firma = document.getElementById('sig-4-canvas').toDataURL();
+                    formDataAutorizacion.append('activos', JSON.stringify(activos));
+                    formDataAutorizacion.append('comentarios', comentarios);
+                    formDataAutorizacion.append('firma', firma);
+                    formDataAutorizacion.append('autoridad', 'VP de Operaciones');
+                    formDataAutorizacion.append('cartaId', @json($cartaAceptacion->id));
+                    formDataAutorizacion.forEach(element => {
+                        console.log(element);
+                    });
+                    Swal.fire({
+                        title: 'Estás seguro de realizar la acción?',
+                        text: "No podrá revertirse!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, aceptar!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('admin.cartaaceptacion.aprobacion') }}",
+                                data: formDataAutorizacion,
+                                dataType: "JSON",
+                                processData: false,
+                                contentType: false,
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                success: function(response) {
+                                    if(response.status == 200){
+                                        toastr.success('Respuesta enviada con éxito')
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 1500);
+                                    }else{
+                                        toastr.error('Ocurrio un error');
+                                    }
+                                }
+                            });
+                        }
+                    })
+
+                })
+            }
+
+            if (document.getElementById('btnEnviarRespuesta5')) {
+                document.getElementById('btnEnviarRespuesta5').addEventListener('click', (e) => {
+                    let formulario = document.getElementById('activosAprobaciones');
+                    let formData = new FormData(formulario);
+                    let formDataAutorizacion = new FormData();
+                    let activos = [];
+                    formData.forEach(element => {
+                        let respuesta = element.split('-');
+                        let id = respuesta[1];
+                        let aceptado = respuesta[0];
+                        activos.push({
+                            id,
+                            aceptado,
+                        })
+                    });
+                    let comentarios = document.getElementById('comentarios-5').value;
+                    let firma = document.getElementById('sig-5-canvas').toDataURL();
+                    formDataAutorizacion.append('activos', JSON.stringify(activos));
+                    formDataAutorizacion.append('comentarios', comentarios);
+                    formDataAutorizacion.append('firma', firma);
+                    formDataAutorizacion.append('autoridad', 'Presidencia');
+                    formDataAutorizacion.append('cartaId', @json($cartaAceptacion->id));
+                    formDataAutorizacion.forEach(element => {
+                        console.log(element);
+                    });
+                    Swal.fire({
+                        title: 'Estás seguro de realizar la acción?',
+                        text: "No podrá revertirse!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, aceptar!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('admin.cartaaceptacion.aprobacion') }}",
+                                data: formDataAutorizacion,
+                                dataType: "JSON",
+                                processData: false,
+                                contentType: false,
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                success: function(response) {
+                                    if(response.status == 200){
+                                        toastr.success('Respuesta enviada con éxito')
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 1500);
+                                    }else{
+                                        toastr.error('Ocurrio un error');
+                                    }
+                                }
+                            });
+                        }
+                    })
+
+                })
+            }
+        })
     </script>
 @endsection

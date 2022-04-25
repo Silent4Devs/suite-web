@@ -9,6 +9,7 @@ use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\ObjetivoRespuesta;
+use App\Traits\FuncionesEvaluacion360;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -20,6 +21,7 @@ use Livewire\WithPagination;
 
 class Ev360ResumenTabla extends Component
 {
+    use FuncionesEvaluacion360;
     use LivewireAlert;
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -112,6 +114,7 @@ class Ev360ResumenTabla extends Component
         } else {
             $competencias = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)->pluck('competencia_id')->unique()->toArray();
         }
+
         return $competencias;
     }
 
@@ -163,7 +166,7 @@ class Ev360ResumenTabla extends Component
             $cantidad_competencias_evaluadas = count($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id, $evaluado->id)) ? count($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id, $evaluado->id)) : 1;
             $lista_autoevaluacion->push([
                 'tipo' => 'Autoevaluación',
-                'firma' => $locacionFirmas . $filtro_autoevaluacion->first()->firma_evaluador,
+                'firma' => $filtro_autoevaluacion->first() ? $locacionFirmas . $filtro_autoevaluacion->first()->firma_evaluador : null,
                 'peso_general' => $evaluacion->peso_autoevaluacion,
                 'evaluaciones' => $filtro_autoevaluacion->map(function ($evaluador) use ($evaluacion, $evaluado) {
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
@@ -171,7 +174,7 @@ class Ev360ResumenTabla extends Component
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
                     $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
 
-                    return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
+                    return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
             ]);
             $calificacion = 0;
@@ -189,7 +192,7 @@ class Ev360ResumenTabla extends Component
 
             $lista_jefe_inmediato->push([
                 'tipo' => 'Jefe Inmediato',
-                'firma' => $locacionFirmas . $filtro_jefe_inmediato->first()->firma_evaluador,
+                'firma' => $filtro_jefe_inmediato->first() ? $locacionFirmas . $filtro_jefe_inmediato->first()->firma_evaluador : null,
                 'peso_general' => $evaluacion->peso_jefe_inmediato,
                 'evaluaciones' => $filtro_jefe_inmediato->map(function ($evaluador) use ($evaluacion, $evaluado) {
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
@@ -197,7 +200,7 @@ class Ev360ResumenTabla extends Component
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
                     $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
 
-                    return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
+                    return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
             ]);
 
@@ -214,7 +217,7 @@ class Ev360ResumenTabla extends Component
 
             $lista_equipo_a_cargo->push([
                 'tipo' => 'Equipo a cargo',
-                'firma' => $locacionFirmas . $filtro_equipo_a_cargo->first()->firma_evaluador,
+                'firma' => $filtro_equipo_a_cargo->first() ? $locacionFirmas . $filtro_equipo_a_cargo->first()->firma_evaluador : null,
                 'peso_general' => $evaluacion->peso_equipo,
                 'evaluaciones' => $filtro_equipo_a_cargo->map(function ($evaluador) use ($evaluacion, $evaluado) {
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
@@ -222,7 +225,7 @@ class Ev360ResumenTabla extends Component
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
                     $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
 
-                    return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
+                    return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
             ]);
             $calificacion = 0;
@@ -238,7 +241,7 @@ class Ev360ResumenTabla extends Component
 
             $lista_misma_area->push([
                 'tipo' => 'Misma área',
-                'firma' => $locacionFirmas . $filtro_misma_area->first()->firma_evaluador,
+                'firma' => $filtro_misma_area->first() ? $locacionFirmas . $filtro_misma_area->first()->firma_evaluador : null,
                 'peso_general' => $evaluacion->peso_area,
                 'evaluaciones' => $filtro_misma_area->map(function ($evaluador) use ($evaluacion, $evaluado) {
                     $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
@@ -246,7 +249,7 @@ class Ev360ResumenTabla extends Component
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
                     $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
 
-                    return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
+                    return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion);
                 }),
             ]);
 
@@ -290,13 +293,14 @@ class Ev360ResumenTabla extends Component
                 }])->where('evaluacion_id', $evaluacion->id)
                     ->where('evaluado_id', $evaluado->id)
                     ->where('evaluador_id', $supervisorObjetivos->evaluador_id)
-                    ->get();
+                    ->orderBy('id')->get();
                 $evaluadores_objetivos->push([
                     'id' => $evaluado->supervisor->id, 'nombre' => $evaluado->supervisor->name,
                     'esSupervisor' => true,
                     'esAutoevaluacion' => false,
                     'objetivos' => $objetivos_calificaciones->map(function ($objetivo) {
                         return [
+                            'objetivo_calificacion_id' => $objetivo->id,
                             'nombre' => $objetivo->objetivo->nombre,
                             'KPI' => $objetivo->objetivo->KPI,
                             'meta' => $objetivo->objetivo->meta,
@@ -322,7 +326,7 @@ class Ev360ResumenTabla extends Component
             }])->where('evaluacion_id', $evaluacion->id)
                 ->where('evaluado_id', $evaluado->id)
                 ->where('evaluador_id', $evaluado->id)
-                ->get();
+                ->orderBy('id')->get();
 
             $evaluadores_objetivos->push([
                 'id' => $evaluado->id, 'nombre' => $evaluado->name,
@@ -330,6 +334,7 @@ class Ev360ResumenTabla extends Component
                 'esAutoevaluacion' => true,
                 'objetivos' => $objetivos_calificaciones_autoevaluacion->map(function ($objetivo) {
                     return [
+                        'objetivo_calificacion_id' => $objetivo->id,
                         'nombre' => $objetivo->objetivo->nombre,
                         'KPI' => $objetivo->objetivo->KPI,
                         'meta' => $objetivo->objetivo->meta,
@@ -354,7 +359,6 @@ class Ev360ResumenTabla extends Component
             }
         }
 
-
         return [
             'peso_general_competencias' => $evaluacion->peso_general_competencias,
             'peso_general_objetivos' => $evaluacion->peso_general_objetivos,
@@ -372,15 +376,17 @@ class Ev360ResumenTabla extends Component
         ];
     }
 
-    public function obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias)
+    public function obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion = null)
     {
+        $competencias = $this->obtenerCompetenciasDelPuestoDelEvaluadoEnLaEvaluacion($evaluacion->id, $evaluado->id);
+
         return [
             'id' => $evaluador_empleado->id, 'nombre' => $evaluador_empleado->name,
             'esSupervisor' => $evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->evaluador_id ? true : false) : false,
             'esAutoevaluacion' => $evaluado->id == $evaluador->evaluador_id ? true : false,
             'tipo' => $evaluador->tipo_formateado,
-            'competencias' => $evaluaciones_competencias->map(function ($competencia) use ($evaluador, $evaluado) {
-                $nivel_esperado = $evaluado->puestoRelacionado->competencias->filter(function ($compe) use ($competencia) {
+            'competencias' => $evaluaciones_competencias->map(function ($competencia) use ($evaluador, $evaluado, $competencias) {
+                $nivel_esperado = $competencias->filter(function ($compe) use ($competencia) {
                     return $compe->competencia_id == $competencia->competencia_id;
                 })->first()->nivel_esperado;
 

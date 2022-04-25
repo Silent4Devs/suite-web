@@ -451,7 +451,14 @@ class MultiStepForm extends Component
             'include_competencias' => $this->includeCompetencias ? $this->includeCompetencias : false,
             'include_objetivos' => $this->includeObjetivos ? $this->includeObjetivos : false,
         ]);
-        $evaluacion->evaluados()->sync($evaluados);
+        $evaluados_puesto = [];
+        foreach ($evaluados  as $evaluado) {
+            $evaluados_puesto[] = [
+                'evaluado_id' => $evaluado,
+                'puesto_id' => Empleado::with('puestoRelacionado')->find($evaluado)->puestoRelacionado->id,
+            ];
+        }
+        $evaluacion->evaluados()->sync($evaluados_puesto);
 
         // foreach ($evaluados as $evaluado) {
         //     $this->relacionarEvaluadoConEvaluadores($evaluacion, $evaluado);
