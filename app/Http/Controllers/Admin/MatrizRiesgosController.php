@@ -491,6 +491,7 @@ class MatrizRiesgosController extends Controller
     public function ControlesGet()
     {
     }
+
     public function SistemaGestion(Request $request)
     {
         // dd($request->all());
@@ -714,7 +715,6 @@ class MatrizRiesgosController extends Controller
 
         return view('admin.matrizRiesgos.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
-
 
     public function octaveIndex(Request $request)
     {
