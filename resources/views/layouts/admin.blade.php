@@ -1227,7 +1227,11 @@
 
     {{-- daterangepicker --}}
     <script>
+        @if (auth()->user()->empleado)
         window.NotificationUser = {!! json_encode(['user' => auth()->check() ? auth()->user()->empleado->id : null]) !!};
+        @else
+        window.NotificationUser = 1
+        @endif
     </script>
     {{-- Librerías para visualizar en campo el dolar --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

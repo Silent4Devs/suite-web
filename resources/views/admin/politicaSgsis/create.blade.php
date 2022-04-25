@@ -2,7 +2,7 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.politica-sgsis.create') }}
-<h5 class="col-12 titulo_general_funcion">Registrar: Política SGSI</h5>
+<h5 class="col-12 titulo_general_funcion">Registrar: Política del Sistema de Gestión</h5>
 <div class="mt-4 card">
     <div class="card-body">
         <form method="POST" action="{{ route("admin.politica-sgsis.store") }}" enctype="multipart/form-data">
