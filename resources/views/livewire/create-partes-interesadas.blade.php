@@ -40,7 +40,7 @@
                                 @error('expectativas') <span class="text-danger">{{ $message }}</span> @enderror
                         </div> --}}
                         <div class="form-group">
-                            <label for="expectativas" class="required">Necesidad</label>
+                            <label for="expectativas" class="required">Expectativa</label>
                             <textarea class="form-control" id="expectativas" name="expectativas" rows="4"
                                 wire:model.defer="expectativas"></textarea>
                             @error('expectativas')

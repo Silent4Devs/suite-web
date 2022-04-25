@@ -6,9 +6,11 @@
     </div>
 
     <div class="mt-2">
-        <label for="contacto"><i class="fas fa-thumbs-up iconos-crear"></i>Nombre</label>
-        <input class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" wire:model.defer="fortaleza">
-        <small class="text-danger errores descripcion_contacto_error"></small>
+        <label for="fortaleza"><i class="fas fa-thumbs-up iconos-crear"></i>Nombre</label>
+        <input class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model.defer="fortaleza">
+        @error('fortaleza')
+            <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
+        @enderror
     </div>
 
     {{-- <div class="mt-2">

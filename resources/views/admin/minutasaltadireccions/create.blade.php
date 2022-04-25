@@ -1,16 +1,21 @@
 @extends('layouts.admin')
+
+{{-- @section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css"
+        integrity="sha512-3g+prZHHfmnvE1HBLwUnVuunaPOob7dpksI7/v6UnF/rnKGwHf/GdEq9K7iEN7qTtW+S0iivTcGpeTBqqB04wA=="
+        crossorigin="anonymous" />
+@endsection --}}
+
 @section('content')
     <style>
         .select2-search.select2-search--inline {
             margin-top: -20px !important;
         }
 
-
-
     </style>
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}
-    <h5 class="col-12 titulo_general_funcion">Registrar: Minutas de Sesiones de Alta Dirección</h5>
+    <h5 class="col-12 titulo_general_funcion">Registrar: Revisión por dirección</h5>
     <div class="mt-4 card">
         <div class="card-body">
             <form method="POST" action="{{ route('admin.minutasaltadireccions.store') }}" enctype="multipart/form-data"
@@ -18,7 +23,8 @@
                 @csrf
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
                     <label for="fechareunion"><i
-                            class="fas fa-calendar-alt iconos-crear"></i>{{ trans('cruds.minutasaltadireccion.fields.fechareunion') }}<span class="text-danger">*</span></label>
+                            class="fas fa-calendar-alt iconos-crear"></i>{{ trans('cruds.minutasaltadireccion.fields.fechareunion') }}<span
+                            class="text-danger">*</span></label>
                     <input class="form-control date" type="date" name="fechareunion" id="fechareunion"
                         value="{{ old('fechareunion') }}">
                     @if ($errors->has('fechareunion'))
@@ -26,10 +32,12 @@
                             {{ $errors->first('fechareunion') }}
                         </span>
                     @endif
-                    <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
+                    <span
+                        class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
                 </div>
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="hora_inicio"><i class="fas fa-clock iconos-crear"></i>Horario de inicio<span class="text-danger">*</span></label>
+                    <label for="hora_inicio"><i class="fas fa-clock iconos-crear"></i>Horario de inicio<span
+                            class="text-danger">*</span></label>
                     <input class="form-control date" type="time" name="hora_inicio" id="hora_inicio"
                         value="{{ old('hora_inicio') }}">
                     @if ($errors->has('hora_inicio'))
@@ -37,7 +45,8 @@
                             {{ $errors->first('hora_inicio') }}
                         </span>
                     @endif
-                    <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
+                    <span
+                        class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
                 </div>
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
                     <label for="responsable_id"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
@@ -59,7 +68,8 @@
                         class="help-block">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion_helper') }}</span>
                 </div>
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="hora_termino"><i class="fas fa-clock iconos-crear"></i>Horario de término<span class="text-danger">*</span></label>
+                    <label for="hora_termino"><i class="fas fa-clock iconos-crear"></i>Horario de término<span
+                            class="text-danger">*</span></label>
                     <input class="form-control date" type="time" name="hora_termino" id="hora_termino"
                         value="{{ old('hora_termino') }}">
                     @if ($errors->has('hora_termino'))
@@ -69,7 +79,8 @@
                     @endif
                 </div>
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label for="tema_reunion"><i class="fas fa-file-alt iconos-crear"></i>Tema de la reunión<span class="text-danger">*</span></label>
+                    <label for="tema_reunion"><i class="fas fa-file-alt iconos-crear"></i>Tema de la reunión<span
+                            class="text-danger">*</span></label>
                     <input data-vincular-nombre='true' class="form-control date" type="text" name="tema_reunion"
                         id="tema_reunion" value="{{ old('tema_reunion') }}">
                     @if ($errors->has('tema_reunion'))
@@ -80,9 +91,9 @@
                 </div>
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
                     <label for="objetivoreunion"><i
-                            class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}<span class="text-danger">*</span></label>
-                    <textarea class="form-control" name="objetivoreunion"
-                        id="objetivoreunion">{{ old('objetivoreunion') }}</textarea>
+                            class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}<span
+                            class="text-danger">*</span></label>
+                    <textarea class="form-control" name="objetivoreunion" id="objetivoreunion">{{ old('objetivoreunion') }}</textarea>
                     @if ($errors->has('objetivoreunion'))
                         <span class="text-danger">
                             {{ $errors->first('objetivoreunion') }}
@@ -150,15 +161,10 @@
                     </table>
                 </div>
                 <input type="hidden" name="participantes" value="" id="participantes">
-                {{-- <div class="mt-3 col-sm-12 form-group">
-                    <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documento</label>
-                    <div class="custom-file">
-                        <input type="file" name="files[]" multiple class="form-control" id="evidencia">
 
-                    </div>
-                </div> --}}
-                <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label for="tema_tratado"><i class="fas fa-file-alt iconos-crear"></i>Temas tratados<span class="text-danger">*</span></label>
+                <div class="form-group col-sm-12 col-md-12 col-lg-12 mt-4">
+                    <label for="tema_tratado"><i class="fas fa-file-alt iconos-crear"></i>Temas tratados<span
+                            class="text-danger">*</span></label>
                     <textarea class="form-control date" type="text" name="tema_tratado" id="temas">
                                         {{ old('tema_tratado') }}
                                     </textarea>
@@ -168,11 +174,29 @@
                         </span>
                     @endif
                 </div>
+
+                <div class="mb-4 col-sm-12 form-group">
+                    <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documento</label>
+                    <div class="custom-file">
+                        <input type="file" name="files[]" multiple class="form-control" id="files" accept="image/*,.pdf">
+                    </div>
+                </div>
+
+
+                {{-- <form></form>
+
+                
+                <form action="{{ route('admin.minutasaltadireccions.store') }}" method="POST" class="dropzone"
+                    id="my-awesome-dropzone">
+                </form> --}}
+
+
                 {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-                @include('admin.planesDeAccion.actividades.tabla',[
-                'empleados'=>$responsablereunions
+                @include('admin.planesDeAccion.actividades.tabla', [
+                    'empleados' => $responsablereunions,
                 ])
                 {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
+
 
                 <div class="text-right form-group col-12">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
@@ -186,32 +210,48 @@
 
     <!-- Button trigger modal -->
 
-
-        <!-- Modal -->
-        <div class="modal fade" id="alertaVinculacion" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="alertaVinculacionLabel" aria-hidden="true">
-          <div class="modal-dialog">
+    <!-- Modal -->
+    <div class="modal fade" id="alertaVinculacion" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="alertaVinculacionLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="alertaVinculacionLabel">Alerta de Vinculación</h5>
-              {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="alertaVinculacionLabel">Alerta de Vinculación</h5>
+                    {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
-                </button>
-                --}}
-              </div>
-              <div class="modal-body">
-                El usuario no esta vinculado a un empleado
+                </button> --}}
+                </div>
+                <div class="modal-body">
+                    El usuario no esta vinculado a un empleado
 
-              </div>
-              <div class="modal-footer">
-                <a type="button" href="{{route("admin.users.index")}}" class="btn btn-primary">Vincular</a>
-              </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" href="{{ route('admin.users.index') }}" class="btn btn-primary">Vincular</a>
+                </div>
             </div>
-          </div>
         </div>
-
+    </div>
 @endsection
 
+
 @section('scripts')
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
+
+    <script>
+        Dropzone.options.myAwesomeDropzone = {
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            dictDefaultMessage: "Arrastre los documentos asociados a la revisión",
+            acceptedFiles: "image/*,.pdf",
+            maxFilesize: 10,
+            maxFiles: 4,
+            paranName:'files[]',
+            autoProcessQueue: false,
+            uploadMultiple: true,
+        };
+    </script>
+
     <script>
         Dropzone.options.archivoDropzone = {
             url: '{{ route('admin.minutasaltadireccions.storeMedia') }}',
@@ -261,7 +301,7 @@
                 return _results
             }
         }
-    </script>
+    </script> --}}
 
 
     <script>
@@ -348,8 +388,8 @@
     <script>
         $(document).ready(function() {
             if (!@json($esta_vinculado)) {
-             $('#alertaVinculacion').modal('show')
-        }
+                $('#alertaVinculacion').modal('show')
+            }
             window.tblParticipantes = $('#tbl-participantes').DataTable({
                 buttons: []
             })
@@ -369,15 +409,18 @@
                         $("#cargando_participantes").show();
                     },
                     success: function(data) {
-                        let lista ="<ul class='list-group id=empleados-lista' >";
-                        $.each(data.usuarios, function (ind, usuario) {
+                        let lista = "<ul class='list-group id=empleados-lista' >";
+                        $.each(data.usuarios, function(ind, usuario) {
                             var result = `{"id":"${usuario.id}",
                                 "name":"${usuario.name}",
                                 "email":"${usuario.email}",
                                 "puesto":"${usuario.puesto}",
                                 "area":"${usuario.area.area}"
                                 }`;
-                            lista += "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario("+result+")' ><i class='mr-2 fas fa-user-circle'></i>"+usuario.name+"</button>";
+                            lista +=
+                                "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
+                                result + ")' ><i class='mr-2 fas fa-user-circle'></i>" +
+                                usuario.name + "</button>";
                         });
                         lista += "</ul>";
 
@@ -468,6 +511,4 @@
             document.getElementById('participantes').value = arrParticipantes;
         }
     </script>
-
-
 @endsection

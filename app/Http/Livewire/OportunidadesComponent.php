@@ -13,6 +13,10 @@ class OportunidadesComponent extends Component
     public $nombre;
     public $view = 'create';
 
+    protected $rules = [
+        'oportunidad' => 'required|max:1050',
+    ];
+
     public function mount($foda_id)
     {
         $this->foda_id = $foda_id;
@@ -32,8 +36,7 @@ class OportunidadesComponent extends Component
 
     public function save()
     {
-        // $foda = EntendimientoOrganizacion::find($this->foda_id);
-
+        $this->validate();
         OportunidadesEntendimientoOrganizacion::create([
             'foda_id' => $this->foda_id,
             'oportunidad' => $this->oportunidad,
@@ -59,6 +62,7 @@ class OportunidadesComponent extends Component
 
     public function update()
     {
+        $this->validate();
         $oportunidadEncontrada = OportunidadesEntendimientoOrganizacion::find($this->oportunidad_id);
         // dd($this->fortaleza_id);
         $oportunidadEncontrada->update([
