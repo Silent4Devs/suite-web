@@ -9,6 +9,9 @@ use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
+use App\Models\Empleado;
+use App\Models\Area;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -433,9 +436,108 @@ class TimesheetController extends Controller
 
     public function dashboard()
     {
-        
+        $borrador_contador = Timesheet::where('estatus', 'papelera')->count();
+        $pendientes_contador = Timesheet::where('estatus', 'pendiente')->count();
+        $aprobados_contador = Timesheet::where('estatus', 'aprobado')->count();
+        $rechazos_contador = Timesheet::where('estatus', 'rechazado')->count();
 
-        return view('admin.timesheet.dashboard');
+        // graf areas ------------
+        $areas = Area::get();
+
+        $areas_array = collect();
+        foreach ($areas as $area) {
+            $contador_times_aprobados_areas = 0;
+            $contador_times_pendientes_areas = 0;
+            $contador_times_rechazados_areas = 0;
+            $proyectos_area = TimesheetProyecto::where('area_id', $area->id)->get();
+            foreach ($proyectos_area as $pro_a) {
+                $times_horas_area = TimesheetHoras::where('proyecto_id', $pro_a->id)->with('timesheet')->get();
+                
+                foreach ($times_horas_area as $times_h_a) {
+                    if ($times_h_a->timesheet->estatus == 'pendiente') {
+                        $contador_times_pendientes_areas++;
+                    }
+                    if ($times_h_a->timesheet->estatus == 'aprobado') {
+                        $contador_times_aprobados_areas++;
+                    }
+                    if ($times_h_a->timesheet->estatus == 'rechazado') {
+                        $contador_times_rechazados_areas++;
+                    }
+                }
+            }
+            $areas_array->push([
+                'area'=>$area->area,
+                'times_aprobados'=>$contador_times_aprobados_areas,
+                'times_pendientes'=>$contador_times_pendientes_areas,
+                'times_rechazados'=>$contador_times_rechazados_areas,
+            ]);
+        }
+
+        // graf empleados ---------------------
+        $hoy = Carbon::now();
+        $semanas_del_mes = intval(($hoy->format('d') * 4) / 29);
+        $empleados_partisipacion = Empleado::get();
+        $empleados_count = Empleado::count();
+        $times_por_mes_esperados = $semanas_del_mes * $empleados_count;
+        $total_times_mes = 0;
+        $empleados_times_atrasados = 0;
+        foreach ($empleados_partisipacion as $emp_part) {
+            $times_empleado_part = Timesheet::whereMonth('fecha_dia', $hoy)->where('empleado_id', $emp_part->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
+            $total_times_mes += $times_empleado_part;
+
+            if ($times_empleado_part < ($semanas_del_mes - 1) ) {
+                $empleados_times_atrasados ++;
+            }
+        }
+        $porcentaje_participacion = round((($total_times_mes * 100) / $times_por_mes_esperados), 2);
+        
+        // graf proyectos -----------------------
+        $proyectos_proceso_c = TimesheetProyecto::where('estatus', 'proceso')->count();
+        $proyectos_cancelados_c = TimesheetProyecto::where('estatus', 'cancelado')->count();
+        $proyectos_terminados_c = TimesheetProyecto::where('estatus', 'terminado')->count();
+
+        $proyectos_proceso = TimesheetProyecto::get();
+        $proyectos_array = collect();
+        foreach ($proyectos_proceso as $proyect) {
+            $horas_totales_proyecto = 0;
+            $tareas_proyecto = TimesheetTarea::where('proyecto_id', $proyect->id)->get();
+            foreach ($tareas_proyecto as $tarea_p) {
+                $horas_proyecto = TimesheetHoras::where('tarea_id', $tarea_p->id)->get();
+                foreach ($horas_proyecto as $horas_p) {
+                    $horas_totales_proyecto += $horas_p->horas_lunes;
+                    $horas_totales_proyecto += $horas_p->horas_martes;
+                    $horas_totales_proyecto += $horas_p->horas_miercoles;
+                    $horas_totales_proyecto += $horas_p->horas_jueves;
+                    $horas_totales_proyecto += $horas_p->horas_viernes;
+                    $horas_totales_proyecto += $horas_p->horas_sabado;
+                    $horas_totales_proyecto += $horas_p->horas_domingo;
+                }
+            }
+            $proyectos_array->push([
+                'proyecto'=>$proyect->proyecto,
+                'horas'=>$horas_totales_proyecto,
+                'tareas'=>$tareas_proyecto,
+                'tareas_count'=>$tareas_proyecto->count(),
+                'estatus'=>$proyect->estatus,
+            ]);
+        }
+
+        $proyectos_proceso_array = 0;
+        $proyectos_cancelado_array = 0;
+        $proyectos_terminado_array = 0;
+        foreach ($proyectos_array as $proyect_array) {
+            if ($proyect_array['estatus'] == 'proceso') {
+                $proyectos_proceso_array += $proyect_array['horas'];
+            }
+            if ($proyect_array['estatus'] == 'cancelado') {
+                $proyectos_cancelado_array += $proyect_array['horas'];
+            }
+            if ($proyect_array['estatus'] == 'terminado') {
+                $proyectos_terminado_array += $proyect_array['horas'];
+            }
+        }
+
+        return view('admin.timesheet.dashboard', compact('borrador_contador', 'pendientes_contador', 'aprobados_contador', 'rechazos_contador', 'areas_array', 'porcentaje_participacion', 'empleados_times_atrasados', 'empleados_count', 'areas', 'proyectos_proceso_c', 'proyectos_cancelados_c', 'proyectos_terminados_c', 'proyectos_array', 'proyectos_proceso_array', 'proyectos_cancelado_array', 'proyectos_terminado_array'));
     }
 
     public function reportes()

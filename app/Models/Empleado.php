@@ -535,6 +535,6 @@ class Empleado extends Model
 
     public function timesheet()
     {
-        return $this->hasMany(Timesheet::class, 'empleado_id', 'id')->orderBy('id');
+        return $this->hasMany(Timesheet::class, 'empleado_id', 'id')->orderBy('id')->with('horas');
     }
 }

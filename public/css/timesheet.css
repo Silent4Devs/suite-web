@@ -85,3 +85,118 @@ body.c-dark-theme .btn-outline-secondary {
 .flatpickr-monthDropdown-months{
     width: 150px !important;
 }
+.modal-content{
+    position: relative;
+}
+.btn-tache-cerrar{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+/*reportes empleado -------------------------------------------*/
+.lista_general{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.general_li{
+    display: inline-block;
+    vertical-align: top;
+    list-style: none;
+    margin: 0;
+    margin-top: 17px;
+    background-color: #fff;
+    width: 250px;
+    height: 240px;
+    padding: 0;
+    border-radius: 4px;
+    box-shadow: 0px 3px 4px 1px #00000029;
+    margin-right: 12px;
+    position: relative;
+    overflow: hidden;
+}
+.general_li h4{
+    font-size: 15px;
+    background-color: rgba(8,170,157,1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 25%;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 14px;
+}
+.general_li_ul{
+    position: absolute;
+    margin: 0;
+    padding: 20px;
+    top: 25%;
+    width: 100%;
+    max-height: 75%;
+    overflow: auto;
+}
+.general_li_ul h5{
+    margin: 0;
+    font-size: 14px;
+}
+.general_li_ul li{
+    display: flex;
+    justify-content: space-between;
+}
+.general_li small{
+    font-weight: lighter;
+}
+
+.span_atrasos{
+    padding: 5px 7px;
+    color: #fff;
+    border-radius: 4px;
+}
+table td .btn i{
+    font-size: 20px !important;
+}
+/*reportes proyecto -------------------------------------------*/
+.caja_anima_reporte{
+    position: relative;
+    min-height: auto;
+}
+.caja_anima_reporte{
+    display: flex;
+}
+.caja_anima_reporte > div{
+    min-width: 100%;
+}
+#reporte_proyecto,
+#reporte_empleado{
+    background-color: #f9f9f9;
+    padding: 24px;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    animation: reporteProyecto 1s;
+    margin-left: -100%;
+    position: relative;
+    z-index: 3;
+}
+.caja_anima_reporte .btn-cerrar{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+@keyframes reporteProyecto{
+    0%{
+        margin-left: 0%;
+    }
+    100%{
+        margin-left: -100%;
+    }
+}
+
+/*dashboard ---------------------------------------------------*/
+
+.titulo-grafica{
+    margin: 0;
+    font-size: 16px;
+}

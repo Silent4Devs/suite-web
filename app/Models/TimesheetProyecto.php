@@ -15,6 +15,7 @@ class TimesheetProyecto extends Model
         'proyecto',
         'area_id',
         'cliente_id',
+        'estatus',
     ];
 
     public function area()
@@ -29,6 +30,6 @@ class TimesheetProyecto extends Model
 
     public function tareas()
     {
-        return $this->hasMany(TimesheetTarea::class, 'tarea_id', 'id');
+        return $this->hasMany(TimesheetTarea::class, 'proyecto_id', 'id');
     }
 }

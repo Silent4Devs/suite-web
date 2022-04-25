@@ -17,9 +17,23 @@ class TablaProyectosTimesheet extends Component
     public $area_id;
     public $cliente_id;
 
+    public $proceso_count;
+    public $cancelado_count;
+    public $terminado_count;
+
+    public function mount()
+    {
+        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->get();
+    }
+
     public function render()
     {
-        $this->proyectos = TimesheetProyecto::get();
+
+        $this->proceso_count = TimesheetProyecto::where('estatus', 'proceso')->count();
+        $this->cancelado_count = TimesheetProyecto::where('estatus', 'cancelado')->count();
+        $this->terminado_count = TimesheetProyecto::where('estatus', 'terminado')->count();
+
+        $this->emit('cerrarModal');
 
         $this->areas = Area::get();
 
@@ -51,10 +65,57 @@ class TablaProyectosTimesheet extends Component
         $this->alert('success', 'Registro añadido!');
     }
 
+    public function procesos()
+    {
+        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->get();
+    }
+    public function cancelados()
+    {
+        $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')->get();
+    }
+    public function terminados()
+    {
+        $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')->get();
+    }
+    public function todos()
+    {
+        $this->proyectos = TimesheetProyecto::get();
+    }
+
     public function destroy($id)
     {
         TimesheetProyecto::destroy($id);
 
         $this->alert('success', 'Registro eliminado!');
+    }
+
+    public function terminarProyecto($id)
+    {
+        $proyecto = TimesheetProyecto::find($id);
+        $proyecto->update([
+            'estatus'=>'terminado',
+        ]);
+
+        $this->alert('success', 'Estatus actualizado!');
+    }
+
+    public function cancelarProyecto($id)
+    {
+        $proyecto = TimesheetProyecto::find($id);
+        $proyecto->update([
+            'estatus'=>'cancelado',
+        ]);
+
+        $this->alert('success', 'Estatus actualizado!');
+    }
+
+    public function procesoProyecto($id)
+    {
+        $proyecto = TimesheetProyecto::find($id);
+        $proyecto->update([
+            'estatus'=>'proceso',
+        ]);
+
+        $this->alert('success', 'Estatus actualizado!');
     }
 }
