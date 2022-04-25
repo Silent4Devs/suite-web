@@ -9,7 +9,6 @@ class FilesRevisonDireccion extends Model
 {
     use HasFactory;
 
-
     protected $table = 'files_revison_direccions';
 
     protected $fillable = [
@@ -17,13 +16,11 @@ class FilesRevisonDireccion extends Model
         'revision_id',
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
-    public function revision(){
+    public function revision()
+    {
         return $this->belongTo('App\Models\Minutasaltadireccion');
     }
-
-    
-
 }

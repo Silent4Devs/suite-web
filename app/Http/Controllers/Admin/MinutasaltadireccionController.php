@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyMinutasaltadireccionRequest;
-use App\Http\Requests\StoreMinutasaltadireccionRequest;
 use App\Mail\Minutas\MinutaConfirmacionSolicitud;
 use App\Mail\Minutas\MinutaRechazoPorEdicion;
 use App\Mail\Minutas\SolicitudDeAprobacion;
@@ -116,11 +115,11 @@ class MinutasaltadireccionController extends Controller
             'tema_tratado' => 'required',
             'actividades' => new ActividadesPlanAccionRule,
             'participantes' => new ParticipantesMinutasAltaDireccionRule,
-    
+
         ]);
-       
+
         $minutasaltadireccion = Minutasaltadireccion::create($request->all());
-       
+
         if ($request->hasFile('files')) {
             $files = $request->file('files');
             foreach ($files as $file) {
@@ -312,7 +311,7 @@ class MinutasaltadireccionController extends Controller
     public function edit(Minutasaltadireccion $minutasaltadireccion)
     {
         abort_if(Gate::denies('minutasaltadireccion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $minutasaltadireccion->load('participantes', 'planes','documentos');
+        $minutasaltadireccion->load('participantes', 'planes', 'documentos');
         // dd($minutasaltadireccion);
         $actividades = $minutasaltadireccion->planes->first()->tasks;
         $actividades = array_filter($actividades, function ($actividad) {
