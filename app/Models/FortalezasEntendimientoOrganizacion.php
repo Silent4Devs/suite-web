@@ -40,21 +40,17 @@ class FortalezasEntendimientoOrganizacion extends Model
 
     public function riesgos()
     {
-        return $this->morphToMany(MatrizRiesgo::class, 'riesgosable',null,null,'riesgos_id');
+        return $this->morphToMany(MatrizRiesgo::class, 'riesgosable', null, null, 'riesgos_id');
     }
 
     public function getTieneRiesgosAsociadosAttribute()
     {
-
         $tiene_riesgos = false;
 
-        if(count($this->riesgos)>0){
-
-        $tiene_riesgos = true;
-
+        if (count($this->riesgos) > 0) {
+            $tiene_riesgos = true;
         }
 
         return $tiene_riesgos;
-
     }
 }
