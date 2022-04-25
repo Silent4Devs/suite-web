@@ -9,20 +9,18 @@ use Livewire\WithFileUploads;
 
 class FileRevisionDireecionComponent extends Component
 {
-
     use WithFileUploads;
 
     public $minutas;
-    public $files=[];
-    
+    public $files = [];
 
-    protected $listeners=['render'];
-  
+    protected $listeners = ['render'];
 
     public function render()
-    {   
+    {
         $path = asset('storage/FilesRevisionDireccion');
-        return view('livewire.file-revision-direecion-component',compact('path'));
+
+        return view('livewire.file-revision-direecion-component', compact('path'));
     }
 
     public function destroy($id)
@@ -31,8 +29,9 @@ class FileRevisionDireecionComponent extends Component
         $model->delete();
         $this->emit('render');
     }
+
     public function save()
-    {   
+    {
         foreach ($this->files as $file) {
             if (Storage::putFileAs('public/FilesRevisionDireccion', $file, $file->getClientOriginalName())) {
                 FilesRevisonDireccion::create([
@@ -40,10 +39,9 @@ class FileRevisionDireecionComponent extends Component
                     'revision_id' =>$this->minutas->id,
                 ]);
             }
-        }    
-       $this->emit('render');
-       $this->files = [];
-       $this->emit('archivosGuardados');
+        }
+        $this->emit('render');
+        $this->files = [];
+        $this->emit('archivosGuardados');
     }
-   
 }
