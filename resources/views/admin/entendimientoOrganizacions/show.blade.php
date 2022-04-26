@@ -62,25 +62,43 @@
 
 
     <div class="mt-5 card p-2">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+        {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Entendimiento de Organización (FODA)</strong></h3>
-        </div>
+        </div> --}}
 
         <button class="btn btn-danger print-none" style="position: absolute; right:20px;" onclick="javascript:window.print()">
             <i class="fas fa-print"></i>
             Imprimir
         </button>
 
-        <div id="impreso_row">
-            <div style="text-align:right; margin-top:20px;" class="mr-4">
-                {{$obtener_FODA->fecha ? \Carbon\Carbon::parse($obtener_FODA->fecha)->format('d-m-Y') : 'sin registro' }}
-            </div>
-            <div class="tit">
-                <h5><strong>
 
-                    {{$obtener_FODA->analisis}}
-                </strong></h5>
+        @php
+            use App\Models\Organizacion;
+            $organizacion = Organizacion::first();
+            $logotipo = $organizacion->logotipo;
+            $empresa = $organizacion->empresa;
+        @endphp
+
+        <div class="row mt-5 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+            <div class="col-2 pl-0" style="border-right: 2px solid #ccc">
+                <img src="{{ asset($logotipo) }}" class="mt-2 mb-2 ml-4" style="width:100px;">
             </div>
+            <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                <span style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
+                <br>
+                <span style="color:#345183; font-size:15px;"><strong>Entendimiento de Organización:
+                        {{$obtener_FODA->analisis}}</strong></span>
+
+            </div>
+            <div class="col-3 p-2">
+                <span style="color:#345183;">Fecha:
+                    {{$obtener_FODA->fecha ? \Carbon\Carbon::parse($obtener_FODA->fecha)->format('d-m-Y') : 'sin registro' }}
+                </span>
+            </div>
+        </div>
+
+        <div id="impreso_row">
+
             <div class="card-body">
                 @if (session('success'))
                     <div class="mb-3 row">
@@ -119,11 +137,13 @@
                                     <ul>
                                         @foreach ($obtener_FODA->fodafortalezas as $fortaleza)
                                         <li>
-                                            @if(null == $fortaleza->riesgo)
-                                            {{$fortaleza->fortaleza}}
+
+                                            @if($fortaleza->tiene_riesgos_asociados)
+                                            <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo Asociado"></i>{{$fortaleza->fortaleza}}
                                             @else
-                                            <i class="print-none text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo"></i>{{$fortaleza->fortaleza}}
+                                                {{$fortaleza->fortaleza}}
                                             @endif
+
                                         </li>
                                         @endforeach
                                     </ul>
@@ -151,10 +171,10 @@
                                     <ul>
                                         @foreach ($obtener_FODA->fodadebilidades as $debilidad)
                                         <li style="text-align:justify;" >
-                                            @if(null == $debilidad->riesgo)
-                                                 {{$debilidad->debilidad}}
+                                            @if($debilidad->tiene_riesgos_asociados)
+                                            <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo Asociado"></i>{{$debilidad->debilidad}}
                                             @else
-                                            <i class="print-none text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo"></i>{{$debilidad->debilidad}}
+                                                {{$debilidad->debilidad}}
                                             @endif
                                         </li>
                                         @endforeach
@@ -186,10 +206,10 @@
                                     <ul>
                                         @foreach ($obtener_FODA->fodaoportunidades as $oportunidad)
                                             <li>
-                                                @if(null == $oportunidad->riesgo)
-                                                {{$oportunidad->oportunidad}}
+                                                @if($oportunidad->tiene_riesgos_asociados)
+                                                <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo Asociado"></i>{{$oportunidad->oportunidad}}
                                                 @else
-                                                <i class="print-none text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo"></i>{{$oportunidad->oportunidad}}
+                                                    {{$oportunidad->oportunidad}}
                                                 @endif
                                             </li>
                                         @endforeach
@@ -212,10 +232,10 @@
                                     <ul>
                                         @foreach ($obtener_FODA->fodamenazas as $amenaza)
                                             <li>
-                                                @if(null == $fortaleza->riesgo)
-                                                {{$amenaza->amenaza}}
+                                                @if($amenaza->tiene_riesgos_asociados)
+                                                <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo Asociado"></i>{{$amenaza->amenaza}}
                                                 @else
-                                                <i class="print-none text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo"></i>{{$amenaza->amenaza}}
+                                                     {{$amenaza->amenaza}}
                                                 @endif
                                             </li>
                                         @endforeach

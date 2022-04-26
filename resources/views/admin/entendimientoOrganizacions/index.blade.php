@@ -270,71 +270,69 @@
             };
 
             let table = $('.datatable-EntendimientoOrganizacion').DataTable(dtOverrideGlobals);
-            document.getElementById('tblFoda').addEventListener('click', function(e) {
-
-                if (e.target.getAttribute('data-type') == 'copiaFoda') {
-                    e.preventDefault();
-                    let id = e.target.getAttribute('data-id');
+            document.querySelector('.dataTables_scrollBody').addEventListener('click', function(event) {
+                console.log(event.target);
+                if (event.target.tagName === 'I' && event.target.getAttribute('data-action') === 'copiaFoda') {
+                    let id = event.target.dataset.id;
+                    let url = `{{ route('admin.entendimiento-organizacions.duplicarFoda') }}`;
                     Swal.fire({
-                        title: '¿Desea duplicar el análisis FODA?',
-                        text: "Toda la información generada para este análisis se repetira",
-                        icon: 'warning',
+                        title: '¿Desea copiar el análisis FODA?',
+                        text: "El análisis será copiado con el nombre ingresado",
+                        icon: 'question',
+                        input: 'text',
+                        inputAttributes:{
+                            autocapitalize:'off'
+                        },
+                        inputValidator: (value) => {
+                            if(value.trim().length < 3){
+                                return 'El nombre del análisis debe tener al menos 3 caracteres'
+                            }
+                        },
                         showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Duplicar'
+                        confirmButtonText: 'Copiar',
+                        cancelButtonText: 'Cancelar',
+                        showLoaderOnConfirm: true,
+                        preConfirm: (login) => {
+                            console.log(login);
+                            return fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRF-TOKEN': _token,
+                                        'Content-Type': 'application/json',
+                                         Accept: 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        id,
+                                        nombreFoda:login
+                                    })
+                                })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(response.statusText)
+                                    }
+                                    return response.json()
+                                })
+                                .catch(error => {
+                                    Swal.showValidationMessage(
+                                        `Request failed: ${error}`
+                                    )
+                                })
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            $.ajax({
-                                type: "POST",
-                                headers: {
-
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content')
-
-                                },
-                                url: "{{ route('admin.entendimiento-organizacions.duplicarFoda') }}",
-                                data: {
-                                    id
-                                },
-                                dataType: "json",
-                                beforeSend: function() {
-                                    toastr.info('Duplicando Foda, espere un momento');
-                                },
-                                success: function(response) {
-                                    if (response.success) {
-                                        toastr.success('Foda Duplicado');
-                                        setTimeout(() => {
-                                            window.location.href =
-                                                `/admin/entendimiento-organizacions/${response.id}/edit`
-                                        }, 1500);
-                                    }
-                                },
-                                error: function(request, status, error) {
-
-                                    console.log(error);
-
-                                    toastr.error('Ocurrio un error al guardar: ' +
-                                        request.responseText);
-
-                                }
+                            Swal.fire({
+                                title: 'Análisis copiado',
+                                text: `El análisis ${result.value.analisis_creado.analisis} ha sido creado con éxito`,
+                                type: 'success'
+                            }).then(() => {
+                                // window.location.reload();
+                                table.ajax.reload();
                             });
                         }
                     })
                 }
-            })
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+            });
         });
     </script>
 @endsection

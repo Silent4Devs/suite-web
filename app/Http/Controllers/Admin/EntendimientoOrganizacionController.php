@@ -201,7 +201,7 @@ class EntendimientoOrganizacionController extends Controller
         $amenazas = $fodaOld->fodamenazas;
 
         $foda = EntendimientoOrganizacion::create([
-            'analisis'=>$fodaOld->analisis,
+            'analisis'=>$request->nombreFoda,
             'fecha'=>$fodaOld->fecha,
             'id_elabora'=>$fodaOld->id_elabora,
         ]);
@@ -239,7 +239,7 @@ class EntendimientoOrganizacionController extends Controller
             ]);
         }
 
-        return response()->json(['success' => true, 'id'=>$foda->id]);
+        return response()->json(['success' => true, 'analisis_creado' => $foda]);
     }
 
     // public function edit()

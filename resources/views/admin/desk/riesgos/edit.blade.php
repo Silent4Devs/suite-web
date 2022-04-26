@@ -388,43 +388,80 @@
 
 
                                     <div id="digrama" class="caja_oculta_dinamica">
-                                        <div class="mt-5 col-12" style="overflow: auto;">
-                                            <div style="width: 100%; min-width:930px; position: relative;">
-                                                <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
-                                                    style="width:100%">
+                                        <div class="mt-5 col-md-12" style="overflow: auto;">
+                                            <div style="width: 100%; min-width:980px; margin-left:80px;">
+                                                    <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
+                                                        style="width:190%; margin-top:20px;">
+                                                <div
+                                                    style="top:0px;left:150px; position: absolute;height:35px; width:150px;  background-color:#63e4e4; border-radius:15px;">
+                                                    <span ><i
+                                                        class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Control</strong>
+                                                </div>
+                                                <div
+                                                style="top:0px; left:680px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                <span ><i
+                                                        class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Proceso</strong>
+                                                </div>
+                                                <div
+                                                style="top:0px; left:1200px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                <span ><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-users" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Personas</strong>
+                                                </div>
+                                                <div
+                                                style="buttom:0px; left:410px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                <span ><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Tecnología</strong>
+                                                </div>
+                                                <div
+                                                style="buttom:0px; left:920px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                <span ><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Métodos</strong>
+                                                </div>
+                                                <div
+                                                style="buttom:0px;left:1450px; position: absolute;height:35px; width:150px; background-color:#63e4e4;border-radius:15px;">
+                                                <span ><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-chalkboard" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Recursos</strong>
+                                                </div>
+                                                <div class="col-6" style="top:55px; left:290px; position: absolute; height:30px !important;">
+                                                    <textarea name="control_a" id="analisisControl"
+                                                        class="politicas_txtarea">{{ $analisis->control_a }}</textarea>
+                                                </div>
 
-                                                <textarea name="control_a"
-                                                    class="politicas_txtarea">{{ $analisis->control_a }}</textarea>
-                                                <textarea name="control_b"
-                                                    class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis->control_b }}</textarea>
-
-                                                <textarea name="proceso_a"
+                                                {{-- <textarea name="control_b"
+                                                    class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis->control_b }}</textarea> --}}
+                                                <div class="col-6" style="top:55px; left:810px; position: absolute; height:30px !important;">
+                                                    <textarea name="proceso_a" id="analisisProceso"
                                                     class="procesos_txtarea">{{ $analisis->proceso_a }}</textarea>
-                                                <textarea name="proceso_b"
-                                                    class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis->proceso_b }}</textarea>
+                                                </div>
 
-                                                <textarea name="personas_a"
-                                                    class="personas_txtarea">{{ $analisis->personas_a }}</textarea>
-                                                <textarea name="personas_b"
-                                                    class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea>
+                                                {{-- <textarea name="proceso_b"
+                                                    class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis->proceso_b }}</textarea> --}}
+                                                <div class="col-6" style="top:55px; left:1315px; position: absolute; height:30px !important;">
+                                                    <textarea name="personas_a" id="analisisPersona"
+                                                        class="personas_txtarea">{{ $analisis->personas_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="personas_b"
+                                                    class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea> --}}
+                                                <div class="col-6" style="bottom:5px; right:480px; position: absolute;">
+                                                    <textarea name="tecnologia_a" id="analisisTecnologia"
+                                                        class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="tecnologia_b"
+                                                    class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea> --}}
+                                                <div class="col-6" style="bottom:5px; left:540px; position: absolute;">
+                                                    <textarea name="metodos_a"
+                                                        class="metodos_txtarea txt_obj_secundarios_b" id="analisisMetodos">{{ $analisis->metodos_a }}</textarea>
+                                                </div>
+                                                {{-- <textarea name="metodos_b"
+                                                    class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea> --}}
+                                                <div class="col-6" style="bottom:5px; left:1060px; position: absolute;">
+                                                    <textarea name="ambiente_a"
+                                                    class="ambiente_txtarea txt_obj_secundarios_b" id="analisisAmbiente">{{ $analisis->ambiente_a }}</textarea>
+                                                </div>
 
-                                                <textarea name="tecnologia_a"
-                                                    class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
-                                                <textarea name="tecnologia_b"
-                                                    class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea>
+                                                {{-- <textarea name="ambiente_b"
+                                                    class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea> --}}
+                                                <div class="col-6" style="bottom:5px; left:1600px; position: absolute;">
+                                                    <textarea name="problema_diagrama"
+                                                    class="problemas_txtarea" id="analisisProblema">{{ $analisis->problema_diagrama }}</textarea>
+                                                </div>
 
-                                                <textarea name="metodos_a"
-                                                    class="metodos_txtarea txt_obj_secundarios_b">{{ $analisis->metodos_a }}</textarea>
-                                                <textarea name="metodos_b"
-                                                    class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea>
-
-                                                <textarea name="ambiente_a"
-                                                    class="ambiente_txtarea txt_obj_secundarios_b">{{ $analisis->ambiente_a }}</textarea>
-                                                <textarea name="ambiente_b"
-                                                    class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea>
-
-                                                <textarea name="problema_diagrama"
-                                                    class="problemas_txtarea">{{ $analisis->problema_diagrama }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -752,6 +789,109 @@
         $("#select_subcategorias option").addClass("d-none");
         var categoria_selected = $("#select_categoria option:selected").attr('id');
         $(document.getElementsByClassName(categoria_selected)).removeClass("d-none");
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        CKEDITOR.replace('analisisControl', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisProceso', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisPersona', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisTecnologia', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisMetodos', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisAmbiente', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
+        CKEDITOR.replace('analisisProblema', {
+            toolbar: [{
+                name: 'paragraph',
+                groups: ['list', 'indent', 'blocks', 'align'],
+                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                    'Bold', 'Italic'
+                ]
+            }, {
+                name: 'clipboard',
+                items: ['Link', 'Unlink']
+            }, ]
+        });
+
     });
 </script>
 @endsection

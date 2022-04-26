@@ -195,7 +195,7 @@
                                                 <li><a href="{{ route("admin.comiteseguridads.index") }}">Conformación del Comité de Seguridad</a></li>
                                                 <li><a href="{{ route("admin.minutasaltadireccions.index") }}">Minutas de Sesiones con Alta Direccion</a></li>
                                                 <li><a href="{{ route("admin.evidencias-sgsis.index") }}" >Evidencias de Asignación de Recursos al SGSI</a></li>
-                                                <li><a href="{{ route("admin.politica-sgsis.index") }}" >Política SGSI</a></li>
+                                                <li><a href="{{ route("admin.politica-sgsis.index") }}" >Política del Sistema de Gestión</a></li>
                                                 <li><a href="{{ route("admin.roles-responsabilidades.index") }}">Roles y Responsabilidades</a></li>
                                             </ul>
 

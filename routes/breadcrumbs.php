@@ -114,7 +114,7 @@ Breadcrumbs::for('admin.evidencias-sgsis.create', function ($trail) {
 Breadcrumbs::for('admin.politica-sgsis.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Liderazgo', route('admin.iso27001.index') . '#liderazgo');
-    $trail->push('Política SGSI', route('admin.politica-sgsis.index'));
+    $trail->push('Política del Sistema de Gestión', route('admin.politica-sgsis.index'));
 });
 Breadcrumbs::for('admin.politica-sgsis.create', function ($trail) {
     $trail->parent('admin.politica-sgsis.index');

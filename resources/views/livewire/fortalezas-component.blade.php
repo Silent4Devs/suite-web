@@ -13,12 +13,11 @@
         @enderror
     </div>
 
-    <div class="mt-2">
-        <label for="contacto"><i class="fas fa-clipboard-list iconos-crear"></i>Riesgo Asociado</label>
-        <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}"
-            wire:model.defer="riesgo">{{ old('riesgo') }}</textarea>
-        <small class="text-danger errores descripcion_contacto_error"></small>
-    </div>
+    {{-- <div class="mt-2">
+            <label for="contacto"><i class="fas fa-clipboard-list iconos-crear"></i>Riesgo Asociado</label>
+            <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" wire:model.defer="riesgo">{{ old('riesgo') }}</textarea>
+            <small class="text-danger errores descripcion_contacto_error"></small>
+        </div> --}}
 
 
     <div class="mb-3 col-12 mt-4 " style="text-align: end">
@@ -31,28 +30,60 @@
         <table class="table w-100" id="contactos_table" style="width:100%">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Fortaleza</th>
-                    <th>Riesgo Asociado</th>
                     <th>Opciones</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($fortalezas as $fortaleza)
+                @foreach ($fortalezas as $index => $fortaleza)
                     <tr>
+                        <td>
+                            {{ $index + 1 }}
+                        </td>
                         <td>
                             {{ $fortaleza->fortaleza }}
                         </td>
                         <td>
-                            {{ $fortaleza->riesgo }}
-                        </td>
-                        <td>
                             <i wire:click="destroy({{ $fortaleza->id }})" class="fas fa-trash-alt text-danger"></i>
                             <i class="fas fa-edit text-primary ml-4" wire:click="edit({{ $fortaleza->id }})"></i>
+                            <i class="text-danger ml-4 fas fa-exclamation-triangle" wire:click="$emit('modalRiesgoFoda',{{$fortaleza->id}},'fortaleza')" data-toggle="modal"
+                                data-target="#marcaslec" title="Asociar un Riesgo"></i>
+
                         </td>
                     </tr>
+
                 @endforeach
             </tbody>
         </table>
     </div>
 
+    <div class="modal fade" id="marcaslec" wire:ignore.self tabindex="-1"
+        aria-labelledby="marcaslecLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Riesgos Asociados</h5>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        @livewire('riesgos-foda')
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Livewire.on('abrirModalRiegos', () => {
+                console.log('hola');
+                $('#marcaslec').modal('show');
+            })
+        })
+    </script>
 </div>
