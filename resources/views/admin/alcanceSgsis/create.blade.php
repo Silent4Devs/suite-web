@@ -110,7 +110,7 @@
 
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma</label>  
+                        <label for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>  
                         <select
                         class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
                         name="normas[]" id="controles" multiple="multiple">

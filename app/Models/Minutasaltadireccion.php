@@ -154,4 +154,14 @@ class Minutasaltadireccion extends Model implements HasMedia
     {
         return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->with('area');
     }
+
+    public function documentos()
+    {
+        return $this->hasMany(FilesRevisonDireccion::class, 'revision_id', 'id');
+    }
+
+    // public function documentoss()
+    // {
+    //     return $this->belongsToMany(FilesRevisonDireccion::class, 'activos_contenedores', 'activo_id', 'contenedor_id');
+    // }
 }

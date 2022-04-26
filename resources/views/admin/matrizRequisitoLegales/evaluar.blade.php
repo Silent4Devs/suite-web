@@ -7,19 +7,19 @@
 
     </style>
     {{-- {{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }} --}}
-    <h5 class="col-12 titulo_general_funcion">{{$requisito->nombrerequisito}}</h5>
+    <h5 class="col-12 titulo_general_funcion">{{ $requisito->nombrerequisito }}</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.matriz-requisito-legales.evaluarStore', $requisito->id) }}" enctype="multipart/form-data"
-                class="row">
+            <form method="POST" action="{{ route('admin.matriz-requisito-legales.evaluarStore', $requisito->id) }}"
+                enctype="multipart/form-data" class="row">
                 @csrf
 
 
                 <div class="form-group col-12">
                     <p class="text-center text-light p-1" style="background-color:#345183; border-radius: 100px;">
-                        Verificación del Requisito</p> 
+                        Verificación del Requisito</p>
                 </div>
-                <input type="hidden" name="id_matriz" value="{{$requisito->id}}"/>
+                <input type="hidden" name="id_matriz" value="{{ $requisito->id }}" />
                 <div class="row col-12">
                     <div class="col-sm-6 form-group ">
                         <label for="cumplerequisito"> <i class="fas fa-question-circle iconos-crear"></i> ¿En
@@ -95,32 +95,32 @@
 
                     </div>
                 </div>
-                <div class="form-group col-12">
-                    <p class="text-center text-light p-1" style="background-color:#345183; border-radius: 100px;">
-                        Vincular revisión a plan de acción</p>
-                </div>
-
-
-
-                {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-                <div class="row w-100 align-items-center" style="margin-left: 1px;">
-                    @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
-                    <div class="pl-0 mt-2 ml-0 col-2">
-                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
-                            data-target="#planAccionModal">
-                            <i class="mr-1 fas fa-plus-circle"></i> Crear
-                        </button>
+                <div id="vincularRevision" class="col-12">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <p class="text-center text-light p-1" style="background-color:#345183; border-radius: 100px;">
+                                Vincular revisión a plan de acción</p>
+                        </div>
+                        {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
+                        <div class="row w-100 align-items-center" style="margin-left: 1px;">
+                            @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
+                            <div class="pl-0 mt-2 ml-0 col-2">
+                                <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
+                                    data-target="#planAccionModal">
+                                    <i class="mr-1 fas fa-plus-circle"></i> Crear
+                                </button>
+                            </div>
+                            @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de
+                            Requisitos
+                            Legales'])
+                        </div>
+                        {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
+                        <div class="form-group col-12">
+                            <p class="text-center text-light p-1" style="background-color:#345183; border-radius: 100px;">
+                                Colaborar que verifico</p>
+                        </div>
                     </div>
-                    @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de Requisitos
-                    Legales'])
                 </div>
-                {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
-                <div class="form-group col-12">
-                    <p class="text-center text-light p-1" style="background-color:#345183; border-radius: 100px;">
-                        Colaborar que verifico</p>
-                </div>
-
-
                 <div class="form-group col-md-4">
                     <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
                     <select class="form-control {{ $errors->has('reviso') ? 'is-invalid' : '' }}" name="id_reviso"
@@ -184,12 +184,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let cumple = document.getElementById('cumplerequisito');
+            $("#vincularRevision").hide(1000);
             cumple.addEventListener('change', function(e) {
                 let respuesta = e.target.value;
                 if (respuesta == 'No') {
-                    $("#plan_accion_select").show(1000);
+                    $("#vincularRevision").show(1000);
                 } else {
-                    $("#plan_accion_select").hide(1000);
+                    $("#vincularRevision").hide(1000);
                 }
             })
 

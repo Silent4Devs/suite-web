@@ -1,14 +1,15 @@
 <style>
-        .table tr th:nth-child(8){
-        min-width:800px !important;
-        text-align:justify !important;
-        }
-
+    .table tr th:nth-child(8) {
+        min-width: 800px !important;
+        text-align: justify !important;
+    }
 
 </style>
 
 
-<div class="container w-100">
+
+
+<div class="container w-100 form-group col-12 mt-5">
     <div class="mb-2 row">
         <div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px #345183;">
             <span class="ml-1" style="font-size: 17px; font-weight: bold;">
@@ -19,7 +20,8 @@
         <div class="col-sm-12 col-lg-12 col-md-12">
             <div class="form-group">
                 <label for="actividad"><i class="iconos-crear fas fa-stream"></i> Actividad <span
-                        class="text-danger">*</span></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title="Nombre de la actividad"></i>
+                        class="text-danger">*</span></label><i class="fas fa-info-circle"
+                    style="font-size:12pt; float: right;" title="Nombre de la actividad"></i>
                 <div class="row align-items-center">
                     <div class="col-12">
                         <input type="text" class="form-control" id="actividad" name="actividad">
@@ -38,7 +40,8 @@
         <div class="col-sm-12 col-lg-6 col-6">
             <div class="form-group">
                 <label for="inicio"><i class="iconos-crear fas fa-calendar-day"></i> Inicio <span
-                        class="text-danger">*</span></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title="Fecha de inicio de la actividad"></i>
+                        class="text-danger">*</span></label><i class="fas fa-info-circle"
+                    style="font-size:12pt; float: right;" title="Fecha de inicio de la actividad"></i>
                 <input type="date" class="form-control" id="inicio" name="inicio">
                 {{-- <small id="inicioHelp" class="form-text text-muted">Fecha de inicio de la actividad</small> --}}
                 <small class="p-0 m-0 text-xs error_inicio errores text-danger"></small>
@@ -47,7 +50,8 @@
         <div class="col-sm-12 col-lg-6 col-6">
             <div class="form-group">
                 <label for="finalizacion"><i class="iconos-crear fas fa-calendar-day"></i> Finalización <span
-                        class="text-danger">*</span></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title="Fecha de finalización de la
+                        class="text-danger">*</span></label><i class="fas fa-info-circle"
+                    style="font-size:12pt; float: right;" title="Fecha de finalización de la
                         actividad"></i>
                 <input type="date" class="form-control" id="finalizacion" name="finalizacion">
                 {{-- <small id="finalizacionHelp" class="form-text text-muted">Fecha de finalización de la
@@ -56,7 +60,7 @@
             </div>
         </div>
     </div>
-        {{-- <div class="col-sm-12 col-lg-4 col-4">
+    {{-- <div class="col-sm-12 col-lg-4 col-4">
             <div class="form-group">
                 <label for="progreso"><i class="iconos-crear fas fa-percent"></i> Progreso <span
                         class="text-danger">*</span></label>
@@ -69,7 +73,8 @@
     <div class="mb-3 row">
         <div class="col-sm-12 col-lg-12 col-md-12">
             <label for="responsables_actividad"><i class="iconos-crear fas fa-users"></i> Responsables <span
-                    class="text-danger">*</span></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title="Responsables de la actividad"></i>
+                    class="text-danger">*</span></label><i class="fas fa-info-circle"
+                style="font-size:12pt; float: right;" title="Responsables de la actividad"></i>
             <select class="responsables_actividad" id="responsables_actividad" multiple>
                 @foreach ($empleados as $empleado)
                     <option value="{{ $empleado->id }}" avatar="{{ $empleado->avatar }}">
@@ -85,7 +90,8 @@
         <div class="col-sm-12 col-lg-12 col-md-12">
             <div class="form-group">
                 <label for="comentarios"><i class="iconos-crear fas fa-comments"></i> Comentarios <span
-                        class="text-danger">*</span></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title="Comentarios de la actividad"></i>
+                        class="text-danger">*</span></label><i class="fas fa-info-circle"
+                    style="font-size:12pt; float: right;" title="Comentarios de la actividad"></i>
                 <textarea class="form-control w-100" id="comentarios" name="comentarios"></textarea>
                 {{-- <small id="comentariosHelp" class="form-text text-muted">Comentarios de la actividad</small> --}}
                 <small class="p-0 m-0 text-xs error_comentarios errores text-danger"></small>
@@ -95,7 +101,7 @@
     <input type="hidden" id="actividades" name="actividades">
     <div class="col-12">
         <button id="btnAgregar" class="mt-3 mb-2 btn btn-sm btn-outline-success" style="float:right;"><i
-            class="fas fa-plus-circle"></i> Agregar Actividad
+                class="fas fa-plus-circle"></i> Agregar Actividad
         </button>
     </div>
     @if ($errors->has('actividades'))
@@ -134,10 +140,9 @@
                                     @php
                                         $empleado = App\Models\Empleado::find(intval($assig->resourceId));
                                     @endphp
-                                    <img src="{{ $empleado->avatar_ruta }}"
-                                        id="res_{{ $empleado->id }}" alt="{{ $empleado->name }}"
-                                        title="{{ $empleado->name }}"
-                                        style="clip-path: circle(15px at 50% 50%);width: 45px;"/>
+                                    <img src="{{ $empleado->avatar_ruta }}" id="res_{{ $empleado->id }}"
+                                        alt="{{ $empleado->name }}" title="{{ $empleado->name }}"
+                                        style="clip-path: circle(15px at 50% 50%);width: 45px;" />
                                 @endforeach
                             </td>
                             <td>
