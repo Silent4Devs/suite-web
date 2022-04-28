@@ -101,7 +101,7 @@
                             {{ trans('cruds.politicaSgsi.fields.id') }}
                         </th>
                         <th>
-                            Política&nbsp;del&nbsp;Sistema&nbsp;de&nbsp;Gestión&nbsp;de&nbsp;Seguridad&nbsp;de&nbsp;la&nbsp;Información&nbsp;(SGSI)
+                            Política&nbsp;del&nbsp;Sistema&nbsp;de&nbsp;Gestión
                         </th>
                         <th>
                             Fecha de publicación
