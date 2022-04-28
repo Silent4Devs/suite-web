@@ -60,7 +60,9 @@ class EV360ObjetivosController extends Controller
         if ($request->ajax()) {
         }
 
-        return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado'));
+        $empleados = Empleado::get();
+
+        return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados'));
     }
 
     public function storeByEmpleado(Request $request, $empleado)
