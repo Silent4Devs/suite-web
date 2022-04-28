@@ -11,6 +11,7 @@
         .table tr th:nth-child(3) {
 
             text-align: center !important;
+            min-width: 800px !important;
 
         }
 

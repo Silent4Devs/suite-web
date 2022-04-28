@@ -91,6 +91,9 @@
                         <i class="fas fa-frown"></i> Quejas
                     </a>
                 @endcan
+                <a href="#" data-tabs="quejasClientes">
+                    <i class="fas fa-thumbs-down"></i> Quejas Clientes
+                </a>
                 @can('denuncias_access')
                     <a href="#" data-tabs="denuncias">
                         <i class="fas fa-hand-paper"></i> Denuncias
@@ -120,6 +123,9 @@
                     </section>
                     <section id="quejas">
                         @include('admin.desk.quejas.quejas')
+                    </section>
+                    <section id="quejasClientes">
+                        @include('admin.desk.clientes.clientes')
                     </section>
                     <section id="denuncias">
                         @include('admin.desk.denuncias.denuncias')

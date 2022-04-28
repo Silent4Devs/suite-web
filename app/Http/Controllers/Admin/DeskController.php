@@ -2,24 +2,30 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Activo;
-use App\Models\AnalisisSeguridad; //mejora apunta a este modelo
 use App\Models\Area;
-use App\Models\CategoriaIncidente;
-use App\Models\Denuncias;
-use App\Models\Empleado;
-use App\Models\IncidentesSeguridad;
+use App\Models\Sede;
+use App\Models\Activo;
+use App\Models\Quejas;
 use App\Models\Mejoras;
 use App\Models\Proceso;
-use App\Models\Quejas;
-use App\Models\RiesgoIdentificado;
-use App\Models\Sede;
-use App\Models\SubcategoriaIncidente;
+use App\Models\Empleado;
+use App\Models\Denuncias;
 use App\Models\Sugerencias;
 use Illuminate\Http\Request;
+use App\Models\QuejasCliente;
 use Illuminate\Http\Response;
+use App\Models\TimesheetCliente;
+use App\Models\TimesheetProyecto;
+use App\Models\CategoriaIncidente;
+use App\Models\RiesgoIdentificado;
+use App\Models\IncidentesSeguridad;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use App\Models\SubcategoriaIncidente;
+use App\Models\AnalisisQuejasClientes;
+use App\Models\EvidenciaQuejasClientes;
+use App\Models\EvidenciasQuejasClientesCerrado;
+use App\Models\AnalisisSeguridad; //mejora apunta a este modelo
 
 class DeskController extends Controller
 {
@@ -53,6 +59,13 @@ class DeskController extends Controller
         $en_espera_quejas = Quejas::where('estatus', 'en espera')->get()->count();
         $cerrados_quejas = Quejas::where('estatus', 'cerrado')->get()->count();
         $cancelados_quejas = Quejas::where('estatus', 'cancelado')->get()->count();
+
+        $total_quejasclientes = QuejasCliente::get()->count();
+        $nuevos_quejasclientes = QuejasCliente::where('estatus', 'nuevo')->get()->count();
+        $en_curso_quejasclientes = QuejasCliente::where('estatus', 'en curso')->get()->count();
+        $en_espera_quejasclientes = QuejasCliente::where('estatus', 'en espera')->get()->count();
+        $cerrados_quejasclientes = QuejasCliente::where('estatus', 'cerrado')->get()->count();
+        $cancelados_quejasclientes = QuejasCliente::where('estatus', 'cancelado')->get()->count();
 
         $total_denuncias = Denuncias::get()->count();
         $nuevos_denuncias = Denuncias::where('estatus', 'nuevo')->get()->count();
@@ -768,5 +781,216 @@ class DeskController extends Controller
         ]);
 
         return redirect()->route('admin.desk.index');
+    }
+
+    public function quejasClientes()
+    {
+        $areas = Area::get();
+
+        $procesos = Proceso::get();
+
+        $activos = Activo::get();
+
+        $empleados = Empleado::get();
+
+        $clientes = TimesheetCliente::get();
+
+        $proyectos = TimesheetProyecto::get();
+
+        return view('admin.desk.clientes.quejasclientes', compact('areas', 'procesos', 'empleados', 'activos','clientes','proyectos'));
+
+    }
+
+    public function indexQuejasClientes()
+    {
+        $quejasClientes  = QuejasCliente::get();
+        // dd($quejasClientes);
+        return datatables()->of($quejasClientes )->toJson();
+    }
+
+    public function storeQuejasClientes(Request $request)
+    {
+        $request->validate([
+            'cliente_id' => 'required',
+            'proyectos_id' => 'required',
+            'nombre' => 'required',
+            'titulo' => 'required',
+            'fecha' => 'required',
+            'descripcion' => 'required',
+        ]);
+
+        // dd($request->fecha);
+        $quejasClientes = QuejasCliente::create([
+            'cliente_id'=>$request->cliente_id,
+            'proyectos_id'=>$request->proyectos_id,
+            'nombre' => $request->nombre,
+            'puesto' => $request->puesto,
+            'telefono' => $request->telefono,
+            'correo' => $request->correo,
+            'area_quejado' => $request->area_quejado,
+            'colaborador_quejado' => $request->colaborador_quejado,
+            'proceso_quejado' => $request->proceso_quejado,
+            'otro_quejado' => $request->otro_quejado,
+            'titulo' => $request->titulo,
+            'fecha' => $request->fecha,
+            'ubicacion' => $request->ubicacion,
+            'descripcion' => $request->descripcion,
+            'estatus' => 'nuevo',
+        ]);
+
+        AnalisisQuejasClientes::create([
+            'quejas_clientes_id' => $quejasClientes->id,
+            'formulario' => 'quejaCliente',
+        ]);
+
+        $image = null;
+
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+            foreach ($request->file('evidencia') as $file) {
+                $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+
+                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
+
+                $route = 'public/evidencias_quejas_clientes';
+
+                $image = $new_name_image;
+
+                $file->storeAs($route, $image);
+
+                EvidenciaQuejasClientes::create([
+                    'evidencia' => $image,
+                    'quejas_clientes_id' => $quejasClientes->id,
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
+    }
+
+
+    public function editQuejasClientes(Request $request, $id_quejas)
+    {
+        $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas))->load('evidencias_quejas','planes','cierre_evidencias');
+        // dd($quejasClientes);
+        $procesos = Proceso::get();
+
+        $activos = Activo::get();
+
+        $analisis = AnalisisQuejasClientes::where('formulario', '=', 'quejaCliente')->where('quejas_clientes_id', intval($id_quejas))->first();
+        // dd($analisis);
+        $areas = Area::get();
+
+        $empleados = Empleado::get();
+
+        $clientes = TimesheetCliente::get();
+
+        $proyectos = TimesheetProyecto::get();
+
+        return view('admin.desk.clientes.edit', compact('clientes','proyectos','quejasClientes', 'procesos', 'empleados', 'areas', 'activos','analisis'));
+    }
+
+    public function updateQuejasClientes(Request $request, $id_quejas)
+    {
+
+        $request->validate([
+            'cliente_id' => 'required',
+            'proyectos_id' => 'required',
+            'nombre' => 'required',
+            'titulo' => 'required',
+            'fecha' => 'required',
+            'descripcion' => 'required',
+        ]);
+
+        // dd($request->all());
+        $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas));
+
+        $quejasClientes->update([
+            'cliente_id'=>$request->cliente_id,
+            'proyectos_id'=>$request->proyectos_id,
+            'nombre' => $request->nombre,
+            'puesto' => $request->puesto,
+            'telefono' => $request->telefono,
+            'correo' => $request->correo,
+            'area_quejado' => $request->area_quejado,
+            'colaborador_quejado' => $request->colaborador_quejado,
+            'proceso_quejado' => $request->proceso_quejado,
+            'otro_quejado' => $request->otro_quejado,
+            'titulo' => $request->titulo,
+            'fecha' => $request->fecha,
+            'ubicacion' => $request->ubicacion,
+            'descripcion' => $request->descripcion,
+            'estatus' => $request->estatus,
+            'comentarios'=> $request->comentarios,
+        ]);
+
+        $image = null;
+
+        if ($request->file('cierre') != null or !empty($request->file('cierre'))) {
+            foreach ($request->file('cierre') as $file) {
+                $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+
+                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
+
+                $route = 'public/evidencias_quejas_clientes_cerrado';
+
+                $image = $new_name_image;
+
+                $file->storeAs($route, $image);
+
+                EvidenciasQuejasClientesCerrado::create([
+                    'cierre' => $image,
+                    'quejas_clientes_id' => $quejasClientes->id,
+                ]);
+            }
+        }
+
+        // return redirect()->route('admin.desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
+    }
+
+    public function updateAnalisisQuejasClientes(Request $request, $id_quejas)
+    {
+        $analisis_quejasClientes = AnalisisQuejasClientes::findOrfail(intval($id_quejas));
+        $analisis_quejasClientes->update([
+            'problema_diagrama' => $request->problema_diagrama,
+            'problema_porque' => $request->problema_porque,
+            'causa_ideas' => $request->causa_ideas,
+            'causa_porque' => $request->causa_porque,
+            'ideas' => $request->ideas,
+            'porque_1' => $request->porque_1,
+            'porque_2' => $request->porque_2,
+            'porque_3' => $request->porque_3,
+            'porque_4' => $request->porque_4,
+            'porque_5' => $request->porque_5,
+            'control_a' => $request->control_a,
+            'control_b' => $request->control_b,
+            'proceso_a' => $request->proceso_a,
+            'proceso_b' => $request->proceso_b,
+            'personas_a' => $request->personas_a,
+            'personas_b' => $request->personas_b,
+            'tecnologia_a' => $request->tecnologia_a,
+            'tecnologia_b' => $request->tecnologia_b,
+            'metodos_a' => $request->metodos_a,
+            'metodos_b' => $request->metodos_b,
+            'ambiente_a' => $request->ambiente_a,
+            'ambiente_b' => $request->ambiente_b,
+            'fecha_cierre'=>$request->fecha_cierre,
+        ]);
+
+        return redirect()->route('admin.desk.index', $analisis_quejasClientes->quejas_id)->with('success', 'Reporte actualizado');
+    }
+
+    public function planesQuejasClientes(Request $request)
+    {
+        $quejasClientes = QuejasCliente::find($request->id);
+        // $quejasClientes->planes()->detach();
+        $quejasClientes->planes()->sync($request->planes);
+
+        return response()->json(['success' => true]);
+
     }
 }
