@@ -164,9 +164,8 @@
         </label>
         {{-- <input class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" type="text"
             name="descripcion_meta" value="{{ old('descripcion_meta', $objetivo->descripcion_meta) }}"> --}}
-        <textarea class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}"
-            name="descripcion_meta" id="" cols="30"
-            rows="1">{{ old('descripcion_meta', $objetivo->descripcion_meta) }}</textarea>
+        <textarea class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" name="descripcion_meta"
+            id="" cols="30" rows="1">{{ old('descripcion_meta', $objetivo->descripcion_meta) }}</textarea>
         <small id="descripcion_metaHelp" class="form-text text-muted">Ingresa una breve descripción del objetivo
             estratégico</small>
         @if ($errors->has('descripcion_meta'))
@@ -220,6 +219,10 @@
                 OBJETIVOS ESTRATÉGICOS ASIGNADOS
             </div>
         </div>
+        <div style="text-align: right">
+            <button class="btn btn-success" id="copiarObjetivos"><i class="fas fa-copy mr-2"></i>Copiar
+                Objetivos</button>
+        </div>
         <table class="table table-bordered w-100 tblObjetivos">
             <thead class="thead-dark">
                 <tr>
@@ -247,6 +250,28 @@
                 </tr>
             </thead>
         </table>
+        <div class="modal fade" id="modalCopiarObjetivos" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #345183;color: white;">
+                        <h5 class="modal-title" id="modalCopiarObjetivosLabel"><i class="mr-2 fas fa-copy"></i>Copiar
+                            Objetivos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="contenidoModal"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
+                        <button type="button" id="btnGuardarCopiaObjs" class="btn btn-success">Guardar</button>
+                    </div>
+                    @include('layouts.loader')
+                </div>
+            </div>
+        </div>
     </div>
 @endif
 
