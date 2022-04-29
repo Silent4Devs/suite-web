@@ -14,7 +14,7 @@ class AddMatrizRiesgosActivoIdForeign extends Migration
     public function up()
     {
         Schema::table('matriz_riesgos', function (Blueprint $table) {
-            //
+            $table->foreign('activo_id')->references('id')->on('subcategoria_activos');
         });
     }
 
@@ -26,7 +26,7 @@ class AddMatrizRiesgosActivoIdForeign extends Migration
     public function down()
     {
         Schema::table('matriz_riesgos', function (Blueprint $table) {
-            $table->foreign('activo_id')->references('id')->on('subcategoria_activos');
+          
         });
     }
 }

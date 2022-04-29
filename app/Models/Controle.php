@@ -42,4 +42,8 @@ class Controle extends Model
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+    public function matrizRiesgoSistemaGestion()
+    {
+        return $this->belongsToMany(MatrizRiesgosSistemaGestion::class, 'matriz_riesgos_sistema_gestion_controles_pivot', 'controles_id','matriz_id');
+    }
 }

@@ -2,65 +2,15 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Class MatrizRiesgo.
- *
- * @property int $id
- * @property string|null $descripcionriesgo
- * @property string|null $tipo_riesgo
- * @property string|null $confidencialidad
- * @property string|null $integridad
- * @property string|null $disponibilidad
- * @property string|null $probabilidad
- * @property string|null $impacto
- * @property float|null $nivelriesgo
- * @property float|null $riesgototal
- * @property float|null $resultadoponderacion
- * @property float|null $riesgoresidual
- * @property string|null $justificacion
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property string|null $deleted_at
- * @property int|null $controles_id
- * @property int|null $team_id
- * @property int|null $id_analisis
- * @property int|null $id_sede
- * @property int|null $id_proceso
- * @property int|null $id_responsable
- * @property int|null $activo_id
- * @property int|null $id_amenaza
- * @property int|null $id_area
- * @property int|null $id_vulnerabilidad
- * @property string|null $plan_de_accion
- * @property string|null $confidencialidad_cid
- * @property string|null $integridad_cid
- * @property string|null $disponibilidad_cid
- * @property string|null $probabilidad_residual
- * @property string|null $impacto_residual
- * @property string|null $nivelriesgo_residual
- * @property string|null $riesgo_total_residual
- *
- * @property Controle|null $controle
- * @property Activo|null $activo
- * @property Amenaza|null $amenaza
- * @property AnalisisDeRiesgo|null $analisis_de_riesgo
- * @property Area|null $area
- * @property Proceso|null $proceso
- * @property Empleado|null $empleado
- * @property Sede|null $sede
- * @property Vulnerabilidad|null $vulnerabilidad
- * @property Team|null $team
- * @property Collection|MatrizRiesgosControlesPivot[] $matriz_riesgos_controles_pivots
- */
-class MatrizRiesgo extends Model
+class MatrizRiesgosSistemaGestion extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'matriz_riesgos';
+    protected $table = 'matriz_riesgos_sistema_gestion';
 
     protected $dates = [
         'created_at',
@@ -80,24 +30,15 @@ class MatrizRiesgo extends Model
         '0'  => 'NULA (0)',
     ];
 
-    
     const IMPACTO_SELECT = [
         '9' => 'MUY ALTO (9)',
         '6'     => 'ALTO (6)',
         '3'    => 'MEDIO (3)',
         '0'     => 'BAJO (0)',
     ];
-    
-    const EV_INICIAL_SELECT = [
-        '11.1' => 'Sí',
-        '0'     => 'No',
-    ];
 
     protected $casts = [
         'plan_de_accion' => 'string',
-        'confidencialidad_cid' => 'string',
-        'integridad_cid' => 'string',
-        'disponibilidad_cid' => 'string',
         'probabilidad_residual' => 'string',
         'impacto_residual' => 'string',
         'nivelriesgo_residual' => 'string',
@@ -121,9 +62,6 @@ class MatrizRiesgo extends Model
     protected $fillable = [
         'descripcionriesgo',
         'tipo_riesgo',
-        'confidencialidad',
-        'integridad',
-        'disponibilidad',
         'probabilidad',
         'impacto',
         'nivelriesgo',
@@ -131,7 +69,6 @@ class MatrizRiesgo extends Model
         'resultadoponderacion',
         'riesgoresidual',
         'justificacion',
-        //'controles_id',
         'team_id',
         'id_analisis',
         'id_sede',
@@ -142,15 +79,34 @@ class MatrizRiesgo extends Model
         'id_area',
         'id_vulnerabilidad',
         'plan_de_accion',
-        'confidencialidad_cid',
-        'integridad_cid',
-        'disponibilidad_cid',
         'probabilidad_residual',
         'impacto_residual',
         'nivelriesgo_residual',
         'riesgo_total_residual',
         'tipo_tratamiento',
         'aceptar_transferir',
+        'calidad_servicio',
+        'cliente',
+        'estrategia_negocio',
+        'disponibilidad_2000',
+        'niveles_servicio',
+        'continuidad_BCP',
+        'confidencialidad_270000',
+        'integridad_27000',
+        'disponibilidad_27000',
+        'resultado_ponderacion',
+        'estrategia_negocioRes',
+        'calidad_servicioRes',
+        'clienteRes',
+        'disponibilidad_2000Res',
+        'niveles_servicioRes',
+        'continuidad_BCPRes',
+        'confidencialidad_270000Res',
+        'integridad_27000Res',
+        'disponibilidad_27000Res',
+        'resultado_ponderacionRes',
+        'riesgo_total',
+        'riesgo_residual',
     ];
 
     /*protected function serializeDate(DateTimeInterface $date)
@@ -232,6 +188,6 @@ class MatrizRiesgo extends Model
 
     public function matriz_riesgos_controles_pivots()
     {
-        return $this->hasMany(MatrizRiesgosControlesPivot::class, 'matriz_id');
+        return $this->belongsToMany(DeclaracionAplicabilidad::class,'matriz_riesgos_sistema_gestion_controles_pivot', 'matriz_id','controles_id');
     }
 }
