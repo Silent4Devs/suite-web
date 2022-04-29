@@ -76,7 +76,7 @@
                             <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control" id="opciones" id="cerradoEvidencia"
+                                <select name="estatus" class="form-control" id="opciones"
                                     onchange='cambioOpciones();'>
                                     <option
                                         {{ old('estatus', $quejasClientes->estatus) == 'nuevo' ? 'selected' : '' }}
@@ -89,7 +89,7 @@
                                         value="en espera">En espera</option>
                                     <option
                                         {{ old('estatus', $quejasClientes->estatus) == 'cerrado' ? 'selected' : '' }}
-                                        value="cerrado" >Cerrado</option>
+                                        value="cerrado">Cerrado</option>
                                     <option
                                         {{ old('estatus', $quejasClientes->estatus) == 'cancelado' ? 'selected' : '' }}
                                         value="cancelado">Cancelado</option>
@@ -99,7 +99,8 @@
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de identificación</label>
-                                <input type="datetime" name="fecha" value="{{ $quejasClientes->fecha }}"
+                                <input type="datetime" name="fecha"
+                                value="{{ old('fecha_publicacion',\Carbon\Carbon::parse($quejasClientes->fecha))->format('d-m-Y H:i:s') }}"
                                     class="form-control">
                             </div>
 
@@ -107,23 +108,26 @@
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de recepción del reporte</label>
-                                <div class="form-control">{{ $quejasClientes->created_at }}</div>
+                                <div class="form-control">
+                                    {{  \Carbon\Carbon::parse($quejasClientes->created_at)->format("d-m-Y H:i:s") }}
+                                </div>
                             </div>
 
                             <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de cierre del ticket</label>
-
                                 <input class="form-control" readonly name="fecha_cierre" type="datetime"
-                                    value="{{ $quejasClientes->fecha_cierre }}" id="solucion">
+                                    value="{{ old('fecha_publicacion',\Carbon\Carbon::parse($quejasClientes->fecha_cierre))->format('d-m-Y H:i:s') }}"
+                                    id="solucion">
 
                             </div>
 
-                            <div class="d-none" id="cerradoCampo">
+                            <div class="d-none row col-12" id="cerradoCampo">
 
                                 <div class="mt-2 form-group col-8">
-                                    <label class="form-label"><i class="fas fa-file-import iconos-crear"></i>Adjuntar
+                                    <label class="form-label"><i
+                                            class="fas fa-file-import iconos-crear"></i>Adjuntar
                                         evidencia</label>
                                     <input type="file" name="cierre[]" class="form-control" multiple="multiple">
                                 </div>
@@ -152,7 +156,8 @@
                             </div>
 
                             <div class="mt-0 form-group col-6">
-                                <label class="form-label"><i class="fas fa-list iconos-crear"></i>Proyecto<sup>*</sup></label>
+                                <label class="form-label"><i
+                                        class="fas fa-list iconos-crear"></i>Proyecto<sup>*</sup></label>
                                 <select class="form-control" name="proyectos_id">
                                     <option disabled selected>Seleccionar el proyecto</option>
                                     @foreach ($proyectos as $proyecto)
@@ -165,7 +170,8 @@
                             </div>
 
                             <div class="mt-0 form-group col-8">
-                                <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre<sup>*</sup></label>
+                                <label class="form-label"><i
+                                        class="fas fa-user-tie iconos-crear"></i>Nombre<sup>*</sup></label>
                                 <input type="text" name="nombre" value="{{ old('nombre', $quejasClientes->nombre) }}"
                                     class="form-control" required>
                             </div>
@@ -279,18 +285,18 @@
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-body">
-                                                    @if (count($quejasClientes->evidencias_quejas))
+                                                    @if (count($quejasClientes->cierre_evidencias))
                                                         <div id='carouselExampleIndicators' class='carousel slide'
                                                             data-ride='carousel'>
                                                             <ol class='carousel-indicators'>
-                                                                @foreach ($quejasClientes->evidencias_quejas as $idx => $cierre)
+                                                                @foreach ($quejasClientes->cierre_evidencias as $idx => $cierre)
                                                                     <li data-target='#carouselExampleIndicators'
                                                                         data-slide-to='{{ $idx }}'
                                                                         class='{{ $idx == 0 ? 'active' : '' }}'></li>
                                                                 @endforeach
                                                             </ol>
                                                             <div class='carousel-inner'>
-                                                                @foreach ($quejasClientes->evidencias_quejas as $idx => $cierre)
+                                                                @foreach ($quejasClientes->cierre_evidencias as $idx => $cierre)
                                                                     <div
                                                                         class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
                                                                         <iframe class='img-size'
@@ -325,7 +331,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default"
-                                                        data-dismiss="modal">Close</button>
+                                                        data-dismiss="modal">Cerrar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -385,7 +391,7 @@
                                 <label class="form-label"><i
                                         class="fas fa-user-plus iconos-crear"></i>Otro(s)</label>
                                 <textarea name="otro_quejado" class="form-control">
-                                    {{old('otro_quejado', $quejasClientes->otro_quejado) }}
+                                    {{ old('otro_quejado', $quejasClientes->otro_quejado) }}
                                 </textarea>
                             </div>
 
@@ -398,7 +404,7 @@
 
 
                             <div class="mt-4 text-right form-group col-12">
-                                <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cancelar</a>
+                                <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
                                 <input type="submit" class="btn btn-success" value="Enviar">
                             </div>
                         </form>
@@ -722,6 +728,43 @@
 
 @section('scripts')
 <script type="text/javascript">
+    $(document).ready(function() {
+        let estatus = @json($quejasClientes->estatus);
+        if (estatus == 'cerrado') {
+
+            $('#cerradoCampo').removeClass('d-none')
+
+        } else {
+
+            $('#cerradoCampo').addClass('d-none')
+
+        }
+    })
+
+    $(document).on('change', '#opciones', function(event) {
+        if ($('#opciones option:selected').val() == 'cerrado') {
+            $('#cerradoCampo').removeClass('d-none');
+        } else {
+            $('#cerradoCampo').addClass('d-none');
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        let estatus = @json($quejasClientes->estatus);
+        if (estatus == 'cerrado') {
+
+            document.getElementById('solucion').value = formatDate(fecha);
+
+        } else {
+
+            document.getElementById('solucion').value = "";
+
+        }
+    })
+
+
     const formatDate = (current_datetime) => {
         let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
             current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
@@ -1026,16 +1069,6 @@
             }
         })
 
-    });
-</script>
-
-<script type="text/javascript">
-    $(document).on('change', '#cerradoEvidencia', function(event) {
-        if ($('#cerradoEvidencia option:selected').attr('Cerrado') == '') {
-            $('#cerradoCampo').removeClass('d-none');
-        } else {
-            $('#cerradoCampo').addClass('d-none');
-        }
     });
 </script>
 @endsection

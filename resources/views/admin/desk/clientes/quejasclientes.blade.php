@@ -43,7 +43,7 @@
                             <select class="form-control" name="cliente_id" required>
                                 <option disabled selected>Seleccionar al cliente</option>
                                 @foreach ($clientes as $cliente)
-                                    <option value="{{ $cliente->id }}">
+                                    <option value="{{ old ($cliente->id) }}">
                                         {{ $cliente->nombre }}
                                     </option>
                                 @endforeach
@@ -55,7 +55,7 @@
                             <select class="form-control" name="proyectos_id" required>
                                 <option disabled selected>Seleccionar el proyecto</option>
                                 @foreach ($proyectos as $proyecto)
-                                <option value="{{ $proyecto->id }}">
+                                <option value="{{ old($proyecto->id) }}">
                                     {{ $proyecto->proyecto }}
                                 </option>
                             @endforeach
@@ -64,22 +64,22 @@
 
                         <div class="mt-0 form-group col-8">
                             <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre<sup>*</sup></label>
-                            <input type="text" name="nombre" class="form-control" required>
+                            <input type="text" name="nombre" value="{{old('nombre') }}" class="form-control" required>
                         </div>
 
                         <div class="mt-0 form-group col-4">
                             <label class="form-label"><i class="fas fa-suitcase iconos-crear"></i></i>Puesto</label>
-                            <input type="text" name="puesto" class="form-control">
+                            <input type="text" name="puesto" value="{{old('puesto') }}" class="form-control">
                         </div>
 
                         <div class="mt-0 form-group col-6">
                             <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Teléfono</label>
-                            <input type="text" name="telefono" class="form-control" >
+                            <input type="text" name="telefono"  value="{{old('telefono') }}"  class="form-control" >
                         </div>
 
                         <div class="mt-0 form-group col-6">
                             <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo electrónico</label>
-                            <input type="text" name="correo" class="form-control" >
+                            <input type="text" name="correo" value="{{old('correo') }}" class="form-control" >
                         </div>
                     {{-- </div> --}}
 
@@ -105,7 +105,7 @@
                         <select class="form-control">
                             <option disabled selected>Seleccionar colaborador</option>
                             @foreach ($empleados as $empleado)
-                                <option value="{{ $empleado->name }}">
+                                <option value="{{$empleado->name }}">
                                     {{ $empleado->name }}
                                 </option>
                             @endforeach
@@ -138,26 +138,26 @@
                     <div class="mt-2 form-group col-md-8">
                         <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título corto de la
                             queja<sup>*</sup></label>
-                        <input type="" name="titulo" class="form-control" required>
+                        <input type="" name="titulo" class="form-control" value="{{old('titulo') }}" required>
                     </div>
 
                     <div class="mt-2 form-group col-md-4">
                         <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i> Fecha y hora de
                             ocurrencia<sup>*</sup></label>
-                        <input type="datetime-local" name="fecha" class="form-control" required>
+                        <input type="datetime-local" name="fecha" class="form-control" value="{{old('fecha') }}" required>
                     </div>
 
 
                     <div class="mt-2 form-group col-md-12">
                         <label class="form-label"><i class="fas fa-map iconos-crear"></i> Ubicación exacta</label>
-                        <input type="" name="ubicacion" class="form-control">
+                        <input type="" name="ubicacion" class="form-control" value="{{old('ubicacion') }}">
                     </div>
 
                     <div class="mt-4 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción detallada de la
                             queja<sup>*</sup></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                             title="Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,¿Cuándo?, ¿Dónde?."></i>
-                        <textarea type="text" name="descripcion" class="form-control" required></textarea>
+                        <textarea type="text" name="descripcion" class="form-control" value="{{old('descripcion') }}" required></textarea>
                     </div>
 
                     <div class="mt-4 form-group col-12">

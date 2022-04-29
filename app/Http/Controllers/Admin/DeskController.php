@@ -60,12 +60,13 @@ class DeskController extends Controller
         $cerrados_quejas = Quejas::where('estatus', 'cerrado')->get()->count();
         $cancelados_quejas = Quejas::where('estatus', 'cancelado')->get()->count();
 
-        $total_quejasclientes = QuejasCliente::get()->count();
-        $nuevos_quejasclientes = QuejasCliente::where('estatus', 'nuevo')->get()->count();
-        $en_curso_quejasclientes = QuejasCliente::where('estatus', 'en curso')->get()->count();
-        $en_espera_quejasclientes = QuejasCliente::where('estatus', 'en espera')->get()->count();
-        $cerrados_quejasclientes = QuejasCliente::where('estatus', 'cerrado')->get()->count();
-        $cancelados_quejasclientes = QuejasCliente::where('estatus', 'cancelado')->get()->count();
+        $total_quejasClientes = QuejasCliente::get()->count();
+        $nuevos_quejasClientes = QuejasCliente::where('estatus', 'nuevo')->get()->count();
+        $en_curso_quejasClientes = QuejasCliente::where('estatus', 'en curso')->get()->count();
+        $en_espera_quejasClientes = QuejasCliente::where('estatus', 'en espera')->get()->count();
+        $cerrados_quejasClientes = QuejasCliente::where('estatus', 'cerrado')->get()->count();
+        $cancelados_quejasClientes = QuejasCliente::where('estatus', 'cancelado')->get()->count();
+
 
         $total_denuncias = Denuncias::get()->count();
         $nuevos_denuncias = Denuncias::where('estatus', 'nuevo')->get()->count();
@@ -113,6 +114,12 @@ class DeskController extends Controller
             'en_espera_quejas',
             'cerrados_quejas',
             'cancelados_quejas',
+            'total_quejasClientes',
+            'nuevos_quejasClientes',
+            'en_curso_quejasClientes',
+            'en_espera_quejasClientes',
+            'cerrados_quejasClientes',
+            'cancelados_quejasClientes',
             'total_denuncias',
             'nuevos_denuncias',
             'en_curso_denuncias',
@@ -803,7 +810,7 @@ class DeskController extends Controller
 
     public function indexQuejasClientes()
     {
-        $quejasClientes  = QuejasCliente::get();
+        $quejasClientes  = QuejasCliente::with('evidencias_quejas','planes','cierre_evidencias','cliente','proyectos')->where('archivado',false)->get();
         // dd($quejasClientes);
         return datatables()->of($quejasClientes )->toJson();
     }
@@ -872,7 +879,7 @@ class DeskController extends Controller
 
     public function editQuejasClientes(Request $request, $id_quejas)
     {
-        $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas))->load('evidencias_quejas','planes','cierre_evidencias');
+        $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas))->load('evidencias_quejas','planes','cierre_evidencias','cliente','proyectos');
         // dd($quejasClientes);
         $procesos = Proceso::get();
 
@@ -993,4 +1000,36 @@ class DeskController extends Controller
         return response()->json(['success' => true]);
 
     }
+
+    public function archivoQuejaClientes()
+    {
+        $quejas = QuejasCliente::where('archivado', true)->get();
+
+        return view('admin.desk.clientes.archivo', compact('quejas'));
+    }
+
+    public function archivadoQuejaClientes(Request $request, $id)
+    {
+        // dd($request);
+        if ($request->ajax()) {
+            $queja = QuejasCliente::findOrfail(intval($id));
+            $queja->update([
+                'archivado' => true,
+            ]);
+
+            return response()->json(['success' => true]);
+        }
+    }
+
+    public function recuperarArchivadoQuejaCliente($id)
+    {
+        $queja = QuejasCliente::find($id);
+        // dd($recurso);
+        $queja->update([
+            'archivado' =>false,
+        ]);
+
+        return redirect()->route('admin.desk.index');
+    }
+
 }

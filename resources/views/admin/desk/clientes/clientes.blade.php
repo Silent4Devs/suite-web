@@ -1,37 +1,37 @@
 <div class="row">
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-celeste">
-            <div class="numero"><i class="fas fa-exclamation-triangle"></i> {{ $total_quejas }}</div>
-            <div>Quejas</div>
+            <div class="numero"><i class="fas fa-exclamation-triangle"></i> {{ $total_quejasClientes }}</div>
+            <div>Quejas Clientes</div>
         </div>
     </div>
     <div class="col-6 col-md-2 ">
         <div class="tarjetas_seguridad_indicadores cdr-amarillo">
-            <div class="numero"><i class="far fa-arrow-alt-circle-right"></i> {{ $nuevos_quejas }}</div>
+            <div class="numero"><i class="far fa-arrow-alt-circle-right"></i> {{ $nuevos_quejasClientes }}</div>
             <div>Sin atender</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-morado">
-            <div class="numero"><i class="fas fa-redo-alt"></i> {{ $en_curso_quejas }}</div>
+            <div class="numero"><i class="fas fa-redo-alt"></i> {{ $en_curso_quejasClientes }}</div>
             <div>En curso</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-azul">
-            <div class="numero"><i class="fas fa-history"></i> {{ $en_espera_quejas }}</div>
+            <div class="numero"><i class="fas fa-history"></i> {{ $en_espera_quejasClientes }}</div>
             <div>En espera</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-verde">
-            <div class="numero"><i class="far fa-check-circle"></i> {{ $cerrados_quejas }}</div>
+            <div class="numero"><i class="far fa-check-circle"></i> {{ $cerrados_quejasClientes }}</div>
             <div>Cerrados</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-rojo">
-            <div class="numero"><i class="far fa-circle"></i> {{ $cancelados_quejas }}</div>
+            <div class="numero"><i class="far fa-circle"></i> {{ $cancelados_quejasClientes }}</div>
             <div>Cancelados</div>
         </div>
     </div>
@@ -52,6 +52,7 @@
                 <th style="min-width:200px;">Puesto</th>
                 <th style="min-width:200px;">Teléfono</th>
                 <th style="min-width:200px;">Correo</th>
+                <th style="min-width:200px;">Titulo</th>
                 <th style="min-width:200px;">Estatus</th>
                 <th style="min-width:200px;">Fecha de identificación</th>
                 <th style="min-width:200px;">Fecha de cierre</th>
@@ -173,10 +174,16 @@
                             data: 'folio'
                         },
                         {
-                            data: 'cliente'
+                            data: 'cliente',
+                            render: function(data, type, row, meta) {
+                               return row.cliente.nombre
+                            }
                         },
                         {
-                            data: 'proyectos'
+                            data: 'proyectos',
+                            render: function(data, type, row, meta) {
+                               return row.proyectos.proyecto
+                            }
                         },
                         {
                             data: 'nombre'
@@ -189,6 +196,9 @@
                         },
                         {
                             data: 'correo'
+                        },
+                        {
+                            data: 'titulo'
                         },
                         {
                             data: 'estatus'
@@ -217,12 +227,12 @@
                                 let html =
                                     `
                 			<div class="botones_tabla">
-                				<a href="/admin/desk/${data}/quejas-edit/"><i class="fas fa-edit"></i></a>`;
+                				<a href="/admin/desk/${data}/quejas-clientes-edit/"><i class="fas fa-edit"></i></a>`;
 
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
-                                    html += `<button class="btn archivar" onclick='ArchivarQueja("/admin/desk/${data}/archivarQuejas"); return false;' style="margin-top:-10px">
+                                    html += `<button class="btn archivar" onclick='ArchivarQuejaCliente("/admin/desk/${data}/archivarQuejasClientes"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 				       					</div>`;
@@ -237,9 +247,9 @@
                 });
             }
 
-            window.ArchivarQueja = function(url) {
+            window.ArchivarQuejaCliente = function(url) {
                 Swal.fire({
-                    title: '¿Archivar queja?',
+                    title: '¿Archivar queja clientes?',
                     text: "",
                     icon: 'warning',
                     showCancelButton: true,
@@ -286,7 +296,7 @@
                     e.preventDefault();
                     let incidente_id = this.getAttribute('data-id');
                     // console.log(incidente_id);
-                    let url = `/admin/desk/${incidente_id}/archivarQuejas`;
+                    let url = `/admin/desk/${incidente_id}/archivarQuejasClientes`;
                 });
             });
         });

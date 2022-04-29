@@ -3,7 +3,7 @@
     {{-- {{ Breadcrumbs::render('riesgo-archivo') }} --}}
     <div class="pl-4 pr-4 mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Archivo Quejas</strong></h3>
+            <h3 class="mb-2 text-center text-white"><strong>Archivo Quejas Clientes</strong></h3>
         </div>
 
         <div class="datatable-fix" style="width: 100%;">
@@ -13,19 +13,17 @@
                     <tr>
                         <th>Folio</th>
                         <th style="min-width:200px;">Cliente</th>
-                        <th style="min-width:200px;">Estatus</th>
-                        <th style="min-width:200px;">Fecha de identificación</th>
-                        <th style="min-width:200px;">Fecha de recepción</th>
-                        <th style="min-width:200px;">Fecha de cierre</th>
+                        <th style="min-width:200px;">Proyecto</th>
                         <th style="min-width:200px;">Nombre</th>
                         <th style="min-width:200px;">Puesto</th>
-                        <th style="min-width:200px;">Área</th>
-                        <th style="min-width:200px;">Nombre</th>
-                        <th style="min-width:200px;">Área</th>
-                        <th style="min-width:200px;">Proceso</th>
-                        <th style="min-width:200px;">Sede</th>
+                        <th style="min-width:200px;">Teléfono</th>
+                        <th style="min-width:200px;">Correo</th>
+                        <th style="min-width:200px;">Estatus</th>
+                        <th style="min-width:200px;">Fecha de identificación</th>
+                        <th style="min-width:200px;">Fecha de cierre</th>
                         <th style="min-width:200px;">Ubicación</th>
-                        <th style="min-width:200px;">Externos</th>
+                        <th style="min-width:200px;">Proceso</th>
+                        <th style="min-width:200px;">Otros</th>
                         <th style="min-width: 500px;">Descripción</th>
                         <th>Opciones</th>
                     </tr>
@@ -36,26 +34,16 @@
                             <td>{{ $queja->folio }}</td>
                             <td>{{ $queja->anonimo }}</td>
                             <td>{{ $queja->estatus }}</td>
-                            <td>{{ $queja->fecha_creacion }}</td>
-                            <td>{{ $queja->fecha_reporte }}</td>
-                            <td>{{ $queja->fecha_de_cierre }}</td>
-                            @if($queja->anonimo == 'no')
-                                <td>
-                                    <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $queja->quejo->avatar }}" title="{{ $queja->quejo->name }}">
-                                </td>
-                                <td>{{ $queja->quejo->puesto }}</td>
-                                <td>{{ $queja->quejo->area->area }}</td>
-                            @else
-                                <td> -- </td>
-                                <td> -- </td>
-                                <td> -- </td>
-                            @endif
-                            <td>{{ $queja->colaborador_quejado }}</td>
-                            <td>{{ $queja->area_quejado }}</td>
-                            <td>{{ $queja->proceso_quejado }}</td>
-                            <td>{{ $queja->sede }}</td>
+                            <td>{{ $queja->nombre }}</td>
+                            <td>{{ $queja->puesto }}</td>
+                            <td>{{ $queja->telefono }}</td>
+                            <td>{{ $queja->correo }}</td>
+                            <td>{{ $queja->estatus }}</td>
+                            <td>{{ $queja->fecha }}</td>
+                            <td>{{ $queja->fecha_cierre }}</td>
                             <td>{{ $queja->ubicacion }}</td>
-                            <td>{{ $queja->externo_quejado }}</td>
+                            <td>{{ $queja->proceso_quejado }}</td>
+                            <td>{{ $queja->otro_quejado }}</td>
                             <td>{{ $queja->descripcion }}</td>
                             <td>
                                 <div class="row">
@@ -64,7 +52,7 @@
                                             class="fas fa-edit"></i></a>
                                     </div>
                                     <div class="col-6">
-                                        <form action="{{route('admin.desk.queja-archivo.recuperar', $queja->id)}}" method="POST">
+                                        <form action="{{route('admin.desk.quejaClientes-archivo.recuperar', $queja->id)}}" method="POST">
                                             @csrf
                                             <button class="btn" title="Recuperar" style="all: unset !important;">
                                                 <i class="fas fa-sign-in-alt"></i>
