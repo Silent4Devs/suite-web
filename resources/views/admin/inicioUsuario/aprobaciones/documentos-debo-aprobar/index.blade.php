@@ -97,7 +97,7 @@
                                 <td style="text-transform: capitalize;">
                                     {{ $revision->documento ? $revision->documento->tipo : 'El tipo no ha sido asignado' }}
                                 </td>
-                                @if (is_null($revision->documento))
+                                @if (!is_null($revision->documento))
                                     @if ($revision->documento->proceso_id == null)
                                         <td style="text-align: center !important; font-weight: normal;">
                                             {{ $revision->documento->macroproceso ? $revision->documento->macroproceso->nombre : 'Sin vincular' }}
