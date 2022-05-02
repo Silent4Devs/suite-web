@@ -44,7 +44,8 @@ class QuejasCliente extends Model
 		'fecha_cierre',
 		'ubicacion',
 		'descripcion',
-		'comentarios'
+		'comentarios',
+        'archivado',
 	];
 
     protected $appends = [
@@ -105,6 +106,21 @@ class QuejasCliente extends Model
     public function planes()
     {
         return $this->morphToMany(PlanImplementacion::class, 'plan_implementacionable');
+    }
+
+    public function getFechaCreacionAttribute()
+    {
+        return Carbon::parse($this->fecha)->format('d-m-Y');
+    }
+
+    public function getFechaDeCierreAttribute()
+    {
+        return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y') : '';
+    }
+
+    public function getFechaReporteAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('d-m-Y');
     }
 
 }

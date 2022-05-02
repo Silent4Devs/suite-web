@@ -276,6 +276,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('desk/quejas', 'DeskController@indexQueja')->name('desk.queja-index');
     //
 
+    //Archivo QuejaCliente
+    Route::post('desk/{incidente}/archivarQuejasClientes', 'DeskController@archivadoQuejaClientes')->name('desk.quejasclientes-archivar');
+    Route::get('desk/quejas-archivo', 'DeskController@archivoQuejaClientes')->name('desk.quejacliente-archivo');
+    Route::post('desk/quejas-clientes-archivo/recuperar/{id}', 'DeskController@recuperarArchivadoQuejaCliente')->name('desk.quejaClientes-archivo.recuperar');
+
+
     //flujo de archivado Sugerencias
     Route::post('desk/{incidente}/archivarSugerencia', 'DeskController@archivadoSugerencia')->name('desk.sugerencia-archivar');
     Route::get('desk/sugerencia-archivo', 'DeskController@archivoSugerencia')->name('desk.sugerencia-archivo');
@@ -310,8 +316,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('desk/quejas-clientes', 'DeskController@quejasClientes')->name('desk.quejas-clientes');
     Route::get('desk/quejas-clientes/index', 'DeskController@indexQuejasClientes')->name('desk.quejasClientes-index');
     Route::post('desk/reportes/quejas-clientes', 'DeskController@storeQuejasClientes')->name('desk.quejasClientes-store');
-    Route::get('desk/{quejas}/quejas-edit', 'DeskController@editQuejasClientes')->name('desk.quejasClientes-edit');
-    Route::post('desk/{quejas}/quejas-update', 'DeskController@updateQuejasClientes')->name('desk.quejasClientes-update');
+    Route::get('desk/{quejas}/quejas-clientes-edit', 'DeskController@editQuejasClientes')->name('desk.quejasClientes-edit');
+    Route::post('desk/{quejas}/quejas-clientes-update', 'DeskController@updateQuejasClientes')->name('desk.quejasClientes-update');
     Route::post('desk/planes/quejas-clientes', 'DeskController@planesQuejasClientes')->name('desk.planesQuejasClientes');
 
 
