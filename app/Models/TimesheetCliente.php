@@ -28,4 +28,9 @@ class TimesheetCliente extends Model
         'correo_contacto',
         'celular_contacto',
     ];
+
+    public function cliente()
+    {
+        return $this->hasMany(QuejasCliente::class, 'cliente_id');
+    }
 }

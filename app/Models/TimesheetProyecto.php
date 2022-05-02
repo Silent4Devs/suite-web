@@ -31,4 +31,9 @@ class TimesheetProyecto extends Model
     {
         return $this->hasMany(TimesheetTarea::class, 'tarea_id', 'id');
     }
+
+    public function proyectos()
+    {
+        return $this->hasMany(QuejasCliente::class, 'proyectos_id');
+    }
 }

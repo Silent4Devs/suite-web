@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddMatrizRiesgosActivoIdForeign extends Migration
+class AddColumnArchivadoToQuejasClientesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddMatrizRiesgosActivoIdForeign extends Migration
      */
     public function up()
     {
-        Schema::table('matriz_riesgos', function (Blueprint $table) {
-            $table->foreign('activo_id')->references('id')->on('subcategoria_activos');
+        Schema::table('quejas_clientes', function (Blueprint $table) {
+            $table->boolean('archivado')->default(false);
         });
     }
 
@@ -25,7 +25,8 @@ class AddMatrizRiesgosActivoIdForeign extends Migration
      */
     public function down()
     {
-        Schema::table('matriz_riesgos', function (Blueprint $table) {
+        Schema::table('quejas_clientes', function (Blueprint $table) {
+            //
         });
     }
 }
