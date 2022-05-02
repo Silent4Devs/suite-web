@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EvidenciasQuejasClientesCerrado extends Model
 {
@@ -30,6 +29,6 @@ class EvidenciasQuejasClientesCerrado extends Model
 
     public function quejas()
     {
-        return $this->belongsTo(QuejasCliente::class, 'quejas_clientes_id','id');
+        return $this->belongsTo(QuejasCliente::class, 'quejas_clientes_id', 'id');
     }
 }

@@ -2,30 +2,30 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\Activo;
-use App\Models\Quejas;
-use App\Models\Mejoras;
-use App\Models\Proceso;
-use App\Models\Empleado;
-use App\Models\Denuncias;
-use App\Models\Sugerencias;
-use Illuminate\Http\Request;
-use App\Models\QuejasCliente;
-use Illuminate\Http\Response;
-use App\Models\TimesheetCliente;
-use App\Models\TimesheetProyecto;
-use App\Models\CategoriaIncidente;
-use App\Models\RiesgoIdentificado;
-use App\Models\IncidentesSeguridad;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use App\Models\SubcategoriaIncidente;
+use App\Models\Activo;
 use App\Models\AnalisisQuejasClientes;
+use App\Models\AnalisisSeguridad;
+use App\Models\Area;
+use App\Models\CategoriaIncidente;
+use App\Models\Denuncias;
+use App\Models\Empleado;
 use App\Models\EvidenciaQuejasClientes;
 use App\Models\EvidenciasQuejasClientesCerrado;
-use App\Models\AnalisisSeguridad; //mejora apunta a este modelo
+use App\Models\IncidentesSeguridad;
+use App\Models\Mejoras;
+use App\Models\Proceso;
+use App\Models\Quejas;
+use App\Models\QuejasCliente;
+use App\Models\RiesgoIdentificado;
+use App\Models\Sede;
+use App\Models\SubcategoriaIncidente;
+use App\Models\Sugerencias;
+use App\Models\TimesheetCliente;
+use App\Models\TimesheetProyecto;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate; //mejora apunta a este modelo
 
 class DeskController extends Controller
 {
@@ -66,7 +66,6 @@ class DeskController extends Controller
         $en_espera_quejasClientes = QuejasCliente::where('estatus', 'en espera')->get()->count();
         $cerrados_quejasClientes = QuejasCliente::where('estatus', 'cerrado')->get()->count();
         $cancelados_quejasClientes = QuejasCliente::where('estatus', 'cancelado')->get()->count();
-
 
         $total_denuncias = Denuncias::get()->count();
         $nuevos_denuncias = Denuncias::where('estatus', 'nuevo')->get()->count();
@@ -804,15 +803,14 @@ class DeskController extends Controller
 
         $proyectos = TimesheetProyecto::get();
 
-        return view('admin.desk.clientes.quejasclientes', compact('areas', 'procesos', 'empleados', 'activos','clientes','proyectos'));
-
+        return view('admin.desk.clientes.quejasclientes', compact('areas', 'procesos', 'empleados', 'activos', 'clientes', 'proyectos'));
     }
 
     public function indexQuejasClientes()
     {
-        $quejasClientes  = QuejasCliente::with('evidencias_quejas','planes','cierre_evidencias','cliente','proyectos')->where('archivado',false)->get();
+        $quejasClientes = QuejasCliente::with('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos')->where('archivado', false)->get();
         // dd($quejasClientes);
-        return datatables()->of($quejasClientes )->toJson();
+        return datatables()->of($quejasClientes)->toJson();
     }
 
     public function storeQuejasClientes(Request $request)
@@ -876,10 +874,9 @@ class DeskController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
-
     public function editQuejasClientes(Request $request, $id_quejas)
     {
-        $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas))->load('evidencias_quejas','planes','cierre_evidencias','cliente','proyectos');
+        $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos');
         // dd($quejasClientes);
         $procesos = Proceso::get();
 
@@ -895,12 +892,11 @@ class DeskController extends Controller
 
         $proyectos = TimesheetProyecto::get();
 
-        return view('admin.desk.clientes.edit', compact('clientes','proyectos','quejasClientes', 'procesos', 'empleados', 'areas', 'activos','analisis'));
+        return view('admin.desk.clientes.edit', compact('clientes', 'proyectos', 'quejasClientes', 'procesos', 'empleados', 'areas', 'activos', 'analisis'));
     }
 
     public function updateQuejasClientes(Request $request, $id_quejas)
     {
-
         $request->validate([
             'cliente_id' => 'required',
             'proyectos_id' => 'required',
@@ -998,7 +994,6 @@ class DeskController extends Controller
         $quejasClientes->planes()->sync($request->planes);
 
         return response()->json(['success' => true]);
-
     }
 
     public function archivoQuejaClientes()
@@ -1031,5 +1026,4 @@ class DeskController extends Controller
 
         return redirect()->route('admin.desk.index');
     }
-
 }

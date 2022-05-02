@@ -49,7 +49,6 @@ class AlcanceSgsiController extends Controller
             });
             $table->editColumn('alcancesgsi', function ($row) {
                 return  $row->alcancesgsi ? html_entity_decode(strip_tags($row->alcancesgsi), ENT_QUOTES, 'UTF-8') : '';
-
             });
 
             $table->editColumn('norma', function ($row) {
