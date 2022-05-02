@@ -26,7 +26,6 @@ use App\Models\MatrizOctaveServicio;
 use App\Models\MatrizRiesgo;
 use App\Models\MatrizRiesgosControlesPivot;
 use App\Models\MatrizRiesgosSistemaGestion;
-use App\Models\MatrizRiesgosSistemaGestionControlesPivot;
 use App\Models\Organizacion;
 use App\Models\PlanImplementacion;
 use App\Models\Proceso;
@@ -707,6 +706,7 @@ class MatrizRiesgosController extends Controller
 
         return view('admin.matrizSistemaGestion.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
+
     public function createSistemaGestion()
     {
         abort_if(Gate::denies('matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -721,12 +721,11 @@ class MatrizRiesgosController extends Controller
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
-        return view('admin.matrizSistemaGestion.create', compact('matrizRiesgo','activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
+        return view('admin.matrizSistemaGestion.create', compact('matrizRiesgo', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
 
     public function storeSistemaGestion(Request $request)
     {
-        
         $controles = array_map(function ($value) {
             return intval($value);
         }, $request->controles_id);
@@ -739,10 +738,9 @@ class MatrizRiesgosController extends Controller
 
         return redirect()->route('admin.matriz-seguridad.sistema-gestion', ['id' => $request->id_analisis])->with('success', 'Guardado con éxito');
     }
+
     public function editSistemaGestion(Request $request, $id)
-    {   
-        
-       
+    {
         $matrizRiesgo = MatrizRiesgosSistemaGestion::with('matriz_riesgos_controles_pivots')->find($id);
         $organizacions = Organizacion::all();
         $teams = Team::get();
@@ -750,7 +748,7 @@ class MatrizRiesgosController extends Controller
         $tipoactivos = Tipoactivo::get();
         // $controles = Controle::get();
         $controlesSeleccionado = [];
-        if( $matrizRiesgo->matriz_riesgos_controles_pivots != null){
+        if ($matrizRiesgo->matriz_riesgos_controles_pivots != null) {
             $controlesSeleccionado = $matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray();
         }
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
@@ -774,8 +772,7 @@ class MatrizRiesgosController extends Controller
     }
 
     public function updateSistemaGestion(Request $request, $matrizRiesgo)
-    {   
-        
+    {
         $matrizRiesgo = MatrizRiesgosSistemaGestion::with('matriz_riesgos_controles_pivots')->find($matrizRiesgo);
         $calculo = new Mriesgos();
         $res = $calculo->CalculoD($request);
@@ -790,21 +787,21 @@ class MatrizRiesgosController extends Controller
 
         return redirect()->route('admin.matriz-seguridad.sistema-gestion', ['id' => $request->id_analisis])->with('success', 'Actualizado con éxito');
     }
+
     public function destroySistemaGestion($id)
     {
         abort_if(Gate::denies('matriz_riesgo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRiesgo = MatrizRiesgosSistemaGestion::find($id);
         $matrizRiesgo->delete();
+
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
+
     public function MapaCalorSistemaGestion(Request $request)
     {
         return view('admin.matrizSistemaGestion.heatchart')->with('id', $request->idAnalisis);
     }
 
-
-
-   
     public function octaveIndex(Request $request)
     {
         // dd($request->all());

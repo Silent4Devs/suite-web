@@ -281,7 +281,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('desk/quejas-archivo', 'DeskController@archivoQuejaClientes')->name('desk.quejacliente-archivo');
     Route::post('desk/quejas-clientes-archivo/recuperar/{id}', 'DeskController@recuperarArchivadoQuejaCliente')->name('desk.quejaClientes-archivo.recuperar');
 
-
     //flujo de archivado Sugerencias
     Route::post('desk/{incidente}/archivarSugerencia', 'DeskController@archivadoSugerencia')->name('desk.sugerencia-archivar');
     Route::get('desk/sugerencia-archivo', 'DeskController@archivoSugerencia')->name('desk.sugerencia-archivo');
@@ -320,7 +319,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('desk/{quejas}/quejas-clientes-update', 'DeskController@updateQuejasClientes')->name('desk.quejasClientes-update');
     Route::post('desk/planes/quejas-clientes', 'DeskController@planesQuejasClientes')->name('desk.planesQuejasClientes');
 
-
     // Actividades DESK - Plan Accion
     Route::get('desk-seguridad-actividades/{seguridad_id}', 'ActividadesIncidentesController@index')->name('desk-seguridad-actividades.index');
     Route::resource('desk-seguridad-actividades', 'ActividadesIncidentesController')->except(['index']);
@@ -339,7 +337,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('desk-sugerencias-actividades/{sugerencia_id}', 'ActividadesSugerenciasController@index')->name('desk-sugerencias-actividades.index');
     Route::resource('desk-sugerencias-actividades', 'ActividadesSugerenciasController')->except(['index']);
-
 
     Route::get('planTrabajoBase', 'PlanTrabajoBaseController@index')->name('planTrabajoBase.index');
     Route::post('planTrabajoBase/save/current', 'PlanTrabajoBaseController@saveCurrentProyect')->name('planTrabajoBase.saveCurrentProyect');
@@ -983,7 +980,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::put('matriz-seguridad/{id}/NIST', 'MatrizRiesgosController@NISTUpdate')->name('matriz-seguridad.NIST.update');
     Route::post('matriz-riesgos/parse-csv-import', 'MatrizRiesgosController@parseCsvImport')->name('matriz-riesgos.parseCsvImport');
     Route::get('matriz-seguridad', 'MatrizRiesgosController@SeguridadInfo')->name('matriz-seguridad');
-   
+
     Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
     Route::get('matriz-octavemapa', 'MatrizRiesgosController@MapaCalorOctave')->name('matriz-octavemapa');
     Route::get('controles-get', 'MatrizRiesgosController@ControlesGet')->name('controles-get');

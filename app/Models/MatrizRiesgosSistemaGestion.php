@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -188,6 +187,6 @@ class MatrizRiesgosSistemaGestion extends Model
 
     public function matriz_riesgos_controles_pivots()
     {
-        return $this->belongsToMany(DeclaracionAplicabilidad::class,'matriz_riesgos_sistema_gestion_controles_pivot', 'matriz_id','controles_id');
+        return $this->belongsToMany(DeclaracionAplicabilidad::class, 'matriz_riesgos_sistema_gestion_controles_pivot', 'matriz_id', 'controles_id');
     }
 }

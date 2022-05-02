@@ -33,7 +33,7 @@ class TimesheetProyecto extends Model
     }
 
     public function proyectos()
-	{
-		return $this->hasMany(QuejasCliente::class, 'proyectos_id');
-	}
+    {
+        return $this->hasMany(QuejasCliente::class, 'proyectos_id');
+    }
 }

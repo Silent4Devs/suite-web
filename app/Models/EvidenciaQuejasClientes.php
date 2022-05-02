@@ -4,13 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EvidenciaQuejasClientes extends Model
 {
     use SoftDeletes;
-
 
     protected $table = 'evidencias_quejas_clientes';
 
@@ -32,6 +29,6 @@ class EvidenciaQuejasClientes extends Model
 
     public function quejas()
     {
-        return $this->belongsTo(QuejasCliente::class, 'quejas_clientes_id','id');
+        return $this->belongsTo(QuejasCliente::class, 'quejas_clientes_id', 'id');
     }
 }

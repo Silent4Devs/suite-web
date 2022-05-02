@@ -80,14 +80,13 @@ class MatrizRiesgo extends Model
         '0'  => 'NULA (0)',
     ];
 
-    
     const IMPACTO_SELECT = [
         '9' => 'MUY ALTO (9)',
         '6'     => 'ALTO (6)',
         '3'    => 'MEDIO (3)',
         '0'     => 'BAJO (0)',
     ];
-    
+
     const EV_INICIAL_SELECT = [
         '11.1' => 'Sí',
         '0'     => 'No',

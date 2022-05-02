@@ -26,7 +26,6 @@ class AddMatrizRiesgosActivoIdForeign extends Migration
     public function down()
     {
         Schema::table('matriz_riesgos', function (Blueprint $table) {
-          
         });
     }
 }
