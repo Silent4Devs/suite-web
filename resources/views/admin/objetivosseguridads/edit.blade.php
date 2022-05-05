@@ -105,7 +105,7 @@
     </style>
 
     {{ Breadcrumbs::render('admin.objetivosseguridads.create') }}
-    <h5 class="col-12 titulo_general_funcion"> Editar: Objetivos de Seguridad</h5> 
+    <h5 class="col-12 titulo_general_funcion"> Editar: Objetivos del Sistema</h5>
     <div class="mt-4 card">
         <div class="card-body">
             <form method="POST" class="row"

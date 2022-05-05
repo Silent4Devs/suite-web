@@ -35,7 +35,7 @@
         <li><a href="{{ route('admin.paneldeclaracion.index') . '#controles' }}">
                 <div>
                     <i class="bi bi-file-earmark-zip"></i> <br>
-                    Asignación de Controles
+                    Asignación de controles
                 </div>
             </a></li>
         <li><a href="{{ route('admin.declaracion-aplicabilidad.index') . '#declaracion' }}">
@@ -53,7 +53,7 @@
         <li><a href="{{ route('admin.objetivosseguridads.index') }}">
                 <div>
                     <i class="bi bi-shield-lock"></i>  <br>
-                    Objetivos de seguridad
+                    Objetivos del sistema
                 </div>
             </a></li>
     </ul>

@@ -3,7 +3,7 @@
     <div class="mt-5 card">
 
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Matriz Riesgo
+            <h3 class="mb-2 text-center text-white"><strong>Matriz Sistema de Gestión  
                 </strong></h3>
         </div>
         @can('configuracion_sede_create')
@@ -35,12 +35,12 @@
                 <div class="d-flex justify-content-between">
                     @can('analisis_de_riesgos_matriz_riesgo_analisis_create')
                         <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                            href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}" type="submit"
+                            href="{{ route('admin.matriz-riesgos.sistema-gestion.create', ['idAnalisis' => $id_matriz]) }}" type="submit"
                             name="action">Agregar nuevo</a>
                     @endcan
                     @can('analisis_de_riesgos_matriz_riesgo_analisis_grafica_show')
                         <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                            href="{{ route('admin.matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
+                            href="{{ route('admin.matriz-mapa.SistemaGestion', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
                     @endcan
                 </div>
                 <table class="table table-bordered w-100 datatable datatable-Matriz">
@@ -151,7 +151,7 @@
                             Atención</p>
                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado
                             matrices de riesgo
-                            <a href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}"><i
+                            <a href="{{ route('admin.matriz-riesgos.sistema-gestion.create', ['idAnalisis' => $id_matriz]) }}"><i
                                     class="fas fa-share"></i></a>
                         </p>
                     </div>
@@ -261,7 +261,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.matriz-riesgos.massDestroy') }}",
+                url: "{{ route('admin.matriz-riesgos.sistema-gestion.destroy','id') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -293,7 +293,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "/admin/matriz-seguridad?id=" + id_matriz,
+                ajax: "/admin/matriz-seguridad/sistema-gestion?id=" + id_matriz,
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -395,9 +395,10 @@
                         render: function(data) {
                             let returnData = "<ol>";
                             let controles = JSON.parse(data);
+                            console.log(controles);
                             controles.forEach(control => {
                                 returnData +=
-                                    `<li>${control.declaracion_aplicabilidad.anexo_politica}</li>`;
+                                    `<li>${control.anexo_politica}</li>`;
                             });
                             return returnData + `</ol>`;
                         }

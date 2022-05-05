@@ -1,15 +1,16 @@
-<div class="w-100" id="contendor-principal-debo-aprobar" x-data="{show:false}">
+<div class="w-100" id="contendor-principal-debo-aprobar" x-data="{ show: false }">
     <div class="row mb-4 align-items-center">
-        <div class="col-12 pr-2" x-bind:class="show?'col-12':'col-12'" style="text-align:right;">
-            <span class="mr-2" x-bind:class="!show?'menu-active':''" title="Visualizar Tarjetas"
+        <div class="col-12 pr-2" x-bind:class="show ? 'col-12' : 'col-12'" style="text-align:right;">
+            <span class="mr-2" x-bind:class="!show ? 'menu-active' : ''" title="Visualizar Tarjetas"
                 style="font-size: 1.1rem;cursor: pointer;" x-on:click="show=false"><i class="fas fa-th"></i></span>
-            <span class="mr-2" style="font-size: 1.1rem;cursor: pointer;" x-bind:class="show?'menu-active':''"
-                x-on:click="show=true" title="Visualizar Tabla"><i class="fas fa-th-list"></i></span>
-            <span x-show="!show" x-data="{archivado:false}">
+            <span class="mr-2" style="font-size: 1.1rem;cursor: pointer;"
+                x-bind:class="show ? 'menu-active' : ''" x-on:click="show=true" title="Visualizar Tabla"><i
+                    class="fas fa-th-list"></i></span>
+            <span x-show="!show" x-data="{ archivado: false }">
                 <span id="btnArchivoDeboAprobar"
                     data-url="{{ route('admin.revisiones.obtenerDocumentosDeboAprobarArchivo') }}"
-                    class="mr-2" style="font-size: 1.1rem;cursor: pointer;" title="Archivo"
-                    x-show="!archivado" x-on:click="archivado=true" x-transition><i class="fas fa-archive"></i></span>
+                    class="mr-2" style="font-size: 1.1rem;cursor: pointer;" title="Archivo" x-show="!archivado"
+                    x-on:click="archivado=true" x-transition><i class="fas fa-archive"></i></span>
                 <span id="btnPrincipalesDeboAprobar"
                     data-url="{{ route('admin.revisiones.obtenerDocumentosDeboAprobar') }}" class="mr-2"
                     style="font-size: 1.1rem;cursor: pointer;" title="Principales" x-show="archivado"
@@ -96,21 +97,24 @@
                                 <td style="text-transform: capitalize;">
                                     {{ $revision->documento ? $revision->documento->tipo : 'El tipo no ha sido asignado' }}
                                 </td>
-                                @if ($revision->documento->proceso_id == null)
-                                    <td style="text-align: center !important; font-weight: normal;">
-                                        {{ $revision->documento->macroproceso ? $revision->documento->macroproceso->nombre : 'Sin vincular' }}
-                                    </td>
-                                @else
-                                    <td style="text-align: center !important; font-weight: normal;">
-                                        {{ $revision->documento->proceso ? $revision->documento->proceso->nombre : 'Sin vincular' }}
-                                    </td>
+                                @if ($revision->documento)
+                                    @if ($revision->documento->proceso_id == null)
+                                        <td style="text-align: center !important; font-weight: normal;">
+                                            {{ $revision->documento->macroproceso ? $revision->documento->macroproceso->nombre : 'Sin vincular' }}
+                                        </td>
+                                    @else
+                                        <td style="text-align: center !important; font-weight: normal;">
+                                            {{ $revision->documento->proceso ? $revision->documento->proceso->nombre : 'Sin vincular' }}
+                                        </td>
+                                    @endif
                                 @endif
 
                                 <td style="text-align: center !important;">
                                     <span class="badge badge-info"
                                         style="background-color:{{ $revision->color_revisiones_estatus }}">{{ mb_strtoupper($revision->estatus_revisiones_formateado) }}</span>
                                 </td>
-                                <td style="text-align: center !important;">{{ $revision->documento->version }}
+                                <td style="text-align: center !important;">
+                                    {{ $revision->documento ? $revision->documento->version : 'Sin Versión' }}
                                 </td>
                                 <td class="justify-content:center">{{ $revision->fecha_solicitud }}</td>
                                 <td style="text-align: center !important;">
