@@ -234,7 +234,6 @@ class EV360ObjetivosController extends Controller
 
     public function storeCopiaObjetivos(Request $request)
     {
-
         $request->validate([
             'empleado_destinatario' => 'required',
             'empleado_destino' => 'required',
