@@ -496,6 +496,23 @@ class MatrizRiesgosController extends Controller
     public function SistemaGestion(Request $request)
     {
         abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+      
+        $organizacions = Organizacion::all();
+        $teams = Team::get();
+        $tipoactivos = Tipoactivo::get();
+        $controles = Controle::get();
+        $matriz_heat = MatrizRiesgosSistemaGestion::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
+        $sedes = Sede::get();
+        $areas = Area::get();
+        $procesos = Proceso::get();
+        $numero_sedes = Sede::count();
+        $numero_matriz = MatrizRiesgosSistemaGestion::count();
+
+        return view('admin.matrizSistemaGestion.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
+    }
+    public function SistemaGestionData(Request $request)
+    {
+        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizRiesgosSistemaGestion::with(['controles', 'matriz_riesgos_controles_pivots'])->where('id_analisis', '=', $request->id)->get();
             $table = Datatables::of($query);
@@ -542,29 +559,80 @@ class MatrizRiesgosController extends Controller
             $table->editColumn('descripcionriesgo', function ($row) {
                 return $row->descripcionriesgo ? $row->descripcionriesgo : '';
             });
-            $table->editColumn('confidencialidad', function ($row) {
-                if ($row->confidencialidad) {
-                    return 'Sí' ? 'Sí' : '';
+            $table->editColumn('calidad_servicio', function ($row) {
+                // return $row->confidencialidad_270000 ? $row->confidencialidad_270000 : '';
+                if ($row->calidad_servicio == 11.1) {
+                    return 'Sí';
                 } else {
-                    return 'No' ? 'No' : '';
+                    return 'No';
                 }
             });
-            $table->editColumn('integridad', function ($row) {
-                if ($row->integridad) {
-                    return 'Sí' ? 'Sí' : '';
+            $table->editColumn('cliente', function ($row) {
+                // return $row->integridad_27000 ? $row->integridad_27000 : '';
+                if ($row->cliente == 11.1) {
+                    return 'Sí';
                 } else {
-                    return 'No' ? 'No' : '';
+                    return 'No';
                 }
             });
-            $table->editColumn('disponibilidad', function ($row) {
-                if ($row->disponibilidad) {
-                    return 'Sí' ? 'Sí' : '';
+            $table->editColumn('estrategia_negocio', function ($row) {
+                // return $row->disponibilidad_27000 ? $row->disponibilidad_27000 : '';
+                if ($row->estrategia_negocio == 11.1) {
+                    return 'Sí';
                 } else {
-                    return 'No' ? 'No' : '';
+                    return 'No';
                 }
             });
-            $table->editColumn('resultadoponderacion', function ($row) {
-                return $row->resultadoponderacion ? $row->resultadoponderacion : '';
+            $table->editColumn('disponibilidad_2000', function ($row) {
+                // return $row->confidencialidad_270000 ? $row->confidencialidad_270000 : '';
+                if ($row->disponibilidad_2000 == 11.1) {
+                    return 'Sí';
+                } else {
+                    return 'No';
+                }
+            });
+            $table->editColumn('niveles_servicio', function ($row) {
+                // return $row->integridad_27000 ? $row->integridad_27000 : '';
+                if ($row->niveles_servicio == 11.1) {
+                    return 'Sí';
+                } else {
+                    return 'No';
+                }
+            });
+            $table->editColumn('continuidad_BCP', function ($row) {
+                // return $row->disponibilidad_27000 ? $row->disponibilidad_27000 : '';
+                if ($row->continuidad_BCP == 11.1) {
+                    return 'Sí';
+                } else {
+                    return 'No';
+                }
+            });
+            $table->editColumn('confidencialidad_270000', function ($row) {
+                // return $row->confidencialidad_270000 ? $row->confidencialidad_270000 : '';
+                if ($row->confidencialidad_270000 == 11.1) {
+                    return 'Sí';
+                } else {
+                    return 'No';
+                }
+            });
+            $table->editColumn('integridad_27000', function ($row) {
+                // return $row->integridad_27000 ? $row->integridad_27000 : '';
+                if ($row->integridad_27000 == 11.1) {
+                    return 'Sí';
+                } else {
+                    return 'No';
+                }
+            });
+            $table->editColumn('disponibilidad_27000', function ($row) {
+                // return $row->disponibilidad_27000 ? $row->disponibilidad_27000 : '';
+                if ($row->disponibilidad_27000 == 11.1) {
+                    return 'Sí';
+                } else {
+                    return 'No';
+                }
+            });
+            $table->editColumn('resultado_ponderacion', function ($row) {
+                return $row->resultado_ponderacion ? $row->resultado_ponderacion : '';
             });
             $table->editColumn('probabilidad', function ($row) {
                 //return $row->probabilidad ? $row->probabilidad : "";
@@ -613,6 +681,15 @@ class MatrizRiesgosController extends Controller
                     return $row->nivelriesgo ? $row->nivelriesgo : '';
                 }
             });
+            $table->editColumn('riesgo_total', function ($row) {
+                if (is_null($row->riesgo_total)) {
+                    return null ? $row->riesgo_total : '';
+                } elseif ($row->riesgo_total == 0) {
+                    return 'cero';
+                } else {
+                    return $row->riesgo_total ? $row->riesgo_total : '';
+                }
+            });
             /*$table->editColumn('riesgototal', function ($row) {
                 return $row->riesgototal ? $row->riesgototal : "";
             });*/
@@ -622,25 +699,67 @@ class MatrizRiesgosController extends Controller
             $table->editColumn('plan_de_accion', function ($row) {
                 return $row->planes ? $row->planes : '';
             });
-            $table->editColumn('confidencialidad_cid', function ($row) {
-                if ($row->confidencialidad_cid) {
-                    return 'Sí' ? 'Sí' : '';
+            $table->editColumn('calidad_servicioRes', function ($row) {
+                if ($row->calidad_servicioRes == 11.1) {
+                    return 'Sí';
                 } else {
-                    return 'No' ? 'No' : '';
+                    return 'No';
                 }
             });
-            $table->editColumn('integridad_cid', function ($row) {
-                if ($row->integridad_cid) {
-                    return 'Sí' ? 'Sí' : '';
+            $table->editColumn('clienteRes', function ($row) {
+                if ($row->clienteRes == 11.1) {
+                    return 'Sí';
                 } else {
-                    return 'No' ? 'No' : '';
+                    return 'No';
                 }
             });
-            $table->editColumn('disponibilidad_cid', function ($row) {
-                if ($row->disponibilidad_cid) {
-                    return 'Sí' ? 'Sí' : '';
+            $table->editColumn('estrategia_negocioRes', function ($row) {
+                if ($row->estrategia_negocioRes == 11.1) {
+                    return 'Sí';
                 } else {
-                    return 'No' ? 'No' : '';
+                    return 'No';
+                }
+            });
+            $table->editColumn('disponibilidad_2000Res', function ($row) {
+                if ($row->disponibilidad_2000Res == 11.1) {
+                    return 'Sí';
+                } else {
+                    return 'No';
+                }
+            });
+            $table->editColumn('niveles_servicioRes', function ($row) {
+                if ($row->niveles_servicioRes == 11.1) {
+                    return 'Sí';
+                } else {
+                    return 'No';
+                }
+            });
+            $table->editColumn('continuidad_BCPRes', function ($row) {
+                if ($row->continuidad_BCPRes == 11.1) {
+                    return 'Sí';
+                } else {
+                    return 'No';
+                }
+            });
+            $table->editColumn('confidencialidad_270000Res', function ($row) {
+                if ($row->confidencialidad_270000Res == 11.1) {
+                    return 'Sí';
+                } else {
+                    return 'No';
+                }
+            });
+            $table->editColumn('integridad_27000Res', function ($row) {
+                if ($row->integridad_27000Res == 11.1) {
+                    return 'Sí';
+                } else {
+                    return 'No';
+                }
+            });
+            $table->editColumn('disponibilidad_27000Res', function ($row) {
+                if ($row->disponibilidad_27000Res == 11.1) {
+                    return 'Sí';
+                } else {
+                    return 'No';
                 }
             });
             $table->editColumn('probabilidad_residual', function ($row) {
@@ -687,24 +806,21 @@ class MatrizRiesgosController extends Controller
             $table->editColumn('riesto_total_residual', function ($row) {
                 return $row->riesto_total_residual ? $row->riesto_total_residual : '';
             });
+            $table->editColumn('riesgo_residual', function ($row) {
+                if (is_null($row->riesgo_residual)) {
+                    return null ? $row->riesgo_residual : '';
+                } elseif ($row->riesgo_residual == 0) {
+                    return 'cero';
+                } else {
+                    return $row->riesgo_residual ? $row->riesgo_residual : '';
+                }
+            });
 
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
         }
 
-        $organizacions = Organizacion::all();
-        $teams = Team::get();
-        $tipoactivos = Tipoactivo::get();
-        $controles = Controle::get();
-        $matriz_heat = MatrizRiesgosSistemaGestion::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
-        $sedes = Sede::get();
-        $areas = Area::get();
-        $procesos = Proceso::get();
-        $numero_sedes = Sede::count();
-        $numero_matriz = MatrizRiesgosSistemaGestion::count();
-
-        return view('admin.matrizSistemaGestion.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
 
     public function createSistemaGestion()
@@ -717,18 +833,21 @@ class MatrizRiesgosController extends Controller
         $responsables = Empleado::get();
         $activos = SubcategoriaActivo::get();
         $amenazas = Amenaza::get();
-
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
-        return view('admin.matrizSistemaGestion.create', compact('matrizRiesgo', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
+        return view('admin.matrizSistemaGestion.create', compact('amenazas','matrizRiesgo', 'activos', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
 
     public function storeSistemaGestion(Request $request)
     {
+        $request->validate([
+            'controles_id' => 'required'
+        ]);
         $controles = array_map(function ($value) {
             return intval($value);
         }, $request->controles_id);
+       
         $matrizRiesgo = MatrizRiesgosSistemaGestion::create($request->all());
         $matrizRiesgo->matriz_riesgos_controles_pivots()->sync($controles);
         if (isset($request->plan_accion)) {
@@ -800,6 +919,14 @@ class MatrizRiesgosController extends Controller
     public function MapaCalorSistemaGestion(Request $request)
     {
         return view('admin.matrizSistemaGestion.heatchart')->with('id', $request->idAnalisis);
+    }
+    public function showSistemaGestion(MatrizRiesgo $matrizRiesgo, $id)
+    {
+        abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $matrizRiesgo = MatrizRiesgosSistemaGestion::with(['controles', 'matriz_riesgos_controles_pivots', 'proceso'])->find($id);
+        // dd($matrizRiesgo);
+        return view('admin.matrizSistemaGestion.show', compact('matrizRiesgo'));
     }
 
     public function octaveIndex(Request $request)

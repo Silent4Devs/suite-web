@@ -579,47 +579,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_amenaza"><i class="fas fa-fire iconos-crear"></i>Amenaza</label>
-                        <select class="procesoSelect form-control" name="id_amenaza" id="id_amenaza">
-                            <option value="">Seleccione una opción</option>
-                            @foreach ($amenazas as $amenaza)
-                                <option {{ old('id_amenaza') == $amenaza->id ? ' selected="selected"' : '' }}
-                                    value="{{ $amenaza->id }}">{{ $amenaza->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('amenaza'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('amenaza') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.proceso_helper') }}</span>
-                    </div>
+                   
+                    @livewire('select-amenaza-component')
 
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_vulnerabilidad"><i class="fas fa-shield-alt iconos-crear"></i>Vulnerabilidad</label>
-                        <select class="procesoSelect form-control" name="id_vulnerabilidad" id="id_vulnerabilidad">
-                            <option value="">Seleccione una opción</option>
-                            @foreach ($vulnerabilidades as $vulnerabilidad)
-                                <option
-                                    {{ old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : '' }}
-                                    value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('id_vulnerabilidad'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_vulnerabilidad') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.proceso_helper') }}</span>
-                    </div>
+                    @livewire('select-vulnerabilidad-component')
+
+                   
 
                     <div class="form-group col-md-4 col-sm-4">
                         <label for="tipo_riesgo"><i class="fas fa-asterisk iconos-crear"></i>Tipo de riesgo</label>
                         <select class="form-control {{ $errors->has('tipo_riesgo') ? 'is-invalid' : '' }}"
-                            name="tipo_riesgo" id="tipo_riesgo">
+                            name="tipo_riesgo" id="tipo_riesgo" onclick="event.preventDefault();">
                             <option value disabled {{ old('tipo_riesgo', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\MatrizRiesgo::TIPO_RIESGO_SELECT as $key => $label)
@@ -671,7 +641,7 @@
                     {{-- 9001:2015 --}}
                     <div class="row">
                         <div class="form-group col-sm-4">
-                            <label for="estrategia_negocio"><i class="fas fa-wave-square iconos-crear"></i>Estrategia de
+                            <label for="estrategia_negocio"><i class="fa-solid fa-chess iconos-crear"></i>Estrategia de
                                 Negocio</label>
                             <select class="form-control {{ $errors->has('estrategia_negocio') ? 'is-invalid' : '' }}"
                                 name="estrategia_negocio" id="estrategia_negocio">
@@ -694,7 +664,7 @@
                         </div>
 
                         <div class="form-group col-sm-4">
-                            <label for="calidad_servicio"><i class="fas fa-compact-disc iconos-crear"></i>Calidad de
+                            <label for="calidad_servicio"><i class="fa-solid fa-chart-line iconos-crear"></i>Calidad de
                                 servicio</label>
                             <select class="form-control {{ $errors->has('calidad_servicio') ? 'is-invalid' : '' }}"
                                 name="calidad_servicio" id="calidad_servicio">
@@ -715,7 +685,7 @@
                             <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                         </div>
                         <div class="form-group col-sm-4">
-                            <label for="cliente"><i class="fas fa-compact-disc iconos-crear"></i>Cliente</label>
+                            <label for="cliente"><i class="fa-solid fa-circle-dollar-to-slot iconos-crear"></i>Cliente</label>
                             <select class="form-control {{ $errors->has('cliente') ? 'is-invalid' : '' }}" name="cliente"
                                 id="cliente">
                                 <option value disabled {{ old('cliente', null) === null ? 'selected' : '' }}>
@@ -745,8 +715,7 @@
                     <hr>
                     <div class="row">
                         <div class="form-group col-sm-4">
-                            <label for="disponibilidad_2000"><i
-                                    class="fas fa-wave-square iconos-crear"></i>Disponibilidad</label>
+                            <label for="disponibilidad_2000"><i class="fa-solid fa-check iconos-crear"></i>Disponibilidad</label>
                             <select class="form-control {{ $errors->has('disponibilidad_2000') ? 'is-invalid' : '' }}"
                                 name="disponibilidad_2000" id="disponibilidad_2000">
                                 <option value disabled {{ old('disponibilidad_2000', null) === null ? 'selected' : '' }}>
@@ -768,7 +737,7 @@
                         </div>
 
                         <div class="form-group col-sm-4">
-                            <label for="niveles_servicio"><i class="fas fa-compact-disc iconos-crear"></i>Niveles de
+                            <label for="niveles_servicio"><i class="fas fa-tasks iconos-crear"></i>Niveles de
                                 Servicio</label>
                             <select class="form-control {{ $errors->has('niveles_servicio') ? 'is-invalid' : '' }}"
                                 name="niveles_servicio" id="niveles_servicio">
@@ -789,7 +758,7 @@
                             <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                         </div>
                         <div class="form-group col-sm-4">
-                            <label for="continuidad_BCP"><i class="fas fa-compact-disc iconos-crear"></i>Continuidad
+                            <label for="continuidad_BCP"><i class="fas fa-retweet iconos-crear"></i>Continuidad
                                 BCP</label>
                             <select class="form-control {{ $errors->has('continuidad_BCP') ? 'is-invalid' : '' }}"
                                 name="continuidad_BCP" id="continuidad_BCP">
@@ -821,7 +790,7 @@
                     <div class="row">
                         <div class="form-group col-sm-4">
                             <label for="confidencialidad_270000"><i
-                                    class="fas fa-wave-square iconos-crear"></i>Confidencialidad</label>
+                                    class="fas fa-lock iconos-crear"></i>Confidencialidad</label>
                             <select
                                 class="form-control {{ $errors->has('confidencialidad_270000') ? 'is-invalid' : '' }}"
                                 name="confidencialidad_270000" id="confidencialidad_270000">
@@ -845,7 +814,7 @@
                         </div>
 
                         <div class="form-group col-sm-4">
-                            <label for="integridad_27000"><i class="fas fa-compact-disc iconos-crear"></i>Integridad</label>
+                            <label for="integridad_27000"><i class="fab fa-black-tie iconos-crear"></i>Integridad</label>
                             <select class="form-control {{ $errors->has('integridad_27000') ? 'is-invalid' : '' }}"
                                 name="integridad_27000" id="integridad_27000">
                                 <option value disabled {{ old('integridad_27000', null) === null ? 'selected' : '' }}>
@@ -866,7 +835,7 @@
                         </div>
                         <div class="form-group col-sm-4">
                             <label for="disponibilidad_27000"><i
-                                    class="fas fa-compact-disc iconos-crear"></i>Disponibilidad</label>
+                                    class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label>
                             <select class="form-control {{ $errors->has('disponibilidad_27000') ? 'is-invalid' : '' }}"
                                 name="disponibilidad_27000" id="disponibilidad_27000">
                                 <option value disabled
@@ -1012,7 +981,7 @@
                     {{-- 9001:2015 --}}
                     <div class="row">
                         <div class="form-group col-sm-4">
-                            <label for="estrategia_negocioRes"><i class="fas fa-wave-square iconos-crear"></i>Estrategia de
+                            <label for="estrategia_negocioRes"><i class="fa-solid fa-chess iconos-crear"></i>Estrategia de
                                 Negocio</label>
                             <select
                                 class="form-control {{ $errors->has('estrategia_negocioRes') ? 'is-invalid' : '' }}"
@@ -1037,7 +1006,7 @@
                         </div>
 
                         <div class="form-group col-sm-4">
-                            <label for="calidad_servicioRes"><i class="fas fa-compact-disc iconos-crear"></i>Calidad de
+                            <label for="calidad_servicioRes"><i class="fa-solid fa-chart-line iconos-crear"></i>Calidad de
                                 servicio</label>
                             <select class="form-control {{ $errors->has('calidad_servicioRes') ? 'is-invalid' : '' }}"
                                 name="calidad_servicioRes" id="calidad_servicioRes">
@@ -1059,7 +1028,7 @@
                             <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                         </div>
                         <div class="form-group col-sm-4">
-                            <label for="clienteRes"><i class="fas fa-compact-disc iconos-crear"></i>Cliente</label>
+                            <label for="clienteRes"><i class="fa-solid fa-circle-dollar-to-slot iconos-crear"></i>Cliente</label>
                             <select class="form-control {{ $errors->has('clienteRes') ? 'is-invalid' : '' }}"
                                 name="clienteRes" id="clienteRes">
                                 <option value disabled {{ old('clienteRes', null) === null ? 'selected' : '' }}>
@@ -1089,8 +1058,7 @@
                     <hr>
                     <div class="row">
                         <div class="form-group col-sm-4">
-                            <label for="disponibilidad_2000Res"><i
-                                    class="fas fa-wave-square iconos-crear"></i>Disponibilidad</label>
+                            <label for="disponibilidad_2000Res"><i class="fa-solid fa-check iconos-crear"></i>Disponibilidad</label>
                             <select
                                 class="form-control {{ $errors->has('disponibilidad_2000Res') ? 'is-invalid' : '' }}"
                                 name="disponibilidad_2000Res" id="disponibilidad_2000Res">
@@ -1113,8 +1081,8 @@
                                 class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
                         </div>
 
-                        <div class="form-group col-sm-4">
-                            <label for="niveles_servicioRes"><i class="fas fa-compact-disc iconos-crear"></i>Niveles de
+                        <div class="form-group col-sm-4 mt-1">
+                            <label for="niveles_servicioRes"><i class="fas fa-tasks icons-crear mr-2"></i> Niveles de
                                 Servicio</label>
                             <select class="form-control {{ $errors->has('niveles_servicioRes') ? 'is-invalid' : '' }}"
                                 name="niveles_servicioRes" id="niveles_servicioRes">
@@ -1136,7 +1104,7 @@
                             <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                         </div>
                         <div class="form-group col-sm-4">
-                            <label for="continuidad_BCPRes"><i class="fas fa-compact-disc iconos-crear"></i>Continuidad
+                            <label for="continuidad_BCPRes"><i class="fas fa-retweet iconos-crear"></i>Continuidad
                                 BCP</label>
                             <select class="form-control {{ $errors->has('continuidad_BCPRes') ? 'is-invalid' : '' }}"
                                 name="continuidad_BCPRes" id="continuidad_BCPRes">
@@ -1168,7 +1136,7 @@
                     <div class="row">
                         <div class="form-group col-sm-4">
                             <label for="confidencialidad_270000Res"><i
-                                    class="fas fa-wave-square iconos-crear"></i>Confidencialidad</label>
+                                    class="fas fa-lock iconos-crear"></i>Confidencialidad</label>
                             <select
                                 class="form-control {{ $errors->has('confidencialidad_270000Res') ? 'is-invalid' : '' }}"
                                 name="confidencialidad_270000Res" id="confidencialidad_270000Res">
@@ -1193,7 +1161,7 @@
 
                         <div class="form-group col-sm-4">
                             <label for="integridad_27000Res"><i
-                                    class="fas fa-compact-disc iconos-crear"></i>Integridad</label>
+                                    class="fab fa-black-tie iconos-crear"></i>Integridad</label>
                             <select class="form-control {{ $errors->has('integridad_27000Res') ? 'is-invalid' : '' }}"
                                 name="integridad_27000Res" id="integridad_27000Res">
                                 <option value disabled
@@ -1215,7 +1183,7 @@
                         </div>
                         <div class="form-group col-sm-4">
                             <label for="disponibilidad_27000Res"><i
-                                    class="fas fa-compact-disc iconos-crear"></i>Disponibilidad</label>
+                                    class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label>
                             <select
                                 class="form-control {{ $errors->has('disponibilidad_27000Res') ? 'is-invalid' : '' }}"
                                 name="disponibilidad_27000Res" id="disponibilidad_27000Res">
