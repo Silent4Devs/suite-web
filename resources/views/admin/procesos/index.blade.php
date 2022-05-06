@@ -166,7 +166,11 @@
                         name: 'descripcion',
                         render: function(data, type, row) {
                             // return data with justify left
-                            return `<div style="text-align:left">${data}</div>`;
+                            let descripcion = `${data.substring(0, 100)}...`;
+                            if (data.length <= 100) {
+                                descripcion = data;
+                            }
+                            return `<div style="text-align:justify">${descripcion}</div>`;
 
                         }
                     },
@@ -174,7 +178,6 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             //create buttons for show, edit, delete
-                            console.log(row);
                             let buttons = `
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ route('admin.procesos.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>

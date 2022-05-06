@@ -43,7 +43,8 @@
                             Escoja un macroproceso
                         </option>
                         @foreach ($macroprocesos as $macroproceso)
-                            <option value="{{ $macroproceso->id }}">
+                            <option value="{{ $macroproceso->id }}"
+                                {{ old('id_macroproceso') == $macroproceso->id ? 'selected' : '' }}>
                                 {{ $macroproceso->codigo }} / {{ $macroproceso->nombre }}
                             </option>
                         @endforeach
@@ -59,7 +60,7 @@
                     <label for="descripcion"><i class="fas fa-sticky-note iconos-crear"></i>
                         Descripción</label>
                     <textarea rows="3" class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"
-                        name="descripcion" id="descripcion" value="{{ old('descripcion', '') }}"></textarea>
+                        name="descripcion" id="descripcion">{{ old('descripcion', '') }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}

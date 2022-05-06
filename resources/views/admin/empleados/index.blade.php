@@ -71,15 +71,17 @@
         }
 
     </style>
-      {{ Breadcrumbs::render('EV360-Empleados') }}
+    {{ Breadcrumbs::render('EV360-Empleados') }}
 
     <h5 class="col-12 titulo_general_funcion">Empleados</h5>
     <div class="mt-5 card">
         @can('configuracion_empleados_create')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modalempleado', ['model' => 'Vulnerabilidad', 'route' =>
-                    'admin.vulnerabilidads.parseCsvImport'])
+                    @include('csvImport.modalempleado', [
+                        'model' => 'Vulnerabilidad',
+                        'route' => 'admin.vulnerabilidads.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -277,24 +279,9 @@
                 $('#xlsxImportModal').modal('show');
                 }
                 };
-
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
-
-                // let btnConf = {
-                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Configurar mis datos',
-                // titleAttr: 'conf',
-                // url: "{{ url('admin/panel-inicio') }}",
-                // className: "btn-xs btn-primary rounded ml-2 pr-3",
-                // action: function(e, dt, node, config) {
-                // let {
-                // url
-                // } = config;
-                // window.location.href = url;
-                // }
-                // };
-                // dtButtons.push(btnConf);
             @endcan
 
             @can('configuracion_empleados_delete')
@@ -307,13 +294,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -392,8 +379,18 @@
                         name: 'sede'
                     },
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let buttons = `
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a href="{{ route('admin.empleados.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('admin.empleados.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
+                                   <button onclick="DarDeBaja(this)" data-url="{{ route('admin.empleados.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></button>
+                                </div>
+                            `;
+                            buttons = buttons.replaceAll(':id', data);
+                            return buttons;
+                        }
                     }
                 ],
                 orderCellsTop: true,
@@ -454,7 +451,41 @@
                     }
                 });
             });
+
+            window.DarDeBaja = (e) => {
+                let url = $(e).data('url');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(data) {
+                                if (data.success) {
+                                    Swal.fire(
+                                        'Eliminado!',
+                                        'El proceso ha sido eliminado.',
+                                        'success'
+                                    ).then().then(() => {
+                                        table.ajax.reload();
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
         });
     </script>
-
 @endsection

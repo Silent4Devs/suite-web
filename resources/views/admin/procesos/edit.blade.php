@@ -49,12 +49,12 @@
                         @if ($macroprocesos)
                             @foreach ($macroprocesos as $macroproceso)
                                 <option value="{{ $macroproceso->id }}"
-                                    {{ $macroproceso->id == $proceso->macroproceso->id ? 'selected' : '' }}>
+                                    {{ old('id_macroproceso', $proceso->macroproceso->id) == $macroproceso->id ? 'selected' : '' }}>
                                     {{ $macroproceso->codigo }} / {{ $macroproceso->nombre }}
                                 </option>
                             @endforeach
                         @else
-                            <option value="">No hay proveedores registrados</option>
+                            <option value="">No hay macroprocesos registrados</option>
                         @endif
                     </select>
                     @if ($errors->has('id_macroproceso'))
