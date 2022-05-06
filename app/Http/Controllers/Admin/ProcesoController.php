@@ -100,6 +100,7 @@ class ProcesoController extends Controller
             ],
         );
         Proceso::create($request->all());
+
         return redirect()->route('admin.procesos.index');
     }
 
