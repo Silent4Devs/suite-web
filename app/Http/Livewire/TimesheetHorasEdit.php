@@ -4,8 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
-use App\Models\TimesheetProyecto;
-use App\Models\TimesheetTarea;
 use Livewire\Component;
 
 class TimesheetHorasEdit extends Component

@@ -2,15 +2,14 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use Livewire\Component;
 use App\Models\Area;
-use App\Models\TimesheetProyecto;
-use App\Models\TimesheetHoras;
-use App\Models\Timesheet;
-use App\Models\TimesheetTarea;
 use App\Models\Empleado;
 use App\Models\TimesheetCliente;
+use App\Models\TimesheetHoras;
+use App\Models\TimesheetProyecto;
+use App\Models\TimesheetTarea;
 use Carbon\Carbon;
+use Livewire\Component;
 
 class ReportesProyectos extends Component
 {
@@ -26,7 +25,7 @@ class ReportesProyectos extends Component
     public $hoy_format;
 
     public function render()
-    {   
+    {
         $hoy = Carbon::now();
 
         $this->emit('resize');
@@ -49,7 +48,7 @@ class ReportesProyectos extends Component
         $this->area_proyecto = Area::find($this->proyecto_reporte->area_id);
         $this->cliente_proyecto = TimesheetCliente::find($this->proyecto_reporte->cliente_id);
 
-        $empleados = collect(); 
+        $empleados = collect();
 
         $tareas = TimesheetTarea::where('proyecto_id', $id)->get();
 
@@ -60,15 +59,14 @@ class ReportesProyectos extends Component
         $this->empleados_proyecto = collect();
 
         $h_total_tarea = 0;
-        
+
         $this->total_horas_proyecto = 0;
-        foreach($tareas as $tarea){
+        foreach ($tareas as $tarea) {
             $horas = TimesheetHoras::where('tarea_id', $tarea->id)->get();
             $empleados = collect();
             $h_total_tarea = 0;
             $h_total_tarea_total = 0;
             foreach ($horas as $hora) {
-                
                 $h_total_tarea = 0;
 
                 $h_total_tarea += $hora->horas_lunes;
@@ -81,14 +79,12 @@ class ReportesProyectos extends Component
 
                 $h_total_tarea_total += $h_total_tarea;
 
-
                 $empleado = Empleado::find($hora->timesheet->empleado_id);
                 $times_horas_empleado = $hora->timesheet;
 
                 // foreach ($times_horas_empleado as $time_horas_empleado) {
-                    
-                // }
 
+                // }
 
                 if (!$empleados->contains('id', $empleado->id)) {
                     $empleados->push([
@@ -100,18 +96,16 @@ class ReportesProyectos extends Component
                         'puesto'=> $empleado->puesto,
                         'horas'=> $h_total_tarea,
                     ]);
-                    
-                }else{
-                    $empleados = $empleados->map(function($emp_item) use($h_total_tarea, $empleado){
+                } else {
+                    $empleados = $empleados->map(function ($emp_item) use ($h_total_tarea, $empleado) {
                         if ($emp_item['id'] == $empleado->id) {
                             $emp_item['horas'] += $h_total_tarea;
                         }
+
                         return $emp_item;
                     });
-                      
                 }
-            }  
-            
+            }
 
             $this->total_horas_proyecto += $h_total_tarea_total;
 
