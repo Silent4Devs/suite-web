@@ -68,14 +68,14 @@ class TimesheetController extends Controller
     public function create()
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $proyectos = TimesheetProyecto::get();
-        $tareas = TimesheetTarea::get();
+        // $proyectos = TimesheetProyecto::get();
+        // $tareas = TimesheetTarea::get();
 
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
 
         $organizacion = Organizacion::first();
 
-        return view('admin.timesheet.create', compact('proyectos', 'tareas', 'fechasRegistradas', 'organizacion'));
+        return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion'));
     }
 
     /**
@@ -90,10 +90,18 @@ class TimesheetController extends Controller
 
         $organizacion_semana = Organizacion::first();
 
-        $request->validate([
-            'timesheet.1.proyecto' => 'required',
-            'timesheet.1.tarea' => 'required',
-        ]);
+        $request->validate(
+            [
+                'timesheet.1.proyecto' => 'required',
+                'timesheet.1.tarea' => 'required',
+                'fecha_dia' => 'required',
+            ], 
+            [
+                'timesheet.*.proyecto.required'=>'Seleccionar proyecto',
+                'timesheet.*.tarea.required'=>'Seleccionar tarea',
+                'fecha_dia.required' => 'Seleccione fecha',
+            ],
+        );
         if (
             $request->timesheet[1]['lunes'] == null &&
             $request->timesheet[1]['martes'] == null &&
@@ -103,18 +111,30 @@ class TimesheetController extends Controller
             $request->timesheet[1]['sabado'] == null &&
             $request->timesheet[1]['domingo'] == null
         ) {
-            $request->validate([
-                'timesheet.1.horas' => 'required',
-            ]);
+            $request->validate(
+                [
+                    'timesheet.1.horas' => 'required',
+                ],
+                [
+                    'timesheet.1.horas.required' => 'Registre horas de la semana',
+                ]
+            );
         }
 
         foreach ($request->timesheet as $index => $hora) {
             if ($index > 1) {
                 if (array_key_exists('proyecto', $hora) || array_key_exists('tarea', $hora)) {
-                    $request->validate([
-                        "timesheet.{$index}.proyecto" => 'required',
-                        "timesheet.{$index}.tarea" => 'required',
-                    ]);
+
+                    $request->validate(
+                        [
+                            "timesheet.{$index}.proyecto" => 'required',
+                            "timesheet.{$index}.tarea" => 'required',
+                        ],
+                        [
+                            "timesheet.{$index}.proyecto.required" => 'Seleccionar proyecto',
+                            "timesheet.{$index}.tarea.required" => 'Seleccionar tarea',
+                        ],
+                    );
 
                     if (
                         $hora['lunes'] == null &&
@@ -125,9 +145,36 @@ class TimesheetController extends Controller
                         $hora['sabado'] == null &&
                         $hora['domingo'] == null
                     ) {
-                        $request->validate([
-                            "timesheet.{$index}.horas" => 'required',
-                        ]);
+                        $request->validate(
+                            [
+                                "timesheet.{$index}.horas" => 'required',
+                            ],
+                            [
+                                "timesheet.{$index}.horas.required" => 'Registre horas de la semana',
+                            ],
+                        );
+                    }
+                }else{
+                    // dd($hora);
+                    if (
+                        $hora['lunes'] != null ||
+                        $hora['martes'] != null ||
+                        $hora['miercoles'] != null ||
+                        $hora['jueves'] != null ||
+                        $hora['viernes'] != null ||
+                        $hora['sabado'] != null ||
+                        $hora['domingo'] != null
+                    ){
+                       $request->validate(
+                            [
+                                "timesheet.{$index}.proyecto" => 'required',
+                                "timesheet.{$index}.tarea" => 'required',
+                            ],
+                            [
+                                "timesheet.{$index}.proyecto.required" => 'Seleccionar proyecto',
+                                "timesheet.{$index}.tarea.required" => 'Seleccionar tarea',
+                            ],
+                        ); 
                     }
                 }
             }
@@ -162,7 +209,12 @@ class TimesheetController extends Controller
             }
         }
 
-        return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
+        $aprobador = Empleado::select('id', 'name', 'email', 'genero', 'foto')->find(auth()->user()->empleado->supervisor_id);
+
+        Mail::to($aprobador->email)->send(new SolicitudAprobacionHorasEmail($quejasClientes));
+
+        return response()->json(['status'=>200]);
+        // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
     }
 
     /**
@@ -176,7 +228,10 @@ class TimesheetController extends Controller
         $timesheet = Timesheet::find($id);
         $horas = TimesheetHoras::where('timesheet_id', $id)->get();
 
-        return view('admin.timesheet.show', compact('timesheet', 'horas'));
+        $hoy = Carbon::now();
+        $hoy_format = $hoy->format('d/m/Y');
+
+        return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format'));
     }
 
     /**
@@ -191,8 +246,10 @@ class TimesheetController extends Controller
         $tareas = TimesheetTarea::get();
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
+        $organizacion = Organizacion::first();
+        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
 
-        return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas'));
+        return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
     }
 
     /**
@@ -204,15 +261,20 @@ class TimesheetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizacion_semana = Organizacion::first();
 
-        $request->validate([
-            'timesheet.1.proyecto' => 'required',
-            'timesheet.1.tarea' => 'required',
-        ]);
+        $request->validate(
+            [
+                'timesheet.1.proyecto' => 'required',
+                'timesheet.1.tarea' => 'required',
+            ], 
+            [
+                'timesheet.*.proyecto.required'=>'Seleccionar proyecto',
+                'timesheet.*.tarea.required'=>'Seleccionar tarea',
+            ],
+        );
         if (
             $request->timesheet[1]['lunes'] == null &&
             $request->timesheet[1]['martes'] == null &&
@@ -222,18 +284,29 @@ class TimesheetController extends Controller
             $request->timesheet[1]['sabado'] == null &&
             $request->timesheet[1]['domingo'] == null
         ) {
-            $request->validate([
-                'timesheet.1.horas' => 'required',
-            ]);
+            $request->validate(
+                [
+                    'timesheet.1.horas' => 'required',
+                ],
+                [
+                    'timesheet.1.horas.required' => 'Registre horas de la semana',
+                ]
+            );
         }
 
         foreach ($request->timesheet as $index => $hora) {
             if ($index > 1) {
                 if (array_key_exists('proyecto', $hora) || array_key_exists('tarea', $hora)) {
-                    $request->validate([
-                        "timesheet.{$index}.proyecto" => 'required',
-                        "timesheet.{$index}.tarea" => 'required',
-                    ]);
+                    $request->validate(
+                        [
+                            "timesheet.{$index}.proyecto" => 'required',
+                            "timesheet.{$index}.tarea" => 'required',
+                        ],
+                        [
+                            "timesheet.{$index}.proyecto.required" => 'Seleccionar proyecto',
+                            "timesheet.{$index}.tarea.required" => 'Seleccionar tarea',
+                        ],
+                    );
 
                     if (
                         $hora['lunes'] == null &&
@@ -244,9 +317,36 @@ class TimesheetController extends Controller
                         $hora['sabado'] == null &&
                         $hora['domingo'] == null
                     ) {
-                        $request->validate([
-                            "timesheet.{$index}.horas" => 'required',
-                        ]);
+                        $request->validate(
+                            [
+                                "timesheet.{$index}.horas" => 'required',
+                            ],
+                            [
+                                "timesheet.{$index}.horas.required" => 'Registre horas de la semana',
+                            ],
+                        );
+                    }
+                }else{
+                    // dd($hora);
+                    if (
+                        $hora['lunes'] != null ||
+                        $hora['martes'] != null ||
+                        $hora['miercoles'] != null ||
+                        $hora['jueves'] != null ||
+                        $hora['viernes'] != null ||
+                        $hora['sabado'] != null ||
+                        $hora['domingo'] != null
+                    ){
+                       $request->validate(
+                            [
+                                "timesheet.{$index}.proyecto" => 'required',
+                                "timesheet.{$index}.tarea" => 'required',
+                            ],
+                            [
+                                "timesheet.{$index}.proyecto.required" => 'Seleccionar proyecto',
+                                "timesheet.{$index}.tarea.required" => 'Seleccionar tarea',
+                            ],
+                        ); 
                     }
                 }
             }
@@ -298,7 +398,7 @@ class TimesheetController extends Controller
             }
         }
 
-        return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
+        return response()->json(['status'=>200]);
     }
 
     /**
@@ -363,8 +463,9 @@ class TimesheetController extends Controller
     public function rechazos()
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $rechazos = Timesheet::where('estatus', 'rechazado')
-            ->where('aprobador_id', auth()->user()->empleado->id)
+        $rechazos = Timesheet::where('estatus', '!=', 'pendiente')
+            ->where('estatus', '!=', 'papelera')
+            ->Where('aprobador_id', auth()->user()->empleado->id)
             ->get();
 
         return view('admin.timesheet.rechazos', compact('rechazos'));
@@ -442,10 +543,39 @@ class TimesheetController extends Controller
         $rechazos_contador = Timesheet::where('estatus', 'rechazado')->count();
 
         // graf areas ------------
+        $hoy = Carbon::now();
+        $semanas_del_mes = intval(($hoy->format('d') * 4) / 29);
+        $empleados_partisipacion = Empleado::get();
+
         $areas = Area::get();
 
         $areas_array = collect();
         foreach ($areas as $area) {
+
+            $empleados_count_area = Empleado::where('area_id', $area->id)->count();
+
+            $times_por_mes_esperados_area = $semanas_del_mes * $empleados_count_area;
+            if ($times_por_mes_esperados_area == 0) {
+                $times_por_mes_esperados_area = 1;
+            }
+            $total_times_mes_area = 0;
+            $empleados_times_atrasados = 0;
+            foreach ($empleados_partisipacion as $emp_part_area) {
+                if ($emp_part_area->area_id == $area->id) {
+                    $times_empleado_part_area = Timesheet::whereMonth('fecha_dia', $hoy)->where('empleado_id', $emp_part_area->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
+                }else{
+                    $times_empleado_part_area = 0;
+                }
+                $total_times_mes_area += $times_empleado_part_area;
+            }
+
+            $porcentaje_participacion_area = round((($total_times_mes_area * 100) / $times_por_mes_esperados_area), 2);
+            if ($total_times_mes_area >= $times_por_mes_esperados_area) {
+                $porcentaje_participacion_area = 100;
+            }
+            if ($porcentaje_participacion_area <= 33) { $nivel_participacion = 'baja'; }
+            if (($porcentaje_participacion_area > 33) && ($porcentaje_participacion_area < 66)) { $nivel_participacion = 'media'; }
+            if ($porcentaje_participacion_area >= 66) { $nivel_participacion = 'alta'; }
             $contador_times_aprobados_areas = 0;
             $contador_times_pendientes_areas = 0;
             $contador_times_rechazados_areas = 0;
@@ -470,27 +600,33 @@ class TimesheetController extends Controller
                 'times_aprobados'=>$contador_times_aprobados_areas,
                 'times_pendientes'=>$contador_times_pendientes_areas,
                 'times_rechazados'=>$contador_times_rechazados_areas,
+                'partisipacion'=>$porcentaje_participacion_area,
+                'nivel_p'=>$nivel_participacion,
             ]);
         }
 
         // graf empleados ---------------------
-        $hoy = Carbon::now();
-        $semanas_del_mes = intval(($hoy->format('d') * 4) / 29);
-        $empleados_partisipacion = Empleado::get();
         $empleados_count = Empleado::count();
         $times_por_mes_esperados = $semanas_del_mes * $empleados_count;
+        if ($times_por_mes_esperados == 0) {
+            $times_por_mes_esperados = 1;
+        }
         $total_times_mes = 0;
         $empleados_times_atrasados = 0;
         foreach ($empleados_partisipacion as $emp_part) {
             $times_empleado_part = Timesheet::whereMonth('fecha_dia', $hoy)->where('empleado_id', $emp_part->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
             $total_times_mes += $times_empleado_part;
 
-            if ($times_empleado_part < ($semanas_del_mes - 1) ) {
+            if ($times_empleado_part < ($semanas_del_mes) ) {
                 $empleados_times_atrasados ++;
             }
         }
-        $porcentaje_participacion = round((($total_times_mes * 100) / $times_por_mes_esperados), 2);
         
+        $porcentaje_participacion = round((($total_times_mes * 100) / $times_por_mes_esperados), 2);
+        if ($total_times_mes >= $times_por_mes_esperados) {
+            $porcentaje_participacion = 100;
+        }
+
         // graf proyectos -----------------------
         $proyectos_proceso_c = TimesheetProyecto::where('estatus', 'proceso')->count();
         $proyectos_cancelados_c = TimesheetProyecto::where('estatus', 'cancelado')->count();
@@ -549,5 +685,13 @@ class TimesheetController extends Controller
         $tareas = TimesheetTarea::get();
 
         return view('admin.timesheet.reportes', compact('clientes', 'proyectos', 'tareas'));
+    }
+
+    public function obtenerTareas(Request $request)
+    {
+        $proyecto_id = $request->proyecto_id;
+        $tareas_obtenidas = TimesheetTarea::where('proyecto_id', $proyecto_id)->get();
+
+        return response()->json(['tareas'=>$tareas_obtenidas]);
     }
 }

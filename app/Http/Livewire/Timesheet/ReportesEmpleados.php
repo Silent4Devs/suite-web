@@ -5,12 +5,15 @@ namespace App\Http\Livewire\Timesheet;
 use App\Models\Empleado;
 use Carbon\Carbon;
 use App\Models\Timesheet;
+use App\Models\TimesheetProyecto;
+use App\Models\TimesheetHoras;
 use Livewire\Component;
 
 class ReportesEmpleados extends Component
 {
     public $lista_empleados;
     public $empleado_seleccionado_id;
+    public $hoy_format;
 
     public $empleado;
     public $timesheet;
@@ -24,6 +27,7 @@ class ReportesEmpleados extends Component
     public $proyectos;
     public $proyectos_detalle;
     public $horas_totales = 0;
+    public $times_empleado_horas;
 
     public function mount()
     {
@@ -39,7 +43,7 @@ class ReportesEmpleados extends Component
             $times_atrasados = 0;
             $times_empleado = Timesheet::where('empleado_id', $empleado_list->id)->whereMonth('fecha_dia', $hoy)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
 
-            if ($times_empleado < ($semanas_del_mes - 1) ) {
+            if ($times_empleado < ($semanas_del_mes) ) {
                 $times_atrasados = ($semanas_del_mes - 1) - $times_empleado;
             }
 
@@ -54,7 +58,7 @@ class ReportesEmpleados extends Component
         }
 
         
-
+        $this->hoy_format = $hoy->format('d/m/Y');
 
 
         $this->emit('scriptTabla');
@@ -70,15 +74,56 @@ class ReportesEmpleados extends Component
 
         $this->proyectos_detalle = collect();
 
+        $this->times_empleado_horas = collect();
+
         $this->empleado = Empleado::find($this->empleado_seleccionado_id);
 
-        $this->timesheet = Timesheet::where('empleado_id', $this->empleado_seleccionado_id)->get();
+        $this->timesheet = Timesheet::where('empleado_id', $this->empleado_seleccionado_id)->orderByDesc('fecha_dia')->get();
 
 
         foreach($this->timesheet as $t){
+
+            $horas_semana_lunes = 0;
+            $horas_semana_martes = 0;
+            $horas_semana_miercoles = 0;
+            $horas_semana_jueves = 0;
+            $horas_semana_viernes = 0;
+            $horas_semana_sabado = 0;
+            $horas_semana_domingo = 0;
+            $horas_totales_semana = 0;
             foreach($t->horas as $hora){
-                $this->proyectos->push($hora->proyectos->id);
+                $this->proyectos->push($hora->proyecto->id);
+
+                $horas_semana_lunes += $hora->horas_lunes;
+                $horas_semana_martes += $hora->horas_martes;
+                $horas_semana_miercoles += $hora->horas_miercoles;
+                $horas_semana_jueves += $hora->horas_jueves;
+                $horas_semana_viernes += $hora->horas_viernes;
+                $horas_semana_sabado += $hora->horas_sabado;
+                $horas_semana_domingo += $hora->horas_domingo;
+
+                $horas_totales_semana += $hora->horas_lunes;
+                $horas_totales_semana += $hora->horas_martes;
+                $horas_totales_semana += $hora->horas_miercoles;
+                $horas_totales_semana += $hora->horas_jueves;
+                $horas_totales_semana += $hora->horas_viernes;
+                $horas_totales_semana += $hora->horas_sabado;
+                $horas_totales_semana += $hora->horas_domingo;
             }
+
+            $this->times_empleado_horas->push([
+                'fecha'=>$t->fecha_dia,
+                'estatus'=>$t->estatus,
+                'semana'=>$t->semana,
+                'horas_lunes'=>$horas_semana_lunes,
+                'horas_martes'=>$horas_semana_martes,
+                'horas_miercoles'=>$horas_semana_miercoles,
+                'horas_jueves'=>$horas_semana_jueves,
+                'horas_viernes'=>$horas_semana_viernes,
+                'horas_sabado'=>$horas_semana_sabado,
+                'horas_domingo'=>$horas_semana_domingo,
+                'horas_totales'=>$horas_totales_semana,
+            ]);
         }
 
         $this->proyectos = $this->proyectos->unique();

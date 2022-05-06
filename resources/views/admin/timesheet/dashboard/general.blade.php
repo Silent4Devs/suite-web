@@ -3,12 +3,19 @@
 		<h4 class="titulo-grafica">Todos los Registros</h4>
 		<canvas id="graf-registros-general" width="400" height="400"></canvas>
 	</div>
-	<div class="col-md-8" style="display:inline-block;">
-		{{-- @foreach()
-			<div class="card-body card">
-				
-			</div>
-		@endforeach --}}
+	<div class="col-md-8 caja-cards-areas p-4" style="position: relative;">
+		<h4 class="titulo-grafica">Partisipación de Áreas</h4>
+		<div style="position:absolute; height:90%; overflow:auto;" class="scroll_estilo mt-3">
+			@foreach($areas_array as $area_p)
+				<div class="card-body card partisipacion-{{ $area_p['nivel_p'] }}">
+					<h5>{{ $area_p['area'] }}</h5>
+					<h4>{{ $area_p['partisipacion'] }}%</h4>
+					<div class="progress mt-3">
+					  	<div class="progress-bar" role="progressbar" style="width: {{ $area_p['partisipacion'] }}%" aria-valuenow="{{ $area_p['partisipacion'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+				</div>
+		    @endforeach
+		</div>
 	</div>
 </div>
 <div class="row">

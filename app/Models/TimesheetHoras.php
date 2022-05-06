@@ -31,7 +31,7 @@ class TimesheetHoras extends Model
         return $this->belongsTo(Timesheet::class, 'timesheet_id');
     }
 
-    public function proyectos()
+    public function proyecto()
     {
         return $this->belongsTo(TimesheetProyecto::class, 'proyecto_id');
     }

@@ -1,20 +1,20 @@
 <div class="row">
 	<div class=" col-md-4 p-4">
-		<h4 class="titulo-grafica">Proyectos</h4>
+		<h4 class="titulo-grafica d-flex justify-content-between">Proyectos <a href="{{ asset('admin/timesheet/reportes') }}">Ver detalle</a></h4>
 		<canvas id="graf-proyectos-estatus" width="400" height="400"></canvas>
 	</div>
 	<div class=" col-md-8 p-4">
-		<h4 class="titulo-grafica">Horas invertidas a proyectos en proceso</h4>
+		<h4 class="titulo-grafica d-flex justify-content-between">Horas invertidas a proyectos en proceso <a href="{{ asset('admin/timesheet/reportes') }}">Ver detalle</a></h4>
 		<canvas id="graf-proyectos-horas" width="800" height="400"></canvas>
 	</div>
 </div>
 <div class="row">
 	<div class=" col-md-4 p-4">
-		<h4 class="titulo-grafica">Horas invertidas en proyectos por estatus</h4>
+		<h4 class="titulo-grafica d-flex justify-content-between">Horas invertidas en proyectos por estatus <a href="{{ asset('admin/timesheet/reportes') }}">Ver detalle</a></h4>
 		<canvas id="graf-proyectos" width="400" height="400"></canvas>
 	</div>
 	<div class=" col-md-8 p-4">
-		<h4 class="titulo-grafica">Tareas por proyectos en proceso</h4>
+		<h4 class="titulo-grafica d-flex justify-content-between">Tareas por proyectos en proceso <a href="{{ asset('admin/timesheet/reportes') }}">Ver detalle</a></h4>
 		<canvas id="graf-proyectos-tareas" width="800" height="400"></canvas>
 	</div>
 </div>
@@ -27,9 +27,9 @@
 	            label: '%',
 	            data: [{{ $proyectos_proceso_c }}, {{ $proyectos_cancelados_c }}, {{ $proyectos_terminados_c }}],
 	            backgroundColor: [
-	                '#46DC34',
+	                '#F48C16',
 	                '#bbb',
-	                '#349FDC',
+	                '#61CB5C',
 	            ],
 	        }]
 	    },
@@ -91,9 +91,9 @@
 	            	{{ $proyectos_proceso_array }}, {{ $proyectos_cancelado_array }}, {{ $proyectos_terminado_array }}
 	            ],
 	            backgroundColor: [
-	                '#46DC34',
+	                '#F48C16',
 	                '#bbb',
-	                '#349FDC',
+	                '#61CB5C',
 	            ],
 	        }]
 	    },

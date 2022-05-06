@@ -467,6 +467,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('timesheet/reportes', 'TimesheetController@reportes')->name('timesheet-reportes');
     Route::get('timesheet/dashboard', 'TimesheetController@dashboard')->name('timesheet-dashboard');
 
+    Route::post('timesheet/create/obtenerTareas', 'TimesheetController@obtenerTareas')->name('timesheet-obtener-tareas');
+
     Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
 
     //Competencia Tipo

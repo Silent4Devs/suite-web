@@ -9,7 +9,7 @@
         }
     </style>
 
-    {{-- {{ Breadcrumbs::render('admin.iso27001.index') }} --}}
+    {{ Breadcrumbs::render('timesheet-reportes') }}
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reportes</font> </h5>
     <div class="mt-5 card card-body">
         <nav class="mt-4">
@@ -52,6 +52,12 @@
 
 @section('scripts')
     @parent
+    <script type="text/javascript">
+        $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+            console.log('click');
+              $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+          });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuActive = localStorage.getItem('menu-iso27001-active');
