@@ -97,7 +97,7 @@
                                 <td style="text-transform: capitalize;">
                                     {{ $revision->documento ? $revision->documento->tipo : 'El tipo no ha sido asignado' }}
                                 </td>
-                                @if (is_null($revision->documento))
+                                @if ($revision->documento)
                                     @if ($revision->documento->proceso_id == null)
                                         <td style="text-align: center !important; font-weight: normal;">
                                             {{ $revision->documento->macroproceso ? $revision->documento->macroproceso->nombre : 'Sin vincular' }}
@@ -113,7 +113,8 @@
                                     <span class="badge badge-info"
                                         style="background-color:{{ $revision->color_revisiones_estatus }}">{{ mb_strtoupper($revision->estatus_revisiones_formateado) }}</span>
                                 </td>
-                                <td style="text-align: center !important;">{{ $revision->documento->version }}
+                                <td style="text-align: center !important;">
+                                    {{ $revision->documento ? $revision->documento->version : 'Sin Versión' }}
                                 </td>
                                 <td class="justify-content:center">{{ $revision->fecha_solicitud }}</td>
                                 <td style="text-align: center !important;">
