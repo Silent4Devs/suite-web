@@ -1,30 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    <style type="text/css">
-        .aprobada {
-            padding: 3px;
-            background-color: #61CB5C;
-            color: #fff;
-            border-radius: 4px;
-        }
-
-        .rechazada {
-            padding: 3px;
-            background-color: #EA7777;
-            color: #fff;
-            border-radius: 4px;
-        }
-
-        .pendiente {
-            padding: 3px;
-            background-color: #F48C16;
-            color: #fff;
-            border-radius: 4px;
-        }
-
-    </style>
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
     {{ Breadcrumbs::render('timesheet-rechazos') }}
 
@@ -49,42 +26,7 @@
                         @foreach ($rechazos as $rechazo)
                             <tr>
                                 <td>
-                                    @if($rechazo->dia_semana == 'Domingo')
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->addDay(6)->format("d/m/Y") }}
-                                    @endif
-                                    @if($rechazo->dia_semana == 'Lunes')
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->subDay(1)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->addDay(5)->format("d/m/Y") }}
-                                    @endif
-                                    @if($rechazo->dia_semana == 'Martes')
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->subDay(2)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->addDay(4)->format("d/m/Y") }}
-                                    @endif
-                                    @if($rechazo->dia_semana == 'Miércoles')
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->subDay(3)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->addDay(3)->format("d/m/Y") }}
-                                    @endif
-                                    @if($rechazo->dia_semana == 'Jueves')
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->subDay(4)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->addDay(2)->format("d/m/Y") }}
-                                    @endif
-                                    @if($rechazo->dia_semana == 'Viernes')
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->subDay(5)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->addDay(1)->format("d/m/Y") }}
-                                    @endif
-                                    @if($rechazo->dia_semana == 'Sábado')
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->subDay(6)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($rechazo->fecha_dia)->format("d/m/Y") }}
-                                    @endif
-
+                                    {!! $rechazo->semana !!}
                                 </td>
                                 <td>
                                     {{ $rechazo->empleado->name }}
@@ -93,25 +35,17 @@
                                     {{ $rechazo->aprobador->name }}
                                 </td>
                                 <td>
-                                    @if ($rechazo->aprobado)
-                                        <span class="aprobada">Aprobada</span>
-                                    @endif
-
-                                    @if ($rechazo->rechazado)
-                                        <span class="rechazada">Rechazada</span>
-                                    @endif
-
-                                    @if ($rechazo->rechazado == false && $rechazo->aprobado == false)
-                                        <span class="pendiente">Pendiente</span>
-                                    @endif
+                                    <span class="{{ $rechazo->estatus }}">{{ $rechazo->estatus }}</span>
                                 </td>
                                 <td class="">
                                     @can('timesheet_administrador_aprobar_horas')
                                         <a href="{{ asset('admin/timesheet/show') }}/{{ $rechazo->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
                                         
-                                        <div class="btn" data-toggle="modal" data-target="#modal_aprobar_{{ $rechazo->id}}"> 
-                                            <i class="fas fa-calendar-check" style="color:#3CA06C; font-size: 15pt;"></i>
-                                        </div>
+                                        @if($rechazo->estatus == 'rechazado')
+                                            <div class="btn" data-toggle="modal" data-target="#modal_aprobar_{{ $rechazo->id}}"> 
+                                                <i class="fas fa-calendar-check" style="color:#3CA06C; font-size: 15pt;"></i>
+                                            </div>
+                                        @endif
                                     @endcan
                                 </td>
                             </tr>
