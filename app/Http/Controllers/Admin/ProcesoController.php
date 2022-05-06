@@ -77,7 +77,7 @@ class ProcesoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource.       
      *
      * @return \Illuminate\Http\Response
      */
@@ -91,16 +91,16 @@ class ProcesoController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'codigo' => 'required|string',
-                'nombre' => 'required|string',
-                'id_macroproceso' => 'required|integer',
-                'descripcion' => 'required|string',
-            ],
-        );
-        $procesos = proceso::create($request->all());
-        Flash::success('<h5 class="text-center">Proceso agregado satisfactoriamente</h5>');
+        // $request->validate(
+        //     [
+        //         'codigo' => 'required|string',
+        //         'nombre' => 'required|string',
+        //         'id_macroproceso' => 'required|integer',
+        //         'descripcion' => 'required|string',
+        //     ],
+        // );
+        $procesos = Proceso::create($request->all());
+        // Flash::success('<h5 class="text-center">Proceso agregado satisfactoriamente</h5>');
 
         return redirect()->route('admin.procesos.index');
     }
@@ -185,7 +185,7 @@ class ProcesoController extends Controller
         return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado', 'organizacion'));
     }
 
-    public function obtenerDocumentoProcesos($documento)
+    public function obtenerDocumentoProcesos($documento = null)
     {
         $documento = Documento::with('elaborador', 'revisor', 'aprobador', 'responsable', 'macroproceso')->find($documento);
 
