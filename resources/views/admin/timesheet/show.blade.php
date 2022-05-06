@@ -1,52 +1,21 @@
 @extends('layouts.admin')
 @section('content')
+	@php
+        use App\Models\Organizacion;
+    @endphp
 
 	{{ Breadcrumbs::render('timesheet-create') }}
 	
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;"> 
-		@if($timesheet->dia_semana == 'Domingo')
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->format("d/m/Y") }}
-             -  
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->addDay(6)->format("d/m/Y") }}
-        @endif
-        @if($timesheet->dia_semana == 'Lunes')
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->subDay(1)->format("d/m/Y") }}
-             -  
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->addDay(5)->format("d/m/Y") }}
-        @endif
-        @if($timesheet->dia_semana == 'Martes')
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->subDay(2)->format("d/m/Y") }}
-             -  
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->addDay(4)->format("d/m/Y") }}
-        @endif
-        @if($timesheet->dia_semana == 'Miércoles')
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->subDay(3)->format("d/m/Y") }}
-             -  
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->addDay(3)->format("d/m/Y") }}
-        @endif
-        @if($timesheet->dia_semana == 'Jueves')
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->subDay(4)->format("d/m/Y") }}
-             -  
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->addDay(2)->format("d/m/Y") }}
-        @endif
-        @if($timesheet->dia_semana == 'Viernes')
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->subDay(5)->format("d/m/Y") }}
-             -  
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->addDay(1)->format("d/m/Y") }}
-        @endif
-        @if($timesheet->dia_semana == 'Sábado')
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->subDay(6)->format("d/m/Y") }}
-             -  
-            {{  \Carbon\Carbon::parse($timesheet->fecha_dia)->format("d/m/Y") }}
-        @endif
-		 | {{ $timesheet->empleado->name }} </font></h5>
+	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">
+		{!! $timesheet->semana !!} |  <font style="font-weight:lighter;">{{ $timesheet->empleado->name }}</font>
+	 </h5>
 
 	<div class="card card-body">
 		<div class="row">
 			<div class="datatable-fix col-12" style="margin:auto;">
 				<div class="col-12 d-flex justify-content-between mb-4">
 					<div  class=""><strong>Fecha: </strong> {{ \Carbon\Carbon::parse($timesheet->fecha_dia)->format("d/m/Y") }}</div>
-					<button class="btn btn-secundario" onclick="window.print()"><i class="fa-solid fa-print iconos_crear"></i> Imprimir</button>
+					<button class="btn btn-secundario" onclick="imprimirElemento('content_times_show_print');"><i class="fa-solid fa-print iconos_crear"></i> Imprimir</button>
 				</div>
 		        <table id="datatable_timesheet_create" class="table table-responsive w-100">
 		            <thead>
@@ -209,6 +178,103 @@
 		        </div>                  
 			@endif
 		</div>
+	</div>
+
+	{{-- print ___________________________________________________________________________________ --}}
+	@php
+        $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+        if (!is_null($organizacion)) {
+            $logotipo = $organizacion->logotipo;
+        } else {
+            $logotipo = 'logotipo-tabantaj.png';
+        }
+    @endphp
+	<style type="text/css">
+		@page {
+		  size: landscape;
+		}	
+	</style>
+	
+	<div id="content_times_show_print" class="solo-print">
+		<table class="encabezado-print">
+            <tr>
+                <td style="width: 25%;">
+                    <img src="{{ asset($logotipo) }}" class="img_logo" style="height: 70px;">
+                </td>
+                <td style="width: 50%;">
+                    <h4><strong>{{ $organizacion->empresa }}</strong></h4>
+                    <h5 style="font-weight: bolder;">Timesheet: <font style="font-weight:lighter;">{!! $timesheet->semana !!}</font></h5>
+                    <div>{{ $timesheet->empleado->name }}</div>
+                </td>
+                <td style="width: 25%;"class="encabezado_print_td_no_paginas">
+                    Fecha: {{ $hoy_format }} <br>
+                </td>
+            </tr>
+        </table>
+		<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">
+			{!! $timesheet->semana !!} |  <font style="font-weight:lighter;">{{ $timesheet->empleado->name }}</font>
+		 </h5>
+		<table id="datatable_timesheet_create" class="table w-100">
+            <thead>
+                <tr>
+                    <th style="min-width:200px;">Proyecto </th>
+                    <th style="min-width:200px;">Tarea</th>
+                    <th>Facturable</th>
+                    <th style="min-width:55px;">Lunes</th>
+                    <th style="min-width:55px;">Martes</th>
+                    <th style="min-width:55px;">Miercoles</th>
+                    <th style="min-width:55px;">Jueves</th>
+                    <th style="min-width:55px;">Viernes</th>
+                    <th style="min-width:55px;">Sabado</th>
+                    <th style="min-width:55px;">Domingo</th>
+                    <th style="min-width:200px;">Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($horas as $hora)
+                    <tr>
+                        <td>
+                           {{ $hora->proyecto->proyecto }}
+                        </td>
+                        <td>
+                            {{ $hora->tarea->tarea }}
+                        </td>
+                        <td>
+                        	@if($hora->facturable)
+                            	<div class="btn btn-info" style="transform: scale(0.5);"><i class="fa-solid fa-check"></i></div>
+                             @else
+                             	<div class="btn btn-info" style="transform: scale(0.5); background-color: #ccc !important;"><i class="fa-solid fa-xmark"></i></div>
+                            @endif
+                        </td>
+                        <td>
+                            {{ $hora->horas_lunes }}
+                        </td>
+                        <td>
+                            {{ $hora->horas_martes }}
+                        </td>
+                        <td>
+                            {{ $hora->horas_miercoles }}
+                        </td>
+                        <td>
+                            {{ $hora->horas_jueves }}
+                        </td>
+                        <td>
+                            {{ $hora->horas_viernes }}
+                        </td>   
+                        <td>
+                           	{{ $hora->horas_sabado }}
+                        </td>   
+                        <td>
+                            {{ $hora->horas_domingo }}
+                        </td> 
+                        <td>
+                            {{ $hora->descripcion }}
+                        </td>                           
+                    </tr>
+                @endforeach
+
+            </tbody>
+        </table>
 	</div>
 	
 @endsection
