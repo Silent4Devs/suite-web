@@ -90,7 +90,6 @@ class PerfilController extends Controller
 
     public function show($perfil)
     {
-
         abort_if(Gate::denies('niveles_jerarquicos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $perfil = PerfilEmpleado::find($perfil);
 
