@@ -345,7 +345,7 @@
                             </div>
                             `;
                             break;
-                            case 'Sistema de Gestión':
+                            case 'Análisis de riesgo integral':
                             return `
                             <div class="text-center w-100">
                                 @can('analisis_de_riesgos_matriz_riesgo_config')
