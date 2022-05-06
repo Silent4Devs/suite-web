@@ -65,7 +65,7 @@
             let RiesgoTotal = Number(riesgo) + Number(result);
             $("#riesgo_total").attr("value", RiesgoTotal);
             switch (true) {
-                case RiesgoTotal > 0 && RiesgoTotal < 45:
+                case RiesgoTotal >= 0 && RiesgoTotal <= 45:
                     $('#nivelriesgo_pre').text('Bajo');
                     $('#nivelriesgo_pre').removeClass("text-dark");
                     $('#nivelriesgo_pre').removeClass("text-orange");
@@ -73,7 +73,7 @@
                     $('#nivelriesgo_pre').removeClass("text-danger");
                     $('#nivelriesgo_pre').addClass('text-success');
                     break;
-                case RiesgoTotal > 46 && RiesgoTotal < 90:
+                case RiesgoTotal >= 46 && RiesgoTotal <= 90:
                     $('#nivelriesgo_pre').text('Medio');
                     $('#nivelriesgo_pre').removeClass("text-dark");
                     $('#nivelriesgo_pre').removeClass("text-orange");
@@ -81,7 +81,7 @@
                     $('#nivelriesgo_pre').removeClass("text-danger");
                     $('#nivelriesgo_pre').addClass('text-yellow');
                     break;
-                case RiesgoTotal > 91 && RiesgoTotal < 135:
+                case RiesgoTotal >= 91 && RiesgoTotal <= 135:
                     $('#nivelriesgo_pre').text('Alto');
                     $('#nivelriesgo_pre').removeClass("text-dark");
                     $('#nivelriesgo_pre').removeClass("text-orange");
@@ -89,7 +89,7 @@
                     $('#nivelriesgo_pre').removeClass("text-danger");
                     $('#nivelriesgo_pre').addClass('text-orange');
                     break;
-                case RiesgoTotal > 136 && RiesgoTotal < 185:
+                case RiesgoTotal >= 136 && RiesgoTotal <= 185:
                     $('#nivelriesgo_pre').text('Muy alto');
                     $('#nivelriesgo_pre').removeClass("text-dark");
                     $('#nivelriesgo_pre').removeClass("text-yellow");
@@ -211,7 +211,7 @@
             let RiesgoTotal = Number(riesgo) + Number(result);
             $("#riesgo_residual").attr("value", RiesgoTotal);
             switch (true) {
-                case RiesgoTotal > 0 && RiesgoTotal < 45:
+                case RiesgoTotal >= 0 && RiesgoTotal <= 45:
                     $('#nivelriesgo_residual_pre').text('Bajo');
                     $('#nivelriesgo_residual_pre').removeClass("text-dark");
                     $('#nivelriesgo_residual_pre').removeClass("text-orange");
@@ -219,7 +219,7 @@
                     $('#nivelriesgo_residual_pre').removeClass("text-danger");
                     $('#nivelriesgo_residual_pre').addClass('text-success');
                     break;
-                case RiesgoTotal > 46 && RiesgoTotal < 90:
+                case RiesgoTotal >= 46 && RiesgoTotal <= 90:
                     $('#nivelriesgo_residual_pre').text('Medio');
                     $('#nivelriesgo_residual_pre').removeClass("text-dark");
                     $('#nivelriesgo_residual_pre').removeClass("text-orange");
@@ -227,7 +227,7 @@
                     $('#nivelriesgo_residual_pre').removeClass("text-danger");
                     $('#nivelriesgo_residual_pre').addClass('text-yellow');
                     break;
-                case RiesgoTotal > 91 && RiesgoTotal < 135:
+                case RiesgoTotal >= 91 && RiesgoTotal <= 135:
                     $('#nivelriesgo_residual_pre').text('Alto');
                     $('#nivelriesgo_residual_pre').removeClass("text-dark");
                     $('#nivelriesgo_residual_pre').removeClass("text-orange");
@@ -235,7 +235,7 @@
                     $('#nivelriesgo_residual_pre').removeClass("text-danger");
                     $('#nivelriesgo_residual_pre').addClass('text-orange');
                     break;
-                case RiesgoTotal > 136 && RiesgoTotal < 185:
+                case RiesgoTotal >= 136 && RiesgoTotal <= 185:
                     $('#nivelriesgo_residual_pre').text('Muy alto');
                     $('#nivelriesgo_residual_pre').removeClass("text-dark");
                     $('#nivelriesgo_residual_pre').removeClass("text-yellow");
@@ -464,5 +464,29 @@
         var suma = numero1 + numero2;
 
         document.writeln(suma);
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Livewire.on('cerrar-modal', (event) => {
+                $('#amenazaSelect').modal('hide');
+                $('.modal-backdrop').hide();
+                if (event.editar) {
+                    toastr.success('Editado con éxito');
+                } else {
+                    toastr.success('Creado con éxito');
+                }
+
+            })
+            Livewire.on('cerrar-VulnerabilidadModal', (event) => {
+                $('#vulnerabilidadSelect').modal('hide');
+                $('.modal-backdrop').hide();
+                if (event.editar) {
+                    toastr.success('Editado con éxito');
+                } else {
+                    toastr.success('Creado con éxito');
+                }
+
+            })
+        })
     </script>
 @endsection
