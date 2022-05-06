@@ -1,10 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.analisis-riesgos.index') }}
 
     @can('matriz_riesgo_create')
-
         <style>
             th {
                 background-color: #345183;
@@ -61,8 +59,9 @@
                 justify-content: center;
                 align-items: center;
             }
-            .agregar{
-                margin-right:15px;
+
+            .agregar {
+                margin-right: 15px;
             }
 
             .agregar {
@@ -71,19 +70,21 @@
 
             .table tr td:nth-child(5) {
 
-            text-align: center !important;
+                text-align: center !important;
 
             }
-
 
         </style>
 
         <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo </h5>
-
         <div class="mt-5 card">
+            @include('partials.flashMessages')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modalmatrizriesgo', ['model' => 'Amenaza', 'route' => 'admin.amenazas.parseCsvImport'])
+                    @include('csvImport.modalmatrizriesgo', [
+                        'model' => 'Amenaza',
+                        'route' => 'admin.amenazas.parseCsvImport',
+                    ])
                 </div>
             </div>
 
@@ -135,9 +136,6 @@
         </div>
     </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -335,47 +333,47 @@
                         render: function(data, type, row, meta) {
                             console.log(row.tipo);
                             const tipo = row.tipo;
-                            switch(tipo){
-                            case 'Seguridad de la información':
-                            return `
+                            switch (tipo) {
+                                case 'Seguridad de la información':
+                                    return `
                             <div class="text-center w-100">
                                 @can('analisis_de_riesgos_matriz_riesgo_config')
                                     <a href="matriz-seguridad/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 @endcan
                             </div>
                             `;
-                            break;
-                            case 'Análisis de riesgo integral':
-                            return `
+                                    break;
+                                case 'Análisis de riesgo integral':
+                                    return `
                             <div class="text-center w-100">
                                 @can('analisis_de_riesgos_matriz_riesgo_config')
                                     <a href="matriz-seguridad/sistema-gestion/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 @endcan
                             </div>
                             `;
-                            break;
-                            case 'OCTAVE':
-                                return `
+                                    break;
+                                case 'OCTAVE':
+                                    return `
                                 <div class="text-center w-100">
                                     <a href="procesos-octave/${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 </div>
                             `;
-                            break;
-                            case 'ISO 31000':
-                            return `
+                                    break;
+                                case 'ISO 31000':
+                                    return `
                             <div class="text-center w-100">
                                 <a href="matriz-seguridad/ISO31000/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                             </div>
                             `;
-                            break;
-                            case 'NIST':
-                            return `
+                                    break;
+                                case 'NIST':
+                                    return `
                             <div class="text-center w-100">
                                 <a href="matriz-seguridad/NIST/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                             </div>
                             `;
-                            default:
-                             return`No se encuentran coincidencias`;
+                                default:
+                                    return `No se encuentran coincidencias`;
                             }
                         }
                     },
