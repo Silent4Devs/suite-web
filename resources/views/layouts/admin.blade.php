@@ -1199,9 +1199,34 @@
     {{-- @include('partials.footer') --}}
     </div>
     <style>
+        #contenido_imprimir{
+            padding: 20px;
+        }
+        .solo-print{
+            display: none;        
+        }
+        .encabezado-print{
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 35px;
+        }
+        .encabezado-print td{
+            padding: 10px 5px;
+            text-align: center;
+            border: 1px #ccc solid;
+        }
         @media print{
-            .vista_print{
+            .vista_print, .print-none{
                 display: none !important;
+            }
+            .solo-print{
+                display: block !important;        
+            }
+            body{
+                background-color: #fff !important;
+            }
+            .table th{
+                background-color: #788BAC !important;
             }
         }
     </style>
@@ -1215,8 +1240,6 @@
             let elemento_seleccionado = document.getElementById(elemento);
             let contenido_imprimir = document.getElementById('contenido_imprimir').innerHTML = elemento_seleccionado.innerHTML;
             console.log(elemento_seleccionado.innerHTML);
-
-
             document.querySelector('#elementos_imprimir').classList.remove('d-none');
             document.querySelector('#contenido_body_general_wrapper').classList.add('vista_print');
             print();
