@@ -172,7 +172,7 @@ Breadcrumbs::for('admin.paneldeclaracion.index', function ($trail) {
 Breadcrumbs::for('admin.objetivosseguridads.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
-    $trail->push('Objetivos de Seguridad', route('admin.objetivosseguridads.index'));
+    $trail->push('Objetivos del Sistema', route('admin.objetivosseguridads.index'));
 });
 Breadcrumbs::for('admin.objetivosseguridads.create', function ($trail) {
     $trail->parent('admin.objetivosseguridads.index');

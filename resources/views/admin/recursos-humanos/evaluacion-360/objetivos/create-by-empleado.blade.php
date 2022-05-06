@@ -73,7 +73,10 @@
             <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
                 enctype="multipart/form-data" class="mt-3 row">
                 @csrf
-                @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado',['editar'=>false])
+                @include(
+                    'admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado',
+                    ['editar' => false]
+                )
                 <div class="col-12">
                     <div class="d-flex justify-content-end w-100">
                         <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
@@ -98,7 +101,10 @@
                 <div class="modal-body">
                     <form id="formObjetivoEdit" method="post" enctype="multipart/form-data" class="mt-3 row">
                         @method('PATCH')
-                        @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado',['editar'=>true])
+                        @include(
+                            'admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado',
+                            ['editar' => true]
+                        )
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -202,7 +208,9 @@
                         return botones;
                     }
                 }],
-                order: [[1, 'asc']],
+                order: [
+                    [1, 'asc']
+                ],
                 pageLength: 10,
                 dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
@@ -398,6 +406,85 @@
                     }
                 })
             }
+
+            document.getElementById('copiarObjetivos').addEventListener('click', (e) => {
+                e.preventDefault();
+                let empleados = @json($empleados);
+                let modalContent = document.getElementById('contenidoModal');
+                let contenidoHTMLGenerado = `                       
+                <form id="formCopiaObjetivos" class="form-group">
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="hidden" value="0" name="empleado_destinatario">
+                            <label><i class="mr-2 fas fa-user"></i>Selecciona un empleado para copiar sus objetivos</label>
+                            <select class="empleados-select" name="empleado_destino">
+                                <option value="">-- Selecciona un empleado --</option>
+                                ${empleados.map(empleado => {
+                                            return `<option data-avatar="${empleado.avatar_ruta}" value="${empleado.id}">${empleado.name}</option>`;
+                                        }).join(',')}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                `;
+                modalContent.innerHTML = contenidoHTMLGenerado;
+                $('#modalCopiarObjetivos').modal('show');
+
+                $('.empleados-select').select2({
+                    theme: 'bootstrap4',
+                    templateResult: stateSelection,
+                    templateSelection: stateSelection,
+
+                });
+
+                function stateSelection(opt) {
+                    if (!opt.id) {
+                        return opt.text;
+                    }
+
+                    var optimage = $(opt.element).attr('data-avatar');
+                    var $opt = $(
+                        '<span><img src="' +
+                        optimage +
+                        '" class="img-fluid rounded-circle" width="30" height="30"/>' +
+                        opt.text + '</span>'
+                    );
+                    return $opt;
+                };
+            })
+
+            document.getElementById('btnGuardarCopiaObjs').addEventListener('click', () => {
+                let formulario = document.getElementById('formCopiaObjetivos');
+                let empleado_destinatario = $('.empleados-select').select2('data')[0].id;
+                if (empleado_destinatario != '') {
+                    console.log('copiando');
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('admin.ev360-objetivos-empleado.storeCopiaObjetivos') }}",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            empleado_destinatario,
+                            empleado_destino: {{ $empleado->id }},
+                        },
+                        dataType: "JSON",
+                        beforeSend: function() {
+                            toastr.info('Copiando objetivos');
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                toastr.success('Objetivos copiados correctamente');
+                                tblObjetivos.ajax.reload();
+                                $('#modalCopiarObjetivos').modal('hide');
+                            }
+                        },
+                        error: function(request, status, error) {
+                            toastr.error(error);
+                            $('#modalCopiarObjetivos').modal('hide');
+                        }
+                    });
+                }
+
+            })
         })
 
         function limpiarErrores() {

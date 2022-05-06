@@ -87,6 +87,11 @@ class MatrizRiesgo extends Model
         '0'     => 'BAJO (0)',
     ];
 
+    const EV_INICIAL_SELECT = [
+        '11.1' => 'Sí',
+        '0'     => 'No',
+    ];
+
     protected $casts = [
         'plan_de_accion' => 'string',
         'confidencialidad_cid' => 'string',
@@ -175,7 +180,7 @@ class MatrizRiesgo extends Model
 
     public function activo()
     {
-        return $this->belongsTo(Activo::class);
+        return $this->belongsTo(SubcategoriaActivo::class);
     }
 
     public function amenaza()

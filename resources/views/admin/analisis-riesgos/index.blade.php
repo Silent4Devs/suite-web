@@ -345,6 +345,15 @@
                             </div>
                             `;
                             break;
+                            case 'Análisis de riesgo integral':
+                            return `
+                            <div class="text-center w-100">
+                                @can('analisis_de_riesgos_matriz_riesgo_config')
+                                    <a href="matriz-seguridad/sistema-gestion/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                                @endcan
+                            </div>
+                            `;
+                            break;
                             case 'OCTAVE':
                                 return `
                                 <div class="text-center w-100">
