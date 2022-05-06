@@ -13,14 +13,14 @@ class SelectVulnerabilidadComponent extends Component
     public $valorAmenaza;
     protected $listeners = ['render' => 'render'];
 
-
     public function render()
-    {   
+    {
         $vulnerabilidades = Vulnerabilidad::orderByDesc('id')->get();
         $amenazas = Amenaza::get();
 
-        return view('livewire.select-vulnerabilidad-component', compact('vulnerabilidades','amenazas'));
+        return view('livewire.select-vulnerabilidad-component', compact('vulnerabilidades', 'amenazas'));
     }
+
     public function validarVulnerabilidad()
     {
         $this->validate([
@@ -33,7 +33,7 @@ class SelectVulnerabilidadComponent extends Component
     public function save()
     {
         $this->validarVulnerabilidad();
-        $model =  Vulnerabilidad::create([
+        $model = Vulnerabilidad::create([
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
             'id_amenaza' => $this->valorAmenaza,

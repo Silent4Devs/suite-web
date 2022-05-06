@@ -6,18 +6,19 @@ use App\Models\Amenaza;
 use Livewire\Component;
 
 class SelectAmenazaComponent extends Component
-{   
+{
     public $nombre;
     public $categoria;
     public $descripcion;
     protected $listeners = ['render' => 'render'];
-   
 
     public function render()
     {
         $amenazas = Amenaza::orderByDesc('id')->get();
-        return view('livewire.select-amenaza-component',compact('amenazas'));
+
+        return view('livewire.select-amenaza-component', compact('amenazas'));
     }
+
     public function validarAmenaza()
     {
         $this->validate([
@@ -30,12 +31,12 @@ class SelectAmenazaComponent extends Component
     public function save()
     {
         $this->validarAmenaza();
-        $model =  Amenaza::create([
+        $model = Amenaza::create([
             'nombre' => $this->nombre,
             'categoria' => $this->categoria,
             'descripcion' => $this->descripcion,
         ]);
-        $this->reset('nombre', 'categoria','descripcion');
+        $this->reset('nombre', 'categoria', 'descripcion');
         $this->emit('render');
         $this->emit('cerrar-modal');
     }

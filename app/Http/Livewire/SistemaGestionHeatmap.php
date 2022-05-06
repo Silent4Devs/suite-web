@@ -2,15 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\MatrizRiesgosSistemaGestion;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Livewire\Component;
 use App\Models\Area;
+use App\Models\MatrizRiesgosSistemaGestion;
 use App\Models\Proceso;
 use App\Models\Sede;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class SistemaGestionHeatmap extends Component
-
 {
     use LivewireAlert;
 
@@ -317,6 +316,7 @@ class SistemaGestionHeatmap extends Component
                     break;
             }
         }
+
         return view('livewire.sistema-gestion-heatmap', [
             'sedes' => $sedes,
             'areas' => $areas,

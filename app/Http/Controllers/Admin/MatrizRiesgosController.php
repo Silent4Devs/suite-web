@@ -496,7 +496,7 @@ class MatrizRiesgosController extends Controller
     public function SistemaGestion(Request $request)
     {
         abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-      
+
         $organizacions = Organizacion::all();
         $teams = Team::get();
         $tipoactivos = Tipoactivo::get();
@@ -510,6 +510,7 @@ class MatrizRiesgosController extends Controller
 
         return view('admin.matrizSistemaGestion.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
+
     public function SistemaGestionData(Request $request)
     {
         abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -820,7 +821,6 @@ class MatrizRiesgosController extends Controller
 
             return $table->make(true);
         }
-
     }
 
     public function createSistemaGestion()
@@ -836,18 +836,18 @@ class MatrizRiesgosController extends Controller
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
-        return view('admin.matrizSistemaGestion.create', compact('amenazas','matrizRiesgo', 'activos', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
+        return view('admin.matrizSistemaGestion.create', compact('amenazas', 'matrizRiesgo', 'activos', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
 
     public function storeSistemaGestion(Request $request)
     {
         $request->validate([
-            'controles_id' => 'required'
+            'controles_id' => 'required',
         ]);
         $controles = array_map(function ($value) {
             return intval($value);
         }, $request->controles_id);
-       
+
         $matrizRiesgo = MatrizRiesgosSistemaGestion::create($request->all());
         $matrizRiesgo->matriz_riesgos_controles_pivots()->sync($controles);
         if (isset($request->plan_accion)) {
@@ -920,6 +920,7 @@ class MatrizRiesgosController extends Controller
     {
         return view('admin.matrizSistemaGestion.heatchart')->with('id', $request->idAnalisis);
     }
+
     public function showSistemaGestion(MatrizRiesgo $matrizRiesgo, $id)
     {
         abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
