@@ -1273,8 +1273,8 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('configuracion_empleados_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $empleado->delete();
-
-        return response()->json(['status' => 'success', 'message' => 'Empleado Eliminado', 'from' => 'rh'], 200);
+        $empleado->update(['estatus' => 'baja']);
+        return response()->json(['success' => true, 'empleado' => $empleado->name, 'message' => 'Empleado dado de baja', 'from' => 'rh'], 200);
     }
 
     public function deleteCertificaciones(Request $request, $certificacion)

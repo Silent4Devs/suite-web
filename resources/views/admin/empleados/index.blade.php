@@ -372,7 +372,14 @@
                     },
                     {
                         data: 'estatus',
-                        name: 'estatus'
+                        name: 'estatus',
+                        render: function(data, type, row, meta) {
+                            if (row.estatus == 'alta') {
+                                return '<i class="fas fa-check text-success"></i>';
+                            } else {
+                                return '<i class="fas fa-times text-danger"></i>';
+                            }
+                        }
                     },
                     {
                         data: 'sede',
@@ -385,7 +392,7 @@
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ route('admin.empleados.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('admin.empleados.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
-                                   <button onclick="DarDeBaja(this)" data-url="{{ route('admin.empleados.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></button>
+                                   <button onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')" data-url="{{ route('admin.empleados.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></button>
                                 </div>
                             `;
                             buttons = buttons.replaceAll(':id', data);
@@ -452,11 +459,15 @@
                 });
             });
 
-            window.DarDeBaja = (e) => {
+            window.DarDeBaja = (e, empleado, avatar) => {
                 let url = $(e).data('url');
                 Swal.fire({
                     title: '¿Estás seguro?',
-                    text: "¡No podrás revertir esto!",
+                    html: `
+                        <div>
+                            <img style="clip-path: circle(18px at 50% 50%);width: 50px;" src="${avatar}" /> <strong>${empleado}</strong> será dado de baja.    
+                        </div>
+                    `,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -474,8 +485,8 @@
                             success: function(data) {
                                 if (data.success) {
                                     Swal.fire(
-                                        'Eliminado!',
-                                        'El proceso ha sido eliminado.',
+                                        'Éxito',
+                                        data.empleado + ' ha sido dado de baja',
                                         'success'
                                     ).then().then(() => {
                                         table.ajax.reload();
