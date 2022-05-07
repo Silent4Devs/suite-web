@@ -13,7 +13,10 @@
 
     @yield('css')
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     {{-- boostrap icons --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <!-- Google Fonts -->
@@ -992,7 +995,8 @@
         .dt-button-collection.dropdown-menu::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.5);
         }
-        .table.table-striped tr{
+
+        .table.table-striped tr {
             background-color: white !important;
         }
 
@@ -1199,36 +1203,46 @@
     {{-- @include('partials.footer') --}}
     </div>
     <style>
-        #contenido_imprimir{
+        #contenido_imprimir {
             padding: 20px;
         }
-        .solo-print{
-            display: none;        
+
+        .solo-print {
+            display: none;
         }
-        .encabezado-print{
+
+        .encabezado-print {
             border-collapse: collapse;
             width: 100%;
             margin-bottom: 35px;
         }
-        .encabezado-print td{
+
+        .encabezado-print td {
             padding: 10px 5px;
             text-align: center;
             border: 1px #ccc solid;
         }
-        @media print{
-            .vista_print, .print-none{
+
+        @media print {
+
+            .vista_print,
+            .print-none {
                 display: none !important;
             }
-            .solo-print{
-                display: block !important;        
+
+            .solo-print {
+                display: block !important;
             }
-            body{
+
+            body {
                 background-color: #fff !important;
             }
-            .table th{
+
+            .table th {
                 background-color: #788BAC !important;
             }
         }
+
     </style>
     <div id="elementos_imprimir" class="d-none">
         <div id="contenido_imprimir">
@@ -1238,7 +1252,8 @@
     <script>
         function imprimirElemento(elemento) {
             let elemento_seleccionado = document.getElementById(elemento);
-            let contenido_imprimir = document.getElementById('contenido_imprimir').innerHTML = elemento_seleccionado.innerHTML;
+            let contenido_imprimir = document.getElementById('contenido_imprimir').innerHTML = elemento_seleccionado
+                .innerHTML;
             console.log(elemento_seleccionado.innerHTML);
             document.querySelector('#elementos_imprimir').classList.remove('d-none');
             document.querySelector('#contenido_body_general_wrapper').classList.add('vista_print');
@@ -1251,9 +1266,9 @@
     {{-- daterangepicker --}}
     <script>
         @if (auth()->user()->empleado)
-        window.NotificationUser = {!! json_encode(['user' => auth()->check() ? auth()->user()->empleado->id : null]) !!};
+            window.NotificationUser = {!! json_encode(['user' => auth()->check() ? auth()->user()->empleado->id : null]) !!};
         @else
-        window.NotificationUser = 1
+            window.NotificationUser = 1
         @endif
     </script>
     {{-- Librerías para visualizar en campo el dolar --}}

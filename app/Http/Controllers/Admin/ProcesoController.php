@@ -93,10 +93,10 @@ class ProcesoController extends Controller
     {
         $request->validate(
             [
-                'codigo' => 'required|string',
-                'nombre' => 'required|string',
+                'codigo' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
                 'id_macroproceso' => 'required|integer',
-                'descripcion' => 'nullable|string',
+                'descripcion' => 'nullable|max:10000',
             ],
         );
         Proceso::create($request->all());
@@ -142,10 +142,10 @@ class ProcesoController extends Controller
     {
         $request->validate(
             [
-                'codigo' => 'required|string',
-                'nombre' => 'required|string',
+                'codigo' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
                 'id_macroproceso' => 'required|integer',
-                'descripcion' => 'nullable|string',
+                'descripcion' => 'nullable|max:10000',
             ],
         );
         $proceso->update($request->all());
