@@ -172,6 +172,7 @@ class EntendimientoOrganizacionController extends Controller
         if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
+
         return redirect()->route('admin.entendimiento-organizacions.index')->with('success', 'Análisis FODA actualizado correctamente');
     }
 
