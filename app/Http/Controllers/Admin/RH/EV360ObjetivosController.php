@@ -201,9 +201,9 @@ class EV360ObjetivosController extends Controller
         }
     }
 
-    public function show($empleado)
+    public function show(Request $request, $empleado)
     {
-        // abort_if(Gate::denies('objetivos_estrategicos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_estrategicos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = new Objetivo;
         $empleado = Empleado::find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
@@ -211,8 +211,10 @@ class EV360ObjetivosController extends Controller
                 $query->with(['tipo', 'metrica']);
             }]);
         }]);
-
         $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+        if ($request->ajax()) {
+            return datatables()->of($objetivos)->toJson();
+        }
 
         return view('admin.recursos-humanos.evaluacion-360.objetivos.show', compact('empleado'));
     }
