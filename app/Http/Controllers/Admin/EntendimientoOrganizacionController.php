@@ -99,16 +99,23 @@ class EntendimientoOrganizacionController extends Controller
     public function store(Request $request, EntendimientoOrganizacion $entendimientoOrganizacion)
     {
         $request->validate([
-
-            'analisis' => 'required|string',
-            'fecha' => 'required|string',
+            'analisis' => 'required|string|max:255',
+            'fecha' => 'required|date',
             'id_elabora' => 'required|string',
 
+        ], [
+            'analisis.required' => 'El campo Análisis es obligatorio',
+            'analisis.string' => 'El campo Análisis debe ser un texto',
+            'analisis.max' => 'El campo Análisis debe tener como máximo 255 caracteres',
+            'fecha.required' => 'El campo Fecha es obligatorio',
+            'fecha.date' => 'El campo Fecha debe ser una fecha',
+            'id_elabora.required' => 'El campo Elabora es obligatorio',
         ]);
-
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
-        $this->vincularParticipantes($request->participantes, $foda);
+        if (!is_null($request->participantes)) {
+            $this->vincularParticipantes($request->participantes, $foda);
+        }
 
         return redirect()->route('admin.entendimiento-organizacions.edit', $foda)->with('success', 'Análisis FODA creado correctamente');
     }
@@ -148,15 +155,23 @@ class EntendimientoOrganizacionController extends Controller
     public function update(Request $request, EntendimientoOrganizacion $entendimientoOrganizacion)
     {
         $request->validate([
-
-            'analisis' => 'required|string',
-            'fecha' => 'required|string',
+            'analisis' => 'required|string|max:255',
+            'fecha' => 'required|date',
             'id_elabora' => 'required|string',
 
+        ], [
+            'analisis.required' => 'El campo Análisis es obligatorio',
+            'analisis.string' => 'El campo Análisis debe ser un texto',
+            'analisis.max' => 'El campo Análisis debe tener como máximo 255 caracteres',
+            'fecha.required' => 'El campo Fecha es obligatorio',
+            'fecha.date' => 'El campo Fecha debe ser una fecha',
+            'id_elabora.required' => 'El campo Elabora es obligatorio',
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
+        if (!is_null($request->participantes)) {
+            $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
+        }
 
         return redirect()->route('admin.entendimiento-organizacions.index')->with('success', 'Análisis FODA actualizado correctamente');
     }
@@ -201,9 +216,9 @@ class EntendimientoOrganizacionController extends Controller
         $amenazas = $fodaOld->fodamenazas;
 
         $foda = EntendimientoOrganizacion::create([
-            'analisis'=>$request->nombreFoda,
-            'fecha'=>$fodaOld->fecha,
-            'id_elabora'=>$fodaOld->id_elabora,
+            'analisis' => $request->nombreFoda,
+            'fecha' => $fodaOld->fecha,
+            'id_elabora' => $fodaOld->id_elabora,
         ]);
         // Almacenamiento de participantes relacionados
         $this->vincularParticipantes($participantes, $foda);
