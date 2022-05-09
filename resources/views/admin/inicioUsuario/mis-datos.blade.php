@@ -443,7 +443,7 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                         </div> --}}
-                        <div class="card" x-data="{show:false}" style="padding:20px;">
+                        <div class="card" x-data="{ show: false }" style="padding:20px;">
                             <h5 class="mb-0"><i class="bi bi-people mr-2"
                                     style="transform:scale(1.15);"></i>Mi Equipo
 
@@ -550,7 +550,7 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                         </div>
-                        <div class="card card_margin_b_n" x-data="{show:false}" style="padding:20px;">
+                        <div class="card card_margin_b_n" x-data="{ show: false }" style="padding:20px;">
                             <h5 class="mb-0"><i class="bi bi-laptop mr-2"></i>Mis Activos
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -597,7 +597,7 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                         </div>
-                        <div class=" card card_margin_b_n" x-data="{show:false}" style="padding:20px;">
+                        <div class=" card card_margin_b_n" x-data="{ show: false }" style="padding:20px;">
                             <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -856,15 +856,14 @@ if (!is_null($organizacion)) {
                         <div class="row gutters-sm">
                             <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100">
-                                    <div class="pb-personzalizado card-body" x-data="{show:false}">
+                                    <div class="pb-personzalizado card-body" x-data="{ show: false }">
                                         <div class="row">
-                                            <div class="col-4">
+                                            <div class="col-5">
                                                 <h5 class="mb-0"><i class="bi bi-bullseye mr-2"></i>Mis
                                                     Objetivos
-
                                                 </h5>
                                             </div>
-                                            <div class="col-8" style="font-size: 15px;text-align: end">
+                                            <div class="col-7" style="font-size: 15px;text-align: end">
                                                 <a class="mr-2 text-dark"
                                                     href="{{ route('admin.ev360-objetivos-empleado.show', ['empleado' => auth()->user()->empleado->id]) }}">
                                                     <i class="fas fa-eye"></i>
@@ -913,19 +912,19 @@ if (!is_null($organizacion)) {
                             </div>
                             <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100 mt-1">
-                                    <div class="pb-personzalizado card-body" x-data="{show:false}"
+                                    <div class="pb-personzalizado card-body" x-data="{ show: false }"
                                         style="padding-top:17px !important; padding-bottom:17px !important;">
                                         <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge mr-2"></i>Mi
                                             Autoevaluación
                                             @if (!is_null($mis_evaluaciones) && is_object($mis_evaluaciones))
-                                            @if(isset($mis_evaluaciones->evaluado))
-                                                @if (!$mis_evaluaciones->evaluado)
-                                                    <div class="circle-total-evaluaciones"
-                                                        style="top:-5px !important;">
-                                                        <span style="position: absolute;top: 3px;">1</span>
-                                                    </div>
+                                                @if (isset($mis_evaluaciones->evaluado))
+                                                    @if (!$mis_evaluaciones->evaluado)
+                                                        <div class="circle-total-evaluaciones"
+                                                            style="top:-5px !important;">
+                                                            <span style="position: absolute;top: 3px;">1</span>
+                                                        </div>
+                                                    @endif
                                                 @endif
-                                            @endif
                                             @endif
                                         </h5>
 
@@ -942,10 +941,10 @@ if (!is_null($organizacion)) {
                                                     @if ($last_evaluacion)
                                                         <div class="text-center" style="margin-top:20px;">
                                                             <a class="btn btn-sm btn-light"
-                                                                href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $last_evaluacion->id,'evaluado' => auth()->user()->empleado->id,'evaluador' => auth()->user()->empleado->id]) }}">
+                                                                href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $last_evaluacion->id, 'evaluado' => auth()->user()->empleado->id, 'evaluador' => auth()->user()->empleado->id]) }}">
                                                                 Autoevaluarme</a>
                                                             <a class="btn btn-sm btn-light"
-                                                                href="{{ route('admin.ev360-evaluaciones.misEvaluaciones', ['evaluacion' => $last_evaluacion->id,'evaluado' => auth()->user()->empleado->id]) }}">Ver
+                                                                href="{{ route('admin.ev360-evaluaciones.misEvaluaciones', ['evaluacion' => $last_evaluacion->id, 'evaluado' => auth()->user()->empleado->id]) }}">Ver
                                                                 mis Autoevaluaciones</a>
                                                         </div>
                                                     @endif
@@ -961,7 +960,7 @@ if (!is_null($organizacion)) {
                             </div>
                             <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100 mt-1">
-                                    <div class="pb-personzalizado mb-0 card-body" x-data="{show:false}"
+                                    <div class="pb-personzalizado mb-0 card-body" x-data="{ show: false }"
                                         style="padding-top:17px !important; padding-bottom:17px !important;">
                                         <h5 class="mb-0 d-inline-block"><i
                                                 class="bi bi-person-badge-fill mr-2"></i>Evaluaciones a
@@ -987,7 +986,7 @@ if (!is_null($organizacion)) {
                                                     @if ($last_evaluacion)
                                                         @if ($esLider)
                                                             <div class="col-12">
-                                                                <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion,'evaluador' => auth()->user()->empleado->id]) }}"
+                                                                <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
                                                                     class="btn btn-xs btn-light mt-3">Evaluaciones de
                                                                     mi equipo</a>
                                                             </div>
@@ -1017,7 +1016,7 @@ if (!is_null($organizacion)) {
                                                                     </div>
                                                                     <div>
                                                                         <a class="btn btn-sm btn-light"
-                                                                            href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion,'evaluado' => $evaluacion->empleado_evaluado,'evaluador' => $evaluacion->evaluador]) }}">
+                                                                            href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}">
                                                                             Evaluar</a>
                                                                         {{-- @if ($evaluacion->empleado_evaluado->supervisor)
                                                                                             @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->supervisor->id)
