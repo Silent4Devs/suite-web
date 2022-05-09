@@ -15,7 +15,7 @@ class FortalezasComponent extends Component
     public $fortaleza_id;
 
     protected $rules = [
-        'fortaleza' => 'required|max:15',
+        'fortaleza' => 'required|max:1050',
     ];
 
     public function mount($foda_id)
