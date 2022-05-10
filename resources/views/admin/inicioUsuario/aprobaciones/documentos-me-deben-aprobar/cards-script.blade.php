@@ -13,7 +13,7 @@
                 inicializarCapacitacionesGeneralesCards('Sin Aprobaciones Archivadas', 'todo', url);
             })
         }
-        btnPrincipalesMeDebenAprobar.addEventListener('click', function(e) {
+        btnPrincipalesMeDebenAprobar?.addEventListener('click', function(e) {
             const url = this.getAttribute('data-url');
             inicializarCapacitacionesGeneralesCards('Sin Aprobaciones', 'todo', url);
         })
@@ -79,14 +79,14 @@
                                             <div class="col-12">
                                                 <h6 class="card-title d-flex align-items-center" style="text-transform: capitalize;">
                                                     ${icono}
-                                                    ${modelo.documento.codigo} - ${modelo.documento.nombre}
+                                                    ${modelo.documento?.codigo} - ${modelo.documento?.nombre}
                                                 </h6>
                                             </div>
                                         </div>
-                                        <p class="m-0" style="font-size: 12px;color:${modelo.documento.color_estatus}">${modelo.documento.estatus_formateado}</p>
-                                        <p class="m-0" style="font-size: 12px;">Versión: ${modelo.documento.version}</p>
-                                        <p class="m-0" style="font-size: 12px;text-transform:capitalize;">Tipo: ${modelo.documento.tipo}</p>
-                                        <p class="m-0" style="font-size: 12px">Fecha de Solicitud: ${modelo.documento.fecha_dmy.replaceAll('-', '/')}</p>
+                                        <p class="m-0" style="font-size: 12px;color:${modelo.documento?.color_estatus}">${modelo.documento?.estatus_formateado}</p>
+                                        <p class="m-0" style="font-size: 12px;">Versión: ${modelo.documento?.version}</p>
+                                        <p class="m-0" style="font-size: 12px;text-transform:capitalize;">Tipo: ${modelo.documento?.tipo}</p>
+                                        <p class="m-0" style="font-size: 12px">Fecha de Solicitud: ${modelo.documento?.fecha_dmy.replaceAll('-', '/')}</p>
                                     </div>
                                 </div>
                             </div>
@@ -98,9 +98,9 @@
         }
 
         function headerAuxCardHTML(modelo) {
-            const estatus = Number(modelo.documento.estatus);
+            const estatus = Number(modelo.documento?.estatus);
             let html = `
-            <a title="Historial de Revisiones del documento: ${modelo.documento.nombre}" href="/admin/documentos/${modelo.documento.id}/history-reviews">
+            <a title="Historial de Revisiones del documento: ${modelo.documento?.nombre}" href="/admin/documentos/${modelo.documento?.id}/history-reviews">
                 <i class="fas fa-clock text-muted" data-historial-revisiones="true" style="cursor: pointer;"></i>    
             </a>
             `;
