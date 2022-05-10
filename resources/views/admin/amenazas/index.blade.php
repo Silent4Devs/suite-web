@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.amenazas.index') }}
 
     <style>
@@ -44,7 +43,10 @@
     <div class="mt-5 card">
         <div style="margin-bottom: 10px; margin-left:10px;" class="row">
             <div class="col-lg-12">
-                @include('csvImport.modal', ['model' => 'Amenaza', 'route' => 'admin.amenazas.parseCsvImport'])
+                @include('csvImport.modal', [
+                    'model' => 'Amenaza',
+                    'route' => 'admin.amenazas.parseCsvImport',
+                ])
             </div>
         </div>
 
@@ -54,7 +56,6 @@
             @include('admin.amenazas.table')
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
@@ -221,7 +222,11 @@
                     },
                     {
                         data: 'nombre',
-                        name: 'nombre'
+                        name: 'nombre',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
+
                     },
                     {
                         data: 'categoria',
@@ -242,6 +247,7 @@
                 ],
             };
             let table = $('.datatable-amenaza').DataTable(dtOverrideGlobals);
+            
         });
     </script>
 @endsection

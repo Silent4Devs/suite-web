@@ -1,4 +1,4 @@
-<ul class="mt-4">
+<ul class="mt-2">
     @can('analisis_de_riesgos_amenazas_access')
         <li>
             <a href="{{ route('admin.amenazas.index') }}">
@@ -30,14 +30,14 @@
         </li>
     @endcan
 
-        <li>
+        {{-- <li>
             <a href="{{ route('admin.carta-aceptacion.index') }}">
                 <div>
                     <i class="far fa-file-alt" style="font-size: 35pt;"></i><br>
                     Cartas de Aceptación
                 </div>
             </a>
-        </li>
+        </li> --}}
 
         {{-- <li>
             <a href="{{ route('admin.tabla-impacto.index') }}">
