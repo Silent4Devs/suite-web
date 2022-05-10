@@ -12,9 +12,11 @@
     </div>
 
     <!-- Descripcion Field -->
-    <div class="form-group col-sm-6">
-        <i class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Descripción:') !!}
-        {!! Form::text('descripcion', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+    <div class="form-group col-sm-12">
+        {{-- <i class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Descripción:') !!}
+        {!! Form::text('descripcion', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!} --}}
+        <label for="exampleFormControlTextarea1"> <i class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Descripción:') !!}</label>
+        <textarea class="form-control" id="edescripcion" name="descripcion" rows="4"></textarea>
     </div>
 
     <!-- Submit Field -->

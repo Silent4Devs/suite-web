@@ -102,13 +102,6 @@ class AmenazaController extends AppBaseController
         return redirect(route('admin.amenazas.index'));
     }
 
-    /**
-     * Display the specified Amenaza.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
     public function show(Amenaza $amenaza)
     {
         abort_if(Gate::denies('analisis_de_riesgos_amenazas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -116,13 +109,6 @@ class AmenazaController extends AppBaseController
         return view('admin.amenazas.show')->with('amenaza', $amenaza);
     }
 
-    /**
-     * Show the form for editing the specified Amenaza.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
     public function edit($id)
     {
         abort_if(Gate::denies('analisis_de_riesgos_amenazas_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -137,14 +123,6 @@ class AmenazaController extends AppBaseController
         return view('admin.amenazas.edit')->with('amenaza', $amenaza);
     }
 
-    /**
-     * Update the specified Amenaza in storage.
-     *
-     * @param  int              $id
-     * @param UpdateAmenazaRequest $request
-     *
-     * @return Response
-     */
     public function update($id, UpdateAmenazaRequest $request)
     {
         abort_if(Gate::denies('analisis_de_riesgos_amenazas_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
