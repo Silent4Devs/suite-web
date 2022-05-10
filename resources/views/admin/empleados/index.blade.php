@@ -71,15 +71,17 @@
         }
 
     </style>
-      {{ Breadcrumbs::render('EV360-Empleados') }}
+    {{ Breadcrumbs::render('EV360-Empleados') }}
 
     <h5 class="col-12 titulo_general_funcion">Empleados</h5>
     <div class="mt-5 card">
         @can('configuracion_empleados_create')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modalempleado', ['model' => 'Vulnerabilidad', 'route' =>
-                    'admin.vulnerabilidads.parseCsvImport'])
+                    @include('csvImport.modalempleado', [
+                        'model' => 'Vulnerabilidad',
+                        'route' => 'admin.vulnerabilidads.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -219,6 +221,13 @@
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    //For repeating heading.
+                    repeatingHead: {
+                        logo: 'https://www.google.co.in/logos/doodles/2018/world-cup-2018-day-22-5384495837478912-s.png',
+                        logoPosition: 'right',
+                        logoStyle: '',
+                        title: '<h3>Sample Heading</h3>'
+                    },
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
@@ -246,83 +255,78 @@
             ];
             @can('configuracion_empleados_create')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar empleado',
-                url: "{{ route('admin.empleados.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar empleado',
+                    url: "{{ route('admin.empleados.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnExport = {
-                text: '<i class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-empleado') }}",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
+                    text: '<i class="fas fa-download"></i>',
+                    titleAttr: 'Descargar plantilla',
+                    className: "btn btn_cargar",
+                    url: "{{ route('descarga-empleado') }}",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnImport = {
-                text: '<i class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                $('#xlsxImportModal').modal('show');
-                }
+                    text: '<i class="fas fa-file-upload"></i>',
+                    titleAttr: 'Importar datos',
+                    className: "btn btn_cargar",
+                    action: function(e, dt, node, config) {
+                        $('#xlsxImportModal').modal('show');
+                    }
                 };
-
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
-
-                // let btnConf = {
-                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Configurar mis datos',
-                // titleAttr: 'conf',
-                // url: "{{ url('admin/panel-inicio') }}",
-                // className: "btn-xs btn-primary rounded ml-2 pr-3",
-                // action: function(e, dt, node, config) {
-                // let {
-                // url
-                // } = config;
-                // window.location.href = url;
-                // }
-                // };
-                // dtButtons.push(btnConf);
             @endcan
 
             @can('configuracion_empleados_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.users.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.users.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 // dtButtons.push(deleteButton)
             @endcan
@@ -385,15 +389,32 @@
                     },
                     {
                         data: 'estatus',
-                        name: 'estatus'
+                        name: 'estatus',
+                        render: function(data, type, row, meta) {
+                            if (row.estatus == 'alta') {
+                                return '<i class="fas fa-check text-success"></i>';
+                            } else {
+                                return '<i class="fas fa-times text-danger"></i>';
+                            }
+                        }
                     },
                     {
                         data: 'sede',
                         name: 'sede'
                     },
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let buttons = `
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a href="{{ route('admin.empleados.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('admin.empleados.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
+                                   <button onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')" data-url="{{ route('admin.empleados.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></button>
+                                </div>
+                            `;
+                            buttons = buttons.replaceAll(':id', data);
+                            return buttons;
+                        }
                     }
                 ],
                 orderCellsTop: true,
@@ -454,7 +475,45 @@
                     }
                 });
             });
+
+            window.DarDeBaja = (e, empleado, avatar) => {
+                let url = $(e).data('url');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    html: `
+                        <div>
+                            <img style="clip-path: circle(18px at 50% 50%);width: 50px;" src="${avatar}" /> <strong>${empleado}</strong> será dado de baja.    
+                        </div>
+                    `,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, dar de baja',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(data) {
+                                if (data.success) {
+                                    Swal.fire(
+                                        'Éxito',
+                                        data.empleado + ' ha sido dado de baja',
+                                        'success'
+                                    ).then().then(() => {
+                                        table.ajax.reload();
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
         });
     </script>
-
 @endsection

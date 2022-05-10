@@ -9,7 +9,7 @@
         }
     </style>
 
-    {{-- {{ Breadcrumbs::render('admin.iso27001.index') }} --}}
+    {{ Breadcrumbs::render('timesheet-reportes') }}
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reportes</font> </h5>
     <div class="mt-5 card card-body">
         <nav class="mt-4">
@@ -26,14 +26,10 @@
                     href="#nav-proyectos" role="tab" aria-controls="nav-proyectos" aria-selected="false">
                     proyectos
                 </a>
-                <a class="nav-link" id="nav-tareas-tab" data-type="tareas" data-toggle="tab"
-                    href="#nav-tareas" role="tab" aria-controls="nav-tareas" aria-selected="false">
-                    Tareas
-                </a>
-                <a class="nav-link" id="nav-clientes-tab" data-type="clientes" data-toggle="tab"
+                {{-- <a class="nav-link" id="nav-clientes-tab" data-type="clientes" data-toggle="tab"
                     href="#nav-clientes" role="tab" aria-controls="nav-clientes" aria-selected="false">
                     Clientes
-                </a>
+                </a> --}}
             </div>
         </nav>
 
@@ -45,110 +41,10 @@
                 @livewire('timesheet.reportes-empleados')
             </div>
             <div class="tab-pane mb-4 fade p-4" id="nav-proyectos" role="tabpanel" aria-labelledby="nav-proyectos-tab">
-                <div class="row">
-                    <div class="datatable-fix w-100 mt-5">
-                        <table id="datatable_timesheet_proyectos" class="table w-100 tabla-animada tablasidjs">
-                            <thead class="w-100">
-                                <tr>
-                                    <th style="min-width:250px;">Proyecto </th>
-                                    <th>Área a la que pertenece</th>
-                                    <th>Cliente</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($proyectos as $proyecto)
-                                    <tr>
-                                        <td>{{ $proyecto->proyecto }} </td>
-                                        <td>{{ $proyecto->area_id ? $proyecto->area->area : '' }} </td>
-                                        <td>{{ $proyecto->cliente_id ? $cliente->nombre : '' }} </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                @livewire('timesheet.reportes-proyectos')
             </div>
-            <div class="tab-pane mb-4 fade p-4" id="nav-tareas" role="tabpanel" aria-labelledby="nav-tareas-tab">
-
-                <div class="row">
-                    <div class="datatable-fix w-100 mt-5">
-                        <table id="datatable_timesheet_tareas" class="table w-100 tabla-animada tablasidjs">
-                            <thead class="w-100">
-                                <tr>
-                                    <th>Tarea </th>
-                                    <th>Proyecto</th>
-                                    <th style="max-width: 150px; width: 150px;">Opciones</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                    @foreach ($tareas as $tarea)
-                                        <tr>
-                                            <td> {{ $tarea->tarea }} </td>
-                                            <td> {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }} </td>
-                                        </tr>
-                                    @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane mb-4 fade p-4" id="nav-clientes" role="tabpanel" aria-labelledby="nav-clientes-tab">
-                
-                <div class="row">
-                    <div class="datatable-fix w-100">
-                        <table id="datatable_clientes" class="table w-100 tablasidjs">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Razón social</th>
-                                    <th rowspan="2" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Nombre comercial del proveedor</th>
-                                    <th rowspan="2" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">RFC persona moral o persona física</th>
-                                    <th colspan="6" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">DOMICILIO FISCAL</th>
-                                    <th colspan="4" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">DATOS DEL CONTACTO</th>
-                                    {{-- <th rowspan="2" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Opciones</th> --}}
-                                </tr>
-                                <tr>
-                                    <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Calle y Número</th>
-                                    <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Colonia</th>
-                                    <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Ciudad o Municipio/ País</th>
-                                    <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Código postal</th>
-                                    <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Teléfonos con lada</th>
-                                    <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Página Web</th>
-
-                                    <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Nombre completo del contacto:</th>
-                                    <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Puesto</th>
-                                    <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Correo electrónico</th>
-                                    <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Celular</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                @foreach($clientes as $cliente)
-                                    <tr>
-                                       <td>{{ $cliente->razon_social }}</td>
-                                       <td>{{ $cliente->nombre }}</td>
-                                       <td>{{ $cliente->rfc }}</td>
-                                       <td>{{ $cliente->calle }}</td>
-                                       <td>{{ $cliente->colonia }}</td>
-                                       <td>{{ $cliente->ciudad }}</td>
-                                       <td>{{ $cliente->codigo_postal }}</td>
-                                       <td>{{ $cliente->telefono }}</td>
-                                       <td>{{ $cliente->pagina_web }}</td>
-                                       <td>{{ $cliente->nombre_contacto }}</td>
-                                       <td>{{ $cliente->puesto_contacto }}</td>
-                                       <td>{{ $cliente->correo_contacto }}</td>
-                                       <td>{{ $cliente->celular_contacto }}</td>
-                                       {{-- <td class="d-flex">
-                                           <a href="" class="btn" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
-                                           <a href="" class="btn" title="Eliminar" style="color:red;"><i class="fa-solid fa-trash-can"></i></a>
-                                       </td> --}}
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            {{-- <div class="tab-pane mb-4 fade p-4" id="nav-clientes" role="tabpanel" aria-labelledby="nav-clientes-tab">
+            </div> --}}
         </div>
     </div>
 @endsection
@@ -156,6 +52,12 @@
 
 @section('scripts')
     @parent
+    <script type="text/javascript">
+        $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+            console.log('click');
+              $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+          });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuActive = localStorage.getItem('menu-iso27001-active');
@@ -170,6 +72,11 @@
         });
     </script>
 
+    <script type="text/javascript">
+        function cerrarVentana(id){
+            $('#' + id).remove();
+        }
+    </script>
 
     <script>
         let cont = 0;
@@ -260,123 +167,22 @@
                     buttons: dtButtons,
                     order:[
                                 [0,'desc']
-                            ]
+                            ],
+                    destroy: true,
+                    render: true,
                 };
 
                 let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
             });
         }
-        tablaLivewire('datatable_timesheet')
+        tablaLivewire('timesheet_empleados_lista');
+        tablaLivewire('datatable_timesheet_empleados');
+        tablaLivewire('datatable_timesheet_proyectos');
     </script>
 
     <script type="text/javascript">
         $('.select2').select2({
             'theme' : 'bootstrap4',
-        });
-    </script>
-
-    <script>
-        $(function() {
-            let dtButtons = [{
-                    extend: 'csvHtml5',
-                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar CSV',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar Excel',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [5, 20, 5, 20];
-                        doc.styles.tableHeader.fontSize = 10;
-                        doc.defaultStyle.fontSize = 10; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
-                    extend: 'print',
-                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Seleccionar Columnas',
-                },
-                {
-                    extend: 'colvisGroup',
-                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    show: ':hidden',
-                    titleAttr: 'Ver todo',
-                },
-                {
-                    extend: 'colvisRestore',
-                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Restaurar a estado anterior',
-                }
-
-            ];
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar empleado',
-                url: "{{ asset('admin/inicioUsuario/reportes/quejas') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-
-
-            let dtOverrideGlobals = {
-                buttons: dtButtons,
-                order: [
-                    [0, 'desc']
-                ]
-            };
-            let table = $('.tablasidjs').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
         });
     </script>
 @endsection

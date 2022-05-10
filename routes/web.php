@@ -392,7 +392,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //procesos
 
     Route::get('mapa-procesos', 'ProcesoController@mapaProcesos')->name('procesos.mapa');
-    Route::get('procesos/{documento}/vista', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
+    Route::get('procesos/{documento?}/vista', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
     Route::resource('procesos', 'ProcesoController');
     Route::post('selectIndicador', 'ProcesoController@AjaxRequestIndicador')->name('selectIndicador');
     Route::post('selectRiesgos', 'ProcesoController@AjaxRequestRiesgos')->name('selectRiesgos');
@@ -479,6 +479,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('timesheet/reportes', 'TimesheetController@reportes')->name('timesheet-reportes');
     Route::get('timesheet/dashboard', 'TimesheetController@dashboard')->name('timesheet-dashboard');
+
+    Route::post('timesheet/create/obtenerTareas', 'TimesheetController@obtenerTareas')->name('timesheet-obtener-tareas');
 
     Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
 
