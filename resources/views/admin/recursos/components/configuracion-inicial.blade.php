@@ -142,14 +142,15 @@
         </div>
         <div class="form-group col-md-6 col-sm-6 col-12 col-lg-12">
             <label for="recurso_capacitacion"><i class="fas fa-file iconos-crear"></i>Recurso de la
-                capacitación</label>
+                capacitación (.pdf)</label>
             <input type="file" id="recurso_capacitacion" class="form-control" name="recurso_capacitacion">
+            <span class="recurso_capacitacion_error text-danger errores"></span>
         </div>
         <div class="form-group col-md-6 col-sm-6 col-12 col-lg-12">
             <label for="descripcion"> <i class="fas fa-lightbulb iconos-crear"></i>
                 Descripción</label>
-            <textarea class="form-control descripcion {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                name="descripcion" id="descripcion">{{ old('descripcion', $recurso->descripcion) }}</textarea>
+            <textarea class="form-control descripcion {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
+                id="descripcion">{{ old('descripcion', $recurso->descripcion) }}</textarea>
             <span class="descripcion_error text-danger errores"></span>
             @if ($errors->has('descripcion'))
                 <div class="invalid-feedback">
@@ -232,7 +233,7 @@
             categoriaInvitaciones.innerHTML = e.target.options[e.target.options.selectedIndex]
                 .getAttribute(
                     'data-nombre')
-                    console.log("texto");
+            console.log("texto");
         });
 
         selectTipo.addEventListener('change', function(e) {

@@ -177,7 +177,7 @@ class RecursosController extends Controller
         if ($request->file('recurso_capacitacion')) {
             $filenameWithExt = $request->file('recurso_capacitacion')->getClientOriginalName();
             $folder = "{$recurso->id}_recurso";
-            Storage::disk('capacitaciones')->put("recursos/{$folder}/{$filenameWithExt}", $request->file('recurso_capacitacion'));
+            Storage::disk('capacitaciones')->putFileAs("recursos/{$folder}", $request->file('recurso_capacitacion'), $filenameWithExt);
             FileCapacitacion::create([
                 'archivo' => $filenameWithExt,
                 'recurso_id' => $recurso->id,
