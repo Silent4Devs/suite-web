@@ -34,4 +34,6 @@ storage/app/public/expedientes/
 storage/app/public/cursos_empleados/
 storage/app/public/evidencias_quejas_clientes/
 storage/app/public/evidencias_quejas_clientes_cerrado/
-storage/app/public/evidencias_sgsi/
+storage/app/public/documentos_concientSgsi/
+storage/app/public/documentos_control_accesos/
+storage/app/public/documentos_material_sgsi/
