@@ -60,10 +60,11 @@
             let result = Number(estrategia) + Number(calidad) + Number(cliente) + Number(disponibilidad2000) +
                 Number(niveles) + Number(continuidad) + Number(confidencialidad) + Number(integridad) + Number(
                     disponibilidad27000);
-            $("#resultado_ponderacion").attr("value", result);
+           console.log(result);
+            $("#resultado_ponderacion").attr("value", Math.round(result * 10)/10);
 
             let RiesgoTotal = Number(riesgo) + Number(result);
-            $("#riesgo_total").attr("value", RiesgoTotal);
+            $("#riesgo_total").attr("value", Math.round(RiesgoTotal * 10)/10);
             switch (true) {
                 case RiesgoTotal >= 0 && RiesgoTotal <= 45:
                     $('#nivelriesgo_pre').text('Bajo');
@@ -207,9 +208,9 @@
             let result = Number(estrategia) + Number(calidad) + Number(cliente) + Number(disponibilidad2000) +
                 Number(niveles) + Number(continuidad) + Number(confidencialidad) + Number(integridad) + Number(
                     disponibilidad27000);
-            $("#resultado_ponderacionRes").attr("value", result);
+            $("#resultado_ponderacionRes").attr("value", Math.round(result* 10)/10);
             let RiesgoTotal = Number(riesgo) + Number(result);
-            $("#riesgo_residual").attr("value", RiesgoTotal);
+            $("#riesgo_residual").attr("value",  Math.round(RiesgoTotal * 10)/10);
             switch (true) {
                 case RiesgoTotal >= 0 && RiesgoTotal <= 45:
                     $('#nivelriesgo_residual_pre').text('Bajo');

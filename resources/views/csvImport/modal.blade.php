@@ -80,6 +80,7 @@
                     if (result.isConfirmed) {
                         const response  = await importar(formData)
                         if (response.status=='success') {
+                            $('.tblCSV').DataTable().ajax.reload();
                             toastr.success(response.message)
                             $('#csvImportModal').modal('hide')
                         }
@@ -89,6 +90,7 @@
                 const response = await importar(formData)
                 if (response.status=='success') {
                     toastr.success(response.message)
+                    $('.tblCSV').DataTable().ajax.reload();
                     $('#csvImportModal').modal('hide')
                 }
             }
