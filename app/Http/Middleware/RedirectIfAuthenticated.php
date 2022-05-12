@@ -24,6 +24,7 @@ class RedirectIfAuthenticated
                 return redirect(RouteServiceProvider::MIPERFIL);
             }
         }
+
         return $next($request);
     }
 }
