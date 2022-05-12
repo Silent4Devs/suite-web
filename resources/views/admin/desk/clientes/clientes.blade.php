@@ -1,3 +1,13 @@
+{{-- <style>
+         .table tr td:nth-child(5) {
+
+        text-align:left !important;
+        }
+
+
+</style> --}}
+
+
 <div class="row">
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-celeste">
@@ -38,35 +48,41 @@
 </div>
 
 <div class="datatable-fix" style="width: 100%;">
-    <div class="mb-3 text-right">
-        <a class="btn btn-danger" href="{{asset('admin/desk/quejas-clientes')}}">Crear reporte</a>
-    </div>
 
-   <table class="table tabla_quejasclientes">
-   		<thead>
+        <div class=" mb-3 text-right">
+
+                <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes') }}">Crear reporte</a>
+
+                <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes/dashboard') }}">Dashboard</a>
+        </div>
+
+    <table class="table tabla_quejasclientes" id="tabla-procesos">
+        <thead>
             <tr>
-       			<th>Folio</th>
+                <th style="min-width:60px;">Folio</th>
                 <th style="min-width:200px;">Cliente</th>
                 <th style="min-width:200px;">Proyecto</th>
-                <th style="min-width:200px;">Nombre</th>
+                <th style="min-width:200px;">Nombre del Cliente</th>
                 <th style="min-width:200px;">Puesto</th>
                 <th style="min-width:200px;">Teléfono</th>
                 <th style="min-width:200px;">Correo</th>
-                <th style="min-width:200px;">Titulo</th>
-                <th style="min-width:200px;">Estatus</th>
-                <th style="min-width:200px;">Fecha de identificación</th>
-                <th style="min-width:200px;">Fecha de cierre</th>
+                <th style="min-width:200px;">Título de la Queja</th>
+                <th style="text-align:left !important;min-width:150px;">Fecha de Registro</th>
+                <th style="min-width:150px;">Fecha de Cierre</th>
                 <th style="min-width:200px;">Proceso</th>
                 <th style="min-width:200px;">Ubicación</th>
                 <th style="min-width:200px;">Otros</th>
-       			<th style="min-width: 500px;">Descripción</th>
-       			<th>Opciones</th>
+                <th style="min-width:500px;">Descripción</th>
+                <th style="min-width:60px;">Estatus</th>
+                <th>Prioridad</th>
+                <th style="min-width:80px;">AC</th>
+                <th>Opciones</th>
             </tr>
-   		</thead>
-   		<tbody>
+        </thead>
+        <tbody>
 
-   		</tbody>
-   </table>
+        </tbody>
+    </table>
 </div>
 
 
@@ -154,7 +170,7 @@
             // let btnAgregar = {
             //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
             //     titleAttr: 'Agregar empleado',
-            //     url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
+            //     url: "{{ asset('admin/inicioUsuario/reportes/seguridad') }}",
             //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
             //     action: function(e, dt, node, config) {
             //     let {
@@ -166,8 +182,12 @@
             //     dtButtons.push(btnAgregar)
             if (!$.fn.dataTable.isDataTable('.tabla_quejasclientes')) {
                 window.tabla_quejasclientes_desk = $(".tabla_quejasclientes").DataTable({
-                    ajax: "{{route('admin.desk.quejasClientes-index')}}",
+                    ajax: "{{ route('admin.desk.quejasClientes-index') }}",
                     buttons: dtButtons,
+                    columnDefs: [{
+                        targets: [4, 5, 6, 10, 11, 12,13],
+                        visible: false,
+                    }],
                     columns: [
                         // {data: 'id'},
                         {
@@ -176,13 +196,13 @@
                         {
                             data: 'cliente',
                             render: function(data, type, row, meta) {
-                               return row.cliente.nombre
+                                return row.cliente.nombre
                             }
                         },
                         {
                             data: 'proyectos',
                             render: function(data, type, row, meta) {
-                               return row.proyectos.proyecto
+                                return row.proyectos.proyecto
                             }
                         },
                         {
@@ -198,16 +218,16 @@
                             data: 'correo'
                         },
                         {
-                            data: 'titulo'
+                            data: 'titulo',
+                            render: function(data, type, row, meta) {
+                                return `<div style="text-align: left">${data}</div>`
+                            }
                         },
                         {
-                            data: 'estatus'
+                            data: 'fecha_reporte'
                         },
                         {
-                            data: 'fecha'
-                        },
-                        {
-                            data: 'fecha_cierre'
+                            data: 'fecha_de_cierre'
                         },
                         {
                             data: 'proceso_quejado'
@@ -222,15 +242,59 @@
                             data: 'descripcion'
                         },
                         {
+                            data: 'estatus',
+                        },
+                        {
+                            data: 'prioridad',
+                            render: function(data, type, row, meta) {
+                                data = data == "" ? 0 : data
+                                let color = "green";
+                                let valor = "";
+                                let texto = "white";
+                                if (data == 'Alta') {
+                                    color = "#FF417B";
+                                    valor = "Alta";
+                                }
+                                if (data == 'Media') {
+                                    color = "#FFCB63";
+                                    valor = "Media";
+                                }
+                                if (data == 'Baja') {
+                                    color = "#6DC866";
+                                    valor = "Baja";
+                                }
+                                return `
+                            <div style="position:absolute;display:flex; justify-content:center; align-items:center; background-color:${color}; color:${texto}">${valor}</div>
+                            `
+                            }
+                        },
+                        {
+                            data: 'desea_levantar_ac',
+                            render: function(data, type, row, meta) {
+                                data = data == "" ? 0 : data
+                                let valor= "";
+                                if(data == true){
+                                    valor= "Solicitada";
+                                }
+                                if(data == false){
+                                    valor= "No aplica";
+                                }
+
+                            return `
+                                <div>${valor}</div>
+                            `
+                            }
+                        },
+                        {
                             data: 'id',
                             render: function(data, type, row, meta) {
                                 let html =
                                     `
                 			<div class="botones_tabla">
-                				<a href="/admin/desk/${data}/quejas-clientes-edit/"><i class="fas fa-edit"></i></a>`;
+                				<a href="/admin/desk/${data}/quejas-clientes-edit/"><i class="fas fa-edit" title="Análisis de la queja"></i></a>`;
 
 
-                                if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
+                                if ((row.estatus == 'Cerrado') || (row.estatus == 'Cancelado')) {
 
                                     html += `<button class="btn archivar" onclick='ArchivarQuejaCliente("/admin/desk/${data}/archivarQuejasClientes"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
@@ -241,9 +305,56 @@
                             }
                         },
                     ],
-                        order:[
-                            [0,'desc']
-                        ]
+                    createdRow: (row, data, dataIndex, cells) => {
+                        let color = "green";
+                        let texto = "white";
+                        if (data.prioridad == 'Alta') {
+                            color = "#FF417B";
+                            texto = "white";
+                        }
+                        if (data.prioridad == 'Media') {
+                            color = "#FFCB63";
+                            texto = "white";
+                        }
+                        if (data.prioridad == 'Baja') {
+                            color = "#6DC866";
+                            texto = "white";
+                        }
+
+                        let fondo = "green";
+                        let letras = "white";
+                        if (data.estatus == 'Sin atender') {
+                            fondo = "#FFCB63";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'En curso') {
+                            fondo = "#AC84FF";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'En espera') {
+                            fondo = "#6863FF";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'Cerrado') {
+                            fondo = "#6DC866";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'Cancelado') {
+                            fondo = "#A5A5A5";
+                            letras = "white";
+                        }
+                        if(data.estatus !=null){
+                            $(cells[14]).css('background-color', fondo)
+                            $(cells[14]).css('color', letras)
+                        }
+                        if(data.prioridad !=null){
+                            $(cells[15]).css('background-color', color)
+                        }
+                    },
+
+                    order: [
+                        [0, 'desc']
+                    ]
                 });
             }
 

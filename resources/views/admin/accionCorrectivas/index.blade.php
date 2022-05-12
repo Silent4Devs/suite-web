@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.accion-correctivas.index') }}
 
     <style>
@@ -14,226 +13,146 @@
             text-align: center !important;
         }
 
-        .descripcion{
+        .descripcion {
             text-align: justify !important;
         }
 
 
-        .comentarios{
+        .comentarios {
             text-align: justify !important;
         }
-
 
     </style>
     <h5 class="col-12 titulo_general_funcion">Acciones Correctivas</h5>
-    <div class="mt-5 card">
 
-
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-2">
-                </div>
-                <div class="col-sm-8 align-content-center">
-                    @include('layouts.errors')
-                    @include('flash::message')
-                </div>
-                <div class="col-sm-2">
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body datatable-fix">
-                <table class="table table-bordered w-100 datatable-AccionCorrectiva">
-                    <thead class="thead-dark">
-                        <tr>
-                            {{-- <th style="vertical-align: top">
-                                {{ trans('cruds.accionCorrectiva.fields.id') }}
-                            </th> --}}
-                            <th style="vertical-align: top">
-                                Folio
-                            </th>
-                            <th style="vertical-align: top">
-                                Título
-                            </th>
-                            <th style="vertical-align: top">
-                                Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;registro
-                            </th>
-                            <th style="vertical-align: top">
-                                Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;recepción
-                            </th>
-                            <th style="vertical-align: top">
-                                Estatus
-                            </th>
-                            <th style="vertical-align: top">
-                                Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;cierre&nbsp;de&nbsp;ticket
-                            </th>
-                            <th style="vertical-align: top">
-                                Reportó
-                            </th>
-                            <th style="vertical-align: top">
-                                Puesto
-                            </th>
-                            <th style="vertical-align: top">
-                                Área
-                            </th>
-                            <th style="vertical-align: top">
-                                Registró
-                            </th>
-                            <th style="vertical-align: top">
-                                Puesto
-                            </th>
-                            <th style="vertical-align: top">
-                                Área
-                            </th>
-                            <th style="vertical-align: top">
-                                Causa&nbsp;de&nbsp;origen
-                            </th>
-                            <th style="vertical-align: top; min-width:500px;">
-                                Descripción
-                            </th>
-                            <th style="vertical-align: top; min-width:500px;">
-                                Comentarios
-                            </th>
-                            {{-- <th style="vertical-align: top">
-                                Método&nbsp;utilizado&nbsp;para&nbsp;el análisis&nbsp;de&nbsp;causa&nbsp;raíz
-                            </th>
-                            <th style="vertical-align: top; min-width:500px;">
-                                Descripción&nbsp;de&nbsp;la solución
-                            </th>
-                            <th style="vertical-align: top; min-width:500px;">
-                                Descripción&nbsp;de&nbsp;la&nbsp;validación
-                                para&nbsp;el&nbsp;cierre&nbsp;de&nbsp;la&nbsp;acción
-                            </th>
-                            <th style="vertical-align: top">
-                                {{ trans('cruds.accionCorrectiva.fields.estatus') }}
-                            </th>
-                            <th style="vertical-align: top">
-                                {{ trans('cruds.accionCorrectiva.fields.fecha_compromiso') }}
-                            </th>
-                            <th style="vertical-align: top">
-                                {{ trans('cruds.accionCorrectiva.fields.fecha_verificacion') }}
-                            </th> --}}
-                            {{-- <th style="vertical-align: top">
-                                {{ trans('cruds.accionCorrectiva.fields.responsable_accion') }}
-                            </th>
-                            <th style="vertical-align: top">
-                                Responsable autorización&nbsp;AC
-                            </th> --}}
-                            {{-- <th style="vertical-align: top">
-                                {{ trans('cruds.accionCorrectiva.fields.documentometodo') }}
-                            </th> --}}
-                            <th style="vertical-align: top">
-                                Opciones
-                            </th>
-                        </tr>
-                        {{-- <tr>
-                            <td>
-                            </td>
-                            <td>
-                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                                <select class="search">
-                                    <option value>{{ trans('global.all') }}</option>
-                                    @foreach ($users as $key => $item)
-                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <select class="search">
-                                    <option value>{{ trans('global.all') }}</option>
-                                    @foreach ($puestos as $key => $item)
-                                        <option value="{{ $item->puesto }}">{{ $item->puesto }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <select class="search">
-                                    <option value>{{ trans('global.all') }}</option>
-                                    @foreach ($users as $key => $item)
-                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <select class="search">
-                                    <option value>{{ trans('global.all') }}</option>
-                                    @foreach ($puestos as $key => $item)
-                                        <option value="{{ $item->puesto }}">{{ $item->puesto }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                            </td>
-                            <td>
-                                <select class="search" strict="true">
-                                    <option value>{{ trans('global.all') }}</option>
-                                    @foreach (App\Models\AccionCorrectiva::CAUSAORIGEN_SELECT as $key => $item)
-                                        <option value="{{ $key }}">{{ $item }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                            </td>
-                            <td>
-                                <select class="search" strict="true">
-                                    <option value>{{ trans('global.all') }}</option>
-                                    @foreach (App\Models\AccionCorrectiva::METODO_CAUSA_SELECT as $key => $item)
-                                        <option value="{{ $key }}">{{ $item }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                            </td>
-                            <td>
-                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                            </td>
-                            <td>
-                                <select class="search" strict="true">
-                                    <option value>{{ trans('global.all') }}</option>
-                                    @foreach (App\Models\AccionCorrectiva::ESTATUS_SELECT as $key => $item)
-                                        <option value="{{ $key }}">{{ $item }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                                <select class="search">
-                                    <option value>{{ trans('global.all') }}</option>
-                                    @foreach ($users as $key => $item)
-                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <select class="search">
-                                    <option value>{{ trans('global.all') }}</option>
-                                    @foreach ($users as $key => $item)
-                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                        </tr> --}}
-                    </thead>
-                </table>
-            </div>
-        </div>
+    <div class="caja_botones_menu mt-4">
+        <a href="#" data-tabs="indexAc" class="btn_activo"><i class="mr-2 fas fa-clipboard-list"></i>Acciones
+            Correctivas</a>
+        <a href="#" data-tabs="aprobaciones"><i class="mr-2 bi bi-check2"></i>Aprobaciones</a>
     </div>
 
+    <div class="caja_caja_secciones">
+        <div class="caja_secciones">
+            <section id="indexAc" class="caja_tab_reveldada">
+                <div class="mt-5 card">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-2">
+                            </div>
+                            <div class="col-sm-8 align-content-center">
+                                @include('layouts.errors')
+                                @include('flash::message')
+                            </div>
+                            <div class="col-sm-2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body datatable-fix">
+                            <table class="table table-bordered w-100 datatable-AccionCorrectiva">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        {{-- <th style="vertical-align: top">
+                                            {{ trans('cruds.accionCorrectiva.fields.id') }}
+                                        </th> --}}
+                                        <th style="vertical-align: top">
+                                            Folio
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Título
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;registro
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;recepción
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Estatus
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;cierre&nbsp;de&nbsp;ticket
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Reportó
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Puesto
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Área
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Registró
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Puesto
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Área
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Causa&nbsp;de&nbsp;origen
+                                        </th>
+                                        <th style="vertical-align: top; min-width:500px;">
+                                            Descripción
+                                        </th>
+                                        <th style="vertical-align: top; min-width:500px;">
+                                            Comentarios
+                                        </th>
+                                        <th style="vertical-align: top">
+                                            Opciones
+                                        </th>
+                                    </tr>
 
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="aprobaciones">
+                <div class="mt-5 card">
+                    <table id="tabla_usuario_aprobaciones" class="table">
+                        <thead>
+                            <tr>
+                                <th style=" min-width:200px; text-align: center !important;">
+                                    Folio
+                                </th>
+                                <th style=" min-width:200px; text-align: center !important;">
+                                    Origen
+                                </th>
+                                <th style="vertical-align: top; text-align: center !important; min-width:150px;">
+                                    Fecha
+                                </th>
+                                <th style="vertical-align: top; text-align: center !important; min-width:80px;">
+                                    Solicitante
+                                </th>
+                                <th style="vertical-align: top; text-align: center !important; min-width:80px;">
+                                    Aprobador
+                                </th>
+                                <th style="vertical-align: top; text-align: center !important; min-width:70px;">
+                                    Revisar
+                                </th>
+                                <th style="vertical-align: top  min-width:80px;">
+                                    Opciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
 @endsection
 @section('scripts')
     @parent
@@ -309,46 +228,55 @@
             ];
             @can('accion_correctiva_create')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar acciones correctivas',
-                url: "{{ route('admin.accion-correctivas.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar acciones correctivas',
+                    url: "{{ route('admin.accion-correctivas.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 dtButtons.push(btnAgregar);
             @endcan
             @can('accion_correctiva_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.accion-correctivas.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.accion-correctivas.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: {ids: ids, _method: 'DELETE'}
-                })
-                .done(function () {
-                location.reload()
-                })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -361,7 +289,6 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.accion-correctivas.index') }}",
                 columnDefs: [{
-                    targets: [3, 4, 5, 14],
                     visible: false
                 }],
                 columns: [
@@ -394,16 +321,21 @@
                         name: 'fecha_cierre'
                     },
                     {
-                        data: 'id',
+                        data: 'reporto',
                         render: function(data, type, row, meta) {
-                            let reporto = JSON.parse(row.reporto);
-                            if (type === "empleadoText") {
-                                return reporto.name;
-                            }else{
-                                let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${reporto?.avatar}" title="${reporto?.name}"></img>`;
+                            if (row.id_reporto != null) {
+                                let reporto = JSON.parse(row.reporto);
+                                if (type === "empleadoText") {
+                                    return reporto.name;
+                                } else {
+                                    let html =
+                                        `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${reporto?.avatar}" title="${reporto?.name}"></img>`;
 
-                                return `${reporto ? html: ''}`;
+                                    return `${reporto ? html: ''}`;
+                                }
                             }
+
+                            return `Sin dato`;
                         }
                     },
                     {
@@ -422,8 +354,9 @@
                                 return data.name;
                             }
                             let reporto = "";
-                            if(data) {
-                                reporto += `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${data.avatar}" title="${data.name}"></img>`;
+                            if (data) {
+                                reporto +=
+                                    `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${data.avatar}" title="${data.name}"></img>`;
                             }
                             return reporto;
                         }
@@ -438,17 +371,17 @@
                     },
                     {
                         data: 'causaorigen',
-                        name: 'causaorigen',
+                        name: 'causaorigen'
                     },
                     {
                         data: 'descripcion',
                         name: 'descripcion',
-                        className:'descripcion'
+                        className: 'descripcion'
                     },
                     {
                         data: 'comentarios',
                         name: 'comentarios',
-                        className:'comentarios'
+                        className: 'comentarios'
                     },
                     // {
                     //     data: 'metodo_causa',
@@ -499,18 +432,297 @@
                 ],
             };
             let table = $('.datatable-AccionCorrectiva').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+
+
+            $.ajaxSetup({
+
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+
+            });
+            let dtButtonsAprobacion = [{
+                    extend: 'csvHtml5',
+                    title: `Acciones Correctivas ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Acciones Correctivas ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: `Acciones Correctivas ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar PDF',
+                    orientation: 'landscape',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    customize: function(doc) {
+                        doc.pageMargins = [5, 20, 5, 20];
+                        doc.styles.tableHeader.fontSize = 6.5;
+                        doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Acciones Correctivas ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
+
+            ];
+            @can('accion_correctiva_create')
+                let btnAgregarAprobacion = {
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar acciones correctivas',
+                    url: "{{ route('admin.accion-correctivas.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
+                };
+                dtButtonsAprobacion.push(btnAgregarAprobacion);
+            @endcan
+            @can('accion_correctiva_delete')
+                let deleteButtonTransAprobacion = '{{ trans('global.datatables.delete') }}';
+                let deleteButtonAprobacion = {
+                    text: deleteButtonTransAprobacion,
+                    url: "{{ route('admin.accion-correctivas.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
+
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
+
+                            return
+                        }
+
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
+                }
+                //dtButtons.push(deleteButton)
+            @endcan
+
+            let dtOverrideGlobalsAprobacion = {
+                buttons: dtButtonsAprobacion,
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                ajax: {
+                    method: 'POST',
+                    url: "{{ route('admin.accion-correctivas.obtenerAprobaciones') }}",
+                },
+                columnDefs: [{
+                    visible: false
+                }],
+                columns: [
+                    // {
+                    //     data: 'id',
+                    //     name: 'id'
+                    // },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            console.log(row);
+                            if (row.desk_queja_cliente.length > 0) {
+                                let item = row.desk_queja_cliente[0];
+                                return item.folio
+                            } else {
+
+                                return `Sin folio`
+                            }
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            console.log(row);
+                            if (row.desk_queja_cliente.length > 0) {
+
+                                return `Quejas Clientes`
+                            } else {
+
+                                return `Sin definir`
+                            }
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.desk_queja_cliente.length > 0) {
+                                return row.desk_queja_cliente[0].pivot.created_at;
+                            } else {
+
+                                return `Sin definir`
+                            }
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.desk_queja_cliente.length > 0) {
+                                return `<div><img class="img_empleado" src="${row.desk_queja_cliente[0].registro.avatar_ruta}" title="${row.desk_queja_cliente[0].registro.name}"></div>`;
+                            } else {
+
+                                return `Sin definir`
+                            }
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.desk_queja_cliente.length > 0) {
+                                return `<div><img class="img_empleado" src="${row.desk_queja_cliente[0].responsable_sgi.avatar_ruta}" title="${row.desk_queja_cliente[0].responsable_sgi.name}"></div>`;
+                            } else {
+
+                                return `Sin definir`
+                            }
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.desk_queja_cliente.length > 0) {
+                                let link = `<a href="{{ route('admin.desk.quejasClientes-edit', ':id') }}">
+                                    <i class="fas fa-eye"></i>
+                                    </a>`;
+                                link = link.replaceAll(':id', row.desk_queja_cliente[0].id);
+                                console.log(link);
+                                return link;
+                            } else {
+
+                                return `Sin definir`
+                            }
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if (row.desk_queja_cliente.length > 0) {
+                                let opciones = `
+                            <div><button class="btn text-success" onclick="aprobarAc('${data}',true,'${row.desk_queja_cliente[0].id}')"><i class="text-success iconos-crear far fa-thumbs-up"></i></button>
+                                <button class="btn text-danger" onclick="aprobarAc('${data}',false, '${row.desk_queja_cliente[0].id}')"><i class="text-danger iconos-crear far fa-thumbs-down"></i></button></div>
+                            `
+                                return opciones;
+                            } else {
+
+                                return `Sin definir`
+                            }
+                        }
+
+                    },
+
+                ],
+                orderCellsTop: true,
+                order: [
+                    [0, 'desc']
+                ],
+            };
+            let tableAprobacion = $('#tabla_usuario_aprobaciones').DataTable(dtOverrideGlobalsAprobacion);
+            window.aprobarAc = (id_accion_corectiva, aprobada, id_queja_cliente) => {
+                let url = "{{ route('admin.accion-correctivas.aprobarRechazar') }}";
+                Swal.fire({
+                    title:`¿Está seguro(a) de ${aprobada?'aprobar':'rechazar'} este ticket?`,
+                    text: '',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: `Si, ${aprobada?'aprobar':'rechazar'}`,
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url,
+                            data: {
+                                id: id_accion_corectiva,
+                                aprobada, id_queja_cliente
+                            },
+                            dataType: "JSON",
+                            success: function(response) {
+                                if (response.success) {
+                                    if (response.aprobado) {
+                                        table.ajax.reload()
+                                        toastr.success(response.message);
+                                    } else {
+                                        toastr.success(response.message);
+                                    }
+                                    tableAprobacion.ajax.reload()
+                                }
+                            },
+                            error: function(request, status,
+                                error) {
+                                toastr.error(error);
+                            }
+                        });
+
+                    }
+                })
+
+            }
         });
     </script>
 @endsection

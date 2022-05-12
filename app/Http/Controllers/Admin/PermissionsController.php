@@ -111,7 +111,7 @@ class PermissionsController extends Controller
     public function actualizarLista()
     {
         Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder', '--force' => true]);
-        // Artisan::call('db:seed', ['--class' => 'PermissionRoleTableSeeder', '--force' => true]);
+        Artisan::call('db:seed', ['--class' => 'PermissionRoleTableSeeder', '--force' => true]);
         return response()->json(['success' => 'Permisos actualizados correctamente.']);
     }
 }

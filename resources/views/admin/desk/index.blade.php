@@ -266,27 +266,31 @@
             const permisoDenuncia = @json(Auth::user()->can('denuncias_access'));
             const permisoMejora = @json(Auth::user()->can('mejoras_access'));
             const permisoSugerencia = @json(Auth::user()->can('sugerencias_access'));
-
+            const permisoQuejaCliente = true;
+            console.log(localStorage.getItem('menu-desk'));
             if (permisoIncidente) {
-                localStorage.setItem('menu-desk', 'incidentes');
+                // localStorage.setItem('menu-desk', 'incidentes');
                 menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'incidentes';
             } else if (permisoRiesgo) {
-                localStorage.setItem('menu-desk', 'riesgos');
+                // localStorage.setItem('menu-desk', 'riesgos');
                 menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'riesgos';
             } else if (permisoQueja) {
-                localStorage.setItem('menu-desk', 'quejas');
+                // localStorage.setItem('menu-desk', 'quejas');
                 menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'quejas';
+            } else if (permisoQuejaCliente) {
+                // localStorage.setItem('menu-desk', 'quejasClientes');
+                menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'quejasClientes';
             } else if (permisoDenuncia) {
-                localStorage.setItem('menu-desk', 'denuncias');
+                // localStorage.setItem('menu-desk', 'denuncias');
                 menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'denuncias';
             } else if (permisoMejora) {
-                localStorage.setItem('menu-desk', 'mejoras');
+                // localStorage.setItem('menu-desk', 'mejoras');
                 menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'mejoras';
             } else if (permisoSugerencia) {
-                localStorage.setItem('menu-desk', 'sugerencias');
+                // localStorage.setItem('menu-desk', 'sugerencias');
                 menu = localStorage.getItem('menu-desk') ? localStorage.getItem('menu-desk') : 'sugerencias';
             }
-
+            console.log(menu);
 
             if (document.querySelector('.caja_tab_reveldada')) {
                 document.querySelector('.caja_tab_reveldada').classList.remove('caja_tab_reveldada');
@@ -299,8 +303,12 @@
                 document.querySelector(`[data-tabs=${menu}]`).classList.add('btn_activo');
             }
             document.querySelector('.caja_botones_menu').addEventListener('click', function(e) {
-                if (e.target.getAttribute('data-tabs')) {
-                    localStorage.setItem('menu-desk', e.target.getAttribute('data-tabs'))
+                let elemento = e.target;
+                if(elemento.tagName == 'I'){
+                elemento=elemento.closest('a');
+                }
+                if (elemento.getAttribute('data-tabs')) {
+                    localStorage.setItem('menu-desk', elemento.getAttribute('data-tabs'))
                 }
             })
             window.menuActive = function(item) {
