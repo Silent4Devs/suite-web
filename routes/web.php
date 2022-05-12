@@ -323,7 +323,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('desk/quejas-clientes/dashboard', 'DeskController@quejasClientesDashboard')->name('desk.quejasClientes-dashboard');
 
-
     // Actividades DESK - Plan Accion
     Route::get('desk-seguridad-actividades/{seguridad_id}', 'ActividadesIncidentesController@index')->name('desk-seguridad-actividades.index');
     Route::resource('desk-seguridad-actividades', 'ActividadesIncidentesController')->except(['index']);

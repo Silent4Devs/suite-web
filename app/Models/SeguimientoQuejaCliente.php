@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SeguimientoQuejaCliente
+ * Class SeguimientoQuejaCliente.
  *
  * @property int $id
  * @property int $queja_cliente_id
@@ -17,26 +17,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  *
  * @property QuejasCliente $quejas_cliente
- *
- * @package App\Models
  */
 class SeguimientoQuejaCliente extends Model
 {
-	use SoftDeletes;
-	protected $table = 'seguimiento_queja_cliente';
+    use SoftDeletes;
+    protected $table = 'seguimiento_queja_cliente';
 
-	protected $casts = [
-		'queja_cliente_id' => 'int',
-		'estado' => 'int'
-	];
+    protected $casts = [
+        'queja_cliente_id' => 'int',
+        'estado' => 'int',
+    ];
 
-	protected $fillable = [
-		'queja_cliente_id',
-		'estado'
-	];
+    protected $fillable = [
+        'queja_cliente_id',
+        'estado',
+    ];
 
-	public function quejas()
-	{
-		return $this->belongsTo(QuejasCliente::class, 'queja_cliente_id');
-	}
+    public function quejas()
+    {
+        return $this->belongsTo(QuejasCliente::class, 'queja_cliente_id');
+    }
 }

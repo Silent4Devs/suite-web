@@ -8,7 +8,6 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -88,7 +87,7 @@ class AccionCorrectiva extends Model implements HasMedia
         'team_id',
         'es_externo',
         'aprobada',
-        'aprobacion_contestada'
+        'aprobacion_contestada',
     ];
 
     public function getFolioAttribute()
@@ -214,8 +213,6 @@ class AccionCorrectiva extends Model implements HasMedia
 
     public function deskQuejaCliente()
     {
-        return $this->morphedByMany(QuejasCliente::class, 'acciones_correctivas_aprobacionables', null,'acciones_correctivas_id')->withPivot('created_at');
+        return $this->morphedByMany(QuejasCliente::class, 'acciones_correctivas_aprobacionables', null, 'acciones_correctivas_id')->withPivot('created_at');
     }
-
-
 }

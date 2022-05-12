@@ -15,7 +15,6 @@ class AddColumnCorreoEnviadoQuejasClientesTable extends Migration
     {
         Schema::table('quejas_clientes', function (Blueprint $table) {
             $table->boolean('correoEnviado')->default(false);
-
         });
     }
 

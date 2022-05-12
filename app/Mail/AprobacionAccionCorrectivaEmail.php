@@ -6,7 +6,6 @@ use App\Models\QuejasCliente;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AprobacionAccionCorrectivaEmail extends Mailable
 {
@@ -17,11 +16,11 @@ class AprobacionAccionCorrectivaEmail extends Mailable
      *
      * @return void
      */
-
     public $quejas;
+
     public function __construct(QuejasCliente $quejas)
     {
-        $this->quejas= $quejas;
+        $this->quejas = $quejas;
     }
 
     /**

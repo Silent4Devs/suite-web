@@ -2,33 +2,33 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use Flash;
-use App\Models\Area;
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Puesto;
-use App\Models\Proceso;
-use App\Models\Empleado;
-use App\Models\Tipoactivo;
-use Illuminate\Http\Request;
-use App\Models\QuejasCliente;
 use App\Functions\GeneratePdf;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
+use App\Http\Requests\UpdateAccionCorrectivaRequest;
+use App\Mail\AprobacionAccionCorrectivaEmail;
 use App\Models\AccionCorrectiva;
+use App\Models\ActividadAccionCorrectiva;
+use App\Models\AnalisisAccionCorrectiva;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\PlanaccionCorrectiva;
+use App\Models\Proceso;
+use App\Models\Puesto;
+use App\Models\QuejasCliente;
+use App\Models\Team;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
-use App\Http\Controllers\Controller;
-use App\Models\PlanaccionCorrectiva;
+use App\Models\Tipoactivo;
+use App\Models\User;
+use Flash;
+use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Models\AnalisisAccionCorrectiva;
-use Yajra\DataTables\Facades\DataTables;
-use App\Models\ActividadAccionCorrectiva;
-use App\Mail\AprobacionAccionCorrectivaEmail;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\UpdateAccionCorrectivaRequest;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class AccionCorrectivaController extends Controller
 {
@@ -40,7 +40,7 @@ class AccionCorrectivaController extends Controller
         // $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados','reporto'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
         // dd($query);
         if ($request->ajax()) {
-            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'empleados', 'reporto'])->where('aprobada',true)->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
+            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'empleados', 'reporto'])->where('aprobada', true)->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -137,32 +137,30 @@ class AccionCorrectivaController extends Controller
 
     public function obtenerAccionesCorrectivasSinAprobacion()
     {
-        $accionesCorrectivas =AccionCorrectiva::with(['deskQuejaCliente'=>function ($query){
-            $query->with('registro','responsableSgi');
-        }])->where('aprobada',false)->where('aprobacion_contestada',false)->get();
+        $accionesCorrectivas = AccionCorrectiva::with(['deskQuejaCliente'=>function ($query) {
+            $query->with('registro', 'responsableSgi');
+        }])->where('aprobada', false)->where('aprobacion_contestada', false)->get();
+
         return datatables()->of($accionesCorrectivas)->toJson();
     }
 
     public function aprobaroRechazarAc(Request $request)
     {
-
-        $accionCorrectiva= AccionCorrectiva::with('quejascliente')->find($request->id);
+        $accionCorrectiva = AccionCorrectiva::with('quejascliente')->find($request->id);
         $accionCorrectiva->update([
             'aprobada'=>$request->aprobada,
             'aprobacion_contestada'=>true,
         ]);
         // dd($accionCorrectiva->quejasCliente);
 
-        $quejasClientes= QuejasCliente::find($request->id_queja_cliente)->load('responsableSgi','registro','accionCorrectiva');
+        $quejasClientes = QuejasCliente::find($request->id_queja_cliente)->load('responsableSgi', 'registro', 'accionCorrectiva');
         Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableSgi->email)->send(new AprobacionAccionCorrectivaEmail($quejasClientes));
 
-        if($request->aprobada){
-            return response()->json(['success'=>true,'message'=>'Acción Correctiva Aprobada','aprobado'=>true]);
-
-        }else
-
-        return response()->json(['success'=>true,'message'=>'Acción Correctiva Rechazada','aprobado'=>false]);
-
+        if ($request->aprobada) {
+            return response()->json(['success'=>true, 'message'=>'Acción Correctiva Aprobada', 'aprobado'=>true]);
+        } else {
+            return response()->json(['success'=>true, 'message'=>'Acción Correctiva Rechazada', 'aprobado'=>false]);
+        }
     }
 
     public function create()
@@ -272,7 +270,7 @@ class AccionCorrectivaController extends Controller
         // $Count = $PlanAccion->count();
         // dd($accionCorrectiva);
 
-        return view('admin.accionCorrectivas.edit', compact('clientes','proyectos','quejasClientes','nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
+        return view('admin.accionCorrectivas.edit', compact('clientes', 'proyectos', 'quejasClientes', 'nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
     }
 
     public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
@@ -348,7 +346,6 @@ class AccionCorrectivaController extends Controller
         $accionCorrectiva->planes()->sync($request->planes);
 
         return response()->json(['success' => true]);
-
     }
 
     public function storeCKEditorImages(Request $request)
@@ -381,6 +378,4 @@ class AccionCorrectivaController extends Controller
 
         return redirect()->route('admin.accion-correctivas.edit', $accion);
     }
-
-
 }
