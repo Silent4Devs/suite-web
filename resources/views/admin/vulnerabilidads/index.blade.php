@@ -224,11 +224,17 @@
                     },
                     {
                         data: 'amenaza',
-                        name: 'amenaza'
+                        name: 'amenaza',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'descripcion',
-                        name: 'descripcion'
+                        name: 'descripcion',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'actions',

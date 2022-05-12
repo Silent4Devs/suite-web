@@ -62,7 +62,7 @@
             const formData = new FormData();
             const archivos = document.getElementById('csv_file').files;
             archivos.forEach(element => {
-                formData.append('alta_direccion', element);
+                formData.append('vulnerabilidad', element);
             });
             formData.append('eliminar', document.getElementById('eliminar').checked)
             formData.append('tipo', 'tabla')
@@ -81,6 +81,7 @@
                         const response  = await importar(formData)
                         if (response.status=='success') {
                             toastr.success(response.message)
+                            $('.tblCSV').DataTable().ajax.reload();
                             $('#xlsxImportModal').modal('hide')
                         }
                     }
@@ -89,6 +90,7 @@
                 const response = await importar(formData)
                 if (response.status=='success') {
                     toastr.success(response.message)
+                     $('.tblCSV').DataTable().ajax.reload();
                     $('#xlsxImportModal').modal('hide')
                 }
             }
@@ -99,7 +101,7 @@
     })
 
     async function importar(formData) {
-        const url = "{{ route('carga-alta_direccion') }}";
+        const url = "{{ route('carga-vulnerabilidad') }}";
             const response = await fetch(url, {
                 method: 'POST',
                 body: formData,
