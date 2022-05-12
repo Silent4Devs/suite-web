@@ -15,7 +15,6 @@ class AddColumnEsExternoToAccionCorrectivasTable extends Migration
     {
         Schema::table('accion_correctivas', function (Blueprint $table) {
             $table->boolean('es_externo')->default(false);
-
         });
     }
 

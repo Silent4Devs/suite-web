@@ -7,7 +7,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-
 class SeguimientoQuejaClienteEmail extends Mailable
 {
     use Queueable, SerializesModels;
@@ -17,9 +16,7 @@ class SeguimientoQuejaClienteEmail extends Mailable
      *
      * @return void
      */
-
-     public $quejas;
-
+    public $quejas;
 
     public function __construct(QuejasCliente $quejas)
     {
@@ -34,6 +31,5 @@ class SeguimientoQuejaClienteEmail extends Mailable
     public function build()
     {
         return $this->view('mails.quejasCliente.seguimiento');
-
     }
 }

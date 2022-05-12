@@ -2,37 +2,35 @@
 
 namespace App\Http\Controllers\admin;
 
-use Carbon\Carbon;
-use App\Models\Area;
-use App\Models\Sede;
+use App\Http\Controllers\Controller;
+use App\Mail\AceptacionAccionCorrectivaEmail;
+use App\Mail\SeguimientoQuejaClienteEmail;
+use App\Models\AccionCorrectiva;
 use App\Models\Activo;
-use App\Models\Quejas;
+use App\Models\AnalisisQuejasClientes;
+use App\Models\AnalisisSeguridad;
+use App\Models\Area;
+use App\Models\CategoriaIncidente;
+use App\Models\Denuncias;
+use App\Models\Empleado;
+use App\Models\EvidenciaQuejasClientes;
+use App\Models\EvidenciasQuejasClientesCerrado;
+use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
 use App\Models\Proceso;
-use App\Models\Empleado;
-use App\Models\Denuncias;
-use App\Models\Sugerencias;
-use Illuminate\Http\Request;
+use App\Models\Quejas;
 use App\Models\QuejasCliente;
-use Illuminate\Http\Response;
-use App\Models\AccionCorrectiva;
+use App\Models\RiesgoIdentificado;
+use App\Models\Sede;
+use App\Models\SubcategoriaIncidente;
+use App\Models\Sugerencias;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
-use App\Models\CategoriaIncidente;
-use App\Models\RiesgoIdentificado;
-use App\Models\IncidentesSeguridad;
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
-use App\Models\SubcategoriaIncidente;
-use App\Models\AnalisisQuejasClientes;
-use App\Models\EvidenciaQuejasClientes;
-use App\Models\SeguimientoQuejaCliente;
-use App\Mail\SeguimientoQuejaClienteEmail;
-use App\Mail\AceptacionAccionCorrectivaEmail;
-use App\Models\EvidenciasQuejasClientesCerrado;
-use App\Models\AnalisisSeguridad; //mejora apunta a este modelo
-
+use Illuminate\Support\Facades\Mail; //mejora apunta a este modelo
 
 class DeskController extends Controller
 {
@@ -73,7 +71,6 @@ class DeskController extends Controller
         $en_espera_quejasClientes = QuejasCliente::where('estatus', 'En espera')->get()->count();
         $cerrados_quejasClientes = QuejasCliente::where('estatus', 'Cerrado')->get()->count();
         $cancelados_quejasClientes = QuejasCliente::where('estatus', 'Cancelado')->get()->count();
-
 
         $total_denuncias = Denuncias::get()->count();
         $nuevos_denuncias = Denuncias::where('estatus', 'nuevo')->get()->count();
@@ -817,7 +814,7 @@ class DeskController extends Controller
 
     public function indexQuejasClientes()
     {
-        $quejasClientes  = QuejasCliente::with('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos')->where('archivado', false)->get();
+        $quejasClientes = QuejasCliente::with('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos')->where('archivado', false)->get();
         // dd($quejasClientes);
         return datatables()->of($quejasClientes)->toJson();
     }
@@ -836,7 +833,6 @@ class DeskController extends Controller
             'solucion_requerida_cliente' => 'required',
             'correo_cliente' => 'required',
         ]);
-
 
         $correo_cliente = intval($request->correo_cliente) == 1 ? true : false;
         if ($correo_cliente) {
@@ -898,18 +894,12 @@ class DeskController extends Controller
             }
         }
 
-
-
         if ($correo_cliente) {
-
             Mail::to($quejasClientes->correo)->cc($quejasClientes->registro->email)->send(new SeguimientoQuejaClienteEmail($quejasClientes));
         }
 
-
-
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
-
 
     public function editQuejasClientes(Request $request, $id_quejas)
     {
@@ -1004,7 +994,6 @@ class DeskController extends Controller
             'cerrar_ticket' => $cerrar_ticket,
         ]);
 
-
         $documento = null;
 
         if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
@@ -1051,8 +1040,6 @@ class DeskController extends Controller
             }
         }
 
-
-
         if ($desea_levantar_ac) {
             $quejasClientes->load('cliente', 'proyectos', 'responsableAtencion', 'responsableSgi', 'registro');
             $evidenciaArr = [];
@@ -1097,7 +1084,6 @@ class DeskController extends Controller
 
     public function updateAnalisisQuejasClientes(Request $request, $id_quejas)
     {
-
         $analisis_quejasClientes = AnalisisQuejasClientes::findOrfail(intval($id_quejas));
         $analisis_quejasClientes->update([
             'problema_diagrama' => $request->problema_diagrama,
@@ -1170,7 +1156,6 @@ class DeskController extends Controller
 
     public function quejasClientesDashboard()
     {
-
         $quejasClientesSaA = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Alta')->count();
         $quejasClientesSaM = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Media')->count();
         $quejasClientesSaB = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Baja')->count();
@@ -1206,7 +1191,6 @@ class DeskController extends Controller
 
         $quejaAcSolicitada = QuejasCliente::select('id', 'desea_levantar_ac')->where('desea_levantar_ac', true)->count();
         $quejaAcNoSolicitada = QuejasCliente::select('id', 'desea_levantar_ac')->where('desea_levantar_ac', false)->count();
-
 
         $quejaCanalCorreoE = QuejasCliente::select('id', 'canal')->where('canal', 'Correo electronico')->count();
         $quejaCanalTelefono = QuejasCliente::select('id', 'canal')->where('canal', 'Via telefonica')->count();

@@ -12,11 +12,11 @@ class QuejasCliente extends Model
     use SoftDeletes;
     protected $table = 'quejas_clientes';
 
-	protected $casts = [
-		'area_quejado_id' => 'int',
-		'colaborador_quejado_id' => 'int',
-		'proceso_quejado_id' => 'int',
-	];
+    protected $casts = [
+        'area_quejado_id' => 'int',
+        'colaborador_quejado_id' => 'int',
+        'proceso_quejado_id' => 'int',
+    ];
 
     protected $dates = [
         'fecha',
@@ -71,12 +71,12 @@ class QuejasCliente extends Model
         'conforme_solucion',
         'cerrar_ticket',
         'correoEnviado',
-	];
+    ];
 
     protected $appends = [
         'folio',
         'fecha_de_cierre',
-        'fecha_reporte'
+        'fecha_reporte',
     ];
 
     public function getFolioAttribute()
@@ -139,10 +139,9 @@ class QuejasCliente extends Model
         return Carbon::parse($this->fecha)->format('d-m-Y');
     }
 
-
     public function getFechaDeCierreAttribute()
     {
-        return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y H:i'): '';
+        return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y H:i') : '';
     }
 
     public function getFechaReporteAttribute()
@@ -167,7 +166,7 @@ class QuejasCliente extends Model
 
     public function accionCorrectiva()
     {
-        return $this->belongsTo(AccionCorrectiva::class, 'accion_correctiva_id','id');
+        return $this->belongsTo(AccionCorrectiva::class, 'accion_correctiva_id', 'id');
     }
 
     public function seguimiento()
@@ -177,8 +176,6 @@ class QuejasCliente extends Model
 
     public function accionCorrectivaAprobacional()
     {
-        return $this->morphToMany(AccionCorrectiva::class, 'acciones_correctivas_aprobacionables', null, null,'acciones_correctivas_id')->withTimestamps()->withPivot('id');
+        return $this->morphToMany(AccionCorrectiva::class, 'acciones_correctivas_aprobacionables', null, null, 'acciones_correctivas_id')->withTimestamps()->withPivot('id');
     }
-
-
 }

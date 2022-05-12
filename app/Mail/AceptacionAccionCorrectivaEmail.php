@@ -2,14 +2,10 @@
 
 namespace App\Mail;
 
-use App\Models\Empleado;
 use App\Models\QuejasCliente;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use App\Models\TimesheetCliente;
-use App\Models\TimesheetProyecto;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AceptacionAccionCorrectivaEmail extends Mailable
 {
@@ -20,14 +16,13 @@ class AceptacionAccionCorrectivaEmail extends Mailable
      *
      * @return void
      */
-
     public $quejas;
     public $evidencia;
 
-    public function __construct(QuejasCliente $quejas, $evidencia=[])
+    public function __construct(QuejasCliente $quejas, $evidencia = [])
     {
         $this->quejas = $quejas;
-        $this->evidencia=$evidencia;
+        $this->evidencia = $evidencia;
     }
 
     /**
@@ -38,7 +33,7 @@ class AceptacionAccionCorrectivaEmail extends Mailable
     public function build()
     {
         $this->view('mails.accioncorrectiva.aceptacion');
-        foreach ($this->evidencia as $evidencia){
+        foreach ($this->evidencia as $evidencia) {
             $this->attach(public_path("storage/evidencias_quejas_clientes/{$evidencia}"));
         }
 

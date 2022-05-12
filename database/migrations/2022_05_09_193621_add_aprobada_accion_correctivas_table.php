@@ -16,9 +16,7 @@ class AddAprobadaAccionCorrectivasTable extends Migration
         Schema::table('accion_correctivas', function (Blueprint $table) {
             $table->boolean('aprobada')->default(true);
             $table->boolean('aprobacion_contestada')->default(true);
-
         });
-
     }
 
     /**

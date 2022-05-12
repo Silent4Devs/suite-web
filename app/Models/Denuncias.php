@@ -71,6 +71,4 @@ class Denuncias extends Model
     {
         return $this->morphToMany(AccionCorrectiva::class, 'acciones_correctivas_aprobacionables', null, null, 'acciones_correctivas_id');
     }
-
-
 }
