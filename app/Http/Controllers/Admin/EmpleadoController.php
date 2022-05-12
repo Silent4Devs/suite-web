@@ -137,6 +137,7 @@ class EmpleadoController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
+
         return view('admin.empleados.index', compact('ceo_exists', 'logo_actual', 'empresa_actual'));
     }
 
