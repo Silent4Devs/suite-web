@@ -51,7 +51,7 @@
                             @php
                                 use App\Models\Organizacion;
                                 $organizacion = Organizacion::first();
-                                 $logotipo = 'img/logo_policromatico_2.png';
+                                $logotipo = 'img/logo_policromatico_2.png';
                                 if ($organizacion) {
                                     if ($organizacion->logotipo) {
                                         $logotipo = '' . $organizacion->logotipo;
@@ -59,7 +59,7 @@
                                 }
                             @endphp
 
-                            <img class="img-profile-lg" style="position: relative;" src="{{ ($logotipo) }}">
+                            <img class="img-profile-lg" style="position: relative;" src="{{ $logotipo }}">
                         </div>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                 processing: true,
                 serverSide: true,
                 retrieve: true,
-                ajax: "{{ route('admin.ev360-objetivos-empleado.create', $empleado->id) }}",
+                ajax: "{{ route('admin.ev360-objetivos-empleado.show', $empleado->id) }}",
                 columns: [{
                     data: 'objetivo.tipo.nombre',
                 }, {

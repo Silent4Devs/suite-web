@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-
-    {{ Breadcrumbs::render('EV360-Evaluacion-Consulta-Evaluado', ['evaluacion' => $evaluacion,'evaluado' => $evaluado]) }}
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
     <style>
         .fs-consulta {
             font-size: 11px;
@@ -14,12 +12,30 @@
             height: 20px;
         }
 
+        @media print {
+            .print-none {
+                display: none !important;
+            }
+        }
+
     </style>
+    <div class="print-none">
+        {{ Breadcrumbs::render('EV360-Evaluacion-Consulta-Evaluado', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado]) }}
+    </div>
     <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <div class="print-none py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Resúmen de la</strong> evaluación </h3>
         </div>
         <div class="card-body">
+            <div class="col-12 pr-0 mr-0 mb-4">
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-danger print-none" onclick="javascript:window.print()">
+                        <i class="fas fa-print"></i>
+                        Imprimir
+                    </button>
+
+                </div>
+            </div>
             <div class="col-12">
                 <div class="mb-3 row">
                     <div class="text-center border col-4">
@@ -275,10 +291,10 @@
                     <div class="col-12" x-data="{ show: false }">
                         <div style="display: flex;justify-content: end">
                             <button title="Gráfica Radar" @click="show=true" class="btn btn-sm"
-                                x-bind:style="show?'background:blue;color:white':'backgrond:white'"><i
+                                x-bind:style="show ? 'background:blue;color:white' : 'backgrond:white'"><i
                                     class="fas fa-chart-area"></i></button>
                             <button title="Gráfica de Barras" @click="show=false" class="btn btn-sm"
-                                x-bind:style="!show?'background:blue;color:white':'backgrond:white'"><i
+                                x-bind:style="!show ? 'background:blue;color:white' : 'backgrond:white'"><i
                                     class="fas fa-chart-bar"></i></button>
                         </div>
                         <div x-show="show" x-transition>
@@ -417,10 +433,10 @@
                     <div class="col-12" x-data="{ show: false }">
                         <div style="display: flex;justify-content: end">
                             <button title="Gráfica Radar" @click="show=true" class="btn btn-sm"
-                                x-bind:style="show?'background:blue;color:white':'backgrond:white'"><i
+                                x-bind:style="show ? 'background:blue;color:white' : 'backgrond:white'"><i
                                     class="fas fa-chart-area"></i></button>
                             <button title="Gráfica de Barras" @click="show=false" class="btn btn-sm"
-                                x-bind:style="!show?'background:blue;color:white':'backgrond:white'"><i
+                                x-bind:style="!show ? 'background:blue;color:white' : 'backgrond:white'"><i
                                     class="fas fa-chart-bar"></i></button>
                         </div>
                         <div x-show="show" x-transition>
@@ -438,17 +454,17 @@
             </div>
             <div class="col-12">
                 <div class="row">
-                    <div class="col-3 border text-center">
+                    <div class="col-6 border text-center">
                         <img class="img-fluid" src="{{ asset($firmaAuto) }}"
                             style="{{ !$existeFirmaAuto ? 'max-width:97px' : '' }}" />
                         <h6 class="my-2">Firma Autoevaluación</h6>
                     </div>
-                    <div class="col-3 border text-center">
+                    <div class="col-6 border text-center">
                         <img class="img-fluid" src="{{ asset($firmaJefe) }}"
                             style="{{ !$existeFirmaJefe ? 'max-width:97px' : '' }}" />
                         <h6 class="my-2">Firma Jefe Inmediato</h6>
                     </div>
-                    <div class="col-3 border text-center">
+                    {{-- <div class="col-3 border text-center">
                         <img class="img-fluid" src="{{ asset($firmaEquipo) }}"
                             style="{{ !$existeFirmaSubordinado ? 'max-width:97px' : '' }}" />
                         <h6 class="my-2">Firma Subordinado</h6>
@@ -457,7 +473,7 @@
                         <img class="img-fluid" src="{{ asset($firmaPar) }}"
                             style="{{ !$existeFirmaPar ? 'max-width:97px' : '' }}" />
                         <h6 class="my-2">Firma Par</h6>
-                    </div>
+                    </div> --}}
                 </div>
 
             </div>

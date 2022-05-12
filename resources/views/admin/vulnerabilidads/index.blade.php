@@ -1,47 +1,51 @@
 @extends('layouts.admin')
 @section('content')
+    {{ Breadcrumbs::render('admin.vulnerabilidads.index') }}
 
-{{ Breadcrumbs::render('admin.vulnerabilidads.index') }}
+    <style>
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
 
-<style>
+        .btn_cargar:hover {
+            color: #fff;
+            background: #345183;
+        }
 
-    .btn_cargar{
-        border-radius: 100px !important;
-        border: 1px solid #345183;
-        color: #345183;
-        text-align: center;
-        padding: 0;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-    .btn_cargar:hover{
-        color: #fff;
-        background:#345183 ;
-    }
-    .btn_cargar i{
-        font-size: 15pt;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .agregar{
-        margin-right:15px;
-    }
+        .btn_cargar i {
+            font-size: 15pt;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-</style>
+        .agregar {
+            margin-right: 15px;
+        }
+
+    </style>
 
     <h5 class="col-12 titulo_general_funcion">Vulnerabilidades </h5>
     <div class="mt-5 card">
         <div style="margin-bottom: 10px; margin-left:10px;" class="row">
             <div class="col-lg-12">
-                @include('csvImport.modalvulnerabilidad', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
+                @include('csvImport.modalvulnerabilidad', [
+                    'model' => 'Vulnerabilidad',
+                    'route' => 'admin.vulnerabilidads.parseCsvImport',
+                ])
             </div>
         </div>
 
@@ -51,7 +55,6 @@
             @include('admin.vulnerabilidads.table')
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
@@ -141,8 +144,8 @@
             let btnExport = {
                 text: '<i  class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-vulnerabilidad') }}",
+                className: "btn btn_cargar",
+                url: "{{ route('descarga-vulnerabilidad') }}",
                 action: function(e, dt, node, config) {
                     let {
                         url
@@ -214,15 +217,24 @@
                     },
                     {
                         data: 'nombre',
-                        name: 'nombre'
+                        name: 'nombre',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'amenaza',
-                        name: 'amenaza'
+                        name: 'amenaza',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'descripcion',
-                        name: 'descripcion'
+                        name: 'descripcion',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'actions',

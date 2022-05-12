@@ -7,11 +7,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 class QuejasCliente extends Model
 {
-	use SoftDeletes;
-	protected $table = 'quejas_clientes';
+    use SoftDeletes;
+    protected $table = 'quejas_clientes';
 
 	protected $casts = [
 		'area_quejado_id' => 'int',
@@ -27,24 +26,24 @@ class QuejasCliente extends Model
         'deleted_at',
     ];
 
-	protected $fillable = [
+    protected $fillable = [
         'cliente_id',
         'proyectos_id',
-		'nombre',
-		'puesto',
-		'telefono',
-		'correo',
-		'estatus',
-		'area_quejado',
-		'colaborador_quejado',
-		'proceso_quejado',
-		'otro_quejado',
-		'titulo',
-		'fecha',
-		'fecha_cierre',
-		'ubicacion',
-		'descripcion',
-		'comentarios',
+        'nombre',
+        'puesto',
+        'telefono',
+        'correo',
+        'estatus',
+        'area_quejado',
+        'colaborador_quejado',
+        'proceso_quejado',
+        'otro_quejado',
+        'titulo',
+        'fecha',
+        'fecha_cierre',
+        'ubicacion',
+        'descripcion',
+        'comentarios',
         'archivado',
         'canal',
         'otro_canal',
@@ -90,31 +89,30 @@ class QuejasCliente extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-	public function area()
-	{
-		return $this->belongsTo(Area::class, 'area_quejado_id');
-	}
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'area_quejado_id');
+    }
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class, 'colaborador_quejado_id');
-	}
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'colaborador_quejado_id');
+    }
 
-	public function proceso()
-	{
-		return $this->belongsTo(Proceso::class, 'proceso_quejado_id');
-	}
+    public function proceso()
+    {
+        return $this->belongsTo(Proceso::class, 'proceso_quejado_id');
+    }
 
     public function cliente()
-	{
-		return $this->belongsTo(TimesheetCliente::class, 'cliente_id');
-	}
+    {
+        return $this->belongsTo(TimesheetCliente::class, 'cliente_id');
+    }
 
     public function proyectos()
-	{
-		return $this->belongsTo(TimesheetProyecto::class, 'proyectos_id');
-	}
-
+    {
+        return $this->belongsTo(TimesheetProyecto::class, 'proyectos_id');
+    }
 
     public function analisis()
     {

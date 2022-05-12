@@ -32,7 +32,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::MIPERFIL;
 
     /**
      * Create a new controller instance.
@@ -41,23 +41,23 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('logout');
     }
 
     public function redirectTo()
     {
         if (auth()->user()->is_admin) {
-            $numero_bloqueo = LockedPlanTrabajo::count();
-            if ($numero_bloqueo == 1) {
-                $bloqueo = LockedPlanTrabajo::first();
-                if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) == auth()->user()->id) {
-                    $bloqueo->update([
-                        'locked_to' => Carbon::now(),
-                        'blocked' => '0',
-                        'locked_by' => 0,
-                    ]);
-                }
-            }
+            // $numero_bloqueo = LockedPlanTrabajo::count();
+            // if ($numero_bloqueo == 1) {
+            //     $bloqueo = LockedPlanTrabajo::first();
+            //     if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) == auth()->user()->id) {
+            //         $bloqueo->update([
+            //             'locked_to' => Carbon::now(),
+            //             'blocked' => '0',
+            //             'locked_by' => 0,
+            //         ]);
+            //     }
+            // }
 
             return '/admin/inicioUsuario#datos';
         }
@@ -75,17 +75,17 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        $numero_bloqueo = LockedPlanTrabajo::count();
-        if ($numero_bloqueo == 1) {
-            $bloqueo = LockedPlanTrabajo::first();
-            if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) == auth()->user()->id) {
-                $bloqueo->update([
-                    'locked_to' => Carbon::now(),
-                    'blocked' => '0',
-                    'locked_by' => 0,
-                ]);
-            }
-        }
+        // $numero_bloqueo = LockedPlanTrabajo::count();
+        // if ($numero_bloqueo == 1) {
+        //     $bloqueo = LockedPlanTrabajo::first();
+        //     if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) == auth()->user()->id) {
+        //         $bloqueo->update([
+        //             'locked_to' => Carbon::now(),
+        //             'blocked' => '0',
+        //             'locked_by' => 0,
+        //         ]);
+        //     }
+        // }
         $this->performLogout($request);
 
         return redirect('/');

@@ -30,9 +30,7 @@ class TimesheetCliente extends Model
     ];
 
     public function cliente()
-	{
-		return $this->hasMany(QuejasCliente::class, 'cliente_id');
-	}
-
-
+    {
+        return $this->hasMany(QuejasCliente::class, 'cliente_id');
+    }
 }

@@ -193,7 +193,7 @@
         @include('partials.flashMessages')
         <div class="card-body">
             <div class="container">
-                @livewire('matriz-heatmap', ['id_analisis' => $id])
+                @livewire('sistema-gestion-heatmap', ['id_analisis' => $id])
             </div>
         </div>
     </div>

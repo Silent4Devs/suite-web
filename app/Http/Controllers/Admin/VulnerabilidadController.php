@@ -35,7 +35,7 @@ class VulnerabilidadController extends AppBaseController
     {
         abort_if(Gate::denies('analisis_de_riesgos_vulnerabilidades_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = Vulnerabilidad::get();
+            $query = Vulnerabilidad::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -117,17 +117,12 @@ class VulnerabilidadController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         abort_if(Gate::denies('analisis_de_riesgos_vulnerabilidades_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $vulnerabilidad = $this->vulnerabilidadRepository->find($id);
 
-        if (empty($vulnerabilidad)) {
-            Flash::error('Vulnerabilidad not found');
-
-            return redirect(route('admin.vulnerabilidads.index'));
-        }
-
+        $vulnerabilidad = Vulnerabilidad::with('idAmenaza')->find($id);
+        // dd($vulnerabilidad);
         return view('admin.vulnerabilidads.show')->with('vulnerabilidad', $vulnerabilidad);
     }
 
