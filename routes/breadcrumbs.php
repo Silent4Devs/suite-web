@@ -142,8 +142,7 @@ Breadcrumbs::for('admin.amenazas.index', function ($trail) {
 });
 
 Breadcrumbs::for('admin.vulnerabilidads.index', function ($trail) {
-    $trail->parent('admin.iso27001.index');
-    $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
+    $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));
     $trail->push('Vulnerabilidades', route('admin.vulnerabilidads.index'));
 });
 Breadcrumbs::for('admin.analisis-riesgos.menu', function ($trail) {
@@ -152,8 +151,7 @@ Breadcrumbs::for('admin.analisis-riesgos.menu', function ($trail) {
 });
 
 Breadcrumbs::for('admin.analisis-riesgos.index', function ($trail) {
-    $trail->parent('admin.iso27001.index');
-    $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
+    $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));
     $trail->push('Matriz de Riesgos', route('admin.analisis-riesgos.index'));
 });
 

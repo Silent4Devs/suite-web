@@ -101,31 +101,31 @@
             <table class="table table-bordered w-100 datatable datatable-AnalisisRiesgo">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        <th style="min-width: 40px;">
                             ID
                         </th>
-                        <th>
+                        <th style="min-width: 150px;">
                             Nombre
                         </th>
-                        <th>
+                        <th style="min-width: 150px;">
                             Tipo
                         </th>
-                        <th>
+                        <th style="min-width: 100px;">
                             Fecha
                         </th>
-                        <th>
-                            %&nbsp;Implementacion
+                        <th style="min-width: 100px;">
+                            %&nbsp;Implementación
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Elaboró
                         </th>
-                        <th>
+                        <th style="min-width: 100px;">
                             Estatus
                         </th>
-                        <th>
-                            Mátriz
+                        <th style="min-width: 40px;">
+                            Matriz
                         </th>
-                        <th>
+                        <th style="min-width: 40px;">
                             Opciones
                         </th>
                     </tr>
@@ -303,31 +303,75 @@
                 ajax: "{{ route('admin.analisis-riesgos.index') }}",
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'nombre',
-                        name: 'nombre'
+                        name: 'nombre',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'tipo',
-                        name: 'tipo'
+                        name: 'tipo',
+                        render: function(data, type, row,meta) {
+                            const tipo = row.tipo;
+                            if (tipo == 'Análisis de riesgo integral') {
+                            return `<div style="text-align:left">Análisis de Riesgo Integral (ISO 27001,9001,20000)</div>`;
+                            }if(tipo == 'Seguridad de la información'){
+                            return `<div style="text-align:left">ISO 27001</div>`;
+                            }
+                            else{
+                            return `<div style="text-align:left">${data}</div>`;
+                            }
+                        }
                     },
                     {
                         data: 'fecha',
-                        name: 'fecha'
+                        name: 'fecha',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:center">${data}</div>`;
+                        }
+
                     },
                     {
                         data: 'porcentaje_implementacion',
-                        name: 'porcentaje_implementacion'
+                        name: 'porcentaje_implementacion',
+                        render: function(data, type, row) {
+                            const porcentaje = row.porcentaje_implementacion;
+                            if (porcentaje == 0) {
+                            return `<div style="text-align:center">Sin evaluar</div>`;
+                            }
+                            else{
+                            return `<div style="text-align:center">${data} %</div>`;
+                            }
+                        }
+
                     },
                     {
                         data: 'elaboro',
-                        name: 'elaboro'
+                        name: 'elaboro',
+                        render: function(data, type, row,meta) {
+                            const elaboro = row.elaboro;
+                            if (elaboro == 0) {
+                            return `<div style="text-align:left">No se ha asociado colaborador</div>`;
+                            }
+                            else{
+                            return `<div style="text-align:left">${data}</div>`;
+                            }
+                        }
+
                     },
                     {
                         data: 'estatus',
-                        name: 'estatus'
+                        name: 'estatus',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'enlace',
@@ -338,7 +382,7 @@
                             switch(tipo){
                             case 'Seguridad de la información':
                             return `
-                            <div class="text-center w-100">
+                            <div class="text-center w-100" style="text-align:center">
                                 @can('analisis_de_riesgos_matriz_riesgo_config')
                                     <a href="matriz-seguridad/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 @endcan
@@ -347,7 +391,7 @@
                             break;
                             case 'Análisis de riesgo integral':
                             return `
-                            <div class="text-center w-100">
+                            <div class="text-center w-100" style="text-align:center">
                                 @can('analisis_de_riesgos_matriz_riesgo_config')
                                     <a href="matriz-seguridad/sistema-gestion/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 @endcan
@@ -356,21 +400,21 @@
                             break;
                             case 'OCTAVE':
                                 return `
-                                <div class="text-center w-100">
+                                <div class="text-center w-100" style="text-align:center">
                                     <a href="procesos-octave/${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 </div>
                             `;
                             break;
                             case 'ISO 31000':
                             return `
-                            <div class="text-center w-100">
+                            <div class="text-center w-100" style="text-align:center">
                                 <a href="matriz-seguridad/ISO31000/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                             </div>
                             `;
                             break;
                             case 'NIST':
                             return `
-                            <div class="text-center w-100">
+                            <div class="text-center w-100" style="text-align:center">
                                 <a href="matriz-seguridad/NIST/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                             </div>
                             `;

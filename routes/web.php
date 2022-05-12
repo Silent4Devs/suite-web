@@ -931,6 +931,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('amenazas/process-csv-import', 'AmenazaController@processCsvImport')->name('amenazas.processCsvImport');
 
     //vulnerabilidades
+    // Route::post('CargaAmenaza', 'SubidaExcel@Vulnerabilidad')->name('cargaExcel-vulnerabilidad');
     Route::resource('vulnerabilidads', 'VulnerabilidadController');
     Route::delete('vulnerabilidads/destroy', 'VulnerabilidadController@massDestroy')->name('vulnerabilidads.massDestroy');
     Route::post('vulnerabilidads/parse-csv-import', 'VulnerabilidadController@parseCsvImport')->name('vulnerabilidads.parseCsvImport');
