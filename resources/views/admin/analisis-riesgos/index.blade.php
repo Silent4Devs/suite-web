@@ -98,7 +98,7 @@
 
 
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable datatable-AnalisisRiesgo">
+            <table class="table table-bordered w-100 datatable datatable-AnalisisRiesgo tblCSV">
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width: 40px;">
@@ -122,7 +122,7 @@
                         <th style="min-width: 100px;">
                             Estatus
                         </th>
-                        <th style="min-width: 40px;">
+                        <th style="min-width: 50px;">
                             Matriz
                         </th>
                         <th style="min-width: 40px;">
@@ -419,7 +419,9 @@
                             </div>
                             `;
                             default:
-                             return`No se encuentran coincidencias`;
+                             return`
+                             <div class="w-100" style="text-align:left">No se encuentran coincidencias</div>
+                            `;
                             }
                         }
                     },
