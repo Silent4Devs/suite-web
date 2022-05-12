@@ -8,16 +8,14 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class AccionCorrectiva extends Model implements HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory, QueryCacheable;
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+
     public $table = 'accion_correctivas';
 
     protected $appends = [
@@ -87,6 +85,9 @@ class AccionCorrectiva extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'team_id',
+        'es_externo',
+        'aprobada',
+        'aprobacion_contestada',
     ];
 
     public function getFolioAttribute()
@@ -203,5 +204,15 @@ class AccionCorrectiva extends Model implements HasMedia
     public function analisis()
     {
         return $this->hasMany(AnalisisAccionCorrectiva::class, 'accion_correctiva_id', 'id');
+    }
+
+    public function quejascliente()
+    {
+        return $this->hasMany(QuejasCliente::class, 'accion_correctiva_id', 'id');
+    }
+
+    public function deskQuejaCliente()
+    {
+        return $this->morphedByMany(QuejasCliente::class, 'acciones_correctivas_aprobacionables', null, 'acciones_correctivas_id')->withPivot('created_at');
     }
 }

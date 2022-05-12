@@ -93,14 +93,13 @@ class ProcesoController extends Controller
     {
         $request->validate(
             [
-                'codigo' => 'required|string',
-                'nombre' => 'required|string',
+                'codigo' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
                 'id_macroproceso' => 'required|integer',
-                'descripcion' => 'required|string',
+                'descripcion' => 'nullable|max:10000',
             ],
         );
-        $procesos = proceso::create($request->all());
-        Flash::success('<h5 class="text-center">Proceso agregado satisfactoriamente</h5>');
+        Proceso::create($request->all());
 
         return redirect()->route('admin.procesos.index');
     }
@@ -143,10 +142,10 @@ class ProcesoController extends Controller
     {
         $request->validate(
             [
-                'codigo' => 'required|string',
-                'nombre' => 'required|string',
+                'codigo' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
                 'id_macroproceso' => 'required|integer',
-                'descripcion' => 'required|string',
+                'descripcion' => 'nullable|max:10000',
             ],
         );
         $proceso->update($request->all());
@@ -161,13 +160,14 @@ class ProcesoController extends Controller
      * @param  \App\Models\Proceso  $proceso
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Proceso $proceso)
+    public function destroy($proceso)
     {
         abort_if(Gate::denies('configuracion_procesos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $proceso = Proceso::find($proceso);
         $proceso->delete();
         Flash::success('<h5 class="text-center">Proceso eliminado satisfactoriamente</h5>');
 
-        return redirect()->route('admin.procesos.index');
+        return response()->json(['success' => true]);
     }
 
     public function mapaProcesos()
@@ -185,7 +185,7 @@ class ProcesoController extends Controller
         return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado', 'organizacion'));
     }
 
-    public function obtenerDocumentoProcesos($documento)
+    public function obtenerDocumentoProcesos($documento = null)
     {
         $documento = Documento::with('elaborador', 'revisor', 'aprobador', 'responsable', 'macroproceso')->find($documento);
 
@@ -196,12 +196,12 @@ class ProcesoController extends Controller
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
         $indicadores = IndicadoresSgsi::where('id_proceso', $proceso->id)->get();
         // dd($indicadores);
-        $riesgos = MatrizRiesgo::with(['analisis_de_riesgo'=>function ($q) {
+        $riesgos = MatrizRiesgo::with(['analisis_de_riesgo' => function ($q) {
             $q->select('id', 'nombre');
         }])->where('id_proceso', $proceso->id)->get();
         $analisis_collect = collect();
         foreach ($riesgos as $riesgo) {
-            $analisis_collect->push(['id'=>$riesgo->analisis_de_riesgo->id, 'nombre'=>$riesgo->analisis_de_riesgo->nombre]);
+            $analisis_collect->push(['id' => $riesgo->analisis_de_riesgo->id, 'nombre' => $riesgo->analisis_de_riesgo->nombre]);
         }
         $analisis_collect = $analisis_collect->unique('id');
         $primer_analisis = [];

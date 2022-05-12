@@ -39,7 +39,8 @@
                 </div>
 
                 <div class="form-group col-md-4 col-sm-4">
-                    <label for="id_macroproceso"><i class="fas fa-users iconos-crear"></i>Macroproceso </label>
+                    <label class="required" for="id_macroproceso"><i
+                            class="fas fa-users iconos-crear"></i>Macroproceso </label>
                     <select class="form-control select2 {{ $errors->has('id_macroproceso') ? 'is-invalid' : '' }}"
                         name="id_macroproceso" id="id_macroproceso" required>
                         <option value="">
@@ -48,12 +49,12 @@
                         @if ($macroprocesos)
                             @foreach ($macroprocesos as $macroproceso)
                                 <option value="{{ $macroproceso->id }}"
-                                    {{ $macroproceso->id == $proceso->macroproceso->id ? 'selected' : '' }}>
+                                    {{ old('id_macroproceso', $proceso->macroproceso->id) == $macroproceso->id ? 'selected' : '' }}>
                                     {{ $macroproceso->codigo }} / {{ $macroproceso->nombre }}
                                 </option>
                             @endforeach
                         @else
-                            <option value="">No hay proveedores registrados</option>
+                            <option value="">No hay macroprocesos registrados</option>
                         @endif
                     </select>
                     @if ($errors->has('id_macroproceso'))
@@ -64,12 +65,11 @@
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group col-sm-12">
-                    <label class="required" for="descripcion"><i class="fas fa-sticky-note iconos-crear"></i>
+                    <label for="descripcion"><i class="fas fa-sticky-note iconos-crear"></i>
                         Descripción</label>
-                    <textarea rows="3" class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion"
-                        id="descripcion" value="{{ old('descripcion', $proceso->descripcion) }}" required>
-                        {{ $proceso->descripcion }}
-                    </textarea>
+                    <textarea rows="3" class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"
+                        name="descripcion" id="descripcion"
+                        value="{{ old('descripcion', $proceso->descripcion) }}">{{ $proceso->descripcion }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -78,7 +78,7 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

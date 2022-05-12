@@ -3,32 +3,6 @@
 	
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
-    <style type="text/css">
-        .ingresar_horas{
-            width: 70px;
-            -webkit-appearance: textfield !important;
-            margin: 0;
-            -moz-appearance:textfield !important;
-        }
-        .table select{
-            width: 100%;
-            height: calc(1.6em + 0.75rem + 2px);
-            padding: 0.375rem 0.75rem;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.6;
-            color: #747474;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
-            justify-content: ;
-        } 
-        .flatpickr-disabled{
-            color: #FFC5C5 !important;
-        }   
-    </style>
-
     {{ Breadcrumbs::render('timesheet-create') }}
 
 	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font> </h5>
@@ -36,7 +10,7 @@
 	<div class="card card-body">
 		<div class="row">
 			
-            @livewire('timesheet.timesheet-horas-filas', ['proyectos'=>$proyectos, 'tareas'=>$tareas, 'origen'=>'create', 'timesheet_id'=>null])
+            @livewire('timesheet.timesheet-horas-filas', ['origen'=>'create', 'timesheet_id'=>null])
 
 		</div>
 	</div>
@@ -110,24 +84,49 @@
             });
         });
 
-        // ---------------------------------------------------
-
-        $('.btn_destroy_tr').click(function(){
-            let tr_seleccionado = '#' + $('.btn_destroy_tr:hover').attr('data-tr');
-
-            console.log(tr_seleccionado);
-
-            $(tr_seleccionado).remove();
-        }); 
-
         // --------------------------------------------------------
 
-        $('.ingresar_horas').focus(function(){
-            let input_hora = $('.ingresar_horas:focus').attr('id');
+        document.querySelector('.tabla-llenar-horas').addEventListener('change', (e)=>{
 
-            let input = document.getElementById(input_hora);
+            if (e.target.type == 'number') {
+                if (Number(e.target.value) > 24) {
+                    e.target.value = 24;
+                }
+                if (Number(e.target.value) <= 0) {
+                    e.target.value = null;
+                }
+                updateValue(e);
+            }
 
-            input.addEventListener('input', updateValue);
+            if (e.target.type == 'checkbox') {
+                calcularSumatoriasFacturables();
+            }
+        });
+
+        document.querySelector('.tabla-llenar-horas').addEventListener('click', (e)=>{
+            let element = e.target;
+            if (e.target.tagName == 'I') {
+                element = e.target.closest('div');
+            }
+            if (element.classList.contains('btn_destroy_tr')) {
+
+                let tr_seleccionado = '#' + $('.btn_destroy_tr:hover').attr('data-tr');
+
+                $(tr_seleccionado).remove();
+                Livewire.emit('removerFila');
+            }
+            if (element.classList.contains('btn_clear_tr')) {
+
+                let tr_seleccionado = '#' + $('.btn_clear_tr:hover').attr('data-tr');
+
+                document.querySelector(tr_seleccionado + ' textarea').value = null;
+                document.querySelector(tr_seleccionado + ' #suma_horas_fila_1').innerText = '';
+                let inputs_1 = document.querySelectorAll(tr_seleccionado + ' input');
+                inputs_1.forEach(input =>{
+                    input.value = null;
+                });
+                calcularSumatoriasFacturables();
+            }
         });
 
         function updateValue(e) {
@@ -144,6 +143,144 @@
             document.getElementById('suma_horas_fila_' + e.srcElement.getAttribute('data-i')).textContent = suma_horas + ' h';
 
             let horas_semana =   [$(' [data-dia="' + e.srcElement.getAttribute('data-dia') + '"] ')];
+
+            sumarFilas();
+            calcularSumatoriasFacturables();
+        }
+        function calcularSumatoriasFacturables(){
+
+            // lunes ----------------------------------
+            let input_lunes = document.querySelectorAll('input[data-dia="lunes"]');
+            let suma_horas_lunes = 0;
+            let suma_horas_lunes_no_fact = 0;
+            input_lunes.forEach(item =>{
+                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input').checked;
+                if (es_facturable) {
+                    suma_horas_lunes += Number(item.value);
+                }
+                else{
+                    suma_horas_lunes_no_fact += Number(item.value);
+                }
+            });      
+            document.getElementById('suma_dia_lunes').innerText = suma_horas_lunes + ' h';
+            document.getElementById('suma_dia_lunes_no_fact').innerText = suma_horas_lunes_no_fact + ' h';
+            
+            // martes ----------------------------------
+            let input_martes = document.querySelectorAll('input[data-dia="martes"]');
+            let suma_horas_martes = 0;
+            let suma_horas_martes_no_fact = 0;
+            input_martes.forEach(item =>{
+                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input').checked;
+                if (es_facturable) {
+                    suma_horas_martes += Number(item.value);
+                }
+                else{
+                    suma_horas_martes_no_fact += Number(item.value);
+                }
+            });      
+            document.getElementById('suma_dia_martes').innerText = suma_horas_martes + ' h';
+            document.getElementById('suma_dia_martes_no_fact').innerText = suma_horas_martes_no_fact + ' h';
+
+            // miercoles ----------------------------------
+            let input_miercoles = document.querySelectorAll('input[data-dia="miercoles"]');
+            let suma_horas_miercoles = 0;
+            let suma_horas_miercoles_no_fact = 0;
+            input_miercoles.forEach(item =>{
+                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input').checked;
+                if (es_facturable) {
+                    suma_horas_miercoles += Number(item.value);
+                }
+                else{
+                    suma_horas_miercoles_no_fact += Number(item.value);
+                }
+            });      
+            document.getElementById('suma_dia_miercoles').innerText = suma_horas_miercoles + ' h';
+            document.getElementById('suma_dia_miercoles_no_fact').innerText = suma_horas_miercoles_no_fact + ' h';
+
+            // jueves ----------------------------------
+            let input_jueves = document.querySelectorAll('input[data-dia="jueves"]');
+            let suma_horas_jueves = 0;
+            let suma_horas_jueves_no_fact = 0;
+            input_jueves.forEach(item =>{
+                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input').checked;
+                if (es_facturable) {
+                    suma_horas_jueves += Number(item.value);
+                }
+                else{
+                    suma_horas_jueves_no_fact += Number(item.value);
+                }
+            });      
+            document.getElementById('suma_dia_jueves').innerText = suma_horas_jueves + ' h';
+            document.getElementById('suma_dia_jueves_no_fact').innerText = suma_horas_jueves_no_fact + ' h';
+
+            // viernes ----------------------------------
+            let input_viernes = document.querySelectorAll('input[data-dia="viernes"]');
+            let suma_horas_viernes = 0;
+            let suma_horas_viernes_no_fact = 0;
+            input_viernes.forEach(item =>{
+                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input').checked;
+                if (es_facturable) {
+                    suma_horas_viernes += Number(item.value);
+                }
+                else{
+                    suma_horas_viernes_no_fact += Number(item.value);
+                }
+            });      
+            document.getElementById('suma_dia_viernes').innerText = suma_horas_viernes + ' h';
+            document.getElementById('suma_dia_viernes_no_fact').innerText = suma_horas_viernes_no_fact + ' h';
+
+            // sabado ----------------------------------
+            let input_sabado = document.querySelectorAll('input[data-dia="sabado"]');
+            let suma_horas_sabado = 0;
+            let suma_horas_sabado_no_fact = 0;
+            input_sabado.forEach(item =>{
+                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input').checked;
+                if (es_facturable) {
+                    suma_horas_sabado += Number(item.value);
+                }
+                else{
+                    suma_horas_sabado_no_fact += Number(item.value);
+                }
+            });      
+            document.getElementById('suma_dia_sabado').innerText = suma_horas_sabado + ' h';
+            document.getElementById('suma_dia_sabado_no_fact').innerText = suma_horas_sabado_no_fact + ' h';
+
+            // domingo ----------------------------------
+            let input_domingo = document.querySelectorAll('input[data-dia="domingo"]');
+            let suma_horas_domingo = 0;
+            let suma_horas_domingo_no_fact = 0;
+            input_domingo.forEach(item =>{
+                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input').checked;
+                if (es_facturable) {
+                    suma_horas_domingo += Number(item.value);
+                }
+                else{
+                    suma_horas_domingo_no_fact += Number(item.value);
+                }
+            });  
+
+            let total_h_fact = suma_horas_lunes + suma_horas_martes + suma_horas_miercoles + suma_horas_jueves + suma_horas_viernes + suma_horas_sabado + suma_horas_domingo;
+
+            let total_h_no_fact = suma_horas_lunes_no_fact + suma_horas_martes_no_fact + suma_horas_miercoles_no_fact + suma_horas_jueves_no_fact + suma_horas_viernes_no_fact + suma_horas_sabado_no_fact + suma_horas_domingo_no_fact;
+
+            document.getElementById('suma_dia_domingo').innerText = suma_horas_domingo + ' h';
+            document.getElementById('suma_dia_domingo_no_fact').innerText = suma_horas_domingo_no_fact + ' h';
+
+            document.getElementById('total_h_facts').innerText = 'Total: ' + total_h_fact + ' h';
+            document.getElementById('total_h_no_facts').innerText = 'Total: ' + total_h_no_fact + ' h';
+
+        }
+        Livewire.on('calcularSumatoriasFacturables', ()=>{
+            calcularSumatoriasFacturables();
+        });
+
+        function sumarFilas(){
+            let total_horas_filas = 0;
+            let tota_filas_elemnt = document.querySelectorAll('.total_filas');
+            tota_filas_elemnt.forEach(item=>{
+                total_horas_filas += Number(item.innerHTML.split(' ')[0]);
+            });
+            document.getElementById('total_horas_filas').innerText = total_horas_filas + ' h';
         }
     </script>
 @endsection

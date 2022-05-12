@@ -267,15 +267,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
                             @if ($quejas->anonimo == 'no')
                                 <div class="mt-2 form-group col-12">
                                     <label class="form-label">

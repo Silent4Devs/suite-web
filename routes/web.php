@@ -319,6 +319,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('desk/{quejas}/quejas-clientes-update', 'DeskController@updateQuejasClientes')->name('desk.quejasClientes-update');
     Route::post('desk/planes/quejas-clientes', 'DeskController@planesQuejasClientes')->name('desk.planesQuejasClientes');
 
+    //Dashboard Queja Cliente
+
+    Route::get('desk/quejas-clientes/dashboard', 'DeskController@quejasClientesDashboard')->name('desk.quejasClientes-dashboard');
+
     // Actividades DESK - Plan Accion
     Route::get('desk-seguridad-actividades/{seguridad_id}', 'ActividadesIncidentesController@index')->name('desk-seguridad-actividades.index');
     Route::resource('desk-seguridad-actividades', 'ActividadesIncidentesController')->except(['index']);
@@ -392,7 +396,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //procesos
 
     Route::get('mapa-procesos', 'ProcesoController@mapaProcesos')->name('procesos.mapa');
-    Route::get('procesos/{documento}/vista', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
+    Route::get('procesos/{documento?}/vista', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
     Route::resource('procesos', 'ProcesoController');
     Route::post('selectIndicador', 'ProcesoController@AjaxRequestIndicador')->name('selectIndicador');
     Route::post('selectRiesgos', 'ProcesoController@AjaxRequestRiesgos')->name('selectRiesgos');
@@ -479,6 +483,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('timesheet/reportes', 'TimesheetController@reportes')->name('timesheet-reportes');
     Route::get('timesheet/dashboard', 'TimesheetController@dashboard')->name('timesheet-dashboard');
+
+    Route::post('timesheet/create/obtenerTareas', 'TimesheetController@obtenerTareas')->name('timesheet-obtener-tareas');
 
     Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
 
@@ -856,10 +862,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('plan-correctivas-storeedit', 'PlanaccionCorrectivaController@storeEdit');
     Route::post('planaccion-storered', 'PlanaccionCorrectivaController@storeRedirect')->name('storered');
 
-    // Ajax
-    //Route::post('AjaxAccionCorrectivaCrear', 'AccionCorrectiva@store');
+    // Accion Correctiva Aprobaciones
+    Route::post('accion-correctivas/obtener', 'AccionCorrectivaController@obtenerAccionesCorrectivasSinAprobacion')->name('accion-correctivas.obtenerAprobaciones');
+    Route::post('accion-correctivas/aprobar', 'AccionCorrectivaController@aprobaroRechazarAc')->name('accion-correctivas.aprobarRechazar');
 
-    // Planaccion Correctivas
+    // Plan Accion Correctivas
+    Route::post('accion-correctivas/planes', 'AccionCorrectivaController@planesAccionCorrectiva')->name('accion-correctivas.planes');
     Route::delete('planaccion-correctivas/destroy', 'PlanaccionCorrectivaController@massDestroy')->name('planaccion-correctivas.massDestroy');
     Route::resource('planaccion-correctivas', 'PlanaccionCorrectivaController');
 

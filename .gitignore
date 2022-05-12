@@ -32,6 +32,9 @@ storage/app/public/activos/
 storage/app/livewire-tmp/
 storage/app/public/expedientes/
 storage/app/public/cursos_empleados/
-storage/app/public/evidencias_quejas_clientes/Queja_file_7_Comprobante de domicilio.pdf
-storage/app/public/evidencias_quejas_clientes_cerrado/Queja_file_7_Req.0488.pdf
-storage/app/public/evidencias_quejas_clientes_cerrado/Queja_file_7_Req.0494.pdf
+storage/app/public/evidencias_quejas_clientes/
+storage/app/public/evidencias_quejas_clientes_cerrado/
+storage/app/public/documentos_concientSgsi/
+storage/app/public/documentos_control_accesos/
+storage/app/public/documentos_material_sgsi/
+

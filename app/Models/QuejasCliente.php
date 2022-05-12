@@ -45,10 +45,38 @@ class QuejasCliente extends Model
         'descripcion',
         'comentarios',
         'archivado',
+        'canal',
+        'otro_canal',
+        'solucion_requerida_cliente',
+        'impacto',
+        'urgencia',
+        'prioridad',
+        'categoria_queja',
+        'otro_categoria',
+        'queja_procedente',
+        'porque_procedente',
+        'realizar_accion',
+        'cual_accion',
+        'desea_levantar_ac',
+        'acciones_tomara_responsable',
+        'fecha_limite',
+        'comentarios_atencion',
+        'empleado_reporto_id',
+        'accion_correctiva_id',
+        'correo_cliente',
+        'responsable_sgi_id',
+        'responsable_atencion_queja_id',
+        'cumplio_ac_responsable',
+        'porque_no_cumplio_responsable',
+        'conforme_solucion',
+        'cerrar_ticket',
+        'correoEnviado',
     ];
 
     protected $appends = [
         'folio',
+        'fecha_de_cierre',
+        'fecha_reporte',
     ];
 
     public function getFolioAttribute()
@@ -113,11 +141,41 @@ class QuejasCliente extends Model
 
     public function getFechaDeCierreAttribute()
     {
-        return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y') : '';
+        return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y H:i') : '';
     }
 
     public function getFechaReporteAttribute()
     {
-        return Carbon::parse($this->created_at)->format('d-m-Y');
+        return Carbon::parse($this->created_at)->format('d-m-Y H:i');
+    }
+
+    public function registro()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id');
+    }
+
+    public function responsableSgi()
+    {
+        return $this->belongsTo(Empleado::class, 'responsable_sgi_id', 'id');
+    }
+
+    public function responsableAtencion()
+    {
+        return $this->belongsTo(Empleado::class, 'responsable_atencion_queja_id', 'id');
+    }
+
+    public function accionCorrectiva()
+    {
+        return $this->belongsTo(AccionCorrectiva::class, 'accion_correctiva_id', 'id');
+    }
+
+    public function seguimiento()
+    {
+        return $this->hasMany(SeguimientoQuejaCliente::class, 'queja_cliente_id', 'id');
+    }
+
+    public function accionCorrectivaAprobacional()
+    {
+        return $this->morphToMany(AccionCorrectiva::class, 'acciones_correctivas_aprobacionables', null, null, 'acciones_correctivas_id')->withTimestamps()->withPivot('id');
     }
 }

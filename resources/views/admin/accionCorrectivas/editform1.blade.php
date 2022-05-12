@@ -2,8 +2,7 @@
     enctype="multipart/form-data" class="row">
     @method('PUT')
     @csrf
-    <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
-        style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
+    <div class="px-1 py-2 mx-3 mb-4 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
         <div class="row w-100">
             <div class="text-center col-1 align-items-center d-flex justify-content-center">
                 <div class="w-100">
@@ -39,22 +38,50 @@
         <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.tema_helper') }}</span>
     </div>
 
-    <div class="form-group col-4">
-        <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-        <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
-            <option {{ old('estatus', $accionCorrectiva->estatus) == 'nuevo' ? 'selected' : '' }} value="nuevo">Nuevo
-            </option>
-            <option {{ old('estatus', $accionCorrectiva->estatus) == 'en curso' ? 'selected' : '' }} value="en curso">
-                En curso</option>
-            <option {{ old('estatus', $accionCorrectiva->estatus) == 'en espera' ? 'selected' : '' }}
-                value="en espera">En espera</option>
-            <option {{ old('estatus', $accionCorrectiva->estatus) == 'cerrado' ? 'selected' : '' }} value="cerrado">
-                Cerrado</option>
-            <option {{ old('estatus', $accionCorrectiva->estatus) == 'cancelado' ? 'selected' : '' }}
-                value="cancelado">Cancelado</option>
-        </select>
-    </div>
+    @if ($accionCorrectiva->es_externo)
+        <div class="form-group col-4">
+            <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+            <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'solicitada' ? 'selected' : '' }}
+                    value="nuevo">Solicitada
+                </option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'nuevo' ? 'selected' : '' }} value="nuevo">
+                    Nuevo
+                </option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'en curso' ? 'selected' : '' }}
+                    value="en curso">
+                    En curso</option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'en espera' ? 'selected' : '' }}
+                    value="en espera">En espera</option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'cerrado' ? 'selected' : '' }}
+                    value="cerrado">
+                    Cerrado</option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'cancelado' ? 'selected' : '' }}
+                    value="cancelado">Cancelado</option>
+            </select>
+        </div>
+    @endif
 
+    @if (!$accionCorrectiva->es_externo)
+        <div class="form-group col-4">
+            <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+            <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'nuevo' ? 'selected' : '' }} value="nuevo">
+                    Nuevo
+                </option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'en curso' ? 'selected' : '' }}
+                    value="en curso">
+                    En curso</option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'en espera' ? 'selected' : '' }}
+                    value="en espera">En espera</option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'cerrado' ? 'selected' : '' }}
+                    value="cerrado">
+                    Cerrado</option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'cancelado' ? 'selected' : '' }}
+                    value="cancelado">Cancelado</option>
+            </select>
+        </div>
+    @endif
 
     <div class="form-group col-sm-12 col-md-4 col-lg-4 ">
         <label for="fecharegistro"><i class="far fa-calendar-alt iconos-crear"></i>Fecha y hora de
@@ -87,51 +114,118 @@
         <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
             hora
             de cierre del ticket</label>
-        <input class="form-control" name="fecha_cierre" readonly value="{{ $accionCorrectiva->fecha_cierre }}" id="solucion"
-            type="datetime">
+        <input class="form-control" name="fecha_cierre" readonly value="{{ $accionCorrectiva->fecha_cierre }}"
+            id="solucion" type="datetime">
     </div>
 
 
-    <div class="mt-1 form-group col-12">
-        <b>Reportó Acción Correctiva:</b>
-    </div>
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label for="id_reporto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-        <select class="form-control {{ $errors->has('id_reporto') ? 'is-invalid' : '' }}" name="id_reporto"
-            id="id_reporto">
-            @foreach ($empleados as $id => $empleado)
-                <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
-                    data-area="{{ $empleado->area->area }}"
-                    {{ old('id_reporto', $accionCorrectiva->id_reporto) == $empleado->id ? 'selected' : '' }}>
+    @if (!$accionCorrectiva->es_externo)
 
-                    {{ $empleado->name }}
-                </option>
-            @endforeach
-        </select>
-        @if ($errors->has('id_reporto'))
-            <div class="invalid-feedback">
-                {{ $errors->first('id_reporto') }}
+        <div class="mt-1 form-group col-12">
+            <b>Reportó Acción Correctiva:</b>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_reporto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+            <select class="form-control {{ $errors->has('id_reporto') ? 'is-invalid' : '' }}" name="id_reporto"
+                id="id_reporto">
+                @foreach ($empleados as $id => $empleado)
+                    <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                        data-area="{{ $empleado->area->area }}"
+                        {{ old('id_reporto', $accionCorrectiva->id_reporto) == $empleado->id ? 'selected' : '' }}>
+
+                        {{ $empleado->name }}
+                    </option>
+                @endforeach
+            </select>
+            @if ($errors->has('id_reporto'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('id_reporto') }}
+                </div>
+            @endif
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="id_reporto_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+            <div class="form-control" id="reporto_puesto"></div>
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_reporto_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+            <div class="form-control" id="reporto_area"></div>
+        </div>
+
+    @endif
+
+
+    @if ($accionCorrectiva->es_externo)
+
+        <div class="mt-1 form-group col-12">
+            <strong>Datos del cliente:</strong>
+        </div>
+
+
+        @foreach ($accionCorrectiva->quejascliente as $queja)
+            <div class="mt-0 form-group col-6">
+                <label class="form-label"><i class="bi bi-building mr-2 iconos-crear"></i>Cliente</label>
+                <div class="form-control" readonly>{{ $queja->cliente->nombre }}</div>
             </div>
-        @endif
-    </div>
-
-    <div class="form-group col-md-4">
-        <label for="id_reporto_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-        <div class="form-control" id="reporto_puesto"></div>
-    </div>
+            <div class="mt-2 form-group col-6">
+                <label class="form-label"><i class="fas fa-list iconos-crear"></i>Proyecto</label>
+                <div class="form-control" readonly>{{ $queja->proyectos->proyecto }}</div>
+            </div>
 
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label for="id_reporto_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-        <div class="form-control"  id="reporto_area"></div>
-    </div>
+            <div class="mt-0 form-group col-6">
+                <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre del
+                    cliente<sup>*</sup></label>
+                <div class="form-control" readonly>{{ $queja->nombre }}</div>
+            </div>
 
+            <div class="mt-0 form-group col-6">
+                <label class="form-label"><i class="fas fa-suitcase iconos-crear"></i></i>Puesto</label>
+                <div class="form-control" readonly>{{ $queja->puesto }}</div>
+            </div>
+
+            <div class="mt-0 form-group col-6">
+                <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Teléfono</label>
+                <div class="form-control" readonly>{{ $queja->telefono }}</div>
+            </div>
+
+            <div class="mt-0 form-group col-6">
+                <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo
+                    electrónico</label>
+                <div class="form-control" readonly>{{ $queja->correo }}</div>
+            </div>
+
+            <div class="mt-1 form-group col-12">
+                <b>Solicitó Acción Correctiva:</b>
+            </div>
+
+            <div class="mt-2 form-group col-4">
+                <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                <div class="form-control" readonly>{{ Str::limit($queja->registro->name, 30, '...') }}</div>
+            </div>
+
+            <div class="mt-2 form-group col-4">
+                <label class="form-label"><i class="fas fa-suitcase iconos-crear"></i></i>Puesto</label>
+                <div class="form-control" readonly>{{ $queja->registro->puesto }}</div>
+            </div>
+
+            <div class="form-group col-4">
+                <label class="form-label"><i class="bi bi-geo mr-2 iconos-crear"></i>Área</label>
+                <div class="form-control" readonly>{{ $queja->registro->area->area }}
+                </div>
+            </div>
+        @endforeach
+
+    @endif
 
     <div class="mt-1 form-group col-12">
         <b>Registró Acción Correctiva:</b>
     </div>
-
 
 
     <div class="form-group col-sm-12 col-md-4 col-lg-4">
@@ -206,9 +300,9 @@
     </div>
 
 
-    <div class="mt-2 form-group col-md-4 areas_multiselect">
-        <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Área(s)
-            afectada(s)</label>
+
+    <div class="mt-2 form-group col-md-3 areas_multiselect">
+        <label class="form-label"><i class="bi bi-geo mr-2 iconos-crear"></i>Área(s)</label>
         <select class="form-control" id="activos">
             <option disabled selected>Seleccionar áreas</option>
             @foreach ($areas as $area)
@@ -216,11 +310,23 @@
                 </option>
             @endforeach
         </select>
-        <textarea name="areas" class="form-control" id="texto_activos"
-            required>{{ $accionCorrectiva->areas }}</textarea>
+        <textarea name="areas" class="form-control" id="texto_activos" required>{{ $accionCorrectiva->areas }}</textarea>
     </div>
 
-    <div class="mt-2 form-group col-md-4 procesos_multiselect">
+    <div class="mt-3 form-group col-3 multiselect_empleados">
+        <label class="form-label"><i class="fas fa-user iconos-crear"></i>Colaborador(es)</label>
+        <select class="form-control">
+            <option disabled selected>Seleccionar colaborador</option>
+            @foreach ($empleados as $empleado)
+                <option value="{{ $empleado->name }}">
+                    {{ $empleado->name }}
+                </option>
+            @endforeach
+        </select>
+        <textarea name="colaborador_quejado" class="form-control">{{ $accionCorrectiva->colaboradores }}</textarea>
+    </div>
+
+    <div class="mt-3 form-group col-md-3 procesos_multiselect">
         <label class="form-label"><i class="fas fa-dice-d20 iconos-crear"></i>Proceso(s)
             afectado(s)</label>
         <select class="form-control" id="activos">
@@ -230,23 +336,34 @@
                 </option>
             @endforeach
         </select>
-        <textarea name="procesos" class="form-control" id="texto_activos"
-            required>{{ $accionCorrectiva->procesos }}</textarea>
+        <textarea name="procesos" class="form-control" id="texto_activos">{{ $accionCorrectiva->procesos }}</textarea>
     </div>
 
-    <div class="mt-2 form-group col-md-4 activos_multiselect">
-        <label class="form-label"><i class="fa-fw fas fa-laptop iconos-crear"></i>Activo(s)
-            afectado(s)</label>
-        <select class="form-control" id="activos">
-            <option disabled selected>Seleccionar afectados</option>
-            @foreach ($activos as $activo)
-                <option value="{{ $activo->nombreactivo }}">{{ $activo->nombreactivo }}
-                </option>
-            @endforeach
-        </select>
-        <textarea name="activos" class="form-control" id="texto_activos"
-            required>{{ $accionCorrectiva->activos }}</textarea>
-    </div>
+    @if ($accionCorrectiva->es_externo)
+        <div class="mt-3 form-group col-3">
+            <label class="form-label"><i class="fas fa-user-plus iconos-crear"></i>Otro(s)</label>
+            <textarea style="min-height:187px;" name="otro_quejado" class="form-control">{{ old('otro_quejado', $accionCorrectiva->otro_quejado) }}
+    </textarea>
+        </div>
+    @endif
+
+    @if (!$accionCorrectiva->es_externo)
+
+        <div class="mt-2 form-group col-md-3 activos_multiselect">
+            <label class="form-label"><i class="fa-fw fas fa-laptop iconos-crear"></i>Activo(s)
+                afectado(s)</label>
+            <select class="form-control" id="activos">
+                <option disabled selected>Seleccionar afectados</option>
+                @foreach ($activos as $activo)
+                    <option value="{{ $activo->nombreactivo }}">{{ $activo->nombreactivo }}
+                    </option>
+                @endforeach
+            </select>
+            <textarea name="activos" class="form-control" id="texto_activos"
+                required>{{ $accionCorrectiva->activos }}</textarea>
+        </div>
+
+    @endif
 
     <div class="mt-2 form-group col-md-12">
         <label class="form-label"><i class="fas fa-comment-dots iconos-crear"></i>Comentarios</label>
