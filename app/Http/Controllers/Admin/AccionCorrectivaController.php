@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
 use App\Http\Requests\UpdateAccionCorrectivaRequest;
+use App\Mail\AprobacionAccionCorrectivaEmail;
 use App\Models\AccionCorrectiva;
 use App\Models\ActividadAccionCorrectiva;
 use App\Models\AnalisisAccionCorrectiva;
@@ -15,12 +16,16 @@ use App\Models\Empleado;
 use App\Models\PlanaccionCorrectiva;
 use App\Models\Proceso;
 use App\Models\Puesto;
+use App\Models\QuejasCliente;
 use App\Models\Team;
+use App\Models\TimesheetCliente;
+use App\Models\TimesheetProyecto;
 use App\Models\Tipoactivo;
 use App\Models\User;
 use Flash;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -35,7 +40,7 @@ class AccionCorrectivaController extends Controller
         // $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados','reporto'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
         // dd($query);
         if ($request->ajax()) {
-            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'empleados', 'reporto'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
+            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'empleados', 'reporto'])->where('aprobada', true)->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -56,9 +61,9 @@ class AccionCorrectivaController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
+            // $table->editColumn('id', function ($row) {
+            //     return $row->id ? $row->id : '';
+            // });
 
             $table->addColumn('folio', function ($row) {
                 return $row->folio ? $row->folio : '';
@@ -128,6 +133,34 @@ class AccionCorrectivaController extends Controller
         $teams = Team::get();
 
         return view('admin.accionCorrectivas.index', compact('users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
+    }
+
+    public function obtenerAccionesCorrectivasSinAprobacion()
+    {
+        $accionesCorrectivas = AccionCorrectiva::with(['deskQuejaCliente'=>function ($query) {
+            $query->with('registro', 'responsableSgi');
+        }])->where('aprobada', false)->where('aprobacion_contestada', false)->get();
+
+        return datatables()->of($accionesCorrectivas)->toJson();
+    }
+
+    public function aprobaroRechazarAc(Request $request)
+    {
+        $accionCorrectiva = AccionCorrectiva::with('quejascliente')->find($request->id);
+        $accionCorrectiva->update([
+            'aprobada'=>$request->aprobada,
+            'aprobacion_contestada'=>true,
+        ]);
+        // dd($accionCorrectiva->quejasCliente);
+
+        $quejasClientes = QuejasCliente::find($request->id_queja_cliente)->load('responsableSgi', 'registro', 'accionCorrectiva');
+        Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableSgi->email)->send(new AprobacionAccionCorrectivaEmail($quejasClientes));
+
+        if ($request->aprobada) {
+            return response()->json(['success'=>true, 'message'=>'Acción Correctiva Aprobada', 'aprobado'=>true]);
+        } else {
+            return response()->json(['success'=>true, 'message'=>'Acción Correctiva Rechazada', 'aprobado'=>false]);
+        }
     }
 
     public function create()
@@ -220,8 +253,15 @@ class AccionCorrectivaController extends Controller
 
         $id = $accionCorrectiva->id;
 
+        $quejasClientes = QuejasCliente::where('accion_correctiva_id', '=', $accionCorrectiva->id)->get();
+
+        $clientes = TimesheetCliente::get();
+
+        $proyectos = TimesheetProyecto::get();
+
         $analisis = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accionCorrectiva->id)->first();
 
+        // dd($accionCorrectiva->quejascliente);
         // $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name','empleados')
         //     ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')
         //     ->join('users', 'planaccion_correctivas.responsable_id', '=', 'users.id')
@@ -230,7 +270,7 @@ class AccionCorrectivaController extends Controller
         // $Count = $PlanAccion->count();
         // dd($accionCorrectiva);
 
-        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
+        return view('admin.accionCorrectivas.edit', compact('clientes', 'proyectos', 'quejasClientes', 'nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
     }
 
     public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
@@ -249,6 +289,23 @@ class AccionCorrectivaController extends Controller
         } elseif ($accionCorrectiva->documentometodo) {
             $accionCorrectiva->documentometodo->delete();
         }
+
+        // QuejasCliente::create([
+        //     'titulo' => $request->titulo,
+        //     'cliente_id'=>$request->cliente_id,
+        //     'proyectos_id'=>$request->proyectos_id,
+        //     'descripcion' => $request->descripcion,
+        //     'nombre' => $request->nombre,
+        //     'puesto' => $request->puesto,
+        //     'telefono' => $request->telefono,
+        //     'correo' => $request->correo,
+        //     'area_quejado' => $request->area_quejado,
+        //     'colaborador_quejado' => $request->colaborador_quejado,
+        //     'proceso_quejado' => $request->proceso_quejado,
+        //     'otro_quejado' => $request->otro_quejado,
+        //     'accion_correctiva_id' => $accionCorrectiva->id,
+        // ]);
+
         Flash::success('Editado con éxito');
 
         return redirect()->route('admin.accion-correctivas.index')->with('success', 'Editado con éxito');
@@ -280,6 +337,15 @@ class AccionCorrectivaController extends Controller
         AccionCorrectiva::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function planesAccionCorrectiva(Request $request)
+    {
+        $accionCorrectiva = AccionCorrectiva::find($request->id);
+        // $accionCorrectiva->planes()->detach();
+        $accionCorrectiva->planes()->sync($request->planes);
+
+        return response()->json(['success' => true]);
     }
 
     public function storeCKEditorImages(Request $request)

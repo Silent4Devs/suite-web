@@ -319,6 +319,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('desk/{quejas}/quejas-clientes-update', 'DeskController@updateQuejasClientes')->name('desk.quejasClientes-update');
     Route::post('desk/planes/quejas-clientes', 'DeskController@planesQuejasClientes')->name('desk.planesQuejasClientes');
 
+    //Dashboard Queja Cliente
+
+    Route::get('desk/quejas-clientes/dashboard', 'DeskController@quejasClientesDashboard')->name('desk.quejasClientes-dashboard');
+
     // Actividades DESK - Plan Accion
     Route::get('desk-seguridad-actividades/{seguridad_id}', 'ActividadesIncidentesController@index')->name('desk-seguridad-actividades.index');
     Route::resource('desk-seguridad-actividades', 'ActividadesIncidentesController')->except(['index']);
@@ -858,10 +862,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('plan-correctivas-storeedit', 'PlanaccionCorrectivaController@storeEdit');
     Route::post('planaccion-storered', 'PlanaccionCorrectivaController@storeRedirect')->name('storered');
 
-    // Ajax
-    //Route::post('AjaxAccionCorrectivaCrear', 'AccionCorrectiva@store');
+    // Accion Correctiva Aprobaciones
+    Route::post('accion-correctivas/obtener', 'AccionCorrectivaController@obtenerAccionesCorrectivasSinAprobacion')->name('accion-correctivas.obtenerAprobaciones');
+    Route::post('accion-correctivas/aprobar', 'AccionCorrectivaController@aprobaroRechazarAc')->name('accion-correctivas.aprobarRechazar');
 
-    // Planaccion Correctivas
+    // Plan Accion Correctivas
+    Route::post('accion-correctivas/planes', 'AccionCorrectivaController@planesAccionCorrectiva')->name('accion-correctivas.planes');
     Route::delete('planaccion-correctivas/destroy', 'PlanaccionCorrectivaController@massDestroy')->name('planaccion-correctivas.massDestroy');
     Route::resource('planaccion-correctivas', 'PlanaccionCorrectivaController');
 
@@ -933,6 +939,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('amenazas/process-csv-import', 'AmenazaController@processCsvImport')->name('amenazas.processCsvImport');
 
     //vulnerabilidades
+    // Route::post('CargaAmenaza', 'SubidaExcel@Vulnerabilidad')->name('cargaExcel-vulnerabilidad');
     Route::resource('vulnerabilidads', 'VulnerabilidadController');
     Route::delete('vulnerabilidads/destroy', 'VulnerabilidadController@massDestroy')->name('vulnerabilidads.massDestroy');
     Route::post('vulnerabilidads/parse-csv-import', 'VulnerabilidadController@parseCsvImport')->name('vulnerabilidads.parseCsvImport');

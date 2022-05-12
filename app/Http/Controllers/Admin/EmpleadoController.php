@@ -15,6 +15,7 @@ use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
 use App\Models\Language;
 use App\Models\ListaDocumentoEmpleado;
+use App\Models\Organizacion;
 use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\BeneficiariosEmpleado;
@@ -128,8 +129,16 @@ class EmpleadoController extends Controller
         }
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.empleados.index', compact('ceo_exists'));
+        return view('admin.empleados.index', compact('ceo_exists', 'logo_actual', 'empresa_actual'));
     }
 
     public function getCertificaciones($empleado)

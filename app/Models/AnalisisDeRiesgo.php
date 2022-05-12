@@ -53,12 +53,12 @@ class AnalisisDeRiesgo extends Model
     ];
 
     const TipoSelect = [
-        'Seguridad de la información' => 'Seguridad de la información',
-        'AMEF'     => 'AMEF',
-        'OCTAVE' => 'OCTAVE',
-        'NIST'=> 'NIST',
-        'ISO 31000' => 'ISO 31000',
-        'Análisis de riesgo integral' => 'Análisis de riesgo integral',
+        'Seguridad de la información' => 'ISO 27001',
+        // 'AMEF'     => 'AMEF',
+        // 'OCTAVE' => 'OCTAVE',
+        // 'NIST'=> 'NIST',
+        // 'ISO 31000' => 'ISO 31000',
+        'Análisis de riesgo integral' => 'Análisis de Riesgo Integral (ISO 27001,9001,20000)',
     ];
 
     const EstatusSelect = [

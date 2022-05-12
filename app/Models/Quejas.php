@@ -61,4 +61,9 @@ class Quejas extends Model
     {
         return Carbon::parse($this->created_at)->format('d-m-Y');
     }
+
+    public function accionCorrectivaAprobacional()
+    {
+        return $this->morphToMany(AccionCorrectiva::class, 'acciones_correctivas_aprobacionables', null, null, 'acciones_correctivas_id');
+    }
 }
