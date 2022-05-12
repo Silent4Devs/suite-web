@@ -45,6 +45,7 @@
                             </div>
                         </section>
 
+
                         <section id="contenido2">
                             <div>
                                 <div class="mt-2 ml-2">
@@ -112,7 +113,7 @@
                 });
                 document.addEventListener('DOMContentLoaded', function() {
                     let select_activos = document.querySelector('.activos_multiselect #activos');
-                    select_activos.addEventListener('change', function(e) {
+                    select_activos?.addEventListener('change', function(e) {
                         e.preventDefault();
                         let texto_activos = document.querySelector(
                             '.activos_multiselect #texto_activos');
@@ -135,7 +136,7 @@
                     $(document.getElementById(metodo_v)).addClass("d-block");
                 });
             </script>
-            <script type="text/javascript">
+            {{-- <script type="text/javascript">
                 $(document).ready(function() {
                     window.tbl_plan = $("#tabla_plan_accion").DataTable({
                         ajax: "{{ route('admin.accion-correctiva-actividades.index', $accionCorrectiva->id) }}",
@@ -176,7 +177,7 @@
                         ]
                     });
                 });
-            </script>
+            </script> --}}
 
             <script type="text/javascript">
                 $(".btn_modal_form").click(function() {
@@ -312,7 +313,7 @@
                 });
             </script>
 
-            <script>
+            {{-- <script>
                 const formatDate = (current_datetime) => {
                     let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
                         current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
@@ -330,32 +331,46 @@
                         document.getElementById('solucion').value = "";
                     }
                 }
-            </script>
+            </script> --}}
 
             <script>
                 document.addEventListener('DOMContentLoaded', function(e) {
 
                     let reporto = document.querySelector('#id_reporto');
-                    let area_init = reporto.options[reporto.selectedIndex].getAttribute('data-area');
-                    let puesto_init = reporto.options[reporto.selectedIndex].getAttribute('data-puesto');
-                    document.getElementById('reporto_puesto').innerHTML = puesto_init
-                    document.getElementById('reporto_area').innerHTML = area_init
+                    let area_init = reporto?.options[reporto?.selectedIndex].getAttribute('data-area');
+                    let puesto_init = reporto?.options[reporto?.selectedIndex].getAttribute('data-puesto');
+                    if(document.getElementById('reporto_puesto')){
+                        document.getElementById('reporto_puesto').innerHTML = puesto_init
+
+                    }
+
+                    if(document.getElementById('reporto_area')){
+                        document.getElementById('reporto_area').innerHTML = area_init
+
+                    }
 
                     let registro = document.querySelector('#id_registro');
-                    let area = registro.options[registro.selectedIndex].getAttribute('data-area');
-                    let puesto = registro.options[registro.selectedIndex].getAttribute('data-puesto');
-                    document.getElementById('registro_puesto').innerHTML = puesto
-                    document.getElementById('registro_area').innerHTML = area
+                    let area = registro?.options[registro?.selectedIndex].getAttribute('data-area');
+                    let puesto = registro?.options[registro?.selectedIndex].getAttribute('data-puesto');
+                    if( document.getElementById('registro_puesto'))
+                    {
+                        document.getElementById('registro_puesto').innerHTML = puesto
 
+                    }
+                    if( document.getElementById('registro_area'))
+                    {
+                        document.getElementById('registro_area').innerHTML = area
 
-                    reporto.addEventListener('change', function(e) {
+                    }
+
+                    reporto?.addEventListener('change', function(e) {
                         e.preventDefault();
                         let area = this.options[this.selectedIndex].getAttribute('data-area');
                         let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
                         document.getElementById('reporto_puesto').innerHTML = puesto
                         document.getElementById('reporto_area').innerHTML = area
                     })
-                    registro.addEventListener('change', function(e) {
+                    registro?.addEventListener('change', function(e) {
                         e.preventDefault();
                         let area = this.options[this.selectedIndex].getAttribute('data-area');
                         let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
@@ -698,4 +713,79 @@
     });
 </script>
 
+<script type="text/javascript">
+    Livewire.on('planStore', () => {
+
+        $('#planAccionModal').modal('hide');
+
+        $('.modal-backdrop').hide();
+
+        toastr.success('Plan de Acción creado con éxito');
+
+    });
+
+    window.initSelect2 = () => {
+
+        $('.select2').select2({
+
+            'theme': 'bootstrap4'
+
+        });
+
+    }
+
+
+
+    initSelect2();
+
+
+
+    Livewire.on('select2', () => {
+
+        initSelect2();
+
+    });
+
+    $(document).ready(function() {
+        document.getElementById('vincularPlan').addEventListener('click', (e) => {
+            e.preventDefault();
+            let planes = $("#plan_accion").select2("val");
+            let idAccionesCorrectivas = @json($accionCorrectiva->id);
+            if (planes.length > 0) {
+                Swal.fire({
+                    title: 'Desea vincular plan(es)?',
+                    text: "Esta acción se visualizara en planes de acción!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, vincular',
+                    cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content')
+                            },
+                            url: "{{ route('admin.accion-correctivas.planes') }}",
+                            data: {
+                                planes,
+                                id: idAccionesCorrectivas
+                            },
+                            dataType: "JSON",
+                            success: function(response) {
+                                if (response.success) {
+                                    window.location.reload();
+                                }
+                            }
+                        });
+                    }
+                })
+            }
+        })
+
+    });
+</script>
 @endsection

@@ -20,7 +20,7 @@
 
                 <div class="row col-12">
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label class="required" for="puesto"><i
+                        <label  for="puesto"><i
                                 class="fas fa-briefcase iconos-crear"></i>Nombre del puesto</label>
                         <input class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}" type="text" name="puesto"
                             id="puesto" value="{{ old('puesto', '') }}" required>

@@ -83,4 +83,9 @@ class IncidentesSeguridad extends Model implements HasMedia
     {
         return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y') : '';
     }
+
+    public function accionCorrectivaAprobacional()
+    {
+        return $this->morphToMany(AccionCorrectiva::class, 'acciones_correctivas_aprobacionables', null, null, 'acciones_correctivas_id');
+    }
 }

@@ -77,7 +77,7 @@
                     @endif
                     <div class="mt-4 form-group col-12">
                         <label class="form-label">
-                            <strong>Drescripción del riesgo:</strong>
+                            <strong>Descripción del riesgo:</strong>
                         </label>
                     </div>
 
