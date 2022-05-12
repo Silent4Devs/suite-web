@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Timesheet;
 
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
+use App\Models\TimesheetProyecto;
 use Livewire\Component;
 
 class TimesheetHorasFilas extends Component
@@ -16,12 +17,30 @@ class TimesheetHorasFilas extends Component
     public $timesheet_id;
     public $contador = 5;
 
-    public function mount($proyectos, $tareas, $origen, $timesheet_id)
+    protected $listeners = ['removerFila'];
+
+    public function hydrate()
     {
-        $this->proyectos = $proyectos;
-        $this->tareas = $tareas;
+        $this->emit('select2');
+    }
+
+    public function mount($origen, $timesheet_id)
+    {
+        $this->proyectos = TimesheetProyecto::get();
+        $this->tareas = collect();
         $this->origen = $origen;
         $this->timesheet_id = $timesheet_id;
+    }
+
+    public function removerFila()
+    {
+        $this->contador = $this->contador - 1;
+        $this->emit('calcularSumatoriasFacturables');
+    }
+
+    public function updatedContador($value)
+    {
+        $this->emit('calcularSumatoriasFacturables');
     }
 
     public function render()

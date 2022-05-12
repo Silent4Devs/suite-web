@@ -107,6 +107,10 @@
                                             {{ $revision->documento->proceso ? $revision->documento->proceso->nombre : 'Sin vincular' }}
                                         </td>
                                     @endif
+                                @else
+                                    <td style="text-align: center !important; font-weight: normal;">
+                                        Sin documento asignado
+                                    </td>
                                 @endif
 
                                 <td style="text-align: center !important;">

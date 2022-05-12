@@ -841,3 +841,12 @@ Breadcrumbs::for('timesheet-clientes-form', function ($trail) {
     $trail->push('Clientes', route('admin.timesheet-clientes'));
     $trail->push('Formulario');
 });
+
+Breadcrumbs::for('timesheet-dashboard', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Dashboard');
+});
+Breadcrumbs::for('timesheet-reportes', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Reportes');
+});

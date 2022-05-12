@@ -193,11 +193,11 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function destroy($id)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_destroy'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $analisis = AnalisisDeRiesgo::find($id);
         $analisis->delete();
 
-        return back()->with('deleted', 'Registro eliminado con éxito');
+        return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Eliminado con éxito');
     }
 
     public function getEmployeeData(Request $request)
