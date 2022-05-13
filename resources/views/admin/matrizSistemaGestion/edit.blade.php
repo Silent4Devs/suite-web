@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="activo_id"><i class="fas fa-user-tie iconos-crear"></i>Activo</label><br>
+                        <label for="activo_id"><i class="fas fa-user-tie iconos-crear"></i>Activo (subcategoría)</label><br>
                         <select class="responsableSelect form-control" name="activo_id" id="activo_id">
                             <option value="">Seleccione una opción</option>
                             @foreach ($activos as $activo)
