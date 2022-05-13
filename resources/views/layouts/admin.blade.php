@@ -64,6 +64,22 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
 
     <style type="text/css">
+        .DTFC_LeftBodyWrapper {
+            top: -13px !important;
+        }
+
+        /* .DTFC_RightBodyWrapper {
+            top: -13px !important;
+        } */
+
+        .DTFC_LeftHeadWrapper table thead tr th {
+            background: #788bac !important;
+        }
+
+        .DTFC_RightHeadWrapper table thead tr th {
+            background: #788bac !important;
+        }
+
         .material-modulos {
             font-size: 50px;
             margin-bottom: 3px;

@@ -331,7 +331,7 @@
                         render: function(data, type, row, meta) {
                             const ids = row.id.toString();
                             console.log(ids);
-                            return `<div class="text-center"><a href="empleados/${ids}/edit"><img style="width: 50px;height: 50px;border-radius: 50%;" src="${row.avatar_ruta}"></a></div>`;
+                            return `<div class="text-center"><a href="empleados/${ids}/edit"><img style="width: 40px;height: 40px;border-radius: 50%;" src="${row.avatar_ruta}"></a></div>`;
                         }
                     },
                     {
@@ -410,8 +410,7 @@
                     selector: "td:first-child"
                 },
                 fixedColumns: {
-                    left: 0,
-                    right: 1
+                    rightColumns: 1
                 }
             };
             let table = $('.datatable-Empleado').DataTable(dtOverrideGlobals);
