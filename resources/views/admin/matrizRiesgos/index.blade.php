@@ -24,9 +24,7 @@
                     <div class="col-11">
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
                         </p>
-                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre cada una de las
-                            matrices
-                            de riesgo</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre los riesgos asociados a su organización</p>
                     </div>
                 </div>
             </div>
