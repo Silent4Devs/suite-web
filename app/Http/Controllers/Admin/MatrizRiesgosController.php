@@ -147,7 +147,7 @@ class MatrizRiesgosController extends Controller
     {
         $organizacions = Organizacion::all();
         $teams = Team::get();
-        $activos = Activo::get();
+        $activos = SubcategoriaActivo::get();
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
         $sedes = Sede::get();
@@ -863,7 +863,7 @@ class MatrizRiesgosController extends Controller
         $matrizRiesgo = MatrizRiesgosSistemaGestion::with('matriz_riesgos_controles_pivots')->find($id);
         $organizacions = Organizacion::all();
         $teams = Team::get();
-        $activos = Activo::get();
+        $activos = SubcategoriaActivo::get();
         $tipoactivos = Tipoactivo::get();
         // $controles = Controle::get();
         $controlesSeleccionado = [];
