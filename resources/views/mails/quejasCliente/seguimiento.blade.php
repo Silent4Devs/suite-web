@@ -82,7 +82,7 @@
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; color:#153643;">Le informamos que su queja ha
                                                 sido recibida, nuestro staff analizará el caso y
-                                                tomará las acciones necesarias para su resolución
+                                                tomará las acciones necesarias para su resolución.
 
                                             </p>
                                             <strong
