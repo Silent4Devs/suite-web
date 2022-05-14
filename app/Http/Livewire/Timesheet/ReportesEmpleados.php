@@ -7,10 +7,10 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Timesheet;
-use App\Models\TimesheetProyecto;
 use App\Models\TimesheetHoras;
 use App\Mail\TimesheetCorreoRetraso;
 use App\Traits\getWeeksFromRange;
+use App\Models\TimesheetProyecto;
 use Livewire\Component;
 
 class ReportesEmpleados extends Component
@@ -41,7 +41,7 @@ class ReportesEmpleados extends Component
     }
 
     public function render()
-    {   
+    {
         $hoy = Carbon::now();
         $semanas_del_mes = intval(($hoy->format('d') * 4) / 29);
         $this->empleados = collect();
@@ -77,7 +77,7 @@ class ReportesEmpleados extends Component
                 'id'=>$empleado_list->id,
                 'avatar_ruta'=>$empleado_list->avatar_ruta,
                 'name'=>$empleado_list->name,
-                'area'=>$empleado_list->area ? $empleado_list->area->area : "",
+                'area'=>$empleado_list->area ? $empleado_list->area->area : '',
                 'puesto'=>$empleado_list->puesto,
                 'times_atrasados'=>$times_atrasados,
                 'times_faltantes'=>$times_faltantes_empleado,
@@ -85,7 +85,6 @@ class ReportesEmpleados extends Component
         }
 
         $this->hoy_format = $hoy->format('d/m/Y');
-
 
         $this->emit('scriptTabla');
 
@@ -106,9 +105,7 @@ class ReportesEmpleados extends Component
 
         $this->timesheet = Timesheet::where('empleado_id', $this->empleado_seleccionado_id)->orderByDesc('fecha_dia')->get();
 
-
-        foreach($this->timesheet as $t){
-
+        foreach ($this->timesheet as $t) {
             $horas_semana_lunes = 0;
             $horas_semana_martes = 0;
             $horas_semana_miercoles = 0;
@@ -117,7 +114,7 @@ class ReportesEmpleados extends Component
             $horas_semana_sabado = 0;
             $horas_semana_domingo = 0;
             $horas_totales_semana = 0;
-            foreach($t->horas as $hora){
+            foreach ($t->horas as $hora) {
                 $this->proyectos->push($hora->proyecto->id);
 
                 $horas_semana_lunes += $hora->horas_lunes;
@@ -153,10 +150,10 @@ class ReportesEmpleados extends Component
         }
 
         $this->proyectos = $this->proyectos->unique();
-        foreach($this->proyectos as $proyecto){
+        foreach ($this->proyectos as $proyecto) {
             $tareas = collect();
             $horas_proyecto = 0;
-            foreach(TimesheetProyecto::find($proyecto)->tareas as $tarea){
+            foreach (TimesheetProyecto::find($proyecto)->tareas as $tarea) {
                 $tarea_model = TimesheetHoras::where('tarea_id', $tarea->id)->get();
                 $horas = 0;
                 foreach ($tarea_model as $tm) {
@@ -173,7 +170,7 @@ class ReportesEmpleados extends Component
                     'tarea'=>$tarea->tarea,
                     'horas'=>$horas,
                 ]);
-                $horas_proyecto += $horas; 
+                $horas_proyecto += $horas;
             }
             $this->proyectos_detalle->push([
                 'id'=>$proyecto,

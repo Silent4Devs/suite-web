@@ -28,7 +28,6 @@ class TablaProyectosTimesheet extends Component
 
     public function render()
     {
-
         $this->proceso_count = TimesheetProyecto::where('estatus', 'proceso')->count();
         $this->cancelado_count = TimesheetProyecto::where('estatus', 'cancelado')->count();
         $this->terminado_count = TimesheetProyecto::where('estatus', 'terminado')->count();
@@ -69,14 +68,17 @@ class TablaProyectosTimesheet extends Component
     {
         $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->get();
     }
+
     public function cancelados()
     {
         $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')->get();
     }
+
     public function terminados()
     {
         $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')->get();
     }
+
     public function todos()
     {
         $this->proyectos = TimesheetProyecto::get();

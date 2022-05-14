@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Area;
+use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\Timesheet;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
-use App\Models\Empleado;
-use App\Models\Area;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -106,7 +106,7 @@ class TimesheetController extends Controller
                 'timesheet.1.proyecto' => 'required',
                 'timesheet.1.tarea' => 'required',
                 'fecha_dia' => 'required',
-            ], 
+            ],
             [
                 'timesheet.*.proyecto.required'=>'Seleccionar proyecto',
                 'timesheet.*.tarea.required'=>'Seleccionar tarea',
@@ -135,7 +135,6 @@ class TimesheetController extends Controller
         foreach ($request->timesheet as $index => $hora) {
             if ($index > 1) {
                 if (array_key_exists('proyecto', $hora) || array_key_exists('tarea', $hora)) {
-
                     $request->validate(
                         [
                             "timesheet.{$index}.proyecto" => 'required',
@@ -165,7 +164,7 @@ class TimesheetController extends Controller
                             ],
                         );
                     }
-                }else{
+                } else {
                     // dd($hora);
                     if (
                         $hora['lunes'] != null ||
@@ -175,8 +174,8 @@ class TimesheetController extends Controller
                         $hora['viernes'] != null ||
                         $hora['sabado'] != null ||
                         $hora['domingo'] != null
-                    ){
-                       $request->validate(
+                    ) {
+                        $request->validate(
                             [
                                 "timesheet.{$index}.proyecto" => 'required',
                                 "timesheet.{$index}.tarea" => 'required',
@@ -185,7 +184,7 @@ class TimesheetController extends Controller
                                 "timesheet.{$index}.proyecto.required" => 'Seleccionar proyecto',
                                 "timesheet.{$index}.tarea.required" => 'Seleccionar tarea',
                             ],
-                        ); 
+                        );
                     }
                 }
             }
@@ -286,7 +285,7 @@ class TimesheetController extends Controller
             [
                 'timesheet.1.proyecto' => 'required',
                 'timesheet.1.tarea' => 'required',
-            ], 
+            ],
             [
                 'timesheet.*.proyecto.required'=>'Seleccionar proyecto',
                 'timesheet.*.tarea.required'=>'Seleccionar tarea',
@@ -343,7 +342,7 @@ class TimesheetController extends Controller
                             ],
                         );
                     }
-                }else{
+                } else {
                     // dd($hora);
                     if (
                         $hora['lunes'] != null ||
@@ -353,8 +352,8 @@ class TimesheetController extends Controller
                         $hora['viernes'] != null ||
                         $hora['sabado'] != null ||
                         $hora['domingo'] != null
-                    ){
-                       $request->validate(
+                    ) {
+                        $request->validate(
                             [
                                 "timesheet.{$index}.proyecto" => 'required',
                                 "timesheet.{$index}.tarea" => 'required',
@@ -363,7 +362,7 @@ class TimesheetController extends Controller
                                 "timesheet.{$index}.proyecto.required" => 'Seleccionar proyecto',
                                 "timesheet.{$index}.tarea.required" => 'Seleccionar tarea',
                             ],
-                        ); 
+                        );
                     }
                 }
             }
@@ -620,7 +619,6 @@ class TimesheetController extends Controller
 
         $areas_array = collect();
         foreach ($areas as $area) {
-
             $empleados_count_area = Empleado::where('area_id', $area->id)->count();
 
             $times_por_mes_esperados_area = $semanas_del_mes * $empleados_count_area;
@@ -632,7 +630,7 @@ class TimesheetController extends Controller
             foreach ($empleados_partisipacion as $emp_part_area) {
                 if ($emp_part_area->area_id == $area->id) {
                     $times_empleado_part_area = Timesheet::whereMonth('fecha_dia', $hoy)->where('empleado_id', $emp_part_area->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
-                }else{
+                } else {
                     $times_empleado_part_area = 0;
                 }
                 $total_times_mes_area += $times_empleado_part_area;
@@ -642,16 +640,22 @@ class TimesheetController extends Controller
             if ($total_times_mes_area >= $times_por_mes_esperados_area) {
                 $porcentaje_participacion_area = 100;
             }
-            if ($porcentaje_participacion_area <= 33) { $nivel_participacion = 'baja'; }
-            if (($porcentaje_participacion_area > 33) && ($porcentaje_participacion_area < 66)) { $nivel_participacion = 'media'; }
-            if ($porcentaje_participacion_area >= 66) { $nivel_participacion = 'alta'; }
+            if ($porcentaje_participacion_area <= 33) {
+                $nivel_participacion = 'baja';
+            }
+            if (($porcentaje_participacion_area > 33) && ($porcentaje_participacion_area < 66)) {
+                $nivel_participacion = 'media';
+            }
+            if ($porcentaje_participacion_area >= 66) {
+                $nivel_participacion = 'alta';
+            }
             $contador_times_aprobados_areas = 0;
             $contador_times_pendientes_areas = 0;
             $contador_times_rechazados_areas = 0;
             $proyectos_area = TimesheetProyecto::where('area_id', $area->id)->get();
             foreach ($proyectos_area as $pro_a) {
                 $times_horas_area = TimesheetHoras::where('proyecto_id', $pro_a->id)->with('timesheet')->get();
-                
+
                 foreach ($times_horas_area as $times_h_a) {
                     if ($times_h_a->timesheet->estatus == 'pendiente') {
                         $contador_times_pendientes_areas++;
@@ -686,11 +690,11 @@ class TimesheetController extends Controller
             $times_empleado_part = Timesheet::whereMonth('fecha_dia', $hoy)->where('empleado_id', $emp_part->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
             $total_times_mes += $times_empleado_part;
 
-            if ($times_empleado_part < ($semanas_del_mes) ) {
-                $empleados_times_atrasados ++;
+            if ($times_empleado_part < ($semanas_del_mes)) {
+                $empleados_times_atrasados++;
             }
         }
-        
+
         $porcentaje_participacion = round((($total_times_mes * 100) / $times_por_mes_esperados), 2);
         if ($total_times_mes >= $times_por_mes_esperados) {
             $porcentaje_participacion = 100;

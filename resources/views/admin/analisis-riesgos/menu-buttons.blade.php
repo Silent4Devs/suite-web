@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+{{ Breadcrumbs::render('admin.analisis-riesgos.menu') }}
     {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
@@ -81,25 +82,25 @@
 
     <div style="display:flex; justify-content:space-between;">
         <h5 class="titulo_general_funcion">Análisis de Riesgos</h5>
-        <a href="{{ route('admin.home') }}" class="btn btn-success">
+        {{-- <a href="{{ route('admin.home') }}" class="btn btn-success">
             <i class="fas fa-chart-pie mr-2"></i>
             Dashboard
-        </a>
+        </a> --}}
     </div>
 
     <div class="mt-5 card">
         <div class="card-body">
             <nav>
                 <div class="nav nav-tabs" id="tabsAnalisisRiesgos" role="tablist">
-                    <a class="nav-link active" id="nav-riesgo-tab" data-type="riesgo" data-toggle="tab" href="#nav-riesgo"
+                    {{-- <a class="nav-link active" id="nav-riesgo-tab" data-type="riesgo" data-toggle="tab" href="#nav-riesgo"
                         role="tab" aria-controls="nav-riesgo" aria-selected="true">
                         <i class="mr-2 bi bi-exclamation-triangle" style="font-size:20px;" style="text-decoration:none;"></i>
                         Riesgos
-                    </a>
+                    </a> --}}
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane mb-4 fade show active" id="nav-riesgo" role="tabpanel"
+                <div class="tab-pane mb-2 fade show active" id="nav-riesgo" role="tabpanel"
                     aria-labelledby="nav-riesgo-tab">
                     @include('admin.analisis-riesgos.components.riesgos')
                 </div>

@@ -15,6 +15,7 @@ use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
 use App\Models\Language;
 use App\Models\ListaDocumentoEmpleado;
+use App\Models\Organizacion;
 use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\BeneficiariosEmpleado;
@@ -28,7 +29,6 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -48,24 +48,6 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('configuracion_empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            // $query = DB::table('empleados')->select(DB::raw('id,
-            // name,
-            // foto,
-            // area,
-            // puesto,
-            // jefe,
-            // antiguedad as "fecha ingreso",
-            // if(estatus = 1, "Activo", "Inactivo") as "estado",
-            // concat(timestampdiff(year, antiguedad, NOW()), " año con ",
-            // FLOOR(( datediff(now(), antiguedad) / 365.25 - FLOOR(datediff(now(), antiguedad) / 365.25)) * 12), " meses y ",
-            // DAY(CURDATE()) - DAY(antiguedad) +30 * (DAY(CURDATE()) < DAY(antiguedad)) , " días."
-            // ) as antiguedad,
-            // email,
-            // telefono,
-            // n_empleado,
-            // estatus,
-            // n_registro
-            // '))->whereNull('deleted_at')->get();
             $query = Empleado::orderByDesc('id')->get();
             $table = DataTables::of($query);
 
@@ -147,8 +129,16 @@ class EmpleadoController extends Controller
         }
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.empleados.index', compact('ceo_exists'));
+        return view('admin.empleados.index', compact('ceo_exists', 'logo_actual', 'empresa_actual'));
     }
 
     public function getCertificaciones($empleado)
@@ -1291,9 +1281,10 @@ class EmpleadoController extends Controller
     public function destroy(Empleado $empleado)
     {
         abort_if(Gate::denies('configuracion_empleados_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleado->delete();
+        // $empleado->delete();
+        $empleado->update(['estatus' => 'baja']);
 
-        return back()->with('deleted', 'Registro eliminado con éxito');
+        return response()->json(['success' => true, 'empleado' => $empleado->name, 'message' => 'Empleado dado de baja', 'from' => 'rh'], 200);
     }
 
     public function deleteCertificaciones(Request $request, $certificacion)

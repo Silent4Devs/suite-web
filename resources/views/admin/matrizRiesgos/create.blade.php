@@ -491,10 +491,20 @@
                 <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
-
-                <div class="form-group">
-                    <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>
-                </div>
+                <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
+                    <div class="row w-100">
+                        <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                            <div class="w-100">
+                                <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
+                            </div>
+                        </div>
+                        <div class="col-11">
+                            <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
+                            </p>
+                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Llene los siguientes campos según corresponda:</p>
+                        </div>
+                    </div>
+                </div><br>
 
                 <input type="hidden" value="{{ $id_analisis }}" name="id_analisis">
 
@@ -531,7 +541,7 @@
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="activo_id"><i class="fas fa-user-tie iconos-crear"></i>Activo</label><br>
+                        <label for="activo_id"><i class="fas fa-user-tie iconos-crear"></i>Activo (subcategoría)</label><br>
                         <select class="responsableSelect form-control" name="activo_id" id="activo_id">
                             <option value="">Seleccione una opción</option>
                             @foreach ($activos as $activo)

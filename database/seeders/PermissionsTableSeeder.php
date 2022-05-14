@@ -1619,6 +1619,18 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Crear a Procesos',
                 'title' => 'configuracion_procesos_create',
             ],
+            [
+                'name' => 'Editar Proceso',
+                'title' => 'configuracion_procesos_edit',
+            ],
+            [
+                'name' => 'Visualizar Proceso',
+                'title' => 'configuracion_procesos_show',
+            ],
+            [
+                'name' => 'Eliminar Proceso',
+                'title' => 'configuracion_procesos_delete',
+            ],
             // AJUSTES
             [
                 'name' => 'Acceso de gestión de usuarios',
