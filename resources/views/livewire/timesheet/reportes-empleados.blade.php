@@ -11,7 +11,7 @@
                         <th>Nombre </th>
                         <th>Área</th>
                         <th>Puesto</th>
-                        <th>Retrasos del mes</th>
+                        <th>Retrasos</th>
                         <th>opciones</th>
                     </tr>
                 </thead>
@@ -23,20 +23,55 @@
                             <td>{{ $empleado_td['name'] }}</td>
                             <td>{{ $empleado_td['area'] }}</td>
                             <td>{{ $empleado_td['puesto'] }}</td>
-                            <td><span class="span_atrasos" {{  ($empleado_td['times_atrasados'] > 0) ? 'style=background-color:#FF9D9D;' : 'style=background-color:#69D552;' }}>{{ $empleado_td['times_atrasados'] }} semanas</span></td>
+                            <td><span class="span_atrasos btn" {{  ($empleado_td['times_atrasados'] > 0) ? 'style=background-color:#FF9D9D;' : 'style=background-color:#69D552;' }} data-toggle="modal" data-target="#modal_semanas_{{ $empleado_td['id'] }}">{{ $empleado_td['times_atrasados'] }} </span></td>
                             <td>
                                 <button class="btn" wire:click="buscarEmpleado({{ $empleado_td['id'] }})" title="Generar Reporte">
                                     <i class="fa-solid fa-file-invoice"></i>
                                 </button>
-                                {{-- <button class="btn" title="Notificar retrasos en Timesheet">
-                                    <i class="fa-solid fa-circle-exclamation" style="color:red;"></i>
-                                </button> --}}
+
+                                @if($empleado_td['times_atrasados'] > 0)
+                                    <button class="btn" title="Notificar retrasos en Timesheet" data-toggle="modal" data-target="#modal_semanas_{{ $empleado_td['id'] }}">
+                                        <i class="fa-solid fa-circle-exclamation" style="color:red;"></i>
+                                    </button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
+
+        <!-- Modal semanas faltantes -->
+        @foreach($empleados as $empleado_md)
+            <div class="modal fade" id="modal_semanas_{{ $empleado_md['id'] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{ $empleado_md['id'] }}" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel{{ $empleado_md['id'] }}"><font style="font-weight:lighter;">Semanas Faltantes de </font>{{ $empleado_md['name'] }}</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class=" d-flex justify-content-between"  style="padding: 7px;">    
+                        <strong> Semanas sin registrar </strong> <span class="span_atrasos" {{  ($empleado_md['times_atrasados'] > 0) ? 'style=background-color:#FF9D9D;' : 'style=background-color:#69D552;' }}>{{ $empleado_md['times_atrasados'] }} </span>
+                    </div>
+                    <ul class="list_times_faltantes scroll_estilo mt-3">
+                        @foreach($empleado_md['times_faltantes'] as $time_f)
+                            <li>
+                                {!! $time_f !!} 
+                            </li>
+                        @endforeach
+                    </ul>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" wire:click="correoRetraso({{ $empleado_md['id'] }})" data-dismiss="modal">Notificar Retrasos al Colaborador</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        @endforeach
     </div>
 
     @if($empleado)
@@ -367,6 +402,13 @@
         document.addEventListener('DOMContentLoaded', ()=>{
             Livewire.on('scriptTabla', ()=>{
                 tablaLivewire('table_horas_empleado_semanas');
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', ()=>{
+            Livewire.on('cerrarModal', ()=>{
+                $('.modal-backdrop').modal('hide');
             });
         });
     </script>

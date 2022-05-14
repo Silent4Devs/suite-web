@@ -42,11 +42,8 @@
                 <thead class="w-100">
                     <tr>
                         <th>Semana </th>
-                        <th>Fecha de corte</th>
-                        <th>Empleado</th>
-                        <th>Responsable</th>
-                        <th>Aprobación</th>
-                        <th>opciones</th>
+                        <th>Estatus</th>
+                        <th>Opciones</th>
                     </tr>
                 </thead>
 
@@ -55,15 +52,6 @@
                         <tr class="tr_{{  $time->estatus }}">
                             <td>
                                 {!! $time->semana !!}
-                            </td>
-                            <td>
-                                {{ \Carbon\Carbon::parse($time->fecha_dia)->format("d/m/Y") }}
-                            </td>
-                            <td>
-                                {{ $time->empleado->name }}
-                            </td>
-                            <td>
-                                {{ $time->aprobador->name }}
                             </td>
                             <td>
                                 @if($time->estatus == 'aprobado')
@@ -84,15 +72,15 @@
                             </td>
                             <td>
                                 <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
-
-                                {{-- @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
+                                @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
                                     <a href="{{ asset('admin/timesheet/edit') }}/{{ $time->id }}" title="Editar" class="btn"><i class="fa-solid fa-pen-to-square"></i></a>
                                 @endif
-
-                                
-                                @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
+                                {{-- @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
                                     <button title="Eliminar" class="btn" style="color:red;" data-toggle="modal" data-target="#alert_time_delet_{{ $time->id }}"><i class="fa-solid fa-trash-can"></i></button>
                                 @endif --}}
+                                <a href="{{ route('admin.timesheet-create-copia', $time->id) }}" class="btn" title="Copiar Timesheet">
+                                    <i class="fa-solid fa-copy"></i>
+                                </a>
                             </td>                       
                         </tr>
                     @endforeach
@@ -112,3 +100,4 @@
         });
     </script>
 </div>
+
