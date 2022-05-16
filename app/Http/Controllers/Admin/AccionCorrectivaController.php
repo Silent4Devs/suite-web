@@ -147,17 +147,20 @@ class AccionCorrectivaController extends Controller
     public function aprobaroRechazarAc(Request $request)
     {
         $accionCorrectiva = AccionCorrectiva::with('quejascliente')->find($request->id);
+        $esAprobada = $request->aprobada == 'true' ? true : false;
+        // dd($esAprobada);
         $accionCorrectiva->update([
-            'aprobada'=>$request->aprobada,
+            'aprobada'=>$esAprobada,
             'aprobacion_contestada'=>true,
+            'comentarios_aprobacion'=>$request->comentarios,
         ]);
         // dd($accionCorrectiva->quejasCliente);
 
         $quejasClientes = QuejasCliente::find($request->id_queja_cliente)->load('responsableSgi', 'registro', 'accionCorrectiva');
         Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableSgi->email)->send(new AprobacionAccionCorrectivaEmail($quejasClientes));
 
-        if ($request->aprobada) {
-            return response()->json(['success'=>true, 'message'=>'Acción Correctiva Aprobada', 'aprobado'=>true]);
+        if ($esAprobada) {
+            return response()->json(['success'=>true, 'message'=>'Acción Correctiva Generada', 'aprobado'=>true]);
         } else {
             return response()->json(['success'=>true, 'message'=>'Acción Correctiva Rechazada', 'aprobado'=>false]);
         }

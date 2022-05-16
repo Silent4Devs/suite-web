@@ -73,41 +73,31 @@
                                         </div>
 
                                         <div style="margin-top:50px;">
-                                            <strong
-                                                style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{$quejas->nombre}},
+                                            <strong style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
+                                                Estimado(a) {{$solicitante->name}},
                                             </strong>
                                         </div>
 
                                         <div style="width: 100%; margin-top: 10px;">
-                                            <p style="font-size:11pt; color:#153643;">Le informamos que su queja ha
-                                                sido recibida, nuestro staff analizará el caso y
-                                                tomará las acciones necesarias para su resolución.
-
+                                            <p style="font-size:11pt; fontcolor:#153643;">
+                                                <strong>{{ $aprobador->name }} </strong> ha rechazado el reporte de horas de la semana <span style="text-transform: lowercase !important;">{!! $rechazar->semana !!} que ha enviado.</span>
                                             </p>
-                                            <strong
-                                                style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Información de la queja
-                                            </strong>
-
-                                            <ul style="font-size:11pt; color:#153643;">
-                                                <li style="font-size:11pt;">Ticket ID:<strong style="font-size:10pt;"> {{$quejas->folio}}</strong></li>
-                                                <li style="font-size:11pt;">Fecha y hora de registro del
-                                                    reporte:<strong style="font-size:10pt;"> {{ \Carbon\Carbon::parse($quejas->fecha)->format('d-m-Y H:i:s') }}</strong></li>
-                                                <li style="font-size:11pt;">Título:<strong style="font-size:10pt;"> {{$quejas->titulo}}</strong></li>
-                                                <li style="font-size:11pt;">Descripción:<strong style="font-size:10pt;"> {{$quejas->descripcion}}</strong></li>
-                                            </ul>
-                                            </p>
-                                            <p style="font-size:11pt; color:#153643;">Lo mantendremos informado
-                                                sobre el estatus de su queja vía correo electrónico.
-                                            </p>
-
-
-
-
                                         </div>
-
-
+                                        @if($rechazar->comentarios)
+                                            <div style="width: 100%; margin-top: 10px;">
+                                                <p style="font-size:11pt; fontcolor:#153643; font-weight: normal !important;">
+                                                    Comentarios de <strong>{{ $aprobador->name }} </strong>:
+                                                </p>
+                                                <p style="border: 1px solid #ccc; border-radius:6px; padding:13px; text-align: justify;">
+                                                    {{ $rechazar->comentarios }}
+                                                </p>
+                                            </div>
+                                        @endif
+                                        <div style="text-align:center; margin-top:20px">
+                                            <a  href="{{ asset('admin/timesheet/edit') }}/{{ $rechazar->id }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:200px; height:35px ;color:#fff; font-size:11pt; background-color:#345183; margin-left:13px;">
+                                                Modificar registro rechazado 
+                                            </a>
+                                        </div>
                                     </td>
 
                                 </tr>

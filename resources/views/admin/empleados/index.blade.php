@@ -2,13 +2,13 @@
 @section('content')
     <style>
         .btn-outline-success {
-            background: #345183;
+            background: #788bac;
             color: white;
             border: none;
         }
 
         .btn-outline-success:hover {
-            background: #345183;
+            background: #788bac;
             color: white;
             border: none;
         }
@@ -170,7 +170,7 @@
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#345183"></i>',
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
@@ -180,7 +180,7 @@
                 {
                     extend: 'excelHtml5',
                     title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#345183"></i>',
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
@@ -231,23 +231,23 @@
                 },
                 {
                     extend: 'colvis',
-                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;color:#345183"></i>',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;color:#000"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Seleccionar Columnas',
                 },
                 {
                     extend: 'colvisGroup',
-                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;color:#345183"></i>',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;color:#000"></i>',
                     className: "btn-sm rounded pr-2",
                     show: ':hidden',
                     titleAttr: 'Ver todo',
                 },
-                // {
-                //     extend: 'colvisRestore',
-                //     text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Restaurar a estado anterior',
-                // }
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
 
             ];
             @can('configuracion_empleados_create')
@@ -479,7 +479,7 @@
                     title: '¿Estás seguro?',
                     html: `
                         <div>
-                            <img style="clip-path: circle(18px at 50% 50%);width: 50px;" src="${avatar}" /> <strong>${empleado}</strong> será dado de baja.    
+                            <img style="clip-path: circle(18px at 50% 50%);width: 50px;" src="${avatar}" /> <strong>${empleado}</strong> será dado de baja.
                         </div>
                     `,
                     icon: 'warning',

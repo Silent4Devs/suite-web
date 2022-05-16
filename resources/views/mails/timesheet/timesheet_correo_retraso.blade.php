@@ -75,39 +75,75 @@
                                         <div style="margin-top:50px;">
                                             <strong
                                                 style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{$quejas->nombre}},
+                                                Estimado(a) {{$empleado->name}},
                                             </strong>
                                         </div>
 
                                         <div style="width: 100%; margin-top: 10px;">
-                                            <p style="font-size:11pt; color:#153643;">Le informamos que su queja ha
-                                                sido recibida, nuestro staff analizará el caso y
-                                                tomará las acciones necesarias para su resolución.
-
+                                            <p style="font-size:11pt; fontcolor:#153643;">
+                                                {{ $empresa }} le solicita llenar el registro de horas de las semanas faltantes correspondientes con su Timsheet.
                                             </p>
-                                            <strong
-                                                style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Información de la queja
-                                            </strong>
-
-                                            <ul style="font-size:11pt; color:#153643;">
-                                                <li style="font-size:11pt;">Ticket ID:<strong style="font-size:10pt;"> {{$quejas->folio}}</strong></li>
-                                                <li style="font-size:11pt;">Fecha y hora de registro del
-                                                    reporte:<strong style="font-size:10pt;"> {{ \Carbon\Carbon::parse($quejas->fecha)->format('d-m-Y H:i:s') }}</strong></li>
-                                                <li style="font-size:11pt;">Título:<strong style="font-size:10pt;"> {{$quejas->titulo}}</strong></li>
-                                                <li style="font-size:11pt;">Descripción:<strong style="font-size:10pt;"> {{$quejas->descripcion}}</strong></li>
-                                            </ul>
-                                            </p>
-                                            <p style="font-size:11pt; color:#153643;">Lo mantendremos informado
-                                                sobre el estatus de su queja vía correo electrónico.
-                                            </p>
-
-
-
-
                                         </div>
+                                        <div style="width: 100%; margin-top: 10px;">
+                                            <p style="font-size:11pt; fontcolor:#153643; font-weight: normal !important;">
+                                               Semanas faltantes:  
+                                            </p>
+                                        </div>
+                                        <style type="text/css">
+                                            .list_times_faltantes{
+                                                list-style: none;
+                                                padding: 0;
+                                                margin: 0;
+                                                width: 100%;
+                                                height: 400px;
+                                                overflow: auto;
+                                            }
+                                            .list_times_faltantes li{
+                                                display: inline-block;
+                                                padding: 4px 7px;
+                                                margin: 7px;
+                                                border-radius: 4px;
+                                                background-color: #f1f1f1;
+                                            }
+                                             /*scroll style*/
 
+                                            .scroll_estilo::-webkit-scrollbar {
+                                                width: 7px;
+                                                height: 7px;
+                                            }
 
+                                            /* Track */
+                                            .scroll_estilo::-webkit-scrollbar-track {
+                                                background: rgba(0, 0, 0, 0);
+                                            }
+
+                                            /* Handle */
+                                            .scroll_estilo::-webkit-scrollbar-thumb {
+                                                background: rgba(0, 0, 0, 0.2);
+                                                border-radius: 50px;
+                                            }
+
+                                            /* Handle on hover */
+                                            .scroll_estilo::-webkit-scrollbar-thumb:hover {
+                                                background: rgba(0, 0, 0, 0.5);
+                                            }
+                                        </style>
+                                        <div style="width: 100%; margin-top: 10px;">
+                                            <p style="font-size:11pt; fontcolor:#153643; font-weight: normal !important;">
+                                               <ul class="list_times_faltantes scroll_estilo mt-3">
+                                                    @foreach($times_faltantes_empleado as $time_f)
+                                                        <li>
+                                                            {!! $time_f !!} 
+                                                        </li>
+                                                    @endforeach
+                                                </ul>  
+                                            </p>
+                                        </div>
+                                        <div style="text-align:center; margin-top:20px">
+                                            <a  href="{{ asset('admin/timesheet/create') }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
+                                                Llenar Horas Faltantes
+                                            </a>
+                                        </div>
                                     </td>
 
                                 </tr>

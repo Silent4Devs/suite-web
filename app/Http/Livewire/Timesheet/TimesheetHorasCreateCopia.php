@@ -2,13 +2,11 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use App\Models\Empleado;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
-use App\Models\TimesheetProyecto;
 use Livewire\Component;
 
-class TimesheetHorasFilas extends Component
+class TimesheetHorasCreateCopia extends Component
 {
     public $proyectos;
     public $tareas;
@@ -16,7 +14,7 @@ class TimesheetHorasFilas extends Component
     public $origen;
     public $timesheet;
     public $timesheet_id;
-    public $contador = 5;
+    public $contador;
 
     protected $listeners = ['removerFila'];
 
@@ -25,17 +23,20 @@ class TimesheetHorasFilas extends Component
         $this->emit('select2');
     }
 
-    public function mount($origen, $timesheet_id)
+    public function mount($proyectos, $tareas, $origen, $timesheet_id)
     {
-        $empleado = Empleado::find(auth()->user()->empleado->id);
-        $this->proyectos = TimesheetProyecto::where('area_id', $empleado->area_id)->get();
-        $this->tareas = collect();
+        $this->proyectos = $proyectos;
+        $this->tareas = $tareas;
         $this->origen = $origen;
         $this->timesheet_id = $timesheet_id;
     }
 
-    public function removerFila()
+    public function removerFila($id)
     {
+        if ($id != null) {
+            $hora_eliminada = TimesheetHoras::find($id);
+            $hora_eliminada->delete();
+        }
         $this->contador = $this->contador - 1;
         $this->emit('calcularSumatoriasFacturables');
     }
@@ -47,12 +48,9 @@ class TimesheetHorasFilas extends Component
 
     public function render()
     {
-        if ($this->origen == 'edit') {
-            $this->contador = 2;
-            $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
-            $this->timesheet = Timesheet::find($this->timesheet_id);
-        }
+        $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
+        $this->timesheet = Timesheet::find($this->timesheet_id);
 
-        return view('livewire.timesheet.timesheet-horas-filas');
+        return view('livewire.timesheet.timesheet-horas-create-copia');
     }
 }

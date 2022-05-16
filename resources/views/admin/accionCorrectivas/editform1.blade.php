@@ -159,6 +159,83 @@
 
     @endif
 
+    {{-- @if ($accionCorrectiva->es_externo)
+
+        <div class="mt-1 form-group col-12">
+            <b>Solicitó Acción Correctiva:</b>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_reporto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+            <select class="form-control {{ $errors->has('id_reporto') ? 'is-invalid' : '' }}" name="id_reporto"
+                id="id_reporto" >
+                @foreach ($empleados as $id => $empleado)
+                    <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                        data-area="{{ $empleado->area->area }}"
+                        {{ old('id_reporto', $accionCorrectiva->id_reporto) == $empleado->id ? 'selected' : '' }}>
+
+                        {{ $empleado->name }}
+                    </option>
+                @endforeach
+            </select>
+            @if ($errors->has('id_reporto'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('id_reporto') }}
+                </div>
+            @endif
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="id_reporto_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+            <div class="form-control" id="reporto_puesto"  ></div>
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_reporto_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+            <div class="form-control" id="reporto_area"  ></div>
+        </div>
+
+    @endif --}}
+
+    {{-- @if ($accionCorrectiva->es_externo)
+
+        <div class="mt-1 form-group col-12">
+            <b>Solicitó Acción Correctiva:</b>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_reporto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+            <select class="form-control {{ $errors->has('id_reporto') ? 'is-invalid' : '' }}" name="id_reporto"
+                id="id_reporto" disabled>
+                @foreach ($empleados as $id => $empleado)
+                    <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                        data-area="{{ $empleado->area->area }}"
+                        {{ old('id_reporto', $accionCorrectiva->id_reporto) == $empleado->id ? 'selected' : '' }}>
+
+                        {{ $empleado->name }}
+                    </option>
+                @endforeach
+            </select>
+            @if ($errors->has('id_reporto'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('id_reporto') }}
+                </div>
+            @endif
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="id_reporto_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+            <div class="form-control" id="reporto_puesto" readonly></div>
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_reporto_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+            <div class="form-control" id="reporto_area" readonly></div>
+        </div>
+
+    @endif --}}
 
     @if ($accionCorrectiva->es_externo)
 
@@ -342,7 +419,7 @@
     @if ($accionCorrectiva->es_externo)
         <div class="mt-3 form-group col-3">
             <label class="form-label"><i class="fas fa-user-plus iconos-crear"></i>Otro(s)</label>
-            <textarea style="min-height:187px;" name="otro_quejado" class="form-control">{{ old('otro_quejado', $accionCorrectiva->otro_quejado) }}
+            <textarea style="min-height:187px;" name="otros" class="form-control">{{ old('otro_quejado', $accionCorrectiva->otro_quejado) }}
     </textarea>
         </div>
     @endif
