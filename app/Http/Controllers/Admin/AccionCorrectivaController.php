@@ -147,7 +147,7 @@ class AccionCorrectivaController extends Controller
     public function aprobaroRechazarAc(Request $request)
     {
         $accionCorrectiva = AccionCorrectiva::with('quejascliente')->find($request->id);
-        $esAprobada=$request->aprobada=='true'?true:false;
+        $esAprobada = $request->aprobada == 'true' ? true : false;
         // dd($esAprobada);
         $accionCorrectiva->update([
             'aprobada'=>$esAprobada,

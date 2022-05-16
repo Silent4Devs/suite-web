@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire\Timesheet;
 
+use App\Mail\TimesheetCorreoRetraso;
 use App\Models\Empleado;
+use App\Models\Timesheet;
+use App\Models\TimesheetHoras;
+use App\Models\TimesheetProyecto;
+use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use App\Models\Timesheet;
-use App\Models\TimesheetHoras;
-use App\Mail\TimesheetCorreoRetraso;
-use App\Traits\getWeeksFromRange;
-use App\Models\TimesheetProyecto;
 use Livewire\Component;
 
 class ReportesEmpleados extends Component
@@ -213,8 +213,6 @@ class ReportesEmpleados extends Component
         $this->alert('success', 'Correo Enviado!');
 
         $this->empleado = null;
-
-        
     }
 
     public function todos()

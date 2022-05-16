@@ -18,7 +18,6 @@ class AccionCorrectiva extends Model implements HasMedia
 
     public $table = 'accion_correctivas';
 
-
     protected $appends = [
         'documentometodo',
         'folio',
@@ -92,10 +91,8 @@ class AccionCorrectiva extends Model implements HasMedia
         'aprobacion_contestada',
         'colaborador_quejado',
         'otros',
-        'comentarios_aprobacion'
+        'comentarios_aprobacion',
     ];
-
-
 
     public function getFolioAttribute()
     {

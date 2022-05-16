@@ -2,35 +2,35 @@
 
 namespace App\Http\Controllers\admin;
 
-use Carbon\Carbon;
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\Activo;
-use App\Models\Quejas;
-use App\Models\Mejoras;
-use App\Models\Proceso;
-use App\Models\Empleado;
-use App\Models\Denuncias;
-use App\Models\Sugerencias;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use App\Models\QuejasCliente;
-use Illuminate\Http\Response;
-use App\Models\AccionCorrectiva;
-use App\Models\TimesheetCliente;
-use App\Models\AnalisisSeguridad;
-use App\Models\TimesheetProyecto;
-use App\Models\CategoriaIncidente;
-use App\Models\RiesgoIdentificado;
-use App\Models\IncidentesSeguridad;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use App\Models\SubcategoriaIncidente;
-use App\Models\AnalisisQuejasClientes;
-use App\Models\EvidenciaQuejasClientes;
-use App\Mail\SeguimientoQuejaClienteEmail;
 use App\Mail\AceptacionAccionCorrectivaEmail;
+use App\Mail\SeguimientoQuejaClienteEmail;
+use App\Models\AccionCorrectiva;
+use App\Models\Activo;
+use App\Models\AnalisisQuejasClientes;
+use App\Models\AnalisisSeguridad;
+use App\Models\Area;
+use App\Models\CategoriaIncidente;
+use App\Models\Denuncias;
+use App\Models\Empleado;
+use App\Models\EvidenciaQuejasClientes;
 use App\Models\EvidenciasQuejasClientesCerrado;
+use App\Models\IncidentesSeguridad;
+use App\Models\Mejoras;
+use App\Models\Organizacion;
+use App\Models\Proceso;
+use App\Models\Quejas;
+use App\Models\QuejasCliente;
+use App\Models\RiesgoIdentificado;
+use App\Models\Sede;
+use App\Models\SubcategoriaIncidente;
+use App\Models\Sugerencias;
+use App\Models\TimesheetCliente;
+use App\Models\TimesheetProyecto;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail; //mejora apunta a este modelo
 
 class DeskController extends Controller
@@ -959,7 +959,7 @@ class DeskController extends Controller
         $desea_levantar_ac = intval($request->desea_levantar_ac) == 1 ? true : false;
         $cumplio_ac_responsable = intval($request->cumplio_ac_responsable) == 1 ? true : false;
         $conforme_solucion = intval($request->conforme_solucion) == 1 ? true : false;
-        $cumplio_fecha= intval($request->conforme_solucion) == 1 ? true : false;
+        $cumplio_fecha = intval($request->conforme_solucion) == 1 ? true : false;
         $cerrar_ticket = intval($request->cerrar_ticket) == 1 ? true : false;
         if ($desea_levantar_ac) {
             $request->validate([
@@ -1079,7 +1079,7 @@ class DeskController extends Controller
                 'aprobacion_contestada' => false,
                 'id_reporto'=>$request->empleado_reporto_id,
                 'otros'=>$request->otro_quejado,
-                'colaborador_quejado'=>$request->colaborador_quejado
+                'colaborador_quejado'=>$request->colaborador_quejado,
 
             ]);
 
@@ -1218,47 +1218,45 @@ class DeskController extends Controller
         $quejaCanalOficio = QuejasCliente::select('id', 'canal')->where('canal', 'Oficio')->count();
         $quejaCanalOtro = QuejasCliente::select('id', 'canal')->where('canal', 'Otro')->count();
 
-        $quejaCategoriaServNoP=QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Servicio no prestado')->count();
-        $quejaCategoriaRetrasoP=QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Retraso en la prestacion')->count();
-        $quejaCategoriaEntreNoC=QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Entregable no conforme')->count();
-        $quejaCategoriaIncuComC=QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Incumplimiento de los compromisos contractuales')->count();
-        $quejasCategoriaIncuNivServ=QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Incumplimiento de los niveles de servicio')->count();
-        $quejasCategoriaNegPresServ=QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Negativa de prestación del servicio')->count();
-        $quejasCategoriaIncFact=QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Incorrecta facturacion')->count();
-        $quejasCategoriaOtro=QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Otro')->count();
+        $quejaCategoriaServNoP = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Servicio no prestado')->count();
+        $quejaCategoriaRetrasoP = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Retraso en la prestacion')->count();
+        $quejaCategoriaEntreNoC = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Entregable no conforme')->count();
+        $quejaCategoriaIncuComC = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Incumplimiento de los compromisos contractuales')->count();
+        $quejasCategoriaIncuNivServ = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Incumplimiento de los niveles de servicio')->count();
+        $quejasCategoriaNegPresServ = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Negativa de prestación del servicio')->count();
+        $quejasCategoriaIncFact = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Incorrecta facturacion')->count();
+        $quejasCategoriaOtro = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Otro')->count();
 
-        $quejaCumplioFecha= QuejasCliente::select('id', 'cumplio_fecha')->where('cumplio_fecha', true)->count();
+        $quejaCumplioFecha = QuejasCliente::select('id', 'cumplio_fecha')->where('cumplio_fecha', true)->count();
         $quejaNoCumplioFecha = QuejasCliente::select('id', 'cumplio_fecha')->where('cumplio_fecha', false)->count();
 
-
-        $ticketPorArea=QuejasCliente::select('id', 'area_quejado')->count();
+        $ticketPorArea = QuejasCliente::select('id', 'area_quejado')->count();
         // $areas = explode(',',$area_quejado);
         // dd($ticketPorArea);
         // $proyectos = QuejasCliente::where('proyectos_id')->pluck('proyectos_id')->toArray();
         // $proyectos = TimesheetProyecto::where('proyectos_id', 'id')
         $quejasproyectos = array_unique(QuejasCliente::pluck('proyectos_id')->toArray());
-        $proyectos= TimesheetProyecto::select('proyecto','id')->find($quejasproyectos);
-        $proyectosLabel=[];
-        foreach($proyectos as $proyecto){
-            $cantidad= QuejasCliente::where('proyectos_id',$proyecto->id)->count();
-            array_push($proyectosLabel,[
+        $proyectos = TimesheetProyecto::select('proyecto', 'id')->find($quejasproyectos);
+        $proyectosLabel = [];
+        foreach ($proyectos as $proyecto) {
+            $cantidad = QuejasCliente::where('proyectos_id', $proyecto->id)->count();
+            array_push($proyectosLabel, [
                 'nombre'=>$proyecto->proyecto,
-                "cantidad"=>$cantidad,
+                'cantidad'=>$cantidad,
             ]);
         }
         // dd($proyectosLabel);
 
         $quejasclientes = array_unique(QuejasCliente::pluck('cliente_id')->toArray());
-        $clientes= TimesheetCliente::select('nombre','id')->find($quejasclientes);
-        $clientesLabel=[];
-        foreach($clientes as $cliente){
-            $cantidadClientes= QuejasCliente::where('cliente_id',$cliente->id)->count();
-            array_push($clientesLabel,[
+        $clientes = TimesheetCliente::select('nombre', 'id')->find($quejasclientes);
+        $clientesLabel = [];
+        foreach ($clientes as $cliente) {
+            $cantidadClientes = QuejasCliente::where('cliente_id', $cliente->id)->count();
+            array_push($clientesLabel, [
                 'nombre'=>$cliente->nombre,
-                "cantidad"=>$cantidadClientes,
+                'cantidad'=>$cantidadClientes,
             ]);
         }
-
 
         $total_quejasClientes = QuejasCliente::get()->count();
         $nuevos_quejasClientes = QuejasCliente::where('estatus', 'Sin atender')->get()->count();
