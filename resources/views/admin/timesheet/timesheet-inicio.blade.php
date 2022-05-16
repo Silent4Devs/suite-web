@@ -268,7 +268,7 @@
                                     <li>
                                         <a href="{{ route('admin.timesheet-aprobaciones') }}">
                                             <div>
-                                                <i class="bi bi-calendar2-check"></i><br>
+                                                <i class="bi bi-calendar2-minus"></i><br>
                                                 Pendientes de Aprobar
 
                                                 @if($aprobar_contador > 0)
@@ -280,10 +280,20 @@
                                 @endcan
                                 @can('timesheet_administrador_aprobar_rechazar_horas_access')
                                     <li>
+                                        <a href="{{ route('admin.timesheet-aprobados') }}">
+                                            <div>
+                                                <i class="bi bi-calendar2-check"></i><br>
+                                                Aprobados
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('timesheet_administrador_aprobar_rechazar_horas_access')
+                                    <li>
                                         <a href="{{ route('admin.timesheet-rechazos') }}">
                                             <div>
                                                 <i class="bi bi-calendar2-x"></i><br>
-                                                Aprobados y Rechazos
+                                                Rechazados
                                             </div>
                                         </a>
                                     </li>

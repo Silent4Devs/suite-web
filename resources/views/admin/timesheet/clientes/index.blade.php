@@ -2,6 +2,15 @@
 @section('content')
     
     <style type="text/css">
+        .td-cj-1{
+            background-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        .td-cj-2{
+            background-color: rgba(0, 0, 0, 0.2) !important;
+        }
+        #datatable_clientes th{
+            min-width: 100px;
+        }
     </style>
 
 
@@ -16,31 +25,33 @@
 	            <table id="datatable_clientes" class="table w-100">
 	                <thead>
                         <tr>
-                            <th rowspan="2" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Razón social</th>
-                            <th rowspan="2" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Nombre comercial del proveedor</th>
-                            <th rowspan="2" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">RFC persona moral o persona física</th>
-                            <th colspan="6" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">DOMICILIO FISCAL</th>
-                            <th colspan="4" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">DATOS DEL CONTACTO</th>
-                            {{-- <th rowspan="2" class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Opciones</th> --}}
+                            <th rowspan="2">ID</th>
+                            <th rowspan="2">Razón social</th>
+                            <th rowspan="2">Nombre comercial del proveedor</th>
+                            <th rowspan="2">RFC persona moral o persona física</th>
+                            <th colspan="6" class="td-cj-1" style="text-align: center;">DOMICILIO FISCAL</th>
+                            <th colspan="4" class="td-cj-2" style="text-align: center;">DATOS DEL CONTACTO</th>
+                            <th rowspan="2">Opciones</th>
                         </tr>
                         <tr>
-                            <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Calle y Número</th>
-                            <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Colonia</th>
-                            <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Ciudad o Municipio/ País</th>
-                            <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Código postal</th>
-                            <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Teléfonos con lada</th>
-                            <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Página Web</th>
+                            <th class="td-cj-1">Calle y Número</th>
+                            <th class="td-cj-1">Colonia</th>
+                            <th class="td-cj-1">Ciudad o Municipio/ País</th>
+                            <th class="td-cj-1">Código postal</th>
+                            <th class="td-cj-1">Teléfonos con lada</th>
+                            <th class="td-cj-1">Página Web</th>
 
-                            <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Nombre completo del contacto:</th>
-                            <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Puesto</th>
-                            <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Correo electrónico</th>
-                            <th class="estilotd" style="border: 1px solid rgba(255, 255, 255, 0.5) !important;">Celular</th>
+                            <th class="td-cj-2">Nombre completo del contacto:</th>
+                            <th class="td-cj-2">Puesto</th>
+                            <th class="td-cj-2">Correo electrónico</th>
+                            <th class="td-cj-2">Celular</th>
                         </tr>
                     </thead>
 
 	                <tbody>
                         @foreach($clientes as $cliente)
     	                	<tr>
+                               <td>{{ $cliente->identificador }}</td>
                                <td>{{ $cliente->razon_social }}</td>
                                <td>{{ $cliente->nombre }}</td>
                                <td>{{ $cliente->rfc }}</td>
@@ -54,10 +65,10 @@
                                <td>{{ $cliente->puesto_contacto }}</td>
                                <td>{{ $cliente->correo_contacto }}</td>
                                <td>{{ $cliente->celular_contacto }}</td>
-                               {{-- <td class="d-flex">
-                                   <a href="" class="btn" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+                               <td class="d-flex">
+                                   <a href="{{ asset('admin/timesheet/clientes/edit') }}/{{ $cliente->id }}" class="btn" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
                                    <a href="" class="btn" title="Eliminar" style="color:red;"><i class="fa-solid fa-trash-can"></i></a>
-                               </td> --}}
+                               </td>
     						</tr>
                         @endforeach
 	                </tbody>

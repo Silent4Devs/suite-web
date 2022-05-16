@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Empleado;
+use App\Models\Timesheet;
+
+class TimesheetCorreoRetraso extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public $times_faltantes_empleado = [];
+    public $empleado;
+
+    public function __construct(Empleado $empleado, $times_faltantes_empleado)
+    {
+        $this->times_faltantes_empleado = $times_faltantes_empleado;
+        $this->empleado = $empleado;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('mails.timesheet.timesheet_correo_retraso');
+    }
+}

@@ -16,9 +16,7 @@
 	                <thead class="w-100">
 	                    <tr>
 	                        <th>Fin de semana </th>
-	                        <th>Empleado</th>
-	                        <th>Responsable</th>
-                            <th>Aprobación</th>
+                            <th>Estatus</th>
 	                        <th>opciones</th>
 	                    </tr>
 	                </thead>
@@ -27,47 +25,7 @@
                         @foreach($papelera as $time)
     	                	<tr>
     	                        <td>
-    	                            @if($time->dia_semana == 'Domingo')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->addDay(6)->format("d/m/Y") }}
-                                    @endif
-                                    @if($time->dia_semana == 'Lunes')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->subDay(1)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->addDay(5)->format("d/m/Y") }}
-                                    @endif
-                                    @if($time->dia_semana == 'Martes')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->subDay(2)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->addDay(4)->format("d/m/Y") }}
-                                    @endif
-                                    @if($time->dia_semana == 'Miércoles')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->subDay(3)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->addDay(3)->format("d/m/Y") }}
-                                    @endif
-                                    @if($time->dia_semana == 'Jueves')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->subDay(4)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->addDay(2)->format("d/m/Y") }}
-                                    @endif
-                                    @if($time->dia_semana == 'Viernes')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->subDay(5)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->addDay(1)->format("d/m/Y") }}
-                                    @endif
-                                    @if($time->dia_semana == 'Sábado')
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->subDay(6)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($time->fecha_dia)->format("d/m/Y") }}
-                                    @endif
-    	                        </td>
-    	                        <td>
-    	                            {{ $time->empleado->name }}
-    	                        </td>
-    	                        <td>
-                                    {{ $time->aprobador->name }}
+    	                            {!! $time->semana !!}
     	                        </td>
     	                        <td>
                                      @if($time->estatus == 'aprobado')

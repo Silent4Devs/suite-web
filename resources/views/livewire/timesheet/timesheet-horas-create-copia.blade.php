@@ -1,7 +1,14 @@
 <div class="w-100">
-    <form id="form_timesheet" action="{{ route('admin.timesheet.update', $timesheet->id) }}" method="POST">
+    <form id="form_timesheet" action="{{ route('admin.timesheet.store') }}" method="POST">
         @csrf
-        @method('PUT')
+
+        <div class="form-group d-flex align-items-center" wire:ignore>
+            <label class="mr-3" style="margin-top: 5px;"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin de jornada laboral</label>
+
+            
+            <input type="date" id="fecha_dia" name="fecha_dia" class="form-control" style="max-width:160px;">
+            <small class="fecha_dia errores text-danger" style="margin-left: 15px;"></small>
+        </div>
 
         <div class="datatable-fix">
             <table id="datatable_timesheet_create" class="table table-responsive dataTables_scrollBody tabla-llenar-horas">
