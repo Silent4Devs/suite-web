@@ -25,6 +25,7 @@ use App\Models\RH\EntidadCrediticia;
 use App\Models\RH\TipoContratoEmpleado;
 use App\Models\Sede;
 use App\Rules\MonthAfterOrEqual;
+use App\Traits\ObtenerOrganizacion;
 use Barryvdh\DomPDF\Facade as PDF;
 use Gate;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class EmpleadoController extends Controller
 {
+    use ObtenerOrganizacion;
     /**
      * Display a listing of the resource.
      *
@@ -129,13 +131,9 @@ class EmpleadoController extends Controller
         }
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.empleados.index', compact('ceo_exists', 'logo_actual', 'empresa_actual'));
@@ -1581,6 +1579,11 @@ class EmpleadoController extends Controller
         $empleado = Empleado::get();
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
+    }
+
+    public function solicitudBaja(Empleado $empleado)
+    {
+        return view('admin.empleados.solicitudBaja', compact('empleado'));
     }
 
     // public function imprimir($id){

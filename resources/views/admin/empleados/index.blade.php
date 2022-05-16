@@ -388,9 +388,10 @@
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ route('admin.empleados.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('admin.empleados.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
-                                   <button onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')" data-url="{{ route('admin.empleados.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></button>
+                                   <a href="{{ route('admin.empleado.solicitud-baja', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></a>
                                 </div>
                             `;
+                            // onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')"
                             buttons = buttons.replaceAll(':id', data);
                             return buttons;
                         }
@@ -409,9 +410,6 @@
                     style: "multi",
                     selector: "td:first-child"
                 },
-                fixedColumns: {
-                    rightColumns: 1
-                }
             };
             let table = $('.datatable-Empleado').DataTable(dtOverrideGlobals);
 
