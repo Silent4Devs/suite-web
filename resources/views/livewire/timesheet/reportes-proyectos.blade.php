@@ -19,7 +19,7 @@
                         <tr>
                             <td>{{ $proyecto->proyecto }} </td>
                             <td>{{ $proyecto->area_id ? $proyecto->area->area : '--' }} </td>
-                            <td>{{ $proyecto->cliente_id ? $cliente->nombre : '--' }} </td>
+                            <td>{{ $proyecto->cliente_id ? $proyecto->cliente->nombre : '--' }} </td>
                             <td><button class="btn" wire:click="genrarReporte({{ $proyecto->id }})"><i class="fa-solid fa-file-invoice"></i></button></td>
                         </tr>
                     @endforeach
