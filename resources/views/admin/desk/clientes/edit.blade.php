@@ -187,7 +187,7 @@
             margin-top: 6px;
         }
 
-        .select2-selection__rendered[title*="Cancelado"]::before {
+        .select2-selection__rendered[title*="No procedente"]::before {
             position: absolute;
             content: '';
             width: 10px;
@@ -198,7 +198,7 @@
             margin-top: 11px;
         }
 
-        #select2-opciones-results li[id*="Cancelado"]::before {
+        #select2-opciones-results li[id*="No procedente"]::before {
             position: absolute;
             content: '';
             width: 10px;
@@ -267,7 +267,7 @@
                                     <div class="mt-2 form-control" readonly>{{ $quejasClientes->folio }}</div>
                                 </div>
 
-                                <div class="mt-2 form-group col-md-2">
+                                <div class="mt-2 form-group col-md-3 col-sm-12">
                                     <label class="form-label"><i
                                             class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
                                     <select name="estatus" class="form-control select2" id="opciones"
@@ -285,16 +285,14 @@
                                             {{ old('estatus', $quejasClientes->estatus) == 'Cerrado' ? 'selected' : '' }}
                                             value="Cerrado">Cerrado</option>
                                         <option
-                                            {{ old('estatus', $quejasClientes->estatus) == 'Cancelado' ? 'selected' : '' }}
-                                            value="Cancelado">Cancelado</option>
+                                            {{ old('estatus', $quejasClientes->estatus) == 'No procedente' ? 'selected' : '' }}
+                                            value="No procedente">No procedente</option>
                                     </select>
                                 </div>
 
 
-                                <div class="mt-2 form-group col-4">
+                                <div class="mt-2 form-group col-3">
                                     <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha
-                                        y
-                                        hora
                                         de registro del reporte</label>
                                     <div class="form-control mt-2" readonly>
                                         {{ \Carbon\Carbon::parse($quejasClientes->created_at)->format('d-m-Y H:i:s') }}
@@ -303,8 +301,6 @@
 
                                 <div class="mt-2 form-group col-md-4">
                                     <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha
-                                        y
-                                        hora
                                         de cierre del ticket</label>
 
 
@@ -314,7 +310,7 @@
 
                                 </div>
                             </div>
-                            <div class="d-none row col-md-12" id="cerradoCampo">
+                            {{-- <div class="d-none row col-md-12" id="cerradoCampo">
                                 @if ($cierre->count() == 0)
                                     <div class="mt-2 form-group col-md-12">
                                         <label class="form-label"><i
@@ -337,7 +333,7 @@
                                         </span>
                                     </div>
                                 @endif
-                            </div>
+                            </div> --}}
 
 
                             <div class="mt-1 form-group col-12">
@@ -525,11 +521,11 @@
                                 <div class="mt-2 form-group col-6">
                                     <label class="form-label"><i class="fas fa-satellite iconos-crear"></i> Canal
                                         de
-                                        recepción de la queja
+                                        recepción de la queja<sup>*</sup>
                                     </label>
                                     <select name="canal"
                                         class="form-control {{ $errors->has('canal') ? 'is-invalid' : '' }}"
-                                        id="otros_campo">
+                                        id="otros_campo" required>
                                         <option value="{{ old('canal', $quejasClientes->canal) }}" selected>
                                             Selecciona una opción</option>
                                         <option
@@ -540,10 +536,10 @@
                                             value="Via telefonica">Vía telefónica</option>
                                         <option
                                             {{ old('canal', $quejasClientes->canal) == 'Forma presencial' ? 'selected' : '' }}
-                                            value="Forma presencial">Forma presencial</option>
+                                            value="Presencial">Presencial</option>
                                         <option
                                             {{ old('canal', $quejasClientes->canal) == 'Forma remota' ? 'selected' : '' }}
-                                            value="Forma remota">Forma remota</option>
+                                            value="Remota">Remota</option>
                                         <option
                                             {{ old('canal', $quejasClientes->canal) == 'Oficio' ? 'selected' : '' }}
                                             value="Oficio">Oficio</option>
@@ -746,29 +742,36 @@
                                 <b>Registró:</b>
                             </div>
 
-                            <div class="mt-2 form-group col-6">
-                                <label class="form-label"><i
-                                        class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                                <div class="form-control" readonly>
-                                    {{ Str::limit($quejasClientes->registro->name, 30, '...') }}</div>
-                            </div>
+                            <div class="row col-12">
+                                <div class="mt-2 form-group col-6">
+                                    <label class="form-label"><i
+                                            class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                                    <div class="form-control" readonly>
+                                        {{ Str::limit($quejasClientes->registro->name, 30, '...') }}</div>
+                                </div>
 
-                            <div class="mt-2 form-group col-6">
-                                <label class="form-label"><i
-                                        class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                                <div class="form-control" readonly>{{ $quejasClientes->registro->puesto }}</div>
-                            </div>
-
-                            <div class=" form-group col-6">
-                                <label class="form-label"><i class="bi bi-geo mr-2 iconos-crear"></i>Área</label>
-                                <div class="form-control" readonly>{{ $quejasClientes->registro->area->area }}
+                                <div class="mt-2 form-group col-6">
+                                    <label class="form-label"><i
+                                            class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                                    <div class="form-control" readonly>{{ $quejasClientes->registro->puesto }}
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="mt-2 form-group col-6">
-                                <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo
-                                    electrónico</label>
-                                <div class="form-control" readonly>{{ $quejasClientes->registro->email }}</div>
+                            <div class="row col-12">
+                                <div class="form-group col-6">
+                                    <label class="form-label"><i
+                                            class="bi bi-geo mr-2 iconos-crear"></i>Área</label>
+                                    <div class="form-control" readonly>{{ $quejasClientes->registro->area->area }}
+                                    </div>
+                                </div>
+
+                                <div class="mt-2 form-group col-6">
+                                    <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo
+                                        electrónico</label>
+                                    <div class="form-control" readonly>{{ $quejasClientes->registro->email }}
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row col-12">
@@ -780,10 +783,11 @@
                                 </div>
                             </div>
 
-
-                            <div class="mt-4 text-right form-group col-12">
-                                <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
-                                <input type="submit" class="btn btn-success" value="Enviar">
+                            <div class="row col-12">
+                                <div class="float-left mt-4 text-right form-group col-12">
+                                    <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
+                                    <input type="submit" class="btn btn-success" value="Guardar">
+                                </div>
                             </div>
                             {{-- </form> --}}
                     </div>
@@ -832,7 +836,7 @@
                     </div><br>
 
                     <div class="display:none" id="porque_queja_procedente">
-                        <div class="row col-12">
+                        <div class="row">
                             <div class="form-group col-12">
                                 <label class="form-label">¿Por qué?</label>
                                 <textarea name="porque_procedente" class="form-control">{{ $quejasClientes->porque_procedente }}</textarea>
@@ -1071,11 +1075,12 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 text-right form-group col-12">
-                        <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
-                        <input type="submit" class="btn btn-success" value="Enviar">
+                    <div class="row">
+                        <div class="float-left mt-4 text-right form-group col-12">
+                            <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
+                            <input type="submit" class="btn btn-success" value="Guardar">
+                        </div>
                     </div>
-
                 </section>
 
 
@@ -1154,7 +1159,7 @@
 
                             <div class="mt-2 form-group col-md-4">
 
-                                <input type="datetime-local" name="fecha_limite" class="form-control"
+                                <input type="date" name="fecha_limite" class="form-control"
                                     value="{{ old('fecha_limite', \Carbon\Carbon::parse($quejasClientes->fecha_limite)->format('Y-m-d\TH:i')) }}">
                             </div>
 
@@ -1167,7 +1172,7 @@
 
                             <div class="mt-4 text-right form-group col-12">
                                 <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
-                                <input type="submit" class="btn btn-success" value="Enviar">
+                                <input type="submit" class="btn btn-success" value="Guardar">
                             </div>
 
 
@@ -1334,8 +1339,8 @@
                 <section id="cierre">
 
                     <div class="mt-4 form-group col-md-12">
-                        <b>Se cumplieron las acciones comprometidas por el responsable
-                            de la atención de la queja
+                        <b>¿Se cumplieron las acciones comprometidas por el responsable
+                            de la atención de la queja?
                         </b>
                     </div>
 
@@ -1362,6 +1367,7 @@
                         </div>
                     </div><br>
 
+
                     <div class="form-group col-md-12 col-sm-12 col-lg-12" style="margin-top:-30px">
                         <div id="porqueNoCumplio" style="display: none;">
                             <label class="form-label">¿Por qué?</label>
@@ -1370,8 +1376,33 @@
                         </div>
                     </div>
 
-                    <div class="mt-5 form-group col-md-12">
-                        <b>El cliente ha quedado conforme con la solución otorgada
+                    <div class="mt-4 form-group col-md-12">
+                        <b>¿Se cumplieron las acciones comprometidas en el tiempo establecido?
+                        </b>
+                    </div>
+
+                    <div class="row col-12">
+                        <div class="card-body" style="margin-top:-30px;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="cumplio_fecha"
+                                    id="cumplioResponsable" value="1"
+                                    {{ old('cumplio_fecha', $quejasClientes->cumplio_fecha) == true ? 'checked' : '' }}>
+                                <label class="form-check-label" for="cumplio_fecha">
+                                    Sí
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="cumplio_fecha" value="2"
+                                    {{ old('cumplio_fecha', $quejasClientes->cumplio_fecha) == false ? 'checked' : '' }}>
+                                <label class="form-check-label" for="cumplio_fecha">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                    </div><br>
+
+                    <div class=" form-group col-md-12">
+                        <b>¿El cliente ha quedado conforme con la solución otorgada?
                         </b>
                     </div>
 
@@ -1396,33 +1427,121 @@
                     </div><br>
 
                     <div class="form-group col-md-12">
-                        <b>Cerrar el ticket
+                        <b>¿Cerrar el ticket?
                         </b>
                     </div>
 
                     <div class="row col-12">
                         <div class="card-body" style="margin-top:-30px;">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="cerrar_ticket" id="cerrar ticket"
-                                    value="1"
-                                    {{ old('cerrar_ticket', $quejasClientes->cerrar_ticket) == true ? 'checked' : '' }}>
-                                <label class="form-check-label" for="cerrar_ticket">
-                                    Sí
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="cerrar_ticket" value="2"
-                                    {{ old('cerrar_ticket', $quejasClientes->cerrar_ticket) == false ? 'checked' : '' }}>
-                                <label class="form-check-label" for="cerrar_ticket">
-                                    No
-                                </label>
+                            <div class="preguntaCierreTicket">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cerrar_ticket" id="cerrarTicket"
+                                        value="1"
+                                        {{ old('cerrar_ticket', $quejasClientes->cerrar_ticket) == true ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="cerrar_ticket">
+                                        Sí
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cerrar_ticket" value="2"
+                                        {{ old('cerrar_ticket', $quejasClientes->cerrar_ticket) == false ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="cerrar_ticket">
+                                        No
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div><br>
 
+
+                    <div style="display: none;" id="ticketcerrado">
+                        @if ($cierre->count() == 0)
+                            <div class="mt-2 form-group col-md-12">
+                                <label class="form-label"><i class="fas fa-file-import iconos-crear"></i>Adjuntar
+                                    evidencia(s) de cierre</label>
+                                <input type="file" name="cierre[]" class="form-control" multiple="multiple">
+                            </div>
+                        @else
+                            <div class="row">
+                                <div class="form-group col-md-8">
+                                    <label class="form-label"><i
+                                            class="fas fa-file-import iconos-crear"></i>Adjuntar
+                                        evidencia(s) de cierre</label>
+                                    <input type="file" name="cierre[]" class="form-control" multiple="multiple">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <span type="button" class="mt-5 mr-5" data-toggle="modal"
+                                        data-target="#evidenciaDeCierreAgregada">
+                                        <i class="mr-2 fas fa-file-download text-primary"
+                                            style="font-size:14pt"></i>Ver
+                                        evidencia(s) de cierre
+                                    </span>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                     <!-- modal Evidencia Cierre -->
+                     <div class="modal fade" id="evidenciaDeCierreAgregada" tabindex="-1" role="dialog"
+                     aria-labelledby="basicModal" aria-hidden="true">
+                     <div class="modal-dialog modal-lg">
+                         <div class="modal-content">
+                             <div class="modal-body">
+                                 @if (count($quejasClientes->cierre_evidencias))
+                                     <div id='carouselExampleIndicators' class='carousel slide'
+                                         data-ride='carousel'>
+                                         <ol class='carousel-indicators'>
+                                             @foreach ($quejasClientes->cierre_evidencias as $idx => $cierre)
+                                                 <li data-target='#carouselExampleIndicators'
+                                                     data-slide-to='{{ $idx }}'
+                                                     class='{{ $idx == 0 ? 'active' : '' }}'></li>
+                                             @endforeach
+                                         </ol>
+                                         <div class='carousel-inner'>
+                                             @foreach ($quejasClientes->cierre_evidencias as $idx => $cierre)
+                                                 <div
+                                                     class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                     <iframe class='img-size'
+                                                         src='{{ asset('storage/evidencias_quejas_clientes_cerrado' . '/' . $cierre->cierre) }}'></iframe>
+                                                 </div>
+                                             @endforeach
+                                         </div>
+                                         <a class='carousel-control-prev'
+                                             href='#carouselExampleIndicators' role='button'
+                                             data-slide='prev'>
+                                             <span class='carousel-control-prev-icon'
+                                                 aria-hidden='true'></span>
+                                             <span class='sr-only'>Previous</span>
+                                         </a>
+                                         <a class='carousel-control-next'
+                                             href='#carouselExampleIndicators' role='button'
+                                             data-slide='next'>
+                                             <span class='carousel-control-next-icon'
+                                                 aria-hidden='true'></span>
+                                             <span class='sr-only'>Next</span>
+                                         </a>
+                                     </div>
+                                 @else
+                                     <div class="text-center">
+                                         <h3 style="text-align:center" class="mt-3">Sin
+                                             archivo agregado</h3>
+                                         <img src="{{ asset('img/undrawn.png') }}"
+                                             class="img-fluid " style="width:350px !important">
+                                     </div>
+                                 @endif
+
+                             </div>
+                             <div class="modal-footer">
+                                 <button type="button" class="btn btn-default"
+                                     data-dismiss="modal">Cerrar</button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+
                     <div class="mt-4 text-right form-group col-12">
                         <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
-                        <input type="submit" class="btn btn-success" value="Enviar">
+                        <input type="submit" class="btn btn-success" value="Guardar">
                     </div>
 
                     </form>
@@ -1560,6 +1679,13 @@
                                 </form>
                             </div> --}}
                     </div>
+
+                    <div class="row col-12">
+                        <div class="mt-4 text-right form-group col-12">
+                            <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
+                            <input type="submit" class="btn btn-success" value="Guardar">
+                        </div>
+                    </div>
                 </section>
             </div>
         </div>
@@ -1570,7 +1696,7 @@
 
 
 @section('scripts')
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     $(document).ready(function() {
         let estatus = @json($quejasClientes->estatus);
         if (estatus == 'Cerrado') {
@@ -1591,7 +1717,7 @@
             $('#cerradoCampo').addClass('d-none');
         }
     });
-</script>
+</script> --}}
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -2029,6 +2155,29 @@
 
     $('.aCumplidoResponsable input[value="2"]').click(function() {
         $("#porqueNoCumplio").fadeOut(100);
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        let ticketSiCerrado = @json($quejasClientes->cerrar_ticket);
+        if (ticketSiCerrado == true) {
+
+            $("#ticketcerrado").fadeIn(100);
+
+        } else {
+
+            $("#ticketcerrado").fadeOut(100);
+
+        }
+    })
+
+    $('.preguntaCierreTicket input[value="1"]').click(function() {
+        $("#ticketcerrado").fadeIn(100);
+    });
+
+    $('.preguntaCierreTicket input[value="2"]').click(function() {
+        $("#ticketcerrado").fadeOut(100);
     });
 </script>
 

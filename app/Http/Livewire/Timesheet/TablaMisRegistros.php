@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use Livewire\Component;
 use App\Models\Timesheet;
+use Livewire\Component;
 
 class TablaMisRegistros extends Component
 {

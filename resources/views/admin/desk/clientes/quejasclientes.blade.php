@@ -26,7 +26,9 @@
 
                 <div class="mt-4">
                     <strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón
-                    "Enviar"
+                    "Enviar".
+                    <p>
+                    Sólo los campos marcados con un (<strong class="text-danger">*</strong>) son obligatorios</p>
                 </div>
 
                 <form class="row" method="POST" action="{{ route('admin.desk.quejasClientes-store') }}"
@@ -214,14 +216,14 @@
 
                     <div class="mt-2 form-group col-6">
                         <label class="form-label"><i class="fas fa-satellite iconos-crear"></i>Canal de recepción de la
-                            queja
+                            queja<sup>*</sup>
                         </label>
-                        <select name="canal" id="otros_campo" class="form-control">
+                        <select name="canal" id="otros_campo" class="form-control" required>
                             <option value="" selected>Selecciona una opción</option>
                             <option value="Correo electronico">Correo electrónico</option>
                             <option value="Via telefonica">Vía telefónica</option>
-                            <option value="Forma presencial">Forma presencial</option>
-                            <option value="Forma remota">Forma remota</option>
+                            <option value="Presencial">Presencial</option>
+                            <option value="Remota">Remota</option>
                             <option value="Oficio">Oficio</option>
                             <option value="Otro">Otro</option>
                         </select>
@@ -248,7 +250,6 @@
                         @endif
                     </div>
 
-                    <div class="row col-12">
                         <div class="mt-2 form-group col-12">
                             <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Solución que requiere
                                 el cliente
@@ -261,7 +262,6 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
 
                     <div class="mt-2 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-import iconos-crear"></i>Adjuntar evidencia(s)
@@ -282,7 +282,7 @@
                     </div>
 
                     <div class="mt-4 form-group col-md-12">
-                        <b>¿Se requiere mandar el correo electronico al cliente?<sup>*</sup></b>
+                        <b>¿Se requiere mandar el correo electrónico al cliente?<sup>*</sup></b>
                     </div>
 
                     <div class="row col-12">
@@ -311,7 +311,7 @@
 
                     <div class="mt-4 text-right form-group col-12">
                         <a href="{{ asset('admin/desk') }}#reportes" class="btn btn_cancelar">Cancelar</a>
-                        <input type="submit" class="btn btn-success" value="Enviar">
+                        <input type="submit" class="btn btn-success" value="Guardar">
                     </div>
 
                 </form>

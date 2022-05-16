@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\TimesheetHorasSolicitudAprobacion;
+use App\Mail\TimesheetSolicitudAprobada;
+use App\Mail\TimesheetSolicitudRechazada;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Organizacion;
@@ -16,9 +19,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\TimesheetHorasSolicitudAprobacion;
-use App\Mail\TimesheetSolicitudAprobada;
-use App\Mail\TimesheetSolicitudRechazada;
 
 class TimesheetController extends Controller
 {
@@ -219,7 +219,6 @@ class TimesheetController extends Controller
             }
         }
 
-
         if ($timesheet_nuevo->estatus == 'pendiente') {
             $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->supervisor_id);
 
@@ -412,7 +411,7 @@ class TimesheetController extends Controller
                     ]);
                 }
             }
-        }   
+        }
 
         if ($timesheet_edit->estatus == 'pendiente') {
             $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->supervisor_id);
@@ -519,7 +518,6 @@ class TimesheetController extends Controller
 
         Mail::to($solicitante->email)->send(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
 
-
         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
     }
 
@@ -563,14 +561,13 @@ class TimesheetController extends Controller
 
     public function clientesStore(Request $request)
     {
-
         $request->validate(
             [
-                'identificador' => 'required|unique:timesheet_clientes,identificador'
-            ], 
+                'identificador' => 'required|unique:timesheet_clientes,identificador',
+            ],
             [
-                'identificador.unique' => 'El ID ya esta en uso'
-            ], 
+                'identificador.unique' => 'El ID ya esta en uso',
+            ],
         );
 
         $cliente_nuevo = TimesheetCliente::create($request->all());
@@ -580,14 +577,13 @@ class TimesheetController extends Controller
 
     public function clientesUpdate(Request $request, $id)
     {
-
         $request->validate(
             [
-                'identificador' => "required|unique:timesheet_clientes,identificador,{$id}"
-            ], 
+                'identificador' => "required|unique:timesheet_clientes,identificador,{$id}",
+            ],
             [
-                'identificador.unique' => 'El ID ya esta en uso'
-            ], 
+                'identificador.unique' => 'El ID ya esta en uso',
+            ],
         );
 
         $cliente = TimesheetCliente::find($id);

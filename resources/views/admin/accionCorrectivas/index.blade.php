@@ -26,14 +26,14 @@
     <h5 class="col-12 titulo_general_funcion">Acciones Correctivas</h5>
 
     <div class="caja_botones_menu mt-4">
-        <a href="#" data-tabs="indexAc" class="btn_activo"><i class="mr-2 fas fa-clipboard-list"></i>Acciones
+        <a href="#" data-tabs="aprobaciones" class="btn_activo"><i class="mr-2 bi bi-check2"></i>Solicitudes</a>
+        <a href="#" data-tabs="indexAc"><i class="mr-2 fas fa-clipboard-list"></i>Acciones
             Correctivas</a>
-        <a href="#" data-tabs="aprobaciones"><i class="mr-2 bi bi-check2"></i>Aprobaciones</a>
     </div>
 
     <div class="caja_caja_secciones">
         <div class="caja_secciones">
-            <section id="indexAc" class="caja_tab_reveldada">
+            <section id="indexAc">
                 <div class="mt-5 card">
                     <div class="container">
                         <div class="row">
@@ -115,38 +115,39 @@
                 </div>
             </section>
 
-            <section id="aprobaciones">
+            <section id="aprobaciones" class="caja_tab_reveldada">
                 <div class="mt-5 card">
-                    <table id="tabla_usuario_aprobaciones" class="table">
-                        <thead>
-                            <tr>
-                                <th style=" min-width:200px; text-align: center !important;">
-                                    Folio
-                                </th>
-                                <th style=" min-width:200px; text-align: center !important;">
-                                    Origen
-                                </th>
-                                <th style="vertical-align: top; text-align: center !important; min-width:150px;">
-                                    Fecha
-                                </th>
-                                <th style="vertical-align: top; text-align: center !important; min-width:80px;">
-                                    Solicitante
-                                </th>
-                                <th style="vertical-align: top; text-align: center !important; min-width:80px;">
-                                    Aprobador
-                                </th>
-                                <th style="vertical-align: top; text-align: center !important; min-width:70px;">
-                                    Revisar
-                                </th>
-                                <th style="vertical-align: top  min-width:80px;">
-                                    Opciones
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
+                    <div class="card-body datatable-fix">
+                        <table id="tabla_usuario_aprobaciones" class="table">
+                            <thead>
+                                <tr>
+                                    <th style=" min-width:200px; text-align: center !important;">
+                                        Folio
+                                    </th>
+                                    <th style=" min-width:200px; text-align: center !important;">
+                                        Origen
+                                    </th>
+                                    <th style="vertical-align: top; text-align: center !important; min-width:150px;">
+                                        Fecha
+                                    </th>
+                                    <th style="vertical-align: top; text-align: center !important; min-width:80px;">
+                                        Solicitante
+                                    </th>
+                                    <th style="vertical-align: top; text-align: center !important; min-width:80px;">
+                                        Aprobador
+                                    </th>
+                                    <th style="vertical-align: top; text-align: center !important; min-width:70px;">
+                                        Revisar
+                                    </th>
+                                    <th style="vertical-align: top  min-width:80px;">
+                                        Opciones
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -611,8 +612,14 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
+
                             if (row.desk_queja_cliente.length > 0) {
-                                return row.desk_queja_cliente[0].pivot.created_at;
+                                let stringDate = row.desk_queja_cliente[0].pivot.created_at;
+                                let splitDate = stringDate.split('T');
+                                let newDate = splitDate[0];
+                                let splitNewDate = newDate.split('-');
+                                let formatted_date = `${splitNewDate[2]}-${splitNewDate[1]}-${splitNewDate[0]}`;
+                                return formatted_date;
                             } else {
 
                                 return `Sin definir`
@@ -684,45 +691,79 @@
             window.aprobarAc = (id_accion_corectiva, aprobada, id_queja_cliente) => {
                 let url = "{{ route('admin.accion-correctivas.aprobarRechazar') }}";
                 Swal.fire({
-                    title:`¿Está seguro(a) de ${aprobada?'aprobar':'rechazar'} este ticket?`,
-                    text: '',
+                    title: `¿Está seguro(a) de ${aprobada?'aprobar':'rechazar'} este ticket?`,
+                    text: 'Comentarios',
                     icon: 'warning',
+                    input: 'textarea',
+                    inputAttributes: {
+                        input: 'textarea',
+                        required: !aprobada
+                    },
+                    inputValidator: (value) => {
+                        if (!aprobada) {
+                            if (value.trim().length < 3) {
+                                return 'El campo comentarios debe tener al menos 3 caracteres'
+                            }
+                        }
+
+                    },
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
                     confirmButtonText: `Si, ${aprobada?'aprobar':'rechazar'}`,
-                    cancelButtonText: 'Cancelar'
+                    cancelButtonText: 'Cancelar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (login) => {
+                        console.log(login);
+
+                        return fetch(url, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': _token,
+                                    'Content-Type': 'application/json',
+                                    Accept: 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    id: id_accion_corectiva,
+                                    aprobada,
+                                    id_queja_cliente,
+                                    comentarios: login
+                                })
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                }
+                                return response.json()
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(
+                                    `Request failed: ${error}`
+                                )
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            url,
-                            data: {
-                                id: id_accion_corectiva,
-                                aprobada, id_queja_cliente
-                            },
-                            dataType: "JSON",
-                            success: function(response) {
-                                if (response.success) {
-                                    if (response.aprobado) {
-                                        table.ajax.reload()
-                                        toastr.success(response.message);
-                                    } else {
-                                        toastr.success(response.message);
-                                    }
-                                    tableAprobacion.ajax.reload()
-                                }
-                            },
-                            error: function(request, status,
-                                error) {
-                                toastr.error(error);
-                            }
-                        });
+                        if (result.value.success) {
+                            Swal.fire(
+                                 `${result.value.message}`,
+                                 `La respuesta ha sido enviada con éxito`,
+                                 'success'
+                            ).then(() => {
+                                // window.location.reload();
+                                table.ajax.reload();
+                                tableAprobacion.ajax.reload()
+
+                            });
+
+                        }
 
                     }
                 })
 
+
             }
+
+
         });
     </script>
 @endsection

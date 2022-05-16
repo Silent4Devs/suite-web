@@ -2,11 +2,10 @@
 
 namespace App\Http\Livewire\Timesheet;
 
+use App\Models\Empleado;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
-use App\Models\TimesheetTarea;
-use App\Models\Empleado;
 use Livewire\Component;
 
 class TimesheetHorasFilas extends Component

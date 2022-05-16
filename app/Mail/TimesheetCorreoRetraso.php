@@ -2,13 +2,10 @@
 
 namespace App\Mail;
 
+use App\Models\Empleado;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Mail;
-use App\Models\Empleado;
-use App\Models\Timesheet;
 
 class TimesheetCorreoRetraso extends Mailable
 {
