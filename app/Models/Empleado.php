@@ -141,6 +141,7 @@ class Empleado extends Model
         'estado',
         'pais',
         'cp',
+        'fecha_baja'
     ];
 
     public function getActualBirdthdayAttribute()
@@ -325,7 +326,7 @@ class Empleado extends Model
 
     public function onlyChildren()
     {
-        return $this->hasMany(self::class, 'supervisor_id', 'id')->select('id');
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->select('id', 'name', 'foto');
     }
 
     public function children()
@@ -541,5 +542,10 @@ class Empleado extends Model
     public function timesheet()
     {
         return $this->hasMany(Timesheet::class, 'empleado_id', 'id')->orderBy('id')->with('horas');
+    }
+
+    public function comiteSeguridad()
+    {
+        return $this->hasMany(Comiteseguridad::class, 'id_asignada', 'id')->orderBy('id');
     }
 }

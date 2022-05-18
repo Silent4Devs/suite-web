@@ -2,7 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Activo;
+use App\Models\Documento;
 use App\Models\Empleado;
+use App\Models\Recurso;
+use App\Models\RevisionDocumento;
 use App\Traits\EmpleadoFunciones;
 use App\Traits\ObtenerOrganizacion;
 use Livewire\Component;
@@ -14,6 +18,12 @@ class BajaEmpleadoComponent extends Component
     public $empleado;
     public $empleados;
     public $nuevoSupervisor;
+    public $comites;
+    public $documentosQueDeboAprobar;
+    public $documentosQueMeDebenAprobar;
+    public $misActivos;
+    public $misCapacitaciones;
+
     public function hydrate()
     {
         $this->emit('select2');
@@ -24,6 +34,11 @@ class BajaEmpleadoComponent extends Component
     {
         $this->empleado = $empleado;
         $this->empleados = $this->obtenerEmpleados();
+        $this->comites = $this->obtenerComites();
+        $this->documentosQueDeboAprobar = $this->obtenerDocumentosQueDeboAprobar();
+        $this->documentosQueMeDebenAprobar = $this->obtenerDocumentosQueMeDebenAprobar();
+        $this->misActivos = $this->obtenerMisActivos();
+        $this->misCapacitaciones = $this->obtenerCapacitaciones();
     }
 
     public function render()
@@ -36,8 +51,40 @@ class BajaEmpleadoComponent extends Component
 
     public function obtenerEmpleados()
     {
-        $empleados = Empleado::select('id', 'name')->get();
+        $empleados = Empleado::where('id', '!=', $this->empleado->id)->select('id', 'name')->orderBy('name')->get();
         return $empleados;
+    }
+
+    public function obtenerComites()
+    {
+        $comites = $this->empleado->comiteSeguridad;
+        return $comites;
+    }
+
+    public function obtenerDocumentosQueDeboAprobar()
+    {
+        $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $this->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
+        return $revisiones;
+    }
+    public function obtenerDocumentosQueMeDebenAprobar()
+    {
+        $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', $this->empleado->id)->get();
+        return $mis_documentos;
+    }
+
+    public function obtenerMisActivos()
+    {
+        $activos = Activo::select('*')->where('id_responsable', '=', $this->empleado->id)->get();
+        return $activos;
+    }
+
+    public function obtenerCapacitaciones()
+    {
+        $empleado = $this->empleado->id;
+        $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
+            $query->where('empleados.id', $empleado);
+        })->get();
+        return $recursos;
     }
 
     public function cambiarSupervisor()

@@ -1583,6 +1583,7 @@ class EmpleadoController extends Controller
 
     public function solicitudBaja(Empleado $empleado)
     {
+
         return view('admin.empleados.solicitudBaja', compact('empleado'));
     }
 

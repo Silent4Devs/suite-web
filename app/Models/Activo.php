@@ -7,15 +7,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class Activo extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'activos';
 
     protected $dates = [
@@ -54,8 +49,8 @@ class Activo extends Model
 
     protected $casts = [
 
-        'modelo'=>'int',
-        'marca'=>'int',
+        'modelo' => 'int',
+        'marca' => 'int',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
