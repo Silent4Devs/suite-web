@@ -85,7 +85,7 @@
                                                 credenciales de acceso:</p>
                                             <p style="font-size:11pt; color:#153643;text-align: left;">
                                                 <strong>URL de Acceso: </strong><a
-                                                    href="{{ env('APP_URL') }}">{{ env('APP_URL') }}</a>
+                                                    href="{{ config('app.url') }}">{{ config('app.url') }}</a>
                                             </p>
                                             <p style="font-size:11pt; color:#153643;text-align: left;">
                                                 <strong>Usuario: </strong><span>{{ $empleado->email }}</span>

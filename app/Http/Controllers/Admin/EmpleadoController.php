@@ -221,11 +221,7 @@ class EmpleadoController extends Controller
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
-            'estatus' => 'required',
             'email' => 'required|email',
-            // 'sede_id' => 'required|exists:sedes,id',
-            // 'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
-
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
@@ -354,7 +350,7 @@ class EmpleadoController extends Controller
             'perfil_empleado_id' => $request->perfil_empleado_id,
             'supervisor_id' =>  $request->supervisor_id,
             'antiguedad' =>  $request->antiguedad,
-            'estatus' =>  $request->estatus,
+            'estatus' => 'alta',
             'email' =>  $request->email,
             'telefono' =>  $request->telefono,
             'genero' =>  $request->genero,
@@ -1139,11 +1135,7 @@ class EmpleadoController extends Controller
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
-            'estatus' => 'required',
             'email' => 'required|email',
-            // 'sede_id' => 'required|exists:sedes,id',
-            // 'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
-
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
@@ -1217,7 +1209,7 @@ class EmpleadoController extends Controller
             'perfil_empleado_id' => $request->perfil_empleado_id,
             'supervisor_id' =>  $request->supervisor_id,
             'antiguedad' =>  $request->antiguedad,
-            'estatus' =>  $request->estatus,
+            // 'estatus' =>  $request->estatus,
             'email' =>  $request->email,
             'telefono' =>  $request->telefono,
             'genero' =>  $request->genero,
