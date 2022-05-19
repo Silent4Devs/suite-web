@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Functions\CountriesFunction;
 use App\Http\Controllers\Controller;
+use App\Mail\EnviarCorreoBienvenidaTabantaj;
 use App\Models\Area;
 use App\Models\CertificacionesEmpleados;
 use App\Models\CursosDiplomasEmpleados;
@@ -24,17 +25,19 @@ use App\Models\RH\DependientesEconomicosEmpleados;
 use App\Models\RH\EntidadCrediticia;
 use App\Models\RH\TipoContratoEmpleado;
 use App\Models\Sede;
+use App\Models\User;
 use App\Rules\MonthAfterOrEqual;
 use Barryvdh\DomPDF\Facade as PDF;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-
+use Illuminate\Support\Str;
 //use Barryvdh\DomPDF\PDF as DomPDFPDF;
 
 class EmpleadoController extends Controller
@@ -401,12 +404,34 @@ class EmpleadoController extends Controller
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
         ]);
-
+        $this->createUserFromEmpleado($empleado);
         $this->assignDependenciesModel($request, $empleado);
 
         return $empleado;
     }
+    public function createUserFromEmpleado($empleado)
+    {
+        $generatedPassword = $this->generatePassword();
+        $user = User::create([
+            'name' => $empleado->name,
+            'email' => $empleado->email,
+            'password' =>  $generatedPassword['hash'],
+            'n_empleado' => $empleado->n_empleado,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
 
+        //Send email with generated password
+        Mail::to($empleado->email)->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
+        return $user;
+    }
+    public function generatePassword()
+    {
+        $random = str_shuffle('abcdefghjklmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ234567890!$%^&!$%^&');
+        $password = substr($random, 0, 10);
+        $hashed_random_password = Hash::make($password);
+        return ['hash' => $hashed_random_password, 'password' => $password];
+    }
     public function assignDependenciesModel($request, $empleado)
     {
         if (isset($request->dependientes)) {
