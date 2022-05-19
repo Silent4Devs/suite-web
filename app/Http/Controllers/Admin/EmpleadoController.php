@@ -34,10 +34,11 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Str;
+
 //use Barryvdh\DomPDF\PDF as DomPDFPDF;
 
 class EmpleadoController extends Controller
@@ -405,6 +406,7 @@ class EmpleadoController extends Controller
 
         return $empleado;
     }
+
     public function createUserFromEmpleado($empleado)
     {
         $generatedPassword = $this->generatePassword();
@@ -419,15 +421,19 @@ class EmpleadoController extends Controller
 
         //Send email with generated password
         Mail::to($empleado->email)->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
+
         return $user;
     }
+
     public function generatePassword()
     {
         $random = str_shuffle('abcdefghjklmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ234567890!$%^&!$%^&');
         $password = substr($random, 0, 10);
         $hashed_random_password = Hash::make($password);
+
         return ['hash' => $hashed_random_password, 'password' => $password];
     }
+
     public function assignDependenciesModel($request, $empleado)
     {
         if (isset($request->dependientes)) {
