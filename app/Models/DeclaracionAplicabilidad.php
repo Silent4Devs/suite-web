@@ -5,21 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class DeclaracionAplicabilidad extends Model
 {
     use HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
+   
     protected static $flushCacheOnUpdate = true;
     public $table = 'declaracion_aplicabilidad';
-    protected $appends = ['name', 'content'];
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
+   
 
     protected $fillable = [
         'control-uno',
