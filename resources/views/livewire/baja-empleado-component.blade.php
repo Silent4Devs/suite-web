@@ -1,12 +1,23 @@
 <div>
-    <div class="row border p-2">
-        <div class="col-4 text-center">
+    <div class="row p-2">
+        <div class="col-4 border p-2 text-center">
             <img src="{{ $logo }}" alt="" style="width: 100px">
         </div>
-        <div class="col-8" style="text-align: end">
+        <div class="col-4 border p-2" style="text-align: center">
             <h3 style="text-transform: uppercase">{{ $empresa }}</h3>
             <h6>GESTIÓN DE TALENTO</h6>
             <strong>BAJA DE EMPLEADO</strong>
+        </div>
+        <div class="col-4 border p-2">
+            {{ now()->format('d/m/Y') }}
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-6 p-0">
+            <label for="fecha_baja"><i class="fas fa-calendar-day mr-2"></i>Fecha de Baja</label>
+            <div class="input-group mb-2">
+                <input type="date" id="fecha_baja" class="fecha_flatpickr form-control">
+            </div>
         </div>
     </div>
     <div class="row mt-4">

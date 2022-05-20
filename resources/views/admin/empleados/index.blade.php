@@ -388,7 +388,7 @@
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ route('admin.empleados.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('admin.empleados.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
-                                   <a href="{{ route('admin.empleado.solicitud-baja', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></a>
+                                   <a href="{{ route('admin.empleado.solicitud-baja', ':id') }}" class="btn rounded-0" style="color:#AD0505" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></a>
                                 </div>
                             `;
                             // onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')"
