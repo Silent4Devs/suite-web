@@ -8,41 +8,47 @@
 </style> --}}
 
 
+<style>
+    .textoCentroCard {
+            font-size: 12pt !important;
+        }
+</style>
+
 <div class="row">
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-celeste">
             <div class="numero"><i class="fas fa-exclamation-triangle"></i> {{ $total_quejasClientes }}</div>
-            <div>Quejas Clientes</div>
+            <div class="textoCentroCard">Quejas Clientes</div>
         </div>
     </div>
     <div class="col-6 col-md-2 ">
         <div class="tarjetas_seguridad_indicadores cdr-amarillo">
             <div class="numero"><i class="far fa-arrow-alt-circle-right"></i> {{ $nuevos_quejasClientes }}</div>
-            <div>Sin atender</div>
+            <div class="textoCentroCard">Sin atender</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-morado">
             <div class="numero"><i class="fas fa-redo-alt"></i> {{ $en_curso_quejasClientes }}</div>
-            <div>En curso</div>
+            <div class="textoCentroCard">En curso</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-azul">
             <div class="numero"><i class="fas fa-history"></i> {{ $en_espera_quejasClientes }}</div>
-            <div>En espera</div>
+            <div class="textoCentroCard">En espera</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-verde">
             <div class="numero"><i class="far fa-check-circle"></i> {{ $cerrados_quejasClientes }}</div>
-            <div>Cerrados</div>
+            <div class="textoCentroCard">Cerrados</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-rojo">
             <div class="numero"><i class="far fa-circle"></i> {{ $cancelados_quejasClientes }}</div>
-            <div>No procedentes</div>
+            <div class="textoCentroCard">No procedentes</div>
         </div>
     </div>
 </div>
@@ -75,7 +81,7 @@
                 <th style="min-width:500px;">Descripción</th>
                 <th style="min-width:80px;">Estatus</th>
                 <th>Prioridad</th>
-                <th style="min-width:80px;">AC</th>
+                <th style="min-width:150px;">Acción Correctiva</th>
                 <th>Opciones</th>
             </tr>
         </thead>
