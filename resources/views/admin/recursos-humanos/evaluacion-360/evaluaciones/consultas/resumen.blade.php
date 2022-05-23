@@ -114,6 +114,10 @@
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-+UYTD5L/bU1sgAfWA0ELK5RlQ811q8wZIocqI7+K0Lhh8yVdIoAMEs96wJAIbgFvzynPm36ZCXtkydxu1cs27w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('resetValues').addEventListener('click', () => {
@@ -156,6 +160,11 @@
                             beginAtZero: true
                         }
                     }
+                },
+                plugins: [ChartDataLabels],
+                options: {
+                    color: 'black',
+                    display: true
                 }
             });
         });
