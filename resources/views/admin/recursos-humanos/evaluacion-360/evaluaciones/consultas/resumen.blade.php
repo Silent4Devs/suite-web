@@ -106,14 +106,13 @@
                 </div>
             </div>
             <div class="col-12" x-show="open" x-transition>
-                @livewire('ev360-resumen-tabla', ['evaluacion' => $evaluacion->id,'rangos'=>$rangosResultados])
+                @livewire('ev360-resumen-tabla', ['evaluacion' => $evaluacion->id, 'rangos' => $rangosResultados])
             </div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
-    @parent
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -160,5 +159,79 @@
                 }
             });
         });
+    </script>
+    <script>
+        $(function() {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Resumen Evaluación ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Resumen Evaluación ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "export"
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Resumen Evaluación ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    exportOptions: {
+                        columns: ['th:visible'],
+                        orthogonal: "export"
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
+
+            ];
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                scrollCollapse: true,
+                columnDefs: [{
+                    targets: 3,
+                    render: function(data, type, row, meta) {
+                        if (type === "export") {
+                            return data.trim();
+                        }
+                        return data;
+                    }
+                }],
+            };
+            let table = $("#tblResumen").DataTable(dtOverrideGlobals);
+            new $.fn.dataTable.FixedColumns(table, {
+                leftColumns: 4
+            });
+        })
     </script>
 @endsection
