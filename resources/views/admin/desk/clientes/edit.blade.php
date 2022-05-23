@@ -840,6 +840,27 @@
             e.preventDefault();
             validarGuardarQuejaRegistro(true);
         })
+        let btnSiguienteAnalisis = document.getElementById('siguiente_analisis');
+        btnSiguienteAnalisis.addEventListener('click', (e) => {
+            e.preventDefault();
+            validarGuardarAnalisisQueja();
+        })
+        let btnGuardarAnalisis = document.getElementById('btn-guardar-analisis');
+        btnGuardarAnalisis.addEventListener('click', (e) => {
+            e.preventDefault();
+            validarGuardarAnalisisQueja(true);
+        })
+        let btnGuardarAtencion = document.getElementById('btn-guardar-atencion');
+        btnGuardarAtencion.addEventListener('click', (e) => {
+            e.preventDefault();
+            validarGuardarAtencionQueja(true);
+        })
+        let btnGuardarCierre = document.getElementById('btn-guardar-cierre');
+        btnGuardarCierre.addEventListener('click', (e) => {
+            e.preventDefault();
+            validarGuardarAtencionQueja(true);
+        })
+
         function limpiarErrores() {
             if (document.querySelectorAll('.errores').length > 0) {
                 document.querySelectorAll('.errores').forEach(element => {
@@ -915,21 +936,8 @@
             }
         }
 
-        function initializeTab() {
-            const menuActive = localStorage.getItem('menu-capacitaciones-active');
-
-            $('#tabsCapacitaciones a').on('click', async function(event) {
-                event.preventDefault()
-                const keyTab = this.getAttribute('data-type');
-                if (keyTab == 'analisis_queja') {
-
-                    limpiarErrores();
-                    mostrarLoader();
-                    validarGuardarQuejaRegistro()
-                } else if (keyTab == 'atencion_queja') {
-                    limpiarErrores();
-                    mostrarLoader();
-                    const url =
+        async function validarGuardarAnalisisQueja(soloGuardar = false) {
+            const url =
                         "{{ route('admin.desk.quejasClientes.validateFormQuejaCliente') }}";
                     const formData = new FormData(document.getElementById(
                         'quejas-clientes-form'));
@@ -955,10 +963,132 @@
                     }
                     if (data.isValid) {
                         ocultarLoader();
-                        guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, this);
+                        guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-atencion-tab',soloGuardar);
                         // $(this).tab('show');
                         localStorage.setItem('menu-quejas-clientes', 'queja-atencion');
                     }
+
+            
+        }
+        async function  validarGuardarAtencionQueja(soloGuardar = false) {
+            const url =
+                        "{{ route('admin.desk.quejasClientes.validateFormQuejaCliente') }}";
+                    const formData = new FormData(document.getElementById(
+                        'quejas-clientes-form'));
+                    formData.append('tipo_validacion', 'queja-analisis')
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        },
+                    })
+                    const data = await response.json();
+                    console.log(data.errors);
+                    if (data.errors) {
+                        ocultarLoader();
+                        $.each(data.errors, function(indexInArray,
+                            valueOfElement) {
+                            document.querySelector(`span.${indexInArray}_error`)
+                                .innerHTML =
+                                `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
+                        });
+                    }
+                    if (data.isValid) {
+                        ocultarLoader();
+                        guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-cierre-tab',soloGuardar);
+                        // $(this).tab('show');
+                        localStorage.setItem('menu-quejas-clientes', 'queja-atencion');
+                    }
+
+            
+        }
+        async function validarGuardarAnalisisQueja(soloGuardar = false) {
+            const url =
+                        "{{ route('admin.desk.quejasClientes.validateFormQuejaCliente') }}";
+                    const formData = new FormData(document.getElementById(
+                        'quejas-clientes-form'));
+                    formData.append('tipo_validacion', 'queja-analisis')
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        },
+                    })
+                    const data = await response.json();
+                    console.log(data.errors);
+                    if (data.errors) {
+                        ocultarLoader();
+                        $.each(data.errors, function(indexInArray,
+                            valueOfElement) {
+                            document.querySelector(`span.${indexInArray}_error`)
+                                .innerHTML =
+                                `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
+                        });
+                    }
+                    if (data.isValid) {
+                        ocultarLoader();
+                        guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-atencion-tab',soloGuardar);
+                        // $(this).tab('show');
+                        localStorage.setItem('menu-quejas-clientes', 'queja-atencion');
+                    }
+
+            
+        }
+        async function  validarGuardarAtencionQueja(soloGuardar = false) {
+            const url =
+                        "{{ route('admin.desk.quejasClientes.validateFormQuejaCliente') }}";
+                    const formData = new FormData(document.getElementById(
+                        'quejas-clientes-form'));
+                    formData.append('tipo_validacion', 'queja-analisis')
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        },
+                    })
+                    const data = await response.json();
+                    console.log(data.errors);
+                    if (data.errors) {
+                        ocultarLoader();
+                        $.each(data.errors, function(indexInArray,
+                            valueOfElement) {
+                            document.querySelector(`span.${indexInArray}_error`)
+                                .innerHTML =
+                                `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
+                        });
+                    }
+                    if (data.isValid) {
+                        ocultarLoader();
+                        guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-cierre-tab',soloGuardar);
+                        // $(this).tab('show');
+                        localStorage.setItem('menu-quejas-clientes', 'queja-atencion');
+                    }
+
+            
+        }
+
+
+        function initializeTab() {
+            const menuActive = localStorage.getItem('menu-capacitaciones-active');
+
+            $('#tabsCapacitaciones a').on('click', async function(event) {
+                event.preventDefault()
+                const keyTab = this.getAttribute('data-type');
+                if (keyTab == 'analisis_queja') {
+
+                    limpiarErrores();
+                    mostrarLoader();
+                    validarGuardarQuejaRegistro()
+                } else if (keyTab == 'atencion_queja') {
+                    limpiarErrores();
+                    mostrarLoader();
+                    validarGuardarAnalisisQueja();
                 } else if (keyTab == 'cierre_queja') {
                     limpiarErrores();
                     mostrarLoader();

@@ -172,7 +172,8 @@
 
         <div class="mt-4 text-right form-group col-12">
             <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
-            <input type="submit" class="btn btn-success" value="Guardar">
+            {{-- <input type="submit" class="btn btn-success" value="Guardar" id="siguiente_atencionQueja"> --}}
+            <button type="submit" class="btn btn-success" id="btn-guardar-atencion">Guardar</button>
         </div>
 
 
