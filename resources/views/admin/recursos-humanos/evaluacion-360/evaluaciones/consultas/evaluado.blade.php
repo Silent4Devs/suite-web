@@ -46,7 +46,7 @@
                         @endphp
                         <img src="{{ $organizacion->logotipo }}" class="img-fluid" alt="" width="70">
                     </div>
-                    <div class="border col-4">
+                    <div class="border col-4 text-center">
                         <p class="m-0" style="font-size:13px">
                             <strong>Evaluación 360°</strong>
                         </p>
@@ -60,11 +60,13 @@
                         </p>
                         <p class="m-0" style="font-size:11px">
                             <strong>Fecha Inicio:</strong>
-                            <span style="font-size: 11px">{{ $evaluacion->fecha_inicio }}</span>
+                            <span
+                                style="font-size: 11px">{{ \Carbon\Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y') }}</span>
                         </p>
                         <p class="m-0" style="font-size:11px">
                             <strong>Fecha Fin:</strong>
-                            <span style="font-size: 11px">{{ $evaluacion->fecha_fin }}</span>
+                            <span
+                                style="font-size: 11px">{{ \Carbon\Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y') }}</span>
                         </p>
                     </div>
                 </div>
@@ -198,8 +200,7 @@
                         @include(
                             'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
                             [
-                                'tipo' =>
-                                    'autoevaluacion',
+                                'tipo' => 'autoevaluacion',
                             ]
                         )
                     @empty
@@ -249,8 +250,7 @@
                         @include(
                             'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
                             [
-                                'tipo' =>
-                                    'misma_area',
+                                'tipo' => 'misma_area',
                             ]
                         )
                     @empty
