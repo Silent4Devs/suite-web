@@ -6,7 +6,6 @@ use App\Models\QuejasCliente;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ResolucionQuejaRechazadaEmail extends Mailable
 {
@@ -21,7 +20,6 @@ class ResolucionQuejaRechazadaEmail extends Mailable
     {
         $this->quejas = $quejas;
     }
-
 
     /**
      * Build the message.

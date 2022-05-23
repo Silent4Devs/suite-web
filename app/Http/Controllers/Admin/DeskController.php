@@ -2,38 +2,37 @@
 
 namespace App\Http\Controllers\admin;
 
-use Carbon\Carbon;
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\Activo;
-use App\Models\Quejas;
-use App\Models\Mejoras;
-use App\Models\Proceso;
-use App\Models\Empleado;
-use App\Models\Denuncias;
-use App\Models\Sugerencias;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use App\Models\QuejasCliente;
-use Illuminate\Http\Response;
-use App\Models\AccionCorrectiva;
-use App\Models\TimesheetCliente;
-use App\Models\AnalisisSeguridad;
-use App\Models\TimesheetProyecto;
-use App\Models\CategoriaIncidente;
-use App\Models\RiesgoIdentificado;
-use App\Models\IncidentesSeguridad;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use App\Models\SubcategoriaIncidente;
-use App\Models\AnalisisQuejasClientes;
-use App\Mail\SolicitarCierreQuejaEmail;
-use App\Models\EvidenciaQuejasClientes;
-use App\Mail\SeguimientoQuejaClienteEmail;
 use App\Mail\AceptacionAccionCorrectivaEmail;
-use App\Mail\NotificacionARegistroQuejaEmail;
 use App\Mail\NotificacionResponsableQuejaEmail;
+use App\Mail\SeguimientoQuejaClienteEmail;
+use App\Mail\SolicitarCierreQuejaEmail;
+use App\Models\AccionCorrectiva;
+use App\Models\Activo;
+use App\Models\AnalisisQuejasClientes;
+use App\Models\AnalisisSeguridad;
+use App\Models\Area;
+use App\Models\CategoriaIncidente;
+use App\Models\Denuncias;
+use App\Models\Empleado;
+use App\Models\EvidenciaQuejasClientes;
 use App\Models\EvidenciasQuejasClientesCerrado;
+use App\Models\IncidentesSeguridad;
+use App\Models\Mejoras;
+use App\Models\Organizacion;
+use App\Models\Proceso;
+use App\Models\Quejas;
+use App\Models\QuejasCliente;
+use App\Models\RiesgoIdentificado;
+use App\Models\Sede;
+use App\Models\SubcategoriaIncidente;
+use App\Models\Sugerencias;
+use App\Models\TimesheetCliente;
+use App\Models\TimesheetProyecto;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail; //mejora apunta a este modelo
 
 class DeskController extends Controller
@@ -940,7 +939,7 @@ class DeskController extends Controller
 
         $evidenciaCreate = EvidenciaQuejasClientes::where('quejas_clientes_id', '=', $quejasClientes->id)->get();
 
-        return view('admin.desk.clientes.edit', compact('id_quejas','evidenciaCreate', 'cierre', 'clientes', 'proyectos', 'quejasClientes', 'procesos', 'empleados', 'areas', 'activos', 'analisis'));
+        return view('admin.desk.clientes.edit', compact('id_quejas', 'evidenciaCreate', 'cierre', 'clientes', 'proyectos', 'quejasClientes', 'procesos', 'empleados', 'areas', 'activos', 'analisis'));
     }
 
     public function updateQuejasClientes(Request $request, $id_quejas)
@@ -1072,9 +1071,7 @@ class DeskController extends Controller
             }
         }
 
-
-
-        if($notificar_registro_queja){
+        if ($notificar_registro_queja) {
             if (!$quejasClientes->correo_enviado_registro) {
                 $quejasClientes->update([
                     'correo_enviado_registro' => true,
@@ -1082,7 +1079,6 @@ class DeskController extends Controller
                 Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes, $evidenciaArr));
             }
         }
-
 
         if ($desea_levantar_ac) {
             $quejasClientes->load('cliente', 'proyectos', 'responsableAtencion', 'responsableSgi', 'registro');
@@ -1123,10 +1119,8 @@ class DeskController extends Controller
                 ]);
                 Mail::to($quejasClientes->responsableSgi->email)->cc($quejasClientes->registro->email)->send(new AceptacionAccionCorrectivaEmail($quejasClientes, $evidenciaArr));
             }
-
-
         }
-        if($request->ajax()){
+        if ($request->ajax()) {
             return response()->json(['estatus'=>200]);
         }
         // return redirect()->route('admin.desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
@@ -1135,9 +1129,8 @@ class DeskController extends Controller
 
     public function correoResponsableQuejaCliente(Request $request)
     {
-
-        $id_quejas=$request->id;
-        $quejasClientes = QuejasCliente::find(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos','responsableAtencion');
+        $id_quejas = $request->id;
+        $quejasClientes = QuejasCliente::find(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos', 'responsableAtencion');
 
         $quejasClientes->update([
             'responsable_atencion_queja_id'=>$request->responsable_atencion_queja_id,
@@ -1146,22 +1139,18 @@ class DeskController extends Controller
         // dd($request->all());
         Mail::to($quejasClientes->responsableAtencion->email)->cc($quejasClientes->registro->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes));
 
-        return response()->json(['success' => true,'request' => $request->all(),'message'=>'Enviado con éxito']);
-
+        return response()->json(['success' => true, 'request' => $request->all(), 'message'=>'Enviado con éxito']);
     }
 
     public function correoSolicitarCierreQuejaCliente(Request $request)
     {
-
-        $id_quejas=$request->id;
-        $quejasClientes = QuejasCliente::find(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos','responsableAtencion');
-
+        $id_quejas = $request->id;
+        $quejasClientes = QuejasCliente::find(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos', 'responsableAtencion');
 
         // dd($request->all());
         Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new SolicitarCierreQuejaEmail($quejasClientes));
 
-        return response()->json(['success' => true,'request' => $request->all(),'message'=>'Enviado con éxito']);
-
+        return response()->json(['success' => true, 'request' => $request->all(), 'message'=>'Enviado con éxito']);
     }
 
     public function updateAnalisisQuejasClientes(Request $request, $id_quejas)
@@ -1301,7 +1290,7 @@ class DeskController extends Controller
         // $proyectos = QuejasCliente::where('proyectos_id')->pluck('proyectos_id')->toArray();
         // $proyectos = TimesheetProyecto::where('proyectos_id', 'id')
         $quejasproyectos = array_unique(QuejasCliente::pluck('proyectos_id')->toArray());
-        $proyectos = TimesheetProyecto::select('id', 'proyecto','cliente_id')->with('cliente')->find($quejasproyectos);
+        $proyectos = TimesheetProyecto::select('id', 'proyecto', 'cliente_id')->with('cliente')->find($quejasproyectos);
         $proyectosLabel = [];
         foreach ($proyectos as $proyecto) {
             // dd($proyecto);
@@ -1380,18 +1369,18 @@ class DeskController extends Controller
             $this->validateRequestRegistroQuejaCliente($request);
 
             return response()->json(['isValid' => true]);
-        }elseif ($request->tipo_validacion == 'queja-analisis'){
+        } elseif ($request->tipo_validacion == 'queja-analisis') {
             $this->validateRequestRegistroQuejaCliente($request);
             $this->validateRequestAnalisisQuejaCliente($request);
 
             return response()->json(['isValid' => true]);
-        }elseif($request->tipo_validacion == 'queja-atencion'){
+        } elseif ($request->tipo_validacion == 'queja-atencion') {
             $this->validateRequestRegistroQuejaCliente($request);
             $this->validateRequestAnalisisQuejaCliente($request);
             $this->validateRequestAtencionQuejaCliente($request);
 
             return response()->json(['isValid' => true]);
-        }elseif($request->tipo_validacion == 'queja-cierre'){
+        } elseif ($request->tipo_validacion == 'queja-cierre') {
             $this->validateRequestRegistroQuejaCliente($request);
             $this->validateRequestAnalisisQuejaCliente($request);
             $this->validateRequestAtencionQuejaCliente($request);
@@ -1418,11 +1407,9 @@ class DeskController extends Controller
 
     public function validateRequestAnalisisQuejaCliente($request)
     {
-
         $levantamiento_ac = intval($request->levantamiento_ac) == 1 ? true : false;
         $queja_procedente = intval($request->queja_procedente) == 1 ? true : false;
         if ($queja_procedente) {
-
             $request->validate([
                 'urgencia' => 'required',
                 'impacto'=>'required',
@@ -1431,14 +1418,12 @@ class DeskController extends Controller
 
             ]);
             // dd($request->all());
-            if($levantamiento_ac){
+            if ($levantamiento_ac) {
                 $request->validate([
                 'responsable_sgi_id'=>'required',
                 ]);
             }
         }
-
-
     }
 
     public function validateRequestAtencionQuejaCliente($request)

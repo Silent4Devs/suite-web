@@ -6,7 +6,6 @@ use App\Models\QuejasCliente;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SolicitarCierreQuejaEmail extends Mailable
 {
@@ -17,14 +16,12 @@ class SolicitarCierreQuejaEmail extends Mailable
      *
      * @return void
      */
-
     public $quejas;
 
     public function __construct(QuejasCliente $quejas)
     {
         $this->quejas = $quejas;
     }
-
 
     /**
      * Build the message.

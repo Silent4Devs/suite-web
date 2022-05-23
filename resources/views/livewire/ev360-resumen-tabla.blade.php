@@ -1,72 +1,5 @@
 <div>
-    <style>
-        #tblResumen th:first-child {
-            position: sticky;
-            left: 0px;
-            background-color: #343a40;
-            z-index: 2;
-        }
 
-        #tblResumen td:first-child {
-            position: sticky;
-            left: 0px;
-            background-color: #343a40;
-            color: #fff;
-            z-index: 2;
-        }
-
-        #tblResumen th:nth-child(2) {
-            position: sticky;
-            left: 60px;
-            background-color: #343a40;
-            z-index: 2;
-        }
-
-        #tblResumen td:nth-child(2) {
-            position: sticky;
-            left: 60px;
-            background-color: #343a40;
-            color: #fff;
-            z-index: 2;
-        }
-
-        #tblResumen th:nth-child(3) {
-            position: sticky;
-            left: 140px;
-            background-color: #343a40;
-            z-index: 2;
-        }
-
-        #tblResumen td:nth-child(3) {
-            position: sticky;
-            left: 140px;
-            background-color: #343a40;
-            color: #fff;
-            z-index: 2;
-        }
-
-        div#tblResumen_wrapper div:nth-child(2) {
-            overflow: auto;
-        }
-
-    </style>
-    {{-- <div class="mt-3 ml-2 row align-items-center">
-        <div class="pl-2 col-6">
-            <input type="text" class="form-control" placeholder="Buscar..." wire:model.debounce.800ms="search">
-        </div>
-        <div class="text-center col-3 d-flex align-items-center">
-            <span class="mr-2" style="display: inline-block;">Mostrar</span>
-            <select class="form-control" wire:model.debounce.800ms="perPage" style="display: inline-block; width:30%">
-                <option value="1">1</option>
-                <option value="5">5</option>
-                <option value="10" selected="">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-            <span class="ml-2">Página</span>
-        </div>
-    </div> --}}
     <div class="mt-3 ml-3">
         <span wire:loading wire:target="perPage" class="text-muted"><i class="fas fa-spinner fa-pulse"></i> Obteniendo
             Información</span>
@@ -116,44 +49,42 @@
                             <td>
                                 <div class="flex-wrap d-flex">
                                     @foreach ($evaluado['informacion_evaluacion']['evaluadores'] as $evaluador)
-                                        <img src="{{ asset('storage/empleados/imagenes/' . $evaluador->avatar) }}"
-                                            class="rounded-circle" title="{{ $evaluador->name }}">
+                                        @if ($evaluado['evaluado'] != $evaluador->name)
+                                            <span class="badge">{{ $evaluador->name }}</span>
+                                        @endif
                                     @endforeach
                                 </div>
                             </td>
-                            <td>{{ $evaluado['informacion_evaluacion']['peso_general_competencias'] }} %</td>
-                            <td>{{ $evaluado['informacion_evaluacion']['peso_general_objetivos'] }} %</td>
+                            <td>{{ $evaluado['informacion_evaluacion']['peso_general_competencias'] }}%</td>
+                            <td>{{ $evaluado['informacion_evaluacion']['peso_general_objetivos'] }}%</td>
                             <td class="p-0" style="position: relative;">
                                 <div
                                     style="width: {{ round($evaluado['informacion_evaluacion']['promedio_competencias']) }}%;max-width: 100%;height: 100%;background: #3ebed2;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['promedio_competencias']) }}
-                                    %</span>
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['promedio_competencias']) }}%
+                                </span>
                             </td>
                             <td class="p-0" style="position: relative;">
                                 <div
                                     style="width: {{ $evaluado['informacion_evaluacion']['promedio_general_objetivos'] }}%;max-width: 100%;height: 100%;background: #3ebed2;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['promedio_general_objetivos']) }}
-                                    %</span>
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['promedio_general_objetivos']) }}%</span>
                             </td>
                             <td class="p-0" style="position: relative;">
                                 <div
                                     style="width: {{ round($evaluado['informacion_evaluacion']['calificacion_final']) }}%;max-width: 100%;height: 100%;background: #3ebed2;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['calificacion_final']) }}
-                                    %</span>
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['calificacion_final']) }}%</span>
                             </td>
                             @if ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangos['inaceptable'])
                                 <td style="background-color:#ff4747;color:white;text-align: center !important"><i
                                         class="mr-1 fas fa-exclamation-triangle"></i>Inaceptable</td>
                             @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangos['minimo_aceptable'])
                                 <td style="background-color:#e89036;color:white;text-align: center !important"><i
-                                        class="mr-1 fas fa-exclamation-triangle"></i>Mínimo
-                                    Aceptable</td>
+                                        class="mr-1 fas fa-exclamation-triangle"></i>Mínimo Aceptable</td>
                             @elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= $rangos['aceptable'])
                                 <td style="background-color:#3e6cd2;color:white;text-align: center !important"><i
                                         class="mr-1 fas fa-check-circle"></i>Aceptable
@@ -237,8 +168,7 @@
                                             style="width: {{ $promedio }}%;max-width: 100%;height: 100%;background: #56de4d;">
                                         </div>
                                         <span
-                                            style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $promedio }}
-                                            %</span>
+                                            style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $promedio }}%</span>
                                     @else
                                         <span
                                             style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">N/A
@@ -277,12 +207,3 @@
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        $("#tblResumen").DataTable({
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
-            }
-        });
-    })
-</script>
