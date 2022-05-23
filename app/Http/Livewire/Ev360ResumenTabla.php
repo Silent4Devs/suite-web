@@ -282,6 +282,9 @@ class Ev360ResumenTabla extends Component
             if ($this->empleadoTieneCompetenciasAsignadas($evaluado->id, $evaluacion->id)) {
                 $promedio_competencias = floatval(number_format($promedio_competencias_collect->sum(), 2));
                 $promedio_general_competencias = floatval(number_format(($promedio_competencias * ($evaluacion->peso_general_competencias / 100)), 2));
+
+                $promedio_general_competencias = $promedio_general_competencias > intval($evaluacion->peso_general_competencias) ? $evaluacion->peso_general_competencias : $promedio_general_competencias;
+
                 $promedio_competencias = $promedio_general_competencias;
 
                 $calificacion_final += $promedio_general_competencias;

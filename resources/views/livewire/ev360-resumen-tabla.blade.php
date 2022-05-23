@@ -11,10 +11,10 @@
             <table class="table table-bordered w-100 datatable-Activo" id="tblResumen" style="font-size: 10px;">
                 <thead class="thead-dark">
                     <tr>
-                        <th class="text-center" colspan="10">
+                        <th class="text-center" colspan="9">
                             Resultados de la evaluación
                         </th>
-                        <th class="text-center" colspan="{{ $competencias_evaluadas }}">
+                        <th class="text-center" colspan="{{ count($competencias_evaluadas) }}">
                             Competencias
                         </th>
                         <th class="text-center" colspan="{{ $objetivos_evaluados }}">
@@ -22,9 +22,9 @@
                         </th>
                     </tr>
                     <tr>
-                        <th style="vertical-align: top;">Nombre</th>
-                        <th style="vertical-align: top;">Puesto</th>
-                        <th style="vertical-align: top;">Área</th>
+                        <th style="vertical-align: top;">Colaborador</th>
+                        <th style="vertical-align: top;">Puesto / Área</th>
+                        {{-- <th style="vertical-align: top;">Área</th> --}}
                         <th style="vertical-align: top;">Evaluador(es)</th>
                         <th style="vertical-align: top;">Peso Competencias(%)</th>
                         <th style="vertical-align: top;">Peso Objetivos(%)</th>
@@ -44,37 +44,42 @@
                     @forelse ($lista as $evaluado)
                         <tr>
                             <td style="text-align: left !important">{{ $evaluado['evaluado'] }}</td>
-                            <td>{{ $evaluado['puesto'] }}</td>
-                            <td>{{ $evaluado['area'] }}</td>
+                            <td><span class="badge badge-primary">{{ $evaluado['puesto'] }}</span><br><span
+                                    class="badge badge-success">{{ $evaluado['area'] }}</span></td>
+                            {{-- <td>{{ $evaluado['area'] }}</td> --}}
                             <td>
                                 <div class="flex-wrap d-flex">
                                     @foreach ($evaluado['informacion_evaluacion']['evaluadores'] as $evaluador)
                                         @if ($evaluado['evaluado'] != $evaluador->name)
-                                            <span class="badge">{{ $evaluador->name }}</span>
+                                            <span class="badge badge-secondary">{{ $evaluador->name }}</span>
                                         @endif
                                     @endforeach
                                 </div>
                             </td>
+                            @php
+                                $promedio_competencias = ($evaluado['informacion_evaluacion']['promedio_competencias'] * 100) / $evaluado['informacion_evaluacion']['peso_general_competencias'];
+                                $promedio_objetivos = ($evaluado['informacion_evaluacion']['promedio_general_objetivos'] * 100) / $evaluado['informacion_evaluacion']['peso_general_objetivos'];
+                            @endphp
                             <td>{{ $evaluado['informacion_evaluacion']['peso_general_competencias'] }}%</td>
                             <td>{{ $evaluado['informacion_evaluacion']['peso_general_objetivos'] }}%</td>
                             <td class="p-0" style="position: relative;">
                                 <div
-                                    style="width: {{ round($evaluado['informacion_evaluacion']['promedio_competencias']) }}%;max-width: 100%;height: 100%;background: #3ebed2;">
+                                    style="width: {{ round($promedio_competencias) }}%;max-width: 100%;height: 100%;background: #5AFF94;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['promedio_competencias']) }}%
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($promedio_competencias) }}%
                                 </span>
                             </td>
                             <td class="p-0" style="position: relative;">
                                 <div
-                                    style="width: {{ $evaluado['informacion_evaluacion']['promedio_general_objetivos'] }}%;max-width: 100%;height: 100%;background: #3ebed2;">
+                                    style="width: {{ $promedio_objetivos }}%;max-width: 100%;height: 100%;background: #5AFF94;">
                                 </div>
                                 <span
-                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['promedio_general_objetivos']) }}%</span>
+                                    style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($promedio_objetivos) }}%</span>
                             </td>
                             <td class="p-0" style="position: relative;">
                                 <div
-                                    style="width: {{ round($evaluado['informacion_evaluacion']['calificacion_final']) }}%;max-width: 100%;height: 100%;background: #3ebed2;">
+                                    style="width: {{ round($evaluado['informacion_evaluacion']['calificacion_final']) }}%;max-width: 100%;height: 100%;background: #5AD7FF;">
                                 </div>
                                 <span
                                     style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ round($evaluado['informacion_evaluacion']['calificacion_final']) }}%</span>
@@ -90,7 +95,7 @@
                                         class="mr-1 fas fa-check-circle"></i>Aceptable
                                 </td>
                             @elseif($evaluado['informacion_evaluacion']['calificacion_final'] > $rangos['sobresaliente'])
-                                <td style="background-color:#3ed257;color:white;text-align: center !important">
+                                <td style="background-color:#5AFF94;color:white;text-align: center !important">
                                     <i class="mr-1 fas fa-check-circle"></i>
                                     Sobresaliente
                                 </td>
@@ -165,7 +170,7 @@
                                 <td class="p-0" style="position: relative;">
                                     @if (count($collect_calificaciones))
                                         <div
-                                            style="width: {{ $promedio }}%;max-width: 100%;height: 100%;background: #56de4d;">
+                                            style="width: {{ $promedio }}%;max-width: 100%;height: 100%;background: #5AFF94;">
                                         </div>
                                         <span
                                             style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;">{{ $promedio }}%</span>
@@ -184,7 +189,7 @@
                                             $avance_porcentaje = number_format(($objetivo_info['calificacion'] * 100) / ($objetivo_info['meta'] > 0 ? $objetivo_info['meta'] : 1), 2);
                                         @endphp
                                         <div
-                                            style="width: {{ $avance_porcentaje }}%;max-width: 100%;height: 100%;background: #56de4d;">
+                                            style="width: {{ $avance_porcentaje }}%;max-width: 100%;height: 100%;background: #5AFF94;">
                                         </div>
                                         <span title="{{ $objetivo_info['nombre'] }}"
                                             style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;text-align: left;">{{ Str::limit($objetivo_info['nombre'], 20, '...') }}

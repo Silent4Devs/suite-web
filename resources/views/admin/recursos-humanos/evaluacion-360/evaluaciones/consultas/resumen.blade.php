@@ -230,7 +230,7 @@
             };
             let table = $("#tblResumen").DataTable(dtOverrideGlobals);
             new $.fn.dataTable.FixedColumns(table, {
-                leftColumns: 4
+                leftColumns: 3
             });
         })
     </script>
