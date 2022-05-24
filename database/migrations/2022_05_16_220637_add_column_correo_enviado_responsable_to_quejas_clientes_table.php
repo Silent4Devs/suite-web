@@ -18,8 +18,6 @@ class AddColumnCorreoEnviadoResponsableToQuejasClientesTable extends Migration
             $table->boolean('correo_enviado_registro')->default(false);
             $table->boolean('notificar_responsable')->default(false);
             $table->boolean('notificar_registro_queja')->default(false);
-
-
         });
     }
 
