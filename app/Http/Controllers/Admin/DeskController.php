@@ -1024,6 +1024,8 @@ class DeskController extends Controller
             'cumplio_fecha'=>$cumplio_fecha,
             'notificar_responsable'=>$notificar_responsable,
             'notificar_registro_queja'=> $notificar_registro_queja,
+            'porque_no_cierre_ticket' =>  $request->porque_no_cierre_ticket,
+
         ]);
 
         $documento = null;

@@ -276,23 +276,30 @@
             action="{{ route('admin.desk.quejasClientes-update', $quejasClientes) }}" enctype="multipart/form-data">
             @csrf
             <div class="tab-content col-12" id="nav-tabContent">
+                @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
                 <div class="tab-pane fade show active" id="nav-registro" role="tabpanel"
                     aria-labelledby="nav-registro-tab">
                     @include('admin.desk.clientes.atencionQuejas.registro-queja')
                 </div>
+                @endif
 
+                @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
                 <div class="tab-pane fade" id="nav-analisis">
                     @include('admin.desk.clientes.atencionQuejas.analisis-queja')
                 </div>
+                @endif
 
                 @if ($quejasClientes->responsable_atencion_queja_id == auth()->user()->empleado->id || $quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
                 <div class="tab-pane fade" id="nav-atencion">
                     @include('admin.desk.clientes.atencionQuejas.atencion-queja')
                 </div>
                 @endif
+
+                @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
                 <div class="tab-pane fade" id="nav-cierre">
                     @include('admin.desk.clientes.atencionQuejas.cierre-queja')
                 </div>
+                @endif
             </div>
         </form>
 
@@ -790,8 +797,8 @@
     let atencion = document.querySelector('#responsable_atencion_queja_id');
     let area_init = atencion.options[atencion.selectedIndex].getAttribute('data-area');
     let puesto_init = atencion.options[atencion.selectedIndex].getAttribute('data-puesto');
-    document.getElementById('atencion_puesto').innerHTML = recortarTexto(puesto_init)
-    document.getElementById('atencion_area').innerHTML = recortarTexto(area_init)
+    document.getElementById('atencion_puesto').innerHTML = recortarTexto(puesto_init);
+    document.getElementById('atencion_area').innerHTML = recortarTexto(area_init);
 
     let autorizo = document.querySelector('#responsable_sgi_id');
     let area = autorizo.options[autorizo.selectedIndex].getAttribute('data-area');

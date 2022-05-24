@@ -229,7 +229,7 @@
                                                 </p>
 
                                                 <div style="text-align:center; margin-top:20px">
-                                                    <a  href="{{route('admin.desk.index',$quejas) }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
+                                                    <a  href="{{route('admin.desk.quejasClientes-edit',$quejas) }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
                                                         Revisar Queja
                                                     </a>
                                                 </div>
