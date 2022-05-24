@@ -76,6 +76,7 @@ class QuejasCliente extends Model
         'notificar_responsable',
         'notificar_registro_queja',
         'correo_enviado_registro',
+        'porque_no_cierre_ticket',
     ];
 
     protected $appends = [
