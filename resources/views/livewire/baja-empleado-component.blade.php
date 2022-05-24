@@ -9,18 +9,22 @@
             <strong>BAJA DE EMPLEADO</strong>
         </div>
         <div class="col-4 border p-2">
-            {{ now()->format('d/m/Y') }}
+            Fecha: {{ now()->format('d/m/Y') }}
         </div>
     </div>
     <div class="row mt-4">
         <div class="col-6 p-0">
             <label for="fecha_baja"><i class="fas fa-calendar-day mr-2"></i>Fecha de Baja</label>
             <div class="input-group mb-2">
-                <input type="date" id="fecha_baja" class="fecha_flatpickr form-control">
+                <input type="date" id="fecha_baja" wire:model.defer="fechaBaja" class="fecha_flatpickr form-control">
             </div>
         </div>
+        <div class="col-12 p-0">
+            <label for="fecha_baja"><i class="fas fa-info-circle mr-2"></i>Razón de Baja</label>
+            <textarea name="razonBaja" id="razonBaja" cols="30" rows="10" wire:model="razonBaja"></textarea>
+        </div>
     </div>
-    <div class="row mt-4">
+    {{-- <div class="row mt-4">
         <div class="col-6 p-0">
             <div class="list-group m-0" wire:ignore>
                 <a class="list-group-item {{ $empleado->onlyChildren->count() > 0 ? '' : 'active' }}">
@@ -32,7 +36,6 @@
                         </small>
                     </div>
                     <p class="mb-1">Debes seleccionar un nuevo colaborador a cargo</p>
-                    {{-- SELECT --}}
                     <div class="row">
                         <div class="col-12 p-0 mb-2">
                             <select wire:ignore class="form-control form-control-sm select2" id="empleadosSelect">
@@ -182,31 +185,9 @@
                     @endforeach
                 @endif
             </div>
-        </div>
-        {{-- <div class="col-6 p-2 border">
-            <div class="list-group m-0" wire:ignore>
-                <div class="d-flex w-100 justify-content-between mb-2">
-                    <h5 class="mb-1">CAPACITACIONES</h5>
-                    <small><i class="fas fa-info-circle mr-2"></i>Participa en {{ $capacitaciones->count() }}
-                        capcitación(es)</small>
-                </div>
-                @if (count($capacitaciones) === 0)
-                    Sin activos asignados actualmente
-                @else
-                    @foreach ($capacitaciones as $key => $activo_it)
-                        <a class="list-group-item" style="position:relative">
-                            <span class="badge badge-dark"
-                                style="position: absolute;top:-5px;left:-5px">{{ $key + 1 }}</span>
-                            <span class="p-2 border"><strong>ID: </strong>{{ $activo_it->id }}</span>
-                            <span class="p-2 border"><strong>Activo:
-                                </strong>{{ $activo_it->nombreactivo }}</span>
-                            <span class="p-2 border"><strong>No. Serie: </strong>{{ $activo_it->n_serie }}</span>
-                        </a>
-                    @endforeach
-                @endif
-            </div>
-        </div> --}}
-
+        </div>      
+    </div> --}}
+    <div class="row">
         <div class="col-12 mt-2 p-0" style="text-align:end">
             <button class="btn btn-success">Dar de Baja</button>
         </div>
@@ -230,6 +211,28 @@
                 @this.set('nuevoSupervisor', Number(e.params.data.id));
                 @this.cambiarSupervisor();
             });
+
+            //CKEDITOR
+            const editor = CKEDITOR.replace(
+                'razonBaja', {
+                    toolbar: [{
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                            'Bold', 'Italic'
+                        ]
+                    }, {
+                        name: 'clipboard',
+                        items: ['Link', 'Unlink']
+                    }, ],
+                    // Remove the redundant buttons from toolbar groups defined above.
+                    removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar,PasteFromWord'
+                });
+            editor.on('change', function(event) {
+                console.log(event.editor.getData())
+                @this.set('razonBaja', event.editor.getData());
+            })
         });
     </script>
 </div>

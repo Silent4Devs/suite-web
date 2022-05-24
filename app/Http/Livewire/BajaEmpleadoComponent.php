@@ -17,12 +17,15 @@ class BajaEmpleadoComponent extends Component
 
     public $empleado;
     public $empleados;
+    public $fechaBaja;
+    public $razonBaja;
     public $nuevoSupervisor;
     public $comites;
     public $documentosQueDeboAprobar;
     public $documentosQueMeDebenAprobar;
     public $misActivos;
     public $misCapacitaciones;
+
 
     public function hydrate()
     {
