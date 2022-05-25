@@ -15,57 +15,41 @@ class StoreMatrizRiesgoRequest extends FormRequest
     public function rules()
     {
         return [
-            'proceso'              => [
-                'string',
-                'nullable',
+            'id_sede' => [
+                'required',
+                'int',
             ],
-            'responsableproceso'   => [
-                'string',
-                'nullable',
+            'id_proceso' => [
+                'required',
+                'int',            
             ],
-            'amenaza'              => [
-                'string',
-                'nullable',
+            'activo_id' => [
+                'required',
+                'int',
             ],
-            'vulnerabilidad'       => [
-                'string',
-                'nullable',
+            'id_responsable' => [
+                'required',
+                'int',
             ],
-            'descripcionriesgo'    => [
-                'string',
-                'nullable',
+            'id_amenaza'=> [
+                'required',
+                'int',
             ],
-            'confidencialidad'     => [
-              'string',
-              'nullable',
+            'id_vulnerabilidad'=> [
+                'required',
+                'int',
             ],
-            'integridad'           => [
-              'string',
-              'nullable',
-            ],
-            'disponibilidad'       => [
-              'string',
-              'nullable',
-            ],
-            'nivelriesgo'          => [
-                'numeric',
-            ],
-            'riesgototal'          => [
-                'numeric',
-            ],
-            'resultadoponderacion' => [
-                'numeric',
-            ],
-            'riesgoresidual'       => [
-                'numeric',
-            ],
-            'justificacion'        => [
-                'string',
-                'nullable',
-            ],
-            'controles_id'         => [
+            'controles_id'=> [
                 'required',
                 'array',
+            ],
+            'probabilidad'=> [
+                'required',
+                'int',
+            ],
+            'impacto'=> [
+                'required',
+                'int',
             ],
         ];
     }

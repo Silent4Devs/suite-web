@@ -1,5 +1,4 @@
 @section('scripts')
-  
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let responsable = document.querySelector('#id_responsable');
@@ -21,20 +20,20 @@
                 let resultadoponderacion = document.getElementById('resultadoponderacion');
                 let resultado = 0.0;
                 if (e.target.checked) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 if (disponibilidad) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 if (integridad) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 resultadoponderacion.value = Math.round(resultado * 10) / 10;
-                let nivelriesgo = document.getElementById('nivelriesgo');
-                let impacto = Number(document.getElementById('impacto').value);
-                let probabilidad =Number(document.getElementById('probabilidad').value);
-                nivelriesgo.value=Number(((Number(resultadoponderacion.value) + probabilidad)*impacto));
-              
+                // let nivelriesgo = document.getElementById('nivelriesgo');
+                // let impacto = Number(document.getElementById('impacto').value);
+                // let probabilidad =Number(document.getElementById('probabilidad').value);
+                // nivelriesgo.value=Number(((Number(resultadoponderacion.value) + probabilidad)*impacto));
+
 
             })
             document.getElementById('integridad').addEventListener('change', (e) => {
@@ -43,19 +42,19 @@
                 let resultadoponderacion = document.getElementById('resultadoponderacion');
                 let resultado = 0.0;
                 if (e.target.checked) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 if (confidencialidad) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 if (disponibilidad) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 resultadoponderacion.value = Math.round(resultado * 10) / 10;
-                let nivelriesgo = document.getElementById('nivelriesgo');
-                let impacto = Number(document.getElementById('impacto').value);
-                let probabilidad =Number(document.getElementById('probabilidad').value);
-                nivelriesgo.value=Number(((Number(resultadoponderacion.value) + probabilidad)*impacto));
+                // let nivelriesgo = document.getElementById('nivelriesgo');
+                // let impacto = Number(document.getElementById('impacto').value);
+                // let probabilidad =Number(document.getElementById('probabilidad').value);
+                // nivelriesgo.value=Number(((Number(resultadoponderacion.value) + probabilidad)*impacto));
             })
             document.getElementById('disponibilidad').addEventListener('change', (e) => {
                 let integridad = document.getElementById('integridad').checked;
@@ -63,19 +62,19 @@
                 let resultadoponderacion = document.getElementById('resultadoponderacion');
                 let resultado = 0.0;
                 if (e.target.checked) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 if (confidencialidad) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 if (integridad) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 resultadoponderacion.value = Math.round(resultado * 10) / 10;
-                let nivelriesgo = document.getElementById('nivelriesgo');
-                let impacto = Number(document.getElementById('impacto').value);
-                let probabilidad =Number(document.getElementById('probabilidad').value);
-                nivelriesgo.value=Number(((Number(resultadoponderacion.value) + probabilidad)*impacto));
+                // let nivelriesgo = document.getElementById('nivelriesgo');
+                // let impacto = Number(document.getElementById('impacto').value);
+                // let probabilidad =Number(document.getElementById('probabilidad').value);
+                // nivelriesgo.value=Number(((Number(resultadoponderacion.value) + probabilidad)*impacto));
             })
 
             document.getElementById('confidencialidad_cid').addEventListener('change', (e) => {
@@ -84,19 +83,19 @@
                 let resultadoponderacion = document.getElementById('resultadoponderacionRes');
                 let resultado = 0.0;
                 if (e.target.checked) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 if (disponibilidad) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 if (integridad) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 resultadoponderacion.value = Math.round(resultado * 10) / 10;
-                let nivelriesgo = document.getElementById('nivelriesgo_residual');
-                let impacto = Number(document.getElementById('impacto_residual').value);
-                let probabilidad =Number(document.getElementById('probabilidad_residual').value);
-                nivelriesgo.value=Number(((Number(resultadoponderacion.value) + probabilidad)*impacto));
+                // let nivelriesgo = document.getElementById('nivelriesgo_residual');
+                // let impacto = Number(document.getElementById('impacto_residual').value);
+                // let probabilidad =Number(document.getElementById('probabilidad_residual').value);
+                // nivelriesgo.value=Number(((Number(resultadoponderacion.value) + probabilidad)*impacto));
             })
             document.getElementById('integridad_cid').addEventListener('change', (e) => {
                 let disponibilidad = document.getElementById('disponibilidad_cid').checked;
@@ -104,19 +103,19 @@
                 let resultadoponderacion = document.getElementById('resultadoponderacionRes');
                 let resultado = 0.0;
                 if (e.target.checked) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 if (confidencialidad) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 if (disponibilidad) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 resultadoponderacion.value = Math.round(resultado * 10) / 10;
-                let nivelriesgo = document.getElementById('nivelriesgo_residual');
-                let impacto = Number(document.getElementById('impacto_residual').value);
-                let probabilidad =Number(document.getElementById('probabilidad_residual').value);
-                nivelriesgo.value=Number(((Number(resultadoponderacion.value) + probabilidad)*impacto));
+                // let nivelriesgo = document.getElementById('nivelriesgo_residual');
+                // let impacto = Number(document.getElementById('impacto_residual').value);
+                // let probabilidad =Number(document.getElementById('probabilidad_residual').value);
+                // nivelriesgo.value=Number(((Number(resultadoponderacion.value) + probabilidad)*impacto));
             })
             document.getElementById('disponibilidad_cid').addEventListener('change', (e) => {
                 let integridad = document.getElementById('integridad_cid').checked;
@@ -124,19 +123,19 @@
                 let resultadoponderacion = document.getElementById('resultadoponderacionRes');
                 let resultado = 0.0;
                 if (e.target.checked) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 if (confidencialidad) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 if (integridad) {
-                    resultado += 1;
+                    resultado += .33;
                 }
                 resultadoponderacion.value = Math.round(resultado * 10) / 10;
-                let nivelriesgo = document.getElementById('nivelriesgo_residual');
-                let impacto = Number(document.getElementById('impacto_residual').value);
-                let probabilidad =Number(document.getElementById('probabilidad_residual').value);
-                nivelriesgo.value=Number(((Number(resultadoponderacion.value) + probabilidad)*impacto));
+                // let nivelriesgo = document.getElementById('nivelriesgo_residual');
+                // let impacto = Number(document.getElementById('impacto_residual').value);
+                // let probabilidad =Number(document.getElementById('probabilidad_residual').value);
+                // nivelriesgo.value=Number(((Number(resultadoponderacion.value) + probabilidad)*impacto));
             })
         });
     </script>
@@ -172,20 +171,12 @@
     <script type=text/javascript>
         $('#probabilidad').change(function() {
             var impactoID = document.getElementById("impacto").value;
-            var ponderacion = document.getElementById("resultadoponderacion").value;
+            // var ponderacion = document.getElementById("resultadoponderacion").value;
             let probabilidadID = $(this).val();
-            let result = (Number(probabilidadID) + Number(ponderacion)) * Number(impactoID);
+            let result = Number(probabilidadID) * Number(impactoID);
             document.getElementById("nivelriesgo").value = result;
             switch (true) {
-                case result >= 0 && result <= 6:
-                    $('#nivelriesgo_pre').text('Muy Bajo');
-                    $('#nivelriesgo_pre').removeClass("text-dark");
-                    $('#nivelriesgo_pre').removeClass("text-orange");
-                    $('#nivelriesgo_pre').removeClass("text-yellow");
-                    $('#nivelriesgo_pre').removeClass("text-danger");
-                    $('#nivelriesgo_pre').addClass('text-primary');
-                    break;
-                case result >= 7 && result <= 10:
+                case result == 0:
                     $('#nivelriesgo_pre').text('Bajo');
                     $('#nivelriesgo_pre').removeClass("text-dark");
                     $('#nivelriesgo_pre').removeClass("text-orange");
@@ -193,15 +184,15 @@
                     $('#nivelriesgo_pre').removeClass("text-danger");
                     $('#nivelriesgo_pre').addClass('text-success');
                     break;
-                case result >= 11 && result <= 15:
-                    $('#nivelriesgo_pre').text('Moderado');
+                case result >= 9 && result <= 18:
+                    $('#nivelriesgo_pre').text('Medio');
                     $('#nivelriesgo_pre').removeClass("text-dark");
                     $('#nivelriesgo_pre').removeClass("text-orange");
-                    $('#nivelriesgo_pre').removeClass("text-success");
+                    $('#nivelriesgo_pre').removeClass("text-yellow");
                     $('#nivelriesgo_pre').removeClass("text-danger");
-                    $('#nivelriesgo_pre').addClass('text-secondary');
+                    $('#nivelriesgo_pre').addClass('text-yellow');
                     break;
-                case result >= 16 && result <= 21:
+                case result >= 27 && result <= 36:
                     $('#nivelriesgo_pre').text('Alto');
                     $('#nivelriesgo_pre').removeClass("text-dark");
                     $('#nivelriesgo_pre').removeClass("text-orange");
@@ -209,10 +200,10 @@
                     $('#nivelriesgo_pre').removeClass("text-danger");
                     $('#nivelriesgo_pre').addClass('text-orange');
                     break;
-                case result >= 22 && result <= 40:
-                    $('#nivelriesgo_pre').text('Crítico');
+                case result >= 54 && result <= 81:
+                    $('#nivelriesgo_pre').text('Muy Alto');
                     $('#nivelriesgo_pre').removeClass("text-dark");
-                    $('#nivelriesgo_pre').removeClass("text-yellow");
+                    $('#nivelriesgo_pre').removeClass("text-orange");
                     $('#nivelriesgo_pre').removeClass("text-success");
                     $('#nivelriesgo_pre').removeClass("text-danger");
                     $('#nivelriesgo_pre').addClass('text-danger');
@@ -228,34 +219,26 @@
             var probabilidadID = document.getElementById("probabilidad").value;
             var ponderacion = document.getElementById("resultadoponderacion").value;
             let impactoID = $(this).val();
-            let result = (Number(probabilidadID) + Number(ponderacion)) * Number(impactoID);
+            let result = Number(probabilidadID) * Number(impactoID);
             document.getElementById("nivelriesgo").value = result;
             switch (true) {
-                case result >= 0 && result <= 6:
-                    $('#nivelriesgo_pre').text('Muy Bajo');
-                    $('#nivelriesgo_pre').removeClass("text-dark");
-                    $('#nivelriesgo_pre').removeClass("text-orange");
-                    $('#nivelriesgo_pre').removeClass("text-yellow");
-                    $('#nivelriesgo_pre').removeClass("text-danger");
-                    $('#nivelriesgo_pre').addClass('text-primary');
-                    break;
-                case result >= 7 && result <= 10:
+                case result == 0:
                     $('#nivelriesgo_pre').text('Bajo');
                     $('#nivelriesgo_pre').removeClass("text-dark");
                     $('#nivelriesgo_pre').removeClass("text-orange");
                     $('#nivelriesgo_pre').removeClass("text-yellow");
                     $('#nivelriesgo_pre').removeClass("text-danger");
-                    $('#nivelriesgo_pre').addClass('text-success');
+                    $('#nivelriesgo_pre').addClass('text-succes');
                     break;
-                case result >= 11 && result <= 15:
-                    $('#nivelriesgo_pre').text('Moderado');
+                case result >= 9 && result <= 18:
+                    $('#nivelriesgo_pre').text('Medio');
                     $('#nivelriesgo_pre').removeClass("text-dark");
                     $('#nivelriesgo_pre').removeClass("text-orange");
-                    $('#nivelriesgo_pre').removeClass("text-success");
+                    $('#nivelriesgo_pre').removeClass("text-yellow");
                     $('#nivelriesgo_pre').removeClass("text-danger");
-                    $('#nivelriesgo_pre').addClass('text-secondary');
+                    $('#nivelriesgo_pre').addClass('text-yellow');
                     break;
-                case result >= 16 && result <= 21:
+                case result >= 27 && result <= 36:
                     $('#nivelriesgo_pre').text('Alto');
                     $('#nivelriesgo_pre').removeClass("text-dark");
                     $('#nivelriesgo_pre').removeClass("text-orange");
@@ -263,10 +246,10 @@
                     $('#nivelriesgo_pre').removeClass("text-danger");
                     $('#nivelriesgo_pre').addClass('text-orange');
                     break;
-                case result >= 22 && result <= 40:
-                    $('#nivelriesgo_pre').text('Crítico');
+                case result >= 54 && result <= 81:
+                    $('#nivelriesgo_pre').text('Muy Alto');
                     $('#nivelriesgo_pre').removeClass("text-dark");
-                    $('#nivelriesgo_pre').removeClass("text-yellow");
+                    $('#nivelriesgo_pre').removeClass("text-orange");
                     $('#nivelriesgo_pre').removeClass("text-success");
                     $('#nivelriesgo_pre').removeClass("text-danger");
                     $('#nivelriesgo_pre').addClass('text-danger');
@@ -281,46 +264,38 @@
     <script type=text/javascript>
         $('#probabilidad_residual').change(function() {
             var impactoID_residual = document.getElementById("impacto_residual").value;
-            var ponderacionRes = document.getElementById("resultadoponderacionRes").value;
+            // var ponderacionRes = document.getElementById("resultadoponderacionRes").value;
             let probabilidadID_residual = $(this).val();
             //$("#nivelriesgo_residual").attr("value", Number(probabilidadID_residual) * Number(impactoID_residual));
-            let result1 = (Number(probabilidadID_residual) + Number(ponderacionRes)) * Number(impactoID_residual);
+            let result1 = Number(probabilidadID_residual) * Number(impactoID_residual);
             document.getElementById("nivelriesgo_residual").value = result1;
             switch (true) {
-                case result1 >= 0 && result1 <= 6:
+                case result1 == 0:
                     $('#nivelriesgo_residual_pre').text('Bajo');
                     $('#nivelriesgo_residual_pre').removeClass("text-dark");
                     $('#nivelriesgo_residual_pre').removeClass("text-orange");
                     $('#nivelriesgo_residual_pre').removeClass("text-yellow");
                     $('#nivelriesgo_residual_pre').removeClass("text-danger");
-                    $('#nivelriesgo_residual_pre').addClass('text-primary');
+                    $('#nivelriesgo_residual_pre').addClass('text-success');
                     break;
-                    case result1 >= 7 && result1 <= 10:
+                case result1 >= 9 && result1 <= 18:
                     $('#nivelriesgo_residual_pre').text('Bajo');
                     $('#nivelriesgo_residual_pre').removeClass("text-dark");
                     $('#nivelriesgo_residual_pre').removeClass("text-orange");
                     $('#nivelriesgo_residual_pre').removeClass("text-success");
                     $('#nivelriesgo_residual_pre').removeClass("text-danger");
-                    $('#nivelriesgo_residual_pre').addClass('text-succes');
+                    $('#nivelriesgo_residual_pre').addClass('text-yellow');
                     break;
-                    case result1 >= 11 && result1 <= 15:
+                case result1 >= 27 && result1 <= 36:
                     $('#nivelriesgo_residual_pre').text('Moderado');
                     $('#nivelriesgo_residual_pre').removeClass("text-dark");
                     $('#nivelriesgo_residual_pre').removeClass("text-orange");
                     $('#nivelriesgo_residual_pre').removeClass("text-success");
                     $('#nivelriesgo_residual_pre').removeClass("text-danger");
-                    $('#nivelriesgo_residual_pre').addClass('text-secondary');
-                    break;
-                    case result1 >= 16 && result1 <= 21:
-                    $('#nivelriesgo_residual_pre').text('Alto');
-                    $('#nivelriesgo_residual_pre').removeClass("text-dark");
-                    $('#nivelriesgo_residual_pre').removeClass("text-yellow");
-                    $('#nivelriesgo_residual_pre').removeClass("text-success");
-                    $('#nivelriesgo_residual_pre').removeClass("text-danger");
                     $('#nivelriesgo_residual_pre').addClass('text-orange');
                     break;
-                    case result1 >= 22 && result1 <= 40:
-                    $('#nivelriesgo_residual_pre').text('Crítico');
+                case result1 >= 54 && result1 <= 81:
+                    $('#nivelriesgo_residual_pre').text('Alto');
                     $('#nivelriesgo_residual_pre').removeClass("text-dark");
                     $('#nivelriesgo_residual_pre').removeClass("text-yellow");
                     $('#nivelriesgo_residual_pre').removeClass("text-success");
@@ -337,44 +312,36 @@
             var probabilidadID_residual = document.getElementById("probabilidad_residual").value;
             let impactoID_residual = $(this).val();
             var ponderacionRes = document.getElementById("resultadoponderacionRes").value;
-            let result1 = (Number(probabilidadID_residual) + Number(ponderacionRes)) * Number(impactoID_residual);
+            let result1 = Number(probabilidadID_residual) * Number(impactoID_residual);
             //$("#nivelriesgo_residual").attr("value", Number(probabilidadID_residual) * Number(impactoID_residual));
             document.getElementById("nivelriesgo_residual").value = result1;
             switch (true) {
-                case result1 >= 0 && result1 <= 6:
+                case result1 == 0 :
                     $('#nivelriesgo_residual_pre').text('Bajo');
                     $('#nivelriesgo_residual_pre').removeClass("text-dark");
                     $('#nivelriesgo_residual_pre').removeClass("text-orange");
                     $('#nivelriesgo_residual_pre').removeClass("text-yellow");
                     $('#nivelriesgo_residual_pre').removeClass("text-danger");
-                    $('#nivelriesgo_residual_pre').addClass('text-primary');
+                    $('#nivelriesgo_residual_pre').addClass('text-success');
                     break;
-                    case result1 >= 7 && result1 <= 10:
+                case result1 >= 9 && result1 <= 18:
                     $('#nivelriesgo_residual_pre').text('Bajo');
                     $('#nivelriesgo_residual_pre').removeClass("text-dark");
                     $('#nivelriesgo_residual_pre').removeClass("text-orange");
                     $('#nivelriesgo_residual_pre').removeClass("text-success");
                     $('#nivelriesgo_residual_pre').removeClass("text-danger");
-                    $('#nivelriesgo_residual_pre').addClass('text-succes');
+                    $('#nivelriesgo_residual_pre').addClass('text-yellow');
                     break;
-                    case result1 >= 11 && result1 <= 15:
+                case result1 >= 27 && result1 <= 36:
                     $('#nivelriesgo_residual_pre').text('Moderado');
                     $('#nivelriesgo_residual_pre').removeClass("text-dark");
                     $('#nivelriesgo_residual_pre').removeClass("text-orange");
                     $('#nivelriesgo_residual_pre').removeClass("text-success");
                     $('#nivelriesgo_residual_pre').removeClass("text-danger");
-                    $('#nivelriesgo_residual_pre').addClass('text-secondary');
-                    break;
-                    case result1 >= 16 && result1 <= 21:
-                    $('#nivelriesgo_residual_pre').text('Alto');
-                    $('#nivelriesgo_residual_pre').removeClass("text-dark");
-                    $('#nivelriesgo_residual_pre').removeClass("text-yellow");
-                    $('#nivelriesgo_residual_pre').removeClass("text-success");
-                    $('#nivelriesgo_residual_pre').removeClass("text-danger");
                     $('#nivelriesgo_residual_pre').addClass('text-orange');
                     break;
-                    case result1 >= 22 && result1 <= 40:
-                    $('#nivelriesgo_residual_pre').text('Crítico');
+                case result1 >= 54 && result1 <= 81:
+                    $('#nivelriesgo_residual_pre').text('Alto');
                     $('#nivelriesgo_residual_pre').removeClass("text-dark");
                     $('#nivelriesgo_residual_pre').removeClass("text-yellow");
                     $('#nivelriesgo_residual_pre').removeClass("text-success");

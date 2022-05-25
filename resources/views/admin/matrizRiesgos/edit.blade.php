@@ -222,7 +222,7 @@
 
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
                     riesgo</p>
-                <input type="text" id="resultadoponderacion" name="resultadoponderacion" value="{{ old('resultadoponderacion', $matrizRiesgo->resultadoponderacion) }}">
+                <input type="hidden" id="resultadoponderacion" name="resultadoponderacion" value="{{ old('resultadoponderacion', $matrizRiesgo->resultadoponderacion) }}">
 
                 <div class="py-2 row">
                     <div class="form-group col-sm-3">
@@ -471,7 +471,7 @@
                 </div>
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
                     riesgo</p>
-                <input type="text" id="resultadoponderacionRes" name="resultadoponderacionRes" value="{{ old('resultadoponderacionRes', $matrizRiesgo->resultadoponderacionRes) }}">
+                <input type="hidden" id="resultadoponderacionRes" name="resultadoponderacionRes" value="{{ old('resultadoponderacionRes', $matrizRiesgo->resultadoponderacionRes) }}">
                 <div class="py-2 row">
                     <div class="form-group col-sm-3">
                         <div class="custom-control custom-checkbox">
