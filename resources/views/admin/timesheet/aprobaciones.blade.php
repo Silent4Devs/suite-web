@@ -137,7 +137,7 @@
                             <div class="text-center">
                                 <i class="fa-solid fa-calendar-check" style="color: #3CA06C; font-size:60pt;"></i>
                                 <h1 class="my-4" style="font-size:14pt;">Aceptar Registro</h1>
-                                <p class="parrafo">¿Esta seguro que desea aceptar este registro?</p>
+                                <p class="parrafo">¿Está seguro que desea aceptar este registro?</p>
                             </div>
                             
                             <div class="mt-4">
@@ -150,7 +150,7 @@
                                     </div>
                                     <div class="col-12 text-right">
                                          <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
-                                            Canecelar
+                                            Cancelar
                                         </button>
                                         <button title="Rechazar" class="btn btn-info" style="border:none; background-color:#3CA06C;">
                                             <i class="fas fa-calendar-check iconos_crear"></i>
@@ -177,7 +177,7 @@
                             <div class="text-center">
                                 <i class="fa-solid fa-calendar-xmark" style="color: #F05353; font-size:60pt;"></i>
                                 <h1 class="my-4" style="font-size:14pt;">Rechazar Registro</h1>
-                                <p class="parrafo">¿Esta seguro que desea rechazar este registro?</p>
+                                <p class="parrafo">¿Está seguro que desea rechazar este registro?</p>
                             </div>
                             
                             <div class="mt-4">
@@ -190,7 +190,7 @@
                                     </div>
                                     <div class="col-12 text-right">
                                         <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
-                                            Canecelar
+                                            Cancelar
                                         </button>
                                         <button title="Rechazar" class="btn btn-info" style="border:none; background-color:#F05353;">
                                             <i class="fas fa-calendar-xmark iconos_crear"></i>

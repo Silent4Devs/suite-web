@@ -1,5 +1,4 @@
-<div>
-        
+<div>    
     <div class="row">
         @include('partials.flashMessages')
         <div class="col-12 d-flex justify-content-between">
@@ -112,5 +111,4 @@
             
         });
     </script>
-
 </div>

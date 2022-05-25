@@ -2,15 +2,22 @@
 
 namespace App\Http\Livewire\Timesheet;
 
+use App\Mail\TimesheetCorreoRetraso;
 use App\Models\Empleado;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
+use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class ReportesEmpleados extends Component
 {
+    use getWeeksFromRange;
+    use LivewireAlert;
+
     public $lista_empleados;
     public $empleado_seleccionado_id;
     public $hoy_format;
@@ -41,12 +48,31 @@ class ReportesEmpleados extends Component
         $empleados_list = Empleado::get();
         foreach ($empleados_list as $empleado_list) {
             $times_atrasados = 0;
-            $times_empleado = Timesheet::where('empleado_id', $empleado_list->id)->whereMonth('fecha_dia', $hoy)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
+            $times_empleado = Timesheet::where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
 
-            if ($times_empleado < ($semanas_del_mes)) {
-                $times_atrasados = ($semanas_del_mes - 1) - $times_empleado;
+            $fecha_inicio = date_create($empleado_list->antiguedad->format('d-m-Y'));
+            $fecha_fin = date_create($hoy->format('d-m-Y'));
+
+            $semanas_empleado = intval(date_diff($fecha_inicio, $fecha_fin)->format('%R%a') / 7);
+
+            if ($times_empleado < $semanas_empleado) {
+                $times_atrasados = $semanas_empleado - $times_empleado;
             }
 
+            // semanas faltantes
+            $antiguedad_y = Carbon::parse($empleado_list->antiguedad)->format('Y');
+            $antiguedad_m = Carbon::parse($empleado_list->antiguedad)->format('m');
+            $antiguedad_d = Carbon::parse($empleado_list->antiguedad)->format('d');
+            $times_empleado_list = Timesheet::where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'papelera')->where('estatus', '!=', 'rechazado')->get();
+            $times_empleado_array = [];
+
+            foreach ($times_empleado_list as $time) {
+                $times_empleado_array[] = $time->semana_y;
+            }
+
+            $times_faltantes_empleado = $this->getWeeksFromRange($antiguedad_y, $antiguedad_m, $antiguedad_d, $times_empleado_array);
+
+            // array empleados
             $this->empleados->push([
                 'id'=>$empleado_list->id,
                 'avatar_ruta'=>$empleado_list->avatar_ruta,
@@ -54,6 +80,7 @@ class ReportesEmpleados extends Component
                 'area'=>$empleado_list->area ? $empleado_list->area->area : '',
                 'puesto'=>$empleado_list->puesto,
                 'times_atrasados'=>$times_atrasados,
+                'times_faltantes'=>$times_faltantes_empleado,
             ]);
         }
 
@@ -164,6 +191,28 @@ class ReportesEmpleados extends Component
         $this->times_empleado = Timesheet::where('empleado_id', $this->empleado_seleccionado_id)->get();
 
         $this->emit('scriptTabla');
+    }
+
+    public function correoRetraso($id)
+    {
+        $empleado = Empleado::select('id', 'name', 'email', 'antiguedad')->find($id);
+        $antiguedad_y = Carbon::parse($empleado->antiguedad)->format('Y');
+        $antiguedad_m = Carbon::parse($empleado->antiguedad)->format('m');
+        $antiguedad_d = Carbon::parse($empleado->antiguedad)->format('d');
+        $times_empleado = Timesheet::where('empleado_id', $empleado->id)->where('estatus', '!=', 'papelera')->where('estatus', '!=', 'rechazado')->get();
+        $times_empleado_array = [];
+
+        foreach ($times_empleado as $time) {
+            $times_empleado_array[] = $time->semana_y;
+        }
+
+        $times_faltantes_empleado = $this->getWeeksFromRange($antiguedad_y, $antiguedad_m, $antiguedad_d, $times_empleado_array);
+
+        Mail::to($empleado->email)->send(new TimesheetCorreoRetraso($empleado, $times_faltantes_empleado));
+
+        $this->alert('success', 'Correo Enviado!');
+
+        $this->empleado = null;
     }
 
     public function todos()

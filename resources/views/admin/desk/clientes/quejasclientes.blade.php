@@ -26,7 +26,9 @@
 
                 <div class="mt-4">
                     <strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón
-                    "Enviar"
+                    "Enviar".
+                    <p>
+                        Sólo los campos marcados con un (<strong class="text-danger">*</strong>) son obligatorios</p>
                 </div>
 
                 <form class="row" method="POST" action="{{ route('admin.desk.quejasClientes-store') }}"
@@ -42,18 +44,20 @@
                     <div class="mt-0 form-group col-6">
                         <label class="form-label"><i
                                 class="bi bi-building mr-2 iconos-crear"></i>Cliente<sup>*</sup></label>
-                        <select class="form-control {{ $errors->has('cliente_id') ? 'is-invalid' : '' }}" name="cliente_id" required>
+                        <select class="form-control {{ $errors->has('cliente_id') ? 'is-invalid' : '' }}"
+                            name="cliente_id" required>
                             <option disabled selected>Seleccionar al cliente</option>
                             @foreach ($clientes as $cliente)
-                                <option {{old('cliente_id') == $cliente->id ? ' selected="selected"' : ''}} value="{{ $cliente->id }}">
+                                <option {{ old('cliente_id') == $cliente->id ? ' selected="selected"' : '' }}
+                                    value="{{ $cliente->id }}">
                                     {{ $cliente->nombre }}
                                 </option>
                             @endforeach
                         </select>
                         @if ($errors->has('cliente_id'))
-                        <span class="text-danger">
-                            {{ $errors->first('cliente_id') }}
-                        </span>
+                            <span class="text-danger">
+                                {{ $errors->first('cliente_id') }}
+                            </span>
                         @endif
                     </div>
 
@@ -62,7 +66,8 @@
                         <select class="form-control" name="proyectos_id" required>
                             <option disabled selected>Seleccionar el proyecto</option>
                             @foreach ($proyectos as $proyecto)
-                                <option {{old('proyectos_id') == $proyecto->id ? ' selected="selected"' : ''}} value="{{ $proyecto->id }}">
+                                <option {{ old('proyectos_id') == $proyecto->id ? ' selected="selected"' : '' }}
+                                    value="{{ $proyecto->id }}">
                                     {{ $proyecto->proyecto }}
                                 </option>
                             @endforeach
@@ -83,10 +88,10 @@
                             cliente<sup>*</sup></label>
                         <input type="text" name="nombre" value="{{ old('nombre') }}" class="form-control" required>
                         @if ($errors->has('nombre'))
-                        <span class="text-danger">
-                            {{ $errors->first('nombre') }}
-                        </span>
-                    @endif
+                            <span class="text-danger">
+                                {{ $errors->first('nombre') }}
+                            </span>
+                        @endif
                     </div>
 
                     <div class="mt-0 form-group col-6">
@@ -100,7 +105,7 @@
                     </div>
 
                     <div class="mt-0 form-group col-6">
-                        <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo electrónico</label>
+                        <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo electrónico<sup>*</sup></label>
                         <input type="text" name="correo" value="{{ old('correo') }}" class="form-control">
                     </div>
                     {{-- </div> --}}
@@ -182,7 +187,8 @@
 
                     <div class="mt-2 form-group col-md-8">
                         <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título corto de la
-                            queja<sup>*</sup></label>
+                            queja<sup>*</sup></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                            title="Describa de forma breve y con palabras clave el motivo de la queja."></i>
                         <input type="" name="titulo" class="form-control" value="{{ old('titulo') }}" required>
                         @if ($errors->has('titulo'))
                             <span class="text-danger">
@@ -194,7 +200,8 @@
 
                     <div class="mt-2 form-group col-md-4">
                         <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i> Fecha y hora de
-                            ocurrencia<sup>*</sup></label>
+                            ocurrencia<sup>*</sup></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                            title="Indique la fecha y hora aproximada en la que ocurrió el evento que motivó la queja."></i>
                         <input type="datetime-local" name="fecha" class="form-control" value="{{ old('fecha') }}"
                             required>
                         @if ($errors->has('fecha'))
@@ -208,22 +215,28 @@
                     <div class="mt-2 form-group col-md-6">
                         <label class="form-label"><i class="fas fa-map iconos-crear"></i>Ubicación física donde se
                             originó la queja
-                        </label>
+                        </label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                        title="Indique el lugar en el que ocurrió el evento que motivó la queja."></i>
                         <input type="" name="ubicacion" class="form-control" value="{{ old('ubicacion') }}">
                     </div>
 
                     <div class="mt-2 form-group col-6">
                         <label class="form-label"><i class="fas fa-satellite iconos-crear"></i>Canal de recepción de la
-                            queja
-                        </label>
-                        <select name="canal" id="otros_campo" class="form-control">
+                            queja<sup>*</sup>
+                        </label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                        title="Indique el medio a través del cual se recibe esta queja."></i>
+                        <select name="canal" id="otros_campo" value="{{ old('otro_canal') }}"
+                            class="form-control {{ $errors->has('canal') ? 'is-invalid' : '' }}" required>
                             <option value="" selected>Selecciona una opción</option>
-                            <option value="Correo electronico">Correo electrónico</option>
-                            <option value="Via telefonica">Vía telefónica</option>
-                            <option value="Forma presencial">Forma presencial</option>
-                            <option value="Forma remota">Forma remota</option>
-                            <option value="Oficio">Oficio</option>
-                            <option value="Otro">Otro</option>
+                            <option {{ old('canal') == 'Correo electronico' ? 'selected' : '' }}
+                                value="Correo electronico">Correo electrónico</option>
+                            <option {{ old('canal') == 'Via telefonica' ? 'selected' : '' }} value="Via telefonica">Vía
+                                telefónica</option>
+                            <option {{ old('canal') == 'Presencial' ? 'selected' : '' }} value="Presencial">Presencial
+                            </option>
+                            <option {{ old('canal') == 'Remota' ? 'selected' : '' }} value="Remota">Remota</option>
+                            <option {{ old('canal') == 'Oficio' ? 'selected' : '' }} value="Oficio">Oficio</option>
+                            <option {{ old('canal') == 'Otro' ? 'selected' : '' }} value="Otro">Otro</option>
                         </select>
                     </div>
 
@@ -248,24 +261,24 @@
                         @endif
                     </div>
 
-                    <div class="row col-12">
-                        <div class="mt-2 form-group col-12">
-                            <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Solución que requiere
-                                el cliente
-                                <sup>*</sup></label>
-                            <textarea name="solucion_requerida_cliente" class="form-control"
-                                required>{{ old('solucion_requerida_cliente') }}</textarea>
-                            @if ($errors->has('solucion_requerida_cliente'))
-                                <span class="text-danger">
-                                    {{ $errors->first('solucion_requerida_cliente') }}
-                                </span>
-                            @endif
-                        </div>
+                    <div class="mt-2 form-group col-12">
+                        <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Solución que requiere
+                            el cliente
+                            <sup>*</sup></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                            title="Describa detalladamente cual es la solución que requiere el cliente para retirar la queja."></i>
+                        <textarea name="solucion_requerida_cliente" class="form-control"
+                            required>{{ old('solucion_requerida_cliente') }}</textarea>
+                        @if ($errors->has('solucion_requerida_cliente'))
+                            <span class="text-danger">
+                                {{ $errors->first('solucion_requerida_cliente') }}
+                            </span>
+                        @endif
                     </div>
 
                     <div class="mt-2 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-import iconos-crear"></i>Adjuntar evidencia(s)
-                            de la queja</label>
+                            de la queja</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                            title="Adjunte la información que soporte la queja que se esta presentando, pueden ser documentos, fotografías, capturas de pantalla, etc."></i>
                         <input type="file" name="evidencia[]" class="form-control" multiple="multiple">
                     </div>
 
@@ -282,7 +295,7 @@
                     </div>
 
                     <div class="mt-4 form-group col-md-12">
-                        <b>¿Se requiere mandar el correo electronico al cliente?<sup>*</sup></b>
+                        <b>¿Se requiere mandar el correo electrónico al cliente?<sup>*</sup></b>
                     </div>
 
                     <div class="row col-12">
@@ -311,7 +324,7 @@
 
                     <div class="mt-4 text-right form-group col-12">
                         <a href="{{ asset('admin/desk') }}#reportes" class="btn btn_cancelar">Cancelar</a>
-                        <input type="submit" class="btn btn-success" value="Enviar">
+                        <input type="submit" class="btn btn-success" value="Guardar">
                     </div>
 
                 </form>

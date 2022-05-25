@@ -8,41 +8,47 @@
 </style> --}}
 
 
+<style>
+    .textoCentroCard {
+            font-size: 12pt !important;
+        }
+</style>
+
 <div class="row">
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-celeste">
             <div class="numero"><i class="fas fa-exclamation-triangle"></i> {{ $total_quejasClientes }}</div>
-            <div>Quejas Clientes</div>
+            <div class="textoCentroCard">Quejas Clientes</div>
         </div>
     </div>
     <div class="col-6 col-md-2 ">
         <div class="tarjetas_seguridad_indicadores cdr-amarillo">
             <div class="numero"><i class="far fa-arrow-alt-circle-right"></i> {{ $nuevos_quejasClientes }}</div>
-            <div>Sin atender</div>
+            <div class="textoCentroCard">Sin atender</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-morado">
             <div class="numero"><i class="fas fa-redo-alt"></i> {{ $en_curso_quejasClientes }}</div>
-            <div>En curso</div>
+            <div class="textoCentroCard">En curso</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-azul">
             <div class="numero"><i class="fas fa-history"></i> {{ $en_espera_quejasClientes }}</div>
-            <div>En espera</div>
+            <div class="textoCentroCard">En espera</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-verde">
             <div class="numero"><i class="far fa-check-circle"></i> {{ $cerrados_quejasClientes }}</div>
-            <div>Cerrados</div>
+            <div class="textoCentroCard">Cerrados</div>
         </div>
     </div>
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-rojo">
             <div class="numero"><i class="far fa-circle"></i> {{ $cancelados_quejasClientes }}</div>
-            <div>Cancelados</div>
+            <div class="textoCentroCard">No procedentes</div>
         </div>
     </div>
 </div>
@@ -73,9 +79,9 @@
                 <th style="min-width:200px;">Ubicación</th>
                 <th style="min-width:200px;">Otros</th>
                 <th style="min-width:500px;">Descripción</th>
-                <th style="min-width:60px;">Estatus</th>
+                <th style="min-width:80px;">Estatus</th>
                 <th>Prioridad</th>
-                <th style="min-width:80px;">AC</th>
+                <th style="min-width:150px;">Acción Correctiva</th>
                 <th>Opciones</th>
             </tr>
         </thead>
@@ -93,7 +99,7 @@
 
             let dtButtons = [{
                     extend: 'csvHtml5',
-                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
+                    title: `Quejas de Clientes ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
@@ -103,7 +109,7 @@
                 },
                 {
                     extend: 'excelHtml5',
-                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
+                    title: `Quejas de Clientes ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
@@ -112,27 +118,43 @@
                     }
                 },
                 {
-                    extend: 'pdfHtml5',
-                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
                     extend: 'print',
-                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    // set custom header when print
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                            <div class="row">
+                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                </div>
+                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                    <p>${empresa_actual}</p>
+                                    <strong style="color:#345183">CENTRO DE ATENCIÓN: QUEJAS CLIENTES</strong>
+                                </div>
+                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                    Fecha: ${jsDate}
+                                </div>
+                            </div>
+                        `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
@@ -294,7 +316,7 @@
                 				<a href="/admin/desk/${data}/quejas-clientes-edit/"><i class="fas fa-edit" title="Análisis de la queja"></i></a>`;
 
 
-                                if ((row.estatus == 'Cerrado') || (row.estatus == 'Cancelado')) {
+                                if ((row.estatus == 'Cerrado') || (row.estatus == 'No procedente')) {
 
                                     html += `<button class="btn archivar" onclick='ArchivarQuejaCliente("/admin/desk/${data}/archivarQuejasClientes"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
@@ -339,8 +361,8 @@
                             fondo = "#6DC866";
                             letras = "white";
                         }
-                        if (data.estatus == 'Cancelado') {
-                            fondo = "#A5A5A5";
+                        if (data.estatus == 'No procedente') {
+                            fondo = "#FF417B";
                             letras = "white";
                         }
                         if(data.estatus !=null){

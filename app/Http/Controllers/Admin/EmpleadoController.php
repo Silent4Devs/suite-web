@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Functions\CountriesFunction;
 use App\Http\Controllers\Controller;
+use App\Mail\EnviarCorreoBienvenidaTabantaj;
 use App\Models\Area;
 use App\Models\CertificacionesEmpleados;
 use App\Models\CursosDiplomasEmpleados;
@@ -24,11 +25,14 @@ use App\Models\RH\DependientesEconomicosEmpleados;
 use App\Models\RH\EntidadCrediticia;
 use App\Models\RH\TipoContratoEmpleado;
 use App\Models\Sede;
+use App\Models\User;
 use App\Rules\MonthAfterOrEqual;
 use Barryvdh\DomPDF\Facade as PDF;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -218,11 +222,7 @@ class EmpleadoController extends Controller
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
-            'estatus' => 'required',
             'email' => 'required|email',
-            // 'sede_id' => 'required|exists:sedes,id',
-            // 'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
-
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
@@ -351,7 +351,7 @@ class EmpleadoController extends Controller
             'perfil_empleado_id' => $request->perfil_empleado_id,
             'supervisor_id' =>  $request->supervisor_id,
             'antiguedad' =>  $request->antiguedad,
-            'estatus' =>  $request->estatus,
+            'estatus' => 'alta',
             'email' =>  $request->email,
             'telefono' =>  $request->telefono,
             'genero' =>  $request->genero,
@@ -401,10 +401,37 @@ class EmpleadoController extends Controller
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
         ]);
-
+        $this->createUserFromEmpleado($empleado);
         $this->assignDependenciesModel($request, $empleado);
 
         return $empleado;
+    }
+
+    public function createUserFromEmpleado($empleado)
+    {
+        $generatedPassword = $this->generatePassword();
+        $user = User::create([
+            'name' => $empleado->name,
+            'email' => $empleado->email,
+            'password' =>  $generatedPassword['hash'],
+            'n_empleado' => $empleado->n_empleado,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        //Send email with generated password
+        Mail::to($empleado->email)->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
+
+        return $user;
+    }
+
+    public function generatePassword()
+    {
+        $random = str_shuffle('abcdefghjklmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ234567890!$%^&!$%^&');
+        $password = substr($random, 0, 10);
+        $hashed_random_password = Hash::make($password);
+
+        return ['hash' => $hashed_random_password, 'password' => $password];
     }
 
     public function assignDependenciesModel($request, $empleado)
@@ -1114,11 +1141,7 @@ class EmpleadoController extends Controller
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
-            'estatus' => 'required',
             'email' => 'required|email',
-            // 'sede_id' => 'required|exists:sedes,id',
-            // 'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
-
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
@@ -1192,7 +1215,7 @@ class EmpleadoController extends Controller
             'perfil_empleado_id' => $request->perfil_empleado_id,
             'supervisor_id' =>  $request->supervisor_id,
             'antiguedad' =>  $request->antiguedad,
-            'estatus' =>  $request->estatus,
+            // 'estatus' =>  $request->estatus,
             'email' =>  $request->email,
             'telefono' =>  $request->telefono,
             'genero' =>  $request->genero,

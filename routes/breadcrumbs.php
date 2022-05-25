@@ -826,11 +826,11 @@ Breadcrumbs::for('timesheet-papelera', function ($trail) {
 });
 Breadcrumbs::for('timesheet-aprobaciones', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
-    $trail->push('Probaciones');
+    $trail->push('Aprobaciones');
 });
 Breadcrumbs::for('timesheet-rechazos', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
-    $trail->push('Probaciones');
+    $trail->push('Aprobaciones');
 });
 Breadcrumbs::for('timesheet-clientes', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));

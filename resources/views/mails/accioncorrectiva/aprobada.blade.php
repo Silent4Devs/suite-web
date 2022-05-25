@@ -75,19 +75,43 @@
                                         <div style="margin-top:50px;">
                                             <strong
                                                 style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a){{$quejas->registro->name}}
+                                                Estimado(a) {{ $quejas->registro->name }},
                                             </strong>
                                         </div>
 
                                         <div style="width: 100%; margin-top: 10px;">
-                                            @if($quejas->accionCorrectiva->aprobada == true)
-                                                <p style="font-size:11pt; color:#153643;">Le informamos que {{$quejas->responsableSgi->name}} ha aprobado su  <strong style="font-size:10pt;">{{$quejas->folio}}</strong>
-                                                    para la generación de la Acción Correctiva.
-                                                 </p>
+                                            @if ($quejas->accionCorrectiva->aprobada == true)
+                                                <p style="font-size:11pt; color:#153643;">
+                                                    Le informamos que derivado de su solicitud de la Acción Correctiva
+                                                    de la queja <strong
+                                                        style="font-size:10pt;">{{ $quejas->folio }}</strong>,
+                                                    {{ $quejas->responsableSgi->name }} ha aprobado
+                                                    su solicitud y se ha generado la Acción Correctiva <strong
+                                                        style="font-size:10pt;">
+                                                        {{ $quejas->accionCorrectiva->folio }}</strong>.
+                                                </p>
+                                                @if ($quejas->accionCorrectiva->comentarios_aprobacion != null)
+                                                    <strong
+                                                        style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
+                                                        Comentarios</strong>
+                                                    <p style="font-size:11pt; color:#153643;">
+                                                        {{ $quejas->accionCorrectiva->comentarios_aprobacion != null ? $quejas->accionCorrectiva->comentarios_aprobacion : 'Sin comentario' }}
+                                                    </p>
+                                                @endif
                                             @else
-                                            <p style="font-size:11pt; color:#153643;">Le informamos que {{$quejas->responsableSgi->name}} no ha aprobado su  <strong style="font-size:10pt;">{{$quejas->folio}}</strong>
-                                                para la generación de la Acción Correctiva.
-                                            </p>
+                                                <p style="font-size:11pt; color:#153643;">
+                                                    Le informamos que derivado de su solicitud de Acción Correctiva de
+                                                    la queja <strong
+                                                        style="font-size:10pt;">{{ $quejas->folio }}</strong>,
+                                                    {{ $quejas->responsableSgi->name }}, ha rechazado
+                                                    su solicitud para la generación de la Acción Correctiva.
+                                                </p>
+                                                <p style="font-size:11pt; color:#153643;"><i
+                                                        class="mr-2 far fa-comments"></i><strong>Comentarios</strong></p>
+                                                <p style="font-size:11pt; color:#153643;">
+                                                    {{ $quejas->accionCorrectiva->comentarios_aprobacion != null ? $quejas->accionCorrectiva->comentarios_aprobacion : 'Sin comentario' }}
+                                                </p>
+
                                             @endif
                                         </div>
                                     </td>
@@ -107,8 +131,7 @@
                                             &nbsp;
                                         </div>
 
-                                        <p
-                                            style="text-align:center;font-size:10pt;font-weight: normal;color:#153643;">
+                                        <p style="text-align:center;font-size:10pt;font-weight: normal;color:#153643;">
                                             SISTEMA INTEGRAL DE GESTIÓN EMPRESARIAL TABANTAJ</p>
                                     </td>
                                 </tr>

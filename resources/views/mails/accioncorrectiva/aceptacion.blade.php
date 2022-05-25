@@ -75,13 +75,13 @@
                                         <div style="margin-top:50px;">
                                             <strong
                                                 style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a){{$quejas->responsableSgi->name}}
+                                                Estimado(a) {{$quejas->responsableSgi->name}},
                                             </strong>
                                         </div>
 
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; color:#153643;">
-                                                Le informamos que derivado de la queja recibida de un cliente (Ticket{{$quejas->folio}} ), nombre del usuario solicita se genere una Acción Correctiva.
+                                                Le informamos que derivado de la queja recibida de un cliente (Ticket {{$quejas->folio}} ), {{$quejas->registro->name}} solicita que se genere una Acción Correctiva.
 
 
                                             </p>
@@ -96,7 +96,7 @@
                                                 <ul style="font-size:11pt; color:#153643;">
                                                     <li style="font-size:11pt;">Ticket ID: <strong style="font-size:10pt;"> {{$quejas->folio}} </strong></li>
                                                     <li style="font-size:11pt;">Fecha y hora del registro del reporte:<strong style="font-size:10pt;"> {{ \Carbon\Carbon::parse($quejas->created_at)->format('d-m-Y H:i:s') }}</strong></li>
-                                                    <li style="font-size:11pt;">Prioridad:<strong style="font-size:10pt;"> {{$quejas->prioridad}}</strong></li>
+                                                    <li style="font-size:11pt;">Prioridad:<strong style="font-size:10pt;"> {{$quejas->prioridad ? $quejas->prioridad: 'Sin definir'}}</strong></li>
                                                     <li style="font-size:11pt;">Categoría: <strong style="font-size:10pt;"> {{$quejas->categoria_queja ? $quejas->categoria_queja: 'Sin definir'}}</strong></li>
                                                     <li style="font-size:11pt;">Cliente: <strong style="font-size:10pt;">{{$quejas->cliente->nombre}}</strong></li>
                                                     <li style="font-size:11pt;">Proyecto: <strong style="font-size:10pt;">{{$quejas->proyectos->proyecto}}</strong></li>

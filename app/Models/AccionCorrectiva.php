@@ -60,6 +60,7 @@ class AccionCorrectiva extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'folio',
         'fecharegistro',
         'tema',
         'causaorigen',
@@ -88,6 +89,9 @@ class AccionCorrectiva extends Model implements HasMedia
         'es_externo',
         'aprobada',
         'aprobacion_contestada',
+        'colaborador_quejado',
+        'otros',
+        'comentarios_aprobacion',
     ];
 
     public function getFolioAttribute()

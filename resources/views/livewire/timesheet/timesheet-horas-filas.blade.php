@@ -160,7 +160,7 @@
                                     <div title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
                                         Cancelar
                                     </div>
-                                    <button class="btn_enviar_formulario btn btn-info" style="border:none; background-color:#2F96EB;">
+                                    <button onclick="event.preventDefault();" id="enviar_aprobacion_time" class="btn_enviar_formulario btn btn-info" style="border:none; background-color:#2F96EB;">
                                         Enviar a Aprobación
                                     </button>
                                 </div>
@@ -232,7 +232,7 @@
                 }
             });
 
-            document.querySelector('.btn_enviar_formulario').addEventListener('click', (e)=>{
+            function procesarInformacionTimesheet(e) {
                 e.preventDefault();
                 limpiarErrores();
                 let formulario = document.getElementById('form_timesheet');
@@ -255,8 +255,8 @@
                     success: function (response) {
                         if (response.status == 200) {   
                             Swal.fire(
-                              'Good job!',
-                              'You clicked the button!',
+                              'Buen trabajo',
+                              'Timesheet Registrado',
                               'success'
                             ).then(()=>{
                                 window.location.href = '{{ route("admin.timesheet-inicio") }}';
@@ -279,7 +279,10 @@
                         });
                     }
                 });
-            });
+            }
+            document.querySelector('.btn_enviar_formulario').addEventListener('click', procesarInformacionTimesheet);
+            document.querySelector('#enviar_aprobacion_time').addEventListener('click', procesarInformacionTimesheet);
+
             function limpiarErrores(){
                 document.querySelectorAll('.errores').forEach(item=>{
                     item.innerHTML = '';

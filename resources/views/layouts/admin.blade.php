@@ -373,7 +373,7 @@
             text-decoration: none;
             display: inline-block;
             color: #345183;
-            padding: 5px 20px;
+            padding: 5px 13px;
             font-weight: bold;
             margin: 0;
             text-align: center;
@@ -1318,7 +1318,8 @@
     <script src="{{ asset('js/yearpicker.js') }}"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
-    <script src="https://cdn.datatables.net/fixedcolumns/4.0.0/js/dataTables.fixedColumns.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.3/css/fixedColumns.bootstrap.css">
+    <script src="https://cdn.datatables.net/fixedcolumns/3.0.2/js/dataTables.fixedColumns.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
