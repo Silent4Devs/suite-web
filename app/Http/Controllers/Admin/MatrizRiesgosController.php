@@ -123,8 +123,7 @@ class MatrizRiesgosController extends Controller
 
     public function store(StoreMatrizRiesgoRequest $request)
     {
-        //$request->merge(['plan_de_accion' => $request['plan_accion']['0']]);
-        // dd($request->controles_id);
+       
         $matrizRiesgo = MatrizRiesgo::create($request->all());
 
         foreach ($request->controles_id as $item) {
@@ -149,7 +148,11 @@ class MatrizRiesgosController extends Controller
         $teams = Team::get();
         $activos = SubcategoriaActivo::get();
         $tipoactivos = Tipoactivo::get();
-        $controles = Controle::get();
+        $controlesSeleccionado = [];
+        if ($matrizRiesgo->matriz_riesgos_controles_pivots != null) {
+            $controlesSeleccionado = $matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray();
+        }
+        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $sedes = Sede::get();
         $areas = Area::get();
         $amenazas = Amenaza::get();
@@ -170,14 +173,14 @@ class MatrizRiesgosController extends Controller
     }
 
     public function update(UpdateMatrizRiesgoRequest $request, MatrizRiesgo $matrizRiesgo)
-    {
+    {  
         $calculo = new Mriesgos();
-        $res = $calculo->CalculoD($request);
-        $request->request->add(['resultadoponderacion' => $res]);
+      
         $matrizRiesgo->update($request->all());
-
+        $matrizRiesgo->matriz_riesgos_controles_pivots()->sync($request->controles_id);
+        
+        
         if (isset($request->plan_accion)) {
-            // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
             $matrizRiesgo->planes()->sync($request->plan_accion);
         }
 
@@ -212,19 +215,9 @@ class MatrizRiesgosController extends Controller
 
     public function SeguridadInfo(Request $request)
     {
-        // dd($request->all());
-        /*$query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
-        dd($query);*/
-        // abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //  $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots' => function ($query) {
-        //     return $query->with('declaracion_aplicabilidad');
-        // }])->where('id_analisis', '=', $request['id'])->get();
-        // dd($query);
         abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots' => function ($query) {
-                return $query->with('declaracion_aplicabilidad');
-            }])->where('id_analisis', '=', $request['id'])->get();
+            $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots'])->where('id_analisis', '=', $request->id)->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -270,21 +263,21 @@ class MatrizRiesgosController extends Controller
                 return $row->descripcionriesgo ? $row->descripcionriesgo : '';
             });
             $table->editColumn('confidencialidad', function ($row) {
-                if ($row->confidencialidad) {
+                if ($row->confidencialidad == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
                 }
             });
             $table->editColumn('integridad', function ($row) {
-                if ($row->integridad) {
+                if ($row->integridad  == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
                 }
             });
             $table->editColumn('disponibilidad', function ($row) {
-                if ($row->disponibilidad) {
+                if ($row->disponibilidad  == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
@@ -294,55 +287,14 @@ class MatrizRiesgosController extends Controller
                 return $row->resultadoponderacion ? $row->resultadoponderacion : '';
             });
             $table->editColumn('probabilidad', function ($row) {
-                //return $row->probabilidad ? $row->probabilidad : "";
-                switch ($row->probabilidad) {
-                    case 0:
-                        return 'NULA' ? 'NULA' : '';
-                        break;
-                    case 3:
-                        return 'BAJA' ? 'BAJA' : '';
-                        break;
-                    case 6:
-                        return 'MEDIA' ? 'MEDIA' : '';
-                        break;
-                    case 9:
-                        return 'ALTA' ? 'ALTA' : '';
-                        break;
-                    default:
-                        break;
-                }
+                return $row->probabilidad ? $row->probabilidad : '';
             });
             $table->editColumn('impacto', function ($row) {
-                //return $row->impacto ? $row->impacto : "";
-                switch ($row->impacto) {
-                    case 0:
-                        return 'BAJO' ? 'BAJO' : '';
-                        break;
-                    case 3:
-                        return 'MEDIO' ? 'MEDIO' : '';
-                        break;
-                    case 6:
-                        return 'ALTO' ? 'ALTO' : '';
-                        break;
-                    case 9:
-                        return 'MUY ALTO' ? 'MUY ALTO' : '';
-                        break;
-                    default:
-                        break;
-                }
+                return $row->impacto ? $row->impacto : '';
             });
             $table->editColumn('nivelriesgo', function ($row) {
-                if (is_null($row->nivelriesgo)) {
-                    return null ? $row->nivelriesgo : '';
-                } elseif ($row->nivelriesgo == 0) {
-                    return 'cero';
-                } else {
-                    return $row->nivelriesgo ? $row->nivelriesgo : '';
-                }
+                return $row->nivelriesgo ? $row->nivelriesgo : '';
             });
-            /*$table->editColumn('riesgototal', function ($row) {
-                return $row->riesgototal ? $row->riesgototal : "";
-            });*/
             $table->editColumn('control', function ($row) {
                 return $row->matriz_riesgos_controles_pivots ? $row->matriz_riesgos_controles_pivots : '';
             });
@@ -350,63 +302,34 @@ class MatrizRiesgosController extends Controller
                 return $row->planes ? $row->planes : '';
             });
             $table->editColumn('confidencialidad_cid', function ($row) {
-                if ($row->confidencialidad_cid) {
+                if ($row->confidencialidad_cid  == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
                 }
             });
             $table->editColumn('integridad_cid', function ($row) {
-                if ($row->integridad_cid) {
+                if ($row->integridad_cid  == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
                 }
             });
             $table->editColumn('disponibilidad_cid', function ($row) {
-                if ($row->disponibilidad_cid) {
+                if ($row->disponibilidad_cid  == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
                 }
             });
+            $table->editColumn('resultadoponderacionRes', function ($row) {
+                return $row->resultadoponderacionRes ? $row->resultadoponderacionRes : '';
+            });
             $table->editColumn('probabilidad_residual', function ($row) {
-                //return $row->probabilidad_residual ? $row->probabilidad_residual : "";
-                switch ($row->probabilidad_residual) {
-                    case 0:
-                        return 'NULA' ? 'NULA' : '';
-                        break;
-                    case 3:
-                        return 'BAJA' ? 'BAJA' : '';
-                        break;
-                    case 6:
-                        return 'MEDIA' ? 'MEDIA' : '';
-                        break;
-                    case 9:
-                        return 'ALTA' ? 'ALTA' : '';
-                        break;
-                    default:
-                        break;
-                }
+                return $row->probabilidad_residual ? $row->probabilidad_residual : '';
             });
             $table->editColumn('impacto_residual', function ($row) {
-                //return $row->impacto_residual ? $row->impacto_residual : "";
-                switch ($row->impacto_residual) {
-                    case 0:
-                        return 'BAJO' ? 'BAJO' : '';
-                        break;
-                    case 3:
-                        return 'MEDIO' ? 'MEDIO' : '';
-                        break;
-                    case 6:
-                        return 'ALTO' ? 'ALTO' : '';
-                        break;
-                    case 9:
-                        return 'MUY ALTO' ? 'MUY ALTO' : '';
-                        break;
-                    default:
-                        break;
-                }
+                return $row->impacto_residual ? $row->impacto_residual : '';
             });
             $table->editColumn('nivelriesgo_residual', function ($row) {
                 return $row->nivelriesgo_residual ? $row->nivelriesgo_residual : '';
@@ -556,6 +479,9 @@ class MatrizRiesgosController extends Controller
             });
             $table->editColumn('id_vulnerabilidad', function ($row) {
                 return $row->vulnerabilidad ? $row->vulnerabilidad->nombre : '';
+            });
+            $table->editColumn('tipo_riesgo', function ($row) {
+                return $row->tipo_riesgo ? $row->tipo_riesgo : '';
             });
             $table->editColumn('descripcionriesgo', function ($row) {
                 return $row->descripcionriesgo ? $row->descripcionriesgo : '';
