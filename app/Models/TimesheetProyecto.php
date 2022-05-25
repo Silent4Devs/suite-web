@@ -16,11 +16,20 @@ class TimesheetProyecto extends Model
         'area_id',
         'cliente_id',
         'estatus',
+        'fecha_fin',
+        'fecha_inicio',
+        'identificador',
+        'sede_id',
     ];
 
     public function area()
     {
         return $this->belongsTo(Area::class, 'area_id');
+    }
+
+    public function sede()
+    {
+        return $this->belongsTo(Sede::class, 'sede_id');
     }
 
     public function cliente()

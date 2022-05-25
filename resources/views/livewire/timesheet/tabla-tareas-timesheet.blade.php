@@ -29,7 +29,7 @@
         </form>
     @endcan
     <div class="datatable-fix w-100 mt-5">
-        <table id="" class="table w-100 tabla-animada">
+        <table id="tabla_time_tareas" class="table w-100 tabla-animada">
             <thead class="w-100">
                 <tr>
                     <th>Tarea </th>
@@ -69,4 +69,12 @@
             </tbody>
         </table>
     </div>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', ()=>{
+            Livewire.on('scriptTabla', ()=>{
+                tablaLivewire('tabla_time_tareas');
+            });
+        });
+    </script>
 </div>

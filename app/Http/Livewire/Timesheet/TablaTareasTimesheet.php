@@ -37,6 +37,8 @@ class TablaTareasTimesheet extends Component
             $this->tareas_proyecto = TimesheetTarea::where('proyecto_id', $this->proyecto_id)->get();
         }
 
+        $this->emit('scriptTabla');
+
         return view('livewire.timesheet.tabla-tareas-timesheet');
     }
 

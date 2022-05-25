@@ -93,10 +93,11 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', ()=>{
             Livewire.on('scriptTabla', ()=>{
-                cont = 4;
-                tablaLivewire('datatable_timesheet');
+                setTimeout(() => {
+                    console.log('liwe');
+                    tablaLivewire('datatable_timesheet');
+                }, 100);
             });
-            
         });
     </script>
 </div>
