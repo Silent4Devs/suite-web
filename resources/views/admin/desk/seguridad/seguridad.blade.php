@@ -32,7 +32,7 @@
     }
 
     .numero {
-        font-size: 20pt;
+        font-size: 16pt;
     }
 
     .botones_tabla {

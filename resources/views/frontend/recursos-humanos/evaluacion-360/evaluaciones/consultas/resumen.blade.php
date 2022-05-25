@@ -1,6 +1,5 @@
 @extends('layouts.frontend')
 @section('content')
-
     {{ Breadcrumbs::render('EV360-Evaluaciones-Create') }}
     <style>
         img.rounded-circle {
@@ -80,5 +79,85 @@
                 }
             }
         });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Acciones Correctivas ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Acciones Correctivas ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: `Acciones Correctivas ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar PDF',
+                    orientation: 'landscape',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    customize: function(doc) {
+                        doc.pageMargins = [5, 20, 5, 20];
+                        doc.styles.tableHeader.fontSize = 6.5;
+                        doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Acciones Correctivas ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
+
+            ];
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
+                }
+
+            };
+            $("#tblResumen").DataTable(dtOverrideGlobals);
+        })
     </script>
 @endsection

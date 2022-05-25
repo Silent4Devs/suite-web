@@ -373,7 +373,7 @@
             text-decoration: none;
             display: inline-block;
             color: #345183;
-            padding: 5px 20px;
+            padding: 5px 13px;
             font-weight: bold;
             margin: 0;
             text-align: center;

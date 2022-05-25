@@ -429,7 +429,10 @@
                 }
             };
             let table = $('.datatable-Empleado').DataTable(dtOverrideGlobals);
-
+            new $.fn.dataTable.FixedColumns(table, {
+                leftColumns: 2,
+                rightColumns: 2
+            });
             $('#eliminar_todo').click(function() {
                 let ArregloIds = [];
                 let arregloEliminar = table.rows({
