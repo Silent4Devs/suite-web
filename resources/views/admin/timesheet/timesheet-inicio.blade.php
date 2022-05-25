@@ -306,22 +306,27 @@
                 @if(Auth::user()->can('timesheet_administrador_proyectos_access') || Auth::user()->can('timesheet_administrador_tareas_proyectos_access') || Auth::user()->can('timesheet_administrador_clientes_access'))
                     <div class="tab-pane mb-4 fade" id="nav-liderazgo" role="tabpanel" aria-labelledby="nav-liderazgo-tab">
                         <ul class="mt-4">
+
                             <li>
-                                <a href="{{ route('admin.timesheet-dashboard') }}">
-                                    <div>
-                                        <i class="bi bi-bar-chart-line"></i><br>
-                                        Dashboard
-                                    </div>
-                                </a>
+                                    <a href="#" data-toggle="modal" data-target="#dia_semana_modal">
+                                        <div>
+                                            <i class="bi bi-calendar2-week"></i><br>
+                                            Configuración Timesheet
+                                        </div>
+                                    </a>
                             </li>
-                            <li>
-                                <a href="{{ route('admin.timesheet-reportes') }}">
-                                    <div>
-                                        <i class="bi bi-file-earmark-text"></i><br>
-                                        Reportes
-                                    </div>
-                                </a>
-                            </li>
+                            
+                            @can('timesheet_administrador_clientes_access')
+                                <li>
+                                    <a href="{{ route('admin.timesheet-clientes') }}">
+                                        <div>
+                                            <i class="bi bi-bag"></i><br>
+                                            Clientes
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+
                             @can('timesheet_administrador_proyectos_access')
                                 <li>
                                     <a href="{{ route('admin.timesheet-proyectos') }}">
@@ -342,25 +347,24 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('timesheet_administrador_clientes_access')
-                                <li>
-                                    <a href="{{ route('admin.timesheet-clientes') }}">
-                                        <div>
-                                            <i class="bi bi-bag"></i><br>
-                                            Clientes
-                                        </div>
-                                    </a>
-                                </li>
-                            @endcan
+                            <li>
+                                <a href="{{ route('admin.timesheet-reportes') }}">
+                                    <div>
+                                        <i class="bi bi-file-earmark-text"></i><br>
+                                        Reportes
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.timesheet-dashboard') }}">
+                                    <div>
+                                        <i class="bi bi-bar-chart-line"></i><br>
+                                        Dashboard
+                                    </div>
+                                </a>
+                            </li>
 
-                                <li>
-                                    <a href="#" data-toggle="modal" data-target="#dia_semana_modal">
-                                        <div>
-                                            <i class="bi bi-calendar2-event"></i><br>
-                                            Establecer Jornada Laboral
-                                        </div>
-                                    </a>
-                                </li>
+                                
 
                         </ul>
                     </div>
@@ -382,6 +386,10 @@
           <div class="modal-body">
             <form method="POST" action="{{ route('admin.timesheet-acualizarDia') }}" class="row">
                 @csrf
+                <div class="col-12 form-group">
+                    <label>Selecciones fecha de inicio del timesheet</label>
+                    <input class="form-control" type="date" name="fecha_registro_timesheet" value="{{ $organizacion->fecha_registro_timesheet }}">
+                </div>
                 <div class="form-group col-12">
                     <label>Seleccione el día de inicio de la jornada laboral</label>
                     <select class="form-control" name="inicio_timesheet">

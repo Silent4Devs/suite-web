@@ -130,7 +130,7 @@ body.c-dark-theme .btn-outline-secondary {
     right: 0;
     margin-top: -10px;
     font-size: 12px;
-    font-weight: bolder;
+    font-weight: lighter;
 }
 
 .flatpickr-monthDropdown-months{
@@ -149,6 +149,18 @@ body.c-dark-theme .btn-outline-secondary {
     padding: 0;
     margin: 0;
     width: 100%;
+}
+.empleado_estatus_alta{
+    background-color: #69D552;
+    color: #fff;
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+.empleado_estatus_baja{
+    background-color: #FF9D9D;
+    color: #fff;
+    padding: 4px 6px;
+    border-radius: 4px;
 }
 .general_li{
     display: inline-block;
@@ -205,6 +217,7 @@ body.c-dark-theme .btn-outline-secondary {
     padding: 5px 7px;
     color: #fff;
     border-radius: 4px;
+    margin: auto;
 }
 table td .btn i{
     font-size: 20px !important;
@@ -223,6 +236,55 @@ table td .btn i{
     margin: 7px;
     border-radius: 4px;
     background-color: #f1f1f1;
+}
+.th-calendario{
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+}
+.th-año{
+    background-color: rgba(0, 0, 0, 0.15) !important;   
+}
+.th-año:nth-child(even){
+    background-color: rgba(0, 0, 0, 0.1) !important;   
+}
+.th-mes{
+    background-color: rgba(0, 0, 0, 0.2) !important;   
+}
+.th-mes:nth-child(even){
+    background-color: rgba(0, 0, 0, 0.25) !important;   
+}
+.th-semana{
+    background-color: rgba(0, 0, 0, 0.3) !important;   
+}
+.th-semana:nth-child(even){
+    background-color: rgba(0, 0, 0, 0.35) !important;   
+}
+.tabla-fixed th{
+    background-color: #788BAC;
+}
+.tabla-fixed tr td{
+    background-color: #fff !important;
+}
+.tabla-fixed tr:nth-child(even) td{
+    background-color: #eee !important;
+}
+.cde-totalh{
+    position: relative;
+}
+.cde-totalh::before{
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: grey;
+}
+.datatable_timesheet_empleados_reportes td, .datatable_timesheet_empleados_reportes th{
+    font-size: 11px !important;
+}
+.datatable_timesheet_empleados_reportes td{
+    text-align: left !important;
 }
 
 /*reportes proyecto -------------------------------------------*/
@@ -267,12 +329,19 @@ table td .btn i{
     margin: 0;
     font-size: 16px;
 }
+.titulo-grafica a{
+    font-size: 11px;
+}
 
 .caja-cards-areas .card{
-    width: 200px;
-    height: 150px;
     display: inline-block;
     margin-right: 14px !important;
+    background-color: #f8f8f8;
+    min-width: 250px;
+    padding: 20px !important;
+}
+.caja-cards-areas .progress{
+    background-color: #ddd;
 }
 .partisipacion-baja{
     background-color: #FF7373;
@@ -289,5 +358,16 @@ table td .btn i{
 }
 .caja-cards-areas .card h4{
     color: rgba(0, 0, 0, 0.5) !important;
+    font-size: 18px;
 }
 
+@media(max-width: 1650px){
+    .total_graf_times_inner{
+        transform: scale(0.7);
+    }
+}
+@media(max-width: 1380px){
+    .total_graf_times_inner{
+        transform: scale(0.4);
+    }
+}

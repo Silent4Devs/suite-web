@@ -1,8 +1,27 @@
 <div>    
-    <div class="row">
+    <div class="row" wire:ignore>
+        <div class="col-md-4 form-group">
+            <label class="form-label">Área</label>
+            <select class="form-control" wire:model="area_id">
+                <option selected value="0">Todas</option>
+                @foreach($areas as $area)
+                    <option value="{{ $area->id }}">{{ $area->area }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-4 form-group">
+            <label class="form-label">Fecha de inicio</label>
+            <input class="form-control date_librery" type="date" name="fecha_inicio" wire:model="fecha_inicio">
+        </div>
+        <div class="col-md-4 form-group">
+            <label class="form-label">Fecha de fin</label>
+            <input class="form-control date_librery" type="date" name="fecha_fin" wire:model="fecha_fin">
+        </div>
+    </div>
+    <div class="row mt-5">
         @include('partials.flashMessages')
-        <div class="col-12 d-flex justify-content-between">
-            <h5 id="titulo_estatus">Todos los Registros</h5>
+        <div class="col-12 d-flex justify-content-between" style="padding-left: 0 !important; padding-right: 0 !important;">
+            <h5 id="titulo_estatus">Registros Timesheet</h5>
             <div class="btn_estatus_caja">
                 <button class="btn btn-primary" style="background-color: #5AC3E5; border:none !important; position: relative;" id="btn_todos" wire:click="todos">
                     @if($todos_contador > 0)
@@ -41,12 +60,12 @@
             <table id="datatable_timesheet" class="table w-100 datatable_timesheet_registros_reportes">
                 <thead class="w-100">
                     <tr>
-                        <th>Semana </th>
-                        <th>Fecha de corte</th>
-                        <th>Empleado</th>
-                        <th>Responsable</th>
-                        <th>Aprobación</th>
-                        <th>opciones</th>
+                        <th >Semana </th>
+                        <th >Empleado</th>
+                        <th >Aprobador</th>
+                        <th style="min-width:250px;">Área</th>
+                        <th>Estatus</th>
+                        <th>Opciones</th>
                     </tr>
                 </thead>
 
@@ -55,15 +74,15 @@
                         <tr class="tr_{{  $time->estatus }}">
                             <td>
                                 {!! $time->semana !!}
-                            </td>
-                            <td>
-                                {{ \Carbon\Carbon::parse($time->fecha_dia)->format("d/m/Y") }}
-                            </td>
+                            </td>                            
                             <td>
                                 {{ $time->empleado->name }}
                             </td>
                             <td>
                                 {{ $time->aprobador->name }}
+                            </td>
+                            <td>
+                                {{ $time->empleado->area->area }}
                             </td>
                             <td>
                                 @if($time->estatus == 'aprobado')
@@ -105,10 +124,8 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', ()=>{
             Livewire.on('scriptTabla', ()=>{
-                cont = 4;
                 tablaLivewire('datatable_timesheet');
             });
-            
         });
     </script>
 </div>
