@@ -56,7 +56,7 @@ class RevisionDocumentoController extends Controller
                 break;
         }
 
-        $empleado = Empleado::find(intval($revisionDocumento->empleado_id));
+        $empleado = Empleado::alta()->find(intval($revisionDocumento->empleado_id));
 
         return view('externos.revisiones.edit', compact('documento', 'empleado', 'path_documentos_aprobacion', 'revisionDocumento'));
     }
@@ -190,7 +190,7 @@ class RevisionDocumentoController extends Controller
                             'estatus' => strval(Documento::DOCUMENTO_RECHAZADO),
                         ]);
 
-                    // $documentoActual = Documento::with('elaborador')->find($documento->documento_id);
+                        // $documentoActual = Documento::with('elaborador')->find($documento->documento_id);
                         // $this->sendMailNotPublish($documentoActual->elaborador->email, $documentoActual);
                     } else {
                         $path_documentos_aprobacion = 'public/Documentos en aprobacion';

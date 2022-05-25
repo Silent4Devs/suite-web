@@ -162,7 +162,7 @@ class DeskController extends Controller
 
         $activos = Activo::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         $sedes = Sede::get();
 
@@ -314,7 +314,7 @@ class DeskController extends Controller
 
         $sedes = Sede::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
     }
@@ -421,7 +421,7 @@ class DeskController extends Controller
 
         $sedes = Sede::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         return view('admin.desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
     }
@@ -527,7 +527,7 @@ class DeskController extends Controller
 
         $activos = Activo::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         return view('admin.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados', 'analisis'));
     }
@@ -624,7 +624,7 @@ class DeskController extends Controller
 
         $activos = Activo::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         $areas = Area::get();
 
@@ -723,7 +723,7 @@ class DeskController extends Controller
 
         $activos = Activo::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         $areas = Area::get();
 
@@ -803,7 +803,7 @@ class DeskController extends Controller
 
         $activos = Activo::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         $clientes = TimesheetCliente::get();
 
@@ -913,7 +913,7 @@ class DeskController extends Controller
         // dd($analisis);
         $areas = Area::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         $clientes = TimesheetCliente::get();
 

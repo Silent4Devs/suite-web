@@ -90,7 +90,7 @@ class CursosDiplomasEmpleados extends Model
 
     public function empleado_cursos()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
     }
 
     public function getAñoAttribute($value)

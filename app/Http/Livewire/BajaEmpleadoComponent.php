@@ -54,7 +54,7 @@ class BajaEmpleadoComponent extends Component
 
     public function obtenerEmpleados()
     {
-        $empleados = Empleado::where('id', '!=', $this->empleado->id)->select('id', 'name')->orderBy('name')->get();
+        $empleados = Empleado::alta()->where('id', '!=', $this->empleado->id)->select('id', 'name')->orderBy('name')->get();
         return $empleados;
     }
 
@@ -98,6 +98,16 @@ class BajaEmpleadoComponent extends Component
             //     'supervisor_id' => $this->nuevoSupervisor
             // ]);
         });
+        $this->emit('select2');
+    }
+
+    public function darDeBaja()
+    {
+        $this->empleado->update([
+            'fecha_baja' => $this->fechaBaja,
+            'razon_baja' => $this->razonBaja,
+        ]);
+        // $this->empleado->delete();
         $this->emit('select2');
     }
 }

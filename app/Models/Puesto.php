@@ -93,22 +93,22 @@ class Puesto extends Model
 
     public function empleados()
     {
-        return $this->belongsTo(Empleado::class, 'elaboro_id', 'reviso_id', 'autoriza_id', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'elaboro_id', 'reviso_id', 'autoriza_id', 'id')->alta()->with('area');
     }
 
     public function elaboro()
     {
-        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->alta()->with('area');
     }
 
     public function reviso()
     {
-        return $this->belongsTo(Empleado::class, 'reviso_id', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'reviso_id', 'id')->alta()->with('area');
     }
 
     public function autoriza()
     {
-        return $this->belongsTo(Empleado::class, 'autoriza_id', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'autoriza_id', 'id')->alta()->with('area');
     }
 
     public function language()

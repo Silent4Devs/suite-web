@@ -205,7 +205,7 @@ class MatrizRiesgo extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_responsable');
+        return $this->belongsTo(Empleado::class, 'id_responsable')->alta();
     }
 
     public function sede()

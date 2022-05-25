@@ -29,7 +29,7 @@ class Denuncias extends Model
 
     public function denuncio()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_denuncio_id', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'empleado_denuncio_id', 'id')->alta()->with('area');
     }
 
     public function evidencias_denuncias()
@@ -39,7 +39,7 @@ class Denuncias extends Model
 
     public function denunciado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_denunciado_id', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'empleado_denunciado_id', 'id')->alta()->with('area');
     }
 
     public function planes()

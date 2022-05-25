@@ -58,6 +58,6 @@ class Comiteseguridad extends Model
 
     public function asignacion()
     {
-        return $this->belongsTo(Empleado::class, 'id_asignada', 'id');
+        return $this->belongsTo(Empleado::class, 'id_asignada', 'id')->alta();
     }
 }

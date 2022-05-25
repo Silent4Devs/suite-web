@@ -50,7 +50,7 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('configuracion_empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = Empleado::orderByDesc('id')->get();
+            $query = Empleado::orderByDesc('id')->alta()->get();
             $table = DataTables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -170,7 +170,7 @@ class EmpleadoController extends Controller
     public function create()
     {
         abort_if(Gate::denies('configuracion_empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
         $sedes = Sede::get();
@@ -949,7 +949,7 @@ class EmpleadoController extends Controller
         $certificados = CertificacionesEmpleados::where('empleado_id', intval($id))->get();
         $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
         $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
-        $empleado = Empleado::get();
+        $empleado = Empleado::alta()->get();
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
@@ -964,7 +964,7 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find(intval($id));
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
         $area = Area::find($empleado->area_id);
@@ -1342,7 +1342,7 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
-                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
+                $usuarios = Empleado::alta()->with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
                 // dd(compact('usuarios'));
                 return compact('usuarios');
             }
@@ -1368,7 +1368,7 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
-                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
+                $usuarios = Empleado::alta()->with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
 
                 return json_encode($usuarios);
             }
@@ -1377,11 +1377,11 @@ class EmpleadoController extends Controller
 
     public function getAllEmpleados(Request $request)
     {
-        $empleados = Empleado::select('id', 'name')->get();
+        $empleados = Empleado::select('id', 'name')->alta()->get();
 
         return json_encode($empleados);
         if ($request->ajax()) {
-            $empleados = Empleado::select('id', 'name')->get();
+            $empleados = Empleado::select('id', 'name')->alta()->get();
 
             return json_encode($empleados);
         }
@@ -1555,14 +1555,14 @@ class EmpleadoController extends Controller
     {
         $participantes = $request->participantes;
 
-        $empleados = Empleado::whereIn('email', $participantes)->get();
+        $empleados = Empleado::alta()->whereIn('email', $participantes)->get();
 
         return $empleados;
     }
 
     public function obtenerEmpleadoPorNombre($nombre)
     {
-        $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+        $empleado_bd = Empleado::alta()->select('id', 'name')->where('name', $nombre)->first();
 
         return $empleado_bd->id;
     }
@@ -1576,7 +1576,7 @@ class EmpleadoController extends Controller
         $certificados = CertificacionesEmpleados::where('empleado_id', intval($id))->get();
         $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
         $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
-        $empleado = Empleado::get();
+        $empleado = Empleado::alta()->get();
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }

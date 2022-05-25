@@ -102,6 +102,6 @@ class RevisionMinuta extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
     }
 }

@@ -1,25 +1,25 @@
 <div>
     <div class="row p-2">
         <div class="col-4 border p-2 text-center">
-            <img src="{{ $logo }}" alt="" style="width: 100px">
+            <img src="{{ $logo }}" alt="" style="width: 80px">
         </div>
         <div class="col-4 border p-2" style="text-align: center">
-            <h3 style="text-transform: uppercase">{{ $empresa }}</h3>
-            <h6>GESTIÓN DE TALENTO</h6>
+            <h5 style="text-transform: uppercase">{{ $empresa }}</h5>
             <strong>BAJA DE EMPLEADO</strong>
         </div>
         <div class="col-4 border p-2">
-            Fecha: {{ now()->format('d/m/Y') }}
+            <p>Área: <strong>GESTIÓN DE TALENTO</strong></p>
+            <p>Fecha: {{ now()->format('d/m/Y') }}</p>
         </div>
     </div>
     <div class="row mt-4">
-        <div class="col-6 p-0">
+        <div class="col-6" style="padding: 0 10px">
             <label for="fecha_baja"><i class="fas fa-calendar-day mr-2"></i>Fecha de Baja</label>
             <div class="input-group mb-2">
                 <input type="date" id="fecha_baja" wire:model.defer="fechaBaja" class="fecha_flatpickr form-control">
             </div>
         </div>
-        <div class="col-12 p-0">
+        <div class="col-12" style="padding: 0 10px" wire:ignore>
             <label for="fecha_baja"><i class="fas fa-info-circle mr-2"></i>Razón de Baja</label>
             <textarea name="razonBaja" id="razonBaja" cols="30" rows="10" wire:model="razonBaja"></textarea>
         </div>
@@ -189,7 +189,7 @@
     </div> --}}
     <div class="row">
         <div class="col-12 mt-2 p-0" style="text-align:end">
-            <button class="btn btn-success">Dar de Baja</button>
+            <button class="btn btn-success" wire:click.prevent="darDeBaja">Dar de Baja</button>
         </div>
     </div>
     <script>

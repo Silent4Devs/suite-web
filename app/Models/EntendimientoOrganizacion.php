@@ -29,7 +29,7 @@ class EntendimientoOrganizacion extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_elabora', 'id');
+        return $this->belongsTo(Empleado::class, 'id_elabora', 'id')->alta();
     }
 
     public function fodafortalezas()
@@ -54,6 +54,6 @@ class EntendimientoOrganizacion extends Model
 
     public function participantes()
     {
-        return $this->belongsToMany(Empleado::class, 'participantes_entendimiento_organizacion', 'foda_id', 'empleado_id')->with('area');
+        return $this->belongsToMany(Empleado::class, 'participantes_entendimiento_organizacion', 'foda_id', 'empleado_id')->alta()->with('area');
     }
 }

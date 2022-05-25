@@ -334,6 +334,16 @@ class Empleado extends Model
         return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
 
+    public function scopeAlta($query)
+    {
+        return $query->where('estatus', 'alta');
+    }
+
+    public function scopeBaja($query)
+    {
+        return $query->where('estatus', 'alta');
+    }
+
     public function empleadoEsSupervisor()
     {
         // code...

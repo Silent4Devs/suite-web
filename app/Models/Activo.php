@@ -75,7 +75,7 @@ class Activo extends Model
 
     public function dueno()
     {
-        return $this->belongsTo(Empleado::class, 'dueno_id');
+        return $this->belongsTo(Empleado::class, 'dueno_id')->alta();
     }
 
     public function ubicacion()
@@ -90,12 +90,12 @@ class Activo extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_responsable', 'id');
+        return $this->belongsTo(Empleado::class, 'id_responsable', 'id')->alta();
     }
 
     public function proceso()
     {
-        return $this->belongsTo(Empleado::class, 'proceso_id', 'id');
+        return $this->belongsTo(Empleado::class, 'proceso_id', 'id')->alta();
     }
 
     public function marca()

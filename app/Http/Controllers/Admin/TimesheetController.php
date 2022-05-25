@@ -53,8 +53,8 @@ class TimesheetController extends Controller
         $organizacion = Organizacion::first();
 
         $organizacion->update([
-            'dia_timesheet'=>$request->dia_timesheet,
-            'inicio_timesheet'=>$request->inicio_timesheet,
+            'dia_timesheet' => $request->dia_timesheet,
+            'inicio_timesheet' => $request->inicio_timesheet,
         ]);
 
         return redirect()->route('admin.timesheet-inicio')->with('success', 'Guardado con éxito');
@@ -97,8 +97,8 @@ class TimesheetController extends Controller
                 'fecha_dia' => 'required',
             ],
             [
-                'timesheet.*.proyecto.required'=>'Seleccionar proyecto',
-                'timesheet.*.tarea.required'=>'Seleccionar tarea',
+                'timesheet.*.proyecto.required' => 'Seleccionar proyecto',
+                'timesheet.*.tarea.required' => 'Seleccionar tarea',
                 'fecha_dia.required' => 'Seleccione fecha',
             ],
         );
@@ -212,7 +212,7 @@ class TimesheetController extends Controller
 
         Mail::to($aprobador->email)->send(new SolicitudAprobacionHorasEmail($quejasClientes));
 
-        return response()->json(['status'=>200]);
+        return response()->json(['status' => 200]);
         // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
     }
 
@@ -270,8 +270,8 @@ class TimesheetController extends Controller
                 'timesheet.1.tarea' => 'required',
             ],
             [
-                'timesheet.*.proyecto.required'=>'Seleccionar proyecto',
-                'timesheet.*.tarea.required'=>'Seleccionar tarea',
+                'timesheet.*.proyecto.required' => 'Seleccionar proyecto',
+                'timesheet.*.tarea.required' => 'Seleccionar tarea',
             ],
         );
         if (
@@ -397,7 +397,7 @@ class TimesheetController extends Controller
             }
         }
 
-        return response()->json(['status'=>200]);
+        return response()->json(['status' => 200]);
     }
 
     /**
@@ -600,12 +600,12 @@ class TimesheetController extends Controller
                 }
             }
             $areas_array->push([
-                'area'=>$area->area,
-                'times_aprobados'=>$contador_times_aprobados_areas,
-                'times_pendientes'=>$contador_times_pendientes_areas,
-                'times_rechazados'=>$contador_times_rechazados_areas,
-                'partisipacion'=>$porcentaje_participacion_area,
-                'nivel_p'=>$nivel_participacion,
+                'area' => $area->area,
+                'times_aprobados' => $contador_times_aprobados_areas,
+                'times_pendientes' => $contador_times_pendientes_areas,
+                'times_rechazados' => $contador_times_rechazados_areas,
+                'partisipacion' => $porcentaje_participacion_area,
+                'nivel_p' => $nivel_participacion,
             ]);
         }
 
@@ -654,11 +654,11 @@ class TimesheetController extends Controller
                 }
             }
             $proyectos_array->push([
-                'proyecto'=>$proyect->proyecto,
-                'horas'=>$horas_totales_proyecto,
-                'tareas'=>$tareas_proyecto,
-                'tareas_count'=>$tareas_proyecto->count(),
-                'estatus'=>$proyect->estatus,
+                'proyecto' => $proyect->proyecto,
+                'horas' => $horas_totales_proyecto,
+                'tareas' => $tareas_proyecto,
+                'tareas_count' => $tareas_proyecto->count(),
+                'estatus' => $proyect->estatus,
             ]);
         }
 
@@ -696,6 +696,6 @@ class TimesheetController extends Controller
         $proyecto_id = $request->proyecto_id;
         $tareas_obtenidas = TimesheetTarea::where('proyecto_id', $proyecto_id)->get();
 
-        return response()->json(['tareas'=>$tareas_obtenidas]);
+        return response()->json(['tareas' => $tareas_obtenidas]);
     }
 }

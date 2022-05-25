@@ -66,7 +66,7 @@ class CertificacionesEmpleados extends Model
 
     public function empleado_certificaciones()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
     }
 
     public function getVigenciaAttribute($value)

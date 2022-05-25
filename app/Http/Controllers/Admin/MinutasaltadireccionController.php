@@ -96,7 +96,7 @@ class MinutasaltadireccionController extends Controller
     public function create()
     {
         abort_if(Gate::denies('minutasaltadireccion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $responsablereunions = Empleado::select('id', 'name', 'foto')->with('area')->get();
+        $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->with('area')->get();
         $esta_vinculado = auth()->user()->empleado ? true : false;
         // dd($esta_vinculado);
 
@@ -318,7 +318,7 @@ class MinutasaltadireccionController extends Controller
             return intval($actividad->level) > 0;
         });
 
-        $responsablereunions = Empleado::select('id', 'name', 'foto')->get();
+        $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->get();
 
         return view('admin.minutasaltadireccions.edit', compact('responsablereunions', 'minutasaltadireccion', 'actividades'));
     }

@@ -47,7 +47,7 @@ class ActividadesPlanAuditorium extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_contacto');
+        return $this->belongsTo(Empleado::class, 'id_contacto')->alta();
     }
 
     public function plan_auditorium()
