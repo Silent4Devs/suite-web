@@ -137,7 +137,7 @@
                                                         style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
                                                         Reportó</strong>
                                                 <ul style="font-size:11pt; color:#153643;">
-                                                    <li style="font-size:11pt;">Nombre del cliente:<strong
+                                                    <li style="font-size:11pt;">Nombre del contacto:<strong
                                                             style="font-size:10pt;"> {{ $quejas->nombre }} </strong>
                                                     </li>
                                                     <li style="font-size:11pt;">Puesto:<strong style="font-size:10pt;">
@@ -184,7 +184,7 @@
                                                             style="font-size:10pt;">{{ \Carbon\Carbon::parse($quejas->fecha)->format('d-m-Y H:i:s') }}</strong>
                                                     </li>
                                                     <li style="font-size:11pt;">Ubicación: <strong
-                                                            style="font-size:10pt;"> {{ $quejas->ubicacion }}
+                                                            style="font-size:10pt;"> {{ $quejas->ubicacion ? $quejas->ubicacion : 'Sin definir' }}
                                                         </strong>
                                                     </li>
                                                     <li style="font-size:11pt;">Canal de recepción:<strong
@@ -225,12 +225,12 @@
                                                 </ul>
                                                 <br>
                                                 <p style="margin-top:10px; font-size:11pt; color:#153643;">
-                                                    Para dar atención a la queja presentada dé clic al siguiente botón
+                                                    Para dar atención a la queja presentada dé clic al siguiente botón:
                                                 </p>
 
                                                 <div style="text-align:center; margin-top:20px">
                                                     <a  href="{{route('admin.desk.quejasClientes-edit',$quejas) }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                        Revisar Queja
+                                                        Atender Queja
                                                     </a>
                                                 </div>
 

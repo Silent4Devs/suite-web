@@ -214,146 +214,93 @@
 {{-- {{ Breadcrumbs::render('quejas-edit', $quejas) }} --}}
 @include('partials.flashMessages')
 <div class="card">
-    <div class="text-center card-header mt-4" style="background-color: #345183;">
-        <strong style="font-size: 16pt; color: #fff;"><i class="fas fa-thumbs-down mr-2"></i> Quejas Clientes
-        </strong>
-    </div>
-    {{-- <div class="caja_botones_menu mt-4" id="botonesVista"> --}}
-    {{-- <a href="#" data-role="tab" data-tabs="registro" class="btn_activo"><i
-                class="fas fa-thumbs-down mr-2"></i>Registro de
-            Queja</a>
-        <a href="#" data-role="tab" data-tabs="analisis"><i class="mr-2 fas fa-clipboard-list"></i>Análisis Inicial de la
-            queja</a>
-
-            <a href="#" data-role="tab" data-tabs="resolucion"><i class="mr-2 fas fa-gavel"></i>Atención de la queja</a>
-            <a href="#" data-role="tab" data-tabs="cierre"><i class="mr-2 fas fa-door-closed"></i>Cierre la queja</a>
-        </div> --}}
-    {{-- <a href="#" data-tabs="plan"><i class="mr-4 fas fa-tasks"></i>Plan de Acción</a> --}}
-    {{-- </div> --}}
-
-    <nav>
-        <div class="nav nav-tabs mt-3" id="tabsCapacitaciones" role="tablist">
-            @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
-                <a class="nav-link active" data-type="registro_queja" id="nav-registro-tab" data-toggle="tab"
-                    href="#nav-registro" role="tab" aria-controls="nav-" aria-selected="true">
-                    <i class="fas fa-thumbs-down mr-2"></i>
-                    <span>Registro de Queja</span>
-                </a>
-            @endif
-            {{-- <a class="nav-link" data-type="lecciones" id="nav-lecciones-tab" href="#nav-lecciones"
-                style="position:relative">
-                <i class="mr-2 fas fa-file-signature" style="font-size:20px;"
-                    style="text-decoration:none;"></i>
-                Lecciones
-                <span class="indicador_numero" id="contador-lecciones-tab">0</span>
-            </a> --}}
-            @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
-                <a class="nav-link" data-type="analisis_queja" id="nav-analisis-tab" href="#nav-analisis"
-                    style="position:relative">
-                    <i class="mr-2 fas fa-clipboard-list"></i>
-                    Análisis Inicial de la queja
-                </a>
-            @endif
-            @if ($quejasClientes->responsable_atencion_queja_id == auth()->user()->empleado->id || $quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
-                <a class="menu_queja_recibida nav-link" data-type="atencion_queja" id="nav-atencion-tab"
-                    href="#nav-atencion" style="display:none; position:relative">
-                    <i class="mr-2 fas fa-gavel"></i>
-                    <span>Atención de la queja</span>
-                </a>
-            @endif
-            @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
-                <a class="menu_queja_recibida nav-link" data-type="cierre_queja" id="nav-cierre-tab" href="#nav-cierre"
-                    style="display:none; position:relative">
-                    <i class="mr-2 fas fa-door-closed"></i>Cierre la queja
-                </a>
-            @endif
-
+    @can('centro_atencion_quejas_cliente_edit')
+        <div class="text-center card-header mt-4" style="background-color: #345183;">
+            <strong style="font-size: 16pt; color: #fff;"><i class="fas fa-thumbs-down mr-2"></i> Quejas Clientes
+            </strong>
         </div>
-    </nav>
-    <div class="card-body">
-        @include('admin.recursos.components.parciales.loader')
-        <form class="row" method="POST" id="quejas-clientes-form"
-            action="{{ route('admin.desk.quejasClientes-update', $quejasClientes) }}" enctype="multipart/form-data">
-            @csrf
-            <div class="tab-content col-12" id="nav-tabContent">
+
+
+        <nav>
+
+            <div class="nav nav-tabs mt-3" id="tabsCapacitaciones" role="tablist">
                 @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
-                <div class="tab-pane fade show active" id="nav-registro" role="tabpanel"
-                    aria-labelledby="nav-registro-tab">
-                    @include('admin.desk.clientes.atencionQuejas.registro-queja')
-                </div>
+                    <a class="nav-link active" data-type="registro_queja" id="nav-registro-tab" data-toggle="tab"
+                        href="#nav-registro" role="tab" aria-controls="nav-" aria-selected="true">
+                        <i class="fas fa-thumbs-down mr-2"></i>
+                        <span>Registro de Queja</span>
+                    </a>
+                @endif
+                @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
+                    <a class="nav-link" data-type="analisis_queja" id="nav-analisis-tab" href="#nav-analisis"
+                        style="position:relative">
+                        <i class="mr-2 fas fa-clipboard-list"></i>
+                        Análisis Inicial de la queja
+                    </a>
                 @endif
 
                 @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
-                <div class="tab-pane fade" id="nav-analisis">
-                    @include('admin.desk.clientes.atencionQuejas.analisis-queja')
-                </div>
-                @endif
-
-                @if ($quejasClientes->responsable_atencion_queja_id == auth()->user()->empleado->id || $quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
-                <div class="tab-pane fade" id="nav-atencion">
-                    @include('admin.desk.clientes.atencionQuejas.atencion-queja')
-                </div>
+                    <a class="menu_queja_recibida nav-link" data-type="atencion_queja" id="nav-atencion-tab"
+                        href="#nav-atencion" style="display:none; position:relative">
+                        <i class="mr-2 fas fa-gavel"></i>
+                        <span>Atención de la queja</span>
+                    </a>
                 @endif
 
                 @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
-                <div class="tab-pane fade" id="nav-cierre">
-                    @include('admin.desk.clientes.atencionQuejas.cierre-queja')
-                </div>
+                    <a class="menu_queja_recibida nav-link" data-type="cierre_queja" id="nav-cierre-tab" href="#nav-cierre"
+                        style="display:none; position:relative">
+                        <i class="mr-2 fas fa-door-closed"></i>Cierre de la queja
+                    </a>
                 @endif
             </div>
-        </form>
+        </nav>
+        <div class="card-body">
+            @include('admin.recursos.components.parciales.loader')
+            <form class="row" method="POST" id="quejas-clientes-form"
+                action="{{ route('admin.desk.quejasClientes-update', $quejasClientes) }}" enctype="multipart/form-data">
+                @csrf
+                <div class="tab-content col-12" id="nav-tabContent">
+                    {{-- @can('acceder_quejas_cliente_registro_queja') --}}
+                    @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
+                        <div class="tab-pane fade show active" id="nav-registro" role="tabpanel"
+                            aria-labelledby="nav-registro-tab">
+                            @include('admin.desk.clientes.atencionQuejas.registro-queja')
+                        </div>
+                    @endif
+                    {{-- @endif --}}
+                    @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
+                        <div class="tab-pane fade" id="nav-analisis">
+                            @include('admin.desk.clientes.atencionQuejas.analisis-queja')
+                        </div>
+                    @endif
+                    @if ($quejasClientes->responsable_atencion_queja_id == auth()->user()->empleado->id || $quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
+                        <div class="tab-pane fade {{ $quejasClientes->responsable_atencion_queja_id == auth()->user()->empleado->id ? 'show active' : '' }}"
+                            id="nav-atencion">
+                            @include('admin.desk.clientes.atencionQuejas.atencion-queja')
+                        </div>
+                    @endif
+
+                    @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
+                        <div class="tab-pane fade" id="nav-cierre">
+                            @include('admin.desk.clientes.atencionQuejas.cierre-queja')
+                        </div>
+                    @endif
+                </div>
+            </form>
 
 
 
 
-    </div>
+        </div>
+    @endcan
 </div>
 @endsection
 
 
 
 @section('scripts')
-{{-- <script type="text/javascript">
-    $(document).ready(function() {
-        let estatus = @json($quejasClientes->estatus);
-        if (estatus == 'Cerrado') {
-
-            $('#cerradoCampo').removeClass('d-none')
-
-        } else {
-
-            $('#cerradoCampo').addClass('d-none')
-
-        }
-    })
-
-    $(document).on('change', '#opciones', function(event) {
-        if ($('#opciones option:selected').val() == 'Cerrado') {
-            $('#cerradoCampo').removeClass('d-none');
-        } else {
-            $('#cerradoCampo').addClass('d-none');
-        }
-    });
-</script> --}}
-<script>
-    if(cerrar_ticket == true){
-        document.getElementById('opciones').attr('value') == 'Cerrado';
-
-    }
-</script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        let estatus = @json($quejasClientes->estatus);
-        if (estatus == 'Cerrado') {
-
-        } else {
-
-            document.getElementById('solucion').value = "";
-
-        }
-    })
-
-
     const formatDate = (current_datetime) => {
         let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
             current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
@@ -366,7 +313,7 @@
         var opcion = combo.value;
         if (opcion == "Cerrado") {
             var fecha = new Date();
-            document.getElementById('solucion').value = formatDate(fecha);
+            document.getElementById('solucion').value = fecha.toLocaleString().replaceAll("/", "-");
         } else {
             document.getElementById('solucion').value = "";
         }
@@ -451,34 +398,39 @@
 
 
 <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
+    if (document.querySelector('.multiselect_areas select') != null) {
+        document.addEventListener('DOMContentLoaded', function() {
 
-        document.querySelector('.multiselect_areas select').addEventListener('change', function(e) {
-            e.preventDefault();
+            document.querySelector('.multiselect_areas select').addEventListener('change', function(e) {
+                e.preventDefault();
 
-            (document.querySelector('.multiselect_areas textarea')).value += `${this.value}, `;
+                (document.querySelector('.multiselect_areas textarea')).value += `${this.value}, `;
 
+            });
         });
+
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.querySelector('.multiselect_empleados select') != null) {
+            document.querySelector('.multiselect_empleados select').addEventListener('change', function(e) {
+                e.preventDefault();
+
+                (document.querySelector('.multiselect_empleados textarea')).value += `${this.value}, `;
+
+            });
+        }
     });
 
     document.addEventListener('DOMContentLoaded', function() {
+        if (document.querySelector('.multiselect_procesos select') != null) {
+            document.querySelector('.multiselect_procesos select').addEventListener('change', function(e) {
+                e.preventDefault();
 
-        document.querySelector('.multiselect_empleados select').addEventListener('change', function(e) {
-            e.preventDefault();
+                (document.querySelector('.multiselect_procesos textarea')).value += `${this.value}, `;
 
-            (document.querySelector('.multiselect_empleados textarea')).value += `${this.value}, `;
-
-        });
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-        document.querySelector('.multiselect_procesos select').addEventListener('change', function(e) {
-            e.preventDefault();
-
-            (document.querySelector('.multiselect_procesos textarea')).value += `${this.value}, `;
-
-        });
+            });
+        }
     });
 </script>
 
@@ -514,48 +466,6 @@
     Livewire.on('select2', () => {
 
         initSelect2();
-
-    });
-
-    $(document).ready(function() {
-        document.getElementById('vincularPlan').addEventListener('click', (e) => {
-            e.preventDefault();
-            let planes = $("#plan_accion").select2("val");
-            let idQuejaCliente = @json($quejasClientes->id);
-            if (planes.length > 0) {
-                Swal.fire({
-                    title: 'Desea vincular plan(es)?',
-                    text: "Esta acción se visualizara en planes de acción!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, vincular',
-                    cancelButtonText: 'Cancelar',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                    'content')
-                            },
-                            url: "{{ route('admin.desk.planesQuejasClientes') }}",
-                            data: {
-                                planes,
-                                id: idQuejaCliente
-                            },
-                            dataType: "JSON",
-                            success: function(response) {
-                                if (response.success) {
-                                    window.location.reload();
-                                }
-                            }
-                        });
-                    }
-                })
-            }
-        })
 
     });
 </script>
@@ -768,11 +678,11 @@
             color = "#FF417B";
             colorText = "white";
         }
-
-        document.getElementById("prioridad").value = prioridad_nombre;
-        document.getElementById("prioridad").style.background = color;
-        document.getElementById("prioridad").style.color = colorText;
-
+        if (document.getElementById("prioridad") != null) {
+            document.getElementById("prioridad").value = prioridad_nombre;
+            document.getElementById("prioridad").style.background = color;
+            document.getElementById("prioridad").style.color = colorText;
+        }
     }
 
 
@@ -794,38 +704,47 @@
 </script>
 
 <script>
-    let atencion = document.querySelector('#responsable_atencion_queja_id');
-    let area_init = atencion.options[atencion.selectedIndex].getAttribute('data-area');
-    let puesto_init = atencion.options[atencion.selectedIndex].getAttribute('data-puesto');
-    document.getElementById('atencion_puesto').innerHTML = recortarTexto(puesto_init);
-    document.getElementById('atencion_area').innerHTML = recortarTexto(area_init);
+    if (document.querySelector('#responsable_atencion_queja_id') != null) {
 
-    let autorizo = document.querySelector('#responsable_sgi_id');
-    let area = autorizo.options[autorizo.selectedIndex].getAttribute('data-area');
-    let puesto = autorizo.options[autorizo.selectedIndex].getAttribute('data-puesto');
-    document.getElementById('responsable_sgi_puesto').innerHTML = recortarTexto(puesto)
-    document.getElementById('responsable_sgi_area').innerHTML = recortarTexto(area)
+        let atencion = document.querySelector('#responsable_atencion_queja_id');
+        let area_init = atencion.options[atencion.selectedIndex].getAttribute('data-area');
+        let puesto_init = atencion.options[atencion.selectedIndex].getAttribute('data-puesto');
+        document.getElementById('atencion_puesto').innerHTML = recortarTexto(puesto_init);
+        document.getElementById('atencion_area').innerHTML = recortarTexto(area_init);
 
-    atencion.addEventListener('change', function(e) {
-        e.preventDefault();
-        let area = this.options[this.selectedIndex].getAttribute('data-area');
-        let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-        document.getElementById('atencion_puesto').innerHTML = recortarTexto(puesto)
-        document.getElementById('atencion_area').innerHTML = recortarTexto(area)
-    })
+        atencion.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('atencion_puesto').innerHTML = recortarTexto(puesto)
+            document.getElementById('atencion_area').innerHTML = recortarTexto(area)
+        })
+    }
 
-    autorizo.addEventListener('change', function(e) {
-        e.preventDefault();
-
-        let area = this.options[this.selectedIndex].getAttribute('data-area');
-        let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-
+    if (document.querySelector('#responsable_sgi_id') != null) {
+        let autorizo = document.querySelector('#responsable_sgi_id');
+        let area = autorizo.options[autorizo.selectedIndex].getAttribute('data-area');
+        let puesto = autorizo.options[autorizo.selectedIndex].getAttribute('data-puesto');
         document.getElementById('responsable_sgi_puesto').innerHTML = recortarTexto(puesto)
         document.getElementById('responsable_sgi_area').innerHTML = recortarTexto(area)
-    })
+
+
+
+        autorizo.addEventListener('change', function(e) {
+            e.preventDefault();
+
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+
+            document.getElementById('responsable_sgi_puesto').innerHTML = recortarTexto(puesto)
+            document.getElementById('responsable_sgi_area').innerHTML = recortarTexto(area)
+        })
+    }
+
+
 
     function recortarTexto(texto, length = 30) {
-        let trimmedString = texto.length > length ?
+        let trimmedString = texto?.length > length ?
             texto.substring(0, length - 3) + "..." :
             texto;
         return trimmedString;
@@ -836,37 +755,56 @@
     document.addEventListener('DOMContentLoaded', function(e) {
         initializeTab();
         let quejaClienteIdModel = @json($quejasClientes->id);
-        let btnSiguienteRegistro = document.getElementById('btn-siguiente-registro');
-        console.log(btnSiguienteRegistro);
-        btnSiguienteRegistro.addEventListener('click', (e) => {
-            e.preventDefault();
-            validarGuardarQuejaRegistro();
-        })
-        let btnGuardarRegistro = document.getElementById('btn-guardar-registro');
-        btnGuardarRegistro.addEventListener('click', (e) => {
-            e.preventDefault();
-            validarGuardarQuejaRegistro(true);
-        })
-        let btnSiguienteAnalisis = document.getElementById('siguiente_analisis');
-        btnSiguienteAnalisis.addEventListener('click', (e) => {
-            e.preventDefault();
-            validarGuardarAnalisisQueja();
-        })
-        let btnGuardarAnalisis = document.getElementById('btn-guardar-analisis');
-        btnGuardarAnalisis.addEventListener('click', (e) => {
-            e.preventDefault();
-            validarGuardarAnalisisQueja(true);
-        })
-        let btnGuardarAtencion = document.getElementById('btn-guardar-atencion');
-        btnGuardarAtencion.addEventListener('click', (e) => {
-            e.preventDefault();
-            validarGuardarAtencionQueja(true);
-        })
-        let btnGuardarCierre = document.getElementById('btn-guardar-cierre');
-        btnGuardarCierre.addEventListener('click', (e) => {
-            e.preventDefault();
-            validarGuardarAtencionQueja(true);
-        })
+        if (document.getElementById('btn-siguiente-registro') != null) {
+            let btnSiguienteRegistro = document.getElementById('btn-siguiente-registro');
+            console.log(btnSiguienteRegistro);
+            btnSiguienteRegistro.addEventListener('click', (e) => {
+                e.preventDefault();
+                validarGuardarQuejaRegistro();
+            })
+        }
+        if (document.getElementById('btn-guardar-registro') != null) {
+            let btnGuardarRegistro = document.getElementById('btn-guardar-registro');
+            btnGuardarRegistro.addEventListener('click', (e) => {
+                e.preventDefault();
+                validarGuardarQuejaRegistro(true);
+            })
+        }
+        if (document.getElementById('siguiente_analisis') != null) {
+            let btnSiguienteAnalisis = document.getElementById('siguiente_analisis');
+            btnSiguienteAnalisis.addEventListener('click', (e) => {
+                e.preventDefault();
+                validarGuardarAnalisisQueja();
+            })
+        }
+        if (document.getElementById('btn-guardar-analisis') != null) {
+            let btnGuardarAnalisis = document.getElementById('btn-guardar-analisis');
+            btnGuardarAnalisis.addEventListener('click', (e) => {
+                e.preventDefault();
+                validarGuardarAnalisisQueja(true);
+            })
+        }
+        if (document.getElementById('btn-guardar-atencion') != null) {
+            let btnGuardarAtencion = document.getElementById('btn-guardar-atencion');
+            btnGuardarAtencion.addEventListener('click', (e) => {
+                e.preventDefault();
+                validarGuardarAtencionQueja(true);
+            })
+        }
+        if (document.getElementById('siguiente_atencion') != null) {
+            let btnSiguienteAtencion = document.getElementById('siguiente_atencion');
+            btnSiguienteAtencion.addEventListener('click', (e) => {
+                e.preventDefault();
+                validarGuardarAtencionQueja();
+            })
+        }
+        if (document.getElementById('btn-guardar-cierre') != null) {
+            let btnGuardarCierre = document.getElementById('btn-guardar-cierre');
+            btnGuardarCierre.addEventListener('click', (e) => {
+                e.preventDefault();
+                validarGuardarAtencionQueja(true);
+            })
+        }
 
         function limpiarErrores() {
             if (document.querySelectorAll('.errores').length > 0) {
@@ -937,7 +875,8 @@
             }
             if (data.isValid) {
                 ocultarLoader();
-                guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-analisis-tab', soloGuardar);
+                guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-analisis-tab',
+                    soloGuardar);
                 // $(this).tab('show');
                 localStorage.setItem('menu-quejas-clientes', 'queja-analisis');
             }
@@ -945,139 +884,143 @@
 
         async function validarGuardarAnalisisQueja(soloGuardar = false) {
             const url =
-                        "{{ route('admin.desk.quejasClientes.validateFormQuejaCliente') }}";
-                    const formData = new FormData(document.getElementById(
-                        'quejas-clientes-form'));
-                    formData.append('tipo_validacion', 'queja-analisis')
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            Accept: "application/json",
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        },
-                    })
-                    const data = await response.json();
-                    console.log(data.errors);
-                    if (data.errors) {
-                        ocultarLoader();
-                        $.each(data.errors, function(indexInArray,
-                            valueOfElement) {
-                            document.querySelector(`span.${indexInArray}_error`)
-                                .innerHTML =
-                                `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
-                        });
-                    }
-                    if (data.isValid) {
-                        ocultarLoader();
-                        guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-atencion-tab',soloGuardar);
-                        // $(this).tab('show');
-                        localStorage.setItem('menu-quejas-clientes', 'queja-atencion');
-                    }
+                "{{ route('admin.desk.quejasClientes.validateFormQuejaCliente') }}";
+            const formData = new FormData(document.getElementById(
+                'quejas-clientes-form'));
+            formData.append('tipo_validacion', 'queja-analisis')
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    Accept: "application/json",
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+            })
+            const data = await response.json();
+            console.log(data.errors);
+            if (data.errors) {
+                ocultarLoader();
+                $.each(data.errors, function(indexInArray,
+                    valueOfElement) {
+                    document.querySelector(`span.${indexInArray}_error`)
+                        .innerHTML =
+                        `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
+                });
+            }
+            if (data.isValid) {
+                ocultarLoader();
+                guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-atencion-tab',
+                    soloGuardar);
+                // $(this).tab('show');
+                localStorage.setItem('menu-quejas-clientes', 'queja-atencion');
+            }
 
-            
+
         }
-        async function  validarGuardarAtencionQueja(soloGuardar = false) {
+        async function validarGuardarAtencionQueja(soloGuardar = false) {
             const url =
-                        "{{ route('admin.desk.quejasClientes.validateFormQuejaCliente') }}";
-                    const formData = new FormData(document.getElementById(
-                        'quejas-clientes-form'));
-                    formData.append('tipo_validacion', 'queja-analisis')
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            Accept: "application/json",
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        },
-                    })
-                    const data = await response.json();
-                    console.log(data.errors);
-                    if (data.errors) {
-                        ocultarLoader();
-                        $.each(data.errors, function(indexInArray,
-                            valueOfElement) {
-                            document.querySelector(`span.${indexInArray}_error`)
-                                .innerHTML =
-                                `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
-                        });
-                    }
-                    if (data.isValid) {
-                        ocultarLoader();
-                        guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-cierre-tab',soloGuardar);
-                        // $(this).tab('show');
-                        localStorage.setItem('menu-quejas-clientes', 'queja-atencion');
-                    }
+                "{{ route('admin.desk.quejasClientes.validateFormQuejaCliente') }}";
+            const formData = new FormData(document.getElementById(
+                'quejas-clientes-form'));
+            formData.append('tipo_validacion', 'queja-analisis')
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    Accept: "application/json",
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+            })
+            const data = await response.json();
+            console.log(data.errors);
+            if (data.errors) {
+                ocultarLoader();
+                $.each(data.errors, function(indexInArray,
+                    valueOfElement) {
+                    document.querySelector(`span.${indexInArray}_error`)
+                        .innerHTML =
+                        `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
+                });
+            }
+            if (data.isValid) {
+                ocultarLoader();
+                guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-cierre-tab',
+                    soloGuardar);
+                // $(this).tab('show');
+                localStorage.setItem('menu-quejas-clientes', 'queja-atencion');
+            }
 
-            
+
         }
         async function validarGuardarAnalisisQueja(soloGuardar = false) {
             const url =
-                        "{{ route('admin.desk.quejasClientes.validateFormQuejaCliente') }}";
-                    const formData = new FormData(document.getElementById(
-                        'quejas-clientes-form'));
-                    formData.append('tipo_validacion', 'queja-analisis')
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            Accept: "application/json",
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        },
-                    })
-                    const data = await response.json();
-                    console.log(data.errors);
-                    if (data.errors) {
-                        ocultarLoader();
-                        $.each(data.errors, function(indexInArray,
-                            valueOfElement) {
-                            document.querySelector(`span.${indexInArray}_error`)
-                                .innerHTML =
-                                `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
-                        });
-                    }
-                    if (data.isValid) {
-                        ocultarLoader();
-                        guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-atencion-tab',soloGuardar);
-                        // $(this).tab('show');
-                        localStorage.setItem('menu-quejas-clientes', 'queja-atencion');
-                    }
+                "{{ route('admin.desk.quejasClientes.validateFormQuejaCliente') }}";
+            const formData = new FormData(document.getElementById(
+                'quejas-clientes-form'));
+            formData.append('tipo_validacion', 'queja-analisis')
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    Accept: "application/json",
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+            })
+            const data = await response.json();
+            console.log(data.errors);
+            if (data.errors) {
+                ocultarLoader();
+                $.each(data.errors, function(indexInArray,
+                    valueOfElement) {
+                    document.querySelector(`span.${indexInArray}_error`)
+                        .innerHTML =
+                        `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
+                });
+            }
+            if (data.isValid) {
+                ocultarLoader();
+                guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-atencion-tab',
+                    soloGuardar);
+                // $(this).tab('show');
+                localStorage.setItem('menu-quejas-clientes', 'queja-atencion');
+            }
 
-            
+
         }
-        async function  validarGuardarAtencionQueja(soloGuardar = false) {
+        async function validarGuardarAtencionQueja(soloGuardar = false) {
             const url =
-                        "{{ route('admin.desk.quejasClientes.validateFormQuejaCliente') }}";
-                    const formData = new FormData(document.getElementById(
-                        'quejas-clientes-form'));
-                    formData.append('tipo_validacion', 'queja-analisis')
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            Accept: "application/json",
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        },
-                    })
-                    const data = await response.json();
-                    console.log(data.errors);
-                    if (data.errors) {
-                        ocultarLoader();
-                        $.each(data.errors, function(indexInArray,
-                            valueOfElement) {
-                            document.querySelector(`span.${indexInArray}_error`)
-                                .innerHTML =
-                                `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
-                        });
-                    }
-                    if (data.isValid) {
-                        ocultarLoader();
-                        guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-cierre-tab',soloGuardar);
-                        // $(this).tab('show');
-                        localStorage.setItem('menu-quejas-clientes', 'queja-atencion');
-                    }
+                "{{ route('admin.desk.quejasClientes.validateFormQuejaCliente') }}";
+            const formData = new FormData(document.getElementById(
+                'quejas-clientes-form'));
+            formData.append('tipo_validacion', 'queja-analisis')
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    Accept: "application/json",
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+            })
+            const data = await response.json();
+            console.log(data.errors);
+            if (data.errors) {
+                ocultarLoader();
+                $.each(data.errors, function(indexInArray,
+                    valueOfElement) {
+                    document.querySelector(`span.${indexInArray}_error`)
+                        .innerHTML =
+                        `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
+                });
+            }
+            if (data.isValid) {
+                ocultarLoader();
+                guardarEnElServidorQuejaCliente(formData, quejaClienteIdModel, '#nav-cierre-tab',
+                    soloGuardar);
+                // $(this).tab('show');
+                localStorage.setItem('menu-quejas-clientes', 'queja-atencion');
+            }
 
-            
+
         }
 
 

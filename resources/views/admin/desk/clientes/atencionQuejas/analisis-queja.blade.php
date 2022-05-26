@@ -20,7 +20,7 @@
 </div>
 <div class="row">
     <div class="mt-4 form-group col-md-12">
-        <b>¿La queja recibida es procedente?</b>
+        <label><i class="fas fa-question-circle iconos-crear"></i>¿La queja recibida es procedente?</label>
     </div>
 </div>
 
@@ -209,7 +209,7 @@
 
     <div class="row">
         <div class="mt-4 form-group col-md-12">
-            <b>Solicitar la atención de la queja</b>
+            <label><i class="fas fa-question-circle iconos-crear"></i>¿Notificar al responsable para la atención de la queja?</label>
         </div>
     </div>
 
@@ -218,30 +218,11 @@
         </buttom>
     </div>
 
-    {{-- <div class="row">
-        <div class="col-12">
-            <div class="card-body" style="margin-top:-30px;">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="notificar_responsable" value="1"
-                        {{ old('notificar_responsable', $quejasClientes->notificar_responsable) == true ? 'checked' : '' }}>
-                    <label class="form-check-label" for="notificar_responsable">
-                        Sí
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="notificar_responsable" value="2"
-                        {{ old('notificar_responsable', $quejasClientes->notificar_responsable) == false ? 'checked' : '' }}>
-                    <label class="form-check-label" for="notificar_responsable">
-                        No
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div><br> --}}
+
 
     <div class=" mt-4 row">
         <div class="mt-3 form-group col-md-12">
-            <b>¿Se requiere levantar una acción correctiva?</b>
+            <label><i class="fas fa-question-circle iconos-crear"></i>¿Se requiere levantar una acción correctiva?</label>
         </div>
     </div>
     <div class="row">
@@ -278,14 +259,14 @@
         <div class="col-12" id="indicaciones_levantamiento" style="display: none; margin-top:-20px;">
             <div class="row">
                 <div class="col-12">
-                    <b class="mr-4 text-primary">Seleccione al responsable del Sistema de
+                    <b class="mr-4 ">Seleccione al responsable del Sistema de
                         Gestión
                     </b>
                 </div>
             </div>
 
             <div class="row">
-                <div class="mt-2 form-group col-sm-12 col-md-4 col-lg-4">
+                <div class="mt-3 form-group col-sm-12 col-md-4 col-lg-4">
                     <label for="responsable_sgi_id"><i class="fas fa-user-tie iconos-crear"></i>Nombre<sup>*</sup></label>
                     <select class="form-control {{ $errors->has('responsable_sgi_id') ? 'is-invalid' : '' }}"
                         name="responsable_sgi_id" id="responsable_sgi_id">

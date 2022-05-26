@@ -16,6 +16,9 @@ class ResolucionQuejaRechazadaEmail extends Mailable
      *
      * @return void
      */
+
+    public $quejas;
+
     public function __construct(QuejasCliente $quejas)
     {
         $this->quejas = $quejas;
@@ -28,6 +31,6 @@ class ResolucionQuejaRechazadaEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.accioncorrectiva.resolucionQuejaRechazada');
+        return $this->view('mails.quejasCliente.resolucionQuejaRechazada')->subject('La resolución de la queja ' .$this->quejas->folio. ' ha sido rechazada');
     }
 }
