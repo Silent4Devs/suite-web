@@ -252,7 +252,7 @@
             </div>
         </div>
     </div>
-    {{-- <div class="row">
+    <div class="row">
         <div class="col-12">
             <div class="card ">
                 <div class="card-header" style="background-color: #345183;">
@@ -265,7 +265,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
     <div class="row">
 
         <div class="col-6">
@@ -769,7 +769,7 @@
             cantidadClientesArray.push(cliente.cantidad)
 
         });
-        console.log(clientes);
+
 
 
         for (let index = 0; index < cantidadClientesArray.length; index++) {
@@ -884,16 +884,16 @@
     </script>
 
 
-        {{-- <script>
+        <script>
             let procesosCollect = @json($procesosCollect);
-            let datos = [];
-            let numeros = [];
+            let informacionprocesos = [];
+            let cantidadprocesos = [];
             let coloresAutomaticamente = [];
             Object.entries(procesosCollect).forEach(([key, value]) => {
-                labels.push(key);
-                data.push(value);
+                informacionprocesos.push(key);
+                cantidadprocesos.push(value);
             });
-            console.log(datos, numeros);
+            console.log(Object.entries(procesosCollect));
 
             for (let index = 0; index < data.length; index++) {
                 coloresAutomaticamente.push("rgba(109, 200, 102, 1)");
@@ -903,14 +903,14 @@
             var pie_procesos = new Chart(chartProcesos, {
                 type: 'bar',
                 data: {
-                    labels: datos,
+                    labels: informacionprocesos,
                     datasets: [{
                         backgroundColor: coloresAutomaticamente,
                         borderColor: coloresAutomaticamente,
                         borderWidth: 1,
                         label: ["Procesos"],
 
-                        data: numeros,
+                        data: cantidadprocesos,
 
                     }]
                 },
@@ -942,5 +942,5 @@
 
 
             });
-        </script> --}}
+        </script>
 @endsection

@@ -81,23 +81,11 @@
 
                                         <div style="width: 100%; margin-top: 10px;">
                                                 <p style="font-size:11pt; color:#153643;">
-                                                    Le informamos que la resolución de la queja presentada no ha sido aprobada por el cliente,
-                                                    por lo que se le solicita atentamente, plantear otra propuesta de solución.
+                                                    Le informamos que la resolución de la queja presentada ha sido aprobada por el cliente.
                                                 </p>
 
                                                 <br>
                                                 <br>
-
-
-                                                <p style="font-size:11pt; color:#153643;">
-                                                   Ingrese nuevamente al formulario, dé clic al botón:
-                                                </p>
-
-                                                <div style="text-align:center; margin-top:20px">
-                                                    <a  href="{{route('admin.desk.quejasClientes-edit',$quejas) }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                        Atender Queja
-                                                    </a>
-                                                </div>
 
                                         </div>
                                     </td>

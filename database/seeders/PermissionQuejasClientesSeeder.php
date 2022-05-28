@@ -27,6 +27,10 @@ class PermissionQuejasClientesSeeder extends Seeder
                 'name' => 'Ese permiso permite al usuario acceder al módulo de "Centro de Atención", a la vista edit de "Queja Cliente"',
                 'title' => 'centro_atencion_quejas_cliente_edit',
             ],
+            [
+                'name' => 'Ese permiso permite al usuario acceder al módulo de "Centro de Atención", a la vista dashboard de "Queja Cliente"',
+                'title' => 'centro_atencion_quejas_cliente_dashboard',
+            ],
 
         ];
 

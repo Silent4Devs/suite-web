@@ -79,6 +79,7 @@ class QuejasCliente extends Model
         'porque_no_cierre_ticket',
         'email_env_resolucion_rechazada',
         'notificar_atencion_queja_no_aprobada',
+        'email_env_resolucion_aprobada',
     ];
 
     protected $appends = [
