@@ -896,7 +896,7 @@
             console.log(Object.entries(procesosCollect));
 
             for (let index = 0; index < data.length; index++) {
-                coloresAutomaticamente.push("rgba(109, 200, 102, 1)");
+                coloresAutomaticamente.push("rgba(230, 108, 162, 1)");
 
             }
 

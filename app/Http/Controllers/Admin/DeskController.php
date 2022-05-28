@@ -1501,7 +1501,17 @@ class DeskController extends Controller
             'descripcion' => 'required',
             'area_quejado' => 'required',
             'canal' => 'required',
-        ]);
+        ],
+        [
+            'cliente_id' => 'El campo cliente es obligatorio',
+            'proyectos_id' =>'El campo proyecto es obligatorio',
+            'titulo' => 'El campo título es obligatorio',
+            'fecha'=>'El campo fecha es obligatorio',
+            'descripcion'=>'El campo descripción es obligatorio',
+            'area_quejado'=> 'El campo area es obligatorio',
+            'canal' => 'El campo canal es obligatorio',
+        ]
+        );
     }
 
     public function validateRequestAnalisisQuejaCliente($request)
@@ -1509,29 +1519,48 @@ class DeskController extends Controller
         $levantamiento_ac = intval($request->levantamiento_ac) == 1 ? true : false;
         $queja_procedente = intval($request->queja_procedente) == 1 ? true : false;
         if ($queja_procedente) {
-            $request->validate([
+            $request->validate(
+            [
                 'urgencia' => 'required',
                 'impacto'=>'required',
                 'categoria_queja' => 'required',
                 'responsable_atencion_queja_id'=>'required',
 
-            ]);
+            ],
+            [
+                'urgencia' => 'El campo urgencia es obligatorio',
+                'impacto'=>'El campo impacto es obligatorio',
+                'categoria_queja' => 'El campo categoria es obligatorio',
+                'responsable_atencion_queja_id'=>'El campo responsable de la atención es obligatorio',
+            ]
+            );
             // dd($request->all());
             if ($levantamiento_ac) {
-                $request->validate([
+                $request->validate(
+                [
                 'responsable_sgi_id'=>'required',
-                ]);
+                ],
+                [
+                'responsable_sgi_id'=>'El campo responsable del SGI es obligatorio',
+                ]
+                );
             }
         }
     }
 
     public function validateRequestAtencionQuejaCliente($request)
     {
-        $request->validate([
+        $request->validate(
+        [
             'realizar_accion' => 'required',
             'acciones_tomara_responsable' => 'required',
 
-        ]);
+        ],
+        [
+            'realizar_accion' => 'El campo realiazar acción es obligatorio',
+            'acciones_tomara_responsable' => 'El campo acciones es obligatorio',
+        ]
+        );
     }
 
     public function validateRequestCierreQuejaCliente($request)
@@ -1540,6 +1569,11 @@ class DeskController extends Controller
             'porque_no_cumplio_responsable' => 'required',
             'porque_no_cierre_ticket'=>'required',
 
-        ]);
+        ],
+        [
+            'porque_no_cumplio_responsable' =>  'El campo por qué no se cumplieron las acciones es obligatorio',
+            'porque_no_cierre_ticket'=>  'El campo por qué no se cierra el ticket es obligatorio',
+        ]
+        );
     }
 }
