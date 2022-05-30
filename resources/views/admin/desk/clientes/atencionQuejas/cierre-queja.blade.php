@@ -47,7 +47,7 @@
 </div><br>
 
 <div class="form-group col-md-12 col-sm-12 col-lg-12" style="margin-top:-30px">
-    <label class="form-label">¿Por qué?</label>
+    <label class="form-label">¿Por qué?</label><sup>*</sup>
     <textarea name="porque_no_cumplio_responsable"
         class="form-control">{{ $quejasClientes->porque_no_cumplio_responsable }}</textarea>
     <span class="porque_no_cumplio_responsable_error text-danger errores"></span>
@@ -128,9 +128,10 @@
 </div><br>
 
 <div class="form-group col-md-12 col-sm-12 col-lg-12" style="margin-top:-30px">
-    <label class="form-label">¿Por qué?</label>
+    <label class="form-label">¿Por qué?</label><sup>*</sup>
     <textarea name="porque_no_cierre_ticket"
         class="form-control">{{ $quejasClientes->porque_no_cierre_ticket }}</textarea>
+        <span class="porque_no_cierre_ticket_error text-danger errores"></span>
 </div>
 
 <div class="form-group col-md-12">

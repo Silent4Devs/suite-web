@@ -92,7 +92,7 @@
         <div class="mt-2 form-group col-md-4">
 
             <input type="date" name="fecha_limite" class="form-control"
-                value="{{ old('fecha_limite', \Carbon\Carbon::parse($quejasClientes->fecha_limite)->format('Y-m-d')) }}">
+                value="{{ old('fecha_limite',$quejasClientes->fecha_limite ? \Carbon\Carbon::parse($quejasClientes->fecha_limite)->format('Y-m-d') : '') }}">
         </div>
 
         <div class="mt-4 form-group col-md-12">
