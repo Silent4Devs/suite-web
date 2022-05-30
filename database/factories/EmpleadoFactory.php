@@ -35,7 +35,7 @@ class EmpleadoFactory extends Factory
             'telefono' => $this->faker->phoneNumber,
             'genero' => $gender,
             'n_empleado' => $this->faker->unique()->randomNumber(),
-            'supervisor_id' => Empleado::all()->count() ? Empleado::all()->random()->id : null,
+            'supervisor_id' => Empleado::alta()->get()->count() ? Empleado::alta()->get()->random()->id : null,
             'area_id' => Area::all()->random()->id,
             'sede_id' => Sede::all()->random()->id,
         ];

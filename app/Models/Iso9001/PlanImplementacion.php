@@ -63,7 +63,7 @@ class PlanImplementacion extends Model
 
     public function elaborador()
     {
-        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id');
+        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->alta();
     }
 
     public function matriz_requsitos_legales()

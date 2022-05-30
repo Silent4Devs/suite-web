@@ -224,34 +224,24 @@
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-general" role="tabpanel"
                             aria-labelledby="nav-general-tab">
-                            @include(
-                                'admin.empleados.form_components.general'
-                            )
+                            @include('admin.empleados.form_components.general')
                         </div>
                         <div class="tab-pane fade" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
-                            @include(
-                                'admin.empleados.form_components.personal'
-                            )
+                            @include('admin.empleados.form_components.personal')
 
                         </div>
                         <div class="tab-pane fade" id="nav-financiera" role="tabpanel"
                             aria-labelledby="nav-financiera-tab">
-                            @include(
-                                'admin.empleados.form_components.financiera'
-                            )
+                            @include('admin.empleados.form_components.financiera')
 
                         </div>
                         <div class="tab-pane fade" id="nav-competencias" role="tabpanel"
                             aria-labelledby="nav-competencias-tab">
-                            @include(
-                                'admin.empleados.components._competencias_form'
-                            )
+                            @include('admin.empleados.components._competencias_form')
                         </div>
                         <div class="tab-pane fade" id="nav-documentos" role="tabpanel"
                             aria-labelledby="nav-documentos-tab">
-                            @include(
-                                'admin.empleados.form_components.documentos'
-                            )
+                            @include('admin.empleados.form_components.documentos')
                         </div>
 
                     </div>
@@ -271,9 +261,7 @@
                 </div>
                 <label id="urlFormEmpleados"
                     data-url="{{ route('admin.empleados.updateFromCurriculum', $empleado) }}"></label>
-                @include(
-                    'admin.empleados.components._competencias_form'
-                )
+                @include('admin.empleados.components._competencias_form')
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.miCurriculum', $empleado) }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit" id="btnGuardar">

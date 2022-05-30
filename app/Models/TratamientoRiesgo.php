@@ -87,6 +87,6 @@ class TratamientoRiesgo extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_reviso', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'id_reviso', 'id')->alta()->with('area');
     }
 }
