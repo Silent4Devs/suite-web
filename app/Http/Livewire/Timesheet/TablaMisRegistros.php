@@ -27,33 +27,36 @@ class TablaMisRegistros extends Component
         $this->aprobados_contador = Timesheet::where('estatus', 'aprobado')->where('empleado_id', auth()->user()->empleado->id)->count();
         $this->rechazos_contador = Timesheet::where('estatus', 'rechazado')->where('empleado_id', auth()->user()->empleado->id)->count();
 
-        $this->emit('scriptTabla');
-
         return view('livewire.timesheet.tabla-mis-registros');
     }
 
     public function todos()
     {
         $this->times = Timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
+        $this->emit('scriptTabla');
     }
 
     public function papelera()
     {
         $this->times = Timesheet::where('estatus', 'papelera')->where('empleado_id', auth()->user()->empleado->id)->get();
+        $this->emit('scriptTabla');
     }
 
     public function pendientes()
     {
         $this->times = Timesheet::where('estatus', 'pendiente')->where('empleado_id', auth()->user()->empleado->id)->get();
+        $this->emit('scriptTabla');
     }
 
     public function aprobados()
     {
         $this->times = Timesheet::where('estatus', 'aprobado')->where('empleado_id', auth()->user()->empleado->id)->get();
+        $this->emit('scriptTabla');
     }
 
     public function rechazos()
     {
         $this->times = Timesheet::where('estatus', 'rechazado')->where('empleado_id', auth()->user()->empleado->id)->get();
+        $this->emit('scriptTabla');
     }
 }

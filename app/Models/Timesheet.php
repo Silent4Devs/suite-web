@@ -67,7 +67,7 @@ class Timesheet extends Model
         $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify('last Monday')->format('Y-m-d');
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify('next Sunday')->format('Y-m-d');
 
-        $semana_rango = $inicio_dia . '-' . $fin_dia;
+        $semana_rango = $inicio_dia . '|' . $fin_dia;
 
         return $semana_rango;
     }

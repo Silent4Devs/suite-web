@@ -91,9 +91,11 @@
                         <i class="fas fa-frown"></i> Quejas
                     </a>
                 @endcan
+                @can('centro_atencion_quejas_clientes_acceder')
                 <a href="#" data-tabs="quejasClientes">
                     <i class="fas fa-thumbs-down"></i> Quejas Clientes
                 </a>
+                @endcan
                 @can('denuncias_access')
                     <a href="#" data-tabs="denuncias">
                         <i class="fas fa-hand-paper"></i> Denuncias

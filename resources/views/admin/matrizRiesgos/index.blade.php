@@ -9,7 +9,10 @@
         @can('configuracion_sede_create')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'MatrizRiesgo', 'route' => 'admin.matriz-riesgos.parseCsvImport'])
+                    @include('csvImport.modal', [
+                        'model' => 'MatrizRiesgo',
+                        'route' => 'admin.matriz-riesgos.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -24,7 +27,8 @@
                     <div class="col-11">
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
                         </p>
-                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre los riesgos asociados a su organización</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre los riesgos
+                            asociados a su organización</p>
                     </div>
                 </div>
             </div>
@@ -36,10 +40,10 @@
                             href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}" type="submit"
                             name="action">Agregar nuevo</a>
                     @endcan
-                    @can('analisis_de_riesgos_matriz_riesgo_analisis_grafica_show')
+                    {{-- @can('analisis_de_riesgos_matriz_riesgo_analisis_grafica_show')
                         <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
                             href="{{ route('admin.matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
-                    @endcan
+                    @endcan --}}
                 </div>
                 <table class="table table-bordered w-100 datatable datatable-Matriz">
                     <thead class="thead-dark">
@@ -49,33 +53,33 @@
                             <th class="text-center" style="background-color:#1168af;" colspan="4">CID</th>
                             <th class="text-center" style="background-color:#217bc5;" colspan="3">Riesgo Inicial
                             <th class="text-center" style="background-color:#1168af;" colspan="2">Acciones</th>
-                            <th class="text-center" style="background-color:#217bc5;" colspan="3">CID</th>
+                            <th class="text-center" style="background-color:#217bc5;" colspan="4">CID Residual</th>
                             <th class="text-center" style="background-color:#1168af;" colspan="3">Riesgo Residual</th>
                             <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
                         </tr>
                         <tr>
-                            <th>
+                            <th style="min-width:20px;">
                                 Id
                             </th>
-                            <th>
+                            <th style="min-width:90px;">
                                 Sede
                             </th>
-                            <th>
+                            <th style="min-width:120px;">
                                 Proceso
                             </th>
-                            <th>
+                            <th style="min-width:120px;">
                                 Responsable
                             </th>
-                            <th>
+                            <th style="min-width:120px;">
                                 Activo
                             </th>
-                            <th>
+                            <th style="min-width:120px;">
                                 Amenaza
                             </th>
-                            <th>
+                            <th style="min-width:120px;">
                                 Vulnerabilidad
                             </th>
-                            <th>
+                            <th style="min-width:120px;">
                                 Descripción riesgo
                             </th>
                             <th>
@@ -90,18 +94,18 @@
                             <th>
                                 Resultado ponderación
                             </th>
-                            <th>
+                            <th style="min-width:120px;">
                                 Probabilidad
                             </th>
-                            <th>
+                            <th style="min-width:120px;">
                                 Impacto
                             </th>
-                            <th>
+                            <th style="min-width:120px;">
                                 Nivel riesgo
                             </th>
                             <!--<th>
-                                                                                                                    Riesgo total
-                                                                                                                </th>-->
+                                                                                                                                Riesgo total
+                                                                                                                            </th>-->
                             <th>
                                 Control
                             </th>
@@ -118,17 +122,20 @@
                                 Disponibilidad
                             </th>
                             <th>
+                                Resultado ponderación
+                            </th>
+                            <th style="min-width:120px;">
                                 Probabilidad
                             </th>
-                            <th>
+                            <th style="min-width:120px;">
                                 Impacto
                             </th>
-                            <th>
+                            <th style="min-width:120px;">
                                 Nivel riesgo
                             </th>
                             <!--<th>
-                                                                                                                Riesgo total
-                                                                                                            </th>-->
+                                                                                                                            Riesgo total
+                                                                                                                        </th>-->
                             <th>
                                 Opciones
                             </th>
@@ -157,8 +164,6 @@
             </div>
         @endif
     </div>
-
-
 @endsection
 
 @section('scripts')
@@ -235,52 +240,64 @@
 
             @can('configuracion_sede_create')
                 let btnAgregar = {
-                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                // titleAttr: 'Agregar sede',
-                // url: "{{ route('admin.matriz-riesgos.create') }}",
-                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    // titleAttr: 'Agregar sede',
+                    // url: "{{ route('admin.matriz-riesgos.create') }}",
+                    // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
-                let btnImport = {
-                text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
-                titleAttr: 'Importar datos por CSV',
-                className: "btn-xs btn-outline-primary rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                $('#csvImportModal').modal('show');
-                }
-                };
+                // let btnImport = {
+                // text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
+                // titleAttr: 'Importar datos por CSV',
+                // className: "btn-xs btn-outline-primary rounded ml-2 pr-3",
+                // action: function(e, dt, node, config){
+                // $('#csvImportModal').modal('show');
+                // }
+                // };
                 dtButtons.push(btnAgregar);
-                dtButtons.push(btnImport);
+                // dtButtons.push(btnImport);
             @endcan
             @can('configuracion_sede_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.matriz-riesgos.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
-            
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-            
-                return
-                }
-            
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.matriz-riesgos.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
+
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
+
+                            return
+                        }
+
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -294,35 +311,59 @@
                 ajax: "/admin/matriz-seguridad?id=" + id_matriz,
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_sede',
-                        name: 'id_sede'
+                        name: 'id_sede',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_proceso',
-                        name: 'id_proceso'
+                        name: 'id_proceso',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_responsable',
-                        name: 'id_responsable'
+                        name: 'id_responsable',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'activo_id',
-                        name: 'activo_id'
+                        name: 'activo_id',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_amenaza',
-                        name: 'id_amenaza'
+                        name: 'id_amenaza',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_vulnerabilidad',
-                        name: 'id_vulnerabilidad'
+                        name: 'id_vulnerabilidad',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'descripcionriesgo',
-                        name: 'descripcionriesgo'
+                        name: 'descripcionriesgo',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'confidencialidad',
@@ -339,44 +380,75 @@
                     {
                         data: 'resultadoponderacion',
                         name: 'resultadoponderacion',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:center">${data}</div>`;
+                        }
                     },
                     {
                         data: 'probabilidad',
-                        name: 'probabilidad'
+                        name: 'probabilidad',
+                        render: function(data, type, row) {
+                            switch (Number(data)) {
+                                case 9:
+                                    return `<div style="text-align:center"><div>${data} - ALTA</div></div>`;
+                                    break;
+                                case 6:
+                                    return `<div style="text-align:center"><div>${data} - MEDIA</div></div>`;
+                                    break;
+                                case 3:
+                                    return `<div style="text-align:center"><div>${data} - BAJA</div></div>`;
+                                    break;
+                                case 0:
+                                    return `<div style="text-align:center"><div>0 - NULA</div></div>`;
+                                    break;
+                                default:
+                                    return `<div style="text-align:center"><div>No evaluado</div></div>`;
+                                    break;
+                            }
+                        }
                     },
                     {
                         data: 'impacto',
-                        name: 'impacto'
+                        name: 'impacto',
+                        render: function(data, type, row) {
+                            switch (Number(data)) {
+                                case 9:
+                                    return `<div style="text-align:center"><div>${data} - MUY ALTO</div></div>`;
+                                    break;
+                                case 6:
+                                    return `<div style="text-align:center"><div>${data} - ALTO</div></div>`;
+                                    break;
+                                case 3:
+                                    return `<div style="text-align:center"><div>${data} - MEDIO</div></div>`;
+                                    break;
+                                case 0:
+                                    return `<div style="text-align:center"><div>0 - BAJO</div></div>`;
+                                    break;
+                                default:
+                                    return `<div style="text-align:center"><div>No evaluado</div></div>`;
+                                    break;
+                            }
+                        }
                     },
                     {
                         data: 'nivelriesgo',
                         name: 'nivelriesgo',
                         render: function(data) {
-                            //console.log(data);
-                            switch (data) {
-                                case 81:
-                                    return `<div class="text-danger"><div>MUY ALTO</div></div>`;
+                            switch (true) {
+                                case data >= 54 && data <= 81:
+                                    return `<div style="text-align:center"><div>${data} - MUY ALTO</div></div>`;
                                     break;
-                                case 54:
-                                    return `<div class="text-danger"><div>MUY ALTO</div></div>`;
+                                case data >= 27 && data <= 36:
+                                    return `<div style="text-align:center"><div>${data} - ALTO</div></div>`;
                                     break;
-                                case 36:
-                                    return `<div style="color: orange;"><div>ALTO</div></div>`;
+                                case data >= 9 && data <= 18:
+                                    return `<div style="text-align:center"><div>${data} - MEDIO</div></div>`;
                                     break;
-                                case 27:
-                                    return `<div style="color: orange;"><div>ALTO</div></div>`;
+                                case data == 0:
+                                    return `<div style="text-align:center"><div>0 - BAJO</div></div>`;
                                     break;
-                                case 18:
-                                    return `<div class="bg-warning"><div>MEDIO</div></div>`;
-                                    break;
-                                case 9:
-                                    return `<div class="bg-warning"><div>MEDIO</div></div>`;
-                                    break;
-                                case 'cero':
-                                    return `<div class="bg-success"><div>BAJO</div></div>`;
-                                    break;
-                                case null:
-                                    return `<div class="bg-success"><div>BAJO</div></div>`;
+                                case data == null:
+                                    return `<div style="text-align:center"><div>0 - BAJO</div></div>`;
                                     break;
                                 default:
                                     break;
@@ -390,12 +462,22 @@
                     {
                         data: 'control',
                         name: 'control',
+                        // render: function(data) {
+                        //     let returnData = "<ol>";
+                        //     let controles = JSON.parse(data);
+                        //     controles.forEach(control => {
+                        //         returnData +=
+                        //             `<li>${control.declaracion_aplicabilidad.anexo_politica}</li>`;
+                        //     });
+                        //     return returnData + `</ol>`;
+                        // }
                         render: function(data) {
                             let returnData = "<ol>";
                             let controles = JSON.parse(data);
+                            console.log(controles);
                             controles.forEach(control => {
                                 returnData +=
-                                    `<li>${control.declaracion_aplicabilidad.anexo_politica}</li>`;
+                                    `<li>${control.anexo_indice} - ${control.anexo_politica}</li>`;
                             });
                             return returnData + `</ol>`;
                         }
@@ -427,16 +509,82 @@
                         name: 'disponibilidad_cid'
                     },
                     {
+                        data: 'resultadoponderacionRes',
+                        name: 'resultadoponderacionRes',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:center">${data}</div>`;
+                        }
+                    },
+                    {
                         data: 'probabilidad_residual',
-                        name: 'probabilidad_residual'
+                        name: 'probabilidad_residual',
+                        render: function(data, type, row) {
+                            switch (Number(data)) {
+                                case 9:
+                                    return `<div style="text-align:center"><div>${data} - ALTA</div></div>`;
+                                    break;
+                                case 6:
+                                    return `<div style="text-align:center"><div>${data} - MEDIA</div></div>`;
+                                    break;
+                                case 3:
+                                    return `<div style="text-align:center"><div>${data} - BAJA</div></div>`;
+                                    break;
+                                case 0:
+                                    return `<div style="text-align:center"><div> 0 - NULA</div></div>`;
+                                    break;
+                                default:
+                                    return `<div style="text-align:center"><div>No evaluado</div></div>`;
+                                    break;
+                            }
+                        }
                     },
                     {
                         data: 'impacto_residual',
-                        name: 'impacto_residual'
+                        name: 'impacto_residual',
+                        render: function(data, type, row) {
+                            switch (Number(data)) {
+                                case 9:
+                                    return `<div style="text-align:center"><div>${data} - MUY ALTO</div></div>`;
+                                    break;
+                                case 6:
+                                    return `<div style="text-align:center"><div>${data} - ALTO</div></div>`;
+                                    break;
+                                case 3:
+                                    return `<div style="text-align:center"><div>${data} - MEDIO</div></div>`;
+                                    break;
+                                case 0:
+                                    return `<div style="text-align:center"><div> 0 - BAJO</div></div>`;
+                                    break;
+                                default:
+                                    return `<div style="text-align:center"><div>No evaluado</div></div>`;
+                                    break;
+                            }
+                        }
                     },
                     {
                         data: 'nivelriesgo_residual',
                         name: 'nivelriesgo_residual',
+                        render: function(data) {
+                            switch (true) {
+                                case data >= 54 && data <= 81:
+                                    return `<div style="text-align:center"><div>${data} - MUY ALTO</div></div>`;
+                                    break;
+                                case data >= 27 && data <= 36:
+                                    return `<div style="text-align:center"><div>${data} - ALTO</div></div>`;
+                                    break;
+                                case data >= 9 && data <= 18:
+                                    return `<div style="text-align:center"><div>${data} - MEDIO</div></div>`;
+                                    break;
+                                case data == 0:
+                                    return `<div style="text-align:center"><div> 0 - BAJO</div></div>`;
+                                    break;
+                                case data == null:
+                                    return `<div style="text-align:center"><div>0 - BAJO</div></div>`;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
 
                     },
                     /*{
@@ -449,6 +597,173 @@
                     }
                 ],
                 orderCellsTop: true,
+
+                createdRow: (row, data, dataIndex, cells) => {
+                    let background = '';
+                    let color = '';
+                    let background2 = '';
+                    let color2 = '';
+                    switch (true) {
+                        case data.nivelriesgo >= 54 && data.nivelriesgo <= 81:
+                            background = '#FF0000';
+                            color = "#000000";
+                            break;
+                        case data.nivelriesgo >= 27 && data.nivelriesgo <= 36:
+                            background = '#FF7800';
+                            color = "#000000";
+                            break;
+                        case data.nivelriesgo >= 9 && data.nivelriesgo <= 18:
+                            background = '#FFFB00';
+                            color = "#000000";
+                            break;
+                        case data.nivelriesgo == 0:
+                            background = '#00FF04';
+                            color = "#000000";
+                            break;
+                        case data.nivelriesgo == null:
+                            background = '#00FF04';
+                            color = "#000000";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    switch (true) {
+                        case data.nivelriesgo_residual >= 54 && data.nivelriesgo_residual <= 81:
+                            background2 = '#FF0000';
+                            color2 = "#000000";
+                            break;
+                        case data.nivelriesgo_residual >= 27 && data.nivelriesgo_residual <= 36:
+                            background2 = '#FF7800';
+                            color2 = "#000000";
+                            break;
+                        case data.nivelriesgo_residual >= 9 && data.nivelriesgo_residual <= 18:
+                            background2 = '#FFFB00';
+                            color2 = "#000000";
+                            break;
+                        case data.nivelriesgo_residual == 0:
+                            background2 = '#00FF04';
+                            color2 = "#000000";
+                            break;
+                        case data.nivelriesgo_residual == null:
+                            background2 = '#00FF04';
+                            color2 = "#000000";
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (true) {
+                        case data.probabilidad == 9 :
+                            background3 = '#FF0000';
+                            color3 = "#000000";
+                            break;
+                        case data.probabilidad == 6:
+                            background3 = '#FF7800';
+                            color3 = "#000000";
+                            break;
+                        case data.probabilidad == 3:
+                            background3 = '#FFFB00';
+                            color3 = "#000000";
+                            break;
+                        case data.probabilidad == 0:
+                            background3 = '#00FF04';
+                            color3 = "#000000";
+                            break;
+                        case data.probabilidad == null:
+                            background3 = '#00FF04';
+                            color3 = "#000000";
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (true) {
+                        case data.impacto == 9 :
+                            background4 = '#FF0000';
+                            color4 = "#000000";
+                            break;
+                        case data.impacto == 6:
+                            background4 = '#FF7800';
+                            color4 = "#000000";
+                            break;
+                        case data.impacto == 3:
+                            background4 = '#FFFB00';
+                            color4 = "#000000";
+                            break;
+                        case data.impacto == 0:
+                            background4 = '#00FF04';
+                            color4 = "#000000";
+                            break;
+                        case data.impacto == null:
+                            background4 = '#00FF04';
+                            color4 = "#000000";
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (true) {
+                        case data.probabilidad_residual == 9 :
+                            background5 = '#FF0000';
+                            color5 = "#000000";
+                            break;
+                        case data.probabilidad_residual == 6:
+                            background5 = '#FF7800';
+                            color5 = "#000000";
+                            break;
+                        case data.probabilidad_residual == 3:
+                            background5 = '#FFFB00';
+                            color5 = "#000000";
+                            break;
+                        case data.probabilidad_residual == 0:
+                            background5 = '#00FF04';
+                            color5 = "#000000";
+                            break;
+                        case data.probabilidad_residual == null:
+                            background5 = '#00FF04';
+                            color5 = "#000000";
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (true) {
+                        case data.impacto_residual == 9 :
+                            background6 = '#FF0000';
+                            color6 = "#000000";
+                            break;
+                        case data.impacto_residual == 6:
+                            background6 = '#FF7800';
+                            color6 = "#000000";
+                            break;
+                        case data.impacto_residual == 3:
+                            background6 = '#FFFB00';
+                            color6 = "#000000";
+                            break;
+                        case data.impacto_residual == 0:
+                            background6 = '#00FF04';
+                            color6 = "#000000";
+                            break;
+                        case data.impacto_residual == null:
+                            background6 = '#00FF04';
+                            color6 = "#000000";
+                            break;
+                        default:
+                            break;
+                    }
+                    $(cells[12]).css('background-color', background3)
+                    $(cells[12]).css('color', color3)
+                    $(cells[13]).css('background-color', background4)
+                    $(cells[13]).css('color', color4)
+                    $(cells[14]).css('background-color', background)
+                    $(cells[14]).css('color', color)
+                    $(cells[21]).css('background-color', background5)
+                    $(cells[21]).css('color', color5)
+                    $(cells[22]).css('background-color', background6)
+                    $(cells[22]).css('color', color6)
+                    $(cells[23]).css('background-color', background2)
+                    $(cells[23]).css('color', color2)
+
+                },
+
+
                 order: [
                     [1, 'desc']
                 ],

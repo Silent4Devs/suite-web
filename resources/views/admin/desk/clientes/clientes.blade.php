@@ -56,10 +56,13 @@
 <div class="datatable-fix" style="width: 100%;">
 
         <div class=" mb-3 text-right">
-
+            @can('centro_atencion_quejas_clientes_create')
                 <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes') }}">Crear reporte</a>
+            @endcan
 
+            @can('centro_atencion_quejas_cliente_dashboard')
                 <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes/dashboard') }}">Dashboard</a>
+            @endcan
         </div>
 
     <table class="table tabla_quejasclientes" id="tabla-procesos">

@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <div class="card">
         <div class="card-header">
             {{ trans('global.show') }} Analisis de riesgo
@@ -9,12 +8,23 @@
         <div class="card-body">
             <div class="form-group">
                 <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.matriz-seguridad',  ['id' => $matrizRiesgo->id_analisis]) }}">
+                    <a class="btn btn-default"
+                        href="{{ route('admin.matriz-seguridad', ['id' => $matrizRiesgo->id_analisis]) }}">
                         {{ trans('global.back_to_list') }}
                     </a>
                 </div>
                 <table class="table table-bordered table-striped">
                     <tbody>
+                        <tr>
+                            <th colspan="2">
+                                <div class="text-center form-group"
+                                    style="background-color:#345183; border-radius: 100px; color: white;">
+                                    DATOS GENERALES
+                                </div>
+                            </th>
+                            <td>
+                            </td>
+                        </tr>
                         <tr>
                             <th>
                                 {{ trans('cruds.matrizRiesgo.fields.id') }}
@@ -33,10 +43,10 @@
                         </tr>
                         <tr>
                             <th>
-                                {{ trans('cruds.matrizRiesgo.fields.activo') }}
+                                Activo (subcategoría)
                             </th>
                             <td>
-                                {{ $matrizRiesgo->activo->descripcion ?? '' }}
+                                {{ $matrizRiesgo->activo->subcategoria ?? '' }}
                             </td>
                         </tr>
                         <tr>
@@ -80,11 +90,22 @@
                             </td>
                         </tr>
                         <tr>
+                            <th colspan="2">
+                                <div class="text-center form-group"
+                                    style="background-color:#345183; border-radius: 100px; color: white;">
+                                    EVALUACIÓN DE RIESGO INICIAL
+                                </div>
+                            </th>
+                            <td>
+                            </td>
+                        </tr>
+
+                        <tr>
                             <th>
                                 {{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}
                             </th>
                             <td>
-                                @if($matrizRiesgo->confidencialidad)
+                                @if ($matrizRiesgo->calidad_servicio == 11.1)
                                     Sí
                                 @else
                                     No
@@ -96,7 +117,7 @@
                                 {{ trans('cruds.matrizRiesgo.fields.integridad') }}
                             </th>
                             <td>
-                                @if($matrizRiesgo->integridad)
+                                @if ($matrizRiesgo->cliente == 11.1)
                                     Sí
                                 @else
                                     No
@@ -108,10 +129,97 @@
                                 {{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}
                             </th>
                             <td>
-                                @if($matrizRiesgo->disponibilidad)
+                                @if ($matrizRiesgo->estrategia_negocio == 11.1)
                                     Sí
                                 @else
                                     No
+                                @endif
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>
+                                {{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->disponibilidad_2000 == 11.1)
+                                    Sí
+                                @else
+                                    No
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.matrizRiesgo.fields.integridad') }}
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->niveles_servicio == 11.1)
+                                    Sí
+                                @else
+                                    No
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->continuidad_BCP == 11.1)
+                                    Sí
+                                @else
+                                    No
+                                @endif
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <th>
+                                {{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->confidencialidad_270000 == 11.1)
+                                    Sí
+                                @else
+                                    No
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.matrizRiesgo.fields.integridad') }}
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->integridad_27000 == 11.1)
+                                    Sí
+                                @else
+                                    No
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->disponibilidad_27000 == 11.1)
+                                    Sí
+                                @else
+                                    No
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Resultado de la ponderación
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->resultado_ponderacion)
+                                    {{ $matrizRiesgo->resultado_ponderacion }}
+                                @else
+                                    No evaluado
                                 @endif
                             </td>
                         </tr>
@@ -120,10 +228,10 @@
                                 {{ trans('cruds.matrizRiesgo.fields.probabilidad') }}
                             </th>
                             <td>
-                                @if($matrizRiesgo->probabilidad)
-                                    Sí
+                                @if ($matrizRiesgo->probabilidad)
+                                    {{ $matrizRiesgo->probabilidad }}
                                 @else
-                                    No
+                                    No evaluado
                                 @endif
                             </td>
                         </tr>
@@ -132,10 +240,10 @@
                                 {{ trans('cruds.matrizRiesgo.fields.impacto') }}
                             </th>
                             <td>
-                                @if($matrizRiesgo->impacto)
-                                    Sí
+                                @if ($matrizRiesgo->impacto)
+                                    {{ $matrizRiesgo->impacto }}
                                 @else
-                                    No
+                                    No evaluado
                                 @endif
                             </td>
                         </tr>
@@ -144,39 +252,41 @@
                                 {{ trans('cruds.matrizRiesgo.fields.nivelriesgo') }}
                             </th>
                             <td>
-                                {{ $matrizRiesgo->nivelriesgo }}
+                                @if ($matrizRiesgo->nivelriesgo)
+                                    {{ $matrizRiesgo->nivelriesgo }}
+                                @else
+                                    No evaluado
+                                @endif
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                {{ trans('cruds.matrizRiesgo.fields.riesgoresidual') }}
+                                Impacto total
                             </th>
                             <td>
-                                {{ $matrizRiesgo->riesgoresidual }}
+                                @if ($matrizRiesgo->riesgo_total)
+                                    {{ $matrizRiesgo->riesgo_total }}
+                                @else
+                                    No evaluado
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">
+                                <div class="text-center form-group"
+                                    style="background-color:#345183; border-radius: 100px; color: white;">
+                                    EVALUACIÓN DE RIESGO RESIDUAL
+                                </div>
+                            </th>
+                            <td>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                {{ trans('cruds.matrizRiesgo.fields.controles') }}
+                                {{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}
                             </th>
                             <td>
-                                {{ $matrizRiesgo->controles->numero ?? '' }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {{ trans('cruds.matrizRiesgo.fields.justificacion') }}
-                            </th>
-                            <td>
-                                {{ $matrizRiesgo->justificacion }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                Confidencialidad CID
-                            </th>
-                            <td>
-                                @if($matrizRiesgo->confidencialidad_cid)
+                                @if ($matrizRiesgo->calidad_servicioRes == 11.1)
                                     Sí
                                 @else
                                     No
@@ -185,10 +295,10 @@
                         </tr>
                         <tr>
                             <th>
-                                Integridad CID
+                                {{ trans('cruds.matrizRiesgo.fields.integridad') }}
                             </th>
                             <td>
-                                @if($matrizRiesgo->integridad_cid)
+                                @if ($matrizRiesgo->clienteRes == 11.1)
                                     Sí
                                 @else
                                     No
@@ -197,10 +307,23 @@
                         </tr>
                         <tr>
                             <th>
-                                Disponibilidad CID
+                                {{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}
                             </th>
                             <td>
-                                @if($matrizRiesgo->disponibilidad_cid)
+                                @if ($matrizRiesgo->estrategia_negocioRes == 11.1)
+                                    Sí
+                                @else
+                                    No
+                                @endif
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>
+                                {{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->disponibilidad_2000Res == 11.1)
                                     Sí
                                 @else
                                     No
@@ -209,10 +332,10 @@
                         </tr>
                         <tr>
                             <th>
-                                Probabilidad Residual
+                                {{ trans('cruds.matrizRiesgo.fields.integridad') }}
                             </th>
                             <td>
-                                @if($matrizRiesgo->probabilidad_residual)
+                                @if ($matrizRiesgo->niveles_servicioRes == 11.1)
                                     Sí
                                 @else
                                     No
@@ -221,10 +344,24 @@
                         </tr>
                         <tr>
                             <th>
-                                Impacto Residual
+                                {{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}
                             </th>
                             <td>
-                                @if($matrizRiesgo->impacto_residual)
+                                @if ($matrizRiesgo->continuidad_BCPRes == 11.1)
+                                    Sí
+                                @else
+                                    No
+                                @endif
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <th>
+                                {{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->confidencialidad_270000Res == 11.1)
                                     Sí
                                 @else
                                     No
@@ -233,23 +370,99 @@
                         </tr>
                         <tr>
                             <th>
-                                Nivel Riesgo Residual
+                                {{ trans('cruds.matrizRiesgo.fields.integridad') }}
                             </th>
                             <td>
-                                {{ $matrizRiesgo->nivelriesgo_residual }}
+                                @if ($matrizRiesgo->integridad_27000Res == 11.1)
+                                    Sí
+                                @else
+                                    No
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->disponibilidad_27000Res == 11.1)
+                                    Sí
+                                @else
+                                    No
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Resultado de la ponderación
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->resultado_ponderacionRes)
+                                    {{ $matrizRiesgo->resultado_ponderacionRes }}
+                                @else
+                                    No evaluado
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.matrizRiesgo.fields.probabilidad') }}
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->probabilidad_residual)
+                                    {{ $matrizRiesgo->probabilidad_residual }}
+                                @else
+                                    No evaluado
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.matrizRiesgo.fields.impacto') }}
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->impacto_residual)
+                                    {{ $matrizRiesgo->impacto_residual }}
+                                @else
+                                    No evaluado
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.matrizRiesgo.fields.nivelriesgo') }}
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->nivelriesgo_residual)
+                                    {{ $matrizRiesgo->nivelriesgo_residual }}
+                                @else
+                                    No evaluado
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Impacto total
+                            </th>
+                            <td>
+                                @if ($matrizRiesgo->riesgo_residual)
+                                    {{ $matrizRiesgo->riesgo_residual }}
+                                @else
+                                    No evaluado
+                                @endif
                             </td>
                         </tr>
                     </tbody>
                 </table>
+
+
                 <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.matriz-seguridad',  ['id' => $matrizRiesgo->id_analisis]) }}">
+                    <a class="btn btn-default"
+                        href="{{ route('admin.matriz-seguridad', ['id' => $matrizRiesgo->id_analisis]) }}">
                         {{ trans('global.back_to_list') }}
                     </a>
                 </div>
             </div>
         </div>
     </div>
-
-
-
 @endsection

@@ -75,30 +75,17 @@
                                         <div style="margin-top:50px;">
                                             <strong
                                                 style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{ $quejas->registro->name }},
+                                                Estimado(a) {{ $quejas->responsableAtencion->name }},
                                             </strong>
                                         </div>
 
                                         <div style="width: 100%; margin-top: 10px;">
-                                            @if ($quejas->accionCorrectiva->aprobada == true)
                                                 <p style="font-size:11pt; color:#153643;">
-                                                    Le informamos que la resolución de la queja presentada no ha sido aceptada por el cliente,
-                                                    por lo que se le solicita atentamente, plantear otra propuesta de solución.
+                                                    Le informamos que la resolución de la queja presentada ha sido aprobada por el cliente.
                                                 </p>
 
                                                 <br>
                                                 <br>
-
-
-                                                <p style="font-size:11pt; color:#153643;">
-                                                   Ingrese nuevamente al formulario dé clic al siguiente botón
-                                                </p>
-
-                                                <div style="text-align:center; margin-top:20px">
-                                                    <a  href="{{route('admin.accion-correctivas.index',$quejas) }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                        Revisar Queja
-                                                    </a>
-                                                </div>
 
                                         </div>
                                     </td>

@@ -21,8 +21,26 @@
             </div>
         </div>
 
+        <div class="row ml-2 col-12">
+            <strong style="font-size: 18px; color:#1E3A8A ">{{ $quejasClientes->folio }}
+            </strong>
+        </div>
+
+
+        <h4 class="text-center" style="font-size: 16px; color:#3086AF;">{{ $quejasClientes->titulo }}
+        </h4>
+
+        <div class="mt-4 form-group col-md-12 ml-2">
+            <b style="font-size:11pt">Descripción</b>
+        </div>
+
+        <div class="form-group col-md-12 ml-2">
+            <p style="text-align: justify; font-size:13px;" class="text-align: justify">
+                {{ $quejasClientes->descripcion }}</p>
+        </div>
+
         <div class="mt-4 form-group col-md-12">
-            <b>1. ¿Realizará alguna acción inmediata?<sup>*</sup></b>
+            <label class="form-label">1. ¿Realizará alguna acción inmediata?<sup>*</sup></label>
         </div>
 
         <div class="row col-12">
@@ -56,7 +74,7 @@
         </div>
 
         <div class="mt-1 form-group col-md-12">
-            <b>2. ¿Qué acciones posteriores tomará para la resolución de la queja?<sup>*</sup></b>
+            <label class="form-label">2. ¿Qué acciones posteriores tomará para la resolución de la queja?<sup>*</sup></label>
         </div>
 
 
@@ -68,17 +86,17 @@
 
 
         <div class="mt-4 form-group col-md-12">
-            <b>3. Fecha compromiso para la resolución de la queja</b>
+            <label class="form-label">3. Fecha compromiso para la resolución de la queja</label>
         </div>
 
         <div class="mt-2 form-group col-md-4">
 
             <input type="date" name="fecha_limite" class="form-control"
-                value="{{ old('fecha_limite', \Carbon\Carbon::parse($quejasClientes->fecha_limite)->format('Y-m-d\TH:i')) }}">
+                value="{{ old('fecha_limite',$quejasClientes->fecha_limite ? \Carbon\Carbon::parse($quejasClientes->fecha_limite)->format('Y-m-d') : '') }}">
         </div>
 
         <div class="mt-4 form-group col-md-12">
-            <b>4. Adjunte la evidencia de la atención de la queja </b>
+            <label class="form-label">4. Adjunte la evidencia de la atención de la queja </label>
         </div>
 
 
@@ -155,11 +173,11 @@
 
 
         <div class="mt-4 form-group col-md-12">
-            <b>5. Solicitar el cierre de la queja </b>
+            <label class="form-label">5. Solicitar el cierre de la queja </label>
         </div>
 
-        <div class="mt-4 form-group col-12">
-            <buttom type="submit" class="btn btn-success" id="cierra_queja_btn_correo" >Enviar Solicitud</buttom>
+        <div class="mt-3 form-group col-12">
+            <buttom type="submit" class="btn btn-success" id="cierra_queja_btn_correo">Enviar Solicitud</buttom>
         </div>
 
 
@@ -172,7 +190,12 @@
 
         <div class="mt-4 text-right form-group col-12">
             <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
-            <input type="submit" class="btn btn-success" value="Guardar">
+            {{-- <input type="submit" class="btn btn-success" value="Guardar" id="siguiente_atencionQueja"> --}}
+            <button type="submit" class="btn btn-success" id="btn-guardar-atencion">Guardar</button>
+            @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
+                <button id="siguiente_atencion" type="submit" class="btn btn-success">Siguiente</button>
+            @endif
+
         </div>
 
 
@@ -186,13 +209,15 @@
 
 
 <script type="text/javascript">
+    let id_quejas = @json($id_quejas);
     document.getElementById("cierra_queja_btn_correo").addEventListener("click", (event) => {
         event.preventDefault();
         console.log('click');
         let empleado_reporto_id = @json($quejasClientes->empleado_reporto_id);
-        sendEmailCierre(empleado_reporto_id,id_quejas);
+        sendEmailCierre(empleado_reporto_id, id_quejas);
     });
-    function sendEmailCierre(empleado_reporto_id,id_quejas) {
+
+    function sendEmailCierre(empleado_reporto_id, id_quejas) {
         let url = "{{ route('admin.desk.quejas-clientes.correoSolicitarCierreQueja') }}";
         Swal.fire({
             title: `¿Está seguro(a) de enviar el correo al responsable?`,

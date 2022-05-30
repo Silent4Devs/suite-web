@@ -13,6 +13,8 @@
             text-align: center !important;
         }
 
+
+
         .descripcion {
             text-align: justify !important;
         }
@@ -121,13 +123,13 @@
                         <table id="tabla_usuario_aprobaciones" class="table">
                             <thead>
                                 <tr>
-                                    <th style=" min-width:200px; text-align: center !important;">
+                                    <th style=" min-width:80px; text-align: left !important;">
                                         Folio
                                     </th>
-                                    <th style=" min-width:200px; text-align: center !important;">
+                                    <th style=" min-width:120px !important; text-align: left !important;">
                                         Origen
                                     </th>
-                                    <th style="vertical-align: top; text-align: center !important; min-width:150px;">
+                                    <th style="vertical-align: top; text-align: left !important; min-width:70px;">
                                         Fecha
                                     </th>
                                     <th style="vertical-align: top; text-align: center !important; min-width:80px;">
@@ -630,7 +632,7 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             if (row.desk_queja_cliente.length > 0) {
-                                return `<div><img class="img_empleado" src="${row.desk_queja_cliente[0].registro.avatar_ruta}" title="${row.desk_queja_cliente[0].registro.name}"></div>`;
+                                return `<div><img class="ml-4 img_empleado" src="${row.desk_queja_cliente[0].registro.avatar_ruta}" title="${row.desk_queja_cliente[0].registro.name}"></div>`;
                             } else {
 
                                 return `Sin definir`
@@ -641,7 +643,7 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             if (row.desk_queja_cliente.length > 0) {
-                                return `<div><img class="img_empleado" src="${row.desk_queja_cliente[0].responsable_sgi.avatar_ruta}" title="${row.desk_queja_cliente[0].responsable_sgi.name}"></div>`;
+                                return `<div><img class="ml-4 img_empleado" src="${row.desk_queja_cliente[0].responsable_sgi.avatar_ruta}" title="${row.desk_queja_cliente[0].responsable_sgi.name}"></div>`;
                             } else {
 
                                 return `Sin definir`
@@ -653,7 +655,7 @@
                         render: function(data, type, row, meta) {
                             if (row.desk_queja_cliente.length > 0) {
                                 let link = `<a href="{{ route('admin.desk.quejasClientes-edit', ':id') }}">
-                                    <i class="fas fa-eye"></i>
+                                    <div class=""><i class="ml-4 text-center fas fa-eye"></i></div>
                                     </a>`;
                                 link = link.replaceAll(':id', row.desk_queja_cliente[0].id);
                                 console.log(link);
