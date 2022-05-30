@@ -11,9 +11,8 @@
             <div class="col-11">
                 <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                     Instrucciones</p>
-                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
-                    cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
-                    de lo contrario la información capturada no será guardada.
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Revise y complemente la información registrada, al final de
+                    cada formulario dé clic en el botón guardar para que la información sea registrada.
                 </p>
 
             </div>
@@ -58,9 +57,8 @@
                 y hora de cierre del ticket</label>
 
 
-            <input class="form-control mt-2" readonly name="fecha_cierre" type="datetime"
-                value="{{ old('fecha_cierre', $quejasClientes->fecha_cierre ? \Carbon\Carbon::parse($quejasClientes->fecha_cierre)->format('d-m-Y H:i:s') : null) }}"
-                id="solucion">
+                <input class="form-control mt-2" name="fecha_cierre" readonly value="{{ $quejasClientes->fecha_cierre }}"
+                id="solucion" type="datetime">
 
         </div>
     </div>
@@ -110,7 +108,7 @@
     <div class="row">
         <div class="mt-0 form-group col-6">
             <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre del
-                cliente<sup>*</sup></label>
+                contacto<sup>*</sup></label>
             <input type="text" name="nombre" value="{{ old('nombre', $quejasClientes->nombre) }}"
                 class="form-control" required>
             @if ($errors->has('nombre'))
@@ -264,9 +262,9 @@
                     value="Correo electronico">Correo electrónico</option>
                 <option {{ old('canal', $quejasClientes->canal) == 'Via telefonica' ? 'selected' : '' }}
                     value="Via telefonica">Vía telefónica</option>
-                <option {{ old('canal', $quejasClientes->canal) == 'Forma presencial' ? 'selected' : '' }}
+                <option {{ old('canal', $quejasClientes->canal) == 'Presencial' ? 'selected' : '' }}
                     value="Presencial">Presencial</option>
-                <option {{ old('canal', $quejasClientes->canal) == 'Forma remota' ? 'selected' : '' }}
+                <option {{ old('canal', $quejasClientes->canal) == 'Remota' ? 'selected' : '' }}
                     value="Remota">Remota</option>
                 <option {{ old('canal', $quejasClientes->canal) == 'Oficio' ? 'selected' : '' }} value="Oficio">
                     Oficio</option>

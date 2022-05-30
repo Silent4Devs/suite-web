@@ -118,7 +118,7 @@
                                                 style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
                                                 Reportó</strong>
                                                 <ul style="font-size:11pt; color:#153643;">
-                                                    <li style="font-size:11pt;">Nombre del cliente:<strong style="font-size:10pt;"> {{$quejas->nombre}} </strong></li>
+                                                    <li style="font-size:11pt;">Nombre del contacto:<strong style="font-size:10pt;"> {{$quejas->nombre}} </strong></li>
                                                     <li style="font-size:11pt;">Puesto:<strong style="font-size:10pt;"> {{$quejas->puesto}} </strong></li>
                                                     <li style="font-size:11pt;">Teléfono:<strong style="font-size:10pt;"> {{$quejas->telefono}} </strong></li>
                                                     <li style="font-size:11pt;">Correo:<strong style="font-size:10pt;"> {{$quejas->correo}} </strong></li>
@@ -144,7 +144,7 @@
                                                 <ul style="font-size:11pt; color:#153643;">
                                                     <li style="font-size:11pt;">Título:<strong style="font-size:10pt;"> {{$quejas->titulo}} </strong></li>
                                                     <li style="font-size:11pt;">Fecha y hora de ocurrencia: <strong style="font-size:10pt;">{{ \Carbon\Carbon::parse($quejas->fecha)->format('d-m-Y H:i:s') }}</strong></li>
-                                                    <li style="font-size:11pt;">Ubicación: <strong style="font-size:10pt;"> {{$quejas->ubicacion}} </strong></li>
+                                                    <li style="font-size:11pt;">Ubicación: <strong style="font-size:10pt;"> {{$quejas->ubicacion ? $quejas->ubicacion : 'Sin definir'}} </strong></li>
                                                     <li style="font-size:11pt;">Canal de recepción:<strong style="font-size:10pt;"> {{$quejas->canal}} </strong></li>
                                                     <li style="font-size:11pt;">Descripción:<strong style="font-size:10pt;"> {{$quejas->descripcion}} </strong></li>
                                                     <li style="font-size:11pt;">Solución que requiere el cliente:<strong style="font-size:10pt;"> {{$quejas->solucion_requerida_cliente}} </strong></li>
@@ -166,7 +166,7 @@
 
 
                                                 <p style="font-size:11pt; color:#153643;">
-                                                    Para aprobar o rechazar la Acción Correctiva dirijase al módulo de Acción Correctiva o dé clic en el siguiente botón
+                                                    Para aprobar o rechazar la Acción Correctiva dé clic en el siguiente botón:
                                                 </p>
 
                                                 <div style="text-align:center; margin-top:20px">
@@ -176,7 +176,7 @@
                                                 </div>
 
                                             {{-- <strong
-                                                style="color:#153643;;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
+                                                style="color:#1536A43;;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
                                                 Información de la queja
                                             </strong> --}}
 

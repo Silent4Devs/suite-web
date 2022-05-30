@@ -2,37 +2,38 @@
 
 namespace App\Http\Controllers\admin;
 
+use Carbon\Carbon;
+use App\Models\Area;
+use App\Models\Sede;
+use App\Models\Activo;
+use App\Models\Quejas;
+use App\Models\Mejoras;
+use App\Models\Proceso;
+use App\Models\Empleado;
+use App\Models\Denuncias;
+use App\Models\Sugerencias;
+use App\Models\Organizacion;
+use Illuminate\Http\Request;
+use App\Models\QuejasCliente;
+use Illuminate\Http\Response;
+use App\Models\AccionCorrectiva;
+use App\Models\TimesheetCliente;
+use App\Models\AnalisisSeguridad;
+use App\Models\TimesheetProyecto;
+use App\Models\CategoriaIncidente;
+use App\Models\RiesgoIdentificado;
+use App\Models\IncidentesSeguridad;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use App\Models\SubcategoriaIncidente;
+use App\Models\AnalisisQuejasClientes;
+use App\Mail\SolicitarCierreQuejaEmail;
+use App\Models\EvidenciaQuejasClientes;
+use App\Mail\SeguimientoQuejaClienteEmail;
+use App\Mail\ResolucionQuejaRechazadaEmail;
 use App\Mail\AceptacionAccionCorrectivaEmail;
 use App\Mail\NotificacionResponsableQuejaEmail;
-use App\Mail\SeguimientoQuejaClienteEmail;
-use App\Mail\SolicitarCierreQuejaEmail;
-use App\Models\AccionCorrectiva;
-use App\Models\Activo;
-use App\Models\AnalisisQuejasClientes;
-use App\Models\AnalisisSeguridad;
-use App\Models\Area;
-use App\Models\CategoriaIncidente;
-use App\Models\Denuncias;
-use App\Models\Empleado;
-use App\Models\EvidenciaQuejasClientes;
 use App\Models\EvidenciasQuejasClientesCerrado;
-use App\Models\IncidentesSeguridad;
-use App\Models\Mejoras;
-use App\Models\Organizacion;
-use App\Models\Proceso;
-use App\Models\Quejas;
-use App\Models\QuejasCliente;
-use App\Models\RiesgoIdentificado;
-use App\Models\Sede;
-use App\Models\SubcategoriaIncidente;
-use App\Models\Sugerencias;
-use App\Models\TimesheetCliente;
-use App\Models\TimesheetProyecto;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail; //mejora apunta a este modelo
 
 class DeskController extends Controller
@@ -972,13 +973,14 @@ class DeskController extends Controller
         $notificar_registro_queja = intval($request->notificar_responsable) == 1 ? true : false;
         $cumplio_ac_responsable = intval($request->cumplio_ac_responsable) == 1 ? true : false;
         $conforme_solucion = intval($request->conforme_solucion) == 1 ? true : false;
-        $cumplio_fecha = intval($request->conforme_solucion) == 1 ? true : false;
+        $cumplio_fecha = intval($request->cumplio_fecha) == 1 ? true : false;
         $cerrar_ticket = intval($request->cerrar_ticket) == 1 ? true : false;
         if ($desea_levantar_ac) {
             $request->validate([
                 'responsable_sgi_id' => 'required',
             ]);
         }
+        $notificar_atencion_queja_no_aprobada  = intval($request->notificar_atencion_queja_no_aprobada) == 1 ? true : false;
         // dd($request->all());
         $quejasClientes->update([
             'cliente_id' => $request->cliente_id,
@@ -995,7 +997,7 @@ class DeskController extends Controller
             'fecha_cierre' => $request->fecha_cierre,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
-            'estatus' => $request->estatus,
+            'estatus' => 'En curso',
             'comentarios' => $request->comentarios,
             'canal' => $request->canal,
             'otro_canal' => $request->otro_canal,
@@ -1024,6 +1026,7 @@ class DeskController extends Controller
             'notificar_responsable'=>$notificar_responsable,
             'notificar_registro_queja'=> $notificar_registro_queja,
             'porque_no_cierre_ticket' =>  $request->porque_no_cierre_ticket,
+            'notificar_atencion_queja_no_aprobada'=>$notificar_atencion_queja_no_aprobada,
 
         ]);
 
@@ -1073,14 +1076,44 @@ class DeskController extends Controller
             }
         }
 
+        if ($queja_procedente == false){
+            $quejasClientes->update([
+                'estatus' => 'No procedente',
+            ]);
+        }
+        // dd($cerrar_ticket);
+        if ($cerrar_ticket){
+            $quejasClientes->update([
+                'estatus' => 'Cerrado',
+                'fecha_cierre' => now(),
+            ]);
+        }
+
+        if($notificar_atencion_queja_no_aprobada){
+            if ($cerrar_ticket == false){
+                if (!$quejasClientes->email_env_resolucion_rechazada) {
+                    $quejasClientes->update([
+                        'email_env_resolucion_rechazada' => true,
+                    ]);
+                    Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new ResolucionQuejaRechazadaEmail($quejasClientes));
+
+            }
+            }
+        }
+
+
+
+
         if ($notificar_registro_queja) {
             if (!$quejasClientes->correo_enviado_registro) {
                 $quejasClientes->update([
                     'correo_enviado_registro' => true,
                 ]);
-                Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes, $evidenciaArr));
+                Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes));
             }
         }
+
+
 
         if ($desea_levantar_ac) {
             $quejasClientes->load('cliente', 'proyectos', 'responsableAtencion', 'responsableSgi', 'registro');
@@ -1154,6 +1187,8 @@ class DeskController extends Controller
 
         return response()->json(['success' => true, 'request' => $request->all(), 'message'=>'Enviado con éxito']);
     }
+
+
 
     public function updateAnalisisQuejasClientes(Request $request, $id_quejas)
     {
@@ -1229,6 +1264,7 @@ class DeskController extends Controller
 
     public function quejasClientesDashboard()
     {
+
         $quejasClientesSaA = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Alta')->count();
         $quejasClientesSaM = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Media')->count();
         $quejasClientesSaB = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Baja')->count();
@@ -1285,12 +1321,42 @@ class DeskController extends Controller
         $quejaCumplioFecha = QuejasCliente::select('id', 'cumplio_fecha')->where('cumplio_fecha', true)->count();
         $quejaNoCumplioFecha = QuejasCliente::select('id', 'cumplio_fecha')->where('cumplio_fecha', false)->count();
 
-        // $ticketPorArea = QuejasCliente::select('id', 'area_quejado')->find();
-        // $areas= explode(',',$ticketPorArea);
-        // $areas = explode(',',$area_quejado);
-        // dd($ticketPorArea);
-        // $proyectos = QuejasCliente::where('proyectos_id')->pluck('proyectos_id')->toArray();
-        // $proyectos = TimesheetProyecto::where('proyectos_id', 'id')
+
+        $areasCollect=[];
+        $ticketPorArea = QuejasCliente::select('area_quejado')->get();
+        foreach($ticketPorArea as $ticketArea){
+            $areas=$ticketArea->area_quejado;
+            $areasExplode= explode(',', $areas);
+            foreach($areasExplode as $areaExplode){
+                //$areasCollect->push(trim($areaExplode));
+                if(array_key_exists($areaExplode,$areasCollect)){
+                    $areasCollect[trim($areaExplode)]=$areasCollect[trim($areaExplode)]+1;
+                }else{
+                    $areasCollect[trim($areaExplode)]=1;
+                }
+            }
+        }
+        $areasCollect=array_filter($areasCollect,function($item){
+            return $item != '';
+        },ARRAY_FILTER_USE_KEY);
+
+        $procesosCollect=[];
+        $ticketPorProceso = QuejasCliente::select('proceso_quejado')->get();
+        foreach($ticketPorProceso as $ticketProceso){
+            $procesos=$ticketProceso->proceso_quejado;
+            $procesosExplode= explode(',', $procesos);
+            foreach($procesosExplode as $procesoExplode){
+                if(array_key_exists($procesoExplode,$procesosCollect)){
+                    $procesosCollect[trim($procesoExplode)]=$procesosCollect[trim($procesoExplode)]+1;
+                }else{
+                    $procesosCollect[trim($procesoExplode)]=1;
+                }
+            }
+        }
+        $procesosCollect=array_filter($procesosCollect,function($item){
+            return $item != '';
+        },ARRAY_FILTER_USE_KEY);
+
         $quejasproyectos = array_unique(QuejasCliente::pluck('proyectos_id')->toArray());
         $proyectos = TimesheetProyecto::select('id', 'proyecto', 'cliente_id')->with('cliente')->find($quejasproyectos);
         $proyectosLabel = [];
@@ -1303,7 +1369,8 @@ class DeskController extends Controller
                 'cantidad'=>$cantidad,
             ]);
         }
-        // dd($proyectosLabel);
+
+
 
         $quejasclientes = array_unique(QuejasCliente::pluck('cliente_id')->toArray());
         $clientes = TimesheetCliente::select('nombre', 'id')->find($quejasclientes);
@@ -1324,6 +1391,11 @@ class DeskController extends Controller
         $cancelados_quejasClientes = QuejasCliente::where('estatus', 'No procedente')->get()->count();
 
         return view('admin.desk.clientes.dashboard', compact(
+            'ticketPorArea',
+            'areas',
+            'areasCollect',
+            'ticketPorProceso',
+            'procesosCollect',
             'total_quejasClientes',
             'nuevos_quejasClientes',
             'en_curso_quejasClientes',
@@ -1366,6 +1438,12 @@ class DeskController extends Controller
 
     public function validateFormQuejaCliente(Request $request)
     {
+
+        $id_quejas = $request->id;
+
+        $quejasClientes = QuejasCliente::with('registro','responsableAtencion')->find(intval($id_quejas));
+        dd($quejasClientes);
+
         // dd($request->all());
         if ($request->tipo_validacion == 'queja-registro') {
             $this->validateRequestRegistroQuejaCliente($request);
@@ -1377,11 +1455,20 @@ class DeskController extends Controller
 
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'queja-atencion') {
-            $this->validateRequestRegistroQuejaCliente($request);
-            $this->validateRequestAnalisisQuejaCliente($request);
-            $this->validateRequestAtencionQuejaCliente($request);
+            if(!is_null($quejasClientes->responsable_atencion_queja_id))
+            {
+                if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id)
+                {
+                $this->validateRequestRegistroQuejaCliente($request);
+                $this->validateRequestAnalisisQuejaCliente($request);
 
+                }
+
+
+                $this->validateRequestAtencionQuejaCliente($request);
+            }
             return response()->json(['isValid' => true]);
+
         } elseif ($request->tipo_validacion == 'queja-cierre') {
             $this->validateRequestRegistroQuejaCliente($request);
             $this->validateRequestAnalisisQuejaCliente($request);
@@ -1390,6 +1477,8 @@ class DeskController extends Controller
 
             return response()->json(['isValid' => true]);
         }
+
+
     }
 
     public function validateRequestRegistroQuejaCliente($request)
