@@ -2,39 +2,39 @@
 
 namespace App\Http\Controllers\admin;
 
-use Carbon\Carbon;
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\Activo;
-use App\Models\Quejas;
-use App\Models\Mejoras;
-use App\Models\Proceso;
-use App\Models\Empleado;
-use App\Models\Denuncias;
-use App\Models\Sugerencias;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use App\Models\QuejasCliente;
-use Illuminate\Http\Response;
-use App\Models\AccionCorrectiva;
-use App\Models\TimesheetCliente;
-use App\Models\AnalisisSeguridad;
-use App\Models\TimesheetProyecto;
-use App\Models\CategoriaIncidente;
-use App\Models\RiesgoIdentificado;
-use App\Models\IncidentesSeguridad;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use App\Models\SubcategoriaIncidente;
-use App\Mail\CierreQuejaAceptadaEmail;
-use App\Models\AnalisisQuejasClientes;
-use App\Mail\SolicitarCierreQuejaEmail;
-use App\Models\EvidenciaQuejasClientes;
-use App\Mail\SeguimientoQuejaClienteEmail;
-use App\Mail\ResolucionQuejaRechazadaEmail;
 use App\Mail\AceptacionAccionCorrectivaEmail;
+use App\Mail\CierreQuejaAceptadaEmail;
 use App\Mail\NotificacionResponsableQuejaEmail;
+use App\Mail\ResolucionQuejaRechazadaEmail;
+use App\Mail\SeguimientoQuejaClienteEmail;
+use App\Mail\SolicitarCierreQuejaEmail;
+use App\Models\AccionCorrectiva;
+use App\Models\Activo;
+use App\Models\AnalisisQuejasClientes;
+use App\Models\AnalisisSeguridad;
+use App\Models\Area;
+use App\Models\CategoriaIncidente;
+use App\Models\Denuncias;
+use App\Models\Empleado;
+use App\Models\EvidenciaQuejasClientes;
 use App\Models\EvidenciasQuejasClientesCerrado;
+use App\Models\IncidentesSeguridad;
+use App\Models\Mejoras;
+use App\Models\Organizacion;
+use App\Models\Proceso;
+use App\Models\Quejas;
+use App\Models\QuejasCliente;
+use App\Models\RiesgoIdentificado;
+use App\Models\Sede;
+use App\Models\SubcategoriaIncidente;
+use App\Models\Sugerencias;
+use App\Models\TimesheetCliente;
+use App\Models\TimesheetProyecto;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail; //mejora apunta a este modelo
 
 class DeskController extends Controller
@@ -946,8 +946,6 @@ class DeskController extends Controller
 
     public function updateQuejasClientes(Request $request, $id_quejas)
     {
-
-
         $queja_procedente = intval($request->queja_procedente) == 1 ? true : false;
         if ($queja_procedente) {
             $request->validate([
@@ -958,66 +956,66 @@ class DeskController extends Controller
 
         // dd($request->all());
         $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas));
-        $queja_procedente = intval($request->queja_procedente ? $request->queja_procedente:$quejasClientes->queja_procedente) == 1 ? true : false;
-        $realizar_accion = intval($request->realizar_accion ? $request->realizar_accion:$quejasClientes->realizar_accion) == 1 ? true : false;
-        $desea_levantar_ac = intval($request->desea_levantar_ac ? $request->desea_levantar_ac:$quejasClientes->desea_levantar_ac) == 1 ? true : false;
-        $notificar_responsable = intval($request->notificar_responsable ? $request->notificar_responsable:$quejasClientes->notificar_responsable) == 1 ? true : false;
-        $notificar_registro_queja = intval($request->notificar_registro_queja ? $request->notificar_registro_queja:$quejasClientes->notificar_registro_queja) == 1 ? true : false;
-        $cumplio_ac_responsable = intval($request->cumplio_ac_responsable ? $request->cumplio_ac_responsable:$quejasClientes->cumplio_ac_responsable) == 1 ? true : false;
-        $conforme_solucion = intval($request->conforme_solucion ? $request->conforme_solucion:$quejasClientes->conforme_solucion) == 1 ? true : false;
-        $cumplio_fecha = intval($request->cumplio_fecha ? $request->cumplio_fecha:$quejasClientes->cumplio_fecha) == 1 ? true : false;
-        $cerrar_ticket = intval($request->cerrar_ticket ? $request->cerrar_ticket:$quejasClientes->cerrar_ticket) == 1 ? true : false;
+        $queja_procedente = intval($request->queja_procedente ? $request->queja_procedente : $quejasClientes->queja_procedente) == 1 ? true : false;
+        $realizar_accion = intval($request->realizar_accion ? $request->realizar_accion : $quejasClientes->realizar_accion) == 1 ? true : false;
+        $desea_levantar_ac = intval($request->desea_levantar_ac ? $request->desea_levantar_ac : $quejasClientes->desea_levantar_ac) == 1 ? true : false;
+        $notificar_responsable = intval($request->notificar_responsable ? $request->notificar_responsable : $quejasClientes->notificar_responsable) == 1 ? true : false;
+        $notificar_registro_queja = intval($request->notificar_registro_queja ? $request->notificar_registro_queja : $quejasClientes->notificar_registro_queja) == 1 ? true : false;
+        $cumplio_ac_responsable = intval($request->cumplio_ac_responsable ? $request->cumplio_ac_responsable : $quejasClientes->cumplio_ac_responsable) == 1 ? true : false;
+        $conforme_solucion = intval($request->conforme_solucion ? $request->conforme_solucion : $quejasClientes->conforme_solucion) == 1 ? true : false;
+        $cumplio_fecha = intval($request->cumplio_fecha ? $request->cumplio_fecha : $quejasClientes->cumplio_fecha) == 1 ? true : false;
+        $cerrar_ticket = intval($request->cerrar_ticket ? $request->cerrar_ticket : $quejasClientes->cerrar_ticket) == 1 ? true : false;
         //if ($desea_levantar_ac) {
         //     $request->validate([
         //        'responsable_sgi_id' => 'required',
         //    ]);
         //}
-        $notificar_atencion_queja_no_aprobada  = intval($request->notificar_atencion_queja_no_aprobada) == 1 ? true : false;
+        $notificar_atencion_queja_no_aprobada = intval($request->notificar_atencion_queja_no_aprobada) == 1 ? true : false;
         // dd($request->all());
         $quejasClientes->update([
-            'cliente_id' => $request->cliente_id ? $request->cliente_id:$quejasClientes->cliente_id,
-            'proyectos_id' => $request->proyectos_id ? $request->proyectos_id:$quejasClientes->proyectos_id,
-            'nombre' => $request->nombre ? $request->nombre:$quejasClientes->nombre,
-            'puesto' => $request->puesto ? $request->puesto:$quejasClientes->puesto,
-            'telefono' => $request->telefono ? $request->telefono:$quejasClientes->telefono,
-            'correo' => $request->correo ? $request->correo:$quejasClientes->correo,
-            'area_quejado' => $request->area_quejado ? $request->area_quejado:$quejasClientes->area_quejado,
-            'colaborador_quejado' => $request->colaborador_quejado ? $request->colaborador_quejado:$quejasClientes->colaborador_quejado,
-            'proceso_quejado' => $request->proceso_quejado ? $request->proceso_quejado:$quejasClientes->proceso_quejado,
-            'otro_quejado' => $request->otro_quejado ? $request->otro_quejado:$quejasClientes->otro_quejado,
-            'titulo' => $request->titulo ? $request->titulo:$quejasClientes->titulo,
-            'fecha_cierre' => $request->fecha_cierre ? $request->fecha_cierre:$quejasClientes->fecha_cierre,
-            'ubicacion' => $request->ubicacion ? $request->ubicacion:$quejasClientes->ubicacion,
-            'descripcion' => $request->descripcion ? $request->descripcion:$quejasClientes->descripcion,
-            'estatus' => 'En curso' ? 'En curso':$quejasClientes->estatus,
-            'comentarios' => $request->comentarios ? $request->comentarios:$quejasClientes->comentarios,
-            'canal' => $request->canal ? $request->canal:$quejasClientes->canal,
-            'otro_canal' => $request->otro_canal ? $request->otro_canal:$quejasClientes->otro_canal,
-            'solucion_requerida_cliente' => $request->solucion_requerida_cliente ? $request->solucion_requerida_cliente:$quejasClientes->solucion_requerida_cliente,
-            'urgencia' => $request->urgencia ? $request->urgencia:$quejasClientes->urgencia,
-            'impacto' => $request->impacto ? $request->impacto:$quejasClientes->impacto,
-            'prioridad' => $request->prioridad ? $request->prioridad:$quejasClientes->prioridad,
-            'categoria_queja' => $request->categoria_queja ? $request->categoria_queja:$quejasClientes->categoria_queja,
-            'otro_categoria' => $request->otro_categoria ? $request->otro_categoria:$quejasClientes->otro_categoria,
+            'cliente_id' => $request->cliente_id ? $request->cliente_id : $quejasClientes->cliente_id,
+            'proyectos_id' => $request->proyectos_id ? $request->proyectos_id : $quejasClientes->proyectos_id,
+            'nombre' => $request->nombre ? $request->nombre : $quejasClientes->nombre,
+            'puesto' => $request->puesto ? $request->puesto : $quejasClientes->puesto,
+            'telefono' => $request->telefono ? $request->telefono : $quejasClientes->telefono,
+            'correo' => $request->correo ? $request->correo : $quejasClientes->correo,
+            'area_quejado' => $request->area_quejado ? $request->area_quejado : $quejasClientes->area_quejado,
+            'colaborador_quejado' => $request->colaborador_quejado ? $request->colaborador_quejado : $quejasClientes->colaborador_quejado,
+            'proceso_quejado' => $request->proceso_quejado ? $request->proceso_quejado : $quejasClientes->proceso_quejado,
+            'otro_quejado' => $request->otro_quejado ? $request->otro_quejado : $quejasClientes->otro_quejado,
+            'titulo' => $request->titulo ? $request->titulo : $quejasClientes->titulo,
+            'fecha_cierre' => $request->fecha_cierre ? $request->fecha_cierre : $quejasClientes->fecha_cierre,
+            'ubicacion' => $request->ubicacion ? $request->ubicacion : $quejasClientes->ubicacion,
+            'descripcion' => $request->descripcion ? $request->descripcion : $quejasClientes->descripcion,
+            'estatus' => 'En curso' ? 'En curso' : $quejasClientes->estatus,
+            'comentarios' => $request->comentarios ? $request->comentarios : $quejasClientes->comentarios,
+            'canal' => $request->canal ? $request->canal : $quejasClientes->canal,
+            'otro_canal' => $request->otro_canal ? $request->otro_canal : $quejasClientes->otro_canal,
+            'solucion_requerida_cliente' => $request->solucion_requerida_cliente ? $request->solucion_requerida_cliente : $quejasClientes->solucion_requerida_cliente,
+            'urgencia' => $request->urgencia ? $request->urgencia : $quejasClientes->urgencia,
+            'impacto' => $request->impacto ? $request->impacto : $quejasClientes->impacto,
+            'prioridad' => $request->prioridad ? $request->prioridad : $quejasClientes->prioridad,
+            'categoria_queja' => $request->categoria_queja ? $request->categoria_queja : $quejasClientes->categoria_queja,
+            'otro_categoria' => $request->otro_categoria ? $request->otro_categoria : $quejasClientes->otro_categoria,
             'queja_procedente' => $queja_procedente,
-            'porque_procedente' => $request->porque_procedente ? $request->porque_procedente:$quejasClientes->porque_procedente,
+            'porque_procedente' => $request->porque_procedente ? $request->porque_procedente : $quejasClientes->porque_procedente,
             'realizar_accion' => $realizar_accion,
-            'cual_accion' => $request->cual_accion ? $request->cual_accion:$quejasClientes->cual_accion,
+            'cual_accion' => $request->cual_accion ? $request->cual_accion : $quejasClientes->cual_accion,
             'desea_levantar_ac' => $desea_levantar_ac,
-            'acciones_tomara_responsable' =>  $request->acciones_tomara_responsable ? $request->acciones_tomara_responsable:$quejasClientes->acciones_tomara_responsable,
-            'fecha_limite' => $request->fecha_limite ? $request->fecha_limite:$quejasClientes->fecha_limite,
-            'comentarios_atencion' => $request->comentarios_atencion ? $request->comentarios_atencion:$quejasClientes->comentarios_atencion,
-            'responsable_sgi_id' => $request->responsable_sgi_id ? $request->responsable_sgi_id:$quejasClientes->responsable_sgi_id,
-            'responsable_atencion_queja_id' => $request->responsable_atencion_queja_id ? $request->responsable_atencion_queja_id:$quejasClientes->responsable_atencion_queja_id,
-            'porque_procedente' => $request->porque_procedente ? $request->porque_procedente:$quejasClientes->porque_procedente,
+            'acciones_tomara_responsable' =>  $request->acciones_tomara_responsable ? $request->acciones_tomara_responsable : $quejasClientes->acciones_tomara_responsable,
+            'fecha_limite' => $request->fecha_limite ? $request->fecha_limite : $quejasClientes->fecha_limite,
+            'comentarios_atencion' => $request->comentarios_atencion ? $request->comentarios_atencion : $quejasClientes->comentarios_atencion,
+            'responsable_sgi_id' => $request->responsable_sgi_id ? $request->responsable_sgi_id : $quejasClientes->responsable_sgi_id,
+            'responsable_atencion_queja_id' => $request->responsable_atencion_queja_id ? $request->responsable_atencion_queja_id : $quejasClientes->responsable_atencion_queja_id,
+            'porque_procedente' => $request->porque_procedente ? $request->porque_procedente : $quejasClientes->porque_procedente,
             'cumplio_ac_responsable' => $cumplio_ac_responsable,
-            'porque_no_cumplio_responsable' => $request->porque_no_cumplio_responsable ? $request->porque_no_cumplio_responsable:$quejasClientes->porque_no_cumplio_responsable,
+            'porque_no_cumplio_responsable' => $request->porque_no_cumplio_responsable ? $request->porque_no_cumplio_responsable : $quejasClientes->porque_no_cumplio_responsable,
             'conforme_solucion' => $conforme_solucion,
             'cerrar_ticket' => $cerrar_ticket,
             'cumplio_fecha'=>$cumplio_fecha,
             'notificar_responsable'=>$notificar_responsable,
             'notificar_registro_queja'=> $notificar_registro_queja,
-            'porque_no_cierre_ticket' =>  $request->porque_no_cierre_ticket ? $request->porque_no_cierre_ticket:$quejasClientes->porque_no_cierre_ticket,
+            'porque_no_cierre_ticket' =>  $request->porque_no_cierre_ticket ? $request->porque_no_cierre_ticket : $quejasClientes->porque_no_cierre_ticket,
             'notificar_atencion_queja_no_aprobada'=>$notificar_atencion_queja_no_aprobada,
         ]);
 
@@ -1067,47 +1065,40 @@ class DeskController extends Controller
             }
         }
 
-        if ($queja_procedente == false){
+        if ($queja_procedente == false) {
             $quejasClientes->update([
                 'estatus' => 'No procedente',
             ]);
         }
         // dd($cerrar_ticket);
-        if ($cerrar_ticket){
+        if ($cerrar_ticket) {
             $quejasClientes->update([
                 'estatus' => 'Cerrado',
                 'fecha_cierre' => now(),
             ]);
         }
 
-        if($notificar_atencion_queja_no_aprobada){
-            if ($cerrar_ticket == false){
+        if ($notificar_atencion_queja_no_aprobada) {
+            if ($cerrar_ticket == false) {
                 if (!$quejasClientes->email_env_resolucion_rechazada) {
                     $quejasClientes->update([
                         'email_env_resolucion_rechazada' => true,
                     ]);
                     Mail::to($quejasClientes->responsableAtencion->email)->cc($quejasClientes->registro->email)->send(new ResolucionQuejaRechazadaEmail($quejasClientes));
-
-            }
+                }
             }
         }
 
-
-        if($notificar_atencion_queja_no_aprobada){
-            if ($cerrar_ticket ){
+        if ($notificar_atencion_queja_no_aprobada) {
+            if ($cerrar_ticket) {
                 if (!$quejasClientes->email_env_resolucion_aprobada) {
                     $quejasClientes->update([
                         'email_env_resolucion_aprobada' => true,
                     ]);
                     Mail::to($quejasClientes->responsableAtencion->email)->cc($quejasClientes->registro->email)->send(new CierreQuejaAceptadaEmail($quejasClientes));
-
-            }
+                }
             }
         }
-
-
-
-
 
         if ($notificar_registro_queja) {
             if (!$quejasClientes->correo_enviado_registro) {
@@ -1117,8 +1108,6 @@ class DeskController extends Controller
                 Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes));
             }
         }
-
-
 
         if ($desea_levantar_ac) {
             $quejasClientes->load('cliente', 'proyectos', 'responsableAtencion', 'responsableSgi', 'registro');
@@ -1192,8 +1181,6 @@ class DeskController extends Controller
 
         return response()->json(['success' => true, 'request' => $request->all(), 'message'=>'Enviado con éxito']);
     }
-
-
 
     public function updateAnalisisQuejasClientes(Request $request, $id_quejas)
     {
@@ -1269,7 +1256,6 @@ class DeskController extends Controller
 
     public function quejasClientesDashboard()
     {
-
         $quejasClientesSaA = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Alta')->count();
         $quejasClientesSaM = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Media')->count();
         $quejasClientesSaB = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Baja')->count();
@@ -1326,44 +1312,43 @@ class DeskController extends Controller
         $quejaCumplioFecha = QuejasCliente::select('id', 'cumplio_fecha')->where('cumplio_fecha', true)->count();
         $quejaNoCumplioFecha = QuejasCliente::select('id', 'cumplio_fecha')->where('cumplio_fecha', false)->count();
 
-
-        $areasCollect=[];
+        $areasCollect = [];
         $ticketPorArea = QuejasCliente::select('area_quejado')->get();
-        foreach($ticketPorArea as $ticketArea){
-            $areas=$ticketArea->area_quejado;
-            $areasExplode= explode(',', $areas);
-            foreach($areasExplode as $areaExplode){
+        foreach ($ticketPorArea as $ticketArea) {
+            $areas = $ticketArea->area_quejado;
+            $areasExplode = explode(',', $areas);
+            foreach ($areasExplode as $areaExplode) {
                 //$areasCollect->push(trim($areaExplode));
-                if(array_key_exists($areaExplode,$areasCollect)){
-                    $areasCollect[trim($areaExplode)]=$areasCollect[trim($areaExplode)]+1;
-                }else{
-                    $areasCollect[trim($areaExplode)]=1;
+                if (array_key_exists($areaExplode, $areasCollect)) {
+                    $areasCollect[trim($areaExplode)] = $areasCollect[trim($areaExplode)] + 1;
+                } else {
+                    $areasCollect[trim($areaExplode)] = 1;
                 }
             }
         }
-        $areasCollect=array_filter($areasCollect,function($item){
+        $areasCollect = array_filter($areasCollect, function ($item) {
             return $item != '';
-        },ARRAY_FILTER_USE_KEY);
+        }, ARRAY_FILTER_USE_KEY);
 
-        $procesosCollect=[];
+        $procesosCollect = [];
         $ticketPorProceso = QuejasCliente::select('proceso_quejado')->get();
 
-        foreach($ticketPorProceso as $ticketProceso){
-            $procesos=$ticketProceso->proceso_quejado;
-            if($procesos != null){
-                $procesosExplode= explode(',', $procesos);
-                foreach($procesosExplode as $procesoExplode){
-                    if(array_key_exists($procesoExplode,$procesosCollect)){
-                        $procesosCollect[trim($procesoExplode)]=$procesosCollect[trim($procesoExplode)]+1;
-                    }else{
-                        $procesosCollect[trim($procesoExplode)]=1;
+        foreach ($ticketPorProceso as $ticketProceso) {
+            $procesos = $ticketProceso->proceso_quejado;
+            if ($procesos != null) {
+                $procesosExplode = explode(',', $procesos);
+                foreach ($procesosExplode as $procesoExplode) {
+                    if (array_key_exists($procesoExplode, $procesosCollect)) {
+                        $procesosCollect[trim($procesoExplode)] = $procesosCollect[trim($procesoExplode)] + 1;
+                    } else {
+                        $procesosCollect[trim($procesoExplode)] = 1;
                     }
                 }
             }
         }
-        $procesosCollect=array_filter($procesosCollect,function($item){
+        $procesosCollect = array_filter($procesosCollect, function ($item) {
             return $item != '';
-        },ARRAY_FILTER_USE_KEY);
+        }, ARRAY_FILTER_USE_KEY);
 
         $quejasproyectos = array_unique(QuejasCliente::pluck('proyectos_id')->toArray());
         $proyectos = TimesheetProyecto::select('id', 'proyecto', 'cliente_id')->with('cliente')->find($quejasproyectos);
@@ -1377,8 +1362,6 @@ class DeskController extends Controller
                 'cantidad'=>$cantidad,
             ]);
         }
-
-
 
         $quejasclientes = array_unique(QuejasCliente::pluck('cliente_id')->toArray());
         $clientes = TimesheetCliente::select('nombre', 'id')->find($quejasclientes);
@@ -1446,10 +1429,9 @@ class DeskController extends Controller
 
     public function validateFormQuejaCliente(Request $request)
     {
-
         $id_quejas = $request->quejas_clientes_id;
 
-        $quejasClientes = QuejasCliente::with('registro','responsableAtencion','cliente', 'proyectos')->find(intval($id_quejas));
+        $quejasClientes = QuejasCliente::with('registro', 'responsableAtencion', 'cliente', 'proyectos')->find(intval($id_quejas));
         if ($request->tipo_validacion == 'queja-registro') {
             $this->validateRequestRegistroQuejaCliente($request);
 
@@ -1460,23 +1442,19 @@ class DeskController extends Controller
 
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'queja-atencion') {
-            if(!is_null($quejasClientes->responsable_atencion_queja_id))
-            {
-
-                if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id)
-                {
-                $this->validateRequestRegistroQuejaCliente($request);
-                $this->validateRequestAnalisisQuejaCliente($request);
+            if (!is_null($quejasClientes->responsable_atencion_queja_id)) {
+                if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id) {
+                    $this->validateRequestRegistroQuejaCliente($request);
+                    $this->validateRequestAnalisisQuejaCliente($request);
                 }
                 $this->validateRequestAtencionQuejaCliente($request);
-            }else{
-
+            } else {
                 $this->validateRequestRegistroQuejaCliente($request);
                 $this->validateRequestAnalisisQuejaCliente($request);
                 $this->validateRequestAtencionQuejaCliente($request);
             }
-            return response()->json(['isValid' => true]);
 
+            return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'queja-cierre') {
             $this->validateRequestRegistroQuejaCliente($request);
             $this->validateRequestAnalisisQuejaCliente($request);
@@ -1485,14 +1463,13 @@ class DeskController extends Controller
 
             return response()->json(['isValid' => true]);
         }
-
-
     }
 
     public function validateRequestRegistroQuejaCliente($request)
     {
         // dd($request->all());
-        $request->validate([
+        $request->validate(
+            [
             'cliente_id' => 'required',
             'proyectos_id' => 'required',
             'nombre' => 'required',
@@ -1502,7 +1479,7 @@ class DeskController extends Controller
             'area_quejado' => 'required',
             'canal' => 'required',
         ],
-        [
+            [
             'cliente_id' => 'El campo cliente es obligatorio',
             'proyectos_id' =>'El campo proyecto es obligatorio',
             'titulo' => 'El campo título es obligatorio',
@@ -1520,14 +1497,14 @@ class DeskController extends Controller
         $queja_procedente = intval($request->queja_procedente) == 1 ? true : false;
         if ($queja_procedente) {
             $request->validate(
-            [
+                [
                 'urgencia' => 'required',
                 'impacto'=>'required',
                 'categoria_queja' => 'required',
                 'responsable_atencion_queja_id'=>'required',
 
             ],
-            [
+                [
                 'urgencia' => 'El campo urgencia es obligatorio',
                 'impacto'=>'El campo impacto es obligatorio',
                 'categoria_queja' => 'El campo categoria es obligatorio',
@@ -1537,10 +1514,10 @@ class DeskController extends Controller
             // dd($request->all());
             if ($levantamiento_ac) {
                 $request->validate(
-                [
+                    [
                 'responsable_sgi_id'=>'required',
                 ],
-                [
+                    [
                 'responsable_sgi_id'=>'El campo responsable del SGI es obligatorio',
                 ]
                 );
@@ -1551,12 +1528,12 @@ class DeskController extends Controller
     public function validateRequestAtencionQuejaCliente($request)
     {
         $request->validate(
-        [
+            [
             'realizar_accion' => 'required',
             'acciones_tomara_responsable' => 'required',
 
         ],
-        [
+            [
             'realizar_accion' => 'El campo realiazar acción es obligatorio',
             'acciones_tomara_responsable' => 'El campo acciones es obligatorio',
         ]
@@ -1565,12 +1542,13 @@ class DeskController extends Controller
 
     public function validateRequestCierreQuejaCliente($request)
     {
-        $request->validate([
+        $request->validate(
+            [
             'porque_no_cumplio_responsable' => 'required',
             'porque_no_cierre_ticket'=>'required',
 
         ],
-        [
+            [
             'porque_no_cumplio_responsable' =>  'El campo por qué no se cumplieron las acciones es obligatorio',
             'porque_no_cierre_ticket'=>  'El campo por qué no se cierra el ticket es obligatorio',
         ]

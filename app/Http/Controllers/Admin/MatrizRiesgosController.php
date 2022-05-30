@@ -123,7 +123,6 @@ class MatrizRiesgosController extends Controller
 
     public function store(StoreMatrizRiesgoRequest $request)
     {
-       
         $matrizRiesgo = MatrizRiesgo::create($request->all());
 
         foreach ($request->controles_id as $item) {
@@ -173,13 +172,12 @@ class MatrizRiesgosController extends Controller
     }
 
     public function update(UpdateMatrizRiesgoRequest $request, MatrizRiesgo $matrizRiesgo)
-    {  
+    {
         $calculo = new Mriesgos();
-      
+
         $matrizRiesgo->update($request->all());
         $matrizRiesgo->matriz_riesgos_controles_pivots()->sync($request->controles_id);
-        
-        
+
         if (isset($request->plan_accion)) {
             $matrizRiesgo->planes()->sync($request->plan_accion);
         }
@@ -270,14 +268,14 @@ class MatrizRiesgosController extends Controller
                 }
             });
             $table->editColumn('integridad', function ($row) {
-                if ($row->integridad  == 'on') {
+                if ($row->integridad == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
                 }
             });
             $table->editColumn('disponibilidad', function ($row) {
-                if ($row->disponibilidad  == 'on') {
+                if ($row->disponibilidad == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
@@ -302,21 +300,21 @@ class MatrizRiesgosController extends Controller
                 return $row->planes ? $row->planes : '';
             });
             $table->editColumn('confidencialidad_cid', function ($row) {
-                if ($row->confidencialidad_cid  == 'on') {
+                if ($row->confidencialidad_cid == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
                 }
             });
             $table->editColumn('integridad_cid', function ($row) {
-                if ($row->integridad_cid  == 'on') {
+                if ($row->integridad_cid == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
                 }
             });
             $table->editColumn('disponibilidad_cid', function ($row) {
-                if ($row->disponibilidad_cid  == 'on') {
+                if ($row->disponibilidad_cid == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';

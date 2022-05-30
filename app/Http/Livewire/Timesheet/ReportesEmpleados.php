@@ -3,9 +3,9 @@
 namespace App\Http\Livewire\Timesheet;
 
 use App\Mail\TimesheetCorreoRetraso;
+use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Organizacion;
-use App\Models\Area;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
@@ -66,6 +66,7 @@ class ReportesEmpleados extends Component
         $this->fecha_inicio = $value;
         $this->empleado = null;
     }
+
     public function updatedFechaFin($value)
     {
         $this->fecha_fin = $value;
@@ -79,10 +80,10 @@ class ReportesEmpleados extends Component
         $this->empleados = collect();
         if ($this->area_id) {
             $empleados_list = Empleado::where('area_id', $this->area_id)->get();
-        }else{
+        } else {
             $empleados_list = Empleado::get();
         }
-        
+
         //calendario tabla
         $calendario_array = [];
         $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
@@ -100,16 +101,15 @@ class ReportesEmpleados extends Component
                 $year = $fecha->format('Y');
                 $month = $fecha->format('F');
                 if (!($this->buscarKeyEnArray($year, $calendario_array))) {
-
                     $calendario_array["{$year}"] = [
                         'year'=>$year,
                         'total_weeks'=>0,
                         'total_months'=>0,
                         'months'=>[
                             "{$month}"=>[
-                                'weeks'=>[]
-                            ]
-                        ]
+                                'weeks'=>[],
+                            ],
+                        ],
                     ];
 
                     if ($month == 'January') {
@@ -120,20 +120,17 @@ class ReportesEmpleados extends Component
                             }
                         }
                     }
-
-                }else{
+                } else {
                     if (array_key_exists($month, $calendario_array["{$year}"]['months'])) {
                         if (!in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
-                        }                            
-                    }else{
+                        }
+                    } else {
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
-                            
                             if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
-                            
-                        }else{
+                        } else {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
                     }
@@ -151,7 +148,7 @@ class ReportesEmpleados extends Component
                 $total_weeks_year += $total_weeks;
                 $c_mes['total_weeks'] = $total_weeks;
             }
-            $c_year['total_weeks'] = $total_weeks_year;  
+            $c_year['total_weeks'] = $total_weeks_year;
             $this->semanas_totales_calendario += $total_weeks_year;
         }
 
@@ -163,13 +160,13 @@ class ReportesEmpleados extends Component
 
             if ($this->fecha_inicio) {
                 $fecha_inicio_timesheet_empleado = Carbon::parse($empleado_list->antiguedad)->lt($this->fecha_inicio) ? $this->fecha_inicio : $empleado_list->antiguedad;
-            }else{
+            } else {
                 $fecha_inicio_timesheet_empleado = Carbon::parse($empleado_list->antiguedad)->lt($fecha_registro_timesheet) ? $fecha_registro_timesheet : $empleado_list->antiguedad;
             }
 
             if (($this->fecha_fin) && (Carbon::parse($this->fecha_fin)->lt($hoy))) {
                 $fecha_fin_timesheet_empleado = $empleado_list->estatus == 'baja' ? $empleado_list->fecha_baja : $this->fecha_fin;
-            }else{
+            } else {
                 $fecha_fin_timesheet_empleado = $empleado_list->estatus == 'baja' ? $empleado_list->fecha_baja : $hoy;
             }
 
@@ -224,12 +221,9 @@ class ReportesEmpleados extends Component
             $antiguedad_y = Carbon::parse($fecha_inicio_timesheet_empleado)->format('Y');
             $antiguedad_m = Carbon::parse($fecha_inicio_timesheet_empleado)->format('m');
             $antiguedad_d = Carbon::parse($fecha_inicio_timesheet_empleado)->format('d');
-            
-            
 
             foreach ($times_empleado_aprobados_pendientes_list as $time) {
                 $times_empleado_array[] = $time->semana_y;
-                
             }
 
             // $times_faltantes_empleado = [];
@@ -241,7 +235,7 @@ class ReportesEmpleados extends Component
                 foreach ($año['months'] as $key => $mes) {
                     foreach ($mes['weeks'] as $key => $semana) {
                         if (count($times_empleado_calendario_array) > 0) {
-                            $time = array_filter($times_empleado_calendario_array, function($value) use($semana){
+                            $time = array_filter($times_empleado_calendario_array, function ($value) use ($semana) {
                                 return $value['semana_y'] == $semana;
                             });
                             if (count($time) > 0) {
@@ -249,11 +243,10 @@ class ReportesEmpleados extends Component
                                 foreach ($time as $key => $t) {
                                     array_push($calendario_tabla_empleado, $t['horas_semana']);
                                 }
-                            }else{
-
+                            } else {
                                 array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
                             }
-                        }else{
+                        } else {
                             array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
                         }
                     }
@@ -275,8 +268,6 @@ class ReportesEmpleados extends Component
                 'calendario'=>$calendario_tabla_empleado,
             ]);
         }
-
-
 
         $this->calendario_tabla = $calendario_array;
 
@@ -306,7 +297,7 @@ class ReportesEmpleados extends Component
             }
         }
 
-        return false;   
+        return false;
     }
 
     public function existsWeeksInMonth($search, $array)
