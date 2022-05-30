@@ -1312,7 +1312,9 @@ class DeskController extends Controller
         $quejaCumplioFecha = QuejasCliente::select('id', 'cumplio_fecha')->where('cumplio_fecha', true)->count();
         $quejaNoCumplioFecha = QuejasCliente::select('id', 'cumplio_fecha')->where('cumplio_fecha', false)->count();
 
-        $areasCollect = [];
+
+        $areasCollect=[];
+        $areas=[];
         $ticketPorArea = QuejasCliente::select('area_quejado')->get();
         foreach ($ticketPorArea as $ticketArea) {
             $areas = $ticketArea->area_quejado;
@@ -1463,6 +1465,15 @@ class DeskController extends Controller
 
             return response()->json(['isValid' => true]);
         }
+    }
+
+    public function destroyQuejasClientes(Request $request, $quejasClientes)
+    {
+        $quejasClientes = QuejasCliente::find($quejasClientes);
+        $quejasClientes->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
+
     }
 
     public function validateRequestRegistroQuejaCliente($request)

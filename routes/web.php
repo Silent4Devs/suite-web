@@ -319,6 +319,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('desk/quejas-clientes/index', 'DeskController@indexQuejasClientes')->name('desk.quejasClientes-index');
     Route::post('desk/reportes/quejas-clientes', 'DeskController@storeQuejasClientes')->name('desk.quejasClientes-store');
     Route::get('desk/{quejas}/quejas-clientes-edit', 'DeskController@editQuejasClientes')->name('desk.quejasClientes-edit');
+    Route::delete('desk/{quejas}/quejas-clientes-delete', 'DeskController@destroyQuejasClientes')->name('desk.quejasClientes-destroy');
     Route::post('desk/{quejas}/quejas-clientes-update', 'DeskController@updateQuejasClientes')->name('desk.quejasClientes-update');
     Route::post('desk/planes/quejas-clientes', 'DeskController@planesQuejasClientes')->name('desk.planesQuejasClientes');
 
