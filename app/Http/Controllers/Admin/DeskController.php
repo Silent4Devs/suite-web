@@ -1328,6 +1328,7 @@ class DeskController extends Controller
 
 
         $areasCollect=[];
+        $areas=[];
         $ticketPorArea = QuejasCliente::select('area_quejado')->get();
         foreach($ticketPorArea as $ticketArea){
             $areas=$ticketArea->area_quejado;
@@ -1486,6 +1487,15 @@ class DeskController extends Controller
             return response()->json(['isValid' => true]);
         }
 
+
+    }
+
+    public function destroyQuejasClientes(Request $request, $quejasClientes)
+    {
+        $quejasClientes = QuejasCliente::find($quejasClientes);
+        $quejasClientes->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
 
     }
 
