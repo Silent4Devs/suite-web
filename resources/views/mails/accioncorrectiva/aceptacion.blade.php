@@ -25,6 +25,52 @@
         }
 
     </style>
+
+<style>
+    /* Remove space around the email design. */
+
+    html,
+
+    body {
+
+        margin: 0 auto !important;
+
+        padding: 0 !important;
+
+        height: 100% !important;
+
+        width: 100% !important;
+    }
+
+    /* Stop Outlook resizing small text. */
+    * {
+        -ms-text-size-adjust: 100%;
+    }
+
+
+    /* Stop Outlook from adding extra spacing to tables. */
+    table,
+    td {
+        mso-table-lspace: 0pt !important;
+        mso-table-rspace: 0pt !important;
+    }
+
+    /* Use a better rendering method when resizing images in Outlook IE. */
+
+    img {
+        -ms-interpolation-mode: bicubic;
+    }
+
+
+    /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+
+    a {
+
+        text-decoration: none;
+
+    }
+
+</style>
 </head>
 
 <body style="margin:0;padding:0;">
@@ -50,9 +96,9 @@
                             <table role="presentation"
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
-                                    <div style="width: 100%; height: 1.5px; background-color: #153643;">
-                                        &nbsp;
-                                    </div>
+                                    <hr style="margin:0;width: 100%; height: 1.5px; background-color: #153643;">
+                                    &nbsp;
+                                    </hr>
                                     @php
                                         use App\Models\Organizacion;
                                         $organizacion = Organizacion::first();
@@ -61,14 +107,14 @@
                                     @endphp
                                     <h2 style="padding-top:3px; color:#153643; text-align:center">
                                         {{ $empresa }}</h2>
-                                    <div style="width: 100%; height:1.5px; background-color: #153643;">
-                                        &nbsp;
-                                    </div>
+                                    <hr style="margin:0;width: 100%; height:1.5px; background-color: #153643;">
+                                    &nbsp;
+                                    </hr>
 
                                     <td style="padding:0 0 36px 0;">
 
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
-                                            <img src="{{ asset($logotipo) }}" class="mt-2 ml-4"
+                                            <img width="160" src="{{ asset($logotipo) }}" class="mt-2 ml-4"
                                                 style="width:160px;">
                                         </div>
 
@@ -212,12 +258,11 @@
                                     <td style="padding:0;width:30%;" align="left">
                                         <p style="text-align:center; font-size:10pt; color:#153643;">Por favor no
                                             responda a este correo</p>
-                                        <div style="width: 100%; height: 1.5px; background-color: #153643;">
-                                            &nbsp;
-                                        </div>
+                                        <hr style="margin:0; width: 100%; height: 1.5px; background-color: #153643;">
+                                        &nbsp;
+                                        </hr>
 
-                                        <p
-                                            style="text-align:center;font-size:10pt;font-weight: normal;color:#153643;">
+                                        <p style="text-align:center;font-size:10pt;font-weight: normal;color:#153643;">
                                             SISTEMA INTEGRAL DE GESTIÓN EMPRESARIAL TABANTAJ</p>
                                     </td>
                                 </tr>

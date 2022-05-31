@@ -132,7 +132,14 @@ class AccionCorrectivaController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.accionCorrectivas.index', compact('users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
+        $total_AC = AccionCorrectiva::get()->count();
+        $nuevos_AC = AccionCorrectiva::where('estatus', 'Sin atender')->get()->count();
+        $en_curso_AC = AccionCorrectiva::where('estatus', 'En curso')->get()->count();
+        $en_espera_AC = AccionCorrectiva::where('estatus', 'En espera')->get()->count();
+        $cerrados_AC = AccionCorrectiva::where('estatus', 'Cerrado')->get()->count();
+        $cancelados_AC = AccionCorrectiva::where('estatus', 'No procedente')->get()->count();
+
+        return view('admin.accionCorrectivas.index', compact('total_AC','nuevos_AC','en_curso_AC','en_espera_AC','cerrados_AC','cancelados_AC','users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
     }
 
     public function obtenerAccionesCorrectivasSinAprobacion()
@@ -246,7 +253,7 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->load('nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team');
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::with('area')->orderBy('name')->get();
 
         $areas = Area::get();
 
