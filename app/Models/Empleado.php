@@ -321,7 +321,7 @@ class Empleado extends Model
 
     public function supervisor()
     {
-        return $this->belongsTo(self::class)->alta();
+        return $this->belongsTo(self::class);
     }
 
     public function onlyChildren()
