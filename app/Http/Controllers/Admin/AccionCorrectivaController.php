@@ -139,7 +139,7 @@ class AccionCorrectivaController extends Controller
         $cerrados_AC = AccionCorrectiva::where('estatus', 'Cerrado')->get()->count();
         $cancelados_AC = AccionCorrectiva::where('estatus', 'No procedente')->get()->count();
 
-        return view('admin.accionCorrectivas.index', compact('total_AC','nuevos_AC','en_curso_AC','en_espera_AC','cerrados_AC','cancelados_AC','users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
+        return view('admin.accionCorrectivas.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
     }
 
     public function obtenerAccionesCorrectivasSinAprobacion()

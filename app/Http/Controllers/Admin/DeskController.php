@@ -4,13 +4,21 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\AceptacionAccionCorrectivaEmail;
+use App\Mail\AceptacionAccionCorrectivaEmail;
+use App\Mail\AtencionQuejaAtendidaEmail;
+use App\Mail\CierreQuejaAceptadaEmail;
 use App\Mail\CierreQuejaAceptadaEmail;
 use App\Mail\NotificacionResponsableQuejaEmail;
+use App\Mail\NotificacionResponsableQuejaEmail;
+use App\Mail\ResolucionQuejaRechazadaEmail;
 use App\Mail\ResolucionQuejaRechazadaEmail;
 use App\Mail\SeguimientoQuejaClienteEmail;
+use App\Mail\SeguimientoQuejaClienteEmail;
+use App\Mail\SolicitarCierreQuejaEmail;
 use App\Mail\SolicitarCierreQuejaEmail;
 use App\Models\AccionCorrectiva;
 use App\Models\Activo;
+use App\Models\AnalisisQuejasClientes;
 use App\Models\AnalisisQuejasClientes;
 use App\Models\AnalisisSeguridad;
 use App\Models\Area;
@@ -18,6 +26,8 @@ use App\Models\CategoriaIncidente;
 use App\Models\Denuncias;
 use App\Models\Empleado;
 use App\Models\EvidenciaQuejasClientes;
+use App\Models\EvidenciaQuejasClientes;
+use App\Models\EvidenciasQuejasClientesCerrado;
 use App\Models\EvidenciasQuejasClientesCerrado;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
@@ -28,6 +38,7 @@ use App\Models\QuejasCliente;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\SubcategoriaIncidente;
+use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
@@ -35,17 +46,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use App\Models\SubcategoriaIncidente;
-use App\Mail\CierreQuejaAceptadaEmail;
-use App\Models\AnalisisQuejasClientes;
-use App\Mail\SolicitarCierreQuejaEmail;
-use App\Models\EvidenciaQuejasClientes;
-use App\Mail\AtencionQuejaAtendidaEmail;
-use App\Mail\SeguimientoQuejaClienteEmail;
-use App\Mail\ResolucionQuejaRechazadaEmail;
-use App\Mail\AceptacionAccionCorrectivaEmail;
-use App\Mail\NotificacionResponsableQuejaEmail;
-use App\Models\EvidenciasQuejasClientesCerrado;
 use Illuminate\Support\Facades\Mail; //mejora apunta a este modelo
 
 class DeskController extends Controller
@@ -967,16 +967,16 @@ class DeskController extends Controller
 
         // dd($request->all());
         $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas));
-        $queja_procedente = intval($request->queja_procedente ? $request->queja_procedente:$quejasClientes->queja_procedente) == 1 ? true : false;
-        $realizar_accion = intval($request->realizar_accion ? $request->realizar_accion:$quejasClientes->realizar_accion) == 1 ? true : false;
-        $desea_levantar_ac = intval($request->desea_levantar_ac ? $request->desea_levantar_ac:$quejasClientes->desea_levantar_ac) == 1 ? true : false;
-        $notificar_responsable = intval($request->notificar_responsable ? $request->notificar_responsable:$quejasClientes->notificar_responsable) == 1 ? true : false;
-        $notificar_registro_queja = intval($request->notificar_registro_queja ? $request->notificar_registro_queja:$quejasClientes->notificar_registro_queja) == 1 ? true : false;
-        $cumplio_ac_responsable = intval($request->cumplio_ac_responsable ? $request->cumplio_ac_responsable:$quejasClientes->cumplio_ac_responsable) == 1 ? true : false;
-        $conforme_solucion = intval($request->conforme_solucion ? $request->conforme_solucion:$quejasClientes->conforme_solucion) == 1 ? true : false;
-        $cumplio_fecha = intval($request->cumplio_fecha ? $request->cumplio_fecha:$quejasClientes->cumplio_fecha) == 1 ? true : false;
-        $cerrar_ticket = intval($request->cerrar_ticket ? $request->cerrar_ticket:$quejasClientes->cerrar_ticket) == 1 ? true : false;
-        $email_realizara_accion_inmediata= intval ($request->email_realizara_accion_inmediata ? $request->email_realizara_accion_inmediata:$quejasClientes->email_realizara_accion_inmediata) == 1 ? true : false;
+        $queja_procedente = intval($request->queja_procedente ? $request->queja_procedente : $quejasClientes->queja_procedente) == 1 ? true : false;
+        $realizar_accion = intval($request->realizar_accion ? $request->realizar_accion : $quejasClientes->realizar_accion) == 1 ? true : false;
+        $desea_levantar_ac = intval($request->desea_levantar_ac ? $request->desea_levantar_ac : $quejasClientes->desea_levantar_ac) == 1 ? true : false;
+        $notificar_responsable = intval($request->notificar_responsable ? $request->notificar_responsable : $quejasClientes->notificar_responsable) == 1 ? true : false;
+        $notificar_registro_queja = intval($request->notificar_registro_queja ? $request->notificar_registro_queja : $quejasClientes->notificar_registro_queja) == 1 ? true : false;
+        $cumplio_ac_responsable = intval($request->cumplio_ac_responsable ? $request->cumplio_ac_responsable : $quejasClientes->cumplio_ac_responsable) == 1 ? true : false;
+        $conforme_solucion = intval($request->conforme_solucion ? $request->conforme_solucion : $quejasClientes->conforme_solucion) == 1 ? true : false;
+        $cumplio_fecha = intval($request->cumplio_fecha ? $request->cumplio_fecha : $quejasClientes->cumplio_fecha) == 1 ? true : false;
+        $cerrar_ticket = intval($request->cerrar_ticket ? $request->cerrar_ticket : $quejasClientes->cerrar_ticket) == 1 ? true : false;
+        $email_realizara_accion_inmediata = intval($request->email_realizara_accion_inmediata ? $request->email_realizara_accion_inmediata : $quejasClientes->email_realizara_accion_inmediata) == 1 ? true : false;
         //if ($desea_levantar_ac) {
         //     $request->validate([
         //        'responsable_sgi_id' => 'required',
@@ -1077,9 +1077,7 @@ class DeskController extends Controller
             }
         }
 
-
-
-        if ($queja_procedente == false){
+        if ($queja_procedente == false) {
             $quejasClientes->update([
                 'estatus' => 'No procedente',
             ]);
@@ -1092,9 +1090,8 @@ class DeskController extends Controller
             ]);
         }
 
-
-        if($notificar_atencion_queja_no_aprobada){
-            if ($cerrar_ticket == false){
+        if ($notificar_atencion_queja_no_aprobada) {
+            if ($cerrar_ticket == false) {
                 if (!$quejasClientes->email_env_resolucion_rechazada) {
                     $quejasClientes->update([
                         'email_env_resolucion_rechazada' => true,
@@ -1115,15 +1112,12 @@ class DeskController extends Controller
             }
         }
 
-
-        if(!$email_realizara_accion_inmediata){
+        if (!$email_realizara_accion_inmediata) {
             $quejasClientes->update([
                 'email_realizara_accion_inmediata' => true,
             ]);
             Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new AtencionQuejaAtendidaEmail($quejasClientes));
-
         }
-
 
         if ($notificar_registro_queja) {
             if (!$quejasClientes->correo_enviado_registro) {
