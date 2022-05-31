@@ -80,6 +80,8 @@ class QuejasCliente extends Model
         'email_env_resolucion_rechazada',
         'notificar_atencion_queja_no_aprobada',
         'email_env_resolucion_aprobada',
+        'email_realizara_accion_inmediata',
+
     ];
 
     protected $appends = [

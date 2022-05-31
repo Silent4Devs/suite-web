@@ -111,7 +111,7 @@
                     <input type="file" name="cierre[]" class="form-control" multiple="multiple">
                 </div>
                 <div class="form-group col-md-4">
-                    <span type="button" class="mt-5 mr-5" data-toggle="modal"
+                    <span type="button" class="mt-2 mr-5" data-toggle="modal"
                         data-target="#evidenciaDeCierreAgregada">
                         <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Ver
                         evidencia(s) de cierre
