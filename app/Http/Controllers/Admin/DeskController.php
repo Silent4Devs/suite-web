@@ -30,6 +30,7 @@ use App\Mail\CierreQuejaAceptadaEmail;
 use App\Models\AnalisisQuejasClientes;
 use App\Mail\SolicitarCierreQuejaEmail;
 use App\Models\EvidenciaQuejasClientes;
+use App\Mail\AtencionQuejaAtendidaEmail;
 use App\Mail\SeguimientoQuejaClienteEmail;
 use App\Mail\ResolucionQuejaRechazadaEmail;
 use App\Mail\AceptacionAccionCorrectivaEmail;
@@ -967,6 +968,7 @@ class DeskController extends Controller
         $conforme_solucion = intval($request->conforme_solucion ? $request->conforme_solucion:$quejasClientes->conforme_solucion) == 1 ? true : false;
         $cumplio_fecha = intval($request->cumplio_fecha ? $request->cumplio_fecha:$quejasClientes->cumplio_fecha) == 1 ? true : false;
         $cerrar_ticket = intval($request->cerrar_ticket ? $request->cerrar_ticket:$quejasClientes->cerrar_ticket) == 1 ? true : false;
+        $email_realizara_accion_inmediata= intval ($request->email_realizara_accion_inmediata ? $request->email_realizara_accion_inmediata:$quejasClientes->email_realizara_accion_inmediata) == 1 ? true : false;
         //if ($desea_levantar_ac) {
         //     $request->validate([
         //        'responsable_sgi_id' => 'required',
@@ -1067,6 +1069,8 @@ class DeskController extends Controller
             }
         }
 
+
+
         if ($queja_procedente == false){
             $quejasClientes->update([
                 'estatus' => 'No procedente',
@@ -1079,6 +1083,7 @@ class DeskController extends Controller
                 'fecha_cierre' => now(),
             ]);
         }
+
 
         if($notificar_atencion_queja_no_aprobada){
             if ($cerrar_ticket == false){
@@ -1106,7 +1111,13 @@ class DeskController extends Controller
         }
 
 
+        if(!$email_realizara_accion_inmediata){
+            $quejasClientes->update([
+                'email_realizara_accion_inmediata' => true,
+            ]);
+            Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new AtencionQuejaAtendidaEmail($quejasClientes));
 
+        }
 
 
         if ($notificar_registro_queja) {
@@ -1138,7 +1149,7 @@ class DeskController extends Controller
                 'es_externo' => true,
                 'otro_categoria' => $request->otro_categoria,
                 'id_registro' => $request->responsable_sgi_id,
-                'estatus' => 'solicitada',
+                'estatus' => 'Sin atender',
                 'aprobada' => false,
                 'aprobacion_contestada' => false,
                 'id_reporto'=>$request->empleado_reporto_id,

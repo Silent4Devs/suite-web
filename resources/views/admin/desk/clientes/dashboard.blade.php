@@ -1,69 +1,14 @@
 @extends('layouts.admin')
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
-    <style type="text/css">
-        .cdr-celeste {
-            background: #4A98FF;
-        }
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centro_atencion_cards.css') }}">
 
-        .cdr-amarillo {
-            background: #FFCB63;
-        }
-
-        .cdr-morado {
-            background: #AC84FF;
-        }
-
-        .cdr-azul {
-            background: #6863FF;
-        }
-
-        .cdr-verde {
-            background: #6DC866;
-        }
-
-        .cdr-rojo {
-            background: #FF417B;
-        }
-
-        .caja_secciones section {
-            overflow: unset !important;
-        }
-
-        .tarjetas_seguridad_indicadores {
-
-            width: 100%;
-            height: 80px;
-            color: #fff;
-            margin-bottom: 40px;
-            font-size: 15pt;
-            border-radius: 6px;
-        }
-
-        .tarjetas_seguridad_indicadores div {
-            width: 100%;
-            text-align: center;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .numero {
-            font-size: 16pt;
-        }
-
-
-        .textoCentroCard {
-            font-size: 12pt !important;
-        }
-
+    <style>
         @media print {
             .print-none {
                 display: none !important;
             }
         }
-
     </style>
 
     <button class="btn btn-danger print-none" style="position: absolute; right:20px;" onclick="javascript:window.print()">
