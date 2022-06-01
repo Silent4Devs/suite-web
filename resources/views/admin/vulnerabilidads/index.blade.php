@@ -82,27 +82,44 @@
                     }
                 },
                 {
-                    extend: 'pdfHtml5',
-                    title: `Vulnerabilidads ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
                     extend: 'print',
-                    title: `Vulnerabilidads ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    // set custom header when print
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+                        let empleado = @json(auth()->user()->empleado->name);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                                <div class="row">
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                    </div>
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        <p>${empresa_actual}</p>
+                                        <strong style="color:#345183">Vulnerabilidades</strong>
+                                    </div>
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        Fecha: ${jsDate}
+                                    </div>
+                                </div>
+                            `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
@@ -247,6 +264,16 @@
                 ],
             };
             let table = $('.datatable-vulnerabilidad').DataTable(dtOverrideGlobals);
+            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function(){
+                let titulo_tabla = `
+                    <h5>
+                        <strong>
+                            Vulnerabilidades
+                        </strong>
+                    </h5>
+                `;
+                imprimirTabla('datatable-vulnerabilidad', titulo_tabla);
+            });
         });
     </script>
 @endsection

@@ -1,5 +1,20 @@
 @extends('layouts.admin')
+
 @section('content')
+
+<style>
+    @page{
+        size:landscape;
+    }
+    @media print{
+        #tabla_blanca_imprimir_global{
+            transform: scale(0.5);
+            transform-origin: 0% 0%;
+            color: black;
+        }
+    }
+</style>
+
     <div class="mt-5 card">
 
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -45,7 +60,7 @@
                             href="{{ route('admin.matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
                     @endcan --}}
                 </div>
-                <table class="table table-bordered w-100 datatable datatable-Matriz">
+                <table class="table table-bordered w-100 datatable datatable-Matriz" id="datatable-Matriz">
                     <thead class="thead-dark">
                         <tr class="negras">
                             <th class="text-center" style="background-color:#3490DC;" colspan="8">Descripción General
@@ -104,8 +119,8 @@
                                 Nivel riesgo
                             </th>
                             <!--<th>
-                                                                                                                                Riesgo total
-                                                                                                                            </th>-->
+                                                                                                                                    Riesgo total
+                                                                                                                                </th>-->
                             <th>
                                 Control
                             </th>
@@ -133,10 +148,7 @@
                             <th style="min-width:120px;">
                                 Nivel riesgo
                             </th>
-                            <!--<th>
-                                                                                                                            Riesgo total
-                                                                                                                        </th>-->
-                            <th>
+                            <th class="print-none">
                                 Opciones
                             </th>
                         </tr>
@@ -191,27 +203,44 @@
                     }
                 },
                 {
-                    extend: 'pdfHtml5',
-                    title: `Matriz Riesgos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
                     extend: 'print',
-                    title: `Matriz Riesgos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    // set custom header when print
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+                        let empleado = @json(auth()->user()->empleado->name);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                                <div class="row">
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                    </div>
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        <p>${empresa_actual}</p>
+                                        <strong style="color:#345183">Matriz ISO-27001</strong>
+                                    </div>
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        Fecha: ${jsDate}
+                                    </div>
+                                </div>
+                            `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
@@ -653,7 +682,7 @@
                             break;
                     }
                     switch (true) {
-                        case data.probabilidad == 9 :
+                        case data.probabilidad == 9:
                             background3 = '#FF0000';
                             color3 = "#000000";
                             break;
@@ -677,7 +706,7 @@
                             break;
                     }
                     switch (true) {
-                        case data.impacto == 9 :
+                        case data.impacto == 9:
                             background4 = '#FF0000';
                             color4 = "#000000";
                             break;
@@ -701,7 +730,7 @@
                             break;
                     }
                     switch (true) {
-                        case data.probabilidad_residual == 9 :
+                        case data.probabilidad_residual == 9:
                             background5 = '#FF0000';
                             color5 = "#000000";
                             break;
@@ -725,7 +754,7 @@
                             break;
                     }
                     switch (true) {
-                        case data.impacto_residual == 9 :
+                        case data.impacto_residual == 9:
                             background6 = '#FF0000';
                             color6 = "#000000";
                             break;
@@ -769,6 +798,16 @@
                 ],
             };
             let table = $('.datatable-Matriz').DataTable(dtOverrideGlobals);
+            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function(){
+                let titulo_tabla = `
+                    <h5>
+                        <strong>
+                            Matriz ISO-27001
+                        </strong>
+                    </h5>
+                `;
+                imprimirTabla('datatable-Matriz', titulo_tabla);
+            });
         });
     </script>
 
