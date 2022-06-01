@@ -286,6 +286,14 @@ table td .btn i{
 .datatable_timesheet_empleados_reportes td{
     text-align: left !important;
 }
+.separador-titulo{
+    background-color: #788BAC;
+    padding: 4px 0;
+    border-radius: 100px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+}
 
 /*reportes proyecto -------------------------------------------*/
 .caja_anima_reporte{
@@ -299,7 +307,8 @@ table td .btn i{
     min-width: 100%;
 }
 #reporte_proyecto,
-#reporte_empleado{
+#reporte_empleado,
+#reporte_general{
     background-color: #f9f9f9;
     padding: 24px;
     border-radius: 6px;
@@ -307,7 +316,7 @@ table td .btn i{
     animation: reporteProyecto 1s;
     margin-left: -100%;
     position: relative;
-    z-index: 3;
+    z-index: 7;
 }
 .caja_anima_reporte .btn-cerrar{
     position: absolute;

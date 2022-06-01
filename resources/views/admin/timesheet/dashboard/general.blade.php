@@ -123,7 +123,7 @@
 	                padding: 10
 	            }
 	        },
-	         plugins: {
+	        plugins: {
 			      datalabels: {
 			        color: '#fff',
 			        display: true, 
