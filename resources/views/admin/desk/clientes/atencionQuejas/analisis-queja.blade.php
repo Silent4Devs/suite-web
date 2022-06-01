@@ -286,11 +286,11 @@
                     @endif
                     <span class="responsable_sgi_id_error text-danger errores"></span>
                 </div>
-                <div class="mt-2 form-group col-md-4">
+                <div class="mt-3 form-group col-md-4">
                     <label><i class="fas fa-briefcase iconos-crear"></i>Puesto<sup>*</sup></label>
                     <div class="form-control" id="responsable_sgi_puesto"></div>
                 </div>
-                <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                <div class="mt-2 form-group col-sm-12 col-md-4 col-lg-4">
                     <label><i class="bi bi-geo mr-2 iconos-crear"></i>Área<sup>*</sup></label>
                     <div class="form-control" id="responsable_sgi_area"></div>
                 </div>

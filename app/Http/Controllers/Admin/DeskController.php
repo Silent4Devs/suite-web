@@ -1114,12 +1114,14 @@ class DeskController extends Controller
 
 
         if(!$email_realizara_accion_inmediata){
+            if(!is_null($quejasClientes->acciones_tomara_responsable)){
             if($quejasClientes->registro != null && $quejasClientes->responsableAtencion !=null){
                 $quejasClientes->update([
                     'email_realizara_accion_inmediata' => true,
                 ]);
                 Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new AtencionQuejaAtendidaEmail($quejasClientes));
             }
+        }
 
         }
 
