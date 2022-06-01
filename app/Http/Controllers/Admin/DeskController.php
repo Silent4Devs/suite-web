@@ -1088,11 +1088,12 @@ class DeskController extends Controller
         if($notificar_atencion_queja_no_aprobada){
             if ($cerrar_ticket == false){
                 if (!$quejasClientes->email_env_resolucion_rechazada) {
-                    $quejasClientes->update([
-                        'email_env_resolucion_rechazada' => true,
-                    ]);
-                    Mail::to($quejasClientes->responsableAtencion->email)->cc($quejasClientes->registro->email)->send(new ResolucionQuejaRechazadaEmail($quejasClientes));
-
+                    if($quejasClientes->registro != null && $quejasClientes->responsableAtencion !=null){
+                        $quejasClientes->update([
+                            'email_env_resolucion_rechazada' => true,
+                        ]);
+                        Mail::to($quejasClientes->responsableAtencion->email)->cc($quejasClientes->registro->email)->send(new ResolucionQuejaRechazadaEmail($quejasClientes));
+                }
             }
             }
         }
@@ -1101,31 +1102,37 @@ class DeskController extends Controller
         if($notificar_atencion_queja_no_aprobada){
             if ($cerrar_ticket ){
                 if (!$quejasClientes->email_env_resolucion_aprobada) {
-                    $quejasClientes->update([
-                        'email_env_resolucion_aprobada' => true,
-                    ]);
-                    Mail::to($quejasClientes->responsableAtencion->email)->cc($quejasClientes->registro->email)->send(new CierreQuejaAceptadaEmail($quejasClientes));
-
+                    if($quejasClientes->registro != null && $quejasClientes->responsableAtencion !=null){
+                        $quejasClientes->update([
+                            'email_env_resolucion_aprobada' => true,
+                        ]);
+                        Mail::to($quejasClientes->responsableAtencion->email)->cc($quejasClientes->registro->email)->send(new CierreQuejaAceptadaEmail($quejasClientes));
+                    }
             }
             }
         }
 
 
         if(!$email_realizara_accion_inmediata){
-            $quejasClientes->update([
-                'email_realizara_accion_inmediata' => true,
-            ]);
-            Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new AtencionQuejaAtendidaEmail($quejasClientes));
+            if($quejasClientes->registro != null && $quejasClientes->responsableAtencion !=null){
+                $quejasClientes->update([
+                    'email_realizara_accion_inmediata' => true,
+                ]);
+                Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new AtencionQuejaAtendidaEmail($quejasClientes));
+            }
 
         }
 
 
+
         if ($notificar_registro_queja) {
             if (!$quejasClientes->correo_enviado_registro) {
-                $quejasClientes->update([
-                    'correo_enviado_registro' => true,
-                ]);
-                Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes));
+                if($quejasClientes->registro != null && $quejasClientes->responsableAtencion !=null){
+                    $quejasClientes->update([
+                        'correo_enviado_registro' => true,
+                    ]);
+                    Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes));
+                }
             }
         }
 
@@ -1188,8 +1195,10 @@ class DeskController extends Controller
         ]);
 
         // dd($request->all());
-        Mail::to($quejasClientes->responsableAtencion->email)->cc($quejasClientes->registro->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes));
+        if($quejasClientes->registro != null && $quejasClientes->responsableAtencion !=null){
 
+             Mail::to($quejasClientes->responsableAtencion->email)->cc($quejasClientes->registro->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes));
+        }
         return response()->json(['success' => true, 'request' => $request->all(), 'message'=>'Enviado con éxito']);
     }
 
