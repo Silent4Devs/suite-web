@@ -209,15 +209,15 @@
 
 
 <script type="text/javascript">
-    let id_quejas = @json($id_quejas);
+    let queja = @json($id_quejas);
     document.getElementById("cierra_queja_btn_correo").addEventListener("click", (event) => {
         event.preventDefault();
         console.log('click');
         let empleado_reporto_id = @json($quejasClientes->empleado_reporto_id);
-        sendEmailCierre(empleado_reporto_id, id_quejas);
+        sendEmailCierre(empleado_reporto_id, queja);
     });
 
-    function sendEmailCierre(empleado_reporto_id, id_quejas) {
+    function sendEmailCierre(empleado_reporto_id, queja) {
         let url = "{{ route('admin.desk.quejas-clientes.correoSolicitarCierreQueja') }}";
         Swal.fire({
             title: `¿Está seguro(a) de enviar el correo al responsable?`,
@@ -236,7 +236,7 @@
                             Accept: 'application/json'
                         },
                         body: JSON.stringify({
-                            id: id_quejas,
+                            id: queja,
                             empleado_reporto_id: empleado_reporto_id,
                         })
                     })
