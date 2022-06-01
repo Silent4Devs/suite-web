@@ -1,76 +1,52 @@
 @extends('layouts.admin')
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
-    <style type="text/css">
-        .cdr-celeste {
-            background: #4A98FF;
-        }
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centro_atencion_cards.css') }}">
 
-        .cdr-amarillo {
-            background: #FFCB63;
-        }
-
-        .cdr-morado {
-            background: #AC84FF;
-        }
-
-        .cdr-azul {
-            background: #6863FF;
-        }
-
-        .cdr-verde {
-            background: #6DC866;
-        }
-
-        .cdr-rojo {
-            background: #FF417B;
-        }
-
-        .caja_secciones section {
-            overflow: unset !important;
-        }
-
-        .tarjetas_seguridad_indicadores {
-
-            width: 100%;
-            height: 80px;
-            color: #fff;
-            margin-bottom: 40px;
-            font-size: 15pt;
-            border-radius: 6px;
-        }
-
-        .tarjetas_seguridad_indicadores div {
-            width: 100%;
-            text-align: center;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .numero {
-            font-size: 16pt;
-        }
-
-
-        .textoCentroCard {
-            font-size: 12pt !important;
-        }
-
+    <style>
         @media print {
             .print-none {
                 display: none !important;
             }
         }
-
     </style>
 
     <button class="btn btn-danger print-none" style="position: absolute; right:20px;" onclick="javascript:window.print()">
         <i class="fas fa-print"></i>
         Imprimir
     </button>
-    <h5 class="col-12 titulo_general_funcion">Dashboard</h5>
+    @php
+    use App\Models\Organizacion;
+    $organizacion = Organizacion::first();
+    $logotipo = $organizacion->logotipo;
+    $empresa = $organizacion->empresa;
+    @endphp
+
+    <div class="solo-print">
+        <div class=" row mt-5 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+            <div class="col-2 pl-0" style="border-right: 2px solid #ccc">
+                <img src="{{ asset($logotipo) }}" class="mt-2 mb-2 ml-4" style="width:100px;">
+            </div>
+            <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                <span style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
+                <br>
+                <span style="color:#345183; font-size:15px;"><strong>Dashboard: Quejas Clientes.
+                    </strong></span>
+
+            </div>
+            <div class="col-3 p-2">
+                <span style="color:#345183;">Fecha: {{ now()->format('d-m-Y') }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <div class="print-none">
+        <h5 class="col-12 titulo_general_funcion">Dashboard</h5>
+    </div>
 
     <div class="row">
         <div class="col-6 col-md-2">
@@ -208,20 +184,33 @@
             </div>
         </div>
 
-        {{-- <div class="col-12">
+        <div class="col-12">
             <div class="card ">
                 <div class="card-header" style="background-color: #345183;">
                     <h5 style="font-size:20px" class="text-white">Tickets por áreas</h5>
                 </div>
                 <div class="card-body">
 
-                    <canvas id="chartAreas" width="600" height="200"></canvas>
+                    <canvas id="chartAreas" width="600" height="300"></canvas>
 
                 </div>
             </div>
-        </div> --}}
+        </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card ">
+                <div class="card-header" style="background-color: #345183;">
+                    <h5 style="font-size:20px" class="text-white">Tickets por procesos</h5>
+                </div>
+                <div class="card-body">
 
+                    <canvas id="chartProcesos" width="600" height="300"></canvas>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
 
         <div class="col-6">
@@ -406,7 +395,9 @@
                     datalabels: {
                         color: 'white',
                         display: true,
-
+                        font: {
+                            size: 20
+                        }
                     },
                 },
             },
@@ -440,7 +431,9 @@
                     datalabels: {
                         color: 'white',
                         display: true,
-
+                        font: {
+                            size: 20
+                        }
                     },
                 },
             },
@@ -504,7 +497,9 @@
                     datalabels: {
                         color: 'white',
                         display: true,
-
+                        font: {
+                            size: 20
+                        }
                     },
                 },
 
@@ -596,7 +591,8 @@
                         color: 'white',
                         display: true,
                         font: {
-                            weight: "normal"
+                            weight: "normal",
+                            size: 20
                         }
 
                     },
@@ -635,7 +631,9 @@
                     datalabels: {
                         color: 'white',
                         display: true,
-
+                        font: {
+                            size: 20
+                        }
                     },
                 },
             },
@@ -692,7 +690,9 @@
                     datalabels: {
                         color: 'white',
                         display: true,
-
+                        font: {
+                            size: 20
+                        }
                     },
                 },
             },
@@ -714,7 +714,7 @@
             cantidadClientesArray.push(cliente.cantidad)
 
         });
-        console.log(clientes);
+
 
 
         for (let index = 0; index < cantidadClientesArray.length; index++) {
@@ -756,7 +756,9 @@
                     datalabels: {
                         color: 'white',
                         display: true,
-
+                        font: {
+                            size: 20
+                        }
                     },
                 },
             },
@@ -766,44 +768,124 @@
         });
     </script>
 
-    {{-- <script>
-        let ticketPorArea = @json($ticketPorArea);
-        var areaCanva = document.getElementById("chartAreas");
-        var areaData = {
-            labels: ticketPorArea,
-            datasets: [{
-                label: "Áreas",
-                data: ticketPorArea,
-                lineTension: 0,
-                fill: false,
-                borderColor: '#f9b115',
-                backgroundColor: 'transparent',
-                borderDash: [5, 5],
-                pointBorderColor: '#38c172',
-                pointBackgroundColor: 'rgba(249,177,21,0.5)',
-                pointRadius: 5,
-                pointHoverRadius: 10,
-                pointHitRadius: 30,
-                pointBorderWidth: 2,
-                pointStyle: 'rectRounded'
-            }]
-        };
-
-        var chartArea = {
-            legend: {
-                display: true,
-                position: 'top',
-                labels: {
-                    boxWidth: 80,
-                    fontColor: 'black'
-                }
-            }
-        };
-
-        var lineChartArea = new Chart(areaCanva, {
-            type: 'line',
-            data: areaData,
-            options: chartArea
+    <script>
+        let areasCollect = @json($areasCollect);
+        let labels = [];
+        let data = [];
+        let coloresEnAutomatico = [];
+        Object.entries(areasCollect).forEach(([key, value]) => {
+            labels.push(key);
+            data.push(value);
         });
-    </script> --}}
+        console.log(labels, data);
+
+        for (let index = 0; index < data.length; index++) {
+            coloresEnAutomatico.push("rgba(109, 200, 102, 1)");
+
+        }
+
+        var pie_area = new Chart(chartAreas, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    backgroundColor: coloresEnAutomatico,
+                    borderColor: coloresEnAutomatico,
+                    borderWidth: 1,
+                    label: ["Areas"],
+
+                    data: data,
+
+                }]
+            },
+
+
+            options: {
+                legend: {
+                    display: false
+
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                plugins: {
+                    datalabels: {
+                        color: 'white',
+                        display: true,
+                        font: {
+                            size: 20
+                        }
+                    },
+                },
+            },
+
+
+
+        });
+    </script>
+
+
+        <script>
+            let procesosCollect = @json($procesosCollect);
+            let informacionprocesos = [];
+            let cantidadprocesos = [];
+            let coloresAutomaticamente = [];
+            Object.entries(procesosCollect).forEach(([key, value]) => {
+                informacionprocesos.push(key);
+                cantidadprocesos.push(value);
+            });
+            console.log(Object.entries(procesosCollect));
+
+            for (let index = 0; index < data.length; index++) {
+                coloresAutomaticamente.push("rgba(230, 108, 162, 1)");
+
+            }
+
+            var pie_procesos = new Chart(chartProcesos, {
+                type: 'bar',
+                data: {
+                    labels: informacionprocesos,
+                    datasets: [{
+                        backgroundColor: coloresAutomaticamente,
+                        borderColor: coloresAutomaticamente,
+                        borderWidth: 1,
+                        label: ["Procesos"],
+
+                        data: cantidadprocesos,
+
+                    }]
+                },
+
+
+                options: {
+                    legend: {
+                        display: false
+
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    plugins: {
+                        datalabels: {
+                            color: 'white',
+                            display: true,
+                            font: {
+                                size: 20
+                            }
+                        },
+                    },
+                },
+
+
+
+            });
+        </script>
 @endsection

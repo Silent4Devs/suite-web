@@ -32,9 +32,9 @@ class AceptacionAccionCorrectivaEmail extends Mailable
      */
     public function build()
     {
-        $this->view('mails.accioncorrectiva.aceptacion');
+        $this->view('mails.accioncorrectiva.aceptacion')->subject('Solicitud de generación de Acción Correctiva');
         foreach ($this->evidencia as $evidencia) {
-            $this->attach(public_path("storage/evidencias_quejas_clientes/{$evidencia}"));
+            $this->attach(public_path("storage/evidencias_quejas_clientes_cerrado/{$evidencia}"));
         }
 
         return $this;

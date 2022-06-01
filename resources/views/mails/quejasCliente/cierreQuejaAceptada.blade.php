@@ -15,16 +15,51 @@
     </xml>
   </noscript>
   <![endif]-->
-    <style>
-        table,
-        td,
-        div,
-        h1,
-        p {
-            font-family: Arial, sans-serif;
-        }
+  <style>
+    /* Remove space around the email design. */
 
-    </style>
+    html,
+
+    body {
+
+        margin: 0 auto !important;
+
+        padding: 0 !important;
+
+        height: 100% !important;
+
+        width: 100% !important;
+    }
+
+    /* Stop Outlook resizing small text. */
+    * {
+        -ms-text-size-adjust: 100%;
+    }
+
+
+    /* Stop Outlook from adding extra spacing to tables. */
+    table,
+    td {
+        mso-table-lspace: 0pt !important;
+        mso-table-rspace: 0pt !important;
+    }
+
+    /* Use a better rendering method when resizing images in Outlook IE. */
+
+    img {
+        -ms-interpolation-mode: bicubic;
+    }
+
+
+    /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+
+    a {
+
+        text-decoration: none;
+
+    }
+
+</style>
 </head>
 
 <body style="margin:0;padding:0;">
@@ -50,9 +85,9 @@
                             <table role="presentation"
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
-                                    <div style="width: 100%; height: 1.5px; background-color: #153643;">
-                                        &nbsp;
-                                    </div>
+                                    <hr style="margin:0;width: 100%; height: 1.5px; background-color: #153643;">
+                                    &nbsp;
+                                    </hr>
                                     @php
                                         use App\Models\Organizacion;
                                         $organizacion = Organizacion::first();
@@ -61,44 +96,31 @@
                                     @endphp
                                     <h2 style="padding-top:3px; color:#153643; text-align:center">
                                         {{ $empresa }}</h2>
-                                    <div style="width: 100%; height:1.5px; background-color: #153643;">
-                                        &nbsp;
-                                    </div>
+                                    <hr style="margin:0;width: 100%; height:1.5px; background-color: #153643;">
+                                    &nbsp;
+                                    </hr>
 
                                     <td style="padding:0 0 36px 0;">
 
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
-                                            <img src="{{ asset($logotipo) }}" class="mt-2 ml-4"
+                                            <img width="160" src="{{ asset($logotipo) }}" class="mt-2 ml-4"
                                                 style="width:160px;">
                                         </div>
 
                                         <div style="margin-top:50px;">
                                             <strong
                                                 style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{ $quejas->registro->name }},
+                                                Estimado(a) {{ $quejas->responsableAtencion->name }},
                                             </strong>
                                         </div>
 
                                         <div style="width: 100%; margin-top: 10px;">
-                                            @if ($quejas->accionCorrectiva->aprobada == true)
                                                 <p style="font-size:11pt; color:#153643;">
-                                                    Le informamos que la resolución de la queja presentada no ha sido aceptada por el cliente,
-                                                    por lo que se le solicita atentamente, plantear otra propuesta de solución.
+                                                    Le informamos que la resolución de la queja presentada ha sido aprobada por el cliente.
                                                 </p>
 
                                                 <br>
                                                 <br>
-
-
-                                                <p style="font-size:11pt; color:#153643;">
-                                                   Ingrese nuevamente al formulario dé clic al siguiente botón
-                                                </p>
-
-                                                <div style="text-align:center; margin-top:20px">
-                                                    <a  href="{{route('admin.accion-correctivas.index',$quejas) }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                        Revisar Queja
-                                                    </a>
-                                                </div>
 
                                         </div>
                                     </td>
@@ -114,9 +136,9 @@
                                     <td style="padding:0;width:30%;" align="left">
                                         <p style="text-align:center; font-size:10pt; color:#153643;">Por favor no
                                             responda a este correo</p>
-                                        <div style="width: 100%; height: 1.5px; background-color: #153643;">
-                                            &nbsp;
-                                        </div>
+                                        <hr style="margin:0; width: 100%; height: 1.5px; background-color: #153643;">
+                                        &nbsp;
+                                        </hr>
 
                                         <p style="text-align:center;font-size:10pt;font-weight: normal;color:#153643;">
                                             SISTEMA INTEGRAL DE GESTIÓN EMPRESARIAL TABANTAJ</p>

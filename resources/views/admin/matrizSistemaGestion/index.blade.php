@@ -39,15 +39,15 @@
                             href="{{ route('admin.matriz-riesgos.sistema-gestion.create', ['idAnalisis' => $id_matriz]) }}"
                             type="submit" name="action">Agregar nuevo</a>
                     @endcan
-                    @can('analisis_de_riesgos_matriz_riesgo_analisis_grafica_show')
+                    {{-- @can('analisis_de_riesgos_matriz_riesgo_analisis_grafica_show')
                         <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
                             href="{{ route('admin.matriz-mapa.SistemaGestion', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
-                    @endcan
+                    @endcan --}}
                 </div>
                 <table class="table table-bordered w-100 datatable datatable-Matriz">
                     <thead class="thead-dark">
                         <tr class="negras">
-                            <th class="text-center" style="background-color:#3490DC;" colspan="8">Descripción General
+                            <th class="text-center" style="background-color:#3490DC;" colspan="9">Descripción General
                             </th>
                             <th class="text-center" style="background-color:#1168af;" colspan="3">9001:2015</th>
                             <th class="text-center" style="background-color:#217bc5;" colspan="3">20000-1:2018</th>
@@ -61,28 +61,31 @@
                             <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
                         </tr>
                         <tr>
-                            <th>
+                            <th style="min-width: 30px;">
                                 Id
                             </th>
-                            <th>
+                            <th style="min-width: 50px;">
                                 Sede
                             </th>
-                            <th>
+                            <th style="min-width: 80px;">
                                 Proceso
                             </th>
-                            <th>
+                            <th style="min-width: 120px;">
                                 Responsable
                             </th>
-                            <th>
+                            <th style="min-width: 50px;">
                                 Activo
                             </th>
-                            <th>
+                            <th style="min-width: 50px;">
                                 Amenaza
                             </th>
-                            <th>
+                            <th style="min-width: 80px;">
                                 Vulnerabilidad
                             </th>
-                            <th>
+                            <th style="min-width: 50px;">
+                                Tipo&nbsp;de Riesgo
+                            </th>
+                            <th style="min-width: 200px;">
                                 Descripción riesgo
                             </th>
                             <th>
@@ -121,7 +124,7 @@
                             <th>
                                 Impacto
                             </th>
-                            <th>
+                            <th style="text-align:center">
                                 Nivel riesgo
                             </th>
                             <th style="min-width:120px;">
@@ -347,35 +350,71 @@
                 },
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_sede',
-                        name: 'id_sede'
+                        name: 'id_sede',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_proceso',
-                        name: 'id_proceso'
+                        name: 'id_proceso',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_responsable',
-                        name: 'id_responsable'
+                        name: 'id_responsable',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'activo_id',
-                        name: 'activo_id'
+                        name: 'activo_id',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_amenaza',
-                        name: 'id_amenaza'
+                        name: 'id_amenaza',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_vulnerabilidad',
-                        name: 'id_vulnerabilidad'
+                        name: 'id_vulnerabilidad',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
+                    },
+                    {
+                        data: 'tipo_riesgo',
+                        name: 'tipo_riesgo',
+                        render: function(data, type, row,meta) {
+                            const riesgo = row.tipo_riesgo;
+                            if (riesgo == 1) {
+                            return `<div style="text-align:left">Positivo</div>`;
+                            } if (riesgo == 0) {
+                            return `<div style="text-align:left">Negativo</div>`;
+                            }
+                            else{
+                            return `<div style="text-align:left">Negativo</div>`;
+                            }
+                        }
                     },
                     {
                         data: 'descripcionriesgo',
-                        name: 'descripcionriesgo'
+                        name: 'descripcionriesgo',
                     },
                     {
                         data: 'estrategia_negocio',
@@ -420,16 +459,24 @@
                     },
                     {
                         data: 'probabilidad',
-                        name: 'probabilidad'
+                        name: 'probabilidad',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'impacto',
-                        name: 'impacto'
+                        name: 'impacto',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'nivelriesgo',
                         name: 'nivelriesgo',
-
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'riesgo_total',
@@ -437,19 +484,19 @@
                         render: function(data) {
                             switch (true) {
                                 case data >= 136 && data <= 185:
-                                    return `<div><div>${data} - MUY ALTO</div></div>`;
+                                    return `<div><div style="text-align:center">${data} - MUY ALTO</div></div>`;
                                     break;
                                 case data >= 91 && data <= 135:
-                                    return `<div><div>${data} - ALTO</div></div>`;
+                                    return `<div><div style="text-align:center">${data} - ALTO</div></div>`;
                                     break;
                                 case data >= 46 && data <= 90:
-                                    return `<div><div>${data} - MEDIO</div></div>`;
+                                    return `<div><div style="text-align:center">${data} - MEDIO</div></div>`;
                                     break;
                                 case data >= 0 && data <= 45:
-                                    return `<div><div>${data} - BAJO</div></div>`;
+                                    return `<div><div style="text-align:center">${data} - BAJO</div></div>`;
                                     break;
                                 case data == null:
-                                    return `<div ><div>${data} - BAJO</div></div>`;
+                                    return `<div ><div style="text-align:center">${data} - BAJO</div></div>`;
                                     break;
                                 default:
                                     break;
@@ -522,16 +569,24 @@
                     },
                     {
                         data: 'probabilidad_residual',
-                        name: 'probabilidad_residual'
+                        name: 'probabilidad_residual',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'impacto_residual',
-                        name: 'impacto_residual'
+                        name: 'impacto_residual',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'nivelriesgo_residual',
                         name: 'nivelriesgo_residual',
-
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'riesgo_residual',
@@ -539,19 +594,19 @@
                         render: function(data) {
                             switch (true) {
                                 case data >= 136 && data <= 185:
-                                    return `<div><div>${data} - MUY ALTO</div></div>`;
+                                    return `<div style="text-align:center"><div>${data} - MUY ALTO</div></div>`;
                                     break;
                                 case data >= 91 && data <= 135:
-                                    return `<div><div>${data} - ALTO</div></div>`;
+                                    return `<div style="text-align:center"><div>${data} - ALTO</div></div>`;
                                     break;
                                 case data >= 46 && data <= 90:
-                                    return `<div><div>${data} - MEDIO</div></div>`;
+                                    return `<div style="text-align:center"><div>${data} - MEDIO</div></div>`;
                                     break;
                                 case data >= 0 && data <= 45:
-                                    return `<div><div>${data} - BAJO</div></div>`;
+                                    return `<div style="text-align:center"><div>${data} - BAJO</div></div>`;
                                     break;
                                 case data == null:
-                                    return `<div ><div>${data} - BAJO</div></div>`;
+                                    return `<div style="text-align:center"><div>${data} - BAJO</div></div>`;
                                     break;
                                 default:
                                     break;
@@ -576,56 +631,56 @@
                     let color2 = '';
                     switch (true) {
                         case data.riesgo_total >= 136 && data.riesgo_total <= 185:
-                            background = 'red';
-                            color = 'white';
+                            background = Number(data.tipo_riesgo) == 0 ?'#FF0000':'#00F06F';
+                            color = Number(data.tipo_riesgo) == 0 ? '#ffffff':"#000000";
                             break;
                         case data.riesgo_total >= 91 && data.riesgo_total <= 135:
-                            background = 'orange';
+                            background = Number(data.tipo_riesgo) == 0 ?'#FFB900':"#92D050";
                             color = 'white';
                             break;
                         case data.riesgo_total >= 46 && data.riesgo_total <= 90:
-                            background = 'yellow';
+                            background =  Number(data.tipo_riesgo) == 0 ?'yellow':"#92CDDC";
                             color = 'black';
                             break;
                         case data.riesgo_total >= 0 && data.riesgo_total <= 45:
-                            background = '#89E72C';
-                            color2 = 'black';
+                            background =  Number(data.tipo_riesgo) == 0 ? '#89E72C':"#003BF6";
+                            color = Number(data.tipo_riesgo) == 0 ? 'black':'#ffffff';
                             break;
                         case data.riesgo_total == null:
-                            background = '#89E72C';
-                            color2 = 'black';
+                            background = Number(data.tipo_riesgo) == 0 ? '#89E72C':"#003BF6";
+                            color = Number(data.tipo_riesgo) == 0 ? 'black':"#ffffff";
                             break;
                         default:
                             break;
                     }
                     switch (true) {
                         case data.riesgo_residual >= 136 && data.riesgo_residual <= 185:
-                            background2 = 'red';
+                            background2 =  Number(data.tipo_riesgo) == 0 ?'red':"#00F06F";
                             color2 = 'white';
                             break;
                         case data.riesgo_residual >= 91 && data.riesgo_residual <= 135:
-                            background2 = 'orange';
+                            background2 =  Number(data.tipo_riesgo) == 0 ?'orange':"#92D050";
                             color2 = 'white';
                             break;
                         case data.riesgo_residual >= 46 && data.riesgo_residual <= 90:
-                            background2 = 'yellow';
+                            background2 =  Number(data.tipo_riesgo) == 0 ?'yellow':"#92CDDC";
                             color2 = 'black';
                             break;
                         case data.riesgo_residual >= 0 && data.riesgo_residual <= 45:
-                            background2 = '#89E72C';
-                            color2 = 'black';
+                            background2 = Number(data.tipo_riesgo) == 0 ? '#89E72C':"#003BF6";
+                            color2 = Number(data.tipo_riesgo) == 0 ? 'black':"#ffffff";
                             break;
                         case data.riesgo_residual == null:
-                            background2 = '#89E72C';
-                            color2 = 'black';
+                            background2 = Number(data.tipo_riesgo) == 0 ? '#89E72C':"#003BF6";
+                            color2 =  Number(data.tipo_riesgo) == 0 ? 'black':"#ffffff";
                             break;
                         default:
                             break;
                     }
-                    $(cells[21]).css('background-color', background)
-                    $(cells[21]).css('color', color)
-                    $(cells[36]).css('background-color', background2)
-                    $(cells[36]).css('color', color2)
+                    $(cells[22]).css('background-color', background)
+                    $(cells[22]).css('color', color)
+                    $(cells[37]).css('background-color', background2)
+                    $(cells[37]).css('color', color2)
                 },
 
                 order: [

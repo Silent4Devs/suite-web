@@ -15,6 +15,16 @@
     </xml>
   </noscript>
   <![endif]-->
+
+    <!--[if (gte mso 9)|(IE)]>
+ <style type="text/css">
+ table {
+ border-collapse: collapse;
+ border-spacing: 0;
+ mso-table-lspace: 0pt !important;
+ mso-table-rspace: 0pt !important; }
+ </style>
+ <![endif]-->
     <style>
         table,
         td,
@@ -25,6 +35,7 @@
         }
 
     </style>
+
 
 <style>
     /* Remove space around the email design. */
@@ -73,7 +84,7 @@
 </style>
 </head>
 
-<body style="margin:0;padding:0;">
+<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly;">
     <table role="presentation"
         style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
         <tr>
@@ -126,19 +137,19 @@
                                         </div>
 
                                         <div style="width: 100%; margin-top: 10px;">
-                                                <p style="font-size:11pt; color:#153643;">
-                                                    Le informamos que {{ $quejas->responsableAtencion->name }}, ha dado atención a la queja asignada y solicita su cierre.
-                                                </p>
-                                                <br>
-                                                <p style="font-size:11pt; color:#153643;">
-                                                    Para ver la resolución de la queja dé clic en el siguiente botón:
-                                                </p>
+                                            <p style="font-size:11pt; color:#153643;">
+                                                Le informamos que {{ $quejas->responsableAtencion->name }}, ha dado
+                                                atención.
+                                            </p>
+                                            <br>
+                                            <p style="font-size:11pt; color:#153643;">
+                                                Para revisar lo que ha contestado dé clic en el siguiente botón:
+                                            </p>
 
-                                                <div style="text-align:center; margin-top:20px">
-                                                    <a  href="{{route('admin.desk.quejasClientes-edit',$quejas) }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                        Revisar Queja
-                                                    </a>
-                                                </div>
+                                            <div style="text-align:center; margin-top:20px">
+                                              <span style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
+                                                <a href="{{ route('admin.desk.quejasClientes-edit', $quejas) }}" style="color:#fff"> Revisar Queja</a></span>
+                                            </div>
 
                                         </div>
                                     </td>

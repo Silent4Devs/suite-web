@@ -79,6 +79,20 @@ class MatrizRiesgo extends Model
         '3'  => 'BAJA (3)',
         '0'  => 'NULA (0)',
     ];
+    const PROBABILIDAD27000_SELECT = [
+        '5'  => 'MUY ALTA (5)',
+        '4'  => 'ALTA (4)',
+        '3' => 'MODERADA (3)',
+        '2'  => 'BAJA (2)',
+        '1'  => 'MUY BAJA (1)',
+    ];
+    const IMPACTO27000_SELECT = [
+        '5'  => 'SIGNIFICATIVO (5)',
+        '4'  => 'MAYOR (4)',
+        '3' => 'IMPORTANTE (3)',
+        '2'  => 'BAJO (2)',
+        '1'  => 'MENOR (1)',
+    ];
 
     const IMPACTO_SELECT = [
         '9' => 'MUY ALTO (9)',
@@ -104,6 +118,7 @@ class MatrizRiesgo extends Model
         'nivelriesgo' => 'float',
         'riesgototal' => 'float',
         'resultadoponderacion' => 'float',
+        'resultadoponderacionRes' => 'float',
         'riesgoresidual' => 'float',
         //'controles_id' => 'int',
         'team_id' => 'int',
@@ -128,6 +143,7 @@ class MatrizRiesgo extends Model
         'nivelriesgo',
         'riesgototal',
         'resultadoponderacion',
+        'resultadoponderacionRes',
         'riesgoresidual',
         'justificacion',
         //'controles_id',
@@ -231,6 +247,6 @@ class MatrizRiesgo extends Model
 
     public function matriz_riesgos_controles_pivots()
     {
-        return $this->hasMany(MatrizRiesgosControlesPivot::class, 'matriz_id');
+        return $this->belongsToMany(DeclaracionAplicabilidad::class, 'matriz_riesgos_controles_pivot', 'matriz_id', 'controles_id');
     }
 }

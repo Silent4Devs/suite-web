@@ -121,22 +121,27 @@
                                         <div style="margin-top:50px;">
                                             <strong
                                                 style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{ $quejas->registro->name }},
+                                                Estimado(a) {{ $quejas->responsableAtencion->name }},
                                             </strong>
                                         </div>
 
                                         <div style="width: 100%; margin-top: 10px;">
                                                 <p style="font-size:11pt; color:#153643;">
-                                                    Le informamos que {{ $quejas->responsableAtencion->name }}, ha dado atención a la queja asignada y solicita su cierre.
+                                                    Le informamos que la resolución de la queja presentada no ha sido aprobada por el cliente,
+                                                    por lo que se le solicita atentamente, plantear otra propuesta de solución.
                                                 </p>
+
                                                 <br>
+                                                <br>
+
+
                                                 <p style="font-size:11pt; color:#153643;">
-                                                    Para ver la resolución de la queja dé clic en el siguiente botón:
+                                                   Ingrese nuevamente al formulario, dé clic al botón:
                                                 </p>
 
                                                 <div style="text-align:center; margin-top:20px">
                                                     <a  href="{{route('admin.desk.quejasClientes-edit',$quejas) }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                        Revisar Queja
+                                                        Atender Queja
                                                     </a>
                                                 </div>
 

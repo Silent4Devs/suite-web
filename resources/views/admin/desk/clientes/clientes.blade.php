@@ -56,10 +56,13 @@
 <div class="datatable-fix" style="width: 100%;">
 
         <div class=" mb-3 text-right">
-
+            @can('centro_atencion_quejas_clientes_create')
                 <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes') }}">Crear reporte</a>
+            @endcan
 
+            @can('centro_atencion_quejas_cliente_dashboard')
                 <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes/dashboard') }}">Dashboard</a>
+            @endcan
         </div>
 
     <table class="table tabla_quejasclientes" id="tabla-procesos">
@@ -313,8 +316,8 @@
                                 let html =
                                     `
                 			<div class="botones_tabla">
-                				<a href="/admin/desk/${data}/quejas-clientes-edit/"><i class="fas fa-edit" title="Análisis de la queja"></i></a>`;
-
+                				<a href="/admin/desk/${data}/quejas-clientes-edit/"><i class="fas fa-edit" title="Análisis de la queja"></i></a>
+                                <a onclick='EliminarQuejaCliente("/admin/desk/${data}/quejas-clientes-delete"); return false;'><i style="color:#000" class="ml-2 fas fa-trash"  data-toggle="tooltip" data-placement="top" title="Eliminar"></i></a>`;
 
                                 if ((row.estatus == 'Cerrado') || (row.estatus == 'No procedente')) {
 
@@ -423,6 +426,48 @@
                 })
             }
 
+            window.EliminarQuejaCliente = function(url) {
+                Swal.fire({
+                    title: '¿Eliminar queja cliente?',
+                    text: "",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Eliminar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+
+                            type: "DELETE",
+
+                            url: url,
+
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+
+                            dataType: "json",
+
+                            success: function(response) {
+
+                                    tabla_quejasclientes_desk.ajax.reload();
+                                    Swal.fire(
+                                        'Queja Eliminada',
+                                        '',
+                                        'success'
+                                    )
+
+
+                            }
+
+                        });
+
+                    }
+                })
+            }
+
             let botones_archivar = document.querySelectorAll('.archivar');
             botones_archivar.forEach(boton => {
                 boton.addEventListener('click', function(e) {
@@ -432,6 +477,7 @@
                     let url = `/admin/desk/${incidente_id}/archivarQuejasClientes`;
                 });
             });
+
         });
     </script>
 @endsection

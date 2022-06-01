@@ -5,6 +5,140 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
+    <style type="text/css">
+        sup {
+            color: red;
+        }
+
+        ol.breadcrumb {
+            margin-bottom: 0px;
+        }
+
+        .select2-results__option {
+            position: relative;
+            padding-left: 30px !important;
+
+        }
+
+        .select2-selection__rendered {
+            padding-left: 30px !important;
+
+        }
+
+
+        .select2-selection__rendered[title*="Sin atender"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #FFCB63;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        #select2-opciones-results li[id*="Sin atender"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #FFCB63;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
+
+
+
+        .select2-selection__rendered[title*="En curso"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #AC84FF;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        #select2-opciones-results li[id*="En curso"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #AC84FF;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
+
+        .select2-selection__rendered[title*="En espera"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #6863FF;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        #select2-opciones-results li[id*="En espera"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #6863FF;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
+
+        .select2-selection__rendered[title*="Cerrado"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #6DC866;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        #select2-opciones-results li[id*="Cerrado"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #6DC866;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
+
+        .select2-selection__rendered[title*="No procedente"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #FF417B;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        #select2-opciones-results li[id*="No procedente"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #FF417B;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
+
+    </style>
 @endsection
 <h5 class="col-12 titulo_general_funcion">Registrar: Acción Correctiva</h5>
 <div class="mt-4 card">
@@ -339,27 +473,25 @@
                     let reporto = document.querySelector('#id_reporto');
                     let area_init = reporto?.options[reporto?.selectedIndex].getAttribute('data-area');
                     let puesto_init = reporto?.options[reporto?.selectedIndex].getAttribute('data-puesto');
-                    if(document.getElementById('reporto_puesto')){
-                        document.getElementById('reporto_puesto').innerHTML = puesto_init
+                    if (document.getElementById('reporto_puesto')) {
+                        document.getElementById('reporto_puesto').innerHTML = recortarTexto(puesto_init);
 
                     }
 
-                    if(document.getElementById('reporto_area')){
-                        document.getElementById('reporto_area').innerHTML = area_init
+                    if (document.getElementById('reporto_area')) {
+                        document.getElementById('reporto_area').innerHTML = recortarTexto(area_init);
 
                     }
 
                     let registro = document.querySelector('#id_registro');
                     let area = registro?.options[registro?.selectedIndex].getAttribute('data-area');
                     let puesto = registro?.options[registro?.selectedIndex].getAttribute('data-puesto');
-                    if( document.getElementById('registro_puesto'))
-                    {
-                        document.getElementById('registro_puesto').innerHTML = puesto
+                    if (document.getElementById('registro_puesto')) {
+                        document.getElementById('registro_puesto').innerHTML = recortarTexto(puesto);
 
                     }
-                    if( document.getElementById('registro_area'))
-                    {
-                        document.getElementById('registro_area').innerHTML = area
+                    if (document.getElementById('registro_area')) {
+                        document.getElementById('registro_area').innerHTML = recortarTexto(area);
 
                     }
 
@@ -367,16 +499,23 @@
                         e.preventDefault();
                         let area = this.options[this.selectedIndex].getAttribute('data-area');
                         let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                        document.getElementById('reporto_puesto').innerHTML = puesto
-                        document.getElementById('reporto_area').innerHTML = area
+                        document.getElementById('reporto_puesto').innerHTML = recortarTexto(puesto);
+                        document.getElementById('reporto_area').innerHTML = recortarTexto(area);
                     })
                     registro?.addEventListener('change', function(e) {
                         e.preventDefault();
                         let area = this.options[this.selectedIndex].getAttribute('data-area');
                         let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                        document.getElementById('registro_puesto').innerHTML = puesto
-                        document.getElementById('registro_area').innerHTML = area
+                        document.getElementById('registro_puesto').innerHTML = recortarTexto(puesto);
+                        document.getElementById('registro_area').innerHTML = recortarTexto(area);
                     })
+
+                    function recortarTexto(texto, length = 30) {
+                        let trimmedString = texto?.length > length ?
+                            texto.substring(0, length - 3) + "..." :
+                            texto;
+                        return trimmedString;
+                    }
 
                 });
             </script>
@@ -494,298 +633,298 @@
             </script>
 
 
-<script>
-    $(document).ready(function() {
-        CKEDITOR.replace('escritura_ideas', {
-            toolbar: [{
-                    name: 'styles',
-                    items: ['Styles', 'Format', 'Font', 'FontSize']
-                },
-                {
-                    name: 'colors',
-                    items: ['TextColor', 'BGColor']
-                },
-                {
-                    name: 'editing',
-                    groups: ['find', 'selection', 'spellchecker'],
-                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
-                }, {
-                    name: 'clipboard',
-                    groups: ['undo'],
-                    items: ['Undo', 'Redo']
-                },
-                {
-                    name: 'tools',
-                    items: ['Maximize']
-                },
-                {
-                    name: 'basicstyles',
-                    groups: ['basicstyles', 'cleanup'],
-                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
-                        '-',
-                        'CopyFormatting', 'RemoveFormat'
-                    ]
-                },
-                {
-                    name: 'paragraph',
-                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
-                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                        'Blockquote',
-                        '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-                        'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
-                    ]
-                },
-                {
-                    name: 'links',
-                    items: ['Link', 'Unlink']
-                },
-                {
-                    name: 'insert',
-                    items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
-                },
-                '/',
-            ]
-        });
-
-
-
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        CKEDITOR.replace('escritura_causa', {
-            toolbar: [{
-                    name: 'styles',
-                    items: ['Styles', 'Format', 'Font', 'FontSize']
-                },
-                {
-                    name: 'colors',
-                    items: ['TextColor', 'BGColor']
-                },
-                {
-                    name: 'editing',
-                    groups: ['find', 'selection', 'spellchecker'],
-                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
-                }, {
-                    name: 'clipboard',
-                    groups: ['undo'],
-                    items: ['Undo', 'Redo']
-                },
-                {
-                    name: 'tools',
-                    items: ['Maximize']
-                },
-                {
-                    name: 'basicstyles',
-                    groups: ['basicstyles', 'cleanup'],
-                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
-                        '-',
-                        'CopyFormatting', 'RemoveFormat'
-                    ]
-                },
-                {
-                    name: 'paragraph',
-                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
-                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                        'Blockquote',
-                        '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-                        'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
-                    ]
-                },
-                {
-                    name: 'links',
-                    items: ['Link', 'Unlink']
-                },
-                {
-                    name: 'insert',
-                    items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
-                },
-                '/',
-            ]
-        });
-
-
-
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        CKEDITOR.replace('analisisControl', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-
-        CKEDITOR.replace('analisisProceso', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-
-        CKEDITOR.replace('analisisPersona', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-
-        CKEDITOR.replace('analisisTecnologia', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-
-        CKEDITOR.replace('analisisMetodos', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-
-        CKEDITOR.replace('analisisAmbiente', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-
-        CKEDITOR.replace('analisisProblema', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-
-    });
-</script>
-
-<script type="text/javascript">
-    Livewire.on('planStore', () => {
-
-        $('#planAccionModal').modal('hide');
-
-        $('.modal-backdrop').hide();
-
-        toastr.success('Plan de Acción creado con éxito');
-
-    });
-
-    window.initSelect2 = () => {
-
-        $('.select2').select2({
-
-            'theme': 'bootstrap4'
-
-        });
-
-    }
-
-
-
-    initSelect2();
-
-
-
-    Livewire.on('select2', () => {
-
-        initSelect2();
-
-    });
-
-    $(document).ready(function() {
-        document.getElementById('vincularPlan').addEventListener('click', (e) => {
-            e.preventDefault();
-            let planes = $("#plan_accion").select2("val");
-            let idAccionesCorrectivas = @json($accionCorrectiva->id);
-            if (planes.length > 0) {
-                Swal.fire({
-                    title: 'Desea vincular plan(es)?',
-                    text: "Esta acción se visualizara en planes de acción!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, vincular',
-                    cancelButtonText: 'Cancelar',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                    'content')
+            <script>
+                $(document).ready(function() {
+                    CKEDITOR.replace('escritura_ideas', {
+                        toolbar: [{
+                                name: 'styles',
+                                items: ['Styles', 'Format', 'Font', 'FontSize']
                             },
-                            url: "{{ route('admin.accion-correctivas.planes') }}",
-                            data: {
-                                planes,
-                                id: idAccionesCorrectivas
+                            {
+                                name: 'colors',
+                                items: ['TextColor', 'BGColor']
                             },
-                            dataType: "JSON",
-                            success: function(response) {
-                                if (response.success) {
-                                    window.location.reload();
+                            {
+                                name: 'editing',
+                                groups: ['find', 'selection', 'spellchecker'],
+                                items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                            }, {
+                                name: 'clipboard',
+                                groups: ['undo'],
+                                items: ['Undo', 'Redo']
+                            },
+                            {
+                                name: 'tools',
+                                items: ['Maximize']
+                            },
+                            {
+                                name: 'basicstyles',
+                                groups: ['basicstyles', 'cleanup'],
+                                items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                                    '-',
+                                    'CopyFormatting', 'RemoveFormat'
+                                ]
+                            },
+                            {
+                                name: 'paragraph',
+                                groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                                    'Blockquote',
+                                    '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                                    'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                                ]
+                            },
+                            {
+                                name: 'links',
+                                items: ['Link', 'Unlink']
+                            },
+                            {
+                                name: 'insert',
+                                items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                            },
+                            '/',
+                        ]
+                    });
+
+
+
+                });
+            </script>
+
+            <script>
+                $(document).ready(function() {
+                    CKEDITOR.replace('escritura_causa', {
+                        toolbar: [{
+                                name: 'styles',
+                                items: ['Styles', 'Format', 'Font', 'FontSize']
+                            },
+                            {
+                                name: 'colors',
+                                items: ['TextColor', 'BGColor']
+                            },
+                            {
+                                name: 'editing',
+                                groups: ['find', 'selection', 'spellchecker'],
+                                items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                            }, {
+                                name: 'clipboard',
+                                groups: ['undo'],
+                                items: ['Undo', 'Redo']
+                            },
+                            {
+                                name: 'tools',
+                                items: ['Maximize']
+                            },
+                            {
+                                name: 'basicstyles',
+                                groups: ['basicstyles', 'cleanup'],
+                                items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                                    '-',
+                                    'CopyFormatting', 'RemoveFormat'
+                                ]
+                            },
+                            {
+                                name: 'paragraph',
+                                groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                                    'Blockquote',
+                                    '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                                    'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                                ]
+                            },
+                            {
+                                name: 'links',
+                                items: ['Link', 'Unlink']
+                            },
+                            {
+                                name: 'insert',
+                                items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                            },
+                            '/',
+                        ]
+                    });
+
+
+
+                });
+            </script>
+
+            <script>
+                $(document).ready(function() {
+                    CKEDITOR.replace('analisisControl', {
+                        toolbar: [{
+                            name: 'paragraph',
+                            groups: ['list', 'indent', 'blocks', 'align'],
+                            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                                'Bold', 'Italic'
+                            ]
+                        }, {
+                            name: 'clipboard',
+                            items: ['Link', 'Unlink']
+                        }, ]
+                    });
+
+                    CKEDITOR.replace('analisisProceso', {
+                        toolbar: [{
+                            name: 'paragraph',
+                            groups: ['list', 'indent', 'blocks', 'align'],
+                            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                                'Bold', 'Italic'
+                            ]
+                        }, {
+                            name: 'clipboard',
+                            items: ['Link', 'Unlink']
+                        }, ]
+                    });
+
+                    CKEDITOR.replace('analisisPersona', {
+                        toolbar: [{
+                            name: 'paragraph',
+                            groups: ['list', 'indent', 'blocks', 'align'],
+                            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                                'Bold', 'Italic'
+                            ]
+                        }, {
+                            name: 'clipboard',
+                            items: ['Link', 'Unlink']
+                        }, ]
+                    });
+
+                    CKEDITOR.replace('analisisTecnologia', {
+                        toolbar: [{
+                            name: 'paragraph',
+                            groups: ['list', 'indent', 'blocks', 'align'],
+                            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                                'Bold', 'Italic'
+                            ]
+                        }, {
+                            name: 'clipboard',
+                            items: ['Link', 'Unlink']
+                        }, ]
+                    });
+
+                    CKEDITOR.replace('analisisMetodos', {
+                        toolbar: [{
+                            name: 'paragraph',
+                            groups: ['list', 'indent', 'blocks', 'align'],
+                            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                                'Bold', 'Italic'
+                            ]
+                        }, {
+                            name: 'clipboard',
+                            items: ['Link', 'Unlink']
+                        }, ]
+                    });
+
+                    CKEDITOR.replace('analisisAmbiente', {
+                        toolbar: [{
+                            name: 'paragraph',
+                            groups: ['list', 'indent', 'blocks', 'align'],
+                            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                                'Bold', 'Italic'
+                            ]
+                        }, {
+                            name: 'clipboard',
+                            items: ['Link', 'Unlink']
+                        }, ]
+                    });
+
+                    CKEDITOR.replace('analisisProblema', {
+                        toolbar: [{
+                            name: 'paragraph',
+                            groups: ['list', 'indent', 'blocks', 'align'],
+                            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                                'Bold', 'Italic'
+                            ]
+                        }, {
+                            name: 'clipboard',
+                            items: ['Link', 'Unlink']
+                        }, ]
+                    });
+
+                });
+            </script>
+
+            <script type="text/javascript">
+                Livewire.on('planStore', () => {
+
+                    $('#planAccionModal').modal('hide');
+
+                    $('.modal-backdrop').hide();
+
+                    toastr.success('Plan de Acción creado con éxito');
+
+                });
+
+                window.initSelect2 = () => {
+
+                    $('.select2').select2({
+
+                        'theme': 'bootstrap4'
+
+                    });
+
+                }
+
+
+
+                initSelect2();
+
+
+
+                Livewire.on('select2', () => {
+
+                    initSelect2();
+
+                });
+
+                $(document).ready(function() {
+                    document.getElementById('vincularPlan').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        let planes = $("#plan_accion").select2("val");
+                        let idAccionesCorrectivas = @json($accionCorrectiva->id);
+                        if (planes.length > 0) {
+                            Swal.fire({
+                                title: 'Desea vincular plan(es)?',
+                                text: "Esta acción se visualizara en planes de acción!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Si, vincular',
+                                cancelButtonText: 'Cancelar',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $.ajax({
+                                        type: "POST",
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                                'content')
+                                        },
+                                        url: "{{ route('admin.accion-correctivas.planes') }}",
+                                        data: {
+                                            planes,
+                                            id: idAccionesCorrectivas
+                                        },
+                                        dataType: "JSON",
+                                        success: function(response) {
+                                            if (response.success) {
+                                                window.location.reload();
+                                            }
+                                        }
+                                    });
                                 }
-                            }
-                        });
-                    }
-                })
-            }
-        })
+                            })
+                        }
+                    })
 
-    });
-</script>
-@endsection
+                });
+            </script>
+        @endsection

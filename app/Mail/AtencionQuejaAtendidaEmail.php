@@ -6,8 +6,9 @@ use App\Models\QuejasCliente;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SeguimientoQuejaClienteEmail extends Mailable
+class AtencionQuejaAtendidaEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,7 +17,9 @@ class SeguimientoQuejaClienteEmail extends Mailable
      *
      * @return void
      */
+
     public $quejas;
+
 
     public function __construct(QuejasCliente $quejas)
     {
@@ -30,6 +33,6 @@ class SeguimientoQuejaClienteEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.quejasCliente.seguimiento')->subject('Su queja con folio ' .$this->quejas->folio. ' ha sido registrada');
+        return $this->view('mails.quejasCliente.atencion-queja')->subject('La queja con folio ' .$this->quejas->folio. ' esta siendo atendida');;
     }
 }

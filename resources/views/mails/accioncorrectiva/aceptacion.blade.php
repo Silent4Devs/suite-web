@@ -25,6 +25,52 @@
         }
 
     </style>
+
+<style>
+    /* Remove space around the email design. */
+
+    html,
+
+    body {
+
+        margin: 0 auto !important;
+
+        padding: 0 !important;
+
+        height: 100% !important;
+
+        width: 100% !important;
+    }
+
+    /* Stop Outlook resizing small text. */
+    * {
+        -ms-text-size-adjust: 100%;
+    }
+
+
+    /* Stop Outlook from adding extra spacing to tables. */
+    table,
+    td {
+        mso-table-lspace: 0pt !important;
+        mso-table-rspace: 0pt !important;
+    }
+
+    /* Use a better rendering method when resizing images in Outlook IE. */
+
+    img {
+        -ms-interpolation-mode: bicubic;
+    }
+
+
+    /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+
+    a {
+
+        text-decoration: none;
+
+    }
+
+</style>
 </head>
 
 <body style="margin:0;padding:0;">
@@ -50,9 +96,9 @@
                             <table role="presentation"
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
-                                    <div style="width: 100%; height: 1.5px; background-color: #153643;">
-                                        &nbsp;
-                                    </div>
+                                    <hr style="margin:0;width: 100%; height: 1.5px; background-color: #153643;">
+                                    &nbsp;
+                                    </hr>
                                     @php
                                         use App\Models\Organizacion;
                                         $organizacion = Organizacion::first();
@@ -61,14 +107,14 @@
                                     @endphp
                                     <h2 style="padding-top:3px; color:#153643; text-align:center">
                                         {{ $empresa }}</h2>
-                                    <div style="width: 100%; height:1.5px; background-color: #153643;">
-                                        &nbsp;
-                                    </div>
+                                    <hr style="margin:0;width: 100%; height:1.5px; background-color: #153643;">
+                                    &nbsp;
+                                    </hr>
 
                                     <td style="padding:0 0 36px 0;">
 
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
-                                            <img src="{{ asset($logotipo) }}" class="mt-2 ml-4"
+                                            <img width="160" src="{{ asset($logotipo) }}" class="mt-2 ml-4"
                                                 style="width:160px;">
                                         </div>
 
@@ -118,7 +164,7 @@
                                                 style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
                                                 Reportó</strong>
                                                 <ul style="font-size:11pt; color:#153643;">
-                                                    <li style="font-size:11pt;">Nombre del cliente:<strong style="font-size:10pt;"> {{$quejas->nombre}} </strong></li>
+                                                    <li style="font-size:11pt;">Nombre del contacto:<strong style="font-size:10pt;"> {{$quejas->nombre}} </strong></li>
                                                     <li style="font-size:11pt;">Puesto:<strong style="font-size:10pt;"> {{$quejas->puesto}} </strong></li>
                                                     <li style="font-size:11pt;">Teléfono:<strong style="font-size:10pt;"> {{$quejas->telefono}} </strong></li>
                                                     <li style="font-size:11pt;">Correo:<strong style="font-size:10pt;"> {{$quejas->correo}} </strong></li>
@@ -144,7 +190,7 @@
                                                 <ul style="font-size:11pt; color:#153643;">
                                                     <li style="font-size:11pt;">Título:<strong style="font-size:10pt;"> {{$quejas->titulo}} </strong></li>
                                                     <li style="font-size:11pt;">Fecha y hora de ocurrencia: <strong style="font-size:10pt;">{{ \Carbon\Carbon::parse($quejas->fecha)->format('d-m-Y H:i:s') }}</strong></li>
-                                                    <li style="font-size:11pt;">Ubicación: <strong style="font-size:10pt;"> {{$quejas->ubicacion}} </strong></li>
+                                                    <li style="font-size:11pt;">Ubicación: <strong style="font-size:10pt;"> {{$quejas->ubicacion ? $quejas->ubicacion : 'Sin definir'}} </strong></li>
                                                     <li style="font-size:11pt;">Canal de recepción:<strong style="font-size:10pt;"> {{$quejas->canal}} </strong></li>
                                                     <li style="font-size:11pt;">Descripción:<strong style="font-size:10pt;"> {{$quejas->descripcion}} </strong></li>
                                                     <li style="font-size:11pt;">Solución que requiere el cliente:<strong style="font-size:10pt;"> {{$quejas->solucion_requerida_cliente}} </strong></li>
@@ -166,7 +212,7 @@
 
 
                                                 <p style="font-size:11pt; color:#153643;">
-                                                    Para aprobar o rechazar la Acción Correctiva dirijase al módulo de Acción Correctiva o dé clic en el siguiente botón
+                                                    Para aprobar o rechazar la Acción Correctiva dé clic en el siguiente botón:
                                                 </p>
 
                                                 <div style="text-align:center; margin-top:20px">
@@ -176,7 +222,7 @@
                                                 </div>
 
                                             {{-- <strong
-                                                style="color:#153643;;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
+                                                style="color:#1536A43;;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
                                                 Información de la queja
                                             </strong> --}}
 
@@ -212,12 +258,11 @@
                                     <td style="padding:0;width:30%;" align="left">
                                         <p style="text-align:center; font-size:10pt; color:#153643;">Por favor no
                                             responda a este correo</p>
-                                        <div style="width: 100%; height: 1.5px; background-color: #153643;">
-                                            &nbsp;
-                                        </div>
+                                        <hr style="margin:0; width: 100%; height: 1.5px; background-color: #153643;">
+                                        &nbsp;
+                                        </hr>
 
-                                        <p
-                                            style="text-align:center;font-size:10pt;font-weight: normal;color:#153643;">
+                                        <p style="text-align:center;font-size:10pt;font-weight: normal;color:#153643;">
                                             SISTEMA INTEGRAL DE GESTIÓN EMPRESARIAL TABANTAJ</p>
                                     </td>
                                 </tr>
