@@ -143,7 +143,8 @@ class Empleado extends Model
         'estado',
         'pais',
         'cp',
-        'fecha_baja'
+        'fecha_baja',
+        'razon_baja',
     ];
 
     public function getActualBirdthdayAttribute()
