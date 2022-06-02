@@ -75,7 +75,7 @@ class Organizacion extends Model
         'dia_timesheet',
         'inicio_timesheet',
         'fin_timesheet',
-
+        'fecha_registro_timesheet',
     ];
 
     public function getLogotipoAttribute($value)

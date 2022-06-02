@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Timesheet;
 
+use App\Models\Empleado;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
@@ -26,7 +27,8 @@ class TimesheetHorasFilas extends Component
 
     public function mount($origen, $timesheet_id)
     {
-        $this->proyectos = TimesheetProyecto::get();
+        $empleado = Empleado::find(auth()->user()->empleado->id);
+        $this->proyectos = TimesheetProyecto::where('area_id', $empleado->area_id)->get();
         $this->tareas = collect();
         $this->origen = $origen;
         $this->timesheet_id = $timesheet_id;

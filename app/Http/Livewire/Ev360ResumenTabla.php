@@ -43,6 +43,7 @@ class Ev360ResumenTabla extends Component
     public function render()
     {
         $evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados')->find(intval($this->evaluacion));
+
         $evaluados = $evaluacion->evaluados;
         $this->lista_evaluados = collect();
         $calificaciones = collect();
@@ -95,7 +96,7 @@ class Ev360ResumenTabla extends Component
         $paginator = new Paginator($items, $this->perPage, $this->page);
 
         $this->competencias_evaluadas = Competencia::find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
-        $this->objetivos_evaluados = $this->obtenerCantidadMaximaDeObjetivos($evaluacion->id);
+        $this->objetivos_evaluados = $this->obtenerCantidadMaximaDeObjetivos($evaluacion->evaluados, $evaluacion->id);
 
         return view('livewire.ev360-resumen-tabla', ['lista_evaluados', 'calificaciones', 'evaluacion', 'competencias_evaluadas', 'lista' => $collection]);
     }
@@ -118,13 +119,26 @@ class Ev360ResumenTabla extends Component
         return $competencias;
     }
 
-    public function obtenerCantidadMaximaDeObjetivos($evaluacion)
+    public function obtenerCantidadMaximaDeObjetivos($evaluados, $evaluacion)
     {
-        $competencias = DB::table('ev360_objetivos_calificaciones')->where('evaluacion_id', $evaluacion);
-        $agrupar_competencias = $competencias->select(DB::raw('count(id) AS total'))->groupBy('evaluado_id')
-            ->get();
+        $max = 0;
+        foreach ($evaluados as $evaluado) {
+            $objetivos = ObjetivoRespuesta::with('objetivo')
+                ->where('evaluacion_id', $evaluacion)
+                ->where('evaluado_id', $evaluado->id)
+                ->where('evaluador_id', $evaluado->id)
+                ->orderBy('id')->get();
+            if ($objetivos->count() > $max) {
+                $max = $objetivos->count();
+            }
+        }
 
-        return $agrupar_competencias->max('total');
+        return $max;
+        // $competencias = DB::table('ev360_objetivos_calificaciones')->where('evaluacion_id', $evaluacion);
+        // $agrupar_competencias = $competencias->select(DB::raw('count(id) AS total'))->groupBy('evaluado_id')
+        //     ->get();
+
+        // return $agrupar_competencias->max('total');
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -268,6 +282,9 @@ class Ev360ResumenTabla extends Component
             if ($this->empleadoTieneCompetenciasAsignadas($evaluado->id, $evaluacion->id)) {
                 $promedio_competencias = floatval(number_format($promedio_competencias_collect->sum(), 2));
                 $promedio_general_competencias = floatval(number_format(($promedio_competencias * ($evaluacion->peso_general_competencias / 100)), 2));
+
+                $promedio_general_competencias = $promedio_general_competencias > intval($evaluacion->peso_general_competencias) ? $evaluacion->peso_general_competencias : $promedio_general_competencias;
+
                 $promedio_competencias = $promedio_general_competencias;
 
                 $calificacion_final += $promedio_general_competencias;

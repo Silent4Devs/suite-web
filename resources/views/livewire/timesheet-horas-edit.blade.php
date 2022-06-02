@@ -47,7 +47,7 @@
                                 <select id="select_tareas{{ $i_hora }}" data-contador="{{ $i_hora }}" name="timesheet[{{ $i_hora }}][tarea]" class="select2">
                                     <option selected value="{{ $hora->tarea->id }}">{{ $hora->tarea->tarea }}</option>    
                                 </select>
-                                <small class="timesheet_{{ $i_hora }}_proyecto errores text-danger"></small>
+                                <small class="timesheet_{{ $i_hora }}_tarea errores text-danger"></small>
                             </td>
                             <td>
                                 @if($hora->facturable)
@@ -58,6 +58,7 @@
                             </td>
                             <td>
                                 <input id="ingresar_hora_lunes_{{ $i_hora }}" type="number" name="timesheet[{{ $i_hora }}][lunes]" data-dia="lunes" data-i="{{ $i_hora }}" class="ingresar_horas form-control" value="{{ $hora->horas_lunes }}" min="0" max="24">
+                                <small class="timesheet_{{ $i_hora }}_horas errores text-danger" style="position:absolute; margin-top:3px;"></small>
                             </td>
                             <td>
                                 <input  type="number" name="timesheet[{{ $i_hora }}][martes]" data-dia="martes" data-i="{{ $i_hora }}" id="ingresar_hora_martes_{{ $i_hora }}"  class="ingresar_horas  form-control" min="0" max="24" value="{{ $hora->horas_martes }}">
@@ -225,7 +226,7 @@
                                     <div title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
                                         Cancelar
                                     </div>
-                                    <button id="enviar_aprobacion" title="Rechazar" class="btn btn-info btn_enviar_formulario" style="border:none; background-color:#2F96EB;">
+                                    <button id="enviar_aprobacion_time" title="Rechazar" class="btn btn-info btn_enviar_formulario" style="border:none; background-color:#2F96EB;">
                                         Enviar a Aprobación
                                     </button>
                                 </div>
@@ -303,7 +304,7 @@
                 }
             });
 
-            document.querySelector('.btn_enviar_formulario').addEventListener('click', (e)=>{
+            function procesarInformacionTimesheet(e){
                 e.preventDefault();
                 limpiarErrores();
                 let formulario = document.getElementById('form_timesheet');
@@ -328,8 +329,8 @@
                     success: function (response) {
                         if (response.status == 200) {   
                             Swal.fire(
-                              'Good job!',
-                              'You clicked the button!',
+                              'Buen trabajo',
+                              'Timesheet Registrado',
                               'success'
                             ).then(()=>{
                                 window.location.href = '{{ route("admin.timesheet-inicio") }}';
@@ -352,7 +353,11 @@
                         });
                     }
                 });
-            });
+            }
+
+            document.querySelector('.btn_enviar_formulario').addEventListener('click', procesarInformacionTimesheet);
+            document.querySelector('#enviar_aprobacion_time').addEventListener('click', procesarInformacionTimesheet);
+
             function limpiarErrores(){
                 document.querySelectorAll('.errores').forEach(item=>{
                     item.innerHTML = '';

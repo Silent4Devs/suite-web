@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\TimesheetHorasSolicitudAprobacion;
+use App\Mail\TimesheetSolicitudAprobada;
+use App\Mail\TimesheetSolicitudRechazada;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Organizacion;
@@ -15,9 +18,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class TimesheetController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +38,16 @@ class TimesheetController extends Controller
         $aprobados_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'aprobado')->count();
         $rechazos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'rechazado')->count();
 
-        return view('admin.timesheet.index', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador'));
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.index', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual'));
     }
 
     public function timesheetInicio()
@@ -53,8 +67,9 @@ class TimesheetController extends Controller
         $organizacion = Organizacion::first();
 
         $organizacion->update([
-            'dia_timesheet' => $request->dia_timesheet,
-            'inicio_timesheet' => $request->inicio_timesheet,
+            'dia_timesheet'=>$request->dia_timesheet,
+            'inicio_timesheet'=>$request->inicio_timesheet,
+            'fecha_registro_timesheet'=>$request->fecha_registro_timesheet,
         ]);
 
         return redirect()->route('admin.timesheet-inicio')->with('success', 'Guardado con éxito');
@@ -78,12 +93,19 @@ class TimesheetController extends Controller
         return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function createCopia($id)
+    {
+        $empleado = Empleado::find(auth()->user()->empleado->id);
+        $proyectos = TimesheetProyecto::where('area_id', $empleado->area_id)->get();
+        $tareas = TimesheetTarea::get();
+        $timesheet = Timesheet::find($id);
+        $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
+        $organizacion = Organizacion::first();
+        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
+
+        return view('admin.timesheet.create-copia', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
+    }
+
     public function store(Request $request)
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -208,11 +230,15 @@ class TimesheetController extends Controller
             }
         }
 
-        $aprobador = Empleado::select('id', 'name', 'email', 'genero', 'foto')->find(auth()->user()->empleado->supervisor_id);
+        if ($timesheet_nuevo->estatus == 'pendiente') {
+            $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->supervisor_id);
 
-        Mail::to($aprobador->email)->send(new SolicitudAprobacionHorasEmail($quejasClientes));
+            $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
 
-        return response()->json(['status' => 200]);
+            Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
+        }
+
+        return response()->json(['status'=>200]);
         // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
     }
 
@@ -241,7 +267,8 @@ class TimesheetController extends Controller
      */
     public function edit($id)
     {
-        $proyectos = TimesheetProyecto::get();
+        $empleado = Empleado::find(auth()->user()->empleado->id);
+        $proyectos = TimesheetProyecto::where('area_id', $empleado->area_id)->get();
         $tareas = TimesheetTarea::get();
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
@@ -397,7 +424,15 @@ class TimesheetController extends Controller
             }
         }
 
-        return response()->json(['status' => 200]);
+        if ($timesheet_edit->estatus == 'pendiente') {
+            $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->supervisor_id);
+
+            $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
+
+            Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
+        }
+
+        return response()->json(['status'=>200]);
     }
 
     /**
@@ -423,21 +458,48 @@ class TimesheetController extends Controller
     {
         $clientes = TimesheetCliente::get();
 
-        return view('admin.timesheet.proyectos', compact('clientes'));
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.proyectos', compact('clientes', 'logo_actual', 'empresa_actual'));
     }
 
     public function tareas()
     {
         abort_if(Gate::denies('timesheet_administrador_tareas_proyectos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.timesheet.tareas');
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.tareas', compact('logo_actual', 'empresa_actual'));
     }
 
     public function tareasProyecto($proyecto_id)
     {
-        $proyecto_id = $proyecto_id;
+        $proyecto = TimesheetProyecto::select('proyecto', 'id')->find($proyecto_id);
 
-        return view('admin.timesheet.tareas-proyecto', compact('proyecto_id'));
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.tareas-proyecto', compact('proyecto', 'logo_actual', 'empresa_actual'));
     }
 
     public function papelera()
@@ -445,7 +507,16 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('mi_timesheet_horas_rechazadas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $papelera = Timesheet::where('estatus', 'papelera')->where('empleado_id', auth()->user()->empleado->id)->get();
 
-        return view('admin.timesheet.papelera', compact('papelera'));
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.papelera', compact('papelera', 'logo_actual', 'empresa_actual'));
     }
 
     public function aprobaciones()
@@ -456,18 +527,54 @@ class TimesheetController extends Controller
             ->where('aprobador_id', auth()->user()->empleado->id)
             ->get();
 
-        return view('admin.timesheet.aprobaciones', compact('aprobaciones'));
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.aprobaciones', compact('aprobaciones', 'logo_actual', 'empresa_actual'));
+    }
+
+    public function aprobados()
+    {
+        abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $aprobados = Timesheet::where('estatus', 'aprobado')
+            ->Where('aprobador_id', auth()->user()->empleado->id)
+            ->get();
+
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.aprobados', compact('aprobados', 'logo_actual', 'empresa_actual'));
     }
 
     public function rechazos()
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_rechazar_horas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $rechazos = Timesheet::where('estatus', '!=', 'pendiente')
-            ->where('estatus', '!=', 'papelera')
+        $rechazos = Timesheet::where('estatus', 'rechazado')
             ->Where('aprobador_id', auth()->user()->empleado->id)
             ->get();
 
-        return view('admin.timesheet.rechazos', compact('rechazos'));
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.rechazos', compact('rechazos', 'logo_actual', 'empresa_actual'));
     }
 
     public function aprobar(Request $request, $id)
@@ -479,16 +586,29 @@ class TimesheetController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
+        $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($aprobar->empleado_id);
+
+        $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($aprobar->aprobador_id);
+
+        Mail::to($solicitante->email)->send(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
+
         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
     }
 
-    public function rechazar($id)
+    public function rechazar(Request $request, $id)
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $aprobar = Timesheet::find($id);
-        $aprobar->update([
+        $rechazar = Timesheet::find($id);
+        $rechazar->update([
             'estatus' => 'rechazado',
+            'comentarios' => $request->comentarios,
         ]);
+
+        $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find($rechazar->empleado_id);
+
+        $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($rechazar->aprobador_id);
+
+        Mail::to($solicitante->email)->send(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
 
         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
     }
@@ -498,7 +618,16 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_clientes_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $clientes = TimesheetCliente::get();
 
-        return view('admin.timesheet.clientes.index', compact('clientes'));
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.clientes.index', compact('clientes', 'logo_actual', 'empresa_actual'));
     }
 
     public function clientesCreate()
@@ -506,30 +635,51 @@ class TimesheetController extends Controller
         return view('admin.timesheet.clientes.create');
     }
 
+    public function clientesEdit($id)
+    {
+        $cliente = TimesheetCliente::find($id);
+
+        return view('admin.timesheet.clientes.edit', compact('cliente'));
+    }
+
     public function clientesStore(Request $request)
     {
+        $request->validate(
+            [
+                'identificador' => 'required|unique:timesheet_clientes,identificador',
+            ],
+            [
+                'identificador.unique' => 'El ID ya esta en uso',
+            ],
+        );
+
         $cliente_nuevo = TimesheetCliente::create($request->all());
 
         return redirect()->route('admin.timesheet-clientes')->with('success', 'Guardado con éxito');
     }
 
-    // public function clientesEdit($id)
-    // {
-    //     return view('admin.timesheet.clientes.edit');
-    // }
+    public function clientesUpdate(Request $request, $id)
+    {
+        $request->validate(
+            [
+                'identificador' => "required|unique:timesheet_clientes,identificador,{$id}",
+            ],
+            [
+                'identificador.unique' => 'El ID ya esta en uso',
+            ],
+        );
 
-    // public function clientesStore(Request $request)
-    // {
-    //     $cliente = TimesheetCliente::find($id);
+        $cliente = TimesheetCliente::find($id);
+        $cliente->update($request->all());
 
-    //     $cliente->update($request->all());
-
-    //     return redirect()->route('admin.timesheet-clientes')->with('success', 'Guardado con éxito');
-    // }
+        return redirect()->route('admin.timesheet-clientes')->with('success', 'Guardado con éxito');
+    }
 
     public function clientesDelete($id)
     {
-        $cliente_borrado = TimesheetCliente::create($id);
+        $cliente_borrado = TimesheetCliente::find($id);
+
+        $cliente_borrado->delete();        
 
         return redirect()->route('admin.timesheet-clientes')->with('success', 'Eliminado');
     }
@@ -550,39 +700,49 @@ class TimesheetController extends Controller
 
         $areas_array = collect();
         foreach ($areas as $area) {
-            $empleados_count_area = Empleado::where('area_id', $area->id)->count();
+            $times_complit_esperados_area = 0;
 
-            $times_por_mes_esperados_area = $semanas_del_mes * $empleados_count_area;
-            if ($times_por_mes_esperados_area == 0) {
-                $times_por_mes_esperados_area = 1;
+            $empleados_area = Empleado::where('area_id', $area->id)->get();
+            foreach ($empleados_area as $empleado) {
+                $fecha_inicio = date_create($empleado->antiguedad->format('d-m-Y'));
+                $fecha_fin = date_create($hoy->format('d-m-Y'));
+                $times_esperados_empleado = intval(date_diff($fecha_inicio, $fecha_fin)->format('%R%a') / 7);
+
+                $times_complit_esperados_area += $times_esperados_empleado;
             }
-            $total_times_mes_area = 0;
+
+            if ($times_complit_esperados_area == 0) {
+                $times_complit_esperados_area = 1;
+            }
+
+            $total_times_complit_area = 0;
             $empleados_times_atrasados = 0;
             foreach ($empleados_partisipacion as $emp_part_area) {
                 if ($emp_part_area->area_id == $area->id) {
-                    $times_empleado_part_area = Timesheet::whereMonth('fecha_dia', $hoy)->where('empleado_id', $emp_part_area->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
+                    $times_empleado_part_area = Timesheet::where('empleado_id', $emp_part_area->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->where('estatus', '!=', 'pendiente')->count();
                 } else {
                     $times_empleado_part_area = 0;
                 }
-                $total_times_mes_area += $times_empleado_part_area;
+                $total_times_complit_area += $times_empleado_part_area;
             }
 
-            $porcentaje_participacion_area = round((($total_times_mes_area * 100) / $times_por_mes_esperados_area), 2);
-            if ($total_times_mes_area >= $times_por_mes_esperados_area) {
+            $porcentaje_participacion_area = round((($total_times_complit_area * 100) / $times_complit_esperados_area), 2);
+            if ($total_times_complit_area >= $times_complit_esperados_area) {
                 $porcentaje_participacion_area = 100;
             }
-            if ($porcentaje_participacion_area <= 33) {
+            if ($porcentaje_participacion_area <= 44) {
                 $nivel_participacion = 'baja';
             }
-            if (($porcentaje_participacion_area > 33) && ($porcentaje_participacion_area < 66)) {
+            if (($porcentaje_participacion_area > 45) && ($porcentaje_participacion_area < 89)) {
                 $nivel_participacion = 'media';
             }
-            if ($porcentaje_participacion_area >= 66) {
+            if ($porcentaje_participacion_area >= 90) {
                 $nivel_participacion = 'alta';
             }
             $contador_times_aprobados_areas = 0;
             $contador_times_pendientes_areas = 0;
             $contador_times_rechazados_areas = 0;
+            $contador_times_papelera_areas = 0;
             $proyectos_area = TimesheetProyecto::where('area_id', $area->id)->get();
             foreach ($proyectos_area as $pro_a) {
                 $times_horas_area = TimesheetHoras::where('proyecto_id', $pro_a->id)->with('timesheet')->get();
@@ -597,15 +757,20 @@ class TimesheetController extends Controller
                     if ($times_h_a->timesheet->estatus == 'rechazado') {
                         $contador_times_rechazados_areas++;
                     }
+                    if ($times_h_a->timesheet->estatus == 'papelera') {
+                        $contador_times_papelera_areas++;
+                    }
                 }
             }
             $areas_array->push([
-                'area' => $area->area,
-                'times_aprobados' => $contador_times_aprobados_areas,
-                'times_pendientes' => $contador_times_pendientes_areas,
-                'times_rechazados' => $contador_times_rechazados_areas,
-                'partisipacion' => $porcentaje_participacion_area,
-                'nivel_p' => $nivel_participacion,
+                'area'=>$area->area,
+                'times_aprobados'=>$contador_times_aprobados_areas,
+                'times_pendientes'=>$contador_times_pendientes_areas,
+                'times_rechazados'=>$contador_times_rechazados_areas,
+                'times_papelera'=>$contador_times_papelera_areas,
+                'partisipacion'=>$porcentaje_participacion_area,
+                'nivel_p'=>$nivel_participacion,
+                'times_esperados'=>$times_complit_esperados_area,
             ]);
         }
 
@@ -688,7 +853,16 @@ class TimesheetController extends Controller
 
         $tareas = TimesheetTarea::get();
 
-        return view('admin.timesheet.reportes', compact('clientes', 'proyectos', 'tareas'));
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.reportes', compact('clientes', 'proyectos', 'tareas', 'logo_actual', 'empresa_actual'));
     }
 
     public function obtenerTareas(Request $request)

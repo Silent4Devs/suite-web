@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Timesheet;
 
 use App\Models\Area;
+use App\Models\Sede;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -13,17 +14,24 @@ class TablaProyectosTimesheet extends Component
     use LivewireAlert;
 
     public $proyectos;
+
+    public $identificador;
     public $proyecto_name;
     public $area_id;
     public $cliente_id;
+    public $fecha_inicio;
+    public $fecha_fin;
+    public $sede_id;
 
     public $proceso_count;
     public $cancelado_count;
     public $terminado_count;
 
+    public $sedes;
+
     public function mount()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->get();
+        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
     }
 
     public function render()
@@ -34,54 +42,71 @@ class TablaProyectosTimesheet extends Component
 
         $this->emit('cerrarModal');
 
+        $this->sedes = Sede::get();
+
         $this->areas = Area::get();
 
         $this->clientes = TimesheetCliente::get();
 
+        $this->emit('scriptTabla');
+
         return view('livewire.timesheet.tabla-proyectos-timesheet');
     }
 
-    public function create()
+    public function store()
     {
-        $this->validate([
-            'proyecto_name'=>'required',
-            'area_id'=>'required',
+        $this->validate(
+            [
+                'identificador' => 'required|unique:timesheet_proyectos,identificador',
+                'proyecto_name'=>'required',
+                'area_id'=>'required',
+            ],
+            [
+                'identificador.unique' => 'El ID ya esta en uso',
+            ],
+        );
+
+        $nuevo_proyecto = TimesheetProyecto::create([
+            'identificador' => $this->identificador,
+            'proyecto' => $this->proyecto_name,
+            'area_id' => $this->area_id,
+            'cliente_id' => $this->cliente_id,
+            'fecha_inicio' => $this->fecha_inicio,
+            'fecha_fin' => $this->fecha_fin,
+            'sede_id' => $this->sede_id,
         ]);
 
-        if ($this->cliente_id) {
-            $nuevo_proyecto = TimesheetProyecto::create([
-                'proyecto' => $this->proyecto_name,
-                'area_id' => $this->area_id,
-                'cliente_id' => $this->cliente_id,
-            ]);
-        } else {
-            $nuevo_proyecto = TimesheetProyecto::create([
-                'proyecto' => $this->proyecto_name,
-                'area_id' => $this->area_id,
-            ]);
-        }
+        $this->identificador = null;
+        $this->proyecto_name = null;
+        $this->area_id = null;
+        $this->cliente_id = null;
+        $this->fecha_inicio = null;
+        $this->fecha_fin = null;
+        $this->sede_id = null;
+
+        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
 
         $this->alert('success', 'Registro añadido!');
     }
 
     public function procesos()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->get();
+        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
     }
 
     public function cancelados()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')->get();
+        $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')->orderByDesc('id')->get();
     }
 
     public function terminados()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')->get();
+        $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')->orderByDesc('id')->get();
     }
 
     public function todos()
     {
-        $this->proyectos = TimesheetProyecto::get();
+        $this->proyectos = TimesheetProyecto::orderByDesc('id')->get();
     }
 
     public function destroy($id)

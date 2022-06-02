@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AnalisisDeRiesgo;
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\Organizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -90,8 +91,16 @@ class AnalisisdeRiesgosController extends Controller
 
             return $table->make(true);
         }
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.analisis-riesgos.index');
+        return view('admin.analisis-riesgos.index', compact('empresa_actual','logo_actual'));
     }
 
     /**

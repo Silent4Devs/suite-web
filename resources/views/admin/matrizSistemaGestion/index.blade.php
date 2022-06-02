@@ -1,9 +1,26 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        @page {
+            size: landscape;
+        }
+
+        @media print {
+            #tabla_blanca_imprimir_global {
+                transform: scale(0.35);
+                transform-origin: 0% 0%;
+                color: black;
+            }
+            #tabla_blanca_imprimir_global td{
+                color: black !important;
+            }
+        }
+
+    </style>
     <div class="mt-5 card">
 
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Matriz análisis de riesgo integral
+            <h3 class="mb-2 text-center text-white"><strong>Matriz Análisis de Riesgo Integral
                 </strong></h3>
         </div>
         @can('configuracion_sede_create')
@@ -27,7 +44,8 @@
                     <div class="col-11">
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
                         </p>
-                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre los riesgos asociados a su organización</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre los riesgos
+                            asociados a su organización</p>
                     </div>
                 </div>
             </div>
@@ -39,15 +57,15 @@
                             href="{{ route('admin.matriz-riesgos.sistema-gestion.create', ['idAnalisis' => $id_matriz]) }}"
                             type="submit" name="action">Agregar nuevo</a>
                     @endcan
-                    @can('analisis_de_riesgos_matriz_riesgo_analisis_grafica_show')
+                    {{-- @can('analisis_de_riesgos_matriz_riesgo_analisis_grafica_show')
                         <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
                             href="{{ route('admin.matriz-mapa.SistemaGestion', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
-                    @endcan
+                    @endcan --}}
                 </div>
-                <table class="table table-bordered w-100 datatable datatable-Matriz">
+                <table class="table table-bordered w-100 datatable datatable-Matriz" id="datatable-Matriz">
                     <thead class="thead-dark">
                         <tr class="negras">
-                            <th class="text-center" style="background-color:#3490DC;" colspan="8">Descripción General
+                            <th class="text-center" style="background-color:#3490DC;" colspan="9">Descripción General
                             </th>
                             <th class="text-center" style="background-color:#1168af;" colspan="3">9001:2015</th>
                             <th class="text-center" style="background-color:#217bc5;" colspan="3">20000-1:2018</th>
@@ -61,28 +79,31 @@
                             <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
                         </tr>
                         <tr>
-                            <th>
+                            <th style="min-width: 30px;">
                                 Id
                             </th>
-                            <th>
+                            <th style="min-width: 50px;">
                                 Sede
                             </th>
-                            <th>
+                            <th style="min-width: 80px;">
                                 Proceso
                             </th>
-                            <th>
+                            <th style="min-width: 120px;">
                                 Responsable
                             </th>
-                            <th>
+                            <th style="min-width: 50px;">
                                 Activo
                             </th>
-                            <th>
+                            <th style="min-width: 50px;">
                                 Amenaza
                             </th>
-                            <th>
+                            <th style="min-width: 80px;">
                                 Vulnerabilidad
                             </th>
-                            <th>
+                            <th style="min-width: 50px;">
+                                Tipo&nbsp;de Riesgo
+                            </th>
+                            <th style="min-width: 200px;">
                                 Descripción riesgo
                             </th>
                             <th>
@@ -121,7 +142,7 @@
                             <th>
                                 Impacto
                             </th>
-                            <th>
+                            <th style="text-align:center">
                                 Nivel riesgo
                             </th>
                             <th style="min-width:120px;">
@@ -172,10 +193,7 @@
                             <th style="min-width:120px;">
                                 Riesgo&nbsp;residual
                             </th>
-                            <!--<th>
-                                                                                                                                                    Riesgo total
-                                                                                                                                                </th>-->
-                            <th>
+                            <th class="print-none">
                                 Opciones
                             </th>
                         </tr>
@@ -231,27 +249,44 @@
                     }
                 },
                 {
-                    extend: 'pdfHtml5',
-                    title: `Matriz Riesgos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
                     extend: 'print',
-                    title: `Matriz Riesgos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    // set custom header when print
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+                        let empleado = @json(auth()->user()->empleado->name);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                                <div class="row">
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                    </div>
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        <p>${empresa_actual}</p>
+                                        <strong style="color:#345183">Matriz Análisis de Riesgo Integral</strong>
+                                    </div>
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        Fecha: ${jsDate}
+                                    </div>
+                                </div>
+                            `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
@@ -280,14 +315,16 @@
 
             @can('configuracion_sede_create')
                 let btnAgregar = {
-                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                // titleAttr: 'Agregar sede',
-                // url: "{{ route('admin.matriz-riesgos.create') }}",
-                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    // titleAttr: 'Agregar sede',
+                    // url: "{{ route('admin.matriz-riesgos.create') }}",
+                    // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 // let btnImport = {
                 // text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
@@ -303,29 +340,39 @@
             @can('configuracion_sede_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.matriz-riesgos.sistema-gestion.destroy', 'id') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
-            
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-            
-                return
-                }
-            
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.matriz-riesgos.sistema-gestion.destroy', 'id') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
+
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
+
+                            return
+                        }
+
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -347,35 +394,71 @@
                 },
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_sede',
-                        name: 'id_sede'
+                        name: 'id_sede',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_proceso',
-                        name: 'id_proceso'
+                        name: 'id_proceso',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_responsable',
-                        name: 'id_responsable'
+                        name: 'id_responsable',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'activo_id',
-                        name: 'activo_id'
+                        name: 'activo_id',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_amenaza',
-                        name: 'id_amenaza'
+                        name: 'id_amenaza',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'id_vulnerabilidad',
-                        name: 'id_vulnerabilidad'
+                        name: 'id_vulnerabilidad',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
+                    },
+                    {
+                        data: 'tipo_riesgo',
+                        name: 'tipo_riesgo',
+                        render: function(data, type, row, meta) {
+                            const riesgo = row.tipo_riesgo;
+                            if (riesgo == 1) {
+                                return `<div style="text-align:left">Positivo</div>`;
+                            }
+                            if (riesgo == 0) {
+                                return `<div style="text-align:left">Negativo</div>`;
+                            } else {
+                                return `<div style="text-align:left">Negativo</div>`;
+                            }
+                        }
                     },
                     {
                         data: 'descripcionriesgo',
-                        name: 'descripcionriesgo'
+                        name: 'descripcionriesgo',
                     },
                     {
                         data: 'estrategia_negocio',
@@ -420,16 +503,24 @@
                     },
                     {
                         data: 'probabilidad',
-                        name: 'probabilidad'
+                        name: 'probabilidad',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'impacto',
-                        name: 'impacto'
+                        name: 'impacto',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'nivelriesgo',
                         name: 'nivelriesgo',
-
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'riesgo_total',
@@ -437,19 +528,19 @@
                         render: function(data) {
                             switch (true) {
                                 case data >= 136 && data <= 185:
-                                    return `<div><div>${data} - MUY ALTO</div></div>`;
+                                    return `<div><div style="text-align:center">${data} - MUY ALTO</div></div>`;
                                     break;
                                 case data >= 91 && data <= 135:
-                                    return `<div><div>${data} - ALTO</div></div>`;
+                                    return `<div><div style="text-align:center">${data} - ALTO</div></div>`;
                                     break;
                                 case data >= 46 && data <= 90:
-                                    return `<div><div>${data} - MEDIO</div></div>`;
+                                    return `<div><div style="text-align:center">${data} - MEDIO</div></div>`;
                                     break;
                                 case data >= 0 && data <= 45:
-                                    return `<div><div>${data} - BAJO</div></div>`;
+                                    return `<div><div style="text-align:center">${data} - BAJO</div></div>`;
                                     break;
                                 case data == null:
-                                    return `<div ><div>${data} - BAJO</div></div>`;
+                                    return `<div ><div style="text-align:center">${data} - BAJO</div></div>`;
                                     break;
                                 default:
                                     break;
@@ -522,16 +613,24 @@
                     },
                     {
                         data: 'probabilidad_residual',
-                        name: 'probabilidad_residual'
+                        name: 'probabilidad_residual',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'impacto_residual',
-                        name: 'impacto_residual'
+                        name: 'impacto_residual',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'nivelriesgo_residual',
                         name: 'nivelriesgo_residual',
-
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'riesgo_residual',
@@ -539,19 +638,19 @@
                         render: function(data) {
                             switch (true) {
                                 case data >= 136 && data <= 185:
-                                    return `<div><div>${data} - MUY ALTO</div></div>`;
+                                    return `<div style="text-align:center"><div>${data} - MUY ALTO</div></div>`;
                                     break;
                                 case data >= 91 && data <= 135:
-                                    return `<div><div>${data} - ALTO</div></div>`;
+                                    return `<div style="text-align:center"><div>${data} - ALTO</div></div>`;
                                     break;
                                 case data >= 46 && data <= 90:
-                                    return `<div><div>${data} - MEDIO</div></div>`;
+                                    return `<div style="text-align:center"><div>${data} - MEDIO</div></div>`;
                                     break;
                                 case data >= 0 && data <= 45:
-                                    return `<div><div>${data} - BAJO</div></div>`;
+                                    return `<div style="text-align:center"><div>${data} - BAJO</div></div>`;
                                     break;
                                 case data == null:
-                                    return `<div ><div>${data} - BAJO</div></div>`;
+                                    return `<div style="text-align:center"><div>${data} - BAJO</div></div>`;
                                     break;
                                 default:
                                     break;
@@ -576,56 +675,56 @@
                     let color2 = '';
                     switch (true) {
                         case data.riesgo_total >= 136 && data.riesgo_total <= 185:
-                            background = 'red';
-                            color = 'white';
+                            background = Number(data.tipo_riesgo) == 0 ? '#FF0000' : '#00F06F';
+                            color = Number(data.tipo_riesgo) == 0 ? '#ffffff' : "#000000";
                             break;
                         case data.riesgo_total >= 91 && data.riesgo_total <= 135:
-                            background = 'orange';
+                            background = Number(data.tipo_riesgo) == 0 ? '#FFB900' : "#92D050";
                             color = 'white';
                             break;
                         case data.riesgo_total >= 46 && data.riesgo_total <= 90:
-                            background = 'yellow';
+                            background = Number(data.tipo_riesgo) == 0 ? 'yellow' : "#92CDDC";
                             color = 'black';
                             break;
                         case data.riesgo_total >= 0 && data.riesgo_total <= 45:
-                            background = '#89E72C';
-                            color2 = 'black';
+                            background = Number(data.tipo_riesgo) == 0 ? '#89E72C' : "#003BF6";
+                            color = Number(data.tipo_riesgo) == 0 ? 'black' : '#ffffff';
                             break;
                         case data.riesgo_total == null:
-                            background = '#89E72C';
-                            color2 = 'black';
+                            background = Number(data.tipo_riesgo) == 0 ? '#89E72C' : "#003BF6";
+                            color = Number(data.tipo_riesgo) == 0 ? 'black' : "#ffffff";
                             break;
                         default:
                             break;
                     }
                     switch (true) {
                         case data.riesgo_residual >= 136 && data.riesgo_residual <= 185:
-                            background2 = 'red';
+                            background2 = Number(data.tipo_riesgo) == 0 ? 'red' : "#00F06F";
                             color2 = 'white';
                             break;
                         case data.riesgo_residual >= 91 && data.riesgo_residual <= 135:
-                            background2 = 'orange';
+                            background2 = Number(data.tipo_riesgo) == 0 ? 'orange' : "#92D050";
                             color2 = 'white';
                             break;
                         case data.riesgo_residual >= 46 && data.riesgo_residual <= 90:
-                            background2 = 'yellow';
+                            background2 = Number(data.tipo_riesgo) == 0 ? 'yellow' : "#92CDDC";
                             color2 = 'black';
                             break;
                         case data.riesgo_residual >= 0 && data.riesgo_residual <= 45:
-                            background2 = '#89E72C';
-                            color2 = 'black';
+                            background2 = Number(data.tipo_riesgo) == 0 ? '#89E72C' : "#003BF6";
+                            color2 = Number(data.tipo_riesgo) == 0 ? 'black' : "#ffffff";
                             break;
                         case data.riesgo_residual == null:
-                            background2 = '#89E72C';
-                            color2 = 'black';
+                            background2 = Number(data.tipo_riesgo) == 0 ? '#89E72C' : "#003BF6";
+                            color2 = Number(data.tipo_riesgo) == 0 ? 'black' : "#ffffff";
                             break;
                         default:
                             break;
                     }
-                    $(cells[21]).css('background-color', background)
-                    $(cells[21]).css('color', color)
-                    $(cells[36]).css('background-color', background2)
-                    $(cells[36]).css('color', color2)
+                    $(cells[22]).css('background-color', background)
+                    $(cells[22]).css('color', color)
+                    $(cells[37]).css('background-color', background2)
+                    $(cells[37]).css('color', color2)
                 },
 
                 order: [
@@ -633,6 +732,16 @@
                 ],
             };
             let table = $('.datatable-Matriz').DataTable(dtOverrideGlobals);
+            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function(){
+                let titulo_tabla = `
+                    <h5>
+                        <strong>
+                            Matriz Análisis de Riesgo Integral
+                        </strong>
+                    </h5>
+                `;
+                imprimirTabla('datatable-Matriz', titulo_tabla);
+            });
         });
     </script>
 

@@ -12,6 +12,7 @@ class TimesheetCliente extends Model
     protected $table = 'timesheet_clientes';
 
     protected $fillable = [
+        'identificador',
         'razon_social',
         'nombre',
         'rfc',

@@ -22,8 +22,7 @@
                         <th style="min-width:200px;">Fecha de identificación</th>
                         <th style="min-width:200px;">Fecha de cierre</th>
                         <th style="min-width:200px;">Ubicación</th>
-                        <th style="min-width:200px;">Proceso</th>
-                        <th style="min-width:200px;">Otros</th>
+                        <th style="min-width:200px;">Área</th>
                         <th style="min-width: 500px;">Descripción</th>
                         <th>Opciones</th>
                     </tr>
@@ -32,8 +31,8 @@
                     @foreach($quejas as $queja)
                         <tr>
                             <td>{{ $queja->folio }}</td>
-                            <td>{{ $queja->anonimo }}</td>
-                            <td>{{ $queja->estatus }}</td>
+                            <td>{{ $queja->cliente->nombre}}</td>
+                            <td>{{ $queja->proyectos->proyecto}}</td>
                             <td>{{ $queja->nombre }}</td>
                             <td>{{ $queja->puesto }}</td>
                             <td>{{ $queja->telefono }}</td>
@@ -42,8 +41,7 @@
                             <td>{{ $queja->fecha }}</td>
                             <td>{{ $queja->fecha_cierre }}</td>
                             <td>{{ $queja->ubicacion }}</td>
-                            <td>{{ $queja->proceso_quejado }}</td>
-                            <td>{{ $queja->otro_quejado }}</td>
+                            <td>{{ $queja->area_quejado }}</td>
                             <td>{{ $queja->descripcion }}</td>
                             <td>
                                 <div class="row">

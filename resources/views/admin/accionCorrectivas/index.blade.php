@@ -2,6 +2,9 @@
 @section('content')
     {{ Breadcrumbs::render('admin.accion-correctivas.index') }}
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centro_atencion_cards.css') }}">
+
+
     <style>
         .table tr th:nth-child(1) {
             min-width: 80px !important;
@@ -13,6 +16,8 @@
             text-align: center !important;
         }
 
+
+
         .descripcion {
             text-align: justify !important;
         }
@@ -22,19 +27,61 @@
             text-align: justify !important;
         }
 
+
+        .textoCentroCard {
+            font-size: 12pt !important;
+        }
+
     </style>
     <h5 class="col-12 titulo_general_funcion">Acciones Correctivas</h5>
 
     <div class="caja_botones_menu mt-4">
-        <a href="#" data-tabs="indexAc" class="btn_activo"><i class="mr-2 fas fa-clipboard-list"></i>Acciones
+        <a href="#" data-tabs="aprobaciones" class="btn_activo"><i class="mr-2 bi bi-check2"></i>Solicitudes</a>
+        <a href="#" data-tabs="indexAc"><i class="mr-2 fas fa-clipboard-list"></i>Acciones
             Correctivas</a>
-        <a href="#" data-tabs="aprobaciones"><i class="mr-2 bi bi-check2"></i>Aprobaciones</a>
     </div>
-
+    <div class="row mt-4 ">
+        <div class="col-6 col-md-2">
+            <div class="tarjetas_seguridad_indicadores cdr-celeste">
+                <div class="numero"><i class="fas fa-exclamation-triangle mr-2"></i> {{ $total_AC }}</div>
+                <div class="textoCentroCard">AC</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2 ">
+            <div class="tarjetas_seguridad_indicadores cdr-amarillo">
+                <div class="numero"><i class="far fa-arrow-alt-circle-right mr-2"></i> {{ $nuevos_AC }}</div>
+                <div class="textoCentroCard">Sin atender</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2">
+            <div class="tarjetas_seguridad_indicadores cdr-morado">
+                <div class="numero"><i class="fas fa-redo-alt mr-2"></i> {{ $en_curso_AC }}</div>
+                <div class="textoCentroCard">En curso</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2">
+            <div class="tarjetas_seguridad_indicadores cdr-azul">
+                <div class="numero"><i class="fas fa-history mr-2"></i> {{ $en_espera_AC }}</div>
+                <div class="textoCentroCard">En espera</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2">
+            <div class="tarjetas_seguridad_indicadores cdr-verde">
+                <div class="numero"><i class="far fa-check-circle mr-2"></i> {{ $cerrados_AC }} </div>
+                <div class="textoCentroCard">Cerrados</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2">
+            <div class="tarjetas_seguridad_indicadores cdr-rojo">
+                <div class="numero"><i class="bi bi-dash-circle mr-2"></i></strong> {{ $cancelados_AC }}</div>
+                <div class="textoCentroCard">No procedentes</div>
+            </div>
+        </div>
+    </div>
     <div class="caja_caja_secciones">
         <div class="caja_secciones">
-            <section id="indexAc" class="caja_tab_reveldada">
-                <div class="mt-5 card">
+            <section id="indexAc">
+                <div class="mt-1 card">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-2">
@@ -49,6 +96,7 @@
                     </div>
                     <div class="card">
                         <div class="card-body datatable-fix">
+
                             <table class="table table-bordered w-100 datatable-AccionCorrectiva">
                                 <thead class="thead-dark">
                                     <tr>
@@ -67,7 +115,7 @@
                                         <th style="vertical-align: top">
                                             Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;recepción
                                         </th>
-                                        <th style="vertical-align: top">
+                                        <th style="min-width:60px;">
                                             Estatus
                                         </th>
                                         <th style="vertical-align: top">
@@ -115,38 +163,39 @@
                 </div>
             </section>
 
-            <section id="aprobaciones">
-                <div class="mt-5 card">
-                    <table id="tabla_usuario_aprobaciones" class="table">
-                        <thead>
-                            <tr>
-                                <th style=" min-width:200px; text-align: center !important;">
-                                    Folio
-                                </th>
-                                <th style=" min-width:200px; text-align: center !important;">
-                                    Origen
-                                </th>
-                                <th style="vertical-align: top; text-align: center !important; min-width:150px;">
-                                    Fecha
-                                </th>
-                                <th style="vertical-align: top; text-align: center !important; min-width:80px;">
-                                    Solicitante
-                                </th>
-                                <th style="vertical-align: top; text-align: center !important; min-width:80px;">
-                                    Aprobador
-                                </th>
-                                <th style="vertical-align: top; text-align: center !important; min-width:70px;">
-                                    Revisar
-                                </th>
-                                <th style="vertical-align: top  min-width:80px;">
-                                    Opciones
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
+            <section id="aprobaciones" class="caja_tab_reveldada">
+                <div class="mt-1 card">
+                    <div class="card-body datatable-fix">
+                        <table id="tabla_usuario_aprobaciones" class="table">
+                            <thead>
+                                <tr>
+                                    <th style=" min-width:80px; text-align: left !important;">
+                                        Folio
+                                    </th>
+                                    <th style=" min-width:120px !important; text-align: left !important;">
+                                        Origen
+                                    </th>
+                                    <th style="vertical-align: top; text-align: left !important; min-width:70px;">
+                                        Fecha
+                                    </th>
+                                    <th style="vertical-align: top; text-align: center !important; min-width:80px;">
+                                        Solicitante
+                                    </th>
+                                    <th style="vertical-align: top; text-align: center !important; min-width:80px;">
+                                        Aprobador
+                                    </th>
+                                    <th style="vertical-align: top; text-align: center !important; min-width:70px;">
+                                        Revisar
+                                    </th>
+                                    <th style="vertical-align: top  min-width:80px;">
+                                        Opciones
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -426,6 +475,35 @@
                         name: '{{ trans('global.actions') }}'
                     }
                 ],
+                createdRow: (row, data, dataIndex, cells) => {
+                    let fondo = "green";
+                        let letras = "white";
+                        if (data.estatus == 'Sin atender') {
+                            fondo = "#FFCB63";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'En curso') {
+                            fondo = "#AC84FF";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'En espera') {
+                            fondo = "#6863FF";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'Cerrado') {
+                            fondo = "#6DC866";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'No procedente') {
+                            fondo = "#FF417B";
+                            letras = "white";
+                        }
+                        if(data.estatus !=null){
+                            $(cells[4]).css('background-color', fondo)
+                            $(cells[4]).css('color', letras)
+                        }
+
+                    },
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
@@ -611,8 +689,15 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
+
                             if (row.desk_queja_cliente.length > 0) {
-                                return row.desk_queja_cliente[0].pivot.created_at;
+                                let stringDate = row.desk_queja_cliente[0].pivot.created_at;
+                                let splitDate = stringDate.split('T');
+                                let newDate = splitDate[0];
+                                let splitNewDate = newDate.split('-');
+                                let formatted_date =
+                                    `${splitNewDate[2]}-${splitNewDate[1]}-${splitNewDate[0]}`;
+                                return formatted_date;
                             } else {
 
                                 return `Sin definir`
@@ -623,7 +708,7 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             if (row.desk_queja_cliente.length > 0) {
-                                return `<div><img class="img_empleado" src="${row.desk_queja_cliente[0].registro.avatar_ruta}" title="${row.desk_queja_cliente[0].registro.name}"></div>`;
+                                return `<div><img class="ml-4 img_empleado" src="${row.desk_queja_cliente[0].registro.avatar_ruta}" title="${row.desk_queja_cliente[0].registro.name}"></div>`;
                             } else {
 
                                 return `Sin definir`
@@ -634,7 +719,7 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             if (row.desk_queja_cliente.length > 0) {
-                                return `<div><img class="img_empleado" src="${row.desk_queja_cliente[0].responsable_sgi.avatar_ruta}" title="${row.desk_queja_cliente[0].responsable_sgi.name}"></div>`;
+                                return `<div><img class="ml-4 img_empleado" src="${row.desk_queja_cliente[0].responsable_sgi.avatar_ruta}" title="${row.desk_queja_cliente[0].responsable_sgi.name}"></div>`;
                             } else {
 
                                 return `Sin definir`
@@ -646,7 +731,7 @@
                         render: function(data, type, row, meta) {
                             if (row.desk_queja_cliente.length > 0) {
                                 let link = `<a href="{{ route('admin.desk.quejasClientes-edit', ':id') }}">
-                                    <i class="fas fa-eye"></i>
+                                    <div class=""><i class="ml-4 text-center fas fa-eye"></i></div>
                                     </a>`;
                                 link = link.replaceAll(':id', row.desk_queja_cliente[0].id);
                                 console.log(link);
@@ -684,45 +769,79 @@
             window.aprobarAc = (id_accion_corectiva, aprobada, id_queja_cliente) => {
                 let url = "{{ route('admin.accion-correctivas.aprobarRechazar') }}";
                 Swal.fire({
-                    title:`¿Está seguro(a) de ${aprobada?'aprobar':'rechazar'} este ticket?`,
-                    text: '',
+                    title: `¿Está seguro(a) de ${aprobada?'aprobar':'rechazar'} este ticket?`,
+                    text: 'Comentarios',
                     icon: 'warning',
+                    input: 'textarea',
+                    inputAttributes: {
+                        input: 'textarea',
+                        required: !aprobada
+                    },
+                    inputValidator: (value) => {
+                        if (!aprobada) {
+                            if (value.trim().length < 3) {
+                                return 'El campo comentarios debe tener al menos 3 caracteres'
+                            }
+                        }
+
+                    },
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
                     confirmButtonText: `Si, ${aprobada?'aprobar':'rechazar'}`,
-                    cancelButtonText: 'Cancelar'
+                    cancelButtonText: 'Cancelar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (login) => {
+                        console.log(login);
+
+                        return fetch(url, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': _token,
+                                    'Content-Type': 'application/json',
+                                    Accept: 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    id: id_accion_corectiva,
+                                    aprobada,
+                                    id_queja_cliente,
+                                    comentarios: login
+                                })
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                }
+                                return response.json()
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(
+                                    `Request failed: ${error}`
+                                )
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            url,
-                            data: {
-                                id: id_accion_corectiva,
-                                aprobada, id_queja_cliente
-                            },
-                            dataType: "JSON",
-                            success: function(response) {
-                                if (response.success) {
-                                    if (response.aprobado) {
-                                        table.ajax.reload()
-                                        toastr.success(response.message);
-                                    } else {
-                                        toastr.success(response.message);
-                                    }
-                                    tableAprobacion.ajax.reload()
-                                }
-                            },
-                            error: function(request, status,
-                                error) {
-                                toastr.error(error);
-                            }
-                        });
+                        if (result.value.success) {
+                            Swal.fire(
+                                `${result.value.message}`,
+                                `La respuesta ha sido enviada con éxito`,
+                                'success'
+                            ).then(() => {
+                                // window.location.reload();
+                                table.ajax.reload();
+                                tableAprobacion.ajax.reload()
+
+                            });
+
+                        }
 
                     }
                 })
 
+
             }
+
+
         });
     </script>
 @endsection

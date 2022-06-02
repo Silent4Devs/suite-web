@@ -22,13 +22,13 @@
     </div>
     <div class=" form-group col-lg-2 col-md-2 col-sm-12">
         <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
-        <div class="form-control">{{ $accionCorrectiva->folio }}</div>
+        <div class="form-control mt-2" readonly>{{ $accionCorrectiva->folio }}</div>
     </div>
 
     <div class="form-group col-md-6 col-lg-6 col-sm-12">
         <label for="tema"><i class="fas fa-text-width iconos-crear"></i>Título corto de la acción correctiva
         </label>
-        <input class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" name="tema" id="tema"
+        <input class="form-control mt-2 {{ $errors->has('tema') ? 'is-invalid' : '' }}" name="tema" id="tema"
             value="{{ old('tema', $accionCorrectiva->tema) }}">
         @if ($errors->has('tema'))
             <div class="invalid-feedback">
@@ -38,26 +38,25 @@
         <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.tema_helper') }}</span>
     </div>
 
+
+
     @if ($accionCorrectiva->es_externo)
         <div class="form-group col-4">
             <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-            <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'solicitada' ? 'selected' : '' }}
-                    value="nuevo">Solicitada
+            <select name="estatus" class="form-control select2" id="opciones" onchange='cambioOpciones();'>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'Sin atender' ? 'selected' : '' }} value="Sin atender">
+                    Sin atender
                 </option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'nuevo' ? 'selected' : '' }} value="nuevo">
-                    Nuevo
-                </option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'en curso' ? 'selected' : '' }}
-                    value="en curso">
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'En curso' ? 'selected' : '' }}
+                    value="En curso">
                     En curso</option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'en espera' ? 'selected' : '' }}
-                    value="en espera">En espera</option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'cerrado' ? 'selected' : '' }}
-                    value="cerrado">
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'En espera' ? 'selected' : '' }}
+                    value="En espera">En espera</option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'Cerrado' ? 'selected' : '' }}
+                    value="Cerrado">
                     Cerrado</option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'cancelado' ? 'selected' : '' }}
-                    value="cancelado">Cancelado</option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'No procedente' ? 'selected' : '' }}
+                    value="No procedente">No procedente</option>
             </select>
         </div>
     @endif
@@ -65,20 +64,20 @@
     @if (!$accionCorrectiva->es_externo)
         <div class="form-group col-4">
             <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-            <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'nuevo' ? 'selected' : '' }} value="nuevo">
-                    Nuevo
+            <select name="estatus" class="form-control select2" id="opciones" onchange='cambioOpciones();'>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'Sin atender' ? 'selected' : '' }} value="Sin atender">
+                    Sin atender
                 </option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'en curso' ? 'selected' : '' }}
-                    value="en curso">
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'En curso' ? 'selected' : '' }}
+                    value="En curso">
                     En curso</option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'en espera' ? 'selected' : '' }}
-                    value="en espera">En espera</option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'cerrado' ? 'selected' : '' }}
-                    value="cerrado">
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'En espera' ? 'selected' : '' }}
+                    value="En espera">En espera</option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'Cerrado' ? 'selected' : '' }}
+                    value="Cerrado">
                     Cerrado</option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'cancelado' ? 'selected' : '' }}
-                    value="cancelado">Cancelado</option>
+                <option {{ old('estatus', $accionCorrectiva->estatus) == 'No procedente' ? 'selected' : '' }}
+                    value="No procedente">Cancelado</option>
             </select>
         </div>
     @endif
@@ -159,6 +158,83 @@
 
     @endif
 
+    {{-- @if ($accionCorrectiva->es_externo)
+
+        <div class="mt-1 form-group col-12">
+            <b>Solicitó Acción Correctiva:</b>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_reporto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+            <select class="form-control {{ $errors->has('id_reporto') ? 'is-invalid' : '' }}" name="id_reporto"
+                id="id_reporto" >
+                @foreach ($empleados as $id => $empleado)
+                    <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                        data-area="{{ $empleado->area->area }}"
+                        {{ old('id_reporto', $accionCorrectiva->id_reporto) == $empleado->id ? 'selected' : '' }}>
+
+                        {{ $empleado->name }}
+                    </option>
+                @endforeach
+            </select>
+            @if ($errors->has('id_reporto'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('id_reporto') }}
+                </div>
+            @endif
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="id_reporto_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+            <div class="form-control" id="reporto_puesto"  ></div>
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_reporto_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+            <div class="form-control" id="reporto_area"  ></div>
+        </div>
+
+    @endif --}}
+
+    {{-- @if ($accionCorrectiva->es_externo)
+
+        <div class="mt-1 form-group col-12">
+            <b>Solicitó Acción Correctiva:</b>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_reporto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+            <select class="form-control {{ $errors->has('id_reporto') ? 'is-invalid' : '' }}" name="id_reporto"
+                id="id_reporto" disabled>
+                @foreach ($empleados as $id => $empleado)
+                    <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                        data-area="{{ $empleado->area->area }}"
+                        {{ old('id_reporto', $accionCorrectiva->id_reporto) == $empleado->id ? 'selected' : '' }}>
+
+                        {{ $empleado->name }}
+                    </option>
+                @endforeach
+            </select>
+            @if ($errors->has('id_reporto'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('id_reporto') }}
+                </div>
+            @endif
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="id_reporto_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+            <div class="form-control" id="reporto_puesto" readonly></div>
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_reporto_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+            <div class="form-control" id="reporto_area" readonly></div>
+        </div>
+
+    @endif --}}
 
     @if ($accionCorrectiva->es_externo)
 
@@ -342,7 +418,7 @@
     @if ($accionCorrectiva->es_externo)
         <div class="mt-3 form-group col-3">
             <label class="form-label"><i class="fas fa-user-plus iconos-crear"></i>Otro(s)</label>
-            <textarea style="min-height:187px;" name="otro_quejado" class="form-control">{{ old('otro_quejado', $accionCorrectiva->otro_quejado) }}
+            <textarea style="min-height:187px;" name="otros" class="form-control">{{ old('otro_quejado', $accionCorrectiva->otro_quejado) }}
     </textarea>
         </div>
     @endif
@@ -379,3 +455,25 @@
     </div>
 
 </form>
+
+
+<script type="text/javascript">
+    window.initSelect2 = () => {
+
+        $('.select2').select2({
+
+            'theme': 'bootstrap4'
+
+        });
+
+    }
+
+
+    initSelect2();
+
+    Livewire.on('select2', () => {
+
+        initSelect2();
+
+    });
+</script>

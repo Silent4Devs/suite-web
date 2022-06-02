@@ -796,7 +796,7 @@
                     <font class="letra_blanca"> Ajustes de Usuario </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
-                    @can('permission_access')
+                    {{-- @can('permission_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.permisos.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/permisos') || request()->is('admin/permisos/*') ? 'active' : '' }}">
@@ -804,7 +804,7 @@
                                 <font class="letra_blanca"> {{ trans('cruds.permission.title') }} </font>
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
                     @can('role_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.roles.index') }}"
@@ -834,7 +834,7 @@
                             </a>
                         </li>
                     @endcan --}}
-                    @can('audit_log_access')
+                    {{-- @can('audit_log_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.audit-logs.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/audit-logs') || request()->is('admin/audit-logs/*') ? 'active' : '' }}">
@@ -855,7 +855,7 @@
                                     Notificaciones </font>
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
                     {{-- @can('enlaces_ejecutar_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.enlaces-ejecutars.index') }}"
