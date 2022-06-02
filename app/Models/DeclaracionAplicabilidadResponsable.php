@@ -50,7 +50,7 @@ class DeclaracionAplicabilidadResponsable extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
     }
 
     public function notificacion()

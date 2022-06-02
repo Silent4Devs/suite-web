@@ -100,7 +100,7 @@ class AnalisisdeRiesgosController extends Controller
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.analisis-riesgos.index', compact('empresa_actual','logo_actual'));
+        return view('admin.analisis-riesgos.index', compact('empresa_actual', 'logo_actual'));
     }
 
     /**
@@ -111,7 +111,7 @@ class AnalisisdeRiesgosController extends Controller
     public function create()
     {
         abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         //$tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -164,7 +164,7 @@ class AnalisisdeRiesgosController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $analisis = AnalisisDeRiesgo::find($id);
 
         return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));
@@ -211,7 +211,7 @@ class AnalisisdeRiesgosController extends Controller
 
     public function getEmployeeData(Request $request)
     {
-        $empleados = Empleado::find($request->id);
+        $empleados = Empleado::alta()->find($request->id);
         $areas = Area::find($empleados->area_id);
 
         return response()->json(['puesto' => $empleados->puesto, 'area' => $areas->area]);

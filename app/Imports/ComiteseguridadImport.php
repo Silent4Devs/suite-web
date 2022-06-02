@@ -17,9 +17,9 @@ class ComiteseguridadImport implements ToModel
     {
         return new Comiteseguridad([
             'nombrerol' => $row[0],
-            'fechavigor'=> $row[1],
-            'id_asignada'=> $this->obtenerEmpleadoPorNombre($row[2]),
-            'responsabilidades'=> $row[3],
+            'fechavigor' => $row[1],
+            'id_asignada' => $this->obtenerEmpleadoPorNombre($row[2]),
+            'responsabilidades' => $row[3],
         ]);
     }
 
@@ -35,7 +35,7 @@ class ComiteseguridadImport implements ToModel
 
     public function obtenerEmpleadoPorNombre($nombre)
     {
-        $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+        $empleado_bd = Empleado::alta()->select('id', 'name')->where('name', $nombre)->first();
 
         if ($empleado_bd) {
             return $empleado_bd->id;

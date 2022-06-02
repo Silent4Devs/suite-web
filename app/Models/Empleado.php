@@ -58,6 +58,8 @@ class Empleado extends Model
 
     // public $cacheFor = 3600;
     // protected static $flushCacheOnUpdate = true;
+    const BAJA = 'baja';
+    const ALTA = 'alta';
 
     protected $table = 'empleados';
 
@@ -141,6 +143,8 @@ class Empleado extends Model
         'estado',
         'pais',
         'cp',
+        'fecha_baja',
+        'razon_baja',
     ];
 
     public function getActualBirdthdayAttribute()
@@ -320,17 +324,32 @@ class Empleado extends Model
 
     public function supervisor()
     {
-        return $this->belongsTo(self::class);
+        return $this->belongsTo(self::class)->alta();
+    }
+
+    public function supervisorEv360()
+    {
+        return $this->belongsTo(self::class, 'supervisor_id', 'id');
     }
 
     public function onlyChildren()
     {
-        return $this->hasMany(self::class, 'supervisor_id', 'id')->select('id');
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->select('id', 'name', 'foto');
     }
 
     public function children()
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+    }
+
+    public function scopeAlta($query)
+    {
+        return $query->where('estatus', 'alta');
+    }
+
+    public function scopeBaja($query)
+    {
+        return $query->where('estatus', 'alta');
     }
 
     public function empleadoEsSupervisor()
@@ -541,5 +560,10 @@ class Empleado extends Model
     public function timesheet()
     {
         return $this->hasMany(Timesheet::class, 'empleado_id', 'id')->orderBy('id')->with('horas');
+    }
+
+    public function comiteSeguridad()
+    {
+        return $this->hasMany(Comiteseguridad::class, 'id_asignada', 'id')->orderBy('id');
     }
 }

@@ -22,68 +22,68 @@ class ActivoInformacion extends Model
     protected $appends = ['riesgo_activo', 'name', 'content', 'color', 'nivel_riesgo_ai'];
 
     protected $fillable = [
-    'identificador',
-    'nombreVP',
-    'duenoVP',
-    'nombre_direccion',
-    'custodioALDirector',
-    'activo_informacion',
-    'formato',
-    'proceso_id',
-    'creacion',
-    'recepcion',
-    'otra_recepcion',
-    'uso_digital',
-    'nombre_aplicacion',
-    'carpeta_compartida',
-    'otra_AppCarpeta',
-    'uso_fisico',
-    'otro',
-    'imprime',
-    'direccion_envio',
-    'vp_envio',
-    'envio_digital',
-    'otro_envio_digital',
-    'informacion_total',
-    'proveedor_envio',
-    'envio_ext',
-    'otro_envioExt',
-    'informacion_totalExt',
-    'acceso_informacionExt',
-    'requiere_info',
-    'almacenamiento_digital',
-    'almacenamiento_aplicacion',
-    'carpeta_compartida_almacenamiento',
-    'otra_AppCarpeta_almacenamiento',
-    'almacenamiento_fisico',
-    'otro_almacenamiento_fisico',
-    'ubicacion_fisica',
-    'almacenamiento_acceso',
-    'acceso_requerido',
-    'tiempo_almacenamiento',
-    'destruye',
-    'eliminacion_digital',
-    'otro_eliminacion',
-    'eliminacion_fisica',
-    'question',
-    'question_1',
-    'question_2',
-    'question_3',
-    'question_4',
-    'question_5',
-    'question_6',
-    'question_7',
-    'confidencialidad_id',
-    'integridad_id',
-    'disponibilidad_id',
-    'valor_criticidad',
-    'nombredevp_id',
-    'name_direccion_id',
-    'matriz_id',
-    'vp_id',
-    'created_at',
-    'updated_at',
-    'deleted_at',
+        'identificador',
+        'nombreVP',
+        'duenoVP',
+        'nombre_direccion',
+        'custodioALDirector',
+        'activo_informacion',
+        'formato',
+        'proceso_id',
+        'creacion',
+        'recepcion',
+        'otra_recepcion',
+        'uso_digital',
+        'nombre_aplicacion',
+        'carpeta_compartida',
+        'otra_AppCarpeta',
+        'uso_fisico',
+        'otro',
+        'imprime',
+        'direccion_envio',
+        'vp_envio',
+        'envio_digital',
+        'otro_envio_digital',
+        'informacion_total',
+        'proveedor_envio',
+        'envio_ext',
+        'otro_envioExt',
+        'informacion_totalExt',
+        'acceso_informacionExt',
+        'requiere_info',
+        'almacenamiento_digital',
+        'almacenamiento_aplicacion',
+        'carpeta_compartida_almacenamiento',
+        'otra_AppCarpeta_almacenamiento',
+        'almacenamiento_fisico',
+        'otro_almacenamiento_fisico',
+        'ubicacion_fisica',
+        'almacenamiento_acceso',
+        'acceso_requerido',
+        'tiempo_almacenamiento',
+        'destruye',
+        'eliminacion_digital',
+        'otro_eliminacion',
+        'eliminacion_fisica',
+        'question',
+        'question_1',
+        'question_2',
+        'question_3',
+        'question_4',
+        'question_5',
+        'question_6',
+        'question_7',
+        'confidencialidad_id',
+        'integridad_id',
+        'disponibilidad_id',
+        'valor_criticidad',
+        'nombredevp_id',
+        'name_direccion_id',
+        'matriz_id',
+        'vp_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public function getNivelRiesgoAiAttribute()
@@ -95,8 +95,8 @@ class ActivoInformacion extends Model
         $riesgo = $criticidad * $contenedores;
 
         return [
-            'riesgo'=>$riesgo,
-            'coordenada'=>"{$criticidad},{$contenedores}",
+            'riesgo' => $riesgo,
+            'coordenada' => "{$criticidad},{$contenedores}",
         ];
     }
 
@@ -157,7 +157,7 @@ class ActivoInformacion extends Model
 
     public function dueno()
     {
-        return $this->belongsTo(Empleado::class, 'duenoVP', 'id');
+        return $this->belongsTo(Empleado::class, 'duenoVP', 'id')->alta();
     }
 
     public function vp()
@@ -167,7 +167,7 @@ class ActivoInformacion extends Model
 
     public function custodio()
     {
-        return $this->belongsTo(Empleado::class, 'custodioALDirector', 'id');
+        return $this->belongsTo(Empleado::class, 'custodioALDirector', 'id')->alta();
     }
 
     public function direccion()

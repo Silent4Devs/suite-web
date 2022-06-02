@@ -22,7 +22,7 @@ class AceptoPolitica extends Model
 
     public function aceptador()
     {
-        return $this->belongsTo(Empleado::class, 'id_empleado');
+        return $this->belongsTo(Empleado::class, 'id_empleado')->alta();
     }
 
     public function politica()

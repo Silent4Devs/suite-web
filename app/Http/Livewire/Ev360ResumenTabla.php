@@ -311,8 +311,9 @@ class Ev360ResumenTabla extends Component
                     ->where('evaluado_id', $evaluado->id)
                     ->where('evaluador_id', $supervisorObjetivos->evaluador_id)
                     ->orderBy('id')->get();
+
                 $evaluadores_objetivos->push([
-                    'id' => $evaluado->supervisor->id, 'nombre' => $evaluado->supervisor->name,
+                    'id' => $evaluado->supervisorEv360->id, 'nombre' => $evaluado->supervisorEv360->name,
                     'esSupervisor' => true,
                     'esAutoevaluacion' => false,
                     'objetivos' => $objetivos_calificaciones->map(function ($objetivo) {
@@ -399,7 +400,7 @@ class Ev360ResumenTabla extends Component
 
         return [
             'id' => $evaluador_empleado->id, 'nombre' => $evaluador_empleado->name,
-            'esSupervisor' => $evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->evaluador_id ? true : false) : false,
+            'esSupervisor' => $evaluado->supervisorEv360 ? ($evaluado->supervisorEv360->id == $evaluador->evaluador_id ? true : false) : false,
             'esAutoevaluacion' => $evaluado->id == $evaluador->evaluador_id ? true : false,
             'tipo' => $evaluador->tipo_formateado,
             'competencias' => $evaluaciones_competencias->map(function ($competencia) use ($evaluador, $evaluado, $competencias) {

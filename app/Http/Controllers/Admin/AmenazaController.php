@@ -77,7 +77,7 @@ class AmenazaController extends AppBaseController
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.amenazas.index', compact('logo_actual','empresa_actual'));
+        return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual'));
     }
 
     /**
@@ -88,7 +88,7 @@ class AmenazaController extends AppBaseController
     public function create()
     {
         abort_if(Gate::denies('analisis_de_riesgos_amenazas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $amenaza= new Amenaza();
+        $amenaza = new Amenaza();
 
         return view('admin.amenazas.create', compact('amenaza'));
     }

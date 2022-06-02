@@ -170,6 +170,6 @@ class User extends Authenticatable
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado');
+        return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
     }
 }

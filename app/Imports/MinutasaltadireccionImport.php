@@ -51,7 +51,7 @@ class MinutasaltadireccionImport implements ToModel
 
     public function obtenerResponsablePorNombre($nombre)
     {
-        $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+        $empleado_bd = Empleado::alta()->select('id', 'name')->where('name', $nombre)->first();
 
         if ($empleado_bd) {
             return $empleado_bd->id;

@@ -71,7 +71,7 @@ class AuditoriaAnual extends Model
 
     public function auditorlider()
     {
-        return $this->belongsTo(Empleado::class, 'auditorlider_id');
+        return $this->belongsTo(Empleado::class, 'auditorlider_id')->alta();
     }
 
     public function team()

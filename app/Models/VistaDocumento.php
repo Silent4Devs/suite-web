@@ -21,7 +21,7 @@ class VistaDocumento extends Model
 
     public function empleados()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
     }
 
     public function docummentos()

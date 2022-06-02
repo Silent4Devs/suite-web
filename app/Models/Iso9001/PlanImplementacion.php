@@ -56,14 +56,14 @@ class PlanImplementacion extends Model
 
     public function getResourcesAttribute()
     {
-        $empleado = Empleado::all();
+        $empleado = Empleado::alta()->get();
 
         return $empleado;
     }
 
     public function elaborador()
     {
-        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id');
+        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->alta();
     }
 
     public function matriz_requsitos_legales()
