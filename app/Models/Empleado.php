@@ -58,6 +58,8 @@ class Empleado extends Model
 
     // public $cacheFor = 3600;
     // protected static $flushCacheOnUpdate = true;
+    const BAJA = 'baja';
+    const ALTA = 'alta';
 
     protected $table = 'empleados';
 
@@ -321,7 +323,11 @@ class Empleado extends Model
 
     public function supervisor()
     {
-        return $this->belongsTo(self::class);
+        return $this->belongsTo(self::class)->alta();
+    }
+    public function supervisorEv360()
+    {
+        return $this->belongsTo(Empleado::class, 'supervisor_id', 'id');
     }
 
     public function onlyChildren()

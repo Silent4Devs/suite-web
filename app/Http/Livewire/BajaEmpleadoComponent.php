@@ -7,6 +7,7 @@ use App\Models\Documento;
 use App\Models\Empleado;
 use App\Models\Recurso;
 use App\Models\RevisionDocumento;
+use App\Models\User;
 use App\Traits\EmpleadoFunciones;
 use App\Traits\ObtenerOrganizacion;
 use Livewire\Component;
@@ -26,6 +27,18 @@ class BajaEmpleadoComponent extends Component
     public $misActivos;
     public $misCapacitaciones;
 
+    protected $rules = [
+        'fechaBaja' => 'required|date',
+        'razonBaja' => 'required|string|max:20000',
+    ];
+
+    protected $messages = [
+        'fechaBaja.required' => 'La fecha de baja es requerida',
+        'fechaBaja.date' => 'La fecha de baja debe ser una fecha válida',
+        'razonBaja.required' => 'La razón de baja es requerida',
+        'razonBaja.string' => 'La razón de baja debe ser un texto',
+        'razonBaja.max' => 'La razón de baja debe tener como máximo 20000 caracteres',
+    ];
 
     public function hydrate()
     {
@@ -103,11 +116,17 @@ class BajaEmpleadoComponent extends Component
 
     public function darDeBaja()
     {
+        $this->validate($this->rules, $this->messages);
         $this->empleado->update([
+            'estatus' => Empleado::BAJA,
             'fecha_baja' => $this->fechaBaja,
             'razon_baja' => $this->razonBaja,
         ]);
-        // $this->empleado->delete();
+        $user = User::where('email', trim(preg_replace('/\s/u', ' ', $this->empleado->email)))->first();
+        if ($user) {
+            $user->delete();
+        }
         $this->emit('select2');
+        $this->emit('baja', $this->empleado);
     }
 }

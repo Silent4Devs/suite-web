@@ -1,4 +1,5 @@
 <div>
+    <x-loading-indicator />
     <div class="row p-2">
         <div class="col-4 border p-2 text-center">
             <img src="{{ $logo }}" alt="" style="width: 80px">
@@ -12,17 +13,41 @@
             <p>Fecha: {{ now()->format('d/m/Y') }}</p>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12 p-2">
+            <x-card-guia title='Importante'
+                message='Al dar de baja al empleado <strong>{{ $empleado->name }}</strong> se eliminará automáticamente el usuario asociado al mismo.' />
+        </div>
+    </div>
     <div class="row mt-4">
         <div class="col-6" style="padding: 0 10px">
-            <label for="fecha_baja"><i class="fas fa-calendar-day mr-2"></i>Fecha de Baja</label>
+            <label for="fecha_baja"><i class="fas fa-calendar-day mr-2"></i>Fecha
+                de Baja <small class="text-danger">*</small></label>
             <div class="input-group mb-2">
-                <input type="date" id="fecha_baja" wire:model.defer="fechaBaja" class="fecha_flatpickr form-control">
+                <input wire:ignore type="date" id="fecha_baja" wire:model.defer="fechaBaja"
+                    class="fecha_flatpickr form-control">
+                {{-- errors --}}
+                @error('fechaBaja')
+                    <small class="invalid-feedback d-block">
+                        <i class="fas fa-info-circle mr-1"></i>{{ $message }}
+                    </small>
+                @enderror
             </div>
         </div>
-        <div class="col-12" style="padding: 0 10px" wire:ignore>
-            <label for="fecha_baja"><i class="fas fa-info-circle mr-2"></i>Razón de Baja</label>
-            <textarea name="razonBaja" id="razonBaja" cols="30" rows="10" wire:model="razonBaja"></textarea>
+        <div class="col-12" style="padding: 0 10px">
+            <div class="w-100" wire:ignore>
+                <label for="fecha_baja"><i class="fas fa-info-circle mr-2"></i>Razón de Baja <small
+                        class="text-danger">*</small></label>
+                <textarea name="razonBaja" id="razonBaja" cols="30" rows="10" wire:model.defer="razonBaja"></textarea>
+            </div>
+            @error('razonBaja')
+                <small class="invalid-feedback d-block">
+                    <i class="fas fa-info-circle mr-1"></i>{{ $message }}
+                </small>
+            @enderror
         </div>
+        {{-- errors --}}
+
     </div>
     {{-- <div class="row mt-4">
         <div class="col-6 p-0">
@@ -188,12 +213,39 @@
         </div>      
     </div> --}}
     <div class="row">
-        <div class="col-12 mt-2 p-0" style="text-align:end">
-            <button class="btn btn-success" wire:click.prevent="darDeBaja">Dar de Baja</button>
+        <div class="col-12 mt-2 p-0 pr-2" style="text-align:end">
+            <button class="btn btn-success" id="darDeBaja">Dar de Baja</button>
         </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            Livewire.on('baja', (e) => {
+                Swal.fire({
+                    title: "Empleado dado de baja",
+                    text: "El empleado ha sido dado de baja exitosamente",
+                    icon: "success",
+                }).then(() => {
+                    window.location.href = "{{ route('admin.empleados.index') }}";
+                });
+            });
+
+            document.getElementById('darDeBaja').addEventListener('click', function() {
+                Swal.fire({
+                    title: "¿Estás seguro(a)?",
+                    text: "El empleado será dado de baja",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Si, dar de baja",
+                    cancelButtonText: "Cancelar"
+                }).then((result) => {
+                    if (result.value) {
+                        @this.darDeBaja();
+                    }
+                });
+            });
+
             window.initSelect = () => {
                 $('.select2').select2({
                     placeholder: 'Seleccione un colaborador',
@@ -230,8 +282,7 @@
                     removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar,PasteFromWord'
                 });
             editor.on('change', function(event) {
-                console.log(event.editor.getData())
-                @this.set('razonBaja', event.editor.getData());
+                @this.set('razonBaja', event.editor.getData(), true);
             })
         });
     </script>

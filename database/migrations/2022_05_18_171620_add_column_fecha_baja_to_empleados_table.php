@@ -15,6 +15,7 @@ class AddColumnFechaBajaToEmpleadosTable extends Migration
     {
         Schema::table('empleados', function (Blueprint $table) {
             $table->date('fecha_baja')->nullable();
+            $table->text('razon_baja')->nullable();
         });
     }
 
@@ -27,6 +28,7 @@ class AddColumnFechaBajaToEmpleadosTable extends Migration
     {
         Schema::table('empleados', function (Blueprint $table) {
             $table->dropColumn('fecha_baja');
+            $table->dropColumn('razon_baja');
         });
     }
 }

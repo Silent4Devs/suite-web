@@ -1198,7 +1198,7 @@ class EV360EvaluacionesController extends Controller
         }
         $ev360ResumenTabla = new Ev360ResumenTabla();
         foreach ($evaluados as $evaluado) {
-            // $evaluado->load('area');
+            $evaluado->load('area', 'supervisorEv360');
             $lista_evaluados->push([
                 'evaluado' => $evaluado->name,
                 'puesto' => $evaluado->puesto,

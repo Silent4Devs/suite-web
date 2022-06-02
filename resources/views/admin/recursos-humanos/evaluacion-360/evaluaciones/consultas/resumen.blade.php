@@ -106,7 +106,7 @@
                 </div>
             </div>
             <div class="col-12" x-show="open" x-transition>
-                @livewire('ev360-resumen-tabla', ['evaluacion' => $evaluacion->id,'rangos'=>$rangosResultados])
+                @livewire('ev360-resumen-tabla', ['evaluacion' => $evaluacion->id, 'rangos' => $rangosResultados])
             </div>
         </div>
     </div>

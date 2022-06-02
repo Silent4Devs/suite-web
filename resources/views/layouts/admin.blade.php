@@ -52,7 +52,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
-
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <style type="text/css">
         .DTFC_LeftBodyWrapper {
             top: -13px !important;
