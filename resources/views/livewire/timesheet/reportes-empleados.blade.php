@@ -316,8 +316,15 @@
                     </div>
                     <ul class="list_times_faltantes scroll_estilo mt-3">
                         @foreach($empleado_md['times_faltantes'] as $time_f)
+                            @php
+                                $fechas_array = explode('|', $time_f);
+                                $start = $fechas_array[0];
+                                $end = $fechas_array[1];
+                                $startDate = \Carbon\Carbon::parse($start)->format('d/m/Y');
+                                $endDate = \Carbon\Carbon::parse($end)->format('d/m/Y');
+                            @endphp
                             <li>
-                                {!! $time_f !!} 
+                               Del <strong>{{ $startDate }}</strong> al <strong>{{ $endDate }}</strong>
                             </li>
                         @endforeach
                     </ul>
@@ -357,8 +364,8 @@
                                 <h3 style="margin-top:0;"> {{ $horas_totales }}h</h3>
                             </div>
                             <div class="text-center mt-2">
-                                <div class="text-center">Importe Total($): </div>
-                                <h3 style="margin-top:0;"> $100,000,000</h3>
+                                <div class="text-center">Importe Total ($): </div>
+                                <h3 style="margin-top:0;"> {{ $costo_total_empleado }}$</h3>
                             </div>
                         </div>
                     </div>

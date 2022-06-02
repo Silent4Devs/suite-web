@@ -119,11 +119,18 @@ class ReportesProyectos extends Component
         $this->proyectos = TimesheetProyecto::get();
         foreach ($this->proyectos as $proyecto) {
 
+            $registro_horas_proyecto = TimesheetHoras::where('proyecto_id', $proyecto->id)->get(); 
+            $times_registro_horas_array = collect();
+            foreach ($registro_horas_proyecto as $key => $registro_horas) {
+                $time_registro_horas = // crear un arreglo pára obtener todos los times de todas las horas y hacer que aparezca el totalñ de horas de cada time para calendario
+            }
+
             // registro de horas en calendario
             $calendario_tabla_proyectos = [];
             foreach ($calendario_array as $key => $año) {
                 foreach ($año['months'] as $key => $mes) {
                     foreach ($mes['weeks'] as $key => $semana) {
+
                         array_push($calendario_tabla_proyectos, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
                     }
                 }

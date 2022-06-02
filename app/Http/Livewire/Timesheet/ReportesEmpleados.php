@@ -52,6 +52,8 @@ class ReportesEmpleados extends Component
 
     public $semanas_totales_calendario = 0;
 
+    public $costo_total_empleado = 0;
+
     public $area_id = 0;
     public $fecha_inicio;
     public $fecha_fin;
@@ -304,7 +306,7 @@ class ReportesEmpleados extends Component
         }
 
         $this->fecha_inicio_empleado = $fecha_inicio_timesheet_empleado;
-        $this->fecha_fin_empleado = $fecha_fin_timesheet_empleado;
+        $this->fecha_fin_empleado = Carbon::parse($fecha_fin_timesheet_empleado)->format('Y-m-d');
 
         $this->calendario_tabla = $calendario_array;
 
@@ -410,7 +412,7 @@ class ReportesEmpleados extends Component
             $fecha_inicio_timesheet_empleado = Carbon::parse($this->empleado->antiguedad)->lt($fecha_registro_timesheet) ? $fecha_registro_timesheet : $this->empleado->antiguedad;
         }
 
-        if (($this->fecha_fin_empleado) && (Carbon::parse($this->fecha_fin_empleado)->lt($this->hoy))) {
+        if (($this->fecha_fin_empleado) && (Carbon::parse($this->fecha_fin_empleado)->lt($this->hoy->format('Y-m-d')))) {
             $fecha_fin_timesheet_empleado = $this->empleado->estatus == 'baja' ? $this->empleado->fecha_baja : $this->fecha_fin_empleado;
         }else{
             $fecha_fin_timesheet_empleado = $this->empleado->estatus == 'baja' ? $this->empleado->fecha_baja : $this->hoy;
@@ -497,6 +499,8 @@ class ReportesEmpleados extends Component
                 'horas'=> $this->fecha_inicio_empleado ? '50' : $horas_proyecto,
             ]);
             $this->horas_totales += $horas_proyecto;
+
+            $this->costo_total_empleado = $this->horas_totales * ($this->empleado->salario_diario / 24);
         }
 
         // contadores
