@@ -146,7 +146,7 @@
                                     <div class="form-group col-12">
                                         <label><i class="fa-solid fa-comment-dots iconos_crear"></i> Comentarios</label>
                                         <textarea class="form-control" name="comentarios"></textarea>
-                                        <small>Escriba las razones por la que acepta este registro.</small>
+                                        <small>Escriba sus comentarios para el solicitante (Opcional).</small>
                                     </div>
                                     <div class="col-12 text-right">
                                          <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
@@ -154,7 +154,7 @@
                                         </button>
                                         <button title="Rechazar" class="btn btn-info" style="border:none; background-color:#3CA06C;">
                                             <i class="fas fa-calendar-check iconos_crear"></i>
-                                            Aceptar Registro
+                                            Aprobar Registro
                                         </button>
                                     </div>
 
@@ -185,8 +185,8 @@
                                     @csrf
                                     <div class="form-group col-12">
                                         <label><i class="fa-solid fa-comment-dots iconos_crear"></i> Comentarios</label>
-                                        <textarea class="form-control" name="comentarios"></textarea>
-                                        <small>Escriba las razones por la que rechaza este registro.</small>
+                                        <textarea class="form-control" name="comentarios" required></textarea>
+                                        <small>Escriba el motivo por el cual rechaza este registro (Obligatorio).</small>
                                     </div>
                                     <div class="col-12 text-right">
                                         <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">

@@ -7,9 +7,6 @@
         <h5 id="titulo_estatus">Crear Proyecto</h5>
     </div>
         <form wire:submit.prevent="store()" class="w-100">
-            <div class="row mt-4">
-                
-            </div>
             <div class="row">
                 <div class="form-group col-md-2">
                     <label><i class="fas fa-list iconos-crear"></i> ID</label>
@@ -30,16 +27,31 @@
                 <div class="form-group col-md-2">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de inicio</label>
                     <input type="date" name="fecha_inicio" wire:model="fecha_inicio" class="form-control">
+                    @if($errors->has('fecha_inicio'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_inicio') }}
+                        </div>
+                    @endif
+                    @error('fecha_inicio')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="form-group col-md-2">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de termino</label>
                     <input type="date" name="fecha_fin" wire:model="fecha_fin" class="form-control">
+                    @if($errors->has('fecha_fin'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_fin') }}
+                        </div>
+                    @endif
+                    @error('fecha_fin')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="form-group col-md-4">
                     <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
                     <select name="area_id" wire:model="cliente_id" class="form-control">
-                        <option selected disabled>Seleccione cliente</option>
-                        <option value="">Sin cliente</option>
+                        <option selected value="">Seleccione cliente</option>
                         @foreach($clientes as $cliente)
                             <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
                         @endforeach
@@ -70,7 +82,12 @@
         </form>
     @endcan
 
-    
+    <style type="text/css">
+        .edit_modal .modal-dialog{
+            max-width: 973px !important;
+        }    
+    </style>
+
     <div class="w-100 d-flex justify-content-between mt-5">
         <h5 id="titulo_estatus">Registros</h5>
         <div class="btn_estatus_caja">
@@ -98,6 +115,7 @@
             </button>
         </div>
     </div>
+    @include('partials.flashMessages')
     <div class="datatable-fix w-100 mt-4">
         <table id="datatable_timesheet_proyectos" class="table w-100 tabla-animada">
             <thead class="w-100">
@@ -130,11 +148,18 @@
                                 @php
                                     $time_proyecto = TimesheetHoras::where('proyecto_id', $proyecto->id)->exists();
                                 @endphp
-                                @if($time_proyecto)
+                                @if(!$time_proyecto)
                                     <button class="btn" data-toggle="modal" data-target="#modal_proyecto_eliminar_{{ $proyecto->id}}">
                                             <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;" title="Eliminar"></i>
                                     </button>
+                                 @else
+                                    <div class="btn">
+                                            <i class="fas fa-trash-alt" style="color: #aaa; font-size: 15pt;" title="Este proyecto no puede ser eliminado debido a que está en uso"></i>
+                                    </div>
                                 @endif
+                                <button class="btn" data-toggle="modal" data-target="#modal_proyecto_editar_{{ $proyecto->id}}">
+                                        <i class="fa-solid fa-pen-to-square" style="font-size:15pt;"></i>
+                                </button>
                             @endcan
                             @can('timesheet_administrador_tareas_proyectos_access')
                                 <a href="{{ route('admin.timesheet-tareas-proyecto', $proyecto->id) }}" class="btn">
@@ -214,8 +239,100 @@
                 </div>
             </div>
         </div>
-    @endforeach
 
+        <div class="modal fade edit_modal" id="modal_proyecto_editar_{{ $proyecto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action="{{ route('admin.timesheet-proyectos-update', $proyecto->id) }}" method="POST">
+                        @csrf
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Proyecto: {{ $proyecto->proyecto }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label><i class="fas fa-list iconos-crear"></i> ID</label>
+                                <input name="identificador" class="form-control" required value="{{ $proyecto->identificador }}">
+                                @if($errors->has('identificador'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('identificador') }}
+                                    </div>
+                                @endif
+                                @error('identificador')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-9">
+                                <label><i class="fas fa-list iconos-crear"></i> Nombre del proyecto</label>
+                                <input name="proyecto" class="form-control" required value="{{ $proyecto->proyecto }}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de inicio</label>
+                                <input type="date" name="fecha_inicio" class="form-control" value="{{ $proyecto->fecha_inicio }}">
+                                @if($errors->has('fecha_inicio'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('fecha_inicio') }}
+                                    </div>
+                                @endif
+                                @error('fecha_inicio')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de termino</label>
+                                <input type="date" name="fecha_fin" class="form-control" value="{{ $proyecto->fecha_fin }}">
+                                @if($errors->has('fecha_fin'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('fecha_fin') }}
+                                    </div>
+                                @endif
+                                @error('fecha_fin')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
+                                <select name="area_id" class="form-control">
+                                    <option selected value="{{ $proyecto->cliente->id }}">{{ $proyecto->cliente->nombre }}</option>
+                                    @foreach($clientes as $cliente)
+                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
+                                <select name="area_id" class="form-control" required>
+                                    <option selected value="{{ $proyecto->area->id }}">{{ $proyecto->area->area }}</option>
+                                    @foreach ($areas as $area)
+                                        <option value="{{ $area->id }}">{{ $area->area }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label"><i class="fa-solid fa-building iconos-crear"></i>Sede</label>
+                                <select class="form-control" name="sede_id">
+                                    <option selected value="{{ $proyecto->sede->id }}">{{ $proyecto->sede->sede }}</option>
+                                    @foreach($sedes as $sede)
+                                        <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 text-right">
+                                <div type="button" class="btn btn_cancelar" data-dismiss="modal">Cancelar</div>
+                                <button type="submit" class="btn btn-success">Guardar</button>
+                            </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+          </div>
+        </div>
+        {{-- <div class="btn btn-danger" wire:click="click_e()">wire:click="click_e()"</div> --}}
+    @endforeach
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', ()=>{
             Livewire.on('scriptTabla', ()=>{

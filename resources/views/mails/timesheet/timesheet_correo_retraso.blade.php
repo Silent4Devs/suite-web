@@ -25,6 +25,93 @@
         }
 
     </style>
+    <style>
+
+    /* Remove space around the email design. */
+
+
+
+    html,
+
+
+
+    body {
+
+
+
+        margin: 0 auto !important;
+
+
+
+        padding: 0 !important;
+
+
+
+        height: 100% !important;
+
+
+
+        width: 100% !important;
+
+    }
+
+
+
+    /* Stop Outlook resizing small text. */
+
+    * {
+
+        -ms-text-size-adjust: 100%;
+
+    }
+
+
+
+
+    /* Stop Outlook from adding extra spacing to tables. */
+
+    table,
+
+    td {
+
+        mso-table-lspace: 0pt !important;
+
+        mso-table-rspace: 0pt !important;
+
+    }
+
+
+
+    /* Use a better rendering method when resizing images in Outlook IE. */
+
+
+
+    img {
+
+        -ms-interpolation-mode: bicubic;
+
+    }
+
+
+
+
+    /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+
+
+
+    a {
+
+
+
+        text-decoration: none;
+
+
+
+    }
+
+
+
+</style>
 </head>
 
 <body style="margin:0;padding:0;">
@@ -50,26 +137,46 @@
                             <table role="presentation"
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
-                                    <div style="width: 100%; height: 1.5px; background-color: #153643;">
-                                        &nbsp;
-                                    </div>
+                                    <hr style="margin:0;width: 100%; height: 1.5px; background-color: #153643;">
+
+                                    &nbsp;
+
+                                    </hr>
+
                                     @php
+
                                         use App\Models\Organizacion;
+
                                         $organizacion = Organizacion::first();
+
                                         $logotipo = $organizacion->logotipo;
+
                                         $empresa = $organizacion->empresa;
+
                                     @endphp
+
                                     <h2 style="padding-top:3px; color:#153643; text-align:center">
+
                                         {{ $empresa }}</h2>
-                                    <div style="width: 100%; height:1.5px; background-color: #153643;">
-                                        &nbsp;
-                                    </div>
+
+                                    <hr style="margin:0;width: 100%; height:1.5px; background-color: #153643;">
+
+                                    &nbsp;
+
+                                    </hr>
+
+
 
                                     <td style="padding:0 0 36px 0;">
 
+
+
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
-                                            <img src="{{ asset($logotipo) }}" class="mt-2 ml-4"
+
+                                            <img width="160" src="{{ asset($logotipo) }}" class="mt-2 ml-4"
+
                                                 style="width:160px;">
+
                                         </div>
 
                                         <div style="margin-top:50px;">
@@ -81,7 +188,7 @@
 
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; fontcolor:#153643;">
-                                                {{ $empresa }} le solicita llenar el registro de horas de las semanas faltantes correspondientes con su Timsheet.
+                                                Le recordamos que para {{ $empresa }} es muy importante que se cumpla con su registro de jornada laboral en el sistema. 
                                             </p>
                                         </div>
                                         <div style="width: 100%; margin-top: 10px;">
@@ -132,8 +239,15 @@
                                             <p style="font-size:11pt; fontcolor:#153643; font-weight: normal !important;">
                                                <ul class="list_times_faltantes scroll_estilo mt-3">
                                                     @foreach($times_faltantes_empleado as $time_f)
+                                                        @php
+                                                            $fechas_array = explode('|', $time_f);
+                                                            $start = $fechas_array[0];
+                                                            $end = $fechas_array[1];
+                                                            $startDate = \Carbon\Carbon::parse($start)->format('d/m/Y');
+                                                            $endDate = \Carbon\Carbon::parse($end)->format('d/m/Y');
+                                                        @endphp
                                                         <li>
-                                                            {!! $time_f !!} 
+                                                            Del <strong>{{ $startDate }}</strong> al <strong>{{ $endDate }}</strong>
                                                         </li>
                                                     @endforeach
                                                 </ul>  
@@ -141,7 +255,7 @@
                                         </div>
                                         <div style="text-align:center; margin-top:20px">
                                             <a  href="{{ asset('admin/timesheet/create') }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                Llenar Horas Faltantes
+                                                Registrar Horas Faltantes
                                             </a>
                                         </div>
                                     </td>
@@ -156,15 +270,23 @@
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:30;font-size:9px;font-family:Arial,sans-serif;">
                                 <tr>
                                     <td style="padding:0;width:30%;" align="left">
-                                        <p style="text-align:center; font-size:10pt; color:#153643;">Por favor no
-                                            responda a este correo</p>
-                                        <div style="width: 100%; height: 1.5px; background-color: #153643;">
-                                            &nbsp;
-                                        </div>
 
-                                        <p
-                                            style="text-align:center;font-size:10pt;font-weight: normal;color:#153643;">
+                                        <p style="text-align:center; font-size:10pt; color:#153643;">Por favor no
+
+                                            responda a este correo</p>
+
+                                        <hr style="margin:0; width: 100%; height: 1.5px; background-color: #153643;">
+
+                                        &nbsp;
+
+                                        </hr>
+
+
+
+                                        <p style="text-align:center;font-size:10pt;font-weight: normal;color:#153643;">
+
                                             SISTEMA INTEGRAL DE GESTIÓN EMPRESARIAL TABANTAJ</p>
+
                                     </td>
                                 </tr>
                             </table>

@@ -23,9 +23,18 @@ class TablaProyectosTimesheet extends Component
     public $fecha_fin;
     public $sede_id;
 
+    public $edit_identificador;
+    public $edit_proyecto_name;
+    public $edit_area_id;
+    public $edit_cliente_id;
+    public $edit_fecha_inicio;
+    public $edit_fecha_fin;
+    public $edit_sede_id;
+
     public $proceso_count;
     public $cancelado_count;
     public $terminado_count;
+
 
     public $sedes;
 
@@ -60,9 +69,13 @@ class TablaProyectosTimesheet extends Component
                 'identificador' => 'required|unique:timesheet_proyectos,identificador',
                 'proyecto_name'=>'required',
                 'area_id'=>'required',
+                'fecha_inicio'=>'required|before:fecha_fin',
+                'fecha_fin'=>'required|after:fecha_inicio',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
+                'fecha_inicio.before'=>'La fecha de incio debe ser anterior a la fecha de fin',
+                'fecha_fin.after'=>'La fecha de fin debe ser posterior a la fecha de incio',
             ],
         );
 
@@ -87,6 +100,36 @@ class TablaProyectosTimesheet extends Component
         $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
 
         $this->alert('success', 'Registro añadido!');
+    }
+
+    public function update(Request $request, $id)
+    {
+        // $this->validate(
+        //     [
+        //         'identificador' => 'required|unique:timesheet_proyectos,identificador',
+        //         'proyecto_name'=>'required',
+        //         'area_id'=>'required',
+        //     ],
+        //     [
+        //         'identificador.unique' => 'El ID ya esta en uso',
+        //     ],
+        // );
+        dd($request);
+        $edit_proyecto = TimesheetProyecto::find($id);
+        
+        $edit_proyecto->update([
+            'identificador' => $this->edit_identificador,
+            'proyecto' => $this->edit_proyecto_name,
+            'area_id' => $this->edit_area_id,
+            'cliente_id' => $this->edit_cliente_id,
+            'fecha_inicio' => $this->edit_fecha_inicio,
+            'fecha_fin' => $this->edit_fecha_fin,
+            'sede_id' => $this->edit_sede_id,
+        ]);
+
+        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
+
+        $this->alert('success', 'Registro guardado!');
     }
 
     public function procesos()

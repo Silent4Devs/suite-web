@@ -1,11 +1,14 @@
 @extends('layouts.admin')
 @section('content')
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 	@php
         use App\Models\Organizacion;
     @endphp
 
 	{{ Breadcrumbs::render('timesheet-create') }}
 	
+	
+
 	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">
 		{!! $timesheet->semana !!} |  <font style="font-weight:lighter;">{{ $timesheet->empleado->name }}</font>
 	 </h5>
@@ -17,67 +20,138 @@
 					<div  class=""><strong>Fecha: </strong> {{ \Carbon\Carbon::parse($timesheet->fecha_dia)->format("d/m/Y") }}</div>
 					<button class="btn btn-secundario" onclick="imprimirElemento('content_times_show_print');"><i class="fa-solid fa-print iconos_crear"></i> Imprimir</button>
 				</div>
-		        <table id="datatable_timesheet_create" class="table table-responsive w-100">
-		            <thead>
-		                <tr>
-		                    <th style="min-width:250px;">Proyecto </th>
-		                    <th style="min-width:250px;">Tarea</th>
-		                    <th>Facturable</th>
-		                    <th style="min-width:55px;">Lunes</th>
-		                    <th style="min-width:55px;">Martes</th>
-		                    <th style="min-width:55px;">Miercoles</th>
-		                    <th style="min-width:55px;">Jueves</th>
-		                    <th style="min-width:55px;">Viernes</th>
-		                    <th style="min-width:55px;">Sabado</th>
-		                    <th style="min-width:55px;">Domingo</th>
-		                    <th style="min-width:200px;">Descripción</th>
-		                </tr>
-		            </thead>
-		            <tbody>
-		                @foreach($horas as $hora)
-		                    <tr>
-		                        <td>
-		                            <div class="form-control">{{ $hora->proyecto->proyecto }}</div>
-		                        </td>
-		                        <td>
-		                            <div class="form-control">{{ $hora->tarea->tarea }}</div>
-		                        </td>
-		                        <td>
-		                        	@if($hora->facturable)
-		                            	<div class="btn btn-info" style="transform: scale(0.5);"><i class="fa-solid fa-check"></i></div>
-		                             @else
-		                             	<div class="btn btn-info" style="transform: scale(0.5); background-color: #ccc !important;"><i class="fa-solid fa-xmark"></i></div>
-		                            @endif
-		                        </td>
-		                        <td>
-		                            <div class="form-control">{{ $hora->horas_lunes }}</div>
-		                        </td>
-		                        <td>
-		                            <div class="form-control">{{ $hora->horas_martes }}</div>
-		                        </td>
-		                        <td>
-		                            <div class="form-control">{{ $hora->horas_miercoles }}</div>
-		                        </td>
-		                        <td>
-		                            <div class="form-control">{{ $hora->horas_jueves }}</div>
-		                        </td>
-		                        <td>
-		                            <div class="form-control">{{ $hora->horas_viernes }}</div>
-		                        </td>   
-		                        <td>
-		                           	<div class="form-control">{{ $hora->horas_sabado }}</div>
-		                        </td>   
-		                        <td>
-		                            <div class="form-control">{{ $hora->horas_domingo }}</div>
-		                        </td> 
-		                        <td>
-		                            <div class="form-control">{{ $hora->descripcion }}</div>
-		                        </td>                           
+				<div id="content_times_show_print" class="w-100">
+					@php
+				        $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+				        if (!is_null($organizacion)) {
+				            $logotipo = $organizacion->logotipo;
+				        } else {
+				            $logotipo = 'logotipo-tabantaj.png';
+				        }
+				    @endphp
+					<style type="text/css">
+						@page {
+						  size: landscape;
+						}
+						.encabezado-print{
+							position: absolute;
+							z-index: -10000;
+						}
+						@media print{
+							.tabla-llenar-horas{
+								overflow: unset;
+							}
+							.encabezado-print{
+								position: unset !important;
+							}
+						}
+					</style>
+					<table class="encabezado-print">
+			            <tr>
+			                <td style="width: 25%;">
+			                    <img src="{{ asset($logotipo) }}" class="img_logo" style="height: 70px;">
+			                </td>
+			                <td style="min-width: 50%;">
+			                    <h4><strong>{{ $organizacion->empresa }}</strong></h4>
+			                    <h5 style="font-weight: bolder;">Timesheet: <font style="font-weight:lighter;">{!! $timesheet->semana !!}</font></h5>
+			                    <div>{{ $timesheet->empleado->name }}</div>
+			                </td>
+			                <td style="width: 25%;"class="encabezado_print_td_no_paginas">
+			                    Fecha: {{ $hoy_format }} <br>
+			                </td>
+			            </tr>
+			        </table>
+			        <table class="table table-responsive tabla-llenar-horas dataTables_scrollBody">
+			            <thead>
+			                <tr>
+			                    <th style="min-width:250px;">Proyecto </th>
+			                    <th style="min-width:250px;">Tarea</th>
+			                    <th>Facturable</th>
+			                    <th style="min-width:55px;">Lunes</th>
+			                    <th style="min-width:55px;">Martes</th>
+			                    <th style="min-width:55px;">Miercoles</th>
+			                    <th style="min-width:55px;">Jueves</th>
+			                    <th style="min-width:55px;">Viernes</th>
+			                    <th style="min-width:55px;">Sabado</th>
+			                    <th style="min-width:55px;">Domingo</th>
+			                    <th style="min-width:200px;">Descripción</th>
+			                    <th style="min-width:100px;">Total</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                @foreach($horas as $index=>$hora)
+			                    <tr>
+			                        <td>
+			                            <div class="form-control">{{ $hora->proyecto->proyecto }}</div>
+			                        </td>
+			                        <td>
+			                            <div class="form-control">{{ $hora->tarea->tarea }}</div>
+			                        </td>
+			                        <td>
+			                        	@if($hora->facturable)
+			                            	<div id="" data-checked="1" class="btn btn-info" style="transform: scale(0.5);"><i class="fa-solid fa-check"></i></div>
+			                             @else
+			                             	<div data-checked="0" class="btn btn-info" style="transform: scale(0.5); background-color: #ccc !important;"><i class="fa-solid fa-xmark"></i></div>
+			                            @endif
+			                        </td>
+			                        <td>
+			                            <div id="ingresar_hora_lunes_{{ $index + 1 }}" data-dia="lunes" class="form-control">{{ $hora->horas_lunes }}</div>
+			                        </td>
+			                        <td>
+			                            <div id="ingresar_hora_martes_{{ $index + 1 }}"  data-dia="martes" class="form-control">{{ $hora->horas_martes }}</div>
+			                        </td>
+			                        <td>
+				                        <div id="ingresar_hora_miercoles_{{ $index + 1 }}"  data-dia="miercoles" class="form-control">{{ $hora->horas_miercoles }}</div>
+			                        </td>
+			                        <td>
+			                            <div id="ingresar_hora_jueves_{{ $index + 1 }}"  data-dia="jueves" class="form-control">{{ $hora->horas_jueves }}</div>
+			                        </td>
+			                        <td>
+			                            <div id="ingresar_hora_viernes_{{ $index + 1 }}"  data-dia="viernes" class="form-control">{{ $hora->horas_viernes }}</div>
+			                        </td>   
+			                        <td>
+			                           	<div id="ingresar_hora_sabado_{{ $index + 1 }}"  data-dia="sabado" class="form-control">{{ $hora->horas_sabado }}</div>
+			                        </td>   
+			                        <td>
+			                            <div id="ingresar_hora_domingo_{{ $index + 1 }}"  data-dia="domingo" class="form-control">{{ $hora->horas_domingo }}</div>
+			                        </td> 
+			                        <td>
+			                            <div class="form-control">{{ $hora->descripcion }}</div>
+			                        </td>  
+			                        <td>
+			                            <div class="form-control">
+			                                <label id="suma_horas_fila_{{ $index + 1 }}" class="total_filas"></label>
+			                            </div>
+			                        </td>                           
+			                    </tr>
+			                @endforeach
+			                <tr>
+		                        <td colspan="3">Toral horas facturables</td>
+		                        <td><label id="suma_dia_lunes"></label></td>
+		                        <td><label id="suma_dia_martes"></label></td>
+		                        <td><label id="suma_dia_miercoles"></label></td>
+		                        <td><label id="suma_dia_jueves"></label></td>
+		                        <td><label id="suma_dia_viernes"></label></td>
+		                        <td><label id="suma_dia_sabado"></label></td>
+		                        <td><label id="suma_dia_domingo"></label></td>
+		                        <td><label id="total_h_facts"></label></td>
+		                        <td><label id="total_horas_filas"></label></td>
 		                    </tr>
-		                @endforeach
-
-		            </tbody>
-		        </table>
+		                    <tr>
+		                        <td colspan="3">Toral horas no facturables</td>
+		                        <td><label id="suma_dia_lunes_no_fact"></label></td>
+		                        <td><label id="suma_dia_martes_no_fact"></label></td>
+		                        <td><label id="suma_dia_miercoles_no_fact"></label></td>
+		                        <td><label id="suma_dia_jueves_no_fact"></label></td>
+		                        <td><label id="suma_dia_viernes_no_fact"></label></td>
+		                        <td><label id="suma_dia_sabado_no_fact"></label></td>
+		                        <td><label id="suma_dia_domingo_no_fact"></label></td>
+		                        <td><label id="total_h_no_facts"></label></td>
+		                        <td colspan="2"></td>
+		                    </tr>
+			            </tbody>
+			        </table>
+				</div>
 			</div>
 
 			
@@ -117,7 +191,7 @@
 		                                    <div class="form-group col-12">
 		                                        <label><i class="fa-solid fa-comment-dots iconos_crear"></i> Comentarios</label>
 		                                        <textarea class="form-control" name="comentarios"></textarea>
-                                    			<small>Escriba sus comentarios para el solicitante.</small>
+                                    			<small>Escriba sus comentarios para el solicitante (Opcional).</small>
 		                                    </div>
 		                                    <div class="col-12 text-right">
 		                                         <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
@@ -125,7 +199,7 @@
 		                                        </button>
 		                                        <button title="Rechazar" class="btn btn-info" style="border:none; background-color:#3CA06C;">
 		                                            <i class="fas fa-calendar-check iconos_crear"></i>
-		                                            Aceptar Registro
+		                                            Aprobar Registro
 		                                        </button>
 		                                    </div>
 
@@ -156,8 +230,8 @@
 		                                    @csrf
 		                                    <div class="form-group col-12">
 		                                        <label><i class="fa-solid fa-comment-dots iconos_crear"></i> Comentarios</label>
-		                                        <textarea class="form-control" name="comentarios"></textarea>
-                                    			<small>Escriba las razones por la que rechaza este registro.</small>
+		                                        <textarea class="form-control" name="comentarios" required></textarea>
+                                    			<small>Escriba el motivo por el cual rechaza este registro (Obligatorio).</small>
 		                                    </div>
 		                                    <div class="col-12 text-right">
 		                                        <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
@@ -180,101 +254,151 @@
 		</div>
 	</div>
 
-	{{-- print ___________________________________________________________________________________ --}}
-	@php
-        $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
-        if (!is_null($organizacion)) {
-            $logotipo = $organizacion->logotipo;
-        } else {
-            $logotipo = 'logotipo-tabantaj.png';
-        }
-    @endphp
-	<style type="text/css">
-		@page {
-		  size: landscape;
-		}	
-	</style>
 	
-	<div id="content_times_show_print" class="solo-print">
-		<table class="encabezado-print">
-            <tr>
-                <td style="width: 25%;">
-                    <img src="{{ asset($logotipo) }}" class="img_logo" style="height: 70px;">
-                </td>
-                <td style="width: 50%;">
-                    <h4><strong>{{ $organizacion->empresa }}</strong></h4>
-                    <h5 style="font-weight: bolder;">Timesheet: <font style="font-weight:lighter;">{!! $timesheet->semana !!}</font></h5>
-                    <div>{{ $timesheet->empleado->name }}</div>
-                </td>
-                <td style="width: 25%;"class="encabezado_print_td_no_paginas">
-                    Fecha: {{ $hoy_format }} <br>
-                </td>
-            </tr>
-        </table>
-		<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">
-			{!! $timesheet->semana !!} |  <font style="font-weight:lighter;">{{ $timesheet->empleado->name }}</font>
-		 </h5>
-		<table id="datatable_timesheet_create" class="table w-100">
-            <thead>
-                <tr>
-                    <th style="min-width:200px;">Proyecto </th>
-                    <th style="min-width:200px;">Tarea</th>
-                    <th>Facturable</th>
-                    <th style="min-width:55px;">Lunes</th>
-                    <th style="min-width:55px;">Martes</th>
-                    <th style="min-width:55px;">Miercoles</th>
-                    <th style="min-width:55px;">Jueves</th>
-                    <th style="min-width:55px;">Viernes</th>
-                    <th style="min-width:55px;">Sabado</th>
-                    <th style="min-width:55px;">Domingo</th>
-                    <th style="min-width:200px;">Descripción</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($horas as $hora)
-                    <tr>
-                        <td>
-                           {{ $hora->proyecto->proyecto }}
-                        </td>
-                        <td>
-                            {{ $hora->tarea->tarea }}
-                        </td>
-                        <td>
-                        	@if($hora->facturable)
-                            	<div class="btn btn-info" style="transform: scale(0.5);"><i class="fa-solid fa-check"></i></div>
-                             @else
-                             	<div class="btn btn-info" style="transform: scale(0.5); background-color: #ccc !important;"><i class="fa-solid fa-xmark"></i></div>
-                            @endif
-                        </td>
-                        <td>
-                            {{ $hora->horas_lunes }}
-                        </td>
-                        <td>
-                            {{ $hora->horas_martes }}
-                        </td>
-                        <td>
-                            {{ $hora->horas_miercoles }}
-                        </td>
-                        <td>
-                            {{ $hora->horas_jueves }}
-                        </td>
-                        <td>
-                            {{ $hora->horas_viernes }}
-                        </td>   
-                        <td>
-                           	{{ $hora->horas_sabado }}
-                        </td>   
-                        <td>
-                            {{ $hora->horas_domingo }}
-                        </td> 
-                        <td>
-                            {{ $hora->descripcion }}
-                        </td>                           
-                    </tr>
-                @endforeach
+	@section('scripts')
+		<script type="text/javascript">
+			function calcularSumatoriasFacturables(){
 
-            </tbody>
-        </table>
-	</div>
-	
+	            // lunes ----------------------------------
+	            let input_lunes = document.querySelectorAll('div[data-dia="lunes"]');
+	            let suma_horas_lunes = 0;
+	            let suma_horas_lunes_no_fact = 0;
+	            input_lunes.forEach(item =>{
+	                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) div').getAttribute('data-checked') == '1'? true : false;
+	                if (es_facturable) {
+	                    suma_horas_lunes += Number(item.innerText);
+	                }
+	                else{
+	                    suma_horas_lunes_no_fact += Number(item.innerText);
+	                }
+	            });      
+	            document.getElementById('suma_dia_lunes').innerText = suma_horas_lunes + ' h';
+	            document.getElementById('suma_dia_lunes_no_fact').innerText = suma_horas_lunes_no_fact + ' h';
+	            
+	            // martes ----------------------------------
+	            let input_martes = document.querySelectorAll('div[data-dia="martes"]');
+	            let suma_horas_martes = 0;
+	            let suma_horas_martes_no_fact = 0;
+	            input_martes.forEach(item =>{
+	                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) div').getAttribute('data-checked') == '1'? true : false;
+	                if (es_facturable) {
+	                    suma_horas_martes += Number(item.innerText);
+	                }
+	                else{
+	                    suma_horas_martes_no_fact += Number(item.innerText);
+	                }
+	            });      
+	            document.getElementById('suma_dia_martes').innerText = suma_horas_martes + ' h';
+	            document.getElementById('suma_dia_martes_no_fact').innerText = suma_horas_martes_no_fact + ' h';
+
+	            // miercoles ----------------------------------
+	            let input_miercoles = document.querySelectorAll('div[data-dia="miercoles"]');
+	            let suma_horas_miercoles = 0;
+	            let suma_horas_miercoles_no_fact = 0;
+	            input_miercoles.forEach(item =>{
+	                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) div').getAttribute('data-checked') == '1'? true : false;
+	                if (es_facturable) {
+	                    suma_horas_miercoles += Number(item.innerText);
+	                }
+	                else{
+	                    suma_horas_miercoles_no_fact += Number(item.innerText);
+	                }
+	            });      
+	            document.getElementById('suma_dia_miercoles').innerText = suma_horas_miercoles + ' h';
+	            document.getElementById('suma_dia_miercoles_no_fact').innerText = suma_horas_miercoles_no_fact + ' h';
+
+	            // jueves ----------------------------------
+	            let input_jueves = document.querySelectorAll('div[data-dia="jueves"]');
+	            let suma_horas_jueves = 0;
+	            let suma_horas_jueves_no_fact = 0;
+	            input_jueves.forEach(item =>{
+	                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) div').getAttribute('data-checked') == '1'? true : false;
+	                if (es_facturable) {
+	                    suma_horas_jueves += Number(item.innerText);
+	                }
+	                else{
+	                    suma_horas_jueves_no_fact += Number(item.innerText);
+	                }
+	            });      
+	            document.getElementById('suma_dia_jueves').innerText = suma_horas_jueves + ' h';
+	            document.getElementById('suma_dia_jueves_no_fact').innerText = suma_horas_jueves_no_fact + ' h';
+
+	            // viernes ----------------------------------
+	            let input_viernes = document.querySelectorAll('div[data-dia="viernes"]');
+	            let suma_horas_viernes = 0;
+	            let suma_horas_viernes_no_fact = 0;
+	            input_viernes.forEach(item =>{
+	                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) div').getAttribute('data-checked') == '1'? true : false;
+	                if (es_facturable) {
+	                    suma_horas_viernes += Number(item.innerText);
+	                }
+	                else{
+	                    suma_horas_viernes_no_fact += Number(item.innerText);
+	                }
+	            });      
+	            document.getElementById('suma_dia_viernes').innerText = suma_horas_viernes + ' h';
+	            document.getElementById('suma_dia_viernes_no_fact').innerText = suma_horas_viernes_no_fact + ' h';
+
+	            // sabado ----------------------------------
+	            let input_sabado = document.querySelectorAll('div[data-dia="sabado"]');
+	            let suma_horas_sabado = 0;
+	            let suma_horas_sabado_no_fact = 0;
+	            input_sabado.forEach(item =>{
+	                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) div').getAttribute('data-checked') == '1'? true : false;
+	                if (es_facturable) {
+	                    suma_horas_sabado += Number(item.innerText);
+	                }
+	                else{
+	                    suma_horas_sabado_no_fact += Number(item.innerText);
+	                }
+	            });      
+	            document.getElementById('suma_dia_sabado').innerText = suma_horas_sabado + ' h';
+	            document.getElementById('suma_dia_sabado_no_fact').innerText = suma_horas_sabado_no_fact + ' h';
+
+	            // domingo ----------------------------------
+	            let input_domingo = document.querySelectorAll('div[data-dia="domingo"]');
+	            let suma_horas_domingo = 0;
+	            let suma_horas_domingo_no_fact = 0;
+	            input_domingo.forEach(item =>{
+	                let es_facturable = item.closest('tr').querySelector('td:nth-child(3) div').getAttribute('data-checked') == '1'? true : false;
+	                if (es_facturable) {
+	                    suma_horas_domingo += Number(item.innerText);
+	                }
+	                else{
+	                    suma_horas_domingo_no_fact += Number(item.innerText);
+	                }
+	            });   
+
+	            let total_h_fact = suma_horas_lunes + suma_horas_martes + suma_horas_miercoles + suma_horas_jueves + suma_horas_viernes + suma_horas_sabado + suma_horas_domingo;
+
+	            let total_h_no_fact = suma_horas_lunes_no_fact + suma_horas_martes_no_fact + suma_horas_miercoles_no_fact + suma_horas_jueves_no_fact + suma_horas_viernes_no_fact + suma_horas_sabado_no_fact + suma_horas_domingo_no_fact;
+
+	            document.getElementById('suma_dia_domingo').innerText = suma_horas_domingo + ' h';
+	            document.getElementById('suma_dia_domingo_no_fact').innerText = suma_horas_domingo_no_fact + ' h';
+
+	            document.getElementById('total_h_facts').innerText = 'Total: ' + total_h_fact + ' h';
+	            document.getElementById('total_h_no_facts').innerText = 'Total: ' + total_h_no_fact + ' h';
+
+	        }
+	        calcularSumatoriasFacturables();
+
+	        let contador_filas = @json($horas_count);
+	        for (var i = 1; i <= contador_filas; i++) {
+	        	updateValue(i);
+	        }
+
+	        function updateValue(index) {
+	            const suma_horas =  Number($('#ingresar_hora_lunes_' + index).text())+
+	                                Number($('#ingresar_hora_martes_' + index).text())+
+	                                Number($('#ingresar_hora_miercoles_' + index).text())+
+	                                Number($('#ingresar_hora_jueves_' + index).text())+
+	                                Number($('#ingresar_hora_viernes_' + index).text())+
+	                                Number($('#ingresar_hora_sabado_' + index).text())+
+	                                Number($('#ingresar_hora_domingo_' + index).text());
+
+
+	            document.getElementById('suma_horas_fila_' + index).textContent = suma_horas + ' h';
+	        }
+		</script>
+	@endsection
 @endsection
