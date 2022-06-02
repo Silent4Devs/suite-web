@@ -84,7 +84,7 @@ class VulnerabilidadController extends AppBaseController
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.vulnerabilidads.index', compact('logo_actual','empresa_actual'));
+        return view('admin.vulnerabilidads.index', compact('logo_actual', 'empresa_actual'));
     }
 
     /**

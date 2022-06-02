@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Mail;
 
 class TimesheetController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -679,7 +678,7 @@ class TimesheetController extends Controller
     {
         $cliente_borrado = TimesheetCliente::find($id);
 
-        $cliente_borrado->delete();        
+        $cliente_borrado->delete();
 
         return redirect()->route('admin.timesheet-clientes')->with('success', 'Eliminado');
     }

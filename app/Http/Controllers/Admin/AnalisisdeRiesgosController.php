@@ -100,7 +100,7 @@ class AnalisisdeRiesgosController extends Controller
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.analisis-riesgos.index', compact('empresa_actual','logo_actual'));
+        return view('admin.analisis-riesgos.index', compact('empresa_actual', 'logo_actual'));
     }
 
     /**

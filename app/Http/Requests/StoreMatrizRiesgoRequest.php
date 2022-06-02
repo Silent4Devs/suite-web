@@ -21,7 +21,7 @@ class StoreMatrizRiesgoRequest extends FormRequest
             ],
             'id_proceso' => [
                 'required',
-                'int',            
+                'int',
             ],
             'activo_id' => [
                 'required',
