@@ -44,7 +44,7 @@ class CartaAceptacionAprobacione extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'aprobador_id');
+        return $this->belongsTo(Empleado::class, 'aprobador_id')->alta();
     }
 
     public function carta()

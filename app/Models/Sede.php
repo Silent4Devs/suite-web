@@ -75,6 +75,6 @@ class Sede extends Model
 
     public function empleados()
     {
-        return $this->hasMany(Empleado::class);
+        return $this->hasMany(Empleado::class)->alta();
     }
 }

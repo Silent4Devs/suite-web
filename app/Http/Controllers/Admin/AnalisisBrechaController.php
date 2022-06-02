@@ -106,7 +106,7 @@ class AnalisisBrechaController extends Controller
      */
     public function create()
     {
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         return view('admin.analisisdebrechas.create', compact('empleados'));
     }
@@ -152,7 +152,7 @@ class AnalisisBrechaController extends Controller
      */
     public function edit($id)
     {
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         $analisisBrecha = AnalisisBrecha::find($id);
 

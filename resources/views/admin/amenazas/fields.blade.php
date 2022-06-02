@@ -14,7 +14,7 @@
     <!-- Descripcion Field -->
     <div class="form-group col-sm-12">
         <label for="exampleFormControlTextarea1"> <i class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Descripción:') !!}</label>
-        <textarea class="form-control" id="edescripcion" name="descripcion" rows="2"></textarea>
+        <textarea class="form-control" id="edescripcion" name="descripcion" rows="2">{{ old('descripcion', $amenaza->descripcion) }}</textarea>
     </div>
 
     <!-- Submit Field -->

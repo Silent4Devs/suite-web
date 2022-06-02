@@ -111,7 +111,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $activos = SubcategoriaActivo::get();
         $amenazas = Amenaza::get();
 
@@ -158,7 +158,7 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $vulnerabilidades = Vulnerabilidad::get();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
@@ -351,8 +351,16 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.matrizRiesgos.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
+        return view('admin.matrizRiesgos.index', compact('empresa_actual', 'logo_actual', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
 
     public function MapaCalor(Request $request)
@@ -428,8 +436,16 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgosSistemaGestion::count();
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.matrizSistemaGestion.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
+        return view('admin.matrizSistemaGestion.index', compact('empresa_actual', 'logo_actual', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
 
     public function SistemaGestionData(Request $request)
@@ -754,7 +770,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $activos = SubcategoriaActivo::get();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
@@ -801,7 +817,7 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $vulnerabilidades = Vulnerabilidad::get();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
@@ -952,8 +968,8 @@ class MatrizRiesgosController extends Controller
         // $responsables = Empleado::get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
-        $duenos = Empleado::get();
-        $custodios = Empleado::get();
+        $duenos = Empleado::alta()->get();
+        $custodios = Empleado::alta()->get();
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $activosoctave = MatrizOctave::get();
@@ -971,8 +987,8 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
-        $duenos = Empleado::get();
-        $custodios = Empleado::get();
+        $duenos = Empleado::alta()->get();
+        $custodios = Empleado::alta()->get();
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $activosoctave = MatrizOctave::get();
@@ -1091,7 +1107,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
 
@@ -1107,7 +1123,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
@@ -1228,7 +1244,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
         $matrizNist = new MatrizNist();
@@ -1243,7 +1259,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
         $matrizNist = MatrizNist::find($id);

@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\CreateAmenazaRequest;
 use App\Http\Requests\UpdateAmenazaRequest;
 use App\Models\Amenaza;
+use App\Models\Organizacion;
 use App\Repositories\AmenazaRepository;
 use Flash;
 use Illuminate\Http\Request;
@@ -67,8 +68,16 @@ class AmenazaController extends AppBaseController
 
             return $table->make(true);
         }
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.amenazas.index');
+        return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual'));
     }
 
     /**
@@ -79,8 +88,9 @@ class AmenazaController extends AppBaseController
     public function create()
     {
         abort_if(Gate::denies('analisis_de_riesgos_amenazas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $amenaza = new Amenaza();
 
-        return view('admin.amenazas.create');
+        return view('admin.amenazas.create', compact('amenaza'));
     }
 
     /**

@@ -37,7 +37,7 @@ class ActivosInformacionAprobacione extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'persona_califico_id');
+        return $this->belongsTo(Empleado::class, 'persona_califico_id')->alta();
     }
 
     public function activos_informacion()

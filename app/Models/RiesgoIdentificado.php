@@ -33,7 +33,7 @@ class RiesgoIdentificado extends Model
 
     public function reporto()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id')->alta();
     }
 
     public function evidencias_riesgos()

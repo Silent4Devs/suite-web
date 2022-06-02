@@ -26,9 +26,9 @@ class ComunicacionSgi extends Model implements HasMedia
     // ];
 
     const TipoSelect = [
-    'Carrusel' => 'Carrusel',
-    'Blog'     => 'Blog',
-    'Ambos'    => 'Ambos',
+        'Carrusel' => 'Carrusel',
+        'Blog'     => 'Blog',
+        'Ambos'    => 'Ambos',
     ];
 
     public static $searchable = [
@@ -91,6 +91,6 @@ class ComunicacionSgi extends Model implements HasMedia
 
     public function empleados()
     {
-        return $this->belongsToMany(Empleado::class, 'empleado_comunicacion', 'comunicacion_id', 'empleado_id');
+        return $this->belongsToMany(Empleado::class, 'empleado_comunicacion', 'comunicacion_id', 'empleado_id')->alta();
     }
 }

@@ -78,7 +78,7 @@ class PoliticaSgsiController extends Controller
 
         $teams = Team::get();
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
 
         return view('admin.politicaSgsis.index', compact('politicaSgsis', 'teams', 'empleados'));
     }
@@ -87,7 +87,7 @@ class PoliticaSgsiController extends Controller
     {
         abort_if(Gate::denies('politica_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
 
         return view('admin.politicaSgsis.create', compact('empleados'));
     }
@@ -106,7 +106,7 @@ class PoliticaSgsiController extends Controller
 
         $politicaSgsi->load('team');
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
 
         return view('admin.politicaSgsis.edit', compact('politicaSgsi', 'empleados'));
     }

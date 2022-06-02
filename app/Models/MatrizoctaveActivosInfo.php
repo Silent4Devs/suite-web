@@ -80,6 +80,6 @@ class MatrizoctaveActivosInfo extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_dueno');
+        return $this->belongsTo(Empleado::class, 'id_dueno')->alta();
     }
 }

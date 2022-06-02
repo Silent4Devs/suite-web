@@ -83,7 +83,7 @@ class AuditoriaAnualController extends Controller
 
         // $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // $auditorliders = Empleado::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $auditorliders = Empleado::all()->pluck('name', 'id');
+        $auditorliders = Empleado::alta()->get()->pluck('name', 'id');
         // dd($auditorliders);
 
         return view('admin.auditoriaAnuals.create', compact('auditorliders'));
@@ -104,7 +104,7 @@ class AuditoriaAnualController extends Controller
 
         $auditoriaAnual->load('auditorlider', 'team');
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         return view('admin.auditoriaAnuals.edit', compact('auditorliders', 'auditoriaAnual', 'empleados'));
     }

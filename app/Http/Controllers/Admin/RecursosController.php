@@ -103,7 +103,7 @@ class RecursosController extends Controller
         $recurso = new Recurso;
         $areas = Area::with('empleados')->get();
         $grupos = GruposEvaluado::with('empleados')->get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         return view('admin.recursos.create', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }
@@ -142,13 +142,13 @@ class RecursosController extends Controller
 
         if ($request->isElearning) {
             if ($request->estatus == 'Enviado') {
-                $empleados = Empleado::select('id', 'name', 'email')->find($request->participantes)->toArray();
+                $empleados = Empleado::alta()->select('id', 'name', 'email')->find($request->participantes)->toArray();
                 $emails = Http::post(env('APP_ELEARNING') . '/api/users', [
                     'students' => json_encode($empleados),
                     'course' =>  $request->cursoscapacitaciones,
                 ]);
                 foreach ($emails->json() as $email) {
-                    $empleado = Empleado::where('email', $email['email'])->first();
+                    $empleado = Empleado::alta()->where('email', $email['email'])->first();
                     Mail::to($empleado->email)->send(new ElearningInscripcionMail($empleado));
                 }
             }
@@ -259,7 +259,7 @@ class RecursosController extends Controller
         $categorias = CategoriaCapacitacion::get();
         $areas = Area::with('empleados')->get();
         $grupos = GruposEvaluado::with('empleados')->get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         return view('admin.recursos.edit', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }

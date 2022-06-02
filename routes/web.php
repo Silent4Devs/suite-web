@@ -250,6 +250,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('desk/queja-cliente/validate', 'DeskController@validateFormQuejaCliente')->name('desk.quejasClientes.validateFormQuejaCliente');
     Route::post('desk/queja-cliente/correo-responsable', 'DeskController@correoResponsableQuejaCliente')->name('desk.quejas-clientes.correoResponsable');
     Route::post('desk/queja-cliente/correo-solicitar-cierre-queja', 'DeskController@correoSolicitarCierreQuejaCliente')->name('desk.quejas-clientes.correoSolicitarCierreQueja');
+    Route::post('desk/queja-cliente/show', 'DeskController@showQuejaClientes')->name('desk.quejas-clientes.show');
     Route::post('desk/{denuncias}/analisis_denuncia-update', 'DeskController@updateAnalisisDenuncias')->name('desk.analisis_denuncia-update');
     Route::post('desk/{sugerencias}/analisis_sugerencia-update', 'DeskController@updateAnalisisSugerencias')->name('desk.analisis_sugerencia-update');
 
@@ -459,7 +460,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::post('empleado/expediente/update', 'EmpleadoController@expedienteUpdate')->name('empleado.edit.expediente-update');
     Route::post('empleado/expediente/Restaurar', 'EmpleadoController@expedienteRestaurar')->name('empleado.edit.expediente-restaurar');
-
+    Route::get('empleado/{empleado}/solicitud-baja', 'EmpleadoController@solicitudBaja')->name('empleado.solicitud-baja');
     Route::resource('empleados', 'EmpleadoController');
 
     // Timesheet

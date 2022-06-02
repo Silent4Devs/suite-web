@@ -79,7 +79,7 @@ class ActivoImport implements ToModel
 
     public function obtenerDuenoPorId($dueno)
     {
-        $dueno_bd = Empleado::select('id', 'name')->where('id', $dueno)->first();
+        $dueno_bd = Empleado::alta()->select('id', 'name')->where('id', $dueno)->first();
         if ($dueno_bd) {
             return $dueno_bd->id;
         }
@@ -89,7 +89,7 @@ class ActivoImport implements ToModel
 
     public function obtenerResponsablePorId($responsable)
     {
-        $responsable_bd = Empleado::select('id', 'name')->where('id', $responsable)->first();
+        $responsable_bd = Empleado::alta()->select('id', 'name')->where('id', $responsable)->first();
         if ($responsable_bd) {
             return $responsable_bd->id;
         }

@@ -102,7 +102,7 @@ class RegistromejoraController extends Controller
 
         $validas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
 
         return view('admin.registromejoras.create', compact('nombre_reportas', 'responsableimplementacions', 'validas', 'empleados'));
     }
@@ -126,7 +126,7 @@ class RegistromejoraController extends Controller
 
         $registromejora->load('nombre_reporta', 'responsableimplementacion', 'valida', 'team');
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
 
         return view('admin.registromejoras.edit', compact('nombre_reportas', 'responsableimplementacions', 'validas', 'registromejora', 'empleados'));
     }

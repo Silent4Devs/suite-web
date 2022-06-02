@@ -154,12 +154,12 @@ class Documento extends Model
     //Relacion uno a muchos inversa
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class);
+        return $this->belongsTo(Empleado::class)->alta();
     }
 
     public function revisores()
     {
-        return $this->belongsToMany(Empleado::class);
+        return $this->belongsToMany(Empleado::class)->alta();
     }
 
     public function revisiones()
@@ -169,7 +169,7 @@ class Documento extends Model
 
     public function revisor()
     {
-        return $this->belongsTo(Empleado::class, 'reviso_id', 'id');
+        return $this->belongsTo(Empleado::class, 'reviso_id', 'id')->alta();
     }
 
     public function macroproceso()
@@ -179,17 +179,17 @@ class Documento extends Model
 
     public function elaborador()
     {
-        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id');
+        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->alta();
     }
 
     public function aprobador()
     {
-        return $this->belongsTo(Empleado::class, 'aprobo_id', 'id');
+        return $this->belongsTo(Empleado::class, 'aprobo_id', 'id')->alta();
     }
 
     public function responsable()
     {
-        return $this->belongsTo(Empleado::class, 'responsable_id', 'id');
+        return $this->belongsTo(Empleado::class, 'responsable_id', 'id')->alta();
     }
 
     public function proceso()

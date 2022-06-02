@@ -88,6 +88,6 @@ class Registromejora extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_reporta');
+        return $this->belongsTo(Empleado::class, 'id_reporta')->alta();
     }
 }

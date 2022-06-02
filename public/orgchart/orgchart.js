@@ -567,7 +567,7 @@ export default class OrgChart {
     let title_info = document.createElement('h3');
     title_info.classList.add('side');
     title_info.classList.add('title-info-nav');
-    title_info.innerText = `${dataSourceJSON.name}`;
+    title_info.innerText = `${dataSourceJSON.estatus == 'alta' ? dataSourceJSON.name : ''}`;
 
 
     //photo
@@ -575,17 +575,22 @@ export default class OrgChart {
     div_img.classList.add('container-img-nav');
     let photo = "";
     let photo_info = document.createElement('img');
-    if (dataSourceJSON.foto == null) {
-      if (dataSourceJSON.genero == 'H') {
-        photo = `${this.options.nodeRepositoryImages}/man.png`;
-      } else if (dataSourceJSON.genero == 'M') {
-        photo = `${this.options.nodeRepositoryImages}/woman.png`;
-      } else {
-        photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
+    if (dataSourceJSON.estatus == 'alta') {
+
+      if (dataSourceJSON.foto == null) {
+        if (dataSourceJSON.genero == 'H') {
+          photo = `${this.options.nodeRepositoryImages}/man.png`;
+        } else if (dataSourceJSON.genero == 'M') {
+          photo = `${this.options.nodeRepositoryImages}/woman.png`;
+        } else {
+          photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
+        }
       }
-    }
-    else {
-      photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
+      else {
+        photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
+      }
+    } else {
+      photo = `${this.options.nodeRepositoryImages}/candidate.png`;
     }
 
     photo_info.classList.add('side');
@@ -597,7 +602,7 @@ export default class OrgChart {
     let name_info = document.createElement('p');
     name_info.classList.add('side');
     name_info.classList.add('name-nav');
-    name_info.innerText = `Nombre: ${dataSourceJSON.name}`;
+    name_info.innerText = `Nombre: ${dataSourceJSON.estatus == 'alta' ? dataSourceJSON.name : ''}`;
 
     //title
     let title_info_text = document.createElement('p');
@@ -614,7 +619,7 @@ export default class OrgChart {
     let c_more = document.createElement('div');
     title_info_text.classList.add('side');
     c_more.classList.add('c_more');
-    let content_more = `
+    let content_more = dataSourceJSON.estatus == 'alta' ? `
         <h4 class="m-0">Información de Contácto</h4>
         <div class="row container mb-2">
           ${dataSourceJSON.telefono != null ? '<div class="col-4 p-0"><a href="https://wa.me/' + dataSourceJSON.telefono + '" class="btn text-success p-0" target="_blank" title="Enviar Mensaje" style="text-align:left;"><i class="fab fa-whatsapp" style="margin:0;font-size:15pt"></i></a></div>' : ''}
@@ -631,7 +636,7 @@ export default class OrgChart {
         <p class="it_5"><i class="fas fa-info-circle" style="margin: 0 7px 0 0px;"></i>
           Teléfono: <span>${dataSourceJSON.telefono == null ? 'Sin dato' : dataSourceJSON.telefono}</span>
         </p>
-        `;
+        ` : '';
     if (dataSourceJSON.supervisor != null) {
       let photo_s;
       if (dataSourceJSON.supervisor.foto == null) {
@@ -1723,15 +1728,25 @@ export default class OrgChart {
       //   photo = `${opts.nodeRepositoryImages}/${nodeData[opts.nodePhoto]}`;
       // }else{
       //   photo = `${opts.nodeRepositoryImages}/${opts.nodeNotPhoto}`
-      // }
-
-      nodeDiv.innerHTML = `
+      // } 
+      let nodeHTML = "";
+      if (nodeData.estatus == 'alta') {
+        nodeHTML = `
           <div class="mb-2" style="text-align:center">
           ${opts.withImage ? `<img class="avatar object-cover w-20 h-20 rounded-full m-auto" src="${photo}" style="position:relative">` : ''}
           </div>
           <div class="title">${nodeData[opts.nodeTitle]}</div>
           ${opts.nodeContent ? `<div class="content">${nodeData[opts.nodeContent]}</div>` : ''}
         `;
+      } else {
+        nodeHTML = `
+          <div class="mb-2" style="text-align:center">
+          ${opts.withImage ? `<img class="avatar object-cover w-20 h-20 rounded-full m-auto" src="${opts.nodeRepositoryImages}/candidate.png" style="position:relative">` : ''}
+          </div>       
+          ${opts.nodeContent ? `<div class="content"><i class="fas fa-circle text-danger mr-1"></i><span class="title">${nodeData[opts.nodeContent]}</span></div>` : ''}
+        `;
+      }
+      nodeDiv.innerHTML = nodeHTML;
       // append 4 direction arrows or expand/collapse buttons
       let flags = nodeData.relationship || '';
 
@@ -1805,33 +1820,66 @@ export default class OrgChart {
       nodeWrapper,
       childNodes = nodeData.children != undefined ? nodeData.children.length > 0 ? nodeData.children : undefined : undefined, // Review if parent contains children´s array null
       isVerticalNode = opts.verticalDepth && (level + 1) >= opts.verticalDepth;
+
     if (Object.keys(nodeData).length > 1) { // if nodeData has nested structure
       nodeWrapper = isVerticalNode ? appendTo : document.createElement('table');
       nodeWrapper.classList.add('charContainerAll');
       if (!isVerticalNode) {
         appendTo.appendChild(nodeWrapper);
       }
-      this._createNode(nodeData, level)
-        .then(function (nodeDiv) {
-          if (isVerticalNode) {
-            nodeWrapper.insertBefore(nodeDiv, nodeWrapper.firstChild);
-          } else {
-            let tr = document.createElement('tr');
+      if (opts.typeOrgChart == 'employees') {
+        childNodes = childNodes?.filter(function (item) {
+          return item.estatus == 'alta' || item.es_supervisor;
+        });
+        console.log(childNodes);
+        if (nodeData.estatus == 'alta' || nodeData.es_supervisor) {
+          this._createNode(nodeData, level)
+            .then(function (nodeDiv) {
+              if (isVerticalNode) {
+                nodeWrapper.insertBefore(nodeDiv, nodeWrapper.firstChild);
+              } else {
+                let tr = document.createElement('tr');
 
-            tr.innerHTML = `
+                tr.innerHTML = `
+                <td ${childNodes ? `colspan="${childNodes.length * 2}"` : ''}>
+                </td>
+              `;
+                tr.children[0].appendChild(nodeDiv);
+                nodeWrapper.insertBefore(tr, nodeWrapper.children[0] ? nodeWrapper.children[0] : null);
+              }
+              if (callback) {
+                callback();
+              }
+            })
+            .catch(function (err) {
+              console.error('Failed to creat node', err);
+            });
+        }
+      } else {
+        this._createNode(nodeData, level)
+          .then(function (nodeDiv) {
+            if (isVerticalNode) {
+              nodeWrapper.insertBefore(nodeDiv, nodeWrapper.firstChild);
+            } else {
+              let tr = document.createElement('tr');
+
+              tr.innerHTML = `
               <td ${childNodes ? `colspan="${childNodes.length * 2}"` : ''}>
               </td>
             `;
-            tr.children[0].appendChild(nodeDiv);
-            nodeWrapper.insertBefore(tr, nodeWrapper.children[0] ? nodeWrapper.children[0] : null);
-          }
-          if (callback) {
-            callback();
-          }
-        })
-        .catch(function (err) {
-          console.error('Failed to creat node', err);
-        });
+              tr.children[0].appendChild(nodeDiv);
+              nodeWrapper.insertBefore(tr, nodeWrapper.children[0] ? nodeWrapper.children[0] : null);
+            }
+            if (callback) {
+              callback();
+            }
+          })
+          .catch(function (err) {
+            console.error('Failed to creat node', err);
+          });
+      }
+
+
     }
     // Construct the inferior nodes and connectiong lines
     if (childNodes) {
@@ -1862,8 +1910,8 @@ export default class OrgChart {
       }
       // draw the lines close to children nodes
       let lineLayer = document.createElement('tr');
-
       lineLayer.setAttribute('class', 'lines' + isHidden);
+
       lineLayer.innerHTML = `
           <td class="rightLine">&nbsp;</td>
           ${childNodes.slice(1).map(() => `
@@ -1871,7 +1919,10 @@ export default class OrgChart {
             <td class="rightLine topLine">&nbsp;</td>
             `).join('')}
           <td class="leftLine">&nbsp;</td>
-        `;
+      `;
+
+
+
       let nodeLayer;
 
       if (isVerticalLayer) {

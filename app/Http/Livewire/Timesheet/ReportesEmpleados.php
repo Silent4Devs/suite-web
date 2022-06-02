@@ -353,17 +353,17 @@ class ReportesEmpleados extends Component
             }
 
             $this->times_empleado_horas->push([
-                'fecha'=>$t->fecha_dia,
-                'estatus'=>$t->estatus,
-                'semana'=>$t->semana,
-                'horas_lunes'=>$horas_semana_lunes,
-                'horas_martes'=>$horas_semana_martes,
-                'horas_miercoles'=>$horas_semana_miercoles,
-                'horas_jueves'=>$horas_semana_jueves,
-                'horas_viernes'=>$horas_semana_viernes,
-                'horas_sabado'=>$horas_semana_sabado,
-                'horas_domingo'=>$horas_semana_domingo,
-                'horas_totales'=>$horas_totales_semana,
+                'fecha' => $t->fecha_dia,
+                'estatus' => $t->estatus,
+                'semana' => $t->semana,
+                'horas_lunes' => $horas_semana_lunes,
+                'horas_martes' => $horas_semana_martes,
+                'horas_miercoles' => $horas_semana_miercoles,
+                'horas_jueves' => $horas_semana_jueves,
+                'horas_viernes' => $horas_semana_viernes,
+                'horas_sabado' => $horas_semana_sabado,
+                'horas_domingo' => $horas_semana_domingo,
+                'horas_totales' => $horas_totales_semana,
             ]);
         }
 
@@ -384,17 +384,17 @@ class ReportesEmpleados extends Component
                     $horas += intval($tm->horas_domingo);
                 }
                 $tareas->push([
-                    'id'=>$tarea->id,
-                    'tarea'=>$tarea->tarea,
-                    'horas'=>$horas,
+                    'id' => $tarea->id,
+                    'tarea' => $tarea->tarea,
+                    'horas' => $horas,
                 ]);
                 $horas_proyecto += $horas;
             }
             $this->proyectos_detalle->push([
-                'id'=>$proyecto,
-                'proyecto'=>TimesheetProyecto::find($proyecto)->proyecto,
-                'tareas'=>$tareas,
-                'horas'=>$horas_proyecto,
+                'id' => $proyecto,
+                'proyecto' => TimesheetProyecto::find($proyecto)->proyecto,
+                'tareas' => $tareas,
+                'horas' => $horas_proyecto,
             ]);
             $this->horas_totales += $horas_proyecto;
         }

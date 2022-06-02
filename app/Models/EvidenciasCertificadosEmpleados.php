@@ -35,6 +35,6 @@ class EvidenciasCertificadosEmpleados extends Model
 
     public function empleado_documentos_certificados()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
     }
 }

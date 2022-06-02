@@ -15,6 +15,18 @@
     </xml>
   </noscript>
   <![endif]-->
+
+  <style>
+    table,
+    td,
+    div,
+    h1,
+    p {
+        font-family: Arial, sans-serif;
+    }
+
+</style>
+
   <style>
     /* Remove space around the email design. */
 

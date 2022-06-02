@@ -121,7 +121,7 @@
                                         <div style="margin-top:50px;">
                                             <strong
                                                 style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{ $quejas->responsableAtencion->name }},
+                                                Estimado(a) {{ $empleado->name }},
                                             </strong>
                                         </div>
 
@@ -162,22 +162,7 @@
 
                                                 </ul>
 
-                                                <p>
-                                                    <strong
-                                                        style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
-                                                        Responsable de la atención de la queja</strong>
-                                                <ul style="font-size:11pt; color:#153643;">
-                                                    <li style="font-size:11pt;">Nombre: <strong style="font-size:10pt;">
-                                                            {{ $quejas->responsableAtencion ? $quejas->responsableAtencion->name : 'Sin definir' }}</strong>
-                                                    </li>
-                                                    <li style="font-size:11pt;">Puesto: <strong style="font-size:10pt;">
-                                                            {{ $quejas->responsableAtencion ? $quejas->responsableAtencion->area->area : 'Sin definir' }}</strong>
-                                                    </li>
-                                                    <li style="font-size:11pt;">Área: <strong style="font-size:10pt;">
-                                                            {{ $quejas->responsableAtencion ? $quejas->responsableAtencion->puesto : 'Sin definir' }}</strong>
-                                                    </li>
-                                                </ul>
-                                                </p>
+
                                                 <p>
                                                     <strong
                                                         style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">

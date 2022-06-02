@@ -41,7 +41,7 @@ class DocumentosController extends Controller
         abort_if(Gate::denies('documentos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroprocesos = Macroproceso::get();
         $procesos = Proceso::get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $documentoActual = new Documento;
 
         return view('admin.documentos.create', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual'));
@@ -173,7 +173,7 @@ class DocumentosController extends Controller
         abort_if(Gate::denies('documentos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroprocesos = Macroproceso::get();
         $procesos = Proceso::get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $documentoActual = $documento;
 
         return view('admin.documentos.edit', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual'));
