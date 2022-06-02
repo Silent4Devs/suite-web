@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Empleado;
 use App\Models\QuejasCliente;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -17,10 +18,12 @@ class NotificacionResponsableQuejaEmail extends Mailable
      * @return void
      */
     public $quejas;
+    public $empleado;
 
-    public function __construct(QuejasCliente $quejas)
+    public function __construct(QuejasCliente $quejas, Empleado $empleado)
     {
         $this->quejas = $quejas;
+        $this->empleado = $empleado;
     }
 
     /**

@@ -138,12 +138,12 @@
 
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; color:#153643;">
-                                                Le informamos que {{ $quejas->responsableAtencion->name }}, ha dado
-                                                atención.
+                                                Le informamos que {{ $quejas->responsableAtencion->name }}, ha ingresado al formulario para
+                                                comenzar a dar atención a la queja.
                                             </p>
                                             <br>
                                             <p style="font-size:11pt; color:#153643;">
-                                                Para revisar lo que ha contestado dé clic en el siguiente botón:
+                                                Para revisar el estatus dé clic en el siguiente botón:
                                             </p>
 
                                             <div style="text-align:center; margin-top:20px">
