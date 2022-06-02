@@ -23,7 +23,7 @@ class NotificacionResponsableQuejaEmail extends Mailable
     public function __construct(QuejasCliente $quejas, Empleado $empleado)
     {
         $this->quejas = $quejas;
-        $this->empleado=$empleado;
+        $this->empleado = $empleado;
     }
 
     /**
