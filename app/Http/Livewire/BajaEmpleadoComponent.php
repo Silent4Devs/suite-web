@@ -62,35 +62,42 @@ class BajaEmpleadoComponent extends Component
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo = $organizacion_actual->logo;
         $empresa = $organizacion_actual->empresa;
+
         return view('livewire.baja-empleado-component', compact('logo', 'empresa'));
     }
 
     public function obtenerEmpleados()
     {
         $empleados = Empleado::alta()->where('id', '!=', $this->empleado->id)->select('id', 'name')->orderBy('name')->get();
+
         return $empleados;
     }
 
     public function obtenerComites()
     {
         $comites = $this->empleado->comiteSeguridad;
+
         return $comites;
     }
 
     public function obtenerDocumentosQueDeboAprobar()
     {
         $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $this->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
+
         return $revisiones;
     }
+
     public function obtenerDocumentosQueMeDebenAprobar()
     {
         $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', $this->empleado->id)->get();
+
         return $mis_documentos;
     }
 
     public function obtenerMisActivos()
     {
         $activos = Activo::select('*')->where('id_responsable', '=', $this->empleado->id)->get();
+
         return $activos;
     }
 
@@ -100,6 +107,7 @@ class BajaEmpleadoComponent extends Component
         $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
             $query->where('empleados.id', $empleado);
         })->get();
+
         return $recursos;
     }
 

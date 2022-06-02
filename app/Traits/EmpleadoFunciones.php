@@ -2,8 +2,6 @@
 
 namespace App\Traits;
 
-use App\Models\Organizacion;
-
 trait EmpleadoFunciones
 {
     public function obtenerEquipoACargo($childrens)

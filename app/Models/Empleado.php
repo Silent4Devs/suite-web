@@ -326,9 +326,10 @@ class Empleado extends Model
     {
         return $this->belongsTo(self::class)->alta();
     }
+
     public function supervisorEv360()
     {
-        return $this->belongsTo(Empleado::class, 'supervisor_id', 'id');
+        return $this->belongsTo(self::class, 'supervisor_id', 'id');
     }
 
     public function onlyChildren()

@@ -20,6 +20,7 @@ trait ObtenerOrganizacion
             'logo' => $logo_actual,
             'empresa' => $empresa_actual,
         ];
+
         return $organizacion;
     }
 }

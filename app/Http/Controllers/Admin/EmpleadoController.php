@@ -15,7 +15,6 @@ use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
 use App\Models\Language;
 use App\Models\ListaDocumentoEmpleado;
-use App\Models\Organizacion;
 use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\BeneficiariosEmpleado;
@@ -41,6 +40,7 @@ use Yajra\DataTables\Facades\DataTables;
 class EmpleadoController extends Controller
 {
     use ObtenerOrganizacion;
+
     /**
      * Display a listing of the resource.
      *
@@ -1583,7 +1583,6 @@ class EmpleadoController extends Controller
 
     public function solicitudBaja(Empleado $empleado)
     {
-
         return view('admin.empleados.solicitudBaja', compact('empleado'));
     }
 
