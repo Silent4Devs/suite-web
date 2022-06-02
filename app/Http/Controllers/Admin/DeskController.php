@@ -1196,10 +1196,12 @@ class DeskController extends Controller
             'responsable_atencion_queja_id'=>$request->responsable_atencion_queja_id,
         ]);
 
-        // dd($request->all());
-        if($quejasClientes->registro != null && $quejasClientes->responsableAtencion !=null){
+        $empleado_email=Empleado::select('name','email')->find($request->responsable_atencion_queja_id);
+        $empleado_copia=auth()->user()->empleado;
 
-             Mail::to($quejasClientes->responsableAtencion->email)->cc($quejasClientes->registro->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes));
+        if($quejasClientes->registro != null && $request->responsable_atencion_queja_id != null){
+
+             Mail::to($empleado_email->email)->cc($empleado_copia->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes, $empleado_email));
         }
         return response()->json(['success' => true, 'request' => $request->all(), 'message'=>'Enviado con éxito']);
     }
@@ -1209,7 +1211,6 @@ class DeskController extends Controller
         $id_quejas = $request->id;
         $quejasClientes = QuejasCliente::find(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos', 'responsableAtencion');
 
-        // dd($request->all());
         Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new SolicitarCierreQuejaEmail($quejasClientes));
 
         return response()->json(['success' => true, 'request' => $request->all(), 'message'=>'Enviado con éxito']);
@@ -1607,5 +1608,16 @@ class DeskController extends Controller
             'porque_no_cierre_ticket'=>  'El campo por qué no se cierra el ticket es obligatorio',
         ]
         );
+    }
+
+    public function showQuejaClientes(Request $request){
+
+        $id_quejas = $request->quejas_clientes_id;
+
+        $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos');
+
+
+        return view('admin.desk.quejas-clientes.show', compact('quejasClientes','id_quejas'));
+
     }
 }
