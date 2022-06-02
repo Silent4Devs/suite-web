@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Mail;
 
 class TimesheetController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -119,8 +118,8 @@ class TimesheetController extends Controller
                 'fecha_dia' => 'required',
             ],
             [
-                'timesheet.*.proyecto.required'=>'Seleccionar proyecto',
-                'timesheet.*.tarea.required'=>'Seleccionar tarea',
+                'timesheet.*.proyecto.required' => 'Seleccionar proyecto',
+                'timesheet.*.tarea.required' => 'Seleccionar tarea',
                 'fecha_dia.required' => 'Seleccione fecha',
             ],
         );
@@ -297,8 +296,8 @@ class TimesheetController extends Controller
                 'timesheet.1.tarea' => 'required',
             ],
             [
-                'timesheet.*.proyecto.required'=>'Seleccionar proyecto',
-                'timesheet.*.tarea.required'=>'Seleccionar tarea',
+                'timesheet.*.proyecto.required' => 'Seleccionar proyecto',
+                'timesheet.*.tarea.required' => 'Seleccionar tarea',
             ],
         );
         if (
@@ -679,7 +678,7 @@ class TimesheetController extends Controller
     {
         $cliente_borrado = TimesheetCliente::find($id);
 
-        $cliente_borrado->delete();        
+        $cliente_borrado->delete();
 
         return redirect()->route('admin.timesheet-clientes')->with('success', 'Eliminado');
     }
@@ -819,11 +818,11 @@ class TimesheetController extends Controller
                 }
             }
             $proyectos_array->push([
-                'proyecto'=>$proyect->proyecto,
-                'horas'=>$horas_totales_proyecto,
-                'tareas'=>$tareas_proyecto,
-                'tareas_count'=>$tareas_proyecto->count(),
-                'estatus'=>$proyect->estatus,
+                'proyecto' => $proyect->proyecto,
+                'horas' => $horas_totales_proyecto,
+                'tareas' => $tareas_proyecto,
+                'tareas_count' => $tareas_proyecto->count(),
+                'estatus' => $proyect->estatus,
             ]);
         }
 
@@ -870,6 +869,6 @@ class TimesheetController extends Controller
         $proyecto_id = $request->proyecto_id;
         $tareas_obtenidas = TimesheetTarea::where('proyecto_id', $proyecto_id)->get();
 
-        return response()->json(['tareas'=>$tareas_obtenidas]);
+        return response()->json(['tareas' => $tareas_obtenidas]);
     }
 }

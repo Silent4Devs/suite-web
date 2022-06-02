@@ -20,11 +20,11 @@ class FelicitarCumpleaños extends Model
 
     public function cumpleañero()
     {
-        return $this->belongsTo(Empleado::class, 'cumpleañero_id');
+        return $this->belongsTo(Empleado::class, 'cumpleañero_id')->alta();
     }
 
     public function felicitador()
     {
-        return $this->belongsTo(Empleado::class, 'felicitador_id');
+        return $this->belongsTo(Empleado::class, 'felicitador_id')->alta();
     }
 }

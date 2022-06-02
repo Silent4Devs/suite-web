@@ -15,7 +15,6 @@ class AddColumnEmailNoRealizaraAccionInmediataToQuejasClientesTable extends Migr
     {
         Schema::table('quejas_clientes', function (Blueprint $table) {
             $table->boolean('email_realizara_accion_inmediata')->default(false);
-
         });
     }
 

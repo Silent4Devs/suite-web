@@ -32,7 +32,7 @@ class EvaluacionRequisitoLegal extends Model
 
     public function evaluador()
     {
-        return $this->belongsTo(Empleado::class, 'id_reviso', 'id', 'puestoRelacionado');
+        return $this->belongsTo(Empleado::class, 'id_reviso', 'id', 'puestoRelacionado')->alta();
     }
 
     public function requisito()

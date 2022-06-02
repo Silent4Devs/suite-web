@@ -6,6 +6,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateVulnerabilidadRequest;
 use App\Http\Requests\UpdateVulnerabilidadRequest;
 use App\Models\Amenaza;
+use App\Models\Organizacion;
 use App\Models\Vulnerabilidad;
 use App\Repositories\VulnerabilidadRepository;
 use Flash;
@@ -74,8 +75,16 @@ class VulnerabilidadController extends AppBaseController
 
             return $table->make(true);
         }
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.vulnerabilidads.index');
+        return view('admin.vulnerabilidads.index', compact('logo_actual', 'empresa_actual'));
     }
 
     /**

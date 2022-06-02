@@ -25,6 +25,6 @@ class ActividadRiesgo extends Model
 
     public function responsables()
     {
-        return $this->belongsToMany(Empleado::class, 'actividades_riesgos_responsables', 'actividad_id', 'responsable_id');
+        return $this->belongsToMany(Empleado::class, 'actividades_riesgos_responsables', 'actividad_id', 'responsable_id')->alta();
     }
 }

@@ -100,7 +100,7 @@ class UsersController extends Controller
         $areas = Area::get();
         $puestos = Puesto::get();
         $teams = Team::get();
-        $empleadosNoAsignados = Empleado::get();
+        $empleadosNoAsignados = Empleado::alta()->get();
         $empleados = $empleadosNoAsignados->filter(function ($item) {
             return !User::where('n_empleado', $item->n_empleado)->exists();
         })->values();

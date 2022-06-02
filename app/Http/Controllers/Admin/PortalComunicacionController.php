@@ -28,14 +28,14 @@ class PortalComunicacionController extends Controller
         $hoy = Carbon::now();
         $hoy->toDateString();
 
-        $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        $nuevos_contador_circulo = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->count();
+        $nuevos = Empleado::alta()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+        $nuevos_contador_circulo = Empleado::alta()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->count();
 
-        $cumpleaños = Empleado::whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
-        $cumpleaños_contador_circulo = Empleado::whereMonth('cumpleaños', '=', $hoy->format('m'))->count();
+        $cumpleaños = Empleado::alta()->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+        $cumpleaños_contador_circulo = Empleado::alta()->whereMonth('cumpleaños', '=', $hoy->format('m'))->count();
 
-        $aniversarios = Empleado::whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
-        $aniversarios_contador_circulo = Empleado::whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
+        $aniversarios = Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
+        $aniversarios_contador_circulo = Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
 
         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
 

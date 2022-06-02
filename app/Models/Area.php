@@ -64,7 +64,7 @@ class Area extends Model
         'id_reporta',
         'descripcion',
         'foto_area',
-            'team_id',
+        'team_id',
         'empleados_id',
     ];
 
@@ -117,7 +117,7 @@ class Area extends Model
 
     public function empleados()
     {
-        return $this->hasMany(Empleado::class);
+        return $this->hasMany(Empleado::class)->alta();
     }
 
     public function material_iso_veinticientes()
@@ -157,6 +157,6 @@ class Area extends Model
 
     public function lider()
     {
-        return $this->belongsTo(Empleado::class, 'empleados_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleados_id', 'id')->alta();
     }
 }

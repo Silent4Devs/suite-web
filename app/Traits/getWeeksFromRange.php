@@ -29,14 +29,14 @@ trait getWeeksFromRange
                 $day_it = intval(date('d', $nextMonday));
                 if ($lastYear == $year) {
                     if (Carbon::parse($nextMonday)->gte(Carbon::parse($year . '-' . $month . '-' . $day))) {
-                         $currentWeek = date('Y-m-d', $nextMonday) . '|' . date('Y-m-d', $nextFriday);
+                        $currentWeek = date('Y-m-d', $nextMonday) . '|' . date('Y-m-d', $nextFriday);
                         $rangeArray[] = $currentWeek;
                         if ($actualWeek == $currentWeek) {
                             break;
                         }
                     }
                 } else {
-                     $currentWeek = date('Y-m-d', $nextMonday) . '|' . date('Y-m-d', $nextFriday);
+                    $currentWeek = date('Y-m-d', $nextMonday) . '|' . date('Y-m-d', $nextFriday);
                     $rangeArray[] = $currentWeek;
 
                     if ($actualWeek == $currentWeek) {
@@ -49,6 +49,7 @@ trait getWeeksFromRange
             $year++;
         }
         $diffArray = array_diff($rangeArray, $employeeWeksTimesheet);
+
         return $diffArray;
     }
 }

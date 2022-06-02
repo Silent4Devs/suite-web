@@ -86,11 +86,11 @@ class CartaAceptacionRiesgosController extends Controller
 
     public function create(Request $request)
     {
-        $responsables = Empleado::get();
-        $directoresRiesgo = Empleado::get();
-        $presidencias = Empleado::get();
-        $vicepresidentesOperaciones = Empleado::get();
-        $vicepresidentes = Empleado::get();
+        $responsables = Empleado::alta()->get();
+        $directoresRiesgo = $responsables;
+        $presidencias = $responsables;
+        $vicepresidentesOperaciones = $responsables;
+        $vicepresidentes = $responsables;
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
         return view('admin.CartaAceptacionRiesgos.create', compact('controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
@@ -173,11 +173,11 @@ class CartaAceptacionRiesgosController extends Controller
     public function edit($cartaAceptacion)
     {
         $cartaAceptacion = CartaAceptacion::find($cartaAceptacion);
-        $responsables = Empleado::get();
-        $directoresRiesgo = Empleado::get();
-        $presidencias = Empleado::get();
-        $vicepresidentesOperaciones = Empleado::get();
-        $vicepresidentes = Empleado::get();
+        $responsables = Empleado::alta()->get();
+        $directoresRiesgo = $responsables;
+        $presidencias = $responsables;
+        $vicepresidentesOperaciones = $responsables;
+        $vicepresidentes = $responsables;
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
         return view('admin.CartaAceptacionRiesgos.edit', compact('cartaAceptacion', 'controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
@@ -190,11 +190,11 @@ class CartaAceptacionRiesgosController extends Controller
         $cartaAceptacion = CartaAceptacion::with(['aprobaciones' => function ($query) {
             $query->with('empleado', 'aprobacionesActivo')->orderBy('nivel');
         }])->find($cartaAceptacion);
-        $responsables = Empleado::get();
-        $directoresRiesgo = Empleado::get();
-        $presidencias = Empleado::get();
-        $vicepresidentesOperaciones = Empleado::get();
-        $vicepresidentes = Empleado::get();
+        $responsables = Empleado::alta()->get();
+        $directoresRiesgo = $responsables;
+        $presidencias = $responsables;
+        $vicepresidentesOperaciones = $responsables;
+        $vicepresidentes = $responsables;
         $controles = CartaAceptacionPivot::with('declaracion_aplicabilidad')->where('carta_id', $cartaAceptacion->id)->get();
         // dd($controles);
         $aprobadores = CartaAceptacionAprobacione::where('carta_id', $cartaAceptacion->id)->pluck('aprobador_id')->toArray();

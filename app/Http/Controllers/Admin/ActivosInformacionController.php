@@ -26,7 +26,7 @@ class ActivosInformacionController extends Controller
 
     public function create($matriz)
     {
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $area = Area::get();
         $procesos = Proceso::with('macroproceso')->get();
@@ -42,7 +42,7 @@ class ActivosInformacionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-           'contenedores' => 'required|array',
+            'contenedores' => 'required|array',
         ]);
 
         $contenedores = array_map(function ($value) {
@@ -52,13 +52,13 @@ class ActivosInformacionController extends Controller
         $activos->contenedores()->sync($contenedores);
         $matriz = $request->matriz_id;
 
-        return redirect()->route('admin.activosInformacion.index', ['matriz'=>$matriz])->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.activosInformacion.index', ['matriz' => $matriz])->with('success', 'Guardado con éxito');
     }
 
     public function edit(Request $request, $activos, $matriz)
     {
         $activos = ActivoInformacion::find($activos);
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
         $procesos = Proceso::with('macroproceso')->get();
         $confidencials = activoConfidencialidad::get();
         $integridads = activoIntegridad::get();
@@ -75,7 +75,7 @@ class ActivosInformacionController extends Controller
         $activos->contenedores()->sync($request->contenedores);
         $matriz = $request->matriz_id;
 
-        return redirect()->route('admin.activosInformacion.index', ['matriz'=>$matriz]);
+        return redirect()->route('admin.activosInformacion.index', ['matriz' => $matriz]);
     }
 
     public function destroy($id)
@@ -92,6 +92,6 @@ class ActivosInformacionController extends Controller
         $codigo = $request->identificador;
         $existe = ActivoInformacion::where('identificador', $codigo)->exists();
 
-        return response()->json(['existe'=>$existe]);
+        return response()->json(['existe' => $existe]);
     }
 }

@@ -46,18 +46,6 @@
             margin-right: 15px;
         }
 
-        .table tr td:nth-child(9) {
-
-            text-align: left !important;
-
-        }
-
-        .table tr td:nth-child(7) {
-
-            text-align: left !important;
-
-        }
-
     </style>
     {{ Breadcrumbs::render('EV360-Empleados') }}
 
@@ -73,26 +61,22 @@
                 </div>
             </div>
         @endcan
-        <div class="d-flex justify-content-between">
-            <div class="p-10">
-                <button id="eliminar_todo" class="btn btn-danger btn-sm"
+        <div class="grid justify-content-between">
+            {{-- <div class="col-10"> --}}
+            {{-- <button id="eliminar_todo" class="btn btn-danger btn-sm"
                     style="text-align: right;padding-right: 20px; background-color: red !important;"><i
                         class="fa-solid fa-trash"></i> seleccionados</button>
                 <div class="spinner-grow hide" role="status" id="loaderDiv">
                     <span class="sr-only">Loading...</span>
                 </div>
-                <span class="sr-only">Loading...</span>
-            </div>
-            <div class="p-2">
+                <span class="sr-only">Loading...</span> --}}
+            {{-- </div> --}}
+            <div class="col-12" style="text-align: end">
                 <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"
                     class="btn btn-success btn-sm active" role="button" aria-pressed="true"><i
                         class="pl-2 pr-3 fas fa-plus"></i> Configurar vista datos</a>
             </div>
         </div>
-
-        {{-- <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"><button
-                class="btn-xs btn-primary rounded ml-2 pr-3"><i class="pl-2 pr-3 fas fa-plus"></i> Configurar mis
-                datos</button></a> --}}
         @if (!$ceo_exists)
             <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                 <div class="row w-100">
@@ -116,9 +100,6 @@
             <table class="table table-bordered w-100 datatable-Empleado">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
-
-                        </th>
                         <th style="vertical-align: top">
                             Foto
                         </th>
@@ -335,21 +316,22 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.empleados.index') }}",
-                columns: [{
-                        data: 'checkbox',
-                        name: 'checkbox',
-                        render: function(data, type, row, meta) {
-                            return '<input type="checkbox" class="select_one" name="checkbox[]" id="checkbox' +
-                                row.id + '" value="' + row.id + '">';
-                        }
-                    },
+                columns: [
+                    // {
+                    //     data: 'checkbox',
+                    //     name: 'checkbox',
+                    //     render: function(data, type, row, meta) {
+                    //         return '<input type="checkbox" class="select_one" name="checkbox[]" id="checkbox' +
+                    //             row.id + '" value="' + row.id + '">';
+                    //     }
+                    // },
                     {
                         data: 'avatar',
                         name: 'avatar',
                         render: function(data, type, row, meta) {
                             const ids = row.id.toString();
                             console.log(ids);
-                            return `<div class="text-center"><a href="empleados/${ids}/edit"><img style="width: 50px;height: 50px;border-radius: 50%;" src="${row.avatar_ruta}"></a></div>`;
+                            return `<div class="text-center"><a href="empleados/${ids}/edit"><img style="width: 40px;height: 40px;border-radius: 50%;" src="${row.avatar_ruta}"></a></div>`;
                         }
                     },
                     {
@@ -389,9 +371,9 @@
                         name: 'estatus',
                         render: function(data, type, row, meta) {
                             if (row.estatus == 'alta') {
-                                return '<i class="fas fa-check text-success"></i>';
+                                return '<i class="fas fa-check text-success"></i> Alta';
                             } else {
-                                return '<i class="fas fa-times text-danger"></i>';
+                                return '<i class="fas fa-times text-danger"></i> Baja';
                             }
                         }
                     },
@@ -406,9 +388,10 @@
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ route('admin.empleados.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('admin.empleados.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
-                                   <button onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')" data-url="{{ route('admin.empleados.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></button>
+                                   <a href="{{ route('admin.empleado.solicitud-baja', ':id') }}" class="btn rounded-0" style="color:#D33" title="Dar de Baja"><i class="fas fa-trash-alt"></i></a>
                                 </div>
                             `;
+                            // onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')"
                             buttons = buttons.replaceAll(':id', data);
                             return buttons;
                         }
@@ -426,7 +409,7 @@
                 select: {
                     style: "multi",
                     selector: "td:first-child"
-                }
+                },
             };
             let table = $('.datatable-Empleado').DataTable(dtOverrideGlobals);
             // new $.fn.dataTable.FixedColumns(table, {

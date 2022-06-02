@@ -39,14 +39,14 @@ class EventosPortal extends Component
 
     public function render()
     {
-        $this->nuevos = Empleado::whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->get();
-        $this->nuevos_contador_circulo = Empleado::whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->count();
+        $this->nuevos = Empleado::alta()->whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->get();
+        $this->nuevos_contador_circulo = Empleado::alta()->whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->count();
 
-        $this->cumpleaños = Empleado::whereMonth('cumpleaños', '=', $this->hoy->format('m'))->get();
-        $this->cumpleaños_contador_circulo = Empleado::whereMonth('cumpleaños', '=', $this->hoy->format('m'))->count();
+        $this->cumpleaños = Empleado::alta()->whereMonth('cumpleaños', '=', $this->hoy->format('m'))->get();
+        $this->cumpleaños_contador_circulo = Empleado::alta()->whereMonth('cumpleaños', '=', $this->hoy->format('m'))->count();
 
-        $this->aniversarios = Empleado::whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->get();
-        $this->aniversarios_contador_circulo = Empleado::whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->count();
+        $this->aniversarios = Empleado::alta()->whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->get();
+        $this->aniversarios_contador_circulo = Empleado::alta()->whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->count();
 
         $this->politica_existe = PoliticaSgsi::count();
         $this->comite_existe = Comiteseguridad::count();

@@ -15,6 +15,6 @@ class TipoContratoEmpleado extends Model
 
     protected function empleados()
     {
-        return $this->hasMany(Empleado::class, 'tipo_contrato_empleado_id', 'id');
+        return $this->hasMany(Empleado::class, 'tipo_contrato_empleado_id', 'id')->alta();
     }
 }

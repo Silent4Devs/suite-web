@@ -56,7 +56,7 @@ class PanelDeclaracionController extends Controller
                 return $row->aprobadores ? $row->aprobadores : '';
             });
             $table->editColumn('empleados', function ($row) {
-                $empleados = Empleado::select('id', 'name', 'genero', 'foto')->get();
+                $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
 
                 return $empleados;
             });
@@ -69,14 +69,14 @@ class PanelDeclaracionController extends Controller
             return $table->make(true);
         }
 
-        $empleados = Empleado::select('id', 'name', 'genero', 'foto')->get();
+        $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
 
         return view('admin.panelDeclaracion.index', compact('empleados'));
     }
 
     public function create()
     {
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $controles = DeclaracionAplicabilidad::OrderBy('id')->get();
 
         return view('admin.panelDeclaracion.create', compact('empleados', 'controles'));
@@ -109,7 +109,7 @@ class PanelDeclaracionController extends Controller
 
     public function edit($id)
     {
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $controles = DeclaracionAplicabilidad::get();
 
         return view('admin.panelDeclaracion.edit', compact('empleados', 'controles'));
@@ -249,7 +249,7 @@ class PanelDeclaracionController extends Controller
         $declaracion = $request->declaracion;
 
         foreach ($destinatarios as $destinatario) {
-            $empleado = Empleado::select('id', 'name', 'email')->find(intval($destinatario));
+            $empleado = Empleado::alta()->select('id', 'name', 'email')->find(intval($destinatario));
             // dd($empleado); Hacer la consulta de controles se la envio como controles buscar la tabla where->
             $responsable = DeclaracionAplicabilidadResponsable::with('declaracion_aplicabilidad')->where('empleado_id', $destinatario)->get();
             // dd($responsable);

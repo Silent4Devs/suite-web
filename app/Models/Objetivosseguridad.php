@@ -85,7 +85,7 @@ class Objetivosseguridad extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'responsable_id');
+        return $this->belongsTo(Empleado::class, 'responsable_id')->alta();
     }
 
     public function variables_objetivosseguridads()

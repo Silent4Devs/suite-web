@@ -250,7 +250,7 @@ class Recurso extends Model implements HasMedia
 
     public function empleados()
     {
-        return $this->belongsToMany(Empleado::class)->with('area')->withPivot('certificado', 'calificacion', 'archivado', 'es_aceptada', 'evaluacion', 'asistio');
+        return $this->belongsToMany(Empleado::class)->alta()->with('area')->withPivot('certificado', 'calificacion', 'archivado', 'es_aceptada', 'evaluacion', 'asistio');
     }
 
     public function categoria_capacitacion()
