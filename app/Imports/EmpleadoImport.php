@@ -4,11 +4,11 @@ namespace App\Imports;
 
 use App\Models\Empleado;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\Importable;
 
-class EmpleadoImport implements ToModel,WithHeadingRow
+class EmpleadoImport implements ToModel, WithHeadingRow
 {
     use Importable;
 
@@ -18,7 +18,6 @@ class EmpleadoImport implements ToModel,WithHeadingRow
         $antiguedad = $this->obtenerFecha($row['fecha_ingreso_dd_mm_aaaa']);
         $birthday = $this->obtenerFecha($row['cumpleanos_dd_mm_aaaa']);
 
-      
         return new Empleado([
                 'name'=> isset($row['nombre']) ? $row['nombre'] : null,
                 'n_empleado'=> isset($row['numero_empleado']) ? $row['numero_empleado'] : null,

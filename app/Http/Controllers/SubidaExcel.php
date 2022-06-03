@@ -374,7 +374,6 @@ class SubidaExcel extends Controller
         if ($request->tipo == 'tabla') {
             return response()->json(['status' => 'success', 'message' => 'Datos importados con éxito']);
         }
-      
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }
