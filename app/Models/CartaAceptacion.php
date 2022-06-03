@@ -130,27 +130,27 @@ class CartaAceptacion extends Model
 
     public function responsables()
     {
-        return $this->belongsTo(Empleado::class, 'responsable_id', 'id');
+        return $this->belongsTo(Empleado::class, 'responsable_id', 'id')->alta();
     }
 
     public function directores()
     {
-        return $this->belongsTo(Empleado::class, 'director_resp_id', 'id');
+        return $this->belongsTo(Empleado::class, 'director_resp_id', 'id')->alta();
     }
 
     public function presidentes()
     {
-        return $this->belongsTo(Empleado::class, 'presidencia_id', 'id');
+        return $this->belongsTo(Empleado::class, 'presidencia_id', 'id')->alta();
     }
 
     public function vicepresidentes()
     {
-        return $this->belongsTo(Empleado::class, 'vp_responsable_id', 'id');
+        return $this->belongsTo(Empleado::class, 'vp_responsable_id', 'id')->alta();
     }
 
     public function vicepresidentesOperaciones()
     {
-        return $this->belongsTo(Empleado::class, 'vice_operaciones_id', 'id');
+        return $this->belongsTo(Empleado::class, 'vice_operaciones_id', 'id')->alta();
     }
 
     public function controles()

@@ -15,7 +15,7 @@ class EmpleadosExport implements FromCollection, WithMapping, WithHeadings
      */
     public function collection()
     {
-        return Empleado::with('supervisor', 'area')->get();
+        return Empleado::alta()->with('supervisor', 'area')->get();
     }
 
     public function map($empleado): array

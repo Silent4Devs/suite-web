@@ -46,12 +46,12 @@ class IncidentesSeguridad extends Model implements HasMedia
 
     public function reporto()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id')->alta();
     }
 
     public function asignado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_asignado_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_asignado_id', 'id')->alta();
     }
 
     public function evidencias_seguridad()

@@ -106,7 +106,7 @@
                 <input type="file" name="cierre[]" class="form-control" multiple="multiple">
             </div>
         @else
-            <div class="row">
+            <div class="row ml-1">
                 <div class="form-group col-md-8">
                     <input type="file" name="cierre[]" class="form-control" multiple="multiple">
                 </div>

@@ -83,7 +83,7 @@ class AlcanceSgsi extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_reviso_alcance')->with('area');
+        return $this->belongsTo(Empleado::class, 'id_reviso_alcance')->alta()->with('area');
     }
 
     public function norma()

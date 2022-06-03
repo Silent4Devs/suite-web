@@ -6,7 +6,6 @@ use App\Models\QuejasCliente;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class CierreQuejaAceptadaEmail extends Mailable
 {
@@ -17,13 +16,11 @@ class CierreQuejaAceptadaEmail extends Mailable
      *
      * @return void
      */
-
     public $quejas;
 
     public function __construct(QuejasCliente $quejas)
     {
         $this->quejas = $quejas;
-
     }
 
     /**
@@ -33,6 +30,6 @@ class CierreQuejaAceptadaEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.quejasCliente.cierreQuejaAceptada')->subject('La resolución de la queja ' .$this->quejas->folio. ' ha sido aprobada');
+        return $this->view('mails.quejasCliente.cierreQuejaAceptada')->subject('La resolución de la queja ' . $this->quejas->folio . ' ha sido aprobada');
     }
 }

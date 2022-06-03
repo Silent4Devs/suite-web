@@ -271,27 +271,6 @@
                         },
                         {
                             data: 'prioridad',
-                            render: function(data, type, row, meta) {
-                                data = data == "" ? 0 : data
-                                let color = "green";
-                                let valor = "";
-                                let texto = "white";
-                                if (data == 'Alta') {
-                                    color = "#FF417B";
-                                    valor = "Alta";
-                                }
-                                if (data == 'Media') {
-                                    color = "#FFCB63";
-                                    valor = "Media";
-                                }
-                                if (data == 'Baja') {
-                                    color = "#6DC866";
-                                    valor = "Baja";
-                                }
-                                return `
-                            <div style="position:absolute;display:flex; justify-content:center; align-items:center; background-color:${color}; color:${texto}">${valor}</div>
-                            `
-                            }
                         },
                         {
                             data: 'desea_levantar_ac',
@@ -374,6 +353,8 @@
                         }
                         if(data.prioridad !=null){
                             $(cells[15]).css('background-color', color)
+                            $(cells[15]).css('color', texto)
+
                         }
                     },
 

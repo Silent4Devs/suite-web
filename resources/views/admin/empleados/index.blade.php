@@ -46,18 +46,6 @@
             margin-right: 15px;
         }
 
-        .table tr td:nth-child(9) {
-
-            text-align: left !important;
-
-        }
-
-        .table tr td:nth-child(7) {
-
-            text-align: left !important;
-
-        }
-
     </style>
     {{ Breadcrumbs::render('EV360-Empleados') }}
 
@@ -89,10 +77,6 @@
                         class="pl-2 pr-3 fas fa-plus"></i> Configurar vista datos</a>
             </div>
         </div>
-
-        {{-- <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"><button
-                class="btn-xs btn-primary rounded ml-2 pr-3"><i class="pl-2 pr-3 fas fa-plus"></i> Configurar mis
-                datos</button></a> --}}
         @if (!$ceo_exists)
             <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                 <div class="row w-100">
@@ -357,7 +341,7 @@
                         render: function(data, type, row, meta) {
                             const ids = row.id.toString();
                             console.log(ids);
-                            return `<div class="text-center"><a href="empleados/${ids}/edit"><img style="width: 50px;height: 50px;border-radius: 50%;" src="${row.avatar_ruta}"></a></div>`;
+                            return `<div class="text-center"><a href="empleados/${ids}/edit"><img style="width: 40px;height: 40px;border-radius: 50%;" src="${row.avatar_ruta}"></a></div>`;
                         }
                     },
                     {
@@ -397,9 +381,9 @@
                         name: 'estatus',
                         render: function(data, type, row, meta) {
                             if (row.estatus == 'alta') {
-                                return '<i class="fas fa-check text-success"></i>';
+                                return '<i class="fas fa-check text-success"></i> Alta';
                             } else {
-                                return '<i class="fas fa-times text-danger"></i>';
+                                return '<i class="fas fa-times text-danger"></i> Baja';
                             }
                         }
                     },
@@ -414,9 +398,10 @@
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ route('admin.empleados.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('admin.empleados.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
-                                   <button onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')" data-url="{{ route('admin.empleados.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></button>
+                                   <a href="{{ route('admin.empleado.solicitud-baja', ':id') }}" class="btn rounded-0" style="color:#D33" title="Dar de Baja"><i class="fas fa-trash-alt"></i></a>
                                 </div>
                             `;
+                            // onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')"
                             buttons = buttons.replaceAll(':id', data);
                             return buttons;
                         }
@@ -434,7 +419,7 @@
                 select: {
                     style: "multi",
                     selector: "td:first-child"
-                }
+                },
             };
             let table = $('.datatable-Empleado').DataTable(dtOverrideGlobals);
             // new $.fn.dataTable.FixedColumns(table, {

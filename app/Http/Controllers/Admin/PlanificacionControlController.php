@@ -101,7 +101,7 @@ class PlanificacionControlController extends Controller
         abort_if(Gate::denies('planificacion_control_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
 
         return view('admin.planificacionControls.create', compact('duenos', 'empleados'));
     }
@@ -119,7 +119,7 @@ class PlanificacionControlController extends Controller
 
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
 
         $planificacionControl->load('dueno', 'team');
 

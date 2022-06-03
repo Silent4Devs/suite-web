@@ -40,7 +40,7 @@ class EnviarCorreoFelicitaciones extends Command
      */
     public function handle()
     {
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         foreach ($empleados as $empleado) {
             Mail::to($empleado->email)->send(new FelicitacionesMail);

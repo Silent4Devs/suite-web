@@ -29,7 +29,7 @@ class ActivosController extends Controller
         abort_if(Gate::denies('configuracion_activo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Activo::with(['tipoactivo'=>function ($query) {
+            $query = Activo::with(['tipoactivo' => function ($query) {
                 $query->with('subcategoria_activos');
             }, 'dueno', 'empleado', 'ubicacion', 'team'])->select(sprintf('%s.*', (new Activo)->table))->orderByDesc('id');
             $table = Datatables::of($query);
@@ -146,7 +146,7 @@ class ActivosController extends Controller
 
         $ubicacions = Sede::all()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
         $procesos = Proceso::with('macroproceso')->get();
 
         $area = Area::get();
@@ -214,7 +214,7 @@ class ActivosController extends Controller
             //indicamos que queremos guardar un nuevo archivo en el disco local
             //    Storage::disk(('app\public\responsivasActivos'))->put($nombre,$file);
             $file->storeAs('public\responsivasActivos', $nombre);
-            $activo->update(['documento' =>$nombre]);
+            $activo->update(['documento' => $nombre]);
         }
 
         return redirect()->route('admin.activos.index')->with('success', 'Guardado con éxito');
@@ -233,7 +233,7 @@ class ActivosController extends Controller
 
         $ubicacions = Sede::all()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
 
         $procesos = Proceso::with('macroproceso')->get();
 

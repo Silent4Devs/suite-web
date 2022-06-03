@@ -54,7 +54,7 @@ class EducacionEmpleados extends Model
 
     public function empleado_educacion()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
     }
 
     // public function getAñoInicioAttribute($value)

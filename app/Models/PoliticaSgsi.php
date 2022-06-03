@@ -72,6 +72,6 @@ class PoliticaSgsi extends Model
 
     public function reviso()
     {
-        return $this->belongsTo(Empleado::class, 'id_reviso_politica', 'id');
+        return $this->belongsTo(Empleado::class, 'id_reviso_politica', 'id')->alta();
     }
 }

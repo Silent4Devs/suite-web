@@ -15,7 +15,6 @@ class ChangeColumnFechaCierreToQuejasClientesTable extends Migration
     {
         Schema::table('quejas_clientes', function (Blueprint $table) {
             $table->dateTime('fecha_cierre')->change();
-
         });
     }
 

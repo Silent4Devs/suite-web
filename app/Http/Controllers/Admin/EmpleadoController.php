@@ -16,7 +16,6 @@ use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
 use App\Models\Language;
 use App\Models\ListaDocumentoEmpleado;
-use App\Models\Organizacion;
 use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\BeneficiariosEmpleado;
@@ -27,6 +26,7 @@ use App\Models\RH\TipoContratoEmpleado;
 use App\Models\Sede;
 use App\Models\User;
 use App\Rules\MonthAfterOrEqual;
+use App\Traits\ObtenerOrganizacion;
 use Barryvdh\DomPDF\Facade as PDF;
 use Gate;
 use Illuminate\Http\Request;
@@ -43,6 +43,8 @@ use Yajra\DataTables\Facades\DataTables;
 
 class EmpleadoController extends Controller
 {
+    use ObtenerOrganizacion;
+
     /**
      * Display a listing of the resource.
      *
@@ -52,7 +54,7 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('configuracion_empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = Empleado::orderByDesc('id')->get();
+            $query = Empleado::orderByDesc('id')->alta()->get();
             $table = DataTables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -133,13 +135,9 @@ class EmpleadoController extends Controller
         }
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.empleados.index', compact('ceo_exists', 'logo_actual', 'empresa_actual'));
@@ -176,7 +174,7 @@ class EmpleadoController extends Controller
     public function create()
     {
         abort_if(Gate::denies('configuracion_empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
         $sedes = Sede::get();
@@ -217,7 +215,7 @@ class EmpleadoController extends Controller
 
         $request->validate([
             'name' => 'required|string',
-            'n_empleado' => 'required|unique:empleados',
+            'n_empleado' => 'nullable|unique:empleados',
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
@@ -351,8 +349,8 @@ class EmpleadoController extends Controller
             'perfil_empleado_id' => $request->perfil_empleado_id,
             'supervisor_id' =>  $request->supervisor_id,
             'antiguedad' =>  $request->antiguedad,
+            'email' =>  trim(preg_replace('/\s/u', ' ', $request->email)),
             'estatus' => 'alta',
-            'email' =>  $request->email,
             'telefono' =>  $request->telefono,
             'genero' =>  $request->genero,
             'n_empleado' =>  $request->n_empleado,
@@ -415,6 +413,7 @@ class EmpleadoController extends Controller
             'email' => $empleado->email,
             'password' =>  $generatedPassword['hash'],
             'n_empleado' => $empleado->n_empleado,
+            'empleado_id' => $empleado->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -978,7 +977,7 @@ class EmpleadoController extends Controller
         $certificados = CertificacionesEmpleados::where('empleado_id', intval($id))->get();
         $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
         $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
-        $empleado = Empleado::get();
+        $empleado = Empleado::alta()->get();
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
@@ -993,7 +992,7 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find(intval($id));
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
         $area = Area::find($empleado->area_id);
@@ -1136,7 +1135,7 @@ class EmpleadoController extends Controller
         }
         $request->validate([
             'name' => 'required|string',
-            'n_empleado' => 'unique:empleados,n_empleado,' . $id,
+            'n_empleado' => 'nullable|unique:empleados,n_empleado,' . $id,
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
@@ -1207,7 +1206,6 @@ class EmpleadoController extends Controller
         //         }
         //     }
         // }
-
         $empleado->update([
             'name' => $request->name,
             'area_id' =>  $request->area_id,
@@ -1215,10 +1213,11 @@ class EmpleadoController extends Controller
             'perfil_empleado_id' => $request->perfil_empleado_id,
             'supervisor_id' =>  $request->supervisor_id,
             'antiguedad' =>  $request->antiguedad,
-            // 'estatus' =>  $request->estatus,
+            'estatus' =>  $request->estatus,
             'email' =>  $request->email,
             'telefono' =>  $request->telefono,
             'genero' =>  $request->genero,
+            'estatus' => 'alta',
             'n_empleado' =>  $request->n_empleado,
             'n_registro' =>  $request->n_registro,
             'sede_id' =>  $request->sede_id,
@@ -1267,7 +1266,10 @@ class EmpleadoController extends Controller
             'periodicidad_nomina' => $request->periodicidad_nomina,
             'foto' => $image,
         ]);
-
+        $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
+        $usuario->update([
+            'n_empleado' => $request->n_empleado,
+        ]);
         $this->assignDependenciesModel($request, $empleado);
 
         return response()->json(['status' => 'success', 'message' => 'Empleado Actualizado', 'from' => 'rh'], 200);
@@ -1367,7 +1369,7 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
-                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
+                $usuarios = Empleado::alta()->with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
                 // dd(compact('usuarios'));
                 return compact('usuarios');
             }
@@ -1393,7 +1395,7 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
-                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
+                $usuarios = Empleado::alta()->with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
 
                 return json_encode($usuarios);
             }
@@ -1402,11 +1404,11 @@ class EmpleadoController extends Controller
 
     public function getAllEmpleados(Request $request)
     {
-        $empleados = Empleado::select('id', 'name')->get();
+        $empleados = Empleado::select('id', 'name')->alta()->get();
 
         return json_encode($empleados);
         if ($request->ajax()) {
-            $empleados = Empleado::select('id', 'name')->get();
+            $empleados = Empleado::select('id', 'name')->alta()->get();
 
             return json_encode($empleados);
         }
@@ -1580,14 +1582,14 @@ class EmpleadoController extends Controller
     {
         $participantes = $request->participantes;
 
-        $empleados = Empleado::whereIn('email', $participantes)->get();
+        $empleados = Empleado::alta()->whereIn('email', $participantes)->get();
 
         return $empleados;
     }
 
     public function obtenerEmpleadoPorNombre($nombre)
     {
-        $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+        $empleado_bd = Empleado::alta()->select('id', 'name')->where('name', $nombre)->first();
 
         return $empleado_bd->id;
     }
@@ -1601,9 +1603,14 @@ class EmpleadoController extends Controller
         $certificados = CertificacionesEmpleados::where('empleado_id', intval($id))->get();
         $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
         $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
-        $empleado = Empleado::get();
+        $empleado = Empleado::alta()->get();
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
+    }
+
+    public function solicitudBaja(Empleado $empleado)
+    {
+        return view('admin.empleados.solicitudBaja', compact('empleado'));
     }
 
     // public function imprimir($id){

@@ -31,7 +31,7 @@ class Sugerencias extends Model
 
     public function sugirio()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_sugirio_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_sugirio_id', 'id')->alta();
     }
 
     public function planes()
