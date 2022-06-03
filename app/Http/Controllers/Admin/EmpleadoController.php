@@ -1205,7 +1205,7 @@ class EmpleadoController extends Controller
         //             ]);
         //         }
         //     }
-        // }        
+        // }
         $empleado->update([
             'name' => $request->name,
             'area_id' =>  $request->area_id,
