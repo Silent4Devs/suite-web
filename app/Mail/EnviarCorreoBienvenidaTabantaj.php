@@ -34,6 +34,6 @@ class EnviarCorreoBienvenidaTabantaj extends Mailable
         return $this->view('mails.bienvenida.bienvenida', [
             'empleado' => $this->empleado,
             'password' => $this->password,
-        ]);
+        ])->subject('Bienvenido a Tabantaj');
     }
 }

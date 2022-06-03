@@ -22,7 +22,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label class="required" for="n_empleado"><i class="fas fa-id-card iconos-crear"></i>N°
+        <label for="n_empleado"><i class="fas fa-id-card iconos-crear"></i>N°
             de
             empleado</label>
         <input class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}" type="text" name="n_empleado"
