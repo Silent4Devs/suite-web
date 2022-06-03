@@ -1,36 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-<style>
 
-        .table tr td:nth-child(1) {
-
-        text-align: left !important;
-
-        }
-
-
-        .table tr td:nth-child(4) {
-
-        min-width:150px;
-        text-align: left !important;
-
-        }
-
-        .table tr td:nth-child(5) {
-
-        min-width:400px;
-        text-align: justify !important;
-
-        }
-
-
-        .table tr td:nth-child(1) {
-
-        min-width:150px;
-
-        }
-</style>
     <h5 class="col-12 titulo_general_funcion">Registro de Áreas</h5>
     <div class="mt-5 card">
         @can('configuracion_area_create')
@@ -64,8 +35,9 @@
             <table class="table table-bordered w-100 datatable-Area">
                 <thead class="thead-dark">
                     <tr>
+                        <th style="max-width: 40px;">ID</th>
                         <th>
-                            Nombre de Área
+                            Nombre&nbsp;de&nbsp;Área
                         </th>
                         <th>
                             Foto
@@ -74,7 +46,7 @@
                             Grupo
                         </th>
                         <th>
-                            Reporta a
+                            Reporta&nbsp;a
                         </th>
                         <th>
                             Descripción
@@ -84,6 +56,7 @@
                         </th>
                     </tr>
                 </thead>
+                <tbody></tbody>
             </table>
         </div>
     </div>
@@ -220,6 +193,10 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.areas.index') }}",
                 columns: [{
+                        data: 'id',
+                        name: 'id',               
+                    },
+                    {
                         data: 'area',
                         name: 'area'
                     },
@@ -235,11 +212,17 @@
                     },
                     {
                         data: 'reporta',
-                        name: 'reporta'
+                        name: 'reporta',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'descripcion',
-                        name: 'descripcion'
+                        name: 'descripcion',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'actions',

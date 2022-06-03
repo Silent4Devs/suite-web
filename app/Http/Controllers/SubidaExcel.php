@@ -368,10 +368,13 @@ class SubidaExcel extends Controller
         if ($request->eliminar == 'true') {
             Empleado::truncate();
         }
-        Excel::import(new EmpleadoImport, request()->file('empleado'));
+        // Excel::import(new EmpleadoImport, request()->file('empleado'));
+        $file = $request->file('empleado');
+        (new EmpleadoImport)->import($file);
         if ($request->tipo == 'tabla') {
             return response()->json(['status'=>'success', 'message'=>'Datos importados con éxito']);
         }
+      
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }

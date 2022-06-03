@@ -74,7 +74,7 @@
             </div>
         @endcan
         <div class="d-flex justify-content-between">
-            <div class="p-10">
+            {{-- <div class="p-10">
                 <button id="eliminar_todo" class="btn btn-danger btn-sm"
                     style="text-align: right;padding-right: 20px; background-color: red !important;"><i
                         class="fa-solid fa-trash"></i> seleccionados</button>
@@ -82,8 +82,8 @@
                     <span class="sr-only">Loading...</span>
                 </div>
                 <span class="sr-only">Loading...</span>
-            </div>
-            <div class="p-2">
+            </div> --}}
+            <div class="p-2 w-100" style="text-align: end;" >
                 <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"
                     class="btn btn-success btn-sm active" role="button" aria-pressed="true"><i
                         class="pl-2 pr-3 fas fa-plus"></i> Configurar vista datos</a>
@@ -113,11 +113,14 @@
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-Empleado">
+            <table class="table table-bordered w-100 datatable-Empleado tblCSV">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        {{-- <th>
 
+                        </th> --}}
+                        <th style="vertical-align: top">
+                            ID
                         </th>
                         <th style="vertical-align: top">
                             Foto
@@ -335,13 +338,18 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.empleados.index') }}",
-                columns: [{
-                        data: 'checkbox',
-                        name: 'checkbox',
-                        render: function(data, type, row, meta) {
-                            return '<input type="checkbox" class="select_one" name="checkbox[]" id="checkbox' +
-                                row.id + '" value="' + row.id + '">';
-                        }
+                columns: [
+                    // {
+                    //     data: 'checkbox',
+                    //     name: 'checkbox',
+                    //     render: function(data, type, row, meta) {
+                    //         return '<input type="checkbox" class="select_one" name="checkbox[]" id="checkbox' +
+                    //             row.id + '" value="' + row.id + '">';
+                    //     }
+                    // },
+                    {
+                        data: 'id',
+                        name: 'id'
                     },
                     {
                         data: 'avatar',
