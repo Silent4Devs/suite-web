@@ -4,38 +4,37 @@ namespace App\Imports;
 
 use App\Models\Empleado;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class EmpleadoImport implements ToModel
+class EmpleadoImport implements ToModel, WithHeadingRow
 {
-    /**
-     * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
+    use Importable;
+
     public function model(array $row)
     {
-        $antiguedad = $this->obtenerFecha($row[6]);
-        $birthday = $this->obtenerFecha($row[15]);
+        // dd($row);
+        $antiguedad = $this->obtenerFecha($row['fecha_ingreso_dd_mm_aaaa']);
+        $birthday = $this->obtenerFecha($row['cumpleanos_dd_mm_aaaa']);
 
         return new Empleado([
-                'name'=> isset($row[0]) ? $row[0] : null,
-                'n_empleado'=> isset($row[1]) ? $row[1] : null,
-                'area_id'=> isset($row[2]) ? $row[2] : null,
-                'supervisor_id'=> isset($row[3]) ? $row[3] : null,
-                'puesto_id'=> isset($row[4]) ? $row[4] : null,
-                'perfil_empleado_id'=> isset($row[5]) ? $row[5] : null,
-                'antiguedad'=> $antiguedad,
-                'genero'=> isset($row[7]) ? $row[7] : null,
-                'estatus'=> isset($row[8]) ? $row[8] : null,
-                'email' => isset($row[9]) ? $row[9] : null,
-                'telefono_movil'=> isset($row[10]) ? $row[10] : null,
-                'telefono' => isset($row[11]) ? $row[11] : null,
-                'extension'=> isset($row[12]) ? $row[12] : null,
-                'sede_id'=> isset($row[13]) ? $row[13] : null,
-                'direccion'=> isset($row[14]) ? $row[14] : null,
-                'cumpleaños'=> $birthday,
-                'resumen'=> isset($row[16]) ? $row[16] : null,
+                'name'=> isset($row['nombre']) ? $row['nombre'] : null,
+                'n_empleado'=> isset($row['numero_empleado']) ? $row['numero_empleado'] : null,
+                'area_id'=> isset($row['area_id']) ? $row['area_id'] : null,
+                'supervisor_id'=> isset($row['jefe_inmediatoid']) ? $row['jefe_inmediatoid'] : null,
+                'puesto_id'=> isset($row['puesto_id']) ? $row['puesto_id'] : null,
+                'perfil_empleado_id'=> isset($row['nivel_jerarquico_id']) ? $row['nivel_jerarquico_id'] : null,
+                // 'antiguedad'=> isset($row['fecha_ingreso_aaa_mm_dd']) ? $row['fecha_ingreso_aaa_mm_dd'] : null,
+                'antiguedad'=>$antiguedad,
+                'genero'=> isset($row['genero_hm']) ? $row['genero_hm'] : null,
+                'email' => isset($row['email']) ? $row['email'] : null,
+                'telefono_movil'=> isset($row['telefono_movil']) ? $row['telefono_movil'] : null,
+                'telefono' => isset($row['telefono_fijo']) ? $row['telefono_fijo'] : null,
+                'sede_id'=> isset($row['sede_id']) ? $row['sede_id'] : null,
+                'direccion'=> isset($row['direccion']) ? $row['direccion'] : null,
+                // 'cumpleaños'=> isset($row['cumpleanos_aaa_mm_dd']) ? $row['cumpleanos_aaa_mm_dd'] : null,
+                'cumpleaños'=>$birthday,
 
         ]);
     }
@@ -54,7 +53,6 @@ class EmpleadoImport implements ToModel
             'telefono_movil'=>'string',
             'direccion'=>'string',
             'cumpleaños'=>'date',
-            'resumen'=>'string',
         ];
     }
 
