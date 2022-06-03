@@ -93,6 +93,13 @@
                                             <p style="font-size:11pt; color:#153643;text-align: left;">
                                                 <strong>Contraseña: </strong><span>{{ $password }}</span>
                                             </p>
+                                            <br>
+                                            <div style="text-align:center; margin-top:20px">
+                                                <span
+                                                    style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
+                                                    <a href="{{ config('app.url') }}"
+                                                        style="color:#fff">Comenzar</a></span>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
