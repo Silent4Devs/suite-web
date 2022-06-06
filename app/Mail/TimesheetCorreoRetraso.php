@@ -32,6 +32,6 @@ class TimesheetCorreoRetraso extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.timesheet.timesheet_correo_retraso');
+        return $this->view('mails.timesheet.timesheet_correo_retraso')->subject('Timesheet - Recordatorio de Registro de Horas');
     }
 }

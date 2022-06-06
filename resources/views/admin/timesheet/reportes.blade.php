@@ -9,6 +9,10 @@
         }
     </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
     {{ Breadcrumbs::render('timesheet-reportes') }}
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reportes</font> </h5>
     <div class="mt-5 card card-body">
@@ -81,8 +85,17 @@
             $(".cde-estatus").removeClass("ver");
         });
 
-        $(".cde-totalh").mouseover(function(){
-            $(".cde-totalh").addClass("ver");
+        $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").mouseover(function(){
+            $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").addClass("ver");
+        });
+        $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").mouseleave(function(){
+            $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").removeClass("ver");
+        });
+        $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)").mouseover(function(){
+            $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)").addClass("ver");
+        });
+        $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)").mouseleave(function(){
+            $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)").removeClass("ver");
         });
     </script>
     <script type="text/javascript">
@@ -219,7 +232,11 @@
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 destroy: true,
-                render: true,
+                aLengthMenu: [ 
+                    [5, 10, 50, 100, -1], 
+                    [5, 10, 50, 100, "Todos"] 
+                ], 
+                iDisplayLength: -1,
                 "footerCallback": function ( row, data, start, end, display ) {
                     var api = this.api();
                     nb_cols = api.columns().nodes().length;
@@ -283,12 +300,6 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', ()=>{
             $(".date_librery").flatpickr({
-                // "disable": [
-                //     function(date) {
-                //         return (date.getDay() === 0 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
-                        
-                //     }
-                // ],
                 locale: {
                     firstDayOfWeek: 1,
                     weekdays: {
@@ -300,6 +311,8 @@
                       longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                     },
                 },
+                altInput: true,
+                dateFormat: 'd-m-Y',
             });
             $("#fecha_dia_registros_inicio_empleados").flatpickr({
                 "disable": [
@@ -321,6 +334,44 @@
                 },
             });
             $("#fecha_dia_registros_fin_empleados").flatpickr({
+                "disable": [
+                    function(date) {
+                        return (date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
+                        
+                    }
+                ],
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                      shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
+                    }, 
+                    months: {
+                      shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+                      longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    },
+                },
+            });
+            $("#fecha_dia_registros_inicio_proyectos").flatpickr({
+                "disable": [
+                    function(date) {
+                        return (date.getDay() === 0 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
+                        
+                    }
+                ],
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                      shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
+                    }, 
+                    months: {
+                      shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+                      longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    },
+                },
+            });
+            $("#fecha_dia_registros_fin_proyectos").flatpickr({
                 "disable": [
                     function(date) {
                         return (date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);

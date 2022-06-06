@@ -116,9 +116,6 @@
                 };
                 let dtOverrideGlobals = {
                     buttons: dtButtons,
-                    order:[
-                                [0,'desc']
-                            ],
                     destroy: true,
                     render: true,
                 };

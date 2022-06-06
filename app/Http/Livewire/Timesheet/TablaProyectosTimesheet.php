@@ -27,6 +27,7 @@ class TablaProyectosTimesheet extends Component
     public $cancelado_count;
     public $terminado_count;
 
+
     public $sedes;
 
     public function mount()
@@ -55,14 +56,19 @@ class TablaProyectosTimesheet extends Component
 
     public function store()
     {
+
         $this->validate(
             [
                 'identificador' => 'required|unique:timesheet_proyectos,identificador',
                 'proyecto_name'=>'required',
                 'area_id'=>'required',
+                'fecha_inicio'=>'required|before:fecha_fin',
+                'fecha_fin'=>'required|after:fecha_inicio',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
+                'fecha_inicio.before'=>'La fecha de incio debe ser anterior a la fecha de fin',
+                'fecha_fin.after'=>'La fecha de fin debe ser posterior a la fecha de incio',
             ],
         );
 
@@ -75,14 +81,6 @@ class TablaProyectosTimesheet extends Component
             'fecha_fin' => $this->fecha_fin,
             'sede_id' => $this->sede_id,
         ]);
-
-        $this->identificador = null;
-        $this->proyecto_name = null;
-        $this->area_id = null;
-        $this->cliente_id = null;
-        $this->fecha_inicio = null;
-        $this->fecha_fin = null;
-        $this->sede_id = null;
 
         $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
 

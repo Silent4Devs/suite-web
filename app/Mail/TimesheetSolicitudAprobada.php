@@ -35,6 +35,6 @@ class TimesheetSolicitudAprobada extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.timesheet.timesheet_solicitud_aprobada');
+        return $this->view('mails.timesheet.timesheet_solicitud_aprobada')->subject('Timesheet - Solicitud Aprobada ' . $this->aprobar->semana_text);
     }
 }

@@ -219,9 +219,6 @@
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
-                order:[
-                            [0,'desc']
-                        ]
             };
             let table = $('#datatable_clientes').DataTable(dtOverrideGlobals);
             console.log(table.selector);

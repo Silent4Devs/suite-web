@@ -11,7 +11,7 @@ class Timesheet extends Model
 
     protected $table = 'timesheet';
 
-    protected $appends = ['semana', 'proyectos', 'semana_y'];
+    protected $appends = ['semana', 'proyectos', 'semana_y', 'semana_text'];
 
     protected $fillable = [
         'fecha_semana',
@@ -54,6 +54,20 @@ class Timesheet extends Model
             <font style="font-weight: bolder !important;">' . $fin_dia . '</font>
 
             ';
+
+        return $semana_rango;
+    }
+
+    public function getSemanaTextAttribute()
+    {
+        $inicio = $this->traducirDia($this->inicio_semana);
+
+        $fin = $this->traducirDia($this->fin_semana);
+
+        $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify("last {$inicio}")->format('d/m/Y');
+        $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->format('d/m/Y');
+
+        $semana_rango = ' del ' .  $inicio_dia . ' al ' . $fin_dia;
 
         return $semana_rango;
     }

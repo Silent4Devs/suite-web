@@ -1,6 +1,6 @@
 <div>    
     <div class="row" wire:ignore>
-        <div class="col-md-4 form-group">
+        <div class="col-md-4 form-group" style="padding-left:0px !important;">
             <label class="form-label">Área</label>
             <select class="form-control" wire:model="area_id">
                 <option selected value="0">Todas</option>

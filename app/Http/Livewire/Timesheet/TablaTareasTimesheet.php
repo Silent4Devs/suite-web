@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Timesheet;
 
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
+use App\Models\TimesheetHoras;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -19,6 +20,8 @@ class TablaTareasTimesheet extends Component
     public $origen;
     public $tareas_proyecto;
 
+    public $tarea_name_actualizada;
+
     public function mount($proyecto_id, $origen)
     {
         $this->origen = $origen;
@@ -29,12 +32,12 @@ class TablaTareasTimesheet extends Component
     {
         if ($this->origen == 'tareas') {
             $this->proyectos = TimesheetProyecto::get();
-            $this->tareas = TimesheetTarea::get();
+            $this->tareas = TimesheetTarea::orderByDesc('id')->get();
         }
 
         if ($this->origen == 'tareas-proyectos') {
             $this->proyecto_seleccionado = TimesheetProyecto::find($this->proyecto_id);
-            $this->tareas_proyecto = TimesheetTarea::where('proyecto_id', $this->proyecto_id)->get();
+            $this->tareas_proyecto = TimesheetTarea::where('proyecto_id', $this->proyecto_id)->orderByDesc('id')->get();
         }
 
         $this->emit('scriptTabla');
@@ -55,6 +58,16 @@ class TablaTareasTimesheet extends Component
         ]);
 
         $this->alert('success', 'Registro añadido!');
+    }
+
+    public function actualizarNameTarea($id, $value)
+    {
+        $tarea_actualizada = TimesheetTarea::find($id);
+
+        $tarea_actualizada->update([
+            'tarea'=>$value,
+        ]);
+        $this->emit('tarea-actualizada', $tarea_actualizada);
     }
 
     public function destroy($id)

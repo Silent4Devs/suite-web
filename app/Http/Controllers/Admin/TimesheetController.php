@@ -251,11 +251,12 @@ class TimesheetController extends Controller
     {
         $timesheet = Timesheet::find($id);
         $horas = TimesheetHoras::where('timesheet_id', $id)->get();
+        $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
 
         $hoy = Carbon::now();
         $hoy_format = $hoy->format('d/m/Y');
 
-        return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format'));
+        return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
     }
 
     /**
@@ -469,6 +470,30 @@ class TimesheetController extends Controller
         return view('admin.timesheet.proyectos', compact('clientes', 'logo_actual', 'empresa_actual'));
     }
 
+    public function updateProyectos(Request $request, $id)
+    {
+        $request->validate(
+            [
+                'identificador' => 'required|unique:timesheet_proyectos,identificador,'. $id,
+                'proyecto'=>'required',
+                'area_id'=>'required',
+                'fecha_inicio'=>'required|before:fecha_fin',
+                'fecha_fin'=>'required|after:fecha_inicio',
+            ],
+            [
+                'identificador.unique' => 'El ID ya esta en uso',
+                'fecha_inicio.before'=>'La fecha de incio debe ser anterior a la fecha de fin',
+                'fecha_fin.after'=>'La fecha de fin debe ser posterior a la fecha de incio',
+            ],
+        );
+
+        $edit_proyecto = TimesheetProyecto::find($id);
+        
+        $edit_proyecto->update($request->all());
+
+        return back()->with('success', 'Guardado con éxito');
+    }
+
     public function tareas()
     {
         abort_if(Gate::denies('timesheet_administrador_tareas_proyectos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -615,7 +640,7 @@ class TimesheetController extends Controller
     public function clientes()
     {
         abort_if(Gate::denies('timesheet_administrador_clientes_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::orderByDesc('id')->get();
 
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
         if (is_null($organizacion_actual)) {

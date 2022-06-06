@@ -1248,7 +1248,7 @@
                 color: #fff !important;
                 padding-top: 10px;
             }
-            #tabla_blanca_imprimir_global thead tr:first-child th:last-child, 
+            #tabla_blanca_imprimir_global thead tr:first-child th:last-child,
             #tabla_blanca_imprimir_global tbody tr td:last-child{
                 display: none !important;
             }
@@ -1278,7 +1278,7 @@
             </table>
 
             <table class="table mt-3 w-100" id="tabla_blanca_imprimir_global">
-                
+
             </table>
         </div>
     </div>
@@ -1301,7 +1301,7 @@
                             Registros
                         </strong>
                         <font style="font-weight: lighter;">
-                            
+
                         </font>
                     </h5>
                 `) {
@@ -1372,7 +1372,6 @@
     <script src="{{ asset('js/yearpicker.js') }}"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
-    {{-- <script src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script> --}}
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
