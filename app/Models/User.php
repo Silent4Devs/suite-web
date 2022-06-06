@@ -52,6 +52,7 @@ class User extends Authenticatable
         'team_id',
         'two_factor_expires_at',
         'is_active',
+        'empleado_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -168,8 +169,17 @@ class User extends Authenticatable
         $this->attributes['two_factor_expires_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
-    public function empleado()
+    public function nEmpleado()
     {
         return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
+    }
+
+    public function empleado()
+    {
+        if ($this->nEmpleado()->exists()) {
+            return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
+        } else {
+            return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
+        }
     }
 }

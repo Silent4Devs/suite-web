@@ -26,6 +26,7 @@ use App\Models\RH\TipoContratoEmpleado;
 use App\Models\Sede;
 use App\Models\User;
 use App\Rules\MonthAfterOrEqual;
+use App\Traits\GeneratePassword;
 use App\Traits\ObtenerOrganizacion;
 use Barryvdh\DomPDF\Facade as PDF;
 use Gate;
@@ -44,6 +45,7 @@ use Yajra\DataTables\Facades\DataTables;
 class EmpleadoController extends Controller
 {
     use ObtenerOrganizacion;
+    use GeneratePassword;
 
     /**
      * Display a listing of the resource.
@@ -215,7 +217,7 @@ class EmpleadoController extends Controller
 
         $request->validate([
             'name' => 'required|string',
-            'n_empleado' => 'required|unique:empleados',
+            'n_empleado' => 'nullable|unique:empleados',
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
@@ -413,6 +415,7 @@ class EmpleadoController extends Controller
             'email' => $empleado->email,
             'password' =>  $generatedPassword['hash'],
             'n_empleado' => $empleado->n_empleado,
+            'empleado_id' => $empleado->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -421,15 +424,6 @@ class EmpleadoController extends Controller
         Mail::to($empleado->email)->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
 
         return $user;
-    }
-
-    public function generatePassword()
-    {
-        $random = str_shuffle('abcdefghjklmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ234567890!$%^&!$%^&');
-        $password = substr($random, 0, 10);
-        $hashed_random_password = Hash::make($password);
-
-        return ['hash' => $hashed_random_password, 'password' => $password];
     }
 
     public function assignDependenciesModel($request, $empleado)
@@ -1134,7 +1128,7 @@ class EmpleadoController extends Controller
         }
         $request->validate([
             'name' => 'required|string',
-            'n_empleado' => 'unique:empleados,n_empleado,' . $id,
+            'n_empleado' => 'nullable|unique:empleados,n_empleado,' . $id,
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
@@ -1205,7 +1199,6 @@ class EmpleadoController extends Controller
         //         }
         //     }
         // }
-
         $empleado->update([
             'name' => $request->name,
             'area_id' =>  $request->area_id,
@@ -1217,6 +1210,7 @@ class EmpleadoController extends Controller
             'email' =>  $request->email,
             'telefono' =>  $request->telefono,
             'genero' =>  $request->genero,
+            'estatus' => 'alta',
             'n_empleado' =>  $request->n_empleado,
             'n_registro' =>  $request->n_registro,
             'sede_id' =>  $request->sede_id,
@@ -1265,7 +1259,10 @@ class EmpleadoController extends Controller
             'periodicidad_nomina' => $request->periodicidad_nomina,
             'foto' => $image,
         ]);
-
+        $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
+        $usuario->update([
+            'n_empleado' => $request->n_empleado,
+        ]);
         $this->assignDependenciesModel($request, $empleado);
 
         return response()->json(['status' => 'success', 'message' => 'Empleado Actualizado', 'from' => 'rh'], 200);
