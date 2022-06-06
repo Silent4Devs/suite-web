@@ -26,6 +26,7 @@ use App\Models\RH\TipoContratoEmpleado;
 use App\Models\Sede;
 use App\Models\User;
 use App\Rules\MonthAfterOrEqual;
+use App\Traits\GeneratePassword;
 use App\Traits\ObtenerOrganizacion;
 use Barryvdh\DomPDF\Facade as PDF;
 use Gate;
@@ -44,6 +45,7 @@ use Yajra\DataTables\Facades\DataTables;
 class EmpleadoController extends Controller
 {
     use ObtenerOrganizacion;
+    use GeneratePassword;
 
     /**
      * Display a listing of the resource.
@@ -422,15 +424,6 @@ class EmpleadoController extends Controller
         Mail::to($empleado->email)->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
 
         return $user;
-    }
-
-    public function generatePassword()
-    {
-        $random = str_shuffle('abcdefghjklmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ234567890!$%^&!$%^&');
-        $password = substr($random, 0, 10);
-        $hashed_random_password = Hash::make($password);
-
-        return ['hash' => $hashed_random_password, 'password' => $password];
     }
 
     public function assignDependenciesModel($request, $empleado)

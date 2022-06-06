@@ -20,6 +20,12 @@
         width: 256px;
         z-index: 999999999999999999 !important;
     }
+    body.c-sidebar-lg-show #sidebar .botones_g_s {
+        display: none;
+    }
+    body.c-sidebar-lg-show #sidebar:hover .botones_g_s {
+        display: block;
+    }
     body.c-sidebar-lg-show #sidebar:hover font.letra_blanca {
         opacity: 1 !important;
         transition: 0s;
