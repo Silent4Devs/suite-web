@@ -17,7 +17,6 @@ use App\Rules\EmpleadoNoVinculado;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class UsersController extends Controller
 {
@@ -28,6 +27,7 @@ class UsersController extends Controller
             $query = User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
                 $q->with('area');
             }])->get();
+
             return datatables()->of($query)->toJson();
         }
 
