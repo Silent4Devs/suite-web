@@ -42,6 +42,7 @@ class EmpleadoImport implements ToModel, WithHeadingRow
 
         ]);
         $this->createUserFromEmpleado($empleado);
+
         return $empleado;
     }
 
