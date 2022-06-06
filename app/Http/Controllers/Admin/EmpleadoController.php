@@ -23,6 +23,7 @@ use App\Models\RH\ContactosEmergenciaEmpleado;
 use App\Models\RH\DependientesEconomicosEmpleados;
 use App\Models\RH\EntidadCrediticia;
 use App\Models\RH\TipoContratoEmpleado;
+use App\Models\Role;
 use App\Models\Sede;
 use App\Models\User;
 use App\Rules\MonthAfterOrEqual;
@@ -418,7 +419,9 @@ class EmpleadoController extends Controller
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-
+        if (Role::find(4) != null) {
+            User::findOrFail($user->id)->roles()->sync(4);
+        }
         //Send email with generated password
         Mail::to($empleado->email)->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
 
