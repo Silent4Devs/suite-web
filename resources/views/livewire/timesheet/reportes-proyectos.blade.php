@@ -6,28 +6,28 @@
 
         .datatable_timesheet_proyectos tr th:first-child,
         .datatable_timesheet_proyectos tr td:first-child{
-            position: sticky;
+            position: sticky !important;
             left: 0;
             z-index: 6;
             transition: 0.3s;
         }
         .datatable_timesheet_proyectos tr th:nth-child(2),
         .datatable_timesheet_proyectos tr td:nth-child(2){
-            position: sticky;
+            position: sticky !important;
             left: 100px;
             z-index: 5;
             transition: 0.3s;
         }
         .datatable_timesheet_proyectos tr th:nth-child(3),
         .datatable_timesheet_proyectos tr td:nth-child(3){
-            position: sticky;
+            position: sticky !important;
             left: 200px;
             z-index: 4;
             transition: 0.3s;
         }
         .datatable_timesheet_proyectos tr th:last-child,
         .datatable_timesheet_proyectos tr td:last-child{
-            position: sticky;
+            position: sticky !important;
             right: 0;
             z-index: 6;
         }
