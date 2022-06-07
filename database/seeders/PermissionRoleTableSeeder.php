@@ -89,6 +89,5 @@ class PermissionRoleTableSeeder extends Seeder
             });
             Role::findOrFail(4)->permissions()->sync($colaborador_permission);
         }
-
     }
 }
