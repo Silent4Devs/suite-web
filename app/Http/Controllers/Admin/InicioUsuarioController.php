@@ -126,7 +126,7 @@ class InicioUsuarioController extends Controller
         $recursos = collect();
         $eventos = Calendario::get();
         $oficiales = CalendarioOficial::get();
-        $cumples_aniversarios = Empleado::alta()->get();
+        $cumples_aniversarios = Empleado::with('area')->alta()->get();
         if ($usuario->empleado) {
             $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function ($query) use ($empleado) {
                 $query->where('auditoria_interno_empleado.empleado_id', $empleado->id);

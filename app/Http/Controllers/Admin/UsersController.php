@@ -23,25 +23,28 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if ($request->ajax()) {
-            $query = User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
-                $q->with('area');
-            }])->get();
-
-            return datatables()->of($query)->toJson();
-        }
 
         $roles = Role::get();
         $organizaciones = Organizacione::get();
         $areas = Area::get();
         $puestos = Puesto::get();
         $teams = Team::get();
-        $empleadosNoAsignados = Empleado::alta()->get();
-        $empleados = $empleadosNoAsignados->filter(function ($item) {
-            return !User::where('n_empleado', $item->n_empleado)->exists();
-        })->values();
+        // $empleadosNoAsignados = Empleado::alta()->get();
+        // $empleados = $empleadosNoAsignados->filter(function ($item) {
+        //     return !User::where('n_empleado', $item->n_empleado)->exists();
+        // })->values();
+        $empleados = Empleado::alta()->get();
 
         return view('admin.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados'));
+    }
+
+    public function getUsersIndex(Request $request)
+    {
+        $query = User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
+            $q->with('area');
+        }])->get();
+
+        return datatables()->of($query)->toJson();
     }
 
     public function create()

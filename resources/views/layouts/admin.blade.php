@@ -1111,12 +1111,17 @@
                             aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
                                 @if (auth()->user()->empleado)
-                                    <span class="mr-2" style="font-weight: bold;">
-                                        {!! auth()->user()->empleado->saludo !!}
-                                    </span>
-                                    <img class="img_empleado" style=""
+                                    <img class="img_empleado mr-2" style=""
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
                                         alt="{{ auth()->user()->empleado->name }}">
+                                    <div>
+                                        <span class="mr-2" style="font-weight: bold;">
+                                            {{ auth()->user()->empleado ? explode(' ', auth()->user()->empleado->name)[0] : '' }}
+                                        </span>
+                                        <p class="m-0" style="font-size: 8px">
+                                            {{ auth()->user()->empleado ? Str::limit(auth()->user()->empleado->puesto, 30, '...') : '' }}
+                                        </p>
+                                    </div>
                                 @else
                                     <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
                                 @endif
@@ -1243,16 +1248,21 @@
             .table th {
                 background-color: #788BAC !important;
             }
-            #tabla_blanca_imprimir_global thead tr, #tabla_blanca_imprimir_global thead tr th, #tabla_blanca_imprimir_global thead tr th div{
+
+            #tabla_blanca_imprimir_global thead tr,
+            #tabla_blanca_imprimir_global thead tr th,
+            #tabla_blanca_imprimir_global thead tr th div {
                 height: unset !important;
                 color: #fff !important;
                 padding-top: 10px;
             }
-            #tabla_blanca_imprimir_global thead tr:first-child th:last-child, 
-            #tabla_blanca_imprimir_global tbody tr td:last-child{
+
+            #tabla_blanca_imprimir_global thead tr:first-child th:last-child,
+            #tabla_blanca_imprimir_global tbody tr td:last-child {
                 display: none !important;
             }
         }
+
     </style>
     <div id="elementos_imprimir" class="d-none">
         <div id="contenido_imprimir">
@@ -1268,17 +1278,17 @@
                         <img src="{{ asset($logotipo) }}" class="img_logo" style="height: 70px;">
                     </td>
                     <td style="width: 50%;">
-                        <h4><strong>{{ $organizacion->empresa ? $organizacion->empresa : 'Tabantaj'}}</strong></h4>
+                        <h4><strong>{{ $organizacion->empresa ? $organizacion->empresa : 'Tabantaj' }}</strong></h4>
                         <div id="titulo_tabla"></div>
                     </td>
-                    <td style="width: 25%;"class="encabezado_print_td_no_paginas">
+                    <td style="width: 25%;" class="encabezado_print_td_no_paginas">
                         Fecha: {{ $hoy_format_global }} <br>
                     </td>
                 </tr>
             </table>
 
             <table class="table mt-3 w-100" id="tabla_blanca_imprimir_global">
-                
+
             </table>
         </div>
     </div>
@@ -1295,7 +1305,7 @@
             document.querySelector('#contenido_body_general_wrapper').classList.remove('vista_print');
         }
 
-        function imprimirTabla(elemento, html=`
+        function imprimirTabla(elemento, html = `
                     <h5>
                         <strong>
                             Registros

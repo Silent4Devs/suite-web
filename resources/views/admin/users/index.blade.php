@@ -177,7 +177,13 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.users.index') }}",
+                ajax: {
+                    url: "{{ route('admin.users.getUsersIndex') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token
+                    }
+                },
                 columns: [{
                         data: 'name',
                         name: 'name'
@@ -202,7 +208,9 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             if (row.n_empleado != null || row.empleado_id != null) {
-                                return row.empleado?.name;
+                                if (row.empleado) {
+                                    return row.empleado?.name;
+                                }
                             }
                             return 'Sin vincular a empleado';
 
@@ -212,20 +220,22 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             if (row.n_empleado != null || row.empleado_id != null) {
-                                return row.empleado?.area?.area;
-                            } else {
-                                return 'Sin vincular a empleado';
+                                if (row.empleado) {
+                                    return row.empleado?.area?.area;
+                                }
                             }
+                            return 'Sin vincular a empleado';
                         }
                     },
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
                             if (row.n_empleado != null || row.empleado_id != null) {
-                                return row.empleado?.puesto;
-                            } else {
-                                return 'Sin vincular a empleado';
+                                if (row.empleado) {
+                                    return row.empleado?.puesto;
+                                }
                             }
+                            return 'Sin vincular a empleado';
                         }
                     },
                     {
