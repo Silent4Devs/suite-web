@@ -194,7 +194,7 @@ class Empleado extends Model
 
     public function getSaludoAttribute()
     {
-        $nombre = explode(' ', $this->name)[0];
+        $nombre = explode(' ', $this->name);
 
         return $nombre;
     }

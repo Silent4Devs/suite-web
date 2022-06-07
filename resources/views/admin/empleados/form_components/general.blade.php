@@ -88,14 +88,15 @@
             <label class="required" for="jefe"><i class="fas fa-user iconos-crear"></i>Jefe
                 Inmediato</label>
             <div class="mb-3 input-group">
-
                 <select class="custom-select supervisor" id="inputGroupSelect01" name="supervisor_id">
                     <option value="" selected disabled>-- Selecciona supervisor --</option>
                     @forelse ($empleados as $empleado_s)
-                        <option value="{{ $empleado_s->id }}"
-                            {{ old('supervisor_id', $empleado->supervisor_id) == $empleado_s->id ? 'selected' : '' }}>
-                            {{ $empleado_s->name }}
-                        </option>
+                        @if ($empleado->id != $empleado_s->id)
+                            <option value="{{ $empleado_s->id }}"
+                                {{ old('supervisor_id', $empleado->supervisor_id) == $empleado_s->id ? 'selected' : '' }}>
+                                {{ $empleado_s->name }}
+                            </option>
+                        @endif
                     @empty
                         <option value="" disabled>Sin Datos</option>
                     @endforelse
