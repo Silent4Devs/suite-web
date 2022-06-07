@@ -208,12 +208,11 @@ class InicioUsuarioController extends Controller
 
         if (!is_null(auth()->user()->empleado)) {
             $activos = Activo::select('*')->where('id_responsable', '=', auth()->user()->empleado->id)->get();
-            if($usuario->empleado->cumpleaños){
+            if ($usuario->empleado->cumpleaños) {
                 $cumpleaños_usuario = Carbon::parse($usuario->empleado->cumpleaños)->format('d-m');
-            }else{
+            } else {
                 $cumpleaños_usuario = null;
             }
-
 
             $cumpleaños_felicitados_like_contador = FelicitarCumpleaños::where('cumpleañero_id', $usuario->empleado->id)->whereYear('created_at', $hoy->format('Y'))->where('like', true)->count();
 
