@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Mail\EnviarCorreoBienvenidaTabantaj;
 use App\Models\Empleado;
+use App\Models\Role;
 use App\Models\User;
 use App\Traits\GeneratePassword;
 use Carbon\Carbon;
@@ -75,7 +76,9 @@ class EmpleadoImport implements ToModel, WithHeadingRow
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-
+        if (Role::find(4) != null) {
+            User::findOrFail($user->id)->roles()->sync(4);
+        }
         //Send email with generated password
         Mail::to($empleado->email)->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
 

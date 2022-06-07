@@ -71,7 +71,7 @@
                 </div>
                 <span class="sr-only">Loading...</span>
             </div> --}}
-            <div class="p-2 w-100" style="text-align: end;" >
+            <div class="p-2 w-100" style="text-align: end;">
                 <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"
                     class="btn btn-success btn-sm active" role="button" aria-pressed="true"><i
                         class="pl-2 pr-3 fas fa-plus"></i> Configurar vista datos</a>
@@ -321,7 +321,13 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.empleados.index') }}",
+                ajax: {
+                    url: "{{ route('admin.empleado.getListaEmpleadosIndex') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token
+                    }
+                },
                 columns: [
                     // {
                     //     data: 'checkbox',
@@ -346,35 +352,76 @@
                     },
                     {
                         data: 'n_empleado',
-                        name: 'n_empleado'
+                        render: function(data, type, row, meta) {
+                            if (data != null) {
+                                return data;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'name',
-                        name: 'name'
+                        render: function(data, type, row, meta) {
+                            if (data != null) {
+                                return data;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'email',
-                        name: 'email'
+                        render: function(data, type, row, meta) {
+                            if (data != null) {
+                                return data;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'telefono',
-                        name: 'telefono'
+                        render: function(data, type, row, meta) {
+                            if (data != null) {
+                                return data;
+                            }
+                            return '- -';
+                        }
                     },
                     {
-                        data: 'area',
-                        name: 'area'
+                        data: 'area.area',
+                        render: function(data, type, row, meta) {
+                            if (data != null) {
+                                return data;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'puesto',
-                        name: 'puesto'
+                        render: function(data, type, row, meta) {
+                            if (row.puesto != null) {
+                                return row.puesto;
+                            }
+                            return '- -';
+                        }
                     },
                     {
-                        data: 'jefe',
-                        name: 'jefe'
+                        data: 'supervisor',
+                        render: function(data, type, row, meta) {
+                            if (row.supervisor != null) {
+                                return row.supervisor.name;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'antiguedad',
-                        name: 'antiguedad'
+                        name: 'antiguedad',
+                        render: function(data, type, row, meta) {
+                            if (data != null) {
+                                return data;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'estatus',
@@ -389,7 +436,12 @@
                     },
                     {
                         data: 'sede',
-                        name: 'sede'
+                        render: function(data, type, row, meta) {
+                            if (row.sede != null) {
+                                return row.sede.sede;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'id',
