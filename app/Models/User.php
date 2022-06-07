@@ -188,7 +188,7 @@ class User extends Authenticatable
 
     public function empleado()
     {
-        if ($this->attributes != null) {
+        if ($this->empleado_id != null) {
             return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
         } else {
             return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
