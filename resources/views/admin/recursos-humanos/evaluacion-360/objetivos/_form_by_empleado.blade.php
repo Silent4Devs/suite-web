@@ -70,7 +70,7 @@
         {{-- Modulo para tipo de objetivo --}}
         <div class="row align-items-center">
             <div class="col-10" style="margin-top:-9px">
-                @livewire('tipo-objetivos-select',['tipo_seleccionado'=>$tipo_seleccionado])
+                @livewire('tipo-objetivos-select', ['tipo_seleccionado' => $tipo_seleccionado])
             </div>
             @if (!$editar)
                 <div class="p-0 col" style="margin-top: -26px;height: 28px;margin-left: -10px;">
@@ -141,7 +141,7 @@
         {{-- Modulo para metrica de objetivo --}}
         <div class="row align-items-center">
             <div class="col-10" style="margin-top:-11px">
-                @livewire('metrica-objetivo-select',['metrica_seleccionada'=>$metrica_seleccionada])
+                @livewire('metrica-objetivo-select', ['metrica_seleccionada' => $metrica_seleccionada])
             </div>
             @if (!$editar)
                 <div class="p-1 col" style="margin-top:-28px;height: 38px;margin-left: -12px;">
@@ -220,7 +220,7 @@
             </div>
         </div>
         <div style="text-align: right">
-            <button class="btn btn-success" id="copiarObjetivos"><i class="fas fa-copy mr-2"></i>Copiar
+            <button class="btn btn-success" id="copiarObjetivos"><i class="fas fa-copy mr-2"></i>Importar
                 Objetivos</button>
         </div>
         <table class="table table-bordered w-100 tblObjetivos">
