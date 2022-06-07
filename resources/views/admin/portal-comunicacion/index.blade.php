@@ -482,7 +482,7 @@
                                             } else {
                                                 $imagen = 'img/tabantaj_fondo_blanco.png';
                                             }
-                                            
+
                                         @endphp
                                         <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}">
                                             <div class="img_carrusel"
@@ -533,7 +533,7 @@
                                             } else {
                                                 $imagen = 'img/portal_404.png';
                                             }
-                                            
+
                                         @endphp
 
                                         {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
@@ -608,8 +608,8 @@
                                         </div>
                                         <div class="opciones_doc">
                                             <p>Responsable:</p>
-                                            <img src="{{ asset('storage/empleados/imagenes/' . $documento->responsable->avatar) }}"
-                                                class="img_empleado" title="{{ $documento->responsable->name }}"><br />
+                                            <img src="{{ asset('storage/empleados/imagenes/')}}/{{$documento->responsable ? $documento->responsable->avatar : 'user.png' }}"
+                                                class="img_empleado" title="{{ $documento->responsable ? $documento->responsable->name : 'Sin dato'}}"><br />
                                             <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver
                                                 documento</a>
                                         </div>
