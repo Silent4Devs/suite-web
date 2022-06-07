@@ -1119,7 +1119,7 @@
                                             {{ auth()->user()->empleado ? explode(' ', auth()->user()->empleado->name)[0] . ' ' . explode(' ', auth()->user()->empleado->name)[1] : '' }}
                                         </span>
                                         <p class="m-0" style="font-size: 8px">
-                                            {{ auth()->user()->empleado ? auth()->user()->empleado->puesto : '' }}
+                                            {{ auth()->user()->empleado ? Str::limit(auth()->user()->empleado->puesto, 30, '...') : '' }}
                                         </p>
                                     </div>
                                 @else
