@@ -22,7 +22,6 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
-
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::get();
@@ -41,7 +40,6 @@ class UsersController extends Controller
 
     public function getUsersIndex(Request $request)
     {
-
         $query = User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
             $q->with('area');
         }])->get();

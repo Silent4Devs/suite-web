@@ -55,7 +55,7 @@ class User extends Authenticatable
         'empleado_id',
     ];
 
-    #empleadoId attribute
+    //empleadoId attribute
     public function getEmpleadoIdAttribute($value)
     {
         return $value ? $value : null;
@@ -175,7 +175,7 @@ class User extends Authenticatable
         $this->attributes['two_factor_expires_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
-    ## Get empleado_id
+    //# Get empleado_id
     public function getEmpleadoId()
     {
         return $this->empleado_id;

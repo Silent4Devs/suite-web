@@ -50,6 +50,7 @@ class EmpleadoController extends Controller
     public function getListaEmpleadosIndex()
     {
         $empleados = Empleado::with('area', 'sede', 'supervisor')->alta()->orderByDesc('id')->get();
+
         return dataTables()->of($empleados)->toJson();
     }
 
