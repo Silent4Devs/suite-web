@@ -11,7 +11,7 @@ class Timesheet extends Model
 
     protected $table = 'timesheet';
 
-    protected $appends = ['semana', 'proyectos', 'semana_y', 'semana_text'];
+    protected $appends = ['semana', 'proyectos', 'semana_y', 'semana_text', 'total_horas'];
 
     protected $fillable = [
         'fecha_semana',
@@ -129,5 +129,22 @@ class Timesheet extends Model
         }
 
         return $proyectos;
+    }
+
+    public function getTotalHorasAttribute()
+    {
+        $total_horas = 0;
+        $horas_time =  TimesheetHoras::where('timesheet_id', $this->id)->get();
+        foreach ($horas_time as $key => $horas) {
+            $total_horas += $horas->horas_lunes;
+            $total_horas += $horas->horas_martes;
+            $total_horas += $horas->horas_miercoles;
+            $total_horas += $horas->horas_jueves;
+            $total_horas += $horas->horas_viernes;
+            $total_horas += $horas->horas_sabado;
+            $total_horas += $horas->horas_domingo;
+        }
+
+        return $total_horas;
     }
 }

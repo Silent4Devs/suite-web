@@ -7,6 +7,24 @@
         #lista_proyectos_tareas li{
             padding-top: 13px;
         }
+        @media print{
+            #sidebar,
+            header,
+            .nav-tabs,
+            .titulo_general_funcion,
+            .breadcrumb{
+                display: none !important;
+            }
+            #reporte_empleado{
+                width: 100% !important;
+                position: absolute;
+                top: 0;
+                margin: 0 !important;
+                margin-top: -150px !important;
+                padding: 0 !important;
+            }
+
+        }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>

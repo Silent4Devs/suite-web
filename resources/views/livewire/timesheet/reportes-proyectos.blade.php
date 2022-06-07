@@ -32,6 +32,23 @@
             z-index: 6;
         }
 
+        .datatable_timesheet_proyectos tr th:nth-child(2).ver,
+        .datatable_timesheet_proyectos tr td:nth-child(2).ver{
+            position: sticky !important;
+            left: 270px;
+            z-index: 5;
+            transition: 0.3s;
+        }
+        .datatable_timesheet_proyectos tr th:nth-child(3).ver,
+        .datatable_timesheet_proyectos tr td:nth-child(3).ver{
+            position: sticky !important;
+            left: 370px;
+            z-index: 4;
+            transition: 0.3s;
+        }
+
+        
+
         .datatable_timesheet_proyectos tr th:first-child::before,
         .datatable_timesheet_proyectos tr td:first-child::before,
         .datatable_timesheet_proyectos tr th:nth-child(2)::before,
@@ -73,13 +90,13 @@
     </style>
     <div class="w-100">
         <div class="row">
-            <div class="col-md-3 form-group" style="padding-left:0 !important;">
+            <div class="col-md-3 form-group">
                 <label class="form-label">Área</label>
                 <select class="form-control" wire:model="area_id">
                     <option selected value="0">Todas</option>
-                    {{-- @foreach($areas as $area)
+                    @foreach($areas as $area)
                         <option value="{{ $area->id }}">{{ $area->area }}</option>
-                    @endforeach --}}
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-3 form-group" wire:ignore>
@@ -92,7 +109,7 @@
             </div>
             <div class="col-md-2 form-group">
                 <label class="form-label">Horas totales</label>
-                <div class="form-control">{{-- {{ $horas_totales_filtros_empleados }} --}} h</div>
+                <div class="form-control">{{ $horas_totales_todos_proyectos }} h</div>
             </div>
             <div class="col-md-1 form-group">
                 <label class="form-label" style="width:100%;">&nbsp;</label><br>
@@ -191,7 +208,7 @@
                                     <td>{{ $proyecto['area'] }} </td>
                                     <td>{{ $proyecto['cliente'] }} </td>
                                     @foreach($proyecto['calendario'] as $index=>$horas_calendar)
-                                        <td style="font-size: 10px !important;">{!! $horas_calendar !!}</td>
+                                        <td style="font-size: 10px !important; text-align: center !important;">{!! $horas_calendar !!}</td>
                                     @endforeach
                                     <td><button class="btn" wire:click="genrarReporte({{ $proyecto['id'] }})"><i class="fa-solid fa-file-invoice"></i></button></td>
                                 </tr>
@@ -205,16 +222,71 @@
 
     @if($proyecto_reporte)
         <div id="reporte_proyecto" class="anima_reporte">
+            @php
+                $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+                if (!is_null($organizacion)) {
+                    $logotipo = $organizacion->logotipo;
+                } else {
+                    $logotipo = 'logotipo-tabantaj.png';
+                }
+            @endphp
+            <table class="encabezado-print">
+                <tr>
+                    <td style="width: 25%;">
+                        <img src="{{ asset($logotipo) }}" class="img_logo" style="height: 70px;">
+                    </td>
+                    <td style="width: 50%;">
+                        <h4><strong>{{ $organizacion->empresa }}</strong></h4>
+                        <h5 style="font-weight: bolder;">Proyecto: <font style="font-weight:lighter;">{{ $proyecto_reporte->proyecto }}</font></h5>
+                    </td>
+                    <td style="width: 25%;">
+                        Fecha: {{ $hoy_format }}
+                    </td>
+                </tr>
+            </table>
             <button class="btn btn-cerrar" onclick="cerrarVentana('reporte_proyecto')"><i class="fa-solid fa-xmark"></i></button>
-            <div class="my-4 d-flex justify-content-between">
-                 <h5 style="font-weight:bolder;">Proyecto: <font style="font-weight:lighter;">{{ $proyecto_reporte->proyecto }}</font></h5>
-                <button class="btn btn-secundario" onclick="imprimirElemento('reporte_proyecto_div_imprimir')"><i class="fa-solid fa-print iconos_crear"></i> Imprimir</button>
-            </div>
             <div class="row">
-                <div class="col-lg-9">
-                    <h5 style="font-weight:lighter;">Tareas: </h5>
+                <div class="col-12"><h6 class="mb-3 separador-titulo">Resumen del Proyecto</h6></div>
+                <div class="col-12 text-right">
+                    <button class="btn btn-secundario print-none" onclick="print()"><i class="fa-solid fa-print iconos_crear"></i> Imprimir</button>
+                </div>
+                <div class="col-12 d-flex justify-content-between align-items-center mt-3">
+                    <div class="d-flex align-items-center">
+                        <div class="ml-3">
+                            <span style="width: 75px; display: inline-block; font-weight: bolder;">Proyecto:</span> {{ $total_horas_proyecto }}<br>
+                            <span style="width: 75px; display: inline-block; font-weight: bolder;">Área:</span> {{ $proyecto_reporte->area->area }}<br>
+                            <span style="width: 75px; display: inline-block; font-weight: bolder;">Área:</span> {{ $proyecto_reporte->cliente_id ? $proyecto_reporte->cliente->nombre : '' }}
+                        </div>
+                    </div>
+                    <div class="d-flex ml-4">
+                        <div class="px-4 py-3" style="background-color: #859BC0; color:#fff; border-radius: 4px;">
+                            <div class="text-center">
+                                <div class="text-center">Horas&nbsp;Totales: </div>
+                                <h3 style="margin-top:0;"> {{ $total_horas_proyecto }}h</h3>
+                            </div>
+                            <div class="text-center mt-2">
+                                <div class="text-center">Importe Total ($): </div>
+                                <h3 style="margin-top: 0;" id="costo_proyecto_total"></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="row mt-5">
+                <div class="form-group col-6">
+                    <label class="form-label">Rango inicial</label>
+                    <input id="fecha_dia_registros_inicio_proyecto_reporte" type="date" name="rango_inicial" class="form-control" wire:model="fecha_inicio_proyecto">
+                </div>
+                <div class="form-group col-6">
+                    <label class="form-label">Rango final</label>
+                    <input id="fecha_dia_registros_fin_proyecto_reporte" type="date" name="rango_final" class="form-control" wire:model="fecha_fin_proyecto">
+                </div>
+            </div> --}}
+            <div class="row">
+                <div class="col-12">
+                    <h6 class="separador-titulo">Tareas</h6>
 
-                    <ul class="lista_general">
+                    {{-- <ul class="lista_general">
                         @foreach($tareas_array as $tarea)
                             <li class="general_li">
                                 <h4>{{ $tarea['tarea'] }}: <small style="padding:5px;">{{ $tarea['horas_totales'] }}h</small></h4>
@@ -229,21 +301,36 @@
                                 </ul>
                             </li>
                         @endforeach
-                    </ul>
-                </div>
-                <div class="col-lg-3" style="background:linear-gradient(0deg, rgba(69,125,182,1) 0%, rgba(8,170,157,1) 60%); color:#fff;">
-                    <div class="p-4">
-                        <h5 class="text-center">Estadisticas Generales</h5>
-                        <div class="mt-3 text-center">Horas Totales Dedicas al Proyecto</div>
-                        <h1 class="mt-3 text-center">{{ $total_horas_proyecto }}h</h1>
-                        <div class="mt-3 text-center">Costo de Horas del Proyecto</div>
-                        <h4 class="mt-3 text-center" id="costo_proyecto_total"></h4>
-                        <div class="mt-3"><strong>Área: </strong> {{ $area_proyecto->area }}</div>
-                        <div class="mt-3"><strong>Cliente: </strong> {{ $cliente_proyecto ? $cliente_proyecto->nombre : 'sin cliente' }}</div>
-                    </div>
+                    </ul> --}}
+
+                    <canvas id="graf-tareas-horas-proyecto" width="800" height="400"></canvas>
                 </div>
             </div>
-            <div class="w-100">
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h6 class="separador-titulo">Participantes en el Proyecto</h6>
+
+                    {{-- <ul class="lista_general">
+                        @foreach($tareas_array as $tarea)
+                            <li class="general_li">
+                                <h4>{{ $tarea['tarea'] }}: <small style="padding:5px;">{{ $tarea['horas_totales'] }}h</small></h4>
+                                <ul class="general_li_ul">
+                                    @foreach($tarea['empleados'] as $empleado)
+                                        <li style="font-size:10px;">
+                                            <img src="{{ $empleado['foto'] }}" class="img_empleado mr-2" style="width: 30px; height: 30px; clip-path:circle( 15px at 50% 50%) !important;">
+                                            {{ $empleado['name'] }}:
+                                            <label><strong class="horas_tarea_empleado{{ $empleado['id'] }}" data-empleado="{{ $empleado['id'] }}">{{ $empleado['horas'] }}</strong>&nbsp;h</label></li>
+                                        <hr>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @endforeach
+                    </ul> --}}
+
+                    <canvas id="graf-empleados-horas-proyecto" width="800" height="400"></canvas>
+                </div>
+            </div>
+            <div class="w-100 print-none">
                 <div class="datatable-fix mt-5">
                     <table id="datatable_timesheet_proyectos_empleados" class="table w-100">
                         <thead>
@@ -273,16 +360,16 @@
             </div>
         </div>
 
-        @php
+        {{-- @php
             $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
             if (!is_null($organizacion)) {
                 $logotipo = $organizacion->logotipo;
             } else {
                 $logotipo = 'logotipo-tabantaj.png';
             }
-        @endphp
+        @endphp --}}
         {{-- div para imprimir __________________________________________ --}}
-        <div id="reporte_proyecto_div_imprimir" class="solo-print">
+        {{-- <div id="reporte_proyecto_div_imprimir" class="solo-print">
             <table class="encabezado-print">
                 <tr>
                     <td style="width: 25%;">
@@ -361,7 +448,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <script type="text/javascript">
             let costo_proyecto_total = 0;
@@ -392,12 +479,96 @@
             document.getElementById('costo_proyecto_total_print').innerHTML = '<strong>$</strong> ' + costo_proyecto_total;
         </script>
     @endif
+
+
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', ()=>{
             Livewire.on('scriptTabla', ()=>{
                 tablaLivewire('datatable_timesheet_proyectos');
                 tablaLivewire('datatable_timesheet_proyectos_empleados');
             });
+
+            Livewire.on('scriptChartsProyect', (tareas_detalle)=>{
+                console.log(tareas_detalle);
+
+                initCharts();
+                function initCharts()
+                {
+                    let labels_tareas = [];
+                    let values_tareas = [];
+                    let colors_tareas = [];
+
+                    let labels_empleados = [];
+                    let values_empleados = [];
+                    let colores_empleados = [];
+
+                    tareas_detalle.forEach(item=>{
+                        labels_tareas.push(item.tarea);
+                        values_tareas.push(item.horas_totales);
+                        colors_tareas.push('#34DCCF');
+                        item.empleados?.forEach(empleado=>{
+                            labels_empleados.push(recotarText(empleado.name));
+                            values_empleados.push(empleado.horas);
+                            colores_empleados.push(getRandomcolor());
+                        });
+                    });
+
+                    new Chart(document.getElementById('graf-tareas-horas-proyecto'), {
+                        type: 'bar',
+                        data: {
+                            labels: labels_tareas,
+                            datasets: [{
+                                label: 'Horas',
+                                data: values_tareas,
+                                backgroundColor: colors_tareas,
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    new Chart(document.getElementById('graf-empleados-horas-proyecto'), {
+                        type: 'bar',
+                        data: {
+                            labels: labels_empleados,
+                            datasets: [{
+                                label: 'Horas',
+                                data: values_empleados,
+                                backgroundColor: colores_empleados,
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+            });
         });
+
+        function getRandomcolor() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters [Math.floor(Math.random() * 16)];
+            }
+            console.log(color);
+            return color;
+        }
+
+        function recotarText(string, length=50){
+            var trimmedString = string.length > length ?
+                                string.substring(0, length - 3) + "..." :
+                                string;
+            return trimmedString;
+        }
     </script>
 </div>

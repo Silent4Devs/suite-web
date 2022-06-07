@@ -298,6 +298,14 @@
                                         </a>
                                     </li>
                                 @endcan
+                                <li>
+                                    <a href="{{ route('admin.timesheet-reporte-aprobador', auth()->user()->empleado->id) }}">
+                                        <div>
+                                            <i class="bi bi-file-earmark-text"></i><br>
+                                            Reporte
+                                        </div>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     @endif

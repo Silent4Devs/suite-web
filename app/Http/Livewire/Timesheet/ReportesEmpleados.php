@@ -112,7 +112,7 @@ class ReportesEmpleados extends Component
         $calendario_array = [];
         $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
-        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), []);
+        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday' , $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null);
         $total_months = 0;
         foreach ($semanas_complit_timesheet as $semana) {
             $semana_array = explode('|', $semana);

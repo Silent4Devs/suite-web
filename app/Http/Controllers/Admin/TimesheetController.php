@@ -896,4 +896,13 @@ class TimesheetController extends Controller
 
         return response()->json(['tareas' => $tareas_obtenidas]);
     }
+
+    public function reporteAprobador($id)
+    {
+        $aprobador = Empleado::find($id);
+
+        $empleados_childern = $aprobador->children;
+
+        return view('admin.timesheet.reporte-aprobador');
+    }
 }

@@ -850,3 +850,7 @@ Breadcrumbs::for('timesheet-reportes', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
     $trail->push('Reportes');
 });
+Breadcrumbs::for('timesheet-reporte-aprobador', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Reporte Aprobador');
+});

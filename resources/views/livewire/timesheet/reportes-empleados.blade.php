@@ -5,7 +5,7 @@
     <style type="text/css">
         .cde-nombre.ver{
             position: sticky;
-            left: 68px !important;
+            left: 64px !important;
         }
         .cde-puesto.ver{
             position: sticky;
@@ -45,7 +45,7 @@
         }
         .cde-estatus{
             position: sticky !important;
-            left: 250px;
+            left: 245px;
             z-index: 2;
         }
         .cde-totalh{
@@ -66,6 +66,7 @@
         .cde-semenasf{
             transition: 0.3s;
         }
+        .cde-foto::before,
         .cde-nombre::before,
         .cde-puesto::before,
         .cde-area::before,
@@ -115,7 +116,7 @@
     <div class="cargando_fondo" wire:loading>
         <i class="fa-solid fa-spinner fa-spin-pulse" style="font-size:150px; color: #000 !important; margin-top:70px;"></i>
     </div>
-    <div class="row" style="margin: 0 !important;">
+    <div class="row print-none" style="margin: 0 !important;">
         <div class="col-md-3 form-group" style="padding-left:0 !important;">
             <label class="form-label">Área</label>
             <select class="form-control" wire:model="area_id">
@@ -250,7 +251,7 @@
                                 {{ $empleado_td['estatus'] }}</span>
                             </td>
                             @foreach($empleado_td['calendario'] as $index=>$horas_calendar)
-                                <td style="font-size: 10px !important;">{!! $horas_calendar !!}</td>
+                                <td style="font-size: 10px !important; text-align: center !important;">{!! $horas_calendar !!}</td>
                             @endforeach
                             <td class="text-center cde-totalh">{{ $empleado_td['horas_totales'] }}</td>
                             <td class="d-flex justify-content-center cde-semenasf" style="{{  $empleado_td['times_atrasados'] > 0 ? 'background-color:#FF9D9D !important;' : 'background-color:#69D552 !important;' }} cursor: pointer;" data-toggle="modal" data-target="#modal_semanas_{{ $empleado_td['id'] }}">
@@ -332,11 +333,33 @@
     {{-- reporte de empleado --}}
     @if($empleado)
         <div id="reporte_empleado" class="anima_reporte">
-            <button class="btn btn-cerrar" onclick="cerrarVentana('reporte_empleado')"><i class="fa-solid fa-xmark"></i></button>
+            @php
+                $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+                if (!is_null($organizacion)) {
+                    $logotipo = $organizacion->logotipo;
+                } else {
+                    $logotipo = 'logotipo-tabantaj.png';
+                }
+            @endphp
+            <table class="encabezado-print mt-3">
+                <tr>
+                    <td style="width: 25%;">
+                        <img src="{{ asset($logotipo) }}" class="img_logo" style="height: 70px;">
+                    </td>
+                    <td style="width: 50%;">
+                        <h4><strong>{{ $organizacion->empresa }}</strong></h4>
+                        <h5 style="font-weight: bolder;">Timesheet: <font style="font-weight:lighter;">{{ $empleado->name }}</font></h5>
+                    </td>
+                    <td style="width: 25%;"class="encabezado_print_td_no_paginas">
+                        Fecha: {{ $hoy_format }} <br>
+                    </td>
+                </tr>
+            </table>
+            <button class="btn btn-cerrar print-none" onclick="cerrarVentana('reporte_empleado')"><i class="fa-solid fa-xmark"></i></button>
             <div class="row mt-2">
                 <div class="col-12"><h6 class="mb-3 separador-titulo">Resumen del Colaborador</h6></div>
                 <div class="col-12 text-right mt-2">
-                    <button class="btn btn-secundario" onclick="imprimirElemento('reporte_empleado')"><i class="fa-solid fa-print iconos_crear"></i> Imprimir</button>
+                    <button class="btn btn-secundario print-none" onclick="print()"><i class="fa-solid fa-print iconos_crear"></i> Imprimir</button>
                 </div>
                 <div class="col-12 d-flex justify-content-between align-items-center mt-3">
                     <div class="d-flex align-items-center">
@@ -532,144 +555,7 @@
         </div>
 
         {{-- div para imprimir __________________________________________________________________________ --}}
-        <div id="reporte_empleado_div_imprimir" class="solo-print">
-            @php
-                $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
-                if (!is_null($organizacion)) {
-                    $logotipo = $organizacion->logotipo;
-                } else {
-                    $logotipo = 'logotipo-tabantaj.png';
-                }
-            @endphp
-            <table class="encabezado-print">
-                <tr>
-                    <td style="width: 25%;">
-                        <img src="{{ asset($logotipo) }}" class="img_logo" style="height: 70px;">
-                    </td>
-                    <td style="width: 50%;">
-                        <h4><strong>{{ $organizacion->empresa }}</strong></h4>
-                        <h5 style="font-weight: bolder;">Timesheet: <font style="font-weight:lighter;">{{ $empleado->name }}</font></h5>
-                    </td>
-                    <td style="width: 25%;"class="encabezado_print_td_no_paginas">
-                        Fecha: {{ $hoy_format }} <br>
-                    </td>
-                </tr>
-            </table>
-            <h5 style="font-weight:bolder;">Reporte Timesheet: <font style="font-weight:lighter;">{{ $empleado->name }}</font></h5>
-            <div style="width:100%; display:flex;">
-                <div>
-                    <h5 style="font-weight:lighter;">Proyectos: </h5>
-                    <ul class="lista_general">
-                        @foreach($proyectos_detalle as $proyecto)
-                            <li class="general_li" style="overflow:unset !important;">
-                                <h4>{{ $proyecto['proyecto'] }}: <small style="padding:5px;">{{ $proyecto['horas'] }}h</small></h4>
-                                <ul class="general_li_ul">
-                                    <h5>Tareas</h5>
-                                    @foreach($proyecto['tareas'] as $tarea)
-                                        <li>{{ $tarea['tarea'] }}: <small>{{ $tarea['horas'] }}h</small></li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div style="width: 20%;">
-                    <div style="background:linear-gradient(0deg, rgba(69,125,182,1) 0%, rgba(8,170,157,1) 60%); color:#fff;">
-                        <div class="p-4">
-                            <h5 class="text-center">Estadisticas Generales</h5>
-                            <div class="mt-3 text-center">Horas Totales</div>
-                            <h1 class="mt-3 text-center">{{ $horas_totales }}h</h1>
-                            <div class="mt-3"><strong>Puesto:</strong> {{ $empleado->puesto }}</div>
-                            <div class="mt-3"><strong>Área:</strong> {{ $empleado->area ? $empleado->area->area : ''}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <h5>Registro de Horas por Semana</h5>
-            <div class="w-100 mt-4">
-                <table id="table_horas_empleado_semanas_print" class="table w-100">
-                    <thead class="w-100">
-                        <tr>
-                            <th>Semana</th>
-                            <th>Lunes</th>
-                            <th>Martes</th>
-                            <th>Miercoles</th>
-                            <th>Jueves</th>
-                            <th>Viernes</th>
-                            <th>Sabado</th>
-                            <th>Domingo</th>
-                            <th>Total de horas semanales</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach($times_empleado_horas as $time_empleado_horas)
-                            <tr>
-                                <td>{!! $time_empleado_horas['semana'] !!}</td>
-                                <td>{{ $time_empleado_horas['horas_lunes'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_martes'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_miercoles'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_jueves'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_viernes'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_sabado'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_domingo'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_totales'] }} <small>h</small></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <h5>Registros del Empleado</h5>
-            <div class="w-100 mt-4">
-                <table class="table w-100">
-                    <thead class="w-100">
-                        <tr>
-                            <th>Semana </th>
-                            <th>Fecha de corte</th>
-                            <th>Empleado</th>
-                            <th>Responsable</th>
-                            <th>Aprobación</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach($times_empleado as $time)
-                            <tr class="tr_{{  $time->estatus }}">
-                                <td>
-                                    {!! $time->semana !!}
-                                </td>
-                                <td>
-                                    {{ \Carbon\Carbon::parse($time->fecha_dia)->format("d/m/Y") }}
-                                </td>
-                                <td>
-                                    {{ $time->empleado->name }}
-                                </td>
-                                <td>
-                                    {{ $time->aprobador->name }}
-                                </td>
-                                <td>
-                                    @if($time->estatus == 'aprobado')
-                                        <span class="aprobado">Aprobada</span>
-                                    @endif
-
-                                    @if($time->estatus == 'rechazado')
-                                        <span class="rechazado">Rechazada</span>
-                                    @endif
-
-                                    @if($time->estatus == 'pendiente')
-                                        <span class="pendiente">Pendiente</span>
-                                    @endif
-
-                                    @if($time->estatus == 'papelera')
-                                        <span class="papelera">Borrador</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        
     @endif
 
     {{-- reporte general --}}
