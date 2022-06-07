@@ -1111,12 +1111,12 @@
                             aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
                                 @if (auth()->user()->empleado)
-                                    <img class="img_empleado" style=""
+                                    <img class="img_empleado mr-2" style=""
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
                                         alt="{{ auth()->user()->empleado->name }}">
                                     <div>
                                         <span class="mr-2" style="font-weight: bold;">
-                                            {{ auth()->user()->empleado ? explode(' ', auth()->user()->empleado->name)[0] . ' ' . explode(' ', auth()->user()->empleado->name)[1] : '' }}
+                                            {{ auth()->user()->empleado ? explode(' ', auth()->user()->empleado->name)[0] : '' }}
                                         </span>
                                         <p class="m-0" style="font-size: 8px">
                                             {{ auth()->user()->empleado ? Str::limit(auth()->user()->empleado->puesto, 30, '...') : '' }}
