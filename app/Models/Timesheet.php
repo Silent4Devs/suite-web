@@ -67,7 +67,7 @@ class Timesheet extends Model
         $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify("last {$inicio}")->format('d/m/Y');
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->format('d/m/Y');
 
-        $semana_rango = ' del ' .  $inicio_dia . ' al ' . $fin_dia;
+        $semana_rango = ' del ' . $inicio_dia . ' al ' . $fin_dia;
 
         return $semana_rango;
     }

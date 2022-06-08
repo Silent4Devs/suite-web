@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Timesheet;
 
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
-use App\Models\TimesheetHoras;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 

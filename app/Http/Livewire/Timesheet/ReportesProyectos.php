@@ -8,7 +8,6 @@ use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
-use App\Models\Organizacion;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -67,16 +66,15 @@ class ReportesProyectos extends Component
                 $year = $fecha->format('Y');
                 $month = $fecha->format('F');
                 if (!($this->buscarKeyEnArray($year, $calendario_array))) {
-
                     $calendario_array["{$year}"] = [
                         'year'=>$year,
                         'total_weeks'=>0,
                         'total_months'=>0,
                         'months'=>[
                             "{$month}"=>[
-                                'weeks'=>[]
-                            ]
-                        ]
+                                'weeks'=>[],
+                            ],
+                        ],
                     ];
 
                     if ($month == 'January') {
@@ -87,20 +85,17 @@ class ReportesProyectos extends Component
                             }
                         }
                     }
-
-                }else{
+                } else {
                     if (array_key_exists($month, $calendario_array["{$year}"]['months'])) {
                         if (!in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
-                    }else{
+                    } else {
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
-
                             if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
-
-                        }else{
+                        } else {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
                     }
@@ -138,7 +133,6 @@ class ReportesProyectos extends Component
             foreach ($calendario_array as $key => $año) {
                 foreach ($año['months'] as $key => $mes) {
                     foreach ($mes['weeks'] as $key => $semana) {
-
                         array_push($calendario_tabla_proyectos, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
                     }
                 }

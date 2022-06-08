@@ -91,6 +91,7 @@ class ReportesEmpleados extends Component
         $this->fecha_inicio_empleado = $value;
         $this->buscarEmpleado($this->empleado->id);
     }
+
     public function updatedFechaFinEmpleado($value)
     {
         $this->fecha_fin_empleado = $value;
@@ -190,7 +191,7 @@ class ReportesEmpleados extends Component
 
             if (($this->fecha_fin) && (Carbon::parse($this->fecha_fin)->lt($this->hoy))) {
                 $fecha_fin_timesheet_empleado = $empleado_list->estatus == 'baja' ? $empleado_list->fecha_baja : $this->fecha_fin;
-            }else{
+            } else {
                 $fecha_fin_timesheet_empleado = $empleado_list->estatus == 'baja' ? $empleado_list->fecha_baja : $this->hoy;
             }
 
@@ -255,16 +256,14 @@ class ReportesEmpleados extends Component
                 foreach ($año['months'] as $key => $mes) {
                     foreach ($mes['weeks'] as $key => $semana) {
                         if (count($times_empleado_calendario_array) > 0) {
-                                
-
                             $unique_array = [];
-                            foreach($times_empleado_calendario_array as $element) {
+                            foreach ($times_empleado_calendario_array as $element) {
                                 $hash = $element['semana_y'];
                                 $unique_array[$hash] = $element;
                             }
                             $result_unique = array_values($unique_array);
 
-                            $time = array_filter($result_unique, function($value) use($semana){
+                            $time = array_filter($result_unique, function ($value) use ($semana) {
                                 return $value['semana_y'] == $semana;
                             });
                             if (count($time) > 0) {
@@ -274,8 +273,7 @@ class ReportesEmpleados extends Component
                             } else {
                                 array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
                             }
-
-                        }else{
+                        } else {
                             array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
                         }
                     }
@@ -401,13 +399,13 @@ class ReportesEmpleados extends Component
 
         if ($this->fecha_inicio_empleado) {
             $fecha_inicio_timesheet_empleado = Carbon::parse($this->empleado->antiguedad)->lt($this->fecha_inicio_empleado) ? $this->fecha_inicio_empleado : $this->empleado->antiguedad;
-        }else{
+        } else {
             $fecha_inicio_timesheet_empleado = Carbon::parse($this->empleado->antiguedad)->lt($fecha_registro_timesheet) ? $fecha_registro_timesheet : $this->empleado->antiguedad;
         }
 
         if (($this->fecha_fin_empleado) && (Carbon::parse($this->fecha_fin_empleado)->lt($this->hoy->format('Y-m-d')))) {
             $fecha_fin_timesheet_empleado = $this->empleado->estatus == 'baja' ? $this->empleado->fecha_baja : $this->fecha_fin_empleado;
-        }else{
+        } else {
             $fecha_fin_timesheet_empleado = $this->empleado->estatus == 'baja' ? $this->empleado->fecha_baja : $this->hoy;
         }
 
@@ -527,7 +525,7 @@ class ReportesEmpleados extends Component
         foreach ($times_empleado as $time) {
             $times_empleado_array[] = $time->semana_y;
         }
-        
+
         Mail::to($empleado->email)->send(new TimesheetCorreoRetraso($empleado, $this->times_faltantes_empleado));
 
         $this->alert('success', 'Correo Enviado!');

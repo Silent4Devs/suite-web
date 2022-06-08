@@ -474,7 +474,7 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => 'required|unique:timesheet_proyectos,identificador,'. $id,
+                'identificador' => 'required|unique:timesheet_proyectos,identificador,' . $id,
                 'proyecto'=>'required',
                 'area_id'=>'required',
                 'fecha_inicio'=>'required|before:fecha_fin',
@@ -488,7 +488,7 @@ class TimesheetController extends Controller
         );
 
         $edit_proyecto = TimesheetProyecto::find($id);
-        
+
         $edit_proyecto->update($request->all());
 
         return back()->with('success', 'Guardado con éxito');

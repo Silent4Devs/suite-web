@@ -27,7 +27,6 @@ class TablaProyectosTimesheet extends Component
     public $cancelado_count;
     public $terminado_count;
 
-
     public $sedes;
 
     public function mount()
@@ -56,7 +55,6 @@ class TablaProyectosTimesheet extends Component
 
     public function store()
     {
-
         $this->validate(
             [
                 'identificador' => 'required|unique:timesheet_proyectos,identificador',
