@@ -73,10 +73,9 @@
             <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
                 enctype="multipart/form-data" class="mt-3 row">
                 @csrf
-                @include(
-                    'admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado',
-                    ['editar' => false]
-                )
+                @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado', [
+                    'editar' => false,
+                ])
                 <div class="col-12">
                     <div class="d-flex justify-content-end w-100">
                         <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
@@ -101,10 +100,9 @@
                 <div class="modal-body">
                     <form id="formObjetivoEdit" method="post" enctype="multipart/form-data" class="mt-3 row">
                         @method('PATCH')
-                        @include(
-                            'admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado',
-                            ['editar' => true]
-                        )
+                        @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado', [
+                            'editar' => true,
+                        ])
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -183,7 +181,7 @@
                 }, {
                     data: 'objetivo',
                     render: function(data, type, row, meta) {
-                        return data.meta;
+                        return data.meta + ' ' + row.objetivo?.metrica?.definicion;
                     }
                 }, {
                     data: 'objetivo.descripcion_meta',
@@ -416,7 +414,7 @@
                     <div class="row">
                         <div class="col-12">
                             <input type="hidden" value="0" name="empleado_destinatario">
-                            <label><i class="mr-2 fas fa-user"></i>Selecciona un empleado para copiar sus objetivos</label>
+                            <label><i class="mr-2 fas fa-user"></i>Selecciona un empleado para importar sus objetivos</label>
                             <select class="empleados-select" name="empleado_destino">
                                 <option value="">-- Selecciona un empleado --</option>
                                 ${empleados.map(empleado => {

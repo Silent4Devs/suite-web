@@ -413,10 +413,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('users/two-factor/{user}/change', 'UsersController@cambiarVerificacion')->name('users.two-factor-change');
     Route::get('users/bloqueo/{user}/change', 'UsersController@toogleBloqueo')->name('users.toogle-bloqueo');
     Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
+    Route::post('users/list/get', 'UsersController@getUsersIndex')->name('users.getUsersIndex');
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     Route::resource('users', 'UsersController');
 
     // Empleados
+    Route::post('empleados/list/get', 'EmpleadoController@getListaEmpleadosIndex')->name('empleado.getListaEmpleadosIndex');
     Route::post('empleado/buscar-empleado-por-correo', 'EmpleadoController@buscarEmpleadoPorCorreo')->name('empleado.buscarEmpleadoPorCorreo');
     Route::get('empleado/{empleado}/documentos', 'EmpleadoController@getDocumentos')->name('empleado.documentos');
     Route::post('empleado/{empleado}/documentos', 'EmpleadoController@storeDocumentos')->name('empleado.storeDocumentos');
