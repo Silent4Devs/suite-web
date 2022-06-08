@@ -351,7 +351,6 @@
             font-weight: normal;
             border: none !important;
         }
-
     </style>
     {{-- menu tabs --}}
     <style type="text/css">
@@ -450,7 +449,6 @@
         .scroll_estilo::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.5);
         }
-
     </style>
     {{-- Estilos Select 2 --}}
     <style>
@@ -990,7 +988,6 @@
         .table.table-striped tr {
             background-color: white !important;
         }
-
     </style>
 
     @yield('styles')
@@ -1262,7 +1259,6 @@
                 display: none !important;
             }
         }
-
     </style>
     <div id="elementos_imprimir" class="d-none">
         <div id="contenido_imprimir">
@@ -1511,10 +1507,10 @@
                     searchable: false,
                     targets: -1
                 }],
-                select: {
-                    style: 'multi+shift',
-                    selector: 'td:first-child'
-                },
+                // select: {
+                //     style: 'multi+shift',
+                //     selector: 'td:first-child'
+                // },
                 order: [],
                 scrollX: true,
                 pageLength: 5,
