@@ -26,7 +26,7 @@ class EV360ObjetivosController extends Controller
             $isAdmin = in_array('Admin', auth()->user()->roles->pluck('title')->toArray());
             if (auth()->user()->empleado->children->count() > 0 && !$isAdmin) {
                 return datatables()->of(auth()->user()->empleado->children)->toJson();
-            } else if ($isAdmin) {
+            } elseif ($isAdmin) {
                 return datatables()->of($empleados)->toJson();
             } else {
                 return datatables()->of($empleados)->toJson();
