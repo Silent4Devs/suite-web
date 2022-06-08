@@ -56,7 +56,7 @@ class RevisionDocumentoController extends Controller
                 break;
         }
 
-        $empleado = Empleado::find(intval($revisionDocumento->empleado_id));
+        $empleado = Empleado::alta()->find(intval($revisionDocumento->empleado_id));
 
         return view('externos.revisiones.edit', compact('documento', 'empleado', 'path_documentos_aprobacion', 'revisionDocumento'));
     }

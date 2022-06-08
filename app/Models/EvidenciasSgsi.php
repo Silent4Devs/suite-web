@@ -91,7 +91,7 @@ class EvidenciasSgsi extends Model implements HasMedia
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'responsable_evidencia_id');
+        return $this->belongsTo(Empleado::class, 'responsable_evidencia_id')->alta();
     }
 
     public function area()

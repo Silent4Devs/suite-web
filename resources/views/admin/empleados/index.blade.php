@@ -46,18 +46,6 @@
             margin-right: 15px;
         }
 
-        .table tr td:nth-child(9) {
-
-            text-align: left !important;
-
-        }
-
-        .table tr td:nth-child(7) {
-
-            text-align: left !important;
-
-        }
-
     </style>
     {{ Breadcrumbs::render('EV360-Empleados') }}
 
@@ -74,7 +62,7 @@
             </div>
         @endcan
         <div class="d-flex justify-content-between">
-            <div class="p-10">
+            {{-- <div class="p-10">
                 <button id="eliminar_todo" class="btn btn-danger btn-sm"
                     style="text-align: right;padding-right: 20px; background-color: red !important;"><i
                         class="fa-solid fa-trash"></i> seleccionados</button>
@@ -82,17 +70,13 @@
                     <span class="sr-only">Loading...</span>
                 </div>
                 <span class="sr-only">Loading...</span>
-            </div>
-            <div class="p-2">
+            </div> --}}
+            <div class="p-2 w-100" style="text-align: end;">
                 <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"
                     class="btn btn-success btn-sm active" role="button" aria-pressed="true"><i
                         class="pl-2 pr-3 fas fa-plus"></i> Configurar vista datos</a>
             </div>
         </div>
-
-        {{-- <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"><button
-                class="btn-xs btn-primary rounded ml-2 pr-3"><i class="pl-2 pr-3 fas fa-plus"></i> Configurar mis
-                datos</button></a> --}}
         @if (!$ceo_exists)
             <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                 <div class="row w-100">
@@ -113,11 +97,14 @@
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-Empleado">
+            <table class="table table-bordered w-100 datatable-Empleado tblCSV">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        {{-- <th>
 
+                        </th> --}}
+                        <th style="vertical-align: top">
+                            ID
                         </th>
                         <th style="vertical-align: top">
                             Foto
@@ -334,14 +321,25 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.empleados.index') }}",
-                columns: [{
-                        data: 'checkbox',
-                        name: 'checkbox',
-                        render: function(data, type, row, meta) {
-                            return '<input type="checkbox" class="select_one" name="checkbox[]" id="checkbox' +
-                                row.id + '" value="' + row.id + '">';
-                        }
+                ajax: {
+                    url: "{{ route('admin.empleado.getListaEmpleadosIndex') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token
+                    }
+                },
+                columns: [
+                    // {
+                    //     data: 'checkbox',
+                    //     name: 'checkbox',
+                    //     render: function(data, type, row, meta) {
+                    //         return '<input type="checkbox" class="select_one" name="checkbox[]" id="checkbox' +
+                    //             row.id + '" value="' + row.id + '">';
+                    //     }
+                    // },
+                    {
+                        data: 'id',
+                        name: 'id'
                     },
                     {
                         data: 'avatar',
@@ -349,55 +347,101 @@
                         render: function(data, type, row, meta) {
                             const ids = row.id.toString();
                             console.log(ids);
-                            return `<div class="text-center"><a href="empleados/${ids}/edit"><img style="width: 50px;height: 50px;border-radius: 50%;" src="${row.avatar_ruta}"></a></div>`;
+                            return `<div class="text-center"><a href="empleados/${ids}/edit"><img style="width: 40px;height: 40px;border-radius: 50%;" src="${row.avatar_ruta}"></a></div>`;
                         }
                     },
                     {
                         data: 'n_empleado',
-                        name: 'n_empleado'
+                        render: function(data, type, row, meta) {
+                            if (data != null) {
+                                return data;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'name',
-                        name: 'name'
+                        render: function(data, type, row, meta) {
+                            if (data != null) {
+                                return data;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'email',
-                        name: 'email'
+                        render: function(data, type, row, meta) {
+                            if (data != null) {
+                                return data;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'telefono',
-                        name: 'telefono'
+                        render: function(data, type, row, meta) {
+                            if (data != null) {
+                                return data;
+                            }
+                            return '- -';
+                        }
                     },
                     {
-                        data: 'area',
-                        name: 'area'
+                        data: 'area.area',
+                        render: function(data, type, row, meta) {
+                            if (data != null) {
+                                return data;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'puesto',
-                        name: 'puesto'
+                        render: function(data, type, row, meta) {
+                            if (row.puesto != null) {
+                                return row.puesto;
+                            }
+                            return '- -';
+                        }
                     },
                     {
-                        data: 'jefe',
-                        name: 'jefe'
+                        data: 'supervisor',
+                        render: function(data, type, row, meta) {
+                            if (row.supervisor != null) {
+                                return row.supervisor.name;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'antiguedad',
-                        name: 'antiguedad'
+                        name: 'antiguedad',
+                        render: function(data, type, row, meta) {
+                            if (data != null) {
+                                return data;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'estatus',
                         name: 'estatus',
                         render: function(data, type, row, meta) {
                             if (row.estatus == 'alta') {
-                                return '<i class="fas fa-check text-success"></i>';
+                                return '<i class="fas fa-check text-success"></i> Alta';
                             } else {
-                                return '<i class="fas fa-times text-danger"></i>';
+                                return '<i class="fas fa-times text-danger"></i> Baja';
                             }
                         }
                     },
                     {
                         data: 'sede',
-                        name: 'sede'
+                        render: function(data, type, row, meta) {
+                            if (row.sede != null) {
+                                return row.sede.sede;
+                            }
+                            return '- -';
+                        }
                     },
                     {
                         data: 'id',
@@ -406,9 +450,10 @@
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ route('admin.empleados.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('admin.empleados.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
-                                   <button onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')" data-url="{{ route('admin.empleados.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></button>
+                                   <a href="{{ route('admin.empleado.solicitud-baja', ':id') }}" class="btn rounded-0" style="color:#D33" title="Dar de Baja"><i class="fas fa-trash-alt"></i></a>
                                 </div>
                             `;
+                            // onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')"
                             buttons = buttons.replaceAll(':id', data);
                             return buttons;
                         }
@@ -426,7 +471,7 @@
                 select: {
                     style: "multi",
                     selector: "td:first-child"
-                }
+                },
             };
             let table = $('.datatable-Empleado').DataTable(dtOverrideGlobals);
             // new $.fn.dataTable.FixedColumns(table, {

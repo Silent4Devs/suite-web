@@ -118,7 +118,7 @@ class PuestosController extends Controller
 
         $lenguajes = (json_decode($json));
         $areas = Area::get();
-        $reportas = Empleado::get();
+        $reportas = Empleado::alta()->get();
         $idis = Language::all();
         $competencias = Competencia::all();
         $responsabilidades = PuestoResponsabilidade::get();
@@ -126,7 +126,7 @@ class PuestosController extends Controller
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
         $puesto = Puesto::get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $perfiles = PerfilEmpleado::all();
         $puestos = Puesto::all();
         $externos = ContactosExternosPuestos::all();
@@ -196,7 +196,7 @@ class PuestosController extends Controller
         // $this->saveOrUpdateSchedule($request, $puesto);
         $lenguajes = (json_decode($json));
         $areas = Area::get();
-        $reportas = Empleado::get();
+        $reportas = Empleado::alta()->get();
         $puesto->load(['contactos' => function ($query) {
             $query->with(['puesto' => function ($query) {
                 $query->with('area');
@@ -212,7 +212,7 @@ class PuestosController extends Controller
         $certificados = PuestosCertificado::get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $language = PuestoIdiomaPorcentajePivot::get();
         $puestos = Puesto::get();
         $externos = ContactosExternosPuestos::all();
@@ -251,7 +251,7 @@ class PuestosController extends Controller
         $idiomas = PuestoIdiomaPorcentajePivot::where('id_puesto', '=', $puesto->id)->get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $areas = Area::get();
 
         return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas'));

@@ -55,7 +55,7 @@ class DeclaracionAplicabilidadAprobadores extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'aprobadores_id');
+        return $this->belongsTo(Empleado::class, 'aprobadores_id')->alta();
     }
 
     public function notificacion()

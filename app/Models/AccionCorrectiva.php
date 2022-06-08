@@ -172,12 +172,12 @@ class AccionCorrectiva extends Model implements HasMedia
 
     public function empleados()
     {
-        return $this->belongsTo(Empleado::class, 'id_registro', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'id_registro', 'id')->alta()->with('area');
     }
 
     public function reporto()
     {
-        return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->alta()->with('area');
     }
 
     public function area()

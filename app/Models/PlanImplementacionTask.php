@@ -46,6 +46,6 @@ class PlanImplementacionTask extends Model
 
     public function assigs()
     {
-        return $this->belongsToMany(Empleado::class, 'empleado_task');
+        return $this->belongsToMany(Empleado::class, 'empleado_task')->alta();
     }
 }

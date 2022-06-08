@@ -25,6 +25,6 @@ class ActividadAccionCorrectiva extends Model
 
     public function responsables()
     {
-        return $this->belongsToMany(Empleado::class, 'actividades_accion_correctiva_responsables', 'actividad_id', 'responsable_id');
+        return $this->belongsToMany(Empleado::class, 'actividades_accion_correctiva_responsables', 'actividad_id', 'responsable_id')->alta();
     }
 }

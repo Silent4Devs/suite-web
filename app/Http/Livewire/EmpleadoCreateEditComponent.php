@@ -78,7 +78,7 @@ class EmpleadoCreateEditComponent extends Component
 
     public function mount()
     {
-        $this->empleados = Empleado::get();
+        $this->empleados = Empleado::alta()->get();
         $this->ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $this->areas = Area::get();
         $this->sedes = Sede::get();

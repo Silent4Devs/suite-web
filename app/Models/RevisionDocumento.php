@@ -111,6 +111,6 @@ class RevisionDocumento extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class);
+        return $this->belongsTo(Empleado::class)->alta();
     }
 }

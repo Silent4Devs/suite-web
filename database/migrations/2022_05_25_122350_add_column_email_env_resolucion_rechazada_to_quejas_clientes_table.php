@@ -16,7 +16,6 @@ class AddColumnEmailEnvResolucionRechazadaToQuejasClientesTable extends Migratio
         Schema::table('quejas_clientes', function (Blueprint $table) {
             $table->boolean('email_env_resolucion_rechazada')->default(false);
             $table->boolean('notificar_atencion_queja_no_aprobada')->default(false);
-
         });
     }
 

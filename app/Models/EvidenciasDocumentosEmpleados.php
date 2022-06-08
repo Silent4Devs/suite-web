@@ -55,6 +55,6 @@ class EvidenciasDocumentosEmpleados extends Model
 
     public function empleados_documentos()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
     }
 }

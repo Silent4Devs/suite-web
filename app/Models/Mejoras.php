@@ -39,7 +39,7 @@ class Mejoras extends Model
 
     public function mejoro()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_mejoro_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_mejoro_id', 'id')->alta();
     }
 
     public function planes()

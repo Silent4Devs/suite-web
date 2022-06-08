@@ -1,4 +1,4 @@
-<table class="table table-bordered w-100 datatable datatable-vulnerabilidad tblCSV">
+<table class="table table-bordered w-100 datatable datatable-vulnerabilidad tblCSV" id="datatable-vulnerabilidad">
     <thead class="thead-dark">
         <tr>
             <th style="min-width: 30px;">

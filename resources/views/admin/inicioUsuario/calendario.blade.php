@@ -259,7 +259,7 @@
                     isReadOnly : true,
                     body: `
                         <font style="font-weight: bold;">Cumpleaños:</font> ${@json(\Carbon\Carbon::parse($cumple->cumpleaños)->format('d-m'))}<br>
-                        <font style="font-weight: bold;">Area:</font> ${@json($cumple->area->area)}<br>
+                        <font style="font-weight: bold;">Area:</font> ${@json($cumple->area ?$cumple->area->area:null)}<br>
                         <font style="font-weight: bold;">Puesto:</font> ${@json($cumple->puesto)}<br>
                         
                     `,
@@ -279,7 +279,7 @@
                     isReadOnly : true,
                     body: `
                         <font style="font-weight: bold;">Aniversario:</font> ${@json(\Carbon\Carbon::parse($aniversario->antiguedad)->format('d-m'))}<br>
-                        <font style="font-weight: bold;">Area:</font> ${@json($aniversario->area->area)}<br>
+                        <font style="font-weight: bold;">Area:</font> ${@json($aniversario->area?$aniversario->area->area:null)}<br>
                         <font style="font-weight: bold;">Puesto:</font> ${@json($aniversario->puesto)}<br>
                         
                     `,

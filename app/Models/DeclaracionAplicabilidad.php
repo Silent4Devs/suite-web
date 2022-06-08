@@ -9,10 +9,9 @@ use Illuminate\Support\Str;
 class DeclaracionAplicabilidad extends Model
 {
     use HasFactory;
-   
+
     protected static $flushCacheOnUpdate = true;
     public $table = 'declaracion_aplicabilidad';
-   
 
     protected $fillable = [
         'control-uno',
@@ -52,7 +51,7 @@ class DeclaracionAplicabilidad extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'aprobadores_id', 'id');
+        return $this->belongsTo(Empleado::class, 'aprobadores_id', 'id')->alta();
     }
 
     public function notificacion()

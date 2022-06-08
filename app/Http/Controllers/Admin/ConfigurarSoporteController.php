@@ -88,7 +88,7 @@ class ConfigurarSoporteController extends Controller
     {
         abort_if(Gate::denies('configurar_soporte_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ConfigurarSoporteModel = ConfigurarSoporteModel::all();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $puestos = Puesto::get();
 
         return view('admin.confSoporte.create', compact('ConfigurarSoporteModel', 'empleados', 'puestos'));
@@ -120,7 +120,7 @@ class ConfigurarSoporteController extends Controller
         abort_if(Gate::denies('configurar_soporte_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ConfigurarSoporteModel = ConfigurarSoporteModel::find($ConfigurarSoporteModel);
         // dd($ConfigurarSoporteModel);
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $puestos = Puesto::get();
 
         return view('admin.confSoporte.edit', compact('ConfigurarSoporteModel', 'empleados', 'puestos'));

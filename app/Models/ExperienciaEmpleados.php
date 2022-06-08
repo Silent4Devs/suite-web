@@ -42,6 +42,6 @@ class ExperienciaEmpleados extends Model
 
     public function empleado_experiencia()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
     }
 }

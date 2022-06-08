@@ -56,7 +56,7 @@ class OrganizacionController extends Controller
 
     public function create()
     {
-        $countEmpleados = Empleado::get()->count();
+        $countEmpleados = Empleado::alta()->get()->count();
 
         if ($countEmpleados == 0) {
             $tamanoEmpresa = 'debe registrar a los empleados';
@@ -154,7 +154,7 @@ class OrganizacionController extends Controller
 
     public function edit(Organizacion $organizacion)
     {
-        $countEmpleados = Empleado::get()->count();
+        $countEmpleados = Empleado::alta()->get()->count();
 
         if ($countEmpleados == 0) {
             $tamanoEmpresa = 'debe registrar a los empleados';
@@ -289,15 +289,15 @@ class OrganizacionController extends Controller
                                 'start_work_time' =>  $w['start_time'][$i],
                                 'end_work_time' => $w['end_time'][$i],
 
-                                ]);
+                            ]);
                         }
                     } else {
                         $schedule = Schedule::create([
-                                'working_day'  => $w['day'][$i],
-                                'start_work_time' =>  $w['start_time'][$i],
-                                'end_work_time' => $w['end_time'][$i],
-                                'organizacions_id'=> $id,
-                            ]);
+                            'working_day'  => $w['day'][$i],
+                            'start_work_time' =>  $w['start_time'][$i],
+                            'end_work_time' => $w['end_time'][$i],
+                            'organizacions_id' => $id,
+                        ]);
                     }
                 }
             }

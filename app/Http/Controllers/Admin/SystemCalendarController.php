@@ -72,7 +72,7 @@ class SystemCalendarController extends Controller
         $eventos = Calendario::get();
         $oficiales = CalendarioOficial::get();
 
-        $cumples_aniversarios = Empleado::get();
+        $cumples_aniversarios = Empleado::alta()->get();
         $nombre_organizacion = Organizacion::first();
         $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';
 

@@ -23,7 +23,12 @@
 
     </div>
 
+    <style>
+        .c-sidebar-navli:nth-last-child(2) {
+            margin-bottom: 30px;
+        }
 
+    </style>
 
     <ul class="c-sidebar-nav dark_mode1" style="margin-top: -10px;">
 
@@ -791,7 +796,7 @@
                     <font class="letra_blanca"> Ajustes de Usuario </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
-                    @can('permission_access')
+                    {{-- @can('permission_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.permisos.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/permisos') || request()->is('admin/permisos/*') ? 'active' : '' }}">
@@ -799,7 +804,7 @@
                                 <font class="letra_blanca"> {{ trans('cruds.permission.title') }} </font>
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
                     @can('role_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.roles.index') }}"
@@ -829,7 +834,7 @@
                             </a>
                         </li>
                     @endcan --}}
-                    @can('audit_log_access')
+                    {{-- @can('audit_log_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.audit-logs.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/audit-logs') || request()->is('admin/audit-logs/*') ? 'active' : '' }}">
@@ -850,7 +855,7 @@
                                     Notificaciones </font>
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
                     {{-- @can('enlaces_ejecutar_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.enlaces-ejecutars.index') }}"
@@ -1011,17 +1016,16 @@
                 </a>
             </li>
         @endif
-        {{-- @can('sitemap_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ url('sitemap') }}" class="c-sidebar-nav-link">
-                    <i class="iconos_menu letra_blanca fas fa-fw fa-sitemap">
-
-                    </i>
-                    <font class="letra_blanca">Mapa de sitio</font>
-                </a>
-            </li>
-        @endcan --}}
         <style type="text/css">
+            .botones_g_s {
+                position: sticky;
+                bottom: 0;
+                left: 50px;
+                width: 100%;
+                background: white;
+                text-align: center;
+            }
+
             .botones_g_s a {
                 display: inline-block;
                 padding: 0px 25px;
@@ -1034,7 +1038,7 @@
             }
 
         </style>
-        <div class="text-center botones_g_s" style="margin-top: 80px;">
+        <li class="botones_g_s">
             @can('listados_soporte_access')
                 <a href="{{ route('admin.soporte') }}" title="Soporte" style="margin-right:14px;"><i
                         class="bi bi-headset"></i></a>
@@ -1042,10 +1046,28 @@
             @can('glosario_access')
                 <a href="{{ route('admin.glosarios.render') }}" title="Glosario"><i class="bi bi-book"></i></a>
             @endcan
-        </div>
+        </li>
+        {{-- @can('sitemap_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ url('sitemap') }}" class="c-sidebar-nav-link">
+                    <i class="iconos_menu letra_blanca fas fa-fw fa-sitemap">
 
-        <div class="row lemnt_row_menu" style="padding-bottom:300px;">
-        </div>
+                    </i>
+                    <font class="letra_blanca">Mapa de sitio</font>
+                </a>
+            </li>
+        @endcan --}}
+        {{-- <div class="text-center botones_g_s" style="margin-top: 80px;">
+            @can('listados_soporte_access')
+                <a href="{{ route('admin.soporte') }}" title="Soporte" style="margin-right:14px;"><i
+                        class="bi bi-headset"></i></a>
+            @endcan
+            @can('glosario_access')
+                <a href="{{ route('admin.glosarios.render') }}" title="Glosario"><i class="bi bi-book"></i></a>
+            @endcan
+        </div> --}}
+        {{-- <div class="row lemnt_row_menu" style="padding-bottom:300px;">
+        </div> --}}
 
 
 
