@@ -349,7 +349,6 @@
             font-weight: normal;
             border: none !important;
         }
-
     </style>
     {{-- menu tabs --}}
     <style type="text/css">
@@ -448,7 +447,6 @@
         .scroll_estilo::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.5);
         }
-
     </style>
     {{-- Estilos Select 2 --}}
     <style>
@@ -954,7 +952,6 @@
             background-color: #345183 !important;
             color: #fff !important;
         }
-
     </style>
 
     @yield('styles')
