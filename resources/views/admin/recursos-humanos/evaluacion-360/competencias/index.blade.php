@@ -182,15 +182,14 @@
                                 `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
 
                             let botones = `
-                            @can('capital_humano_competencias_edit')
-                                <a class="mr-2 btn btn-sm btn-editar" title="Agregar Conductas" href="${urlBtnEditarConductas}"><i
-                                        class="fas fa-chalkboard-teacher"></i></a>
+                            @can('competencias_editar')
+
                                 <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
-                            @endcan                               
-                            @can('capital_humano_competencias_show')
+                            @endcan
+                            @can('competencias_show')
                                 <a class="btn btn-sm btn-editar" title="Visualizar" href="${urlBtnVisualizar}"><i class="fas fa-eye"></i></a>
                             @endcan
-                            @can('capital_humano_competencias_delete')
+                            @can('competencias_eliminar')
                                 <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" data-action="Eliminar"
                                     data-url="${urlBtnEliminar}"><i class="fas fa-trash-alt"></i></button>
                             @endcan

@@ -52,7 +52,8 @@ class InicioUsuarioController extends Controller
     {
         $hoy = Carbon::now();
         $hoy->toDateString();
-        abort_if(Gate::denies('mi_perfil_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_perfil_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $usuario = auth()->user();
         $usuarioVinculadoConEmpleado = false;
         if ($usuario->empleado) {
@@ -521,6 +522,8 @@ class InicioUsuarioController extends Controller
 
     public function quejas()
     {
+        abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_queja'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $areas = Area::get();
 
         $procesos = Proceso::get();
@@ -588,6 +591,8 @@ class InicioUsuarioController extends Controller
 
     public function denuncias()
     {
+        abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_denuncia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $empleados = Empleado::get();
 
         $sedes = Sede::get();
@@ -644,6 +649,8 @@ class InicioUsuarioController extends Controller
 
     public function mejoras()
     {
+        abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $areas = Area::get();
 
         $procesos = Proceso::get();
@@ -677,6 +684,8 @@ class InicioUsuarioController extends Controller
 
     public function sugerencias()
     {
+        abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $areas = Area::get();
 
         $empleados = Empleado::get();
@@ -711,6 +720,8 @@ class InicioUsuarioController extends Controller
 
     public function seguridad()
     {
+        abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $areas = Area::get();
 
         $procesos = Proceso::get();
@@ -1060,6 +1071,7 @@ class InicioUsuarioController extends Controller
 
     public function expediente($id_empleado)
     {
+
         $empleado = Empleado::find($id_empleado);
 
         $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->get();

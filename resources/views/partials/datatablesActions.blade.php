@@ -95,7 +95,7 @@
         </a>
     @endcan
     @if (Request::route()->getName() == 'admin.puestos.index')
-        @can('capital_humano_competencias_por_puestos_create')
+        @can('lista_de_perfiles_de_puesto_asignar_competencias')
             <a class="mr-2 rounded btn btn-sm" href="{{ route('admin.ev360-competencias-por-puesto.create', $row->id) }}">
                 {{-- {{ trans('global.view') }} --}} <i class="bi bi-bookmark-star" title="Asignar Competencias"></i>
             </a>

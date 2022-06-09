@@ -33,7 +33,7 @@ class RecursosController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('recurso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('capacitaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Recurso::with(['empleados', 'team', 'categoria_capacitacion'])->select(sprintf('%s.*', (new Recurso)->table))->orderByDesc('id');
@@ -43,9 +43,9 @@ class RecursosController extends Controller
             $table->addColumn('actions', '&nbsp;');
             $table->addIndexColumn();
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'recurso_show';
-                $editGate = 'recurso_edit';
-                $deleteGate = 'recurso_delete';
+                $viewGate = 'capacitaciones_ver';
+                $editGate = 'capacitaciones_editar';
+                $deleteGate = 'capacitaciones_eliminar';
                 $crudRoutePart = 'recursos';
 
                 return view('partials.datatablesActions', compact(
@@ -97,7 +97,7 @@ class RecursosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('recurso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('capacitaciones_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $participantes = User::all()->pluck('name', 'id');
         $categorias = CategoriaCapacitacion::get();
         $recurso = new Recurso;
@@ -110,6 +110,8 @@ class RecursosController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('capacitaciones_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->merge([
             'tipo_seleccion_participantes' => [
                 'tipo' => $request->tipo_de_grupo,
@@ -255,7 +257,7 @@ class RecursosController extends Controller
 
     public function edit(Recurso $recurso)
     {
-        abort_if(Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('capacitaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $categorias = CategoriaCapacitacion::get();
         $areas = Area::with('empleados')->get();
         $grupos = GruposEvaluado::with('empleados')->get();
@@ -266,6 +268,8 @@ class RecursosController extends Controller
 
     public function update(Request $request, Recurso $recurso)
     {
+        abort_if(Gate::denies('capacitaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->merge([
             'tipo_seleccion_participantes' => [
                 'tipo' => $request->tipo_de_grupo,
@@ -325,7 +329,7 @@ class RecursosController extends Controller
 
     public function show(Recurso $recurso)
     {
-        abort_if(Gate::denies('recurso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('capacitaciones_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $recurso->load('participantes', 'empleados');
 
@@ -334,7 +338,7 @@ class RecursosController extends Controller
 
     public function destroy(Recurso $recurso)
     {
-        abort_if(Gate::denies('recurso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('capacitaciones_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $deleted = $recurso->delete();
         if ($deleted) {

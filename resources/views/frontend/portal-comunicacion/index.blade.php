@@ -434,7 +434,7 @@
                                     } else {
                                         $imagen = 'img/tabantaj_fondo_blanco.png';
                                     }
-                                    
+
                                 @endphp
                                 <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}">
                                     <div class="img_carrusel" style="background-image: url('{{ asset($imagen) }}');">
@@ -470,20 +470,34 @@
                     </div>
                 </div>
                 <div class="col-lg-3 caja_btn_silent">
+                    @can('portal_comunicacion_mostrar_organizacion')
                     <a class="btn-silent" href="{{ asset('organizacions') }}"><i class="mr-2 fas fa-gopuram"></i>
                         <span>Organización</span></a>
+                    @endcan
+                    @can('portal_comunicacion_mostrar_organigrama')
                     <a class="btn-silent" href="{{ asset('organigrama') }}"><i class="mr-2 fas fa-sitemap"></i>
                         <span>Organigrama</span></a>
+                    @endcan
+                    @can('portal_comunicacion_mostrar_documentos')
                     <a class="btn-silent" href="{{ asset('documentos/publicados') }}"><i
                             class="mr-2 fas fa-folder"></i> <span>Documentos</span></a>
+                    @endcan
+                    @can('portal_comunicacion_mostrar_politicas')
                     <a class="btn-silent" href="{{ asset('politica-sgsis/visualizacion') }}"><i
                             class="mr-2 fas fa-file"></i> <span>Política SGSI</span></a>
+                    @endcan
+                    @can('portal_comunicacion_mostrar_comites')
                     <a class="btn-silent" href="{{ asset('comiteseguridads/visualizacion') }}"><i
                             class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
+                    @endcan
+                    @can('portal_comunicacion_mostrar_sedes')
                     <a class="btn-silent" href="{{ asset('sedes/organizacion') }}"><i
                             class="mr-2 fas fa-map-marked-alt "></i> <span>Sedes</span></a>
+                    @endcan
+                    @can('portal_comunicacion_mostrar_reportar')
                     <a class="btn-silent" href="{{ asset('portal-comunicacion/reportes') }}"><i
                             class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
+                    @endcan
                 </div>
 
 
@@ -501,7 +515,7 @@
                                 } else {
                                     $imagen = 'img/portal_404.png';
                                 }
-                                
+
                             @endphp
 
                             {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}

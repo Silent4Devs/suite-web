@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 
+
+
     <style type="text/css">
 
         .datos_der_cv{
@@ -42,7 +44,7 @@
             .datos_der_cv{
                 margin-right: -50px !important;
 
-                
+
             }
         }
     </style>
@@ -52,11 +54,13 @@
     {{-- @if (is_null($visualizarEmpleados->name)) --}}
     {{-- <label class="ml-4">Sin registro</label> --}}
     {{-- @else --}}
+
     <h5 class="col-12 titulo_general_funcion">Datos de {{$visualizarEmpleados->name}}</h5>
     {{-- @endif --}}
     <div>
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
+
                 <div class="card-body" id="imp1">
 
                     {{-- <div class="col-md-4"> --}}
@@ -164,10 +168,10 @@
                                         <span>{{ $visualizarEmpleados->extension}}</span>
                                     </div>
                                 @endif
-  
+
                                 <div class="col-4">
                                     <span><strong>Sede</strong>
-                                    <div>{{$visualizarEmpleados->sede->sede}}</div>
+                                    <div>{{$visualizarEmpleados->sede ? $visualizarEmpleados->sede->sede : "Sin dato"}}</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -350,7 +354,7 @@
                                         <span><strong>Periodicidad de nómina</strong>
                                         <span>{{ $visualizarEmpleados->periodicidad_nomina}}</span>
                                     </div>
-                                @endif                                
+                                @endif
                             </div>
                             <div class="row mb-3">
                                 <div class="col-12">
@@ -781,7 +785,6 @@
         </div>
 
     </div>
-
 
 
 @endsection

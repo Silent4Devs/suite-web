@@ -118,7 +118,7 @@
                 }
             };
 
-            @can('entidades_crediticias_create')
+            @can('entidades_crediticeas_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
             let dtOverrideGlobals = {
@@ -157,17 +157,17 @@
                             const urlShowDelete =
                                 `/admin/recursos-humanos/entidades-crediticias/${data}`;
                             const html = `
-                            @can('entidades_crediticias_edit')
+                            @can('entidades_crediticeas_editar')
                                 <a class="btn btn-sm " title="Editar" href="${urlEdit}">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             @endcan
-                                @can('entidades_crediticias_show')
+                                @can('entidades_crediticeas_ver')
                                     <a class="btn btn-sm " title="Visualizar" href="${urlShowDelete}">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                 @endcan
-                            @can('entidades_crediticias_delete')
+                            @can('entidades_crediticeas_eliminar')
                                 <button title="Eliminar" onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.entidad}');return false;"
                                     class="btn btn-sm text-danger">
                                     <i class="fas fa-trash-alt"></i>

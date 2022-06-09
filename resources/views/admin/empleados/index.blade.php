@@ -63,7 +63,7 @@
 
     <h5 class="col-12 titulo_general_funcion">Empleados</h5>
     <div class="mt-5 card">
-        @can('configuracion_empleados_create')
+        @can('bd_empleados_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modalempleado', [
@@ -74,6 +74,7 @@
             </div>
         @endcan
         <div class="d-flex justify-content-between">
+            @can('bd_empleados_borrar_seleccionados')
             <div class="p-10">
                 <button id="eliminar_todo" class="btn btn-danger btn-sm"
                     style="text-align: right;padding-right: 20px; background-color: red !important;"><i
@@ -83,11 +84,14 @@
                 </div>
                 <span class="sr-only">Loading...</span>
             </div>
+            @endcan
+            @can('bd_empleados_configurar_vista_datos')
             <div class="p-2">
                 <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"
                     class="btn btn-success btn-sm active" role="button" aria-pressed="true"><i
                         class="pl-2 pr-3 fas fa-plus"></i> Configurar vista datos</a>
             </div>
+            @endcan
         </div>
 
         {{-- <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"><button
@@ -250,7 +254,7 @@
                 }
 
             ];
-            @can('configuracion_empleados_create')
+            @can('bd_empleados_agregar')
                 let btnAgregar = {
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar empleado',
@@ -404,9 +408,15 @@
                         render: function(data, type, row, meta) {
                             let buttons = `
                                 <div class="btn-group" role="group" aria-label="Basic example">
+                                    @can('bd_empleados_ver')
                                     <a href="{{ route('admin.empleados.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>
+                                    @endcan
+                                    @can('bd_empleados_editar')
                                     <a href="{{ route('admin.empleados.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
-                                   <button onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')" data-url="{{ route('admin.empleados.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></button>
+                                   @endcan
+                                   @can('bd_empleados_dar_de_baja')
+                                    <button onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')" data-url="{{ route('admin.empleados.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></button>
+                                   @endcan
                                 </div>
                             `;
                             buttons = buttons.replaceAll(':id', data);

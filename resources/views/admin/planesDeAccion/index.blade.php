@@ -142,8 +142,9 @@
                     window.location.href = url;
                 }
             };
+            @can('planes_de_accion_agregar')
             dtButtons.push(btnAgregar);
-
+            @endcan
             let url = "{{ route('admin.planes-de-accion.index') }}"
             let tblPlanesAccion = $('#tblPlanesAccion').DataTable({
                 buttons: dtButtons,
@@ -292,19 +293,27 @@
                         }
                         let botones = `
                             <div class="btn-group">
+                                @can('planes_de_accion_editar')
                                 <a class="btn" href="${urlEditarPlanAccion}" title="Editar Plan de Acción"><i class="fas fa-edit"></i></a>
+                                @endcan
+                                @can('planes_de_accion_visualizar_diagrama')
                                 <a class="btn" href="${urlVerPlanAccion}" title="Visualizar Plan de Acción"><i class="fas fa-stream"></i></a>
-                        `;
+                                @endcan
+                            `;
+
                         if (data > 1) {
                             botones += `
+                            @can('planes_de_accion_eliminar')
                              <button class="btn" onclick="eliminar('${urlEliminarPlanAccion}','${row.parent}')" title="Eliminar Plan de Acción"><i class="fas fa-trash-alt text-danger"></i></button>
                              </div>
+                             @endcan
                              `;
                         } else {
                             botones += `
                              </div>
                              `;
                         }
+
                         return botones;
 
                     }

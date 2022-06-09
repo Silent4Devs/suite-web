@@ -31,7 +31,7 @@ class PuestosController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('puesto_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('lista_de_perfiles_de_puesto_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Puesto::with(['area'])->orderByDesc('id')->get();
@@ -41,9 +41,9 @@ class PuestosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'puesto_show';
-                $editGate = 'puesto_edit';
-                $deleteGate = 'puesto_delete';
+                $viewGate = 'lista_de_perfiles_de_puesto_show';
+                $editGate = 'lista_de_perfiles_de_puesto_editar';
+                $deleteGate = 'lista_de_perfiles_de_puesto_eliminar';
                 $crudRoutePart = 'puestos';
 
                 return view('partials.datatablesActions', compact(
@@ -80,7 +80,7 @@ class PuestosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('puesto_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('lista_de_perfiles_de_puesto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $json = '[{
                     "abr":"zh",
@@ -137,6 +137,7 @@ class PuestosController extends Controller
 
     public function store(StorePuestoRequest $request)
     {
+        abort_if(Gate::denies('lista_de_perfiles_de_puesto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($request->all());
         $val = $request->validate([
             'puesto' => 'unique:puestos,puesto',
@@ -159,7 +160,7 @@ class PuestosController extends Controller
 
     public function edit(Puesto $puesto)
     {
-        abort_if(Gate::denies('puesto_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('lista_de_perfiles_de_puesto_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $json = '[{
                     "abr":"zh",
                     "idioma":"Chinese"
@@ -222,6 +223,7 @@ class PuestosController extends Controller
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)
     {
+        abort_if(Gate::denies('lista_de_perfiles_de_puesto_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($request->all());
         $puesto->update($request->all());
 
@@ -259,7 +261,7 @@ class PuestosController extends Controller
 
     public function destroy(Puesto $puesto)
     {
-        abort_if(Gate::denies('puesto_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('lista_de_perfiles_de_puesto_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $puesto->delete();
 

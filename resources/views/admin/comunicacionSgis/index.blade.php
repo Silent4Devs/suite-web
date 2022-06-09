@@ -174,7 +174,7 @@
 
             ];
 
-            @can('comunicacion_sgi_create')
+            @can('comunicados_generales_agregar')
                 let btnAgregar = {
 
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
