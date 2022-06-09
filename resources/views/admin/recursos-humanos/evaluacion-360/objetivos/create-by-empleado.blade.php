@@ -187,10 +187,16 @@
                 }, {
                     data: 'objetivo.esta_aprobado',
                     render: function(data, type, row, meta) {
-                        if (data) {
+                        if (data == 1) {
                             return '<span class="badge badge-success">Aprobado</span>';
+                        } else if (data == 2) {
+                            let html = `
+                            <span class="badge badge-danger">No Aprobado
+                                <i class="fas fa-comment ml-1" title="${row.objetivo.comentarios_aprobacion}"></i>
+                            </span>`;
+                            return html;
                         } else {
-                            return '<span class="badge badge-danger">No Aprobado</span>';
+                            return '<span class="badge badge-warning">Pendiente</span>';
                         }
                     }
                 }, {
@@ -214,7 +220,7 @@
                                     <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
                                 </div>
                                 `;
-                        if (!row.objetivo.esta_aprobado == 0) {
+                        if (row.objetivo.esta_aprobado == 0) {
                             if (auth.id == supervisor.id) {
                                 botones +=
                                     `<div class="col-12">

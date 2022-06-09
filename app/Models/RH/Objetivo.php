@@ -20,6 +20,11 @@ class Objetivo extends Model
     const RECHAZADO = 2;
     const SIN_DEFINIR = 0;
 
+    public function scopeAprobado($query)
+    {
+        return $query->where('esta_aprobado', self::APROBADO);
+    }
+
     public function getImagenRutaAttribute()
     {
         if ($this->imagen) {
