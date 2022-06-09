@@ -2425,7 +2425,6 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario acceder a vista detallada  de "Competecias"',
             ],
 
-
             [
                 'title' => 'perfiles_de_puesto_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Perfiles de Puesto", permite visualizar lo submodulos (Lista de Perfiles de Puesto, Compétencias por Puesto, Consulta de Perfiles de Puesto)',
@@ -3798,33 +3797,9 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'principal_soporte_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Soporte"',
-            ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            ],
 
         ];
-
 
         Permission::insert($permissions);
         Permission::insert($permissions1);

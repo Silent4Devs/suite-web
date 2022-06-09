@@ -277,7 +277,6 @@ class EV360ObjetivosController extends Controller
 
     public function destroy(ObjetivoEmpleado $objetivoEmpleado)
     {
-
         $objetivoEmpleado->delete();
 
         return response()->json(['deleted' => true]);

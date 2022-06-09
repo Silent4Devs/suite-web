@@ -256,7 +256,6 @@ class PlanesAccionController extends Controller
      */
     public function destroy(Request $request, $planImplementacion)
     {
-
         abort_if(Gate::denies('planes_de_accion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {

@@ -81,7 +81,6 @@ class MacroprocesoController extends Controller
         return view('admin.macroprocesos.create')->with('grupos', $grupos);
     }
 
-  
     public function store(Request $request)
     {
         abort_if(Gate::denies('macroprocesos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');

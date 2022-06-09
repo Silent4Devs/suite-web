@@ -126,7 +126,6 @@ class ConfigurarSoporteController extends Controller
         return view('admin.confSoporte.edit', compact('ConfigurarSoporteModel', 'empleados', 'puestos'));
     }
 
-   
     // UpdatePartesInteresadaRequest
     public function update(Request $request, ConfigurarSoporteModel $ConfigurarSoporteModel)
     {
@@ -138,7 +137,6 @@ class ConfigurarSoporteController extends Controller
 
     public function destroy($ConfigurarSoporteModel)
     {
-
         abort_if(Gate::denies('configurar_soporte_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ConfigurarSoporteModel = ConfigurarSoporteModel::find($ConfigurarSoporteModel);
         // dd($ConfigurarSoporteModel);

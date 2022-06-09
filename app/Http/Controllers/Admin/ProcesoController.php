@@ -112,7 +112,6 @@ class ProcesoController extends Controller
         return view('admin.procesos.show', compact('proceso'));
     }
 
-   
     public function edit(Proceso $proceso)
     {
         abort_if(Gate::denies('procesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -121,7 +120,6 @@ class ProcesoController extends Controller
         return view('admin.procesos.edit', compact('proceso'))->with('macroprocesos', $macroproceso);
     }
 
-   
     public function update(Request $request, Proceso $proceso)
     {
         abort_if(Gate::denies('procesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -140,7 +138,6 @@ class ProcesoController extends Controller
         return redirect()->route('admin.procesos.index');
     }
 
-   
     public function destroy($proceso)
     {
         abort_if(Gate::denies('procesos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');

@@ -16,12 +16,11 @@ use Yajra\DataTables\Facades\DataTables;
 class AnalisisdeRiesgosController extends Controller
 {
     public function menu()
-    {   
+    {
         // abort_if(Gate::denies('menu_analisis_riesgo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.analisis-riesgos.menu-buttons');
     }
 
-  
     public function index(Request $request)
     {
         abort_if(Gate::denies('matriz_de_riesgo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -100,7 +99,6 @@ class AnalisisdeRiesgosController extends Controller
         return view('admin.analisis-riesgos.index', compact('empresa_actual', 'logo_actual'));
     }
 
-  
     public function create()
     {
         abort_if(Gate::denies('matriz_de_riesgo_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -111,7 +109,6 @@ class AnalisisdeRiesgosController extends Controller
         return view('admin.analisis-riesgos.create', compact('empleados'));
     }
 
-   
     public function store(Request $request)
     {
         abort_if(Gate::denies('matriz_de_riesgo_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -129,7 +126,6 @@ class AnalisisdeRiesgosController extends Controller
         }
     }
 
-  
     public function show(Request $request, $id)
     {
         abort_if(Gate::denies('matriz_de_riesgo_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -138,7 +134,6 @@ class AnalisisdeRiesgosController extends Controller
         return view('admin.analisis-riesgos.show', compact('analisis'));
     }
 
-  
     public function edit($id)
     {
         abort_if(Gate::denies('matriz_de_riesgo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -148,7 +143,6 @@ class AnalisisdeRiesgosController extends Controller
         return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));
     }
 
-  
     public function update(Request $request, $id)
     {
         abort_if(Gate::denies('matriz_de_riesgo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -166,7 +160,6 @@ class AnalisisdeRiesgosController extends Controller
         return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Editado con éxito');
     }
 
-   
     public function destroy($id)
     {
         abort_if(Gate::denies('matriz_de_riesgo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');

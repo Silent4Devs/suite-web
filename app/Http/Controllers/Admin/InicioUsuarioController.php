@@ -1074,7 +1074,6 @@ class InicioUsuarioController extends Controller
 
     public function expediente($id_empleado)
     {
-
         $empleado = Empleado::find($id_empleado);
 
         $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->get();
