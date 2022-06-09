@@ -8,7 +8,6 @@
     .select2-container {
         margin-top: 10px !important;
     }
-
 </style>
 
 @if (!$editar)
@@ -238,9 +237,9 @@
                     <th style="vertical-align: top">
                         Meta
                     </th>
-                    {{-- <th style="vertical-align: top">
-                        Unidad
-                    </th> --}}
+                    <th style="vertical-align: top">
+                        Estatus
+                    </th>
                     <th style="vertical-align: top">
                         Descripción
                     </th>

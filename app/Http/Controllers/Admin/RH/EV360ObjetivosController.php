@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SolicitudAprobacionObjetivo;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\PerfilEmpleado;
@@ -12,6 +13,7 @@ use App\Models\RH\ObjetivoEmpleado;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -55,7 +57,6 @@ class EV360ObjetivosController extends Controller
                 $query->with(['tipo', 'metrica']);
             }]);
         }]);
-
         if ($request->ajax()) {
             $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
 
@@ -77,14 +78,26 @@ class EV360ObjetivosController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',
-            'meta' => 'required|integer',
+            'meta' => 'required|integer|max:1',
             'descripcion_meta' => 'nullable|string|max:1500',
             'tipo_id' => 'required|exists:ev360_tipo_objetivos,id',
             'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
         ]);
-        $empleado = Empleado::find(intval($empleado));
+        $empleado = Empleado::with('supervisor')->find(intval($empleado));
+
         if ($request->ajax()) {
+            if ($empleado->id == auth()->user()->empleado->id) {
+                #add esta_aprobado in $request
+                $request->merge(['esta_aprobado' => Objetivo::SIN_DEFINIR]);
+            }
             $objetivo = Objetivo::create($request->all());
+
+            #send email if who add is not supervisor
+            // if ($empleado->id == auth()->user()->empleado->id) {
+            //     if (!is_null($empleado->supervisor)) {
+            //         Mail::to($empleado->email)->send(new SolicitudAprobacionObjetivo($objetivo, $empleado));
+            //     }
+            // }
             if ($request->hasFile('foto')) {
                 Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -122,12 +135,25 @@ class EV360ObjetivosController extends Controller
             'tipo_id' => 'required|exists:ev360_tipo_objetivos,id',
             'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
         ]);
+
         $objetivo = Objetivo::create($request->all());
         if ($objetivo) {
             return redirect()->route('admin.ev360-objetivos.index')->with('success', 'Objetivo creado con éxito');
         } else {
             return redirect()->route('admin.ev360-objetivos.index')->with('error', 'Ocurrió un error al crear el objetivo, intente de nuevo...');
         }
+    }
+
+    public function aprobarRechazarObjetivo(Request $request, $empleado, $objetivo)
+    {
+        $aprobacion = $request->esta_aprobado ? Objetivo::APROBADO : Objetivo::RECHAZADO;
+        $objetivo = Objetivo::find(intval($objetivo));
+        $objetivo->update([
+            'esta_aprobado' => $aprobacion,
+            'comentarios_aprobacion' => $request->comentarios_aprobacion,
+        ]);
+
+        return response()->json(['success' => true]);
     }
 
     public function editByEmpleado(Request $request, $empleado, $objetivo)

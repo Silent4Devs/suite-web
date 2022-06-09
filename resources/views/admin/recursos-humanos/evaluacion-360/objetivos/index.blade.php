@@ -286,7 +286,7 @@
                     {
                         data: 'objetivos',
                         render: function(data, type, row, meta) {
-                            if (data.length > 0) {
+                            if (data) {
                                 if (data.length == 1) {
                                     return `<span class="badge badge-success">${data.length} objetivo asignado</span>`;
                                 } else {

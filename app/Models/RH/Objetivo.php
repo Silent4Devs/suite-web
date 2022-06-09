@@ -16,6 +16,10 @@ class Objetivo extends Model
     protected $appends = ['imagen_ruta'];
     protected $guarded = ['id'];
 
+    const APROBADO = 1;
+    const RECHAZADO = 2;
+    const SIN_DEFINIR = 0;
+
     public function getImagenRutaAttribute()
     {
         if ($this->imagen) {
