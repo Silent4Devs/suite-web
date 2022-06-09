@@ -193,7 +193,7 @@
 
 
 
-            @can('comunicacion_sgi_delete')
+            @can('comunicados_generales_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -248,7 +248,9 @@
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
+                                        @can('comunicados_generales_vinculo')
                                         <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;archivos</a>
+                                        @endcan
                                     </div>
                                     </div>
 

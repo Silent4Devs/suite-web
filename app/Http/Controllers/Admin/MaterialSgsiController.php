@@ -23,7 +23,7 @@ class MaterialSgsiController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('material_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('material_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd(MaterialSgsi::with('arearesponsable', 'team','documentos_material')->get());
         if ($request->ajax()) {
             $query = MaterialSgsi::with(['arearesponsable', 'team', 'documentos_material'])->select(sprintf('%s.*', (new MaterialSgsi)->table))->orderByDesc('id');
@@ -33,9 +33,9 @@ class MaterialSgsiController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'material_sgsi_show';
-                $editGate = 'material_sgsi_edit';
-                $deleteGate = 'material_sgsi_delete';
+                $viewGate = 'material_sgsi_ver';
+                $editGate = 'material_sgsi_editar';
+                $deleteGate = 'material_sgsi_eliminar';
                 $crudRoutePart = 'material-sgsis';
 
                 return view('partials.datatablesActions', compact(
@@ -88,7 +88,7 @@ class MaterialSgsiController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('material_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('material_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
         $documentos = DocumentoMaterialSgsi::get();
@@ -98,6 +98,8 @@ class MaterialSgsiController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('material_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $materialSgsi = MaterialSgsi::create($request->all());
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -123,7 +125,7 @@ class MaterialSgsiController extends Controller
 
     public function edit(MaterialSgsi $materialSgsi)
     {
-        abort_if(Gate::denies('material_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('material_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
         $documentos = DocumentoMaterialSgsi::get();
@@ -134,6 +136,8 @@ class MaterialSgsiController extends Controller
 
     public function update(UpdateMaterialSgsiRequest $request, MaterialSgsi $materialSgsi)
     {
+        abort_if(Gate::denies('material_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $materialSgsi->update($request->all());
         $files = $request->file('files');
         if ($request->hasFile('files')) {
@@ -152,7 +156,7 @@ class MaterialSgsiController extends Controller
 
     public function show(MaterialSgsi $materialSgsi)
     {
-        abort_if(Gate::denies('material_sgsi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('material_sgsi_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $materialSgsi->load('arearesponsable', 'team');
 
@@ -161,7 +165,7 @@ class MaterialSgsiController extends Controller
 
     public function destroy(MaterialSgsi $materialSgsi)
     {
-        abort_if(Gate::denies('material_sgsi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('material_sgsi_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $materialSgsi->delete();
 
@@ -177,7 +181,7 @@ class MaterialSgsiController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('material_sgsi_create') && Gate::denies('material_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('material_sgsi_agregar') && Gate::denies('material_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new MaterialSgsi();
         $model->id = $request->input('crud_id', 0);
