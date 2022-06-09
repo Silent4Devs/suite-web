@@ -6,6 +6,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateVulnerabilidadRequest;
 use App\Http\Requests\UpdateVulnerabilidadRequest;
 use App\Models\Amenaza;
+use App\Models\Organizacion;
 use App\Models\Vulnerabilidad;
 use App\Repositories\VulnerabilidadRepository;
 use Flash;
@@ -33,7 +34,7 @@ class VulnerabilidadController extends AppBaseController
      */
     public function index(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_vulnerabilidades_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('vulnerabilidades_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Vulnerabilidad::orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -74,8 +75,16 @@ class VulnerabilidadController extends AppBaseController
 
             return $table->make(true);
         }
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.vulnerabilidads.index');
+        return view('admin.vulnerabilidads.index', compact('logo_actual', 'empresa_actual'));
     }
 
     /**
@@ -85,22 +94,16 @@ class VulnerabilidadController extends AppBaseController
      */
     public function create()
     {
-        abort_if(Gate::denies('analisis_de_riesgos_vulnerabilidades_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('vulnerabilidades_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $amenazas = Amenaza::get();
 
         return view('admin.vulnerabilidads.create', compact('amenazas'));
     }
 
-    /**
-     * Store a newly created Vulnerabilidad in storage.
-     *
-     * @param CreateVulnerabilidadRequest $request
-     *
-     * @return Response
-     */
+   
     public function store(CreateVulnerabilidadRequest $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_vulnerabilidades_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('vulnerabilidades_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $input = $request->all();
 
         $vulnerabilidad = $this->vulnerabilidadRepository->create($input);
@@ -110,32 +113,20 @@ class VulnerabilidadController extends AppBaseController
         return redirect(route('admin.vulnerabilidads.index'));
     }
 
-    /**
-     * Display the specified Vulnerabilidad.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
+ 
     public function show(Request $request, $id)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_vulnerabilidades_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('vulnerabilidades_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $vulnerabilidad = Vulnerabilidad::with('idAmenaza')->find($id);
         // dd($vulnerabilidad);
         return view('admin.vulnerabilidads.show')->with('vulnerabilidad', $vulnerabilidad);
     }
 
-    /**
-     * Show the form for editing the specified Vulnerabilidad.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
+  
     public function edit($id)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_vulnerabilidades_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('vulnerabilidades_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vulnerabilidad = $this->vulnerabilidadRepository->find($id);
 
         if (empty($vulnerabilidad)) {
@@ -149,17 +140,10 @@ class VulnerabilidadController extends AppBaseController
         return view('admin.vulnerabilidads.edit', compact('amenazas'))->with('vulnerabilidad', $vulnerabilidad);
     }
 
-    /**
-     * Update the specified Vulnerabilidad in storage.
-     *
-     * @param int $id
-     * @param UpdateVulnerabilidadRequest $request
-     *
-     * @return Response
-     */
+   
     public function update($id, UpdateVulnerabilidadRequest $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_vulnerabilidades_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('vulnerabilidades_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vulnerabilidad = $this->vulnerabilidadRepository->find($id);
 
         if (empty($vulnerabilidad)) {
@@ -175,18 +159,10 @@ class VulnerabilidadController extends AppBaseController
         return redirect(route('admin.vulnerabilidads.index'));
     }
 
-    /**
-     * Remove the specified Vulnerabilidad from storage.
-     *
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
+   
     public function destroy($id)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_vulnerabilidades_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('vulnerabilidades_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vulnerabilidad = $this->vulnerabilidadRepository->find($id);
 
         if (empty($vulnerabilidad)) {

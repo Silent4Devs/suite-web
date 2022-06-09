@@ -15,7 +15,6 @@ class AddColumnEmailEnvResolucionAprobadaToQuejasClientesTable extends Migration
     {
         Schema::table('quejas_clientes', function (Blueprint $table) {
             $table->boolean('email_env_resolucion_aprobada')->default(false);
-
         });
     }
 

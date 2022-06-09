@@ -1,9 +1,8 @@
-
 <div class="row">
     <style type="text/css">
-        .modal{
-        }
-        .modal-content{
+        .modal {}
+
+        .modal-content {
             box-shadow: 0px 0px 0px 5000px rgba(0, 0, 0, 0.2) !important;
         }
 
@@ -13,7 +12,8 @@
             font-size: 16px;
             color:#747474;
         }
-        .acordeon_separado{
+
+        .acordeon_separado {
             margin-top: 15px;
         }
 
@@ -24,7 +24,8 @@
              align-items: center;
              position: relative;
         }
-        .titulos_acordeon_i_name_i span{
+
+        .titulos_acordeon_i_name_i span {
             margin-right: 20px;
         }
 
@@ -44,6 +45,7 @@
             left: 25px;
             font-size: 10px !important;
         }
+
     </style>
 
     <script src="https://cdn.ckeditor.com/4.17.1/standard-all/ckeditor.js"></script>
@@ -378,7 +380,8 @@
                             <label><i class="fas fa-birthday-cake iconos-crear"></i> Envia tus felicitaciones a <strong id="nombre_cumple"></strong></label>
 
                             <div id="formulario_comentarios"></div>
-                            <div style="background-color: rgba(255, 255, 255, 0.1); position:fixed; z-index:99999999; width: 100%; height: 100%; justify-content: center; align-items: center; top: 0; left:0;" wire:loading.flex>
+                            <div style="background-color: rgba(255, 255, 255, 0.1); position:fixed; z-index:99999999; width: 100%; height: 100%; justify-content: center; align-items: center; top: 0; left:0;"
+                                wire:loading.flex>
                                 <i class="fas fa-spinner fa-spin" style="font-size: 15pt;"></i>
                             </div>
 
@@ -389,9 +392,12 @@
 
         </div>
 
-@section('scripts')
-    @parent
-    <script>
+        @section('scripts')
+            @parent
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.getElementById('contenedor_cumples').addEventListener('click', function(e) {
+                        if (e.target.classList.contains('modal_comentarios')) {
 
         document.addEventListener('DOMContentLoaded', function(){
             document.getElementById('contenedor_cumples').addEventListener('click', function(e){
@@ -399,20 +405,21 @@
 
                     document.getElementById('formulario_comentarios').innerHTML = null;
 
-                    const comentarios_contador = e.target.getAttribute('data-comentarios-contador');
-                    const cumple_id = e.target.getAttribute('data-cumple-id');
-                    const comentarios_id = e.target.getAttribute('data-comentarios-id');
-                    const comentarios_comentarios = e.target.getAttribute('data-comentarios-comentarios');
-                    const cumple_nombre = e.target.getAttribute('data-cumple-nombre');
+                            const comentarios_contador = e.target.getAttribute('data-comentarios-contador');
+                            const cumple_id = e.target.getAttribute('data-cumple-id');
+                            const comentarios_id = e.target.getAttribute('data-comentarios-id');
+                            const comentarios_comentarios = e.target.getAttribute('data-comentarios-comentarios');
+                            const cumple_nombre = e.target.getAttribute('data-cumple-nombre');
 
-                    console.log(comentarios_contador, cumple_id, comentarios_id, comentarios_comentarios, cumple_nombre);
+                            console.log(comentarios_contador, cumple_id, comentarios_id, comentarios_comentarios,
+                                cumple_nombre);
 
-                    document.getElementById('nombre_cumple').innerHTML = cumple_nombre;
+                            document.getElementById('nombre_cumple').innerHTML = cumple_nombre;
 
-                    if (Number(comentarios_contador) == 0) {
+                            if (Number(comentarios_contador) == 0) {
 
 
-                        document.getElementById('formulario_comentarios').innerHTML = `
+                                document.getElementById('formulario_comentarios').innerHTML = `
 
                             <div>
                                 <div class="form-group">
@@ -423,8 +430,8 @@
                                 </div>
                             </div>
                         `;
-                    }else{
-                        document.getElementById('formulario_comentarios').innerHTML = `
+                            } else {
+                                document.getElementById('formulario_comentarios').innerHTML = `
 
                             <div>
                                 <div class="form-group">
@@ -435,7 +442,7 @@
                                 </div>
                             </div>
                         `;
-                    }
+                            }
 
 
 
@@ -443,275 +450,277 @@
                 }
             });
 
-            document.querySelector('.modal').addEventListener('click', function(e){
-                if(e.target.getAttribute('id') == 'btn_guardar'){
-                    @this.set('comentarios', CKEDITOR.instances.comentario.getData());
-                    const funcion = e.target.getAttribute('data-funcion');
-                    const cumple_id = e.target.getAttribute('data-cumple-id');
-                    @this.call(funcion, cumple_id);
-                }
-                if(e.target.getAttribute('id') == 'btn_actualizar'){
-                    @this.set('comentarios_update', CKEDITOR.instances.comentario.getData());
-                    const funcion = e.target.getAttribute('data-funcion');
-                    const coment_id = e.target.getAttribute('data-comentario-id');
-                    @this.call(funcion, coment_id);
-                }
-            });
+                            $('.modal').modal('show');
+                        }
+                    });
 
-            window.livewire.on('comentario-almacenado', function(){
-                $('.modal').modal('hide');
-            });
-        });
-        $('.modal').on('show.bs.modal', function (event) {
+                    document.querySelector('.modal').addEventListener('click', function(e) {
+                        if (e.target.getAttribute('id') == 'btn_guardar') {
+                            @this.set('comentarios', CKEDITOR.instances.comentario.getData());
+                            const funcion = e.target.getAttribute('data-funcion');
+                            const cumple_id = e.target.getAttribute('data-cumple-id');
+                            @this.call(funcion, cumple_id);
+                        }
+                        if (e.target.getAttribute('id') == 'btn_actualizar') {
+                            @this.set('comentarios_update', CKEDITOR.instances.comentario.getData());
+                            const funcion = e.target.getAttribute('data-funcion');
+                            const coment_id = e.target.getAttribute('data-comentario-id');
+                            @this.call(funcion, coment_id);
+                        }
+                    });
 
-            console.log(event.target);
-
-            var users = [{
-                  id: 1,
-                  avatar: 'm_1',
-                  fullname: 'Charles Flores',
-                  username: 'cflores'
-                },
-                {
-                  id: 2,
-                  avatar: 'm_2',
-                  fullname: 'Gerald Jackson',
-                  username: 'gjackson'
-                },
-                {
-                  id: 3,
-                  avatar: 'm_3',
-                  fullname: 'Wayne Reed',
-                  username: 'wreed'
-                },
-                {
-                  id: 4,
-                  avatar: 'm_4',
-                  fullname: 'Louis Garcia',
-                  username: 'lgarcia'
-                },
-                {
-                  id: 5,
-                  avatar: 'm_5',
-                  fullname: 'Roy Wilson',
-                  username: 'rwilson'
-                },
-                {
-                  id: 6,
-                  avatar: 'm_6',
-                  fullname: 'Matthew Nelson',
-                  username: 'mnelson'
-                },
-                {
-                  id: 7,
-                  avatar: 'm_7',
-                  fullname: 'Randy Williams',
-                  username: 'rwilliams'
-                },
-                {
-                  id: 8,
-                  avatar: 'm_8',
-                  fullname: 'Albert Johnson',
-                  username: 'ajohnson'
-                },
-                {
-                  id: 9,
-                  avatar: 'm_9',
-                  fullname: 'Steve Roberts',
-                  username: 'sroberts'
-                },
-                {
-                  id: 10,
-                  avatar: 'm_10',
-                  fullname: 'Kevin Evans',
-                  username: 'kevans'
-                },
-
-                {
-                  id: 11,
-                  avatar: 'w_1',
-                  fullname: 'Mildred Wilson',
-                  username: 'mwilson'
-                },
-                {
-                  id: 12,
-                  avatar: 'w_2',
-                  fullname: 'Melissa Nelson',
-                  username: 'mnelson'
-                },
-                {
-                  id: 13,
-                  avatar: 'w_3',
-                  fullname: 'Kathleen Allen',
-                  username: 'kallen'
-                },
-                {
-                  id: 14,
-                  avatar: 'w_4',
-                  fullname: 'Mary Young',
-                  username: 'myoung'
-                },
-                {
-                  id: 15,
-                  avatar: 'w_5',
-                  fullname: 'Ashley Rogers',
-                  username: 'arogers'
-                },
-                {
-                  id: 16,
-                  avatar: 'w_6',
-                  fullname: 'Debra Griffin',
-                  username: 'dgriffin'
-                },
-                {
-                  id: 17,
-                  avatar: 'w_7',
-                  fullname: 'Denise Williams',
-                  username: 'dwilliams'
-                },
-                {
-                  id: 18,
-                  avatar: 'w_8',
-                  fullname: 'Amy James',
-                  username: 'ajames'
-                },
-                {
-                  id: 19,
-                  avatar: 'w_9',
-                  fullname: 'Ruby Anderson',
-                  username: 'randerson'
-                },
-                {
-                  id: 20,
-                  avatar: 'w_10',
-                  fullname: 'Wanda Lee',
-                  username: 'wlee'
-                }
-              ],
-              tags = [
-                'american',
-                'asian',
-                'baking',
-                'breakfast',
-                'cake',
-                'caribbean',
-                'chinese',
-                'chocolate',
-                'cooking',
-                'dairy',
-                'delicious',
-                'delish',
-                'dessert',
-                'desserts',
-                'dinner',
-                'eat',
-                'eating',
-                'eggs',
-                'fish',
-                'food',
-                'foodgasm',
-                'foodie',
-                'foodporn',
-                'foods',
-                'french',
-                'fresh',
-                'fusion',
-                'glutenfree',
-                'greek',
-                'grilling',
-                'halal',
-                'homemade',
-                'hot',
-                'hungry',
-                'icecream',
-                'indian',
-                'italian',
-                'japanese',
-                'keto',
-                'korean',
-                'lactosefree',
-                'lunch',
-                'meat',
-                'mediterranean',
-                'mexican',
-                'moroccan',
-                'nom',
-                'nomnom',
-                'paleo',
-                'poultry',
-                'snack',
-                'spanish',
-                'sugarfree',
-                'sweet',
-                'sweettooth',
-                'tasty',
-                'thai',
-                'vegan',
-                'vegetarian',
-                'vietnamese',
-                'yum',
-                'yummy'
-              ];
-
-            CKEDITOR.replace('comentario', {
-              plugins: 'mentions,emoji,basicstyles,undo,link,wysiwygarea,toolbar, pastefromgdocs, pastefromlibreoffice, pastefromword',
-              contentsCss: [
-                'http://cdn.ckeditor.com/4.17.1/full-all/contents.css',
-                'https://ckeditor.com/docs/ckeditor4/4.17.1/examples/assets/mentions/contents.css'
-              ],
-              height: 150,
-              toolbar: [{
-                  name: 'document',
-                  items: ['Undo', 'Redo']
-                },
-                {
-                  name: 'basicstyles',
-                  items: ['Bold', 'Italic', 'Strike']
-                },
-                {
-                  name: 'links',
-                  items: ['EmojiPanel', 'Link', 'Unlink']
-                }
-              ],
-              mentions: [{
-                  feed: dataFeed,
-                  itemTemplate: '<li data-id="{id}">' +
-                    '<img class="photo" src="assets/mentions/img/{avatar}.jpg" />' +
-                    '<strong class="username">{username}</strong>' +
-                    '<span class="fullname">{fullname}</span>' +
-                    '</li>',
-                  outputTemplate: '<a href="mailto:{username}@example.com">@{username}</a><span>&nbsp;</span>',
-                  minChars: 0
-                },
-                {
-                  feed: tags,
-                  marker: '#',
-                  itemTemplate: '<li data-id="{id}"><strong>{name}</strong></li>',
-                  outputTemplate: '<a href="https://example.com/social?tag={name}">{name}</a><span>&nbsp;</span>',
-                  minChars: 1
-                }
-              ],
-              removeButtons: 'PasteFromWord'
-            });
-
-            function dataFeed(opts, callback) {
-              var matchProperty = 'username',
-                data = users.filter(function(item) {
-                  return item[matchProperty].indexOf(opts.query.toLowerCase()) == 0;
+                    window.livewire.on('comentario-almacenado', function() {
+                        $('.modal').modal('hide');
+                    });
                 });
+                $('.modal').on('show.bs.modal', function(event) {
 
-              data = data.sort(function(a, b) {
-                return a[matchProperty].localeCompare(b[matchProperty], undefined, {
-                  sensitivity: 'accent'
+                    console.log(event.target);
+
+                    var users = [{
+                                id: 1,
+                                avatar: 'm_1',
+                                fullname: 'Charles Flores',
+                                username: 'cflores'
+                            },
+                            {
+                                id: 2,
+                                avatar: 'm_2',
+                                fullname: 'Gerald Jackson',
+                                username: 'gjackson'
+                            },
+                            {
+                                id: 3,
+                                avatar: 'm_3',
+                                fullname: 'Wayne Reed',
+                                username: 'wreed'
+                            },
+                            {
+                                id: 4,
+                                avatar: 'm_4',
+                                fullname: 'Louis Garcia',
+                                username: 'lgarcia'
+                            },
+                            {
+                                id: 5,
+                                avatar: 'm_5',
+                                fullname: 'Roy Wilson',
+                                username: 'rwilson'
+                            },
+                            {
+                                id: 6,
+                                avatar: 'm_6',
+                                fullname: 'Matthew Nelson',
+                                username: 'mnelson'
+                            },
+                            {
+                                id: 7,
+                                avatar: 'm_7',
+                                fullname: 'Randy Williams',
+                                username: 'rwilliams'
+                            },
+                            {
+                                id: 8,
+                                avatar: 'm_8',
+                                fullname: 'Albert Johnson',
+                                username: 'ajohnson'
+                            },
+                            {
+                                id: 9,
+                                avatar: 'm_9',
+                                fullname: 'Steve Roberts',
+                                username: 'sroberts'
+                            },
+                            {
+                                id: 10,
+                                avatar: 'm_10',
+                                fullname: 'Kevin Evans',
+                                username: 'kevans'
+                            },
+
+                            {
+                                id: 11,
+                                avatar: 'w_1',
+                                fullname: 'Mildred Wilson',
+                                username: 'mwilson'
+                            },
+                            {
+                                id: 12,
+                                avatar: 'w_2',
+                                fullname: 'Melissa Nelson',
+                                username: 'mnelson'
+                            },
+                            {
+                                id: 13,
+                                avatar: 'w_3',
+                                fullname: 'Kathleen Allen',
+                                username: 'kallen'
+                            },
+                            {
+                                id: 14,
+                                avatar: 'w_4',
+                                fullname: 'Mary Young',
+                                username: 'myoung'
+                            },
+                            {
+                                id: 15,
+                                avatar: 'w_5',
+                                fullname: 'Ashley Rogers',
+                                username: 'arogers'
+                            },
+                            {
+                                id: 16,
+                                avatar: 'w_6',
+                                fullname: 'Debra Griffin',
+                                username: 'dgriffin'
+                            },
+                            {
+                                id: 17,
+                                avatar: 'w_7',
+                                fullname: 'Denise Williams',
+                                username: 'dwilliams'
+                            },
+                            {
+                                id: 18,
+                                avatar: 'w_8',
+                                fullname: 'Amy James',
+                                username: 'ajames'
+                            },
+                            {
+                                id: 19,
+                                avatar: 'w_9',
+                                fullname: 'Ruby Anderson',
+                                username: 'randerson'
+                            },
+                            {
+                                id: 20,
+                                avatar: 'w_10',
+                                fullname: 'Wanda Lee',
+                                username: 'wlee'
+                            }
+                        ],
+                        tags = [
+                            'american',
+                            'asian',
+                            'baking',
+                            'breakfast',
+                            'cake',
+                            'caribbean',
+                            'chinese',
+                            'chocolate',
+                            'cooking',
+                            'dairy',
+                            'delicious',
+                            'delish',
+                            'dessert',
+                            'desserts',
+                            'dinner',
+                            'eat',
+                            'eating',
+                            'eggs',
+                            'fish',
+                            'food',
+                            'foodgasm',
+                            'foodie',
+                            'foodporn',
+                            'foods',
+                            'french',
+                            'fresh',
+                            'fusion',
+                            'glutenfree',
+                            'greek',
+                            'grilling',
+                            'halal',
+                            'homemade',
+                            'hot',
+                            'hungry',
+                            'icecream',
+                            'indian',
+                            'italian',
+                            'japanese',
+                            'keto',
+                            'korean',
+                            'lactosefree',
+                            'lunch',
+                            'meat',
+                            'mediterranean',
+                            'mexican',
+                            'moroccan',
+                            'nom',
+                            'nomnom',
+                            'paleo',
+                            'poultry',
+                            'snack',
+                            'spanish',
+                            'sugarfree',
+                            'sweet',
+                            'sweettooth',
+                            'tasty',
+                            'thai',
+                            'vegan',
+                            'vegetarian',
+                            'vietnamese',
+                            'yum',
+                            'yummy'
+                        ];
+
+                    CKEDITOR.replace('comentario', {
+                        plugins: 'mentions,emoji,basicstyles,undo,link,wysiwygarea,toolbar, pastefromgdocs, pastefromlibreoffice, pastefromword',
+                        contentsCss: [
+                            'http://cdn.ckeditor.com/4.17.1/full-all/contents.css',
+                            'https://ckeditor.com/docs/ckeditor4/4.17.1/examples/assets/mentions/contents.css'
+                        ],
+                        height: 150,
+                        toolbar: [{
+                                name: 'document',
+                                items: ['Undo', 'Redo']
+                            },
+                            {
+                                name: 'basicstyles',
+                                items: ['Bold', 'Italic', 'Strike']
+                            },
+                            {
+                                name: 'links',
+                                items: ['EmojiPanel', 'Link', 'Unlink']
+                            }
+                        ],
+                        mentions: [{
+                                feed: dataFeed,
+                                itemTemplate: '<li data-id="{id}">' +
+                                    '<img class="photo" src="assets/mentions/img/{avatar}.jpg" />' +
+                                    '<strong class="username">{username}</strong>' +
+                                    '<span class="fullname">{fullname}</span>' +
+                                    '</li>',
+                                outputTemplate: '<a href="mailto:{username}@example.com">@{username}</a><span>&nbsp;</span>',
+                                minChars: 0
+                            },
+                            {
+                                feed: tags,
+                                marker: '#',
+                                itemTemplate: '<li data-id="{id}"><strong>{name}</strong></li>',
+                                outputTemplate: '<a href="https://example.com/social?tag={name}">{name}</a><span>&nbsp;</span>',
+                                minChars: 1
+                            }
+                        ],
+                        removeButtons: 'PasteFromWord'
+                    });
+
+                    function dataFeed(opts, callback) {
+                        var matchProperty = 'username',
+                            data = users.filter(function(item) {
+                                return item[matchProperty].indexOf(opts.query.toLowerCase()) == 0;
+                            });
+
+                        data = data.sort(function(a, b) {
+                            return a[matchProperty].localeCompare(b[matchProperty], undefined, {
+                                sensitivity: 'accent'
+                            });
+                        });
+
+                        callback(data);
+                    }
+
                 });
-              });
-
-              callback(data);
-            }
-
-        });
-
-  </script>
-
-@endsection
-</div>
+            </script>
+        @endsection
+    </div>

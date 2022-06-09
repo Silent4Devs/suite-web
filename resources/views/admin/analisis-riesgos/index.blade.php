@@ -2,7 +2,7 @@
 @section('content')
     {{ Breadcrumbs::render('admin.analisis-riesgos.index') }}
 
-    @can('matriz_riesgo_create')
+  
         <style>
             th {
                 background-color: #345183;
@@ -73,12 +73,19 @@
                 text-align: center !important;
 
             }
+            @media print{
+                #tabla_blanca_imprimir_global{
+                    transform: scale(1.8);
+                    transform-origin: 0% 0%;
+                }
+            }
 
         </style>
 
         <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo </h5>
         <div class="mt-5 card">
             @include('partials.flashMessages')
+            @can('matriz_de_riesgo_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modalmatrizriesgo', [
@@ -87,6 +94,7 @@
                     ])
                 </div>
             </div>
+            @endcan
 
             {{-- <div style="margin-bottom:10px; margin-left:12px;" class="row">
                   <div class="col-lg-12">
@@ -95,11 +103,10 @@
                       </a>
                   </div>
               </div> --}}
-        @endcan
-
+      
 
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable datatable-AnalisisRiesgo tblCSV">
+            <table class="table table-bordered w-100 datatable datatable-AnalisisRiesgo tblCSV" id="datatable-AnalisisRiesgo">
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width: 40px;">
@@ -123,10 +130,10 @@
                         <th style="min-width: 100px;">
                             Estatus
                         </th>
-                        <th style="min-width: 50px;">
+                        <th style="min-width: 50px;" class="print-none">
                             Matriz
                         </th>
-                        <th style="min-width: 40px;">
+                        <th style="min-width: 40px;" class="print-none">
                             Opciones
                         </th>
                     </tr>
@@ -163,27 +170,44 @@
                     }
                 },
                 {
-                    extend: 'pdfHtml5',
-                    title: `Anlisis de Riesgo ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'landscape',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        doc.styles.tableHeader.fontSize = 7.5;
-                        doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
                     extend: 'print',
-                    title: `Analisis de Riesgo ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    // set custom header when print
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+                        let empleado = @json(auth()->user()->empleado->name);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                                <div class="row">
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                    </div>
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        <p>${empresa_actual}</p>
+                                        <strong style="color:#345183">Matriz de Riesgos</strong>
+                                    </div>
+                                    <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                        Fecha: ${jsDate}
+                                    </div>
+                                </div>
+                            `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
@@ -209,6 +233,7 @@
                 }
 
             ];
+            @can('matriz_de_riesgo_eliminar')
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
@@ -245,7 +270,7 @@
                     }
                 }
             }
-            //dtButtons.push(deleteButton)
+           @endcan
 
 
             let btnAgregar = {
@@ -281,7 +306,7 @@
                 }
             };
 
-            @can('analisis_de_riesgos_matriz_riesgo_create')
+            @can('amenazas_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
 
@@ -381,7 +406,7 @@
                             case 'Seguridad de la información':
                             return `
                             <div class="text-center w-100" style="text-align:center">
-                                @can('analisis_de_riesgos_matriz_riesgo_config')
+                                @can('matriz_de_riesgo_vinculo')
                                     <a href="matriz-seguridad/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 @endcan
                             </div>
@@ -390,7 +415,7 @@
                             case 'Análisis de riesgo integral':
                             return `
                             <div class="text-center w-100" style="text-align:center">
-                                @can('analisis_de_riesgos_matriz_riesgo_config')
+                                @can('matriz_de_riesgo_vinculo')
                                     <a href="matriz-seguridad/sistema-gestion/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 @endcan
                             </div>
@@ -399,21 +424,27 @@
                             case 'OCTAVE':
                                 return `
                                 <div class="text-center w-100" style="text-align:center">
+                                    @can('matriz_de_riesgo_vinculo')
                                     <a href="procesos-octave/${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                                    @endcan
                                 </div>
                             `;
                             break;
                             case 'ISO 31000':
                             return `
                             <div class="text-center w-100" style="text-align:center">
+                                @can('matriz_de_riesgo_vinculo')
                                 <a href="matriz-seguridad/ISO31000/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                                @endcan
                             </div>
                             `;
                             break;
                             case 'NIST':
                             return `
                             <div class="text-center w-100" style="text-align:center">
+                                @can('matriz_de_riesgo_vinculo')
                                 <a href="matriz-seguridad/NIST/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                                @endcan
                             </div>
                             `;
                             default:
@@ -434,6 +465,19 @@
                 ]
             };
             let table = $('.datatable-AnalisisRiesgo').DataTable(dtOverrideGlobals);
+            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function(){
+                let titulo_tabla = `
+                    <h5>
+                        <strong>
+                            Timesheet:
+                        </strong>
+                        <font style="font-weight: lighter;">
+                            Matriz de Riesgos
+                        </font>
+                    </h5>
+                `;
+                imprimirTabla('datatable-AnalisisRiesgo', titulo_tabla);
+            });
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();

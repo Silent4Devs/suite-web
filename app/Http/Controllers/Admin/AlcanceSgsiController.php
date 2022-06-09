@@ -80,7 +80,7 @@ class AlcanceSgsiController extends Controller
         }
 
         $teams = Team::get();
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
 
         return view('admin.alcanceSgsis.index', compact('teams', 'empleados'));
     }
@@ -99,7 +99,7 @@ class AlcanceSgsiController extends Controller
     {
         $request->validate([
             'normas' => 'required|array',
-         ]);
+        ]);
 
         $normas = array_map(function ($value) {
             return intval($value);
@@ -118,7 +118,7 @@ class AlcanceSgsiController extends Controller
         $normas_seleccionadas = $alcanceSgsi->normas->pluck('id')->toArray();
 
         $normas = Norma::get();
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
 
         return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados', 'normas', 'normas_seleccionadas'));
     }
@@ -128,7 +128,7 @@ class AlcanceSgsiController extends Controller
         // dd($request->all());
         $request->validate([
             'normas' => 'required|array',
-         ]);
+        ]);
 
         $alcanceSgsi->update($request->all());
         $normas = array_map(function ($value) {

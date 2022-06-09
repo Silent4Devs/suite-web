@@ -29,7 +29,7 @@ class Quejas extends Model
 
     public function quejo()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_quejo_id', 'id')->with('area');
+        return $this->belongsTo(Empleado::class, 'empleado_quejo_id', 'id')->alta()->with('area');
     }
 
     public function evidencias_quejas()

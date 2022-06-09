@@ -75,7 +75,7 @@ class Minutasaltadireccion extends Model implements HasMedia
 
     public function responsable()
     {
-        return $this->belongsTo(Empleado::class, 'responsable_id', 'id');
+        return $this->belongsTo(Empleado::class, 'responsable_id', 'id')->alta();
     }
 
     // public function getFechareunionAttribute($value)
@@ -152,7 +152,7 @@ class Minutasaltadireccion extends Model implements HasMedia
 
     public function participantes()
     {
-        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->with('area');
+        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->alta()->with('area');
     }
 
     public function documentos()

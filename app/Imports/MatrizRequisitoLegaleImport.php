@@ -76,7 +76,7 @@ class MatrizRequisitoLegaleImport implements ToModel
 
     public function obtenerEmpleadoPorNombre($nombre)
     {
-        $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+        $empleado_bd = Empleado::alta()->select('id', 'name')->where('name', $nombre)->first();
 
         return $empleado_bd->id;
     }

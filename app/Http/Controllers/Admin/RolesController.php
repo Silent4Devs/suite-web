@@ -16,7 +16,7 @@ class RolesController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('roles_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Role::with(['permissions'])->orderBy('id')->get();
@@ -26,9 +26,9 @@ class RolesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'role_show';
-                $editGate = 'role_edit';
-                $deleteGate = 'role_delete';
+                $viewGate = 'roles_ver';
+                $editGate = 'roles_editar';
+                $deleteGate = 'roles_eliminar';
                 $crudRoutePart = 'roles';
 
                 return view('partials.datatablesActions', compact(
@@ -68,7 +68,7 @@ class RolesController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('role_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('roles_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $permissions = Permission::all();
         $role = Role::all();
@@ -87,6 +87,8 @@ class RolesController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('roles_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate([
             'nombre_rol' => 'required|string|min:3|max:255|unique:roles,title,NULL,id,deleted_at,NULL',
         ]);
@@ -107,7 +109,7 @@ class RolesController extends Controller
 
     public function edit(Role $role)
     {
-        abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('roles_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $permissions = Permission::all();
         $role->load('permissions');
 
@@ -116,6 +118,7 @@ class RolesController extends Controller
 
     public function update(Request $request, Role $role)
     {
+        abort_if(Gate::denies('roles_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre_rol' => "required|string|min:3|max:255|unique:roles,title,{$role->id},id,deleted_at,NULL",
         ]);
@@ -131,7 +134,7 @@ class RolesController extends Controller
 
     public function show(Role $role)
     {
-        abort_if(Gate::denies('role_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('roles_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $role->load('permissions');
 
         return view('admin.roles.show', compact('role'));
@@ -139,7 +142,7 @@ class RolesController extends Controller
 
     public function destroy(Role $role)
     {
-        abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('roles_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $role->delete();
 
         return back();
@@ -147,6 +150,7 @@ class RolesController extends Controller
 
     public function copiarRol(Role $role, Request $request)
     {
+        abort_if(Gate::denies('roles_copiar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre_rol' => 'required|string|min:3|max:255|unique:roles,title,NULL,id,deleted_at,NULL',
         ]);

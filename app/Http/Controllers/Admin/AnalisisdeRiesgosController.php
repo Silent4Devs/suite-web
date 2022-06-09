@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AnalisisDeRiesgo;
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\Organizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -15,18 +16,15 @@ use Yajra\DataTables\Facades\DataTables;
 class AnalisisdeRiesgosController extends Controller
 {
     public function menu()
-    {
+    {   
+        // abort_if(Gate::denies('menu_analisis_riesgo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.analisis-riesgos.menu-buttons');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function index(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_de_riesgo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             //Esta es el error , activo_id no lo encuentra, hay que modificar la relacion en el modelo de matrizriesgo
             $query = AnalisisDeRiesgo::orderByDesc('id')->get();
@@ -90,34 +88,33 @@ class AnalisisdeRiesgosController extends Controller
 
             return $table->make(true);
         }
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.analisis-riesgos.index');
+        return view('admin.analisis-riesgos.index', compact('empresa_actual', 'logo_actual'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function create()
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        abort_if(Gate::denies('matriz_de_riesgo_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleados = Empleado::alta()->get();
 
         //$tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.analisis-riesgos.create', compact('empleados'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_de_riesgo_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $analisis = AnalisisDeRiesgo::create($request->all());
         switch ($request->tipo) {
             case 'Seguridad de la información':
@@ -132,45 +129,29 @@ class AnalisisdeRiesgosController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function show(Request $request, $id)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_de_riesgo_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $analisis = AnalisisDeRiesgo::find($id);
 
         return view('admin.analisis-riesgos.show', compact('analisis'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function edit($id)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        abort_if(Gate::denies('matriz_de_riesgo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleados = Empleado::alta()->get();
         $analisis = AnalisisDeRiesgo::find($id);
 
         return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_de_riesgo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $analisis = AnalisisDeRiesgo::find($id);
 
         $analisis->update([
@@ -185,15 +166,10 @@ class AnalisisdeRiesgosController extends Controller
         return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Editado con éxito');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy($id)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_de_riesgo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $analisis = AnalisisDeRiesgo::find($id);
         $analisis->delete();
 
@@ -202,7 +178,7 @@ class AnalisisdeRiesgosController extends Controller
 
     public function getEmployeeData(Request $request)
     {
-        $empleados = Empleado::find($request->id);
+        $empleados = Empleado::alta()->find($request->id);
         $areas = Area::find($empleados->area_id);
 
         return response()->json(['puesto' => $empleados->puesto, 'area' => $areas->area]);

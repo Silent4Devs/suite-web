@@ -29,6 +29,6 @@ class ConfigurarSoporteModel extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_elaboro');
+        return $this->belongsTo(Empleado::class, 'id_elaboro')->alta();
     }
 }

@@ -18,7 +18,7 @@ class GrupoAreaController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_grupoarea_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_grupo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $grupos = Grupo::orderByDesc('id')->get();
 
@@ -30,13 +30,15 @@ class GrupoAreaController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_grupoarea_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_grupo_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.grupoarea.create');
     }
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('crear_grupo_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate(
             [
                 'nombre' => 'required|string',
@@ -65,7 +67,7 @@ class GrupoAreaController extends Controller
 
     public function edit(Grupo $grupoarea)
     {
-        abort_if(Gate::denies('configuracion_grupoarea_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_grupo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $grupoarea->load('team');
 
@@ -74,6 +76,8 @@ class GrupoAreaController extends Controller
 
     public function update(Request $request, Grupo $grupoarea)
     {
+        abort_if(Gate::denies('crear_grupo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate(
             [
                 'nombre' => 'required|string',
@@ -87,7 +91,7 @@ class GrupoAreaController extends Controller
 
     public function destroy(Grupo $grupoarea)
     {
-        abort_if(Gate::denies('configuracion_grupoarea_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_grupo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $deleted = $grupoarea->delete();
         if ($deleted) {

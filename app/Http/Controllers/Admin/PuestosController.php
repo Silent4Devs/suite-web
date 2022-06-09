@@ -41,9 +41,9 @@ class PuestosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'lista_de_perfiles_de_puesto_show';
-                $editGate = 'lista_de_perfiles_de_puesto_editar';
-                $deleteGate = 'lista_de_perfiles_de_puesto_eliminar';
+                $viewGate = 'puestos_ver';
+                $editGate = 'puestos_editar';
+                $deleteGate = 'puestos_eliminar';
                 $crudRoutePart = 'puestos';
 
                 return view('partials.datatablesActions', compact(
@@ -80,7 +80,7 @@ class PuestosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('lista_de_perfiles_de_puesto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('puestos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $json = '[{
                     "abr":"zh",
@@ -118,7 +118,7 @@ class PuestosController extends Controller
 
         $lenguajes = (json_decode($json));
         $areas = Area::get();
-        $reportas = Empleado::get();
+        $reportas = Empleado::alta()->get();
         $idis = Language::all();
         $competencias = Competencia::all();
         $responsabilidades = PuestoResponsabilidade::get();
@@ -126,7 +126,7 @@ class PuestosController extends Controller
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
         $puesto = Puesto::get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $perfiles = PerfilEmpleado::all();
         $puestos = Puesto::all();
         $externos = ContactosExternosPuestos::all();
@@ -137,8 +137,7 @@ class PuestosController extends Controller
 
     public function store(StorePuestoRequest $request)
     {
-        abort_if(Gate::denies('lista_de_perfiles_de_puesto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($request->all());
+        abort_if(Gate::denies('puestos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $val = $request->validate([
             'puesto' => 'unique:puestos,puesto',
         ]);
@@ -160,7 +159,7 @@ class PuestosController extends Controller
 
     public function edit(Puesto $puesto)
     {
-        abort_if(Gate::denies('lista_de_perfiles_de_puesto_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('puestos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $json = '[{
                     "abr":"zh",
                     "idioma":"Chinese"
@@ -197,7 +196,7 @@ class PuestosController extends Controller
         // $this->saveOrUpdateSchedule($request, $puesto);
         $lenguajes = (json_decode($json));
         $areas = Area::get();
-        $reportas = Empleado::get();
+        $reportas = Empleado::alta()->get();
         $puesto->load(['contactos' => function ($query) {
             $query->with(['puesto' => function ($query) {
                 $query->with('area');
@@ -213,7 +212,7 @@ class PuestosController extends Controller
         $certificados = PuestosCertificado::get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $language = PuestoIdiomaPorcentajePivot::get();
         $puestos = Puesto::get();
         $externos = ContactosExternosPuestos::all();
@@ -223,8 +222,7 @@ class PuestosController extends Controller
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)
     {
-        abort_if(Gate::denies('lista_de_perfiles_de_puesto_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($request->all());
+        abort_if(Gate::denies('puestos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $puesto->update($request->all());
 
         // $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
@@ -242,7 +240,7 @@ class PuestosController extends Controller
 
     public function show(Puesto $puesto)
     {
-        abort_if(Gate::denies('puesto_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('puestos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $puesto->load('team');
         // $empleados = Empleado::with('area')->get();
@@ -253,7 +251,7 @@ class PuestosController extends Controller
         $idiomas = PuestoIdiomaPorcentajePivot::where('id_puesto', '=', $puesto->id)->get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $areas = Area::get();
 
         return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas'));
@@ -261,7 +259,7 @@ class PuestosController extends Controller
 
     public function destroy(Puesto $puesto)
     {
-        abort_if(Gate::denies('lista_de_perfiles_de_puesto_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('puestos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $puesto->delete();
 

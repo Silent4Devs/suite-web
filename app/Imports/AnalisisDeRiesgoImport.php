@@ -38,14 +38,14 @@ class AnalisisDeRiesgoImport implements ToModel
 
     public function obtenerEmpleadoPorNombre($nombre)
     {
-        $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+        $empleado_bd = Empleado::alta()->select('id', 'name')->where('name', $nombre)->first();
 
         return $empleado_bd->id;
     }
 
     public function obtenerEmpleadoPorNumero($numero)
     {
-        $empleado_bd = Empleado::select('id', 'name')->where('n_empleado', trim($numero))->first();
+        $empleado_bd = Empleado::alta()->select('id', 'name')->where('n_empleado', trim($numero))->first();
 
         return $empleado_bd->id;
     }

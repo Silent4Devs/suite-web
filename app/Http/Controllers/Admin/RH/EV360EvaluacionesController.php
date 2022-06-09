@@ -34,7 +34,7 @@ class EV360EvaluacionesController extends Controller
         abort_if(Gate::denies('evaluacion_360_seguimiento_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($this->obtenerCantidadMaximaDeObjetivos(20));
         $areas = Area::all();
-        $empleados = Empleado::all();
+        $empleados = Empleado::alta()->get();
 
         if ($request->ajax()) {
             $evaluaciones = Evaluacion::orderByDesc('id')->get();
@@ -50,7 +50,7 @@ class EV360EvaluacionesController extends Controller
         abort_if(Gate::denies('evaluacion_360_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion = Evaluacion::all();
         $areas = Area::all();
-        $empleados = Empleado::all();
+        $empleados = Empleado::alta()->get();
 
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.create', compact('evaluacion', 'areas', 'empleados'));
     }
@@ -75,10 +75,10 @@ class EV360EvaluacionesController extends Controller
             if ($evaluados_objetivo == 0) {
                 $evaluados_grupo_dinamico = intval($request->evaluados_grupo_dinamico);
                 if ($evaluados_grupo_dinamico == 0) {
-                    $evaluados = Empleado::pluck('id')->toArray();
+                    $evaluados = Empleado::alta()->pluck('id')->toArray();
                 } else {
                     $evaluados_area = intval($request->evaluados_areas);
-                    $evaluados = Empleado::where('area_id', $evaluados_area)->pluck('id')->toArray();
+                    $evaluados = Empleado::alta()->where('area_id', $evaluados_area)->pluck('id')->toArray();
                 }
             } else {
                 $evaluados = $request->evaluados_manual;
@@ -278,7 +278,7 @@ class EV360EvaluacionesController extends Controller
     public function contestarCuestionario($evaluacion, $evaluado, $evaluador)
     {
         $evaluacion = Evaluacion::find(intval($evaluacion));
-        $evaluado = Empleado::with(['puestoRelacionado' => function ($q) {
+        $evaluado = Empleado::alta()->with(['puestoRelacionado' => function ($q) {
             $q->with(['competencias' => function ($q) {
                 $q->with('competencia');
             }]);
@@ -1198,7 +1198,7 @@ class EV360EvaluacionesController extends Controller
         }
         $ev360ResumenTabla = new Ev360ResumenTabla();
         foreach ($evaluados as $evaluado) {
-            // $evaluado->load('area');
+            $evaluado->load('area', 'supervisorEv360');
             $lista_evaluados->push([
                 'evaluado' => $evaluado->name,
                 'puesto' => $evaluado->puesto,

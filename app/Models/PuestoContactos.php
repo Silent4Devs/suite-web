@@ -26,6 +26,6 @@ class PuestoContactos extends Model
 
     public function empleados()
     {
-        return $this->belongsTo(Empleado::class, 'id_contacto', 'id')->with('puesto', 'area');
+        return $this->belongsTo(Empleado::class, 'id_contacto', 'id')->alta()->with('puesto', 'area');
     }
 }

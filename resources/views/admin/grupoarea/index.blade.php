@@ -50,7 +50,7 @@
     </style>
     <h5 class="col-12 titulo_general_funcion">Grupos de Áreas</h5>
     <div class="mt-5 card">
-        @can('configuracion_grupoarea_create')
+        @can('crear_grupo_agregar')
 
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -173,7 +173,7 @@
 
             ];
 
-            @can('configuracion_grupoarea_create')
+            @can('crear_grupo_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar Grupo Area',
@@ -209,7 +209,7 @@
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan
-            @can('configuracion_grupoarea_delete')
+            @can('crear_grupo_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -272,11 +272,11 @@
                         name: 'Opciones',
                         render: function(data, type, row, meta) {
                             const opciones = `
-                            @can('configuracion_grupoarea_edit')
+                            @can('crear_grupo_editar')
                                 <a href="/admin/grupoarea/${data}/edit" class="btn btn-sm"><i class="fas fa-edit" title="Editar"></i></a>
                             @endcan
 
-                            @can('configuracion_grupoarea_delete')
+                            @can('crear_grupo_eliminar')
                                 <button onclick="Eliminar('/admin/grupoarea/${data}','${data}')" class="btn btn-sm text-danger"><i class="fas fa-trash"
                                         title="Eliminar"></i></button>
                             @endcan

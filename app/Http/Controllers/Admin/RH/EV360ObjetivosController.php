@@ -22,9 +22,15 @@ class EV360ObjetivosController extends Controller
         abort_if(Gate::denies('objetivos_estrategicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $empleados = Empleado::with(['objetivos', 'area', 'perfil'])->get();
-
-            return datatables()->of($empleados)->toJson();
+            $empleados = Empleado::alta()->with(['objetivos', 'area', 'perfil'])->get();
+            $isAdmin = in_array('Admin', auth()->user()->roles->pluck('title')->toArray());
+            if (auth()->user()->empleado->children->count() > 0 && !$isAdmin) {
+                return datatables()->of(auth()->user()->empleado->children)->toJson();
+            } elseif ($isAdmin) {
+                return datatables()->of($empleados)->toJson();
+            } else {
+                return datatables()->of($empleados)->toJson();
+            }
         }
 
         $areas = Area::select('id', 'area')->get();
@@ -62,7 +68,7 @@ class EV360ObjetivosController extends Controller
         if ($request->ajax()) {
         }
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados'));
     }
@@ -228,7 +234,7 @@ class EV360ObjetivosController extends Controller
         }])->find(intval($empleado));
         $objetivos_empleado = $empleado->objetivos;
         if (count($objetivos_empleado)) {
-            $empleados = Empleado::select('id', 'name', 'genero', 'foto')->get()->except($empleado->id);
+            $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get()->except($empleado->id);
 
             return response()->json(['empleados' => $empleados, 'hasObjetivos' => true, 'objetivos' => $objetivos_empleado]);
         } else {

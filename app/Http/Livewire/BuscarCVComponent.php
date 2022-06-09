@@ -47,7 +47,7 @@ class BuscarCVComponent extends Component
     {
         $this->empleado_id = '';
         $this->area_id = '';
-        $this->empleados = Empleado::select('id', 'area_id', 'name')->get();
+        $this->empleados = Empleado::alta()->select('id', 'area_id', 'name')->get();
         //$this->conteo = '';
         $this->callAlert('info', 'Los filtros se han restablecido', true, 'La información volvio a su estado original');
     }
@@ -56,11 +56,11 @@ class BuscarCVComponent extends Component
     {
         if ($value == '') {
             $this->area_id = null;
-            $this->empleados = Empleado::get();
+            $this->empleados = Empleado::alta()->get();
         } else {
             $this->area_id = $value;
             $this->empleado_id = null;
-            $this->empleados = Empleado::where('area_id', $this->area_id)->get();
+            $this->empleados = Empleado::alta()->where('area_id', $this->area_id)->get();
         }
         $this->emit('tagify');
     }
@@ -93,14 +93,14 @@ class BuscarCVComponent extends Component
     public function mount()
     {
         if (!$this->isPersonal) {
-            $this->empleados = Empleado::select('id', 'area_id', 'name')->get();
+            $this->empleados = Empleado::alta()->select('id', 'area_id', 'name')->get();
         }
     }
 
     public function render()
     {
         $this->lista_docs = ListaDocumentoEmpleado::get();
-        $empleadosCV = Empleado::with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
+        $empleadosCV = Empleado::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
             ->when($this->empleado_id, function ($q3) {
                 $q3->where('id', $this->empleado_id);
             })
@@ -180,7 +180,7 @@ class BuscarCVComponent extends Component
 
     public function mostrarCurriculum($empleadoID)
     {
-        $this->empleadoModel = Empleado::with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->find($empleadoID);
+        $this->empleadoModel = Empleado::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->find($empleadoID);
         $this->emit('tagify');
     }
 

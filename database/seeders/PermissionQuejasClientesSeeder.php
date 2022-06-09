@@ -35,6 +35,5 @@ class PermissionQuejasClientesSeeder extends Seeder
         ];
 
         Permission::insert($permissions);
-
     }
 }

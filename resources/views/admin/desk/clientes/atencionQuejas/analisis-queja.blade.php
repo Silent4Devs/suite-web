@@ -197,13 +197,13 @@
 
         <div class="form-group col-md-4">
             <label><i class="fas fa-briefcase iconos-crear"></i>Puesto<sup>*</sup></label>
-            <div class="form-control" id="atencion_puesto"></div>
+            <div class="form-control" id="atencion_puesto" readonly></div>
         </div>
 
 
         <div class="form-group col-sm-12 col-md-4 col-lg-4">
             <label><i class="fas fa-street-view iconos-crear"></i>Área<sup>*</sup></label>
-            <div class="form-control" id="atencion_area"></div>
+            <div class="form-control" id="atencion_area" readonly></div>
         </div>
     </div>
 
@@ -286,13 +286,13 @@
                     @endif
                     <span class="responsable_sgi_id_error text-danger errores"></span>
                 </div>
-                <div class="mt-2 form-group col-md-4">
+                <div class="mt-3 form-group col-md-4">
                     <label><i class="fas fa-briefcase iconos-crear"></i>Puesto<sup>*</sup></label>
-                    <div class="form-control" id="responsable_sgi_puesto"></div>
+                    <div class="form-control" id="responsable_sgi_puesto" readonly></div>
                 </div>
-                <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                <div class="mt-2 form-group col-sm-12 col-md-4 col-lg-4">
                     <label><i class="bi bi-geo mr-2 iconos-crear"></i>Área<sup>*</sup></label>
-                    <div class="form-control" id="responsable_sgi_area"></div>
+                    <div class="form-control" id="responsable_sgi_area"readonly></div>
                 </div>
             </div>
         </div>
@@ -307,23 +307,16 @@
     </div>
 </div>
 
-<script>
-    const responsable_atencion_id = document.querySelector('#responsable_atencion_queja_id');
-    responsable_atencion_id.addEventListener('change', (event) => {
-        let responsable_queja_id = event.target.value;
-        console.log(responsable_queja_id);
-    });
 
-</script>
 
 <script type="text/javascript">
     let id_quejas = @json($id_quejas);
     document.getElementById("atencion_queja_btn_correo").addEventListener("click", (event) => {
         event.preventDefault();
-        let responsable_queja_id = document.getElementById("responsable_atencion_queja_id").value;
-        sendEmail(responsable_queja_id,id_quejas);
+        let responsable_atencion_queja_id = document.getElementById("responsable_atencion_queja_id").value;
+        sendEmail(responsable_atencion_queja_id,id_quejas);
     });
-    function sendEmail(responsable_queja_id,id_quejas) {
+    function sendEmail(responsable_atencion_queja_id,id_quejas) {
         let url = "{{ route('admin.desk.quejas-clientes.correoResponsable') }}";
         Swal.fire({
             title: `¿Está seguro(a) de enviar el correo al responsable?`,
@@ -332,7 +325,6 @@
             cancelButtonText: 'Cancelar',
             showLoaderOnConfirm: true,
             preConfirm: (login) => {
-                console.log(login);
 
                 return fetch(url, {
                         method: 'POST',
@@ -343,7 +335,7 @@
                         },
                         body: JSON.stringify({
                             id: id_quejas,
-                            responsable_atencion_queja_id: responsable_queja_id,
+                            responsable_atencion_queja_id: responsable_atencion_queja_id,
                         })
                     })
                     .then(response => {

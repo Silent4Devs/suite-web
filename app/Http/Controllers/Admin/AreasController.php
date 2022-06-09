@@ -28,7 +28,7 @@ class AreasController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Area::orderByDesc('id')->get();
@@ -38,9 +38,9 @@ class AreasController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'configuracion_area_show';
-                $editGate = 'configuracion_area_edit';
-                $deleteGate = 'configuracion_area_delete';
+                $viewGate = 'crear_area_ver';
+                $editGate = 'crear_area_editar';
+                $deleteGate = 'crear_area_eliminar';
                 $crudRoutePart = 'areas';
 
                 return view('partials.datatablesActions', compact(
@@ -89,18 +89,19 @@ class AreasController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_area_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
 
         return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas', 'empleados'));
     }
 
     public function store(StoreAreaRequest $request)
     {
+        abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $validateReporta = 'nullable|exists:areas,id';
         if ($direccion_exists) {
@@ -140,18 +141,19 @@ class AreasController extends Controller
 
     public function edit(Area $area)
     {
-        abort_if(Gate::denies('configuracion_area_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
-        $reportas = Empleado::get();
+        $reportas = Empleado::alta()->get();
 
         return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area', 'reportas'));
     }
 
     public function update(Request $request, $id)
     {
+        abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $primer_nodo = Area::select('id', 'id_reporta')->whereNull('id_reporta')->first();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $validateReporta = 'nullable|exists:areas,id';
@@ -210,7 +212,7 @@ class AreasController extends Controller
 
     public function show(Area $area)
     {
-        abort_if(Gate::denies('configuracion_area_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $area->load('team', 'grupo');
 
@@ -219,7 +221,7 @@ class AreasController extends Controller
 
     public function destroy(Area $area)
     {
-        abort_if(Gate::denies('configuracion_area_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $area->delete();
 

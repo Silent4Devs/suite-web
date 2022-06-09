@@ -118,9 +118,9 @@ class AuditoriaInternaController extends Controller
 
         $clausulas = Clausula::all();
 
-        $auditorliders = Empleado::all();
+        $auditorliders = Empleado::alta()->get();
 
-        $equipoauditorias = Empleado::all();
+        $equipoauditorias = Empleado::alta()->get();
 
         return view('admin.auditoriaInternas.create', compact('clausulas', 'auditorliders', 'equipoauditorias'));
     }
@@ -129,7 +129,7 @@ class AuditoriaInternaController extends Controller
     {
         $request->validate([
 
-            'lider_id'=>'required|exists:empleados,id',
+            'lider_id' => 'required|exists:empleados,id',
         ]);
         // dd($request->all());
 
@@ -148,9 +148,9 @@ class AuditoriaInternaController extends Controller
 
         $clausulas = Clausula::all();
 
-        $auditorliders = Empleado::all();
+        $auditorliders = Empleado::alta()->get();
 
-        $equipoauditorias = Empleado::all();
+        $equipoauditorias = Empleado::alta()->get();
 
         return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'));
     }
@@ -159,7 +159,7 @@ class AuditoriaInternaController extends Controller
     {
         $request->validate([
 
-            'lider_id'=>'required|exists:empleados,id',
+            'lider_id' => 'required|exists:empleados,id',
         ]);
 
         $auditoriaInterna->update($request->all());

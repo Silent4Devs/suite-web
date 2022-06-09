@@ -21,7 +21,7 @@ class OrganizacionesController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('organizacione_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Organizacione::with(['team'])->select(sprintf('%s.*', (new Organizacione)->table));

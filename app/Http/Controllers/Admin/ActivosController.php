@@ -26,10 +26,10 @@ class ActivosController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_activo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('inventario_activos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Activo::with(['tipoactivo'=>function ($query) {
+            $query = Activo::with(['tipoactivo' => function ($query) {
                 $query->with('subcategoria_activos');
             }, 'dueno', 'empleado', 'ubicacion', 'team'])->select(sprintf('%s.*', (new Activo)->table))->orderByDesc('id');
             $table = Datatables::of($query);
@@ -38,9 +38,9 @@ class ActivosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'configuracion_activo_show';
-                $editGate = 'configuracion_activo_edit';
-                $deleteGate = 'configuracion_activo_delete';
+                $viewGate = 'inventario_activos_ver';
+                $editGate = 'inventario_activos_editar';
+                $deleteGate = 'inventario_activos_eliminar';
                 $crudRoutePart = 'activos';
 
                 return view('partials.datatablesActions', compact(
@@ -136,7 +136,7 @@ class ActivosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_activo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('inventario_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -146,7 +146,7 @@ class ActivosController extends Controller
 
         $ubicacions = Sede::all()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
         $procesos = Proceso::with('macroproceso')->get();
 
         $area = Area::get();
@@ -161,7 +161,7 @@ class ActivosController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+        abort_if(Gate::denies('inventario_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $data = [];
 
@@ -214,7 +214,7 @@ class ActivosController extends Controller
             //indicamos que queremos guardar un nuevo archivo en el disco local
             //    Storage::disk(('app\public\responsivasActivos'))->put($nombre,$file);
             $file->storeAs('public\responsivasActivos', $nombre);
-            $activo->update(['documento' =>$nombre]);
+            $activo->update(['documento' => $nombre]);
         }
 
         return redirect()->route('admin.activos.index')->with('success', 'Guardado con éxito');
@@ -222,8 +222,8 @@ class ActivosController extends Controller
 
     public function edit(Activo $activo)
     {
-        // dd($activo);
-        abort_if(Gate::denies('configuracion_activo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('inventario_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
 
         $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -233,7 +233,7 @@ class ActivosController extends Controller
 
         $ubicacions = Sede::all()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::with('area')->get();
+        $empleados = Empleado::alta()->with('area')->get();
 
         $procesos = Proceso::with('macroproceso')->get();
 
@@ -251,7 +251,8 @@ class ActivosController extends Controller
 
     public function update(UpdateActivoRequest $request, Activo $activo)
     {
-        // dd($request);
+        abort_if(Gate::denies('inventario_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $data = [];
         if ($request->hasfile('documentos_relacionados')) {
             foreach ($request->file('documentos_relacionados') as $file) {
@@ -292,7 +293,7 @@ class ActivosController extends Controller
 
     public function show(Activo $activo)
     {
-        abort_if(Gate::denies('configuracion_activo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('inventario_activos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activo->load('tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team', 'activoIncidentesDeSeguridads');
 
@@ -301,7 +302,7 @@ class ActivosController extends Controller
 
     public function destroy(Activo $activo)
     {
-        abort_if(Gate::denies('configuracion_activo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('inventario_activos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activo->delete();
 

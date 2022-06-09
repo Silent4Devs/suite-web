@@ -26,7 +26,7 @@ class DocumentosController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('documentos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_documentar_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documentos = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable', 'revisiones', 'proceso', 'macroproceso')->orderByDesc('id')->get();
 
         $macroprocesos = Macroproceso::pluck('nombre')->toArray();
@@ -38,10 +38,10 @@ class DocumentosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('documentos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_documentar_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroprocesos = Macroproceso::get();
         $procesos = Proceso::get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $documentoActual = new Documento;
 
         return view('admin.documentos.create', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual'));
@@ -49,6 +49,7 @@ class DocumentosController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('control_documentar_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $this->validateRequestStore($request);
 
@@ -170,10 +171,10 @@ class DocumentosController extends Controller
 
     public function edit(Documento $documento)
     {
-        abort_if(Gate::denies('documentos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_documentar_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroprocesos = Macroproceso::get();
         $procesos = Proceso::get();
-        $empleados = Empleado::get();
+        $empleados = Empleado::alta()->get();
         $documentoActual = $documento;
 
         return view('admin.documentos.edit', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual'));
@@ -181,6 +182,7 @@ class DocumentosController extends Controller
 
     public function update(Request $request, Documento $documento)
     {
+        abort_if(Gate::denies('control_documentar_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $this->validateRequestUpdate($request, $documento);
 
@@ -337,7 +339,7 @@ class DocumentosController extends Controller
 
     public function destroy(Request $request, Documento $documento)
     {
-        abort_if(Gate::denies('documentos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_documentar_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             if ($documento->tipo == 'proceso') {
                 // logica para eliminar el proceso vinculado al documento

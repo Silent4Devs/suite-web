@@ -610,8 +610,8 @@
                                         </div>
                                         <div class="opciones_doc">
                                             <p>Responsable:</p>
-                                            <img src="{{ asset('storage/empleados/imagenes/' . $documento->responsable->avatar) }}"
-                                                class="img_empleado" title="{{ $documento->responsable->name }}"><br />
+                                            <img src="{{ asset('storage/empleados/imagenes/')}}/{{$documento->responsable ? $documento->responsable->avatar : 'user.png' }}"
+                                                class="img_empleado" title="{{ $documento->responsable ? $documento->responsable->name : 'Sin dato'}}"><br />
                                             <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver
                                                 documento</a>
                                         </div>

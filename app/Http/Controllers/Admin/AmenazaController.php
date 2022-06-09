@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\CreateAmenazaRequest;
 use App\Http\Requests\UpdateAmenazaRequest;
 use App\Models\Amenaza;
+use App\Models\Organizacion;
 use App\Repositories\AmenazaRepository;
 use Flash;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class AmenazaController extends AppBaseController
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_amenazas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Amenaza::orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -67,8 +68,16 @@ class AmenazaController extends AppBaseController
 
             return $table->make(true);
         }
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.amenazas.index');
+        return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual'));
     }
 
     /**
@@ -78,9 +87,10 @@ class AmenazaController extends AppBaseController
      */
     public function create()
     {
-        abort_if(Gate::denies('analisis_de_riesgos_amenazas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $amenaza = new Amenaza();
 
-        return view('admin.amenazas.create');
+        return view('admin.amenazas.create', compact('amenaza'));
     }
 
     /**
@@ -92,7 +102,7 @@ class AmenazaController extends AppBaseController
      */
     public function store(CreateAmenazaRequest $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_amenazas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $input = $request->all();
 
         $amenaza = $this->amenazaRepository->create($input);
@@ -104,14 +114,14 @@ class AmenazaController extends AppBaseController
 
     public function show(Amenaza $amenaza)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_amenazas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.amenazas.show')->with('amenaza', $amenaza);
     }
 
     public function edit($id)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_amenazas_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $amenaza = $this->amenazaRepository->find($id);
 
         if (empty($amenaza)) {
@@ -125,7 +135,7 @@ class AmenazaController extends AppBaseController
 
     public function update($id, UpdateAmenazaRequest $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_amenazas_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $amenaza = $this->amenazaRepository->find($id);
 
         if (empty($amenaza)) {
@@ -150,7 +160,7 @@ class AmenazaController extends AppBaseController
      */
     public function destroy($id)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_amenazas_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('amenazas_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $amenaza = $this->amenazaRepository->find($id);
 
         if (empty($amenaza)) {

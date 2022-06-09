@@ -51,7 +51,7 @@ class IndicadoresSgsiComponent extends Component
 
     public function render()
     {
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $procesos = Proceso::get();
         $evaluaciones = EvaluacionIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->get();
 

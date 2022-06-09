@@ -18,9 +18,9 @@ class PoliticaSgsiImport implements ToModel
         return new PoliticaSgsi([
             'politicasgsi' => $row[0],
             'fecha_publicacion' => $row[1],
-            'fecha_entrada'=> $row[2],
-            'fecha_revision'=> $row[3],
-            'id_reviso_politica'=> $this->obtenerEmpleadoPorNombre($row[4]),
+            'fecha_entrada' => $row[2],
+            'fecha_revision' => $row[3],
+            'id_reviso_politica' => $this->obtenerEmpleadoPorNombre($row[4]),
         ]);
     }
 
@@ -37,7 +37,7 @@ class PoliticaSgsiImport implements ToModel
 
     public function obtenerEmpleadoPorNombre($nombre)
     {
-        $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+        $empleado_bd = Empleado::alta()->select('id', 'name')->where('name', $nombre)->first();
         if ($empleado_bd) {
             return $empleado_bd->id;
         }

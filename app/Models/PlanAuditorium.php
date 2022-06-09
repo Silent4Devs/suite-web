@@ -63,12 +63,12 @@ class PlanAuditorium extends Model
 
     public function auditados()
     {
-        return $this->belongsToMany(Empleado::class, 'plan_auditoria_empleados', 'plan_auditoria_id', 'empleado_id');
+        return $this->belongsToMany(Empleado::class, 'plan_auditoria_empleados', 'plan_auditoria_id', 'empleado_id')->alta();
     }
 
     public function equipo()
     {
-        return $this->belongsTo(Empleado::class, 'id_equipo_auditores', 'id');
+        return $this->belongsTo(Empleado::class, 'id_equipo_auditores', 'id')->alta();
     }
 
     public function team()

@@ -106,12 +106,12 @@ class MatrizRiesgosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $activos = SubcategoriaActivo::get();
         $amenazas = Amenaza::get();
 
@@ -123,7 +123,7 @@ class MatrizRiesgosController extends Controller
 
     public function store(StoreMatrizRiesgoRequest $request)
     {
-       
+        abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRiesgo = MatrizRiesgo::create($request->all());
 
         foreach ($request->controles_id as $item) {
@@ -144,6 +144,7 @@ class MatrizRiesgosController extends Controller
 
     public function edit(MatrizRiesgo $matrizRiesgo)
     {
+        abort_if(Gate::denies('iso_27001_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacions = Organizacion::all();
         $teams = Team::get();
         $activos = SubcategoriaActivo::get();
@@ -159,7 +160,7 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $vulnerabilidades = Vulnerabilidad::get();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
@@ -173,13 +174,13 @@ class MatrizRiesgosController extends Controller
     }
 
     public function update(UpdateMatrizRiesgoRequest $request, MatrizRiesgo $matrizRiesgo)
-    {  
+    {
+        abort_if(Gate::denies('iso_27001_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $calculo = new Mriesgos();
-      
+
         $matrizRiesgo->update($request->all());
         $matrizRiesgo->matriz_riesgos_controles_pivots()->sync($request->controles_id);
-        
-        
+
         if (isset($request->plan_accion)) {
             $matrizRiesgo->planes()->sync($request->plan_accion);
         }
@@ -189,7 +190,7 @@ class MatrizRiesgosController extends Controller
 
     public function show(MatrizRiesgo $matrizRiesgo)
     {
-        abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('iso_27001_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         /*if (!is_null($matrizRiesgo->activo_id)) {
             $matrizRiesgo->load('activo_id', 'controles');
         }*/
@@ -199,7 +200,7 @@ class MatrizRiesgosController extends Controller
 
     public function destroy(MatrizRiesgo $matrizRiesgo)
     {
-        abort_if(Gate::denies('matriz_riesgo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('iso_27001_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $matrizRiesgo->delete();
 
@@ -208,6 +209,7 @@ class MatrizRiesgosController extends Controller
 
     public function massDestroy(MassDestroyMatrizRiesgoRequest $request)
     {
+        abort_if(Gate::denies('iso_27001_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         MatrizRiesgo::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
@@ -215,7 +217,7 @@ class MatrizRiesgosController extends Controller
 
     public function SeguridadInfo(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_de_riesgo_vinculo'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots'])->where('id_analisis', '=', $request->id)->orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -270,14 +272,14 @@ class MatrizRiesgosController extends Controller
                 }
             });
             $table->editColumn('integridad', function ($row) {
-                if ($row->integridad  == 'on') {
+                if ($row->integridad == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
                 }
             });
             $table->editColumn('disponibilidad', function ($row) {
-                if ($row->disponibilidad  == 'on') {
+                if ($row->disponibilidad == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
@@ -302,21 +304,21 @@ class MatrizRiesgosController extends Controller
                 return $row->planes ? $row->planes : '';
             });
             $table->editColumn('confidencialidad_cid', function ($row) {
-                if ($row->confidencialidad_cid  == 'on') {
+                if ($row->confidencialidad_cid == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
                 }
             });
             $table->editColumn('integridad_cid', function ($row) {
-                if ($row->integridad_cid  == 'on') {
+                if ($row->integridad_cid == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
                 }
             });
             $table->editColumn('disponibilidad_cid', function ($row) {
-                if ($row->disponibilidad_cid  == 'on') {
+                if ($row->disponibilidad_cid == 'on') {
                     return 'Sí' ? 'Sí' : '';
                 } else {
                     return 'No' ? 'No' : '';
@@ -353,8 +355,16 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.matrizRiesgos.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
+        return view('admin.matrizRiesgos.index', compact('empresa_actual', 'logo_actual', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
 
     public function MapaCalor(Request $request)
@@ -418,7 +428,7 @@ class MatrizRiesgosController extends Controller
 
     public function SistemaGestion(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_de_riesgo_vinculo'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizacions = Organizacion::all();
         $teams = Team::get();
@@ -430,13 +440,21 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgosSistemaGestion::count();
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.matrizSistemaGestion.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
+        return view('admin.matrizSistemaGestion.index', compact('empresa_actual', 'logo_actual', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
 
     public function SistemaGestionData(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_de_riesgo_vinculo'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizRiesgosSistemaGestion::with(['controles', 'matriz_riesgos_controles_pivots'])->where('id_analisis', '=', $request->id)->get();
             $table = Datatables::of($query);
@@ -751,12 +769,12 @@ class MatrizRiesgosController extends Controller
 
     public function createSistemaGestion()
     {
-        abort_if(Gate::denies('matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_de_riesgo_integral_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRiesgo = new MatrizRiesgosSistemaGestion();
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $activos = SubcategoriaActivo::get();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
@@ -767,6 +785,7 @@ class MatrizRiesgosController extends Controller
 
     public function storeSistemaGestion(Request $request)
     {
+        abort_if(Gate::denies('analisis_de_riesgo_integral_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'controles_id' => 'required',
         ]);
@@ -786,6 +805,7 @@ class MatrizRiesgosController extends Controller
 
     public function editSistemaGestion(Request $request, $id)
     {
+        abort_if(Gate::denies('analisis_de_riesgo_integral_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRiesgo = MatrizRiesgosSistemaGestion::with('matriz_riesgos_controles_pivots')->find($id);
         $organizacions = Organizacion::all();
         $teams = Team::get();
@@ -803,7 +823,7 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $vulnerabilidades = Vulnerabilidad::get();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
@@ -818,6 +838,7 @@ class MatrizRiesgosController extends Controller
 
     public function updateSistemaGestion(Request $request, $matrizRiesgo)
     {
+        abort_if(Gate::denies('analisis_de_riesgo_integral_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRiesgo = MatrizRiesgosSistemaGestion::with('matriz_riesgos_controles_pivots')->find($matrizRiesgo);
         $calculo = new Mriesgos();
         $res = $calculo->CalculoD($request);
@@ -835,7 +856,7 @@ class MatrizRiesgosController extends Controller
 
     public function destroySistemaGestion($id)
     {
-        abort_if(Gate::denies('matriz_riesgo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_de_riesgo_integral_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRiesgo = MatrizRiesgosSistemaGestion::find($id);
         $matrizRiesgo->delete();
 
@@ -954,8 +975,8 @@ class MatrizRiesgosController extends Controller
         // $responsables = Empleado::get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
-        $duenos = Empleado::get();
-        $custodios = Empleado::get();
+        $duenos = Empleado::alta()->get();
+        $custodios = Empleado::alta()->get();
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $activosoctave = MatrizOctave::get();
@@ -973,8 +994,8 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
-        $duenos = Empleado::get();
-        $custodios = Empleado::get();
+        $duenos = Empleado::alta()->get();
+        $custodios = Empleado::alta()->get();
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
         $activosoctave = MatrizOctave::get();
@@ -1093,7 +1114,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
 
@@ -1109,7 +1130,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
@@ -1230,7 +1251,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
         $matrizNist = new MatrizNist();
@@ -1245,7 +1266,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $responsables = Empleado::alta()->get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
         $matrizNist = MatrizNist::find($id);

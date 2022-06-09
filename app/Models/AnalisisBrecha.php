@@ -58,7 +58,7 @@ class AnalisisBrecha extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_elaboro');
+        return $this->belongsTo(Empleado::class, 'id_elaboro')->alta();
     }
 
     public function gap_logro_tres()

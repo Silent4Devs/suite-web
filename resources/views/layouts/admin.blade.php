@@ -10,10 +10,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <title>{{ trans('panel.site_title') }}</title>
-
     @yield('css')
     <!-- Font Awesome -->
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -25,16 +23,8 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
-
-    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet"/>-->
-    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css"
-          rel="tylesheet"/>-->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
-    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"/>-->
-    <!--<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"/>-->
-    <!--<link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet"/>-->
-    <!--<link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet"/>-->
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
@@ -58,11 +48,28 @@
     <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('/img/logo_policromatico.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
-
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <style type="text/css">
+        .DTFC_LeftBodyWrapper {
+            top: -13px !important;
+        }
+
+        /* .DTFC_RightBodyWrapper {
+            top: -13px !important;
+        } */
+
+        .DTFC_LeftHeadWrapper table thead tr th {
+            background: #788bac !important;
+        }
+
+        .DTFC_RightHeadWrapper table thead tr th {
+            background: #788bac !important;
+        }
+
         .material-modulos {
             font-size: 50px;
             margin-bottom: 3px;
@@ -112,22 +119,6 @@
             border-collapse: collapse !important;
         }
 
-        /*body::before {
-            content: "";
-            position: fixed;
-            background: url({{ asset('img/auth-bg2.jpg') }});
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            z-index: -1;
-            filter: grayscale(100%) brightness(230%);
-            opacity: 0.2;
-        }*/
         .btn-read {
             display: inline-block;
             cursor: pointer;
@@ -360,7 +351,6 @@
             font-weight: normal;
             border: none !important;
         }
-
     </style>
     {{-- menu tabs --}}
     <style type="text/css">
@@ -459,7 +449,6 @@
         .scroll_estilo::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.5);
         }
-
     </style>
     {{-- Estilos Select 2 --}}
     <style>
@@ -999,7 +988,6 @@
         .table.table-striped tr {
             background-color: white !important;
         }
-
     </style>
 
     @yield('styles')
@@ -1120,12 +1108,17 @@
                             aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
                                 @if (auth()->user()->empleado)
-                                    <span class="mr-2" style="font-weight: bold;">
-                                        {!! auth()->user()->empleado->saludo !!}
-                                    </span>
-                                    <img class="img_empleado" style=""
+                                    <img class="img_empleado mr-2" style=""
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
                                         alt="{{ auth()->user()->empleado->name }}">
+                                    <div>
+                                        <span class="mr-2" style="font-weight: bold;">
+                                            {{ auth()->user()->empleado ? explode(' ', auth()->user()->empleado->name)[0] : '' }}
+                                        </span>
+                                        <p class="m-0" style="font-size: 8px">
+                                            {{ auth()->user()->empleado ? Str::limit(auth()->user()->empleado->puesto, 30, '...') : '' }}
+                                        </p>
+                                    </div>
                                 @else
                                     <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
                                 @endif
@@ -1252,13 +1245,17 @@
             .table th {
                 background-color: #788BAC !important;
             }
-            #tabla_blanca_imprimir_global thead tr, #tabla_blanca_imprimir_global thead tr th, #tabla_blanca_imprimir_global thead tr th div{
+
+            #tabla_blanca_imprimir_global thead tr,
+            #tabla_blanca_imprimir_global thead tr th,
+            #tabla_blanca_imprimir_global thead tr th div {
                 height: unset !important;
                 color: #fff !important;
                 padding-top: 10px;
             }
-            #tabla_blanca_imprimir_global thead tr:first-child th:last-child, 
-            #tabla_blanca_imprimir_global tbody tr td:last-child{
+
+            #tabla_blanca_imprimir_global thead tr:first-child th:last-child,
+            #tabla_blanca_imprimir_global tbody tr td:last-child {
                 display: none !important;
             }
         }
@@ -1277,17 +1274,17 @@
                         <img src="{{ asset($logotipo) }}" class="img_logo" style="height: 70px;">
                     </td>
                     <td style="width: 50%;">
-                        <h4><strong>{{ $organizacion->empresa ? $organizacion->empresa : 'Tabantaj'}}</strong></h4>
+                        <h4><strong>{{ $organizacion->empresa ? $organizacion->empresa : 'Tabantaj' }}</strong></h4>
                         <div id="titulo_tabla"></div>
                     </td>
-                    <td style="width: 25%;"class="encabezado_print_td_no_paginas">
+                    <td style="width: 25%;" class="encabezado_print_td_no_paginas">
                         Fecha: {{ $hoy_format_global }} <br>
                     </td>
                 </tr>
             </table>
 
             <table class="table mt-3 w-100" id="tabla_blanca_imprimir_global">
-                
+
             </table>
         </div>
     </div>
@@ -1304,7 +1301,7 @@
             document.querySelector('#contenido_body_general_wrapper').classList.remove('vista_print');
         }
 
-        function imprimirTabla(elemento, html=`
+        function imprimirTabla(elemento, html = `
                     <h5>
                         <strong>
                             Registros
@@ -1394,7 +1391,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 
-
+    <link href="https://cdnout.com/flatpickr/themes/material_blue.css" rel="stylesheet" media="all">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
@@ -1510,10 +1507,10 @@
                     searchable: false,
                     targets: -1
                 }],
-                select: {
-                    style: 'multi+shift',
-                    selector: 'td:first-child'
-                },
+                // select: {
+                //     style: 'multi+shift',
+                //     selector: 'td:first-child'
+                // },
                 order: [],
                 scrollX: true,
                 pageLength: 5,
@@ -1523,7 +1520,7 @@
                 ],
                 //dom: 'lBfrtip<"actions">',
                 dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 p-0'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 buttons: [{
                         extend: 'selectAll',
