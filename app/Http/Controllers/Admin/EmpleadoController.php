@@ -61,20 +61,20 @@ class EmpleadoController extends Controller
      */
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // if ($request->ajax()) {
-        //     $query = Empleado::orderByDesc('id')->alta()->get();
-        //     $table = DataTables::of($query);
+        abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if ($request->ajax()) {
+            $query = Empleado::orderByDesc('id')->get();
+            $table = DataTables::of($query);
 
         //     $table->addColumn('placeholder', '&nbsp;');
         //     $table->addColumn('actions', '&nbsp;');
         //     $table->addIndexColumn();
 
-        //     $table->editColumn('actions', function ($row) {
-        //         $viewGate = 'configuracion_empleados_show';
-        //         $editGate = 'configuracion_empleados_edit';
-        //         $deleteGate = 'configuracion_empleados_delete';
-        //         $crudRoutePart = 'empleados';
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'bd_empleados_ver';
+                $editGate = 'bd_empleados_editar';
+                $deleteGate = 'bd_empleados_borrar_seleccionados';
+                $crudRoutePart = 'empleados';
 
         //         return view('partials.datatablesActions', compact(
         //             'viewGate',
@@ -972,6 +972,8 @@ class EmpleadoController extends Controller
      */
     public function show($id)
     {
+        abort_if(Gate::denies('bd_empleados_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($id));
         $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
         $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();

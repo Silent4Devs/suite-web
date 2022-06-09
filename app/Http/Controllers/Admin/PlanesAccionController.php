@@ -43,6 +43,8 @@ class PlanesAccionController extends Controller
      */
     public function create($modulo, $referencia = null)
     {
+        abort_if(Gate::denies('planes_de_accion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $planImplementacion = new PlanImplementacion();
 
         return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo', 'referencia'));
@@ -207,6 +209,8 @@ class PlanesAccionController extends Controller
      */
     public function edit($planImplementacion)
     {
+        abort_if(Gate::denies('planes_de_accion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $planImplementacion = PlanImplementacion::find($planImplementacion);
         $referencia = null;
 
@@ -252,6 +256,8 @@ class PlanesAccionController extends Controller
      */
     public function destroy(Request $request, $planImplementacion)
     {
+        abort_if(Gate::denies('planes_de_accion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->ajax()) {
             $planImplementacion = PlanImplementacion::find($planImplementacion);
             $eliminado = $planImplementacion->delete();

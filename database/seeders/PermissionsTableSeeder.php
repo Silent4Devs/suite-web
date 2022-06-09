@@ -2186,7 +2186,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'planes_accion_access',
             ],
         ];
-        
+
         $permissions1 = [
             // CONFIGURAR VISTAS
             [
@@ -2234,7 +2234,7 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso consiste en darle acceso al usuario para visualizar las evaluaciones que tiene que realizar',
             ],
             [
-                'title' => 'mi_perfil_mi_calendario_acceder ',
+                'title' => 'mi_perfil_mi_calendario_acceder',
                 'name' => 'Este permiso consiste en darle acceso al usuario para acceder a la pestaña "MI CALENDARIO" en el módulo de "MI PERFIL"',
             ],
             [
@@ -2254,27 +2254,27 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso consiste en darle acceso al usuario para acceder a la pestaña "REPORTES" en el módulo de "MI PERFIL"',
             ],
             [
-                'title' => 'mi_perifl_mis_reportes_realizar_reporte_de_incidente_de_seguridad',
+                'title' => 'mi_perfil_mis_reportes_realizar_reporte_de_incidente_de_seguridad',
                 'name' => 'Este permiso consiste en darle acceso al usuario para poder levantar un reporte de incidente de seguridad desde la pestaña "REPORTES" en el módulo de "MI PERFIL"',
             ],
             [
-                'title' => 'mi_perifl_mis_reportes_realizar_reporte_de_riesgo_identificado',
+                'title' => 'mi_perfil_mis_reportes_realizar_reporte_de_riesgo_identificado',
                 'name' => 'Este permiso consiste en darle acceso al usuario para poder levantar un reporte de riesgo identificado desde la pestaña "REPORTES" en el módulo de "MI PERFIL"',
             ],
             [
-                'title' => 'mi_perifl_mis_reportes_realizar_reporte_de_queja',
+                'title' => 'mi_perfil_mis_reportes_realizar_reporte_de_queja',
                 'name' => 'Este permiso consiste en darle acceso al usuario para poder levantar un reporte de queja desde la pestaña "REPORTES" en el módulo de "MI PERFIL"',
             ],
             [
-                'title' => 'mi_perifl_mis_reportes_realizar_reporte_de_denuncia',
+                'title' => 'mi_perfil_mis_reportes_realizar_reporte_de_denuncia',
                 'name' => 'Este permiso consiste en darle acceso al usuario para poder levantar un reporte de denuncia desde la pestaña "REPORTES" en el módulo de "MI PERFIL"',
             ],
             [
-                'title' => 'mi_perifl_mis_reportes_realizar_reporte_de_propuesta_de_mejora',
+                'title' => 'mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora',
                 'name' => 'Este permiso consiste en darle acceso al usuario para poder levantar un reporte propuesta de mejora desde la pestaña "REPORTES" en el módulo de "MI PERFIL"',
             ],
             [
-                'title' => 'mi_perifl_mis_reportes_realizar_reporte_de_sugerencia',
+                'title' => 'mi_perfil_mis_reportes_realizar_reporte_de_sugerencia',
                 'name' => 'Este permiso consiste en darle acceso al usuario para poder levantar un reporte de sugerencia desde la pestaña "REPORTES" en el módulo de "MI PERFIL"',
             ],
 
@@ -2393,6 +2393,16 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'planes_de_accion_visualizar_diagrama',
                 'name' => 'Este permiso permite al usuario realizar la acción de visualizar diagrama del plan de acción en el módulo de planes de acción',
             ],
+            //Centro de Atención
+            [
+                'title' => 'centro_de_atencion_acceder',
+                'name' => 'Este permiso permite acceder al menú "Centro de Atención"',
+            ],
+            //Capital Humano
+            [
+                'title' => 'capital_humano_acceder',
+                'name' => 'Este permiso permite al usuario acceder al módulo de "Capital Humano", permite visualizar las pestañas (Empleados, Calendrario y Comunicación)',
+            ],
             // Competencias
             [
                 'title' => 'competencias_acceder',
@@ -2413,10 +2423,6 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'competencias_show',
                 'name' => 'Este permiso permite al usuario acceder a vista detallada  de "Competecias"',
-            ],
-            [
-                'title' => 'competencias_agregar_conductas',
-                'name' => 'Pendiente',
             ],
 
             [
@@ -2440,6 +2446,10 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario eliminar "Perfiles de puesto"',
             ],
             [
+                'title' => 'lista_de_perfiles_de_puesto_show',
+                'name' => 'Este permiso permite al usuario acceder a vista detallada  del "Perfil por puesto"',
+            ],
+            [
                 'title' => 'lista_de_perfiles_de_puesto_asignar_competencias',
                 'name' => 'Este permiso permite al usuario ingresar al modulo "Asignar competencia al puesto" para enlazar competencias',
             ],
@@ -2456,31 +2466,31 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Consulta Perfiles de Puesto"',
             ],
             [
-                'title' => 'bd_empelados_acceder',
+                'title' => 'bd_empleados_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "BD EMPLEADOS"',
             ],
             [
-                'title' => 'bd_empelados_agregar',
+                'title' => 'bd_empleados_agregar',
                 'name' => 'Este permiso permite al usuario agregar registros',
             ],
             [
-                'title' => 'bd_empelados_ver',
+                'title' => 'bd_empleados_ver',
                 'name' => 'Este permiso permite al usuario ver detalles de un registro',
             ],
             [
-                'title' => 'bd_empelados_editar',
+                'title' => 'bd_empleados_editar',
                 'name' => 'Este permiso permite al usuario editar registros',
             ],
             [
-                'title' => 'bd_empelados_dar_de_baja',
+                'title' => 'bd_empleados_dar_de_baja',
                 'name' => 'Este permiso permite al usuario dar de baja registros',
             ],
             [
-                'title' => 'bd_empelados_configurar_vista_datos',
+                'title' => 'bd_empleados_configurar_vista_datos',
                 'name' => 'Este permiso permite redirije al usuario al modulo "vista datos"',
             ],
             [
-                'title' => 'bd_empelados_borrar_seleccionados',
+                'title' => 'bd_empleados_borrar_seleccionados',
                 'name' => 'Este permiso permite al usuario eliminar registros',
             ],
             [
@@ -2572,6 +2582,10 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario ver registros asociados',
             ],
             [
+                'title' => 'objetivos_estrategicos_editar',
+                'name' => 'Este permiso permite al usuario editar registros',
+            ],
+            [
                 'title' => 'perfiles_profesionales_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Perfiles Profesionales"',
             ],
@@ -2580,23 +2594,23 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Organigrama"',
             ],
             [
-                'title' => 'capacitaciones_categorias_acceder',
-                'name' => 'Este permiso permite al usuario acceder al módulo de "Categoria Capacitaciones"',
+                'title' => 'capacitaciones_acceder',
+                'name' => 'Este permiso permite al usuario acceder al módulo de "Capacitaciones"',
             ],
             [
-                'title' => 'capacitaciones_categorias_agregar',
+                'title' => 'capacitaciones_agregar',
                 'name' => 'Este permiso permite al usuario agregar registros',
             ],
             [
-                'title' => 'capacitaciones_categorias_editar',
+                'title' => 'capacitaciones_editar',
                 'name' => 'Este permiso permite al usuario editar registros',
             ],
             [
-                'title' => 'capacitaciones_categorias_eliminar',
+                'title' => 'capacitaciones_eliminar',
                 'name' => 'Este permiso permite al usuario eliminar registros',
             ],
             [
-                'title' => 'capacitaciones_categorias_ver',
+                'title' => 'capacitaciones_ver',
                 'name' => 'Este permiso permite al usuario ver  registros',
             ],
             [
@@ -2620,7 +2634,7 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario ver  detalles del registro',
             ],
             [
-                'title' => 'calendario_coorporativo_acceder',
+                'title' => 'calendario_corporativo_acceder',
                 'name' => ' Este permiso permite al usuario acceder al módulo de "Calendario coorporativo"',
             ],
             [
@@ -2788,6 +2802,10 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario ver  detalles del registro',
             ],
             [
+                'title' => 'analisis_de_riesgo_integral_acceder',
+                'name' => 'Este permiso permite al usuario acceder al menú izquierdo "Análisis de Riesgo"',
+            ],
+            [
                 'title' => 'analisis_de_riesgo_integral_agregar',
                 'name' => 'Este permiso permite al usuario agregar registros',
             ],
@@ -2802,6 +2820,11 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'analisis_de_riesgo_integral_ver',
                 'name' => 'Este permiso permite al usuario ver  detalles del registro',
+            ],
+            //Sistema de Gestión Integral
+            [
+                'title' => 'sistema_de_gestion_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión"',
             ],
             [
                 'title' => 'analisis_de_brechas_acceder',
@@ -3336,8 +3359,16 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Rejistro Mejora"',
             ],
             [
-                'title' => 'carga_masiva_datos',
+                'title' => 'permisos_de_administracion_acceder',
+                'name' => 'Este permiso permite al usuario visualizar en el menú izquierdo "Administración"',
+            ],
+            [
+                'title' => 'carga_masiva_datos_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Carga Masiva de Datos"',
+            ],
+            [
+                'title' => 'configurar_organizacion_acceder',
+                'name' => 'Este permiso permite al usuario acceder a la vista de menú izquierdo "Configurar Organización"',
             ],
             [
                 'title' => 'mi_organizacion_acceder',
@@ -3568,6 +3599,10 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Puestos"',
             ],
             [
+                'title' => 'configurar_capital_humano',
+                'name' => 'Este permiso permite al usuario acceder a la vista del menú izquierdo "Configurar Capital Humano"',
+            ],
+            [
                 'title' => 'puestos_agregar',
                 'name' => 'Este permiso permite al usuario agregar registros',
             ],
@@ -3648,8 +3683,12 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Mis datos"',
             ],
             [
-                'title' => 'configurar_vista_mi_organizacion_acceder',
+                'title' => 'configurar_vistas_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Mi Organizacion"',
+            ],
+            [
+                'title' => 'ajustes_usuario_acceder',
+                'name' => 'Este permiso le permite acceder a la vista del menú izquierdo "Ajustes de Usuario"',
             ],
             [
                 'title' => 'permisos_acceder',
@@ -3758,33 +3797,9 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'principal_soporte_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Soporte"',
-            ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            ],
 
         ];
-
 
         Permission::insert($permissions);
         Permission::insert($permissions1);

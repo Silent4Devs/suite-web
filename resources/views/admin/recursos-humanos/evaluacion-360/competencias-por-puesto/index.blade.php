@@ -206,10 +206,10 @@
                             `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/create`;
                         let botones =
                             `
-                            @can('capital_humano_competencias_por_puestos_create')
+                            @can('lista_de_perfiles_de_puesto_agregar')
                                 <a class="btn btn-sm btn-editar btn-primary" title="Agregar competencias" href="${urlBtnAsignarCompetencias}"><i
                                         class="mr-2 fas fa-user-tag"></i> Agregar</a>
-                            @endcan                           
+                            @endcan
                             `;
                         return botones;
                     },

@@ -15,7 +15,6 @@ class SubcategoriaActivoContoller extends Controller
 
     public function index(Request $request)
     {
-
         abort_if(Gate::denies('subcategoria_activos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
@@ -81,7 +80,6 @@ class SubcategoriaActivoContoller extends Controller
 
     public function edit($subcategoria)
     {
-
         abort_if(Gate::denies('subcategoria_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $subcategoria = SubcategoriaActivo::find($subcategoria);
         $categorias = Tipoactivo::get();

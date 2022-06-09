@@ -1,5 +1,5 @@
 <ul class="mt-4">
-    @can('agenda_access')
+    @can('calendario_corporativo_acceder')
         <li><a href="{{ route('admin.systemCalendar') }}">
                 <div>
                     <i class="bi bi-calendar"></i><br>
@@ -7,7 +7,7 @@
                 </div>
             </a></li>
     @endcan
-    @can('dias_festivos_access')
+    @can('dias_festivos_acceder')
         <li><a href="{{ route('admin.calendario-oficial.index') }}">
                 <div>
                     <i class="bi bi-calendar2-check"></i><br>
@@ -16,7 +16,7 @@
             </a>
         </li>
     @endcan
-    @can('eventos_organizacion_access')
+    @can('eventos_acceder')
         <li><a href="{{ route('admin.tabla-calendario.index') }}">
                 <div>
                     <i class="bi bi-calendar-event"></i><br>
@@ -24,7 +24,7 @@
                 </div>
             </a></li>
     @endcan
-    @can('comunicacion_sgi_access')
+    @can('comunicados_generales_acceder')
         <li><a href="{{ route('admin.comunicacion-sgis.index') }}">
                 <div>
                     <i class="bi bi-megaphone"></i><br>
@@ -32,7 +32,7 @@
                 </div>
             </a></li>
     @endcan
-    @can('centro_atencion_access')
+    @can('centro_de_atencion_acceder')
         <li><a href="{{ route('admin.desk.index') }}">
                 <div>
                     <i class="bi bi-person-workspace"></i><br>

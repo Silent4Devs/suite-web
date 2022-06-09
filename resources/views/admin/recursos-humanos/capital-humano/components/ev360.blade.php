@@ -1,5 +1,5 @@
 <ul class="mt-4">
-    @can('evaluacion_360_access')
+    @can('crear_evaluacion_acceder')
         <li>
             <a href="{{ route('admin.ev360-evaluaciones.create') }}">
                 <div style="text-transform: capitalize">

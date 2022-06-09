@@ -31,7 +31,7 @@ class PuestosController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('puestos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('lista_de_perfiles_de_puesto_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Puesto::with(['area'])->orderByDesc('id')->get();

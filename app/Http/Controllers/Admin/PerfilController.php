@@ -14,7 +14,7 @@ class PerfilController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('niveles_jerarquicos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = PerfilEmpleado::with(['empleados'])->orderBy('id')->get();
             $table = DataTables::of($query);
@@ -23,9 +23,9 @@ class PerfilController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'niveles_jerarquicos_create';
-                $editGate = 'niveles_jerarquicos_edit';
-                $deleteGate = 'niveles_jerarquicos_delete';
+                $viewGate = 'niveles_jerarquicos_agregar';
+                $editGate = 'niveles_jerarquicos_editar';
+                $deleteGate = 'niveles_jerarquicos_eliminar';
                 $crudRoutePart = 'perfiles';
 
                 return view('partials.datatablesActions', compact(
@@ -57,15 +57,15 @@ class PerfilController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('niveles_jerarquicos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::alta()->get();
+        abort_if(Gate::denies('niveles_jerarquicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleados = Empleado::get();
 
         return view('admin.perfiles.create', compact('empleados'));
     }
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('niveles_jerarquicos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('niveles_jerarquicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         PerfilEmpleado::create($request->all());
 
         return redirect()->route('admin.perfiles.index')->with('success', 'Guardado con éxito');
@@ -73,7 +73,7 @@ class PerfilController extends Controller
 
     public function edit($perfil)
     {
-        abort_if(Gate::denies('niveles_jerarquicos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('niveles_jerarquicos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $perfil = PerfilEmpleado::find($perfil);
 
         return view('admin.perfiles.edit', compact('perfil'));
@@ -81,7 +81,7 @@ class PerfilController extends Controller
 
     public function update(Request $request, $perfil)
     {
-        abort_if(Gate::denies('niveles_jerarquicos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('niveles_jerarquicos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $perfil = PerfilEmpleado::find($perfil);
         $perfil->update($request->all());
 
@@ -90,7 +90,7 @@ class PerfilController extends Controller
 
     public function show($perfil)
     {
-        abort_if(Gate::denies('niveles_jerarquicos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('niveles_jerarquicos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $perfil = PerfilEmpleado::find($perfil);
 
         return view('admin.perfiles.show', compact('perfil'));
@@ -98,7 +98,7 @@ class PerfilController extends Controller
 
     public function destroy($perfil)
     {
-        abort_if(Gate::denies('niveles_jerarquicos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('niveles_jerarquicos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $perfil = PerfilEmpleado::find($perfil);
         // dd($perfil);
         $perfil->delete();

@@ -55,6 +55,7 @@ class DatabaseSeeder extends Seeder
             // activosIntegridadSeeder::class,
             // PlanBaseSeeder::class,
             // TablaImpactoSeeder::class,
+            PermissionQuejasClientesSeeder::class,
         ]);
     }
 }

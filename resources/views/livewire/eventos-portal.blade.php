@@ -6,23 +6,23 @@
             box-shadow: 0px 0px 0px 5000px rgba(0, 0, 0, 0.2) !important;
         }
 
-        .titulo_acordeon_eventos {
+        .titulo_acordeon_eventos{
             all: unset;
             padding: 10px;
             font-size: 16px;
-            color: #747474;
+            color:#747474;
         }
 
         .acordeon_separado {
             margin-top: 15px;
         }
 
-        .titulos_acordeon_i_name_i {
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
+        .titulos_acordeon_i_name_i{
+             cursor: pointer;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             position: relative;
         }
 
         .titulos_acordeon_i_name_i span {
@@ -53,51 +53,71 @@
 
     <div class="col-lg-12 caja_btn_silent">
         <div class="card card-body" style="padding:5px 20px !important;">
-            <a class="btn-silent" href="{{ asset('admin/organizacions/visualizarorganizacion') }}">
-                <i class="bi bi-building mr-2"></i>
-                <span>Organización</span>
-            </a>
-            <a class="btn-silent" href="{{ asset('admin/sedes/organizacion') }}">
-                <i class="bi bi-geo-alt mr-2"></i>
-                <span>Sedes</span>
-            </a>
-            <a href="{{ route('admin.areas.renderJerarquia') }}" class="btn-silent">
-                <i class="bi bi-geo mr-2"></i>
-                <span>Áreas</span>
-            </a>
-            <a href="{{ route('admin.procesos.mapa') }}" class="btn-silent">
-                <i class="bi bi-file-post mr-2"></i>
-                <span> Mapa de procesos </span>
-            </a>
-            <a class="btn-silent" href="{{ asset('admin/organigrama') }}">
-                <i class="bi bi-diagram-3"></i>
-                <span>Organigrama</span>
-            </a>
-            <a class="btn-silent" href="{{ asset('admin/directorio') }}">
-                <i class="bi bi-journal mr-2"></i>
-                <span>Directorio</span>
-            </a>
-            <a class="btn-silent" href="{{ asset('admin/documentos/publicados') }}">
-                <i class="bi bi-folder2 mr-2"></i>
-                <span>Documentos</span>
-            </a>
-            @if ($politica_existe != 0)
-                <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}">
-                    <i class="bi bi-collection mr-2"></i>
-                    <span>Políticas</span>
+            @can('portal_comunicacion_mostrar_organizacion')
+                <a class="btn-silent" href="{{ asset('admin/organizacions/visualizarorganizacion') }}">
+                    <i class="bi bi-building mr-2"></i>
+                    <span>Organización</span>
                 </a>
+            @endcan
+            @can('portal_comunicacion_mostrar_sedes')
+                <a class="btn-silent" href="{{ asset('admin/sedes/organizacion') }}">
+                    <i class="bi bi-geo-alt mr-2"></i>
+                    <span>Sedes</span>
+                </a>
+            @endcan
+            @can('portal_comunicacion_mostrar_areas')
+                <a href="{{ route('admin.areas.renderJerarquia') }}" class="btn-silent">
+                    <i class="bi bi-geo mr-2"></i>
+                    <span>Áreas</span>
+                </a>
+            @endcan
+            @can('portal_comunicacion_mostrar_mapa_de_procesos')
+                <a href="{{ route('admin.procesos.mapa') }}" class="btn-silent">
+                    <i class="bi bi-file-post mr-2"></i>
+                    <span> Mapa de procesos </span>
+                </a>
+            @endcan
+            @can('portal_comunicacion_mostrar_organigrama')
+                <a class="btn-silent" href="{{ asset('admin/organigrama') }}">
+                    <i class="bi bi-diagram-3"></i>
+                    <span>Organigrama</span>
+                </a>
+            @endcan
+            @can('portal_comunicacion_mostrar_directorio')
+                <a class="btn-silent" href="{{ asset('admin/directorio') }}">
+                    <i class="bi bi-journal mr-2"></i>
+                    <span>Directorio</span>
+                </a>
+            @endcan
+                @can('portal_comunicacion_mostrar_documentos')
+                <a class="btn-silent" href="{{ asset('admin/documentos/publicados') }}">
+                    <i class="bi bi-folder2 mr-2"></i>
+                    <span>Documentos</span>
+                </a>
+                @endcan
+            @if($politica_existe != 0)
+                @can('portal_comunicacion_mostrar_politicas')
+                    <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}">
+                        <i class="bi bi-collection mr-2"></i>
+                        <span>Políticas</span>
+                    </a>
+                @endcan
             @endif
-            @if ($comite_existe != 0)
-                <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}">
-                    <i class="bi bi-person-bounding-box mr-2"></i>
-                    <span>Comités</span>
-                </a>
+            @if($comite_existe != 0)
+                @can('portal_comunicacion_mostrar_comites')
+                    <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}">
+                        <i class="bi bi-person-bounding-box mr-2"></i>
+                        <span>Comités</span>
+                    </a>
+                @endcan
             @endif
             @if ($empleado_asignado)
-                <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}">
-                    <i class="bi bi-flag mr-2"></i>
-                    <span>Reportar</span>
-                </a>
+                @can('portal_comunicacion_mostrar_reportar')
+                    <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}">
+                        <i class="bi bi-flag mr-2"></i>
+                        <span>Reportar</span>
+                    </a>
+                @endcan
             @endif
         </div>
 
@@ -108,264 +128,256 @@
 
 
 
+            @can('portal_comunicacion_mostrar_nuevos_ingresos')
+                <div x-data="{ active: 1 }" class="acordeon_separado">
+                    <div x-data="{
+                            id: 1,
+                            get expanded() {
+                                return this.active === this.id
+                            },
+                            set expanded(value) {
+                                this.active = value ? this.id : null
+                            },
+                        }" role="region">
+                            <div
+                                class="titulos_acordeon_i_name_i"
+                                x-on:click="expanded = !expanded"
+                                :aria-expanded="expanded">
+                                <p class="titulo_acordeon_eventos">
+                                    <i class="mr-3 far fa-user"></i>
+                                    Nuevos ingresos
+                                    <span class="indicador_numero">{{$nuevos_contador_circulo}}</span>
+                                </p>
+                                <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
+                                <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
+                            </div>
 
-            <div x-data="{ active: 1 }" class="acordeon_separado">
-                <div x-data="{
-                    id: 1,
-                    get expanded() {
-                        return this.active === this.id
-                    },
-                    set expanded(value) {
-                        this.active = value ? this.id : null
-                    },
-                }" role="region">
+                            <div x-show="expanded" x-collapse>
+                                <div class="caja_nuevo">
+                                    @forelse($nuevos as $nuevo)
+                                        <div class="nuevo">
+                                            <div class="img_nuevo">
+                                                <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
+                                                    class="">
+                                            </div>
+                                            <h5 class="nombre_nuevo">{{ $nuevo->name }}</h5>
+                                            <div class="datos_nuevo">
+                                                <p>{{ $nuevo->puesto }}<br>
+                                                    @if (is_null($nuevo->area->area))
+                                                        No hay Area
+                                                    @else
+                                                        {{ $nuevo->area->area }}
+                                                    @endif
+                                                </p>
+                                                <h6 class="mt-3">Fecha de ingreso</h6>
+                                                <span>{{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}</span>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div class="nuevo">No hay nuevos ingresos registrados en este mes.</div>
+                                    @endforelse
 
-                    <div class="titulos_acordeon_i_name_i" x-on:click="expanded = !expanded" :aria-expanded="expanded">
-                        <p class="titulo_acordeon_eventos">
-                            <i class="mr-3 far fa-user"></i>
-                            Nuevos ingresos
-                            <span class="indicador_numero">{{ $nuevos_contador_circulo }}</span>
-                        </p>
-                        <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
-                        <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-
-                    <div x-show="expanded" x-collapse>
-                        <div class="caja_nuevo">
-                            @forelse($nuevos as $nuevo)
-                                <div class="nuevo">
-                                    <div class="img_nuevo">
-                                        <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
-                                            class="">
-                                    </div>
-                                    <h5 class="nombre_nuevo">{{ $nuevo->name }}</h5>
-                                    <div class="datos_nuevo">
-                                        <p>{{ $nuevo->puesto }}<br>
-                                            @if (is_null($nuevo->area))
-                                                No hay Area
-                                            @else
-                                                {{ $nuevo->area->area }}
-                                            @endif
-                                        </p>
-                                        <h6 class="mt-3">Fecha de ingreso</h6>
-                                        <span>{{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}</span>
-                                    </div>
                                 </div>
-                            @empty
-                                <div class="nuevo">No hay nuevos ingresos registrados en este mes.</div>
-                            @endforelse
+                            </div>
 
-                        </div>
                     </div>
                 </div>
-            </div>
+            @endcan
 
 
+            @can('portal_comunicacion_mostrar_cumpleaños')
+                <div x-data="{ active: 1 }" class="acordeon_separado">
+                    <div x-data="{
+                            id: 1,
+                            get expanded() {
+                                return this.active === this.id
+                            },
+                            set expanded(value) {
+                                this.active = value ? this.id : null
+                            },
+                        }" role="region">
 
+                        <div
+                            class="titulos_acordeon_i_name_i"
+                            x-on:click="expanded = !expanded"
+                            :aria-expanded="expanded">
+                            <p class="titulo_acordeon_eventos">
+                                <i class="mr-3 fas fa-birthday-cake"></i>
+                                Cumpleaños
+                                <span class="indicador_numero">{{$cumpleaños_contador_circulo}}</span>
+                            </p>
+                            <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
+                            <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
+                        </div>
 
+                        <div x-show="expanded" x-collapse>
+                            <div class="caja_nuevo" id="contenedor_cumples">
+                                @forelse($cumpleaños as $cumple)
+                                    <div class="nuevo">
+                                        <div class="img_nuevo">
+                                                <img src="{{ asset('storage/empleados/imagenes/' . $cumple->avatar) }}"
+                                                    class="">
 
-
-
-            <div x-data="{ active: 1 }" class="acordeon_separado">
-                <div x-data="{
-                    id: 1,
-                    get expanded() {
-                        return this.active === this.id
-                    },
-                    set expanded(value) {
-                        this.active = value ? this.id : null
-                    },
-                }" role="region">
-
-                    <div class="titulos_acordeon_i_name_i" x-on:click="expanded = !expanded" :aria-expanded="expanded">
-                        <p class="titulo_acordeon_eventos">
-                            <i class="mr-3 fas fa-birthday-cake"></i>
-                            Cumpleaños
-                            <span class="indicador_numero">{{ $cumpleaños_contador_circulo }}</span>
-                        </p>
-                        <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
-                        <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-
-                    <div x-show="expanded" x-collapse>
-                        <div class="caja_nuevo" id="contenedor_cumples">
-                            @forelse($cumpleaños as $cumple)
-                                <div class="nuevo">
-                                    <div class="img_nuevo">
-                                        <img src="{{ asset('storage/empleados/imagenes/' . $cumple->avatar) }}"
-                                            class="">
-
-                                    </div>
-                                    <h5 class="nombre_nuevo">{{ $cumple->name }}</h5>
-                                    <div class="datos_nuevo">
-                                        <p>{{ $cumple->puesto }}<br>
-                                            @if (is_null($cumple->area))
-                                                No hay Area
-                                            @else
-                                                {{ $cumple->area->area }}
-                                            @endif
-                                        </p>
-                                        <h6 class="mt-3">Fecha de cumpleaños</h6>
-                                        @php
-                                            $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                                            $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
-                                            $mes = $meses[$fecha->format('n') - 1];
-                                            $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
-                                        @endphp
-
-                                        <span>{{ $inputs['Fecha'] }}</span>
-
-                                        @php
-                                            $cumples_felicitados_like_contador_usuarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
-                                                ->whereYear('created_at', $hoy->format('Y'))
-                                                ->where('like', true)
-                                                ->count();
-                                            
-                                            $cumples_felicitados_like_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
-                                                ->where('felicitador_id', auth()->user()->empleado->id)
-                                                ->whereYear('created_at', $hoy->format('Y'))
-                                                ->where('like', true)
-                                                ->count();
-                                            
-                                            $cumples_felicitados_like = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
-                                                ->where('felicitador_id', auth()->user()->empleado->id)
-                                                ->whereYear('created_at', $hoy->format('Y'))
-                                                ->where('like', true)
-                                                ->first();
-                                            
-                                            $cumples_felicitados_comentarios_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
-                                                ->where('felicitador_id', auth()->user()->empleado->id)
-                                                ->whereYear('created_at', $hoy->format('Y'))
-                                                ->where('like', false)
-                                                ->where('comentarios', '!=', null)
-                                                ->count();
-                                            
-                                            $cumples_felicitados_comentarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
-                                                ->where('felicitador_id', auth()->user()->empleado->id)
-                                                ->whereYear('created_at', $hoy->format('Y'))
-                                                ->where('like', false)
-                                                ->where('comentarios', '!=', null)
-                                                ->first();
-                                        @endphp
-                                        <div class="opciones_felicitar">
-                                            <button style="all:unset;"
-                                                {{ $cumples_felicitados_like_contador == 0 ? 'wire:click=felicitarCumpleaños(' . $cumple->id . ')' : 'wire:click=felicitarCumpleañosDislike(' . $cumples_felicitados_like->id . ')' }}>
-
-
-                                                @if ($cumples_felicitados_like_contador_usuarios == 0)
-                                                    <i class="far fa-thumbs-up" style="color:#888;"></i>
-                                                    <font style="color:#888">
-                                                        {{ $cumples_felicitados_like_contador_usuarios }}
-                                                    </font>
+                                        </div>
+                                        <h5 class="nombre_nuevo">{{ $cumple->name }}</h5>
+                                        <div class="datos_nuevo">
+                                            <p>{{ $cumple->puesto }}<br>
+                                                @if (is_null($cumple->area->area))
+                                                    No hay Area
                                                 @else
-                                                    <i class="fas fa-thumbs-up" style="color:#345183;"></i>
-                                                    <font style="color:#345183">
-                                                        {{ $cumples_felicitados_like_contador_usuarios }}
-                                                    </font>
+                                                    {{ $cumple->area->area }}
                                                 @endif
+                                            </p>
+                                            <h6 class="mt-3">Fecha de cumpleaños</h6>
+                                            @php
+                                                $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+                                                $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
+                                                $mes = $meses[$fecha->format('n') - 1];
+                                                $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
+                                            @endphp
 
-                                                <i class="fas fa-spinner fa-spin"
-                                                    style="font-size: 15pt; background-color: rgba(255, 255, 255, 0.3); margin-left:-30px; position: absolute;"
-                                                    wire:loading>
-                                                </i>
-                                            </button>
-                                            <i class="fas fa-comment-dots btn_modal modal_comentarios"
-                                                {{-- data-toggle="modal"
-                                                data-target="#cumpleaños_comentarios_Modal" --}}
-                                                data-comentarios-contador="{{ $cumples_felicitados_comentarios_contador }}"
-                                                data-cumple-id="{{ $cumple->id }}"
-                                                data-comentarios-id="{{ $cumples_felicitados_comentarios ? $cumples_felicitados_comentarios->id : null }}"
-                                                data-comentarios-comentarios="{{ $cumples_felicitados_comentarios ? $cumples_felicitados_comentarios->comentarios : null }}"
-                                                data-cumple-nombre="{{ $cumple->name }}"></i>
+                                            <span>{{ $inputs['Fecha'] }}</span>
+
+                                            @php
+                                                $cumples_felicitados_like_contador_usuarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                    ->whereYear('created_at', $hoy->format('Y'))
+                                                    ->where('like', true)
+                                                    ->count();
+
+                                                $cumples_felicitados_like_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                    ->where('felicitador_id', auth()->user()->empleado->id)
+                                                    ->whereYear('created_at', $hoy->format('Y'))
+                                                    ->where('like', true)
+                                                    ->count();
+
+                                                $cumples_felicitados_like = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                    ->where('felicitador_id', auth()->user()->empleado->id)
+                                                    ->whereYear('created_at', $hoy->format('Y'))
+                                                    ->where('like', true)
+                                                    ->first();
+
+                                                $cumples_felicitados_comentarios_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                    ->where('felicitador_id', auth()->user()->empleado->id)
+                                                    ->whereYear('created_at', $hoy->format('Y'))
+                                                    ->where('like', false)
+                                                    ->where('comentarios', '!=', null)
+                                                    ->count();
+
+                                                $cumples_felicitados_comentarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                    ->where('felicitador_id', auth()->user()->empleado->id)
+                                                    ->whereYear('created_at', $hoy->format('Y'))
+                                                    ->where('like', false)
+                                                    ->where('comentarios', '!=', null)
+                                                    ->first();
+                                            @endphp
+                                            <div class="opciones_felicitar">
+                                                <button style="all:unset;"
+                                                    {{ $cumples_felicitados_like_contador == 0 ? 'wire:click=felicitarCumpleaños(' . $cumple->id . ')' : 'wire:click=felicitarCumpleañosDislike(' . $cumples_felicitados_like->id . ')'}}>
+
+
+                                                    @if($cumples_felicitados_like_contador_usuarios == 0)
+                                                        <i class="far fa-thumbs-up" style="color:#888;"></i>
+                                                        <font style="color:#888">
+                                                            {{ $cumples_felicitados_like_contador_usuarios }}
+                                                        </font>
+                                                    @else
+                                                        <i class="fas fa-thumbs-up" style="color:#345183;"></i>
+                                                        <font style="color:#345183">
+                                                            {{ $cumples_felicitados_like_contador_usuarios }}
+                                                        </font>
+                                                    @endif
+
+                                                    <i class="fas fa-spinner fa-spin" style="font-size: 15pt; background-color: rgba(255, 255, 255, 0.3); margin-left:-30px; position: absolute;" wire:loading>
+                                                    </i>
+                                                </button>
+                                                <i class="fas fa-comment-dots btn_modal modal_comentarios"
+                                                    {{-- data-toggle="modal"
+                                                    data-target="#cumpleaños_comentarios_Modal"  --}}
+                                                    data-comentarios-contador="{{$cumples_felicitados_comentarios_contador}}"
+                                                    data-cumple-id="{{$cumple->id}}"
+                                                    data-comentarios-id="{{$cumples_felicitados_comentarios ? $cumples_felicitados_comentarios->id :  null}}"
+                                                    data-comentarios-comentarios="{{ $cumples_felicitados_comentarios ? $cumples_felicitados_comentarios->comentarios : null}}"
+                                                    data-cumple-nombre="{{$cumple->name}}"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @empty
-                                <div class="nuevo">No hay cumpleaños registrados en este mes.</div>
-                            @endforelse
+                                @empty
+                                    <div class="nuevo">No hay cumpleaños registrados en este mes.</div>
+                                @endforelse
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endcan
 
 
+            @can('portal_comunicacion_mostrar_aniversarios')
+                <div x-data="{ active: 1 }" class="acordeon_separado">
+                    <div x-data="{
+                            id: 1,
+                            get expanded() {
+                                return this.active === this.id
+                            },
+                            set expanded(value) {
+                                this.active = value ? this.id : null
+                            },
+                        }" role="region">
 
+                        <div
+                            class="titulos_acordeon_i_name_i"
+                            x-on:click="expanded = !expanded"
+                            :aria-expanded="expanded">
+                            <p class="titulo_acordeon_eventos">
+                                <i class="mr-3 fas fa-medal"></i>
+                                Aniversarios
+                                <span class="indicador_numero">{{$aniversarios_contador_circulo}}</span>
+                            </p>
+                            <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
+                            <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
+                        </div>
 
+                        <div x-show="expanded" x-collapse>
+                            <div class="caja_nuevo">
+                                @forelse($aniversarios as $aniversario)
 
-
-
-
-
-            <div x-data="{ active: 1 }" class="acordeon_separado">
-                <div x-data="{
-                    id: 1,
-                    get expanded() {
-                        return this.active === this.id
-                    },
-                    set expanded(value) {
-                        this.active = value ? this.id : null
-                    },
-                }" role="region">
-
-                    <div class="titulos_acordeon_i_name_i" x-on:click="expanded = !expanded" :aria-expanded="expanded">
-                        <p class="titulo_acordeon_eventos">
-                            <i class="mr-3 fas fa-medal"></i>
-                            Aniversarios
-                            <span class="indicador_numero">{{ $aniversarios_contador_circulo }}</span>
-                        </p>
-                        <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
-                        <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-
-                    <div x-show="expanded" x-collapse>
-                        <div class="caja_nuevo">
-                            @forelse($aniversarios as $aniversario)
-                                <div class="nuevo">
-                                    <div class="img_nuevo">
-                                        <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
-                                            class="">
+                                    <div class="nuevo">
+                                        <div class="img_nuevo">
+                                                <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
+                                                    class="">
+                                        </div>
+                                        <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
+                                        <div class="datos_nuevo">
+                                            <p>{{ $aniversario->puesto }}<br>
+                                                @if (is_null($aniversario->area->area))
+                                                    No hay Area
+                                                @else
+                                                    {{ $aniversario->area->area }}
+                                                @endif
+                                            </p>
+                                            <h6 class="mt-3">Antigüedad</h6>
+                                            <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }}
+                                                año(s)
+                                            </span>
+                                        </div>
                                     </div>
-                                    <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
-                                    <div class="datos_nuevo">
-                                        <p>{{ $aniversario->puesto }}<br>
-                                            @if (is_null($aniversario->area->area))
-                                                No hay Area
-                                            @else
-                                                {{ $aniversario->area->area }}
-                                            @endif
-                                        </p>
-                                        <h6 class="mt-3">Antigüedad</h6>
-                                        <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }}
-                                            año(s)
-                                        </span>
-                                    </div>
-                                </div>
 
-                            @empty
-                                <div class="nuevo">No hay aniversarios registrados en este mes.</div>
-                            @endforelse
+                                @empty
+                                    <div class="nuevo">No hay aniversarios registrados en este mes.</div>
+                                @endforelse
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endcan
 
 
-
-
-
-
-
-
-
-
-            <div class="modal fade" id="cumpleaños_comentarios_Modal" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
+            <div class="modal fade" id="cumpleaños_comentarios_Modal" tabindex="-1"
+                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
 
-                            <label><i class="fas fa-birthday-cake iconos-crear"></i> Envia tus felicitaciones a <strong
-                                    id="nombre_cumple"></strong></label>
+                            <label><i class="fas fa-birthday-cake iconos-crear"></i> Envia tus felicitaciones a <strong id="nombre_cumple"></strong></label>
 
                             <div id="formulario_comentarios"></div>
                             <div style="background-color: rgba(255, 255, 255, 0.1); position:fixed; z-index:99999999; width: 100%; height: 100%; justify-content: center; align-items: center; top: 0; left:0;"
@@ -387,7 +399,11 @@
                     document.getElementById('contenedor_cumples').addEventListener('click', function(e) {
                         if (e.target.classList.contains('modal_comentarios')) {
 
-                            document.getElementById('formulario_comentarios').innerHTML = null;
+        document.addEventListener('DOMContentLoaded', function(){
+            document.getElementById('contenedor_cumples').addEventListener('click', function(e){
+                if (e.target.classList.contains('modal_comentarios')) {
+
+                    document.getElementById('formulario_comentarios').innerHTML = null;
 
                             const comentarios_contador = e.target.getAttribute('data-comentarios-contador');
                             const cumple_id = e.target.getAttribute('data-cumple-id');
@@ -429,6 +445,10 @@
                             }
 
 
+
+                    $('.modal').modal('show');
+                }
+            });
 
                             $('.modal').modal('show');
                         }

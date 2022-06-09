@@ -218,18 +218,20 @@
             <form method="POST" action="{{ route('admin.empleados.store') }}" enctype="multipart/form-data"
                 id="formCreateEmpleado">
                 @csrf
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-general" role="tabpanel"
-                        aria-labelledby="nav-general-tab">
-                        @include('admin.empleados.form_components.general')
+                @can('bd_empleados_agregar')
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-general" role="tabpanel"
+                            aria-labelledby="nav-general-tab">
+                            @include('admin.empleados.form_components.general')
+                        </div>
+                        <div class="tab-pane fade" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
+                            @include('admin.empleados.form_components.personal')
+                        </div>
+                        <div class="tab-pane fade" id="nav-financiera" role="tabpanel" aria-labelledby="nav-financiera-tab">
+                            @include('admin.empleados.form_components.financiera')
+                        </div>
                     </div>
-                    <div class="tab-pane fade" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
-                        @include('admin.empleados.form_components.personal')
-                    </div>
-                    <div class="tab-pane fade" id="nav-financiera" role="tabpanel" aria-labelledby="nav-financiera-tab">
-                        @include('admin.empleados.form_components.financiera')
-                    </div>
-                </div>
+                @endcan
                 <div class="text-right form-group col-12">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit" id="btnGuardar">

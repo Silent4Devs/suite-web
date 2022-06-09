@@ -151,8 +151,9 @@
                     window.location.href = url;
                 }
             };
+            @can(niveles_jerarquicos_agregar)
             dtButtons.push(btnAgregar);
-
+            @endcan
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

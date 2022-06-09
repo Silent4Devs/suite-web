@@ -116,7 +116,7 @@
                 }
             };
 
-            @can('tipos_de_contratos_create')
+            @can('tipos_de_contrato_para_empleados_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
             let dtOverrideGlobals = {
@@ -155,17 +155,17 @@
                             const urlShowDelete =
                                 `/admin/recursos-humanos/tipos-contratos-empleados/${data}`;
                             const html = `
-                            @can('tipos_de_contratos_edit')
+                            @can('tipos_de_contrato_para_empleados_editar')
                                 <a class="btn btn-sm " title="Editar" href="${urlEdit}">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             @endcan
-                            @can('tipos_de_contratos_show')
+                            @can('tipos_de_contrato_para_empleados_ver')
                                 <a class="btn btn-sm " title="Visualizar" href="${urlShowDelete}">
                                     <i class="fas fa-eye"></i>
                                 </a>
                             @endcan
-                            @can('tipos_de_contratos_delete')
+                            @can('tipos_de_contrato_para_empleados_eliminar')
                                 <button title="Eliminar" onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.name}');return false;"
                                     class="btn btn-sm text-danger">
                                     <i class="fas fa-trash-alt"></i>
