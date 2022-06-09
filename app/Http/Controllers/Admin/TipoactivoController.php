@@ -18,7 +18,7 @@ class TipoactivoController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('categoria_activos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Tipoactivo::select('*')->orderByDesc('id');
@@ -28,9 +28,9 @@ class TipoactivoController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'configuracion_tipoactivo_show';
-                $editGate = 'configuracion_tipoactivo_edit';
-                $deleteGate = 'configuracion_tipoactivo_delete';
+                $viewGate = 'categoria_activos_ver';
+                $editGate = 'categoria_activos_editar';
+                $deleteGate = 'categoria_activos_eliminar';
                 $crudRoutePart = 'tipoactivos';
 
                 return view('partials.datatablesActions', compact(
@@ -61,13 +61,14 @@ class TipoactivoController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('categoria_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.tipoactivos.create');
     }
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('categoria_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $val = $request->validate([
             'tipo'=> 'unique:tipoactivos,tipo',
         ]);
@@ -82,7 +83,7 @@ class TipoactivoController extends Controller
 
     public function edit(Tipoactivo $tipoactivo)
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('categoria_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivo->load('team');
 
@@ -91,6 +92,7 @@ class TipoactivoController extends Controller
 
     public function update(Request $request, Tipoactivo $tipoactivo)
     {
+        abort_if(Gate::denies('categoria_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tipoactivo->update($request->all());
 
         return redirect()->route('admin.tipoactivos.index')->with('success', 'Editado con éxito');
@@ -98,7 +100,7 @@ class TipoactivoController extends Controller
 
     public function show(Tipoactivo $tipoactivo)
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('categoria_activos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivo->load('team');
 
@@ -107,7 +109,7 @@ class TipoactivoController extends Controller
 
     public function destroy(Tipoactivo $tipoactivo)
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('categoria_activos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivo->delete();
 
