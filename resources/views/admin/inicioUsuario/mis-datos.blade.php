@@ -42,7 +42,6 @@
             height: 32px;
         }
     }
-
 </style>
 <style>
     .circle-total-evaluaciones {
@@ -272,7 +271,6 @@
         max-height: 50px !important;
         min-height: 50px !important;
     }
-
 </style>
 
 <style>
@@ -287,7 +285,6 @@
     .pastel {
         z-index: -1;
     }
-
 </style>
 
 
@@ -874,10 +871,15 @@ if (!is_null($organizacion)) {
                                                 </h5>
                                             </div>
                                             <div class="col-7" style="font-size: 15px;text-align: end">
-                                                <a class="mr-2 text-dark"
+                                                <a class="mr-1 text-dark"
                                                     href="{{ route('admin.ev360-objetivos-empleado.show', ['empleado' => auth()->user()->empleado->id]) }}">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
+                                                @if (auth()->user()->empleado)
+                                                    <a class="mr-1 text-dark"
+                                                        href="{{ route('admin.ev360-objetivos-empleado.create', auth()->user()->empleado->id) }}"><i
+                                                            class="fas fa-pencil"></i></a>
+                                                @endif
                                                 <span style="cursor: pointer" @click="show=!show"><i
                                                         class="fas"
                                                         :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -941,9 +943,7 @@ if (!is_null($organizacion)) {
                                         </h5>
 
                                         @if ($last_evaluacion)
-                                            @include(
-                                                'admin.inicioUsuario.info_card_evaluacion'
-                                            )
+                                            @include('admin.inicioUsuario.info_card_evaluacion')
                                         @endif
                                         <hr class="hr-custom-title">
                                         <div id="evaluacionesRealizar" x-show="show" x-transition:enter.duration.500ms
@@ -987,9 +987,7 @@ if (!is_null($organizacion)) {
                                             @endif
                                         </h5>
                                         @if ($last_evaluacion)
-                                            @include(
-                                                'admin.inicioUsuario.info_card_evaluacion'
-                                            )
+                                            @include('admin.inicioUsuario.info_card_evaluacion')
                                         @endif
                                         <hr class="hr-custom-title">
 

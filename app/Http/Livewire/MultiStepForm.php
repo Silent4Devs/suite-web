@@ -639,15 +639,18 @@ class MultiStepForm extends Component
             if (!is_null($objetivos)) {
                 foreach ($evaluadores_objetivos as $evaluador) {
                     foreach ($objetivos as $objetivo) {
-                        ObjetivoRespuesta::create([
-                            'meta_alcanzada' => 'Sin evaluar',
-                            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                            'calificacion' => 0,
-                            'objetivo_id' => $objetivo->objetivo_id,
-                            'evaluado_id' => $empleado->id,
-                            'evaluador_id' => $evaluador['id'],
-                            'evaluacion_id' => $evaluacion->id,
-                        ]);
+                        $objvo = Objetivo::find($objetivo->objetivo_id);
+                        if ($objvo->esta_aprobado == Objetivo::APROBADO) {
+                            ObjetivoRespuesta::create([
+                                'meta_alcanzada' => 'Sin evaluar',
+                                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+                                'calificacion' => 0,
+                                'objetivo_id' => $objetivo->objetivo_id,
+                                'evaluado_id' => $empleado->id,
+                                'evaluador_id' => $evaluador['id'],
+                                'evaluacion_id' => $evaluacion->id,
+                            ]);
+                        }
                     }
                 }
             }
