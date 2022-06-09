@@ -268,7 +268,7 @@
 
             ];
 
-            @can('material_sgsi_create')
+            @can('material_sgsi_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar material SGSI',
@@ -281,7 +281,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('material_sgsi_delete')
+            @can('material_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -356,7 +356,9 @@
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
+                                        @can('material_sgsi_vinculo')
                                         <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                        @endcan
                                     </div>
                                     </div>
 

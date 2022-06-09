@@ -13,7 +13,7 @@
             </a>
         </li>
     @endcan
-    @can('evaluacion_360_seguimiento_access')
+    @can('seguimiento_evaluaciones_acceder')
         <li>
             <a href="{{ route('admin.ev360-evaluaciones.index') }}">
                 <div>

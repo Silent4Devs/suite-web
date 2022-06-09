@@ -240,7 +240,7 @@
 
             ];
 
-            @can('concientizacion_sgi_create')
+            @can('concientizacion_sgsi_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar objetivo de seguridad',
@@ -253,7 +253,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('concientizacion_sgi_delete')
+            @can('concientizacion_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -325,7 +325,9 @@
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
+                                        @can('concientizacion_sgsi_vinculos')
                                         <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                        @endcan
                                     </div>
                                     </div>
 

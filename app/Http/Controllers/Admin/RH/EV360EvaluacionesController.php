@@ -31,7 +31,7 @@ class EV360EvaluacionesController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('evaluacion_360_seguimiento_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('seguimiento_evaluaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($this->obtenerCantidadMaximaDeObjetivos(20));
         $areas = Area::all();
         $empleados = Empleado::alta()->get();
@@ -47,7 +47,7 @@ class EV360EvaluacionesController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('evaluacion_360_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('seguimiento_evaluaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion = Evaluacion::all();
         $areas = Area::all();
         $empleados = Empleado::alta()->get();
@@ -57,7 +57,7 @@ class EV360EvaluacionesController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('evaluacion_360_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('seguimiento_evaluaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:255',
@@ -1393,6 +1393,8 @@ class EV360EvaluacionesController extends Controller
 
     public function destroy($evaluacion)
     {
+        abort_if(Gate::denies('seguimiento_evaluaciones_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $evaluacion = Evaluacion::find($evaluacion);
         $evaluacion->delete();
 
