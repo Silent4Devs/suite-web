@@ -163,7 +163,7 @@
                 }
 
             ];
-            @can('role_create')
+            @can('roles_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar rol',
@@ -197,7 +197,7 @@
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan
-            @can('role_delete')
+            @can('roles_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -251,8 +251,10 @@
                         render: function(data, type, row) {
                             return `
                             <div class="d-flex align-items-center">
+                                @can('roles_copiar')
                                 <i class="fas fa-copy text-dark mr-2" title="Copiar" style="cursor:pointer" data-action="copy" data-id="${row.id}"></i>    
                                 ${data}
+                                @endcan
                             </div>
                             `;
                         }

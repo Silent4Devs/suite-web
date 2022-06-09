@@ -35,7 +35,7 @@
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca" style="color: #345183;">Menu</font>
         </li>
-        @can('mi_perfil_access')
+        @can('mi_perfil_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.inicio-Usuario.index') }}#datos"
                     class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') || request()->is('admin/competencias/*/cv') ? 'active' : '' }}">

@@ -4,7 +4,7 @@
 
     <h5 class="col-12 titulo_general_funcion">Registro de Áreas</h5>
     <div class="mt-5 card">
-        @can('configuracion_area_create')
+        @can('crear_area_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', ['model' => 'Area', 'route' => 'admin.areas.parseCsvImport'])
@@ -133,7 +133,7 @@
 
             ];
 
-            @can('configuracion_area_create')
+            @can('crear_area_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar area',
@@ -155,7 +155,7 @@
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
             @endcan
-            @can('configuracion_area_delete')
+            @can('crear_area_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
