@@ -87,12 +87,12 @@ class EV360ObjetivosController extends Controller
 
         if ($request->ajax()) {
             if ($empleado->id == auth()->user()->empleado->id) {
-                #add esta_aprobado in $request
+                //add esta_aprobado in $request
                 $request->merge(['esta_aprobado' => Objetivo::SIN_DEFINIR]);
             }
             $objetivo = Objetivo::create($request->all());
 
-            #send email if who add is not supervisor
+            //send email if who add is not supervisor
             // if ($empleado->id == auth()->user()->empleado->id) {
             //     if (!is_null($empleado->supervisor)) {
             //         Mail::to($empleado->email)->send(new SolicitudAprobacionObjetivo($objetivo, $empleado));

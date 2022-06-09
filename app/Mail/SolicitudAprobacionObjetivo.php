@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -16,10 +15,8 @@ class SolicitudAprobacionObjetivo extends Mailable
      *
      * @return void
      */
-
     public $objetivo;
     public $empleado;
-
 
     public function __construct($objetivo, $empleado)
     {

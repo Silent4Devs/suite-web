@@ -11,7 +11,6 @@ class ObjetivoEmpleado extends Model
     protected $table = 'ev360_objetivo_empleados';
     protected $fillable = ['empleado_id', 'objetivo_id', 'completado', 'en_curso'];
 
-
     public function objetivo()
     {
         return $this->belongsTo('App\Models\RH\Objetivo', 'objetivo_id', 'id');
