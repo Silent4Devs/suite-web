@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    
+
     <style type="text/css">
         .img_empleado_expediente {
             clip-path: circle(70px at 50% 50%);
@@ -30,11 +30,12 @@
         #tabla_docs .aplica::before{
             content: "Solo si ";
         }
-          
+
     </style>
+
     {{ Breadcrumbs::render('mi-expediente') }}
     <h5 class="col-12 titulo_general_funcion">Mi Expediente</h5>
-    
+
     <div class="card-body card">
         <div class="row">
 
@@ -65,17 +66,17 @@
             </div>
 
             <div class="col-12 my-4">
-                <hr>                
+                <hr>
             </div>
 
             <div class="datatable-fix col-12">
                 <table class="table table-bordered w-100 datatable datatable-Perfiles" id="tabla_docs">
                     <thead class="thead-dark">
                         <tr>
-                            <th style="max-width:120px;">Tipo</th>                        
+                            <th style="max-width:120px;">Tipo</th>
                             <th>Documento</th>
-                            <th style="max-width:160px; text-align: center;">ID</th>                        
-                            <th style="max-width:350px; text-align: center;">Archivo</th>                        
+                            <th style="max-width:160px; text-align: center;">ID</th>
+                            <th style="max-width:350px; text-align: center;">Archivo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -110,7 +111,7 @@
                                     @endif
 
 
-                                    
+
                                 </td>
                                 {{-- <td>
                                     @if( $doc->archivado == false)

@@ -32,36 +32,47 @@
                     Competencias
                 </div>
             </a></li>
+        @can('concientizacion_sgsi_acceder')
         <li><a href="{{ route('admin.concientizacion-sgis.index') }}">
                 <div>
                     <i class="bi bi-window-desktop"></i> <br>
                     Concientización SGI
                 </div>
             </a></li>
+        @endcan
+        @can('material_sgsi_acceder')
         <li><a href="{{ route('admin.material-sgsis.index') }}">
                 <div>
                     <i class="bi bi-boxes"></i> <br>
                     Material SGSI
                 </div>
-            </a></li>
+            </a>
+        </li>
+        @endcan
         {{-- <li><a href="{{ route('admin.material-iso-veinticientes.index') }}">
                 <div>
                     <i class="far fa-object-ungroup"></i>
                     Material ISO 27001: 2013
                 </div>
             </a></li> --}}
+        @can('comunicados_generales_acceder')
         <li><a href="{{ route('admin.comunicacion-sgis.index') }}">
                 <div>
                     <i class="bi bi-chat-right-text"></i> <br>
                     Comunicados Generales
                 </div>
-            </a></li>
+            </a>
+        </li>
+        @endcan
+        @can('control_de_accesos_acceder')
         <li><a href="{{ route('admin.control-accesos.index') }}">
                 <div>
                     <i class="bi bi-person-badge"></i> <br>
                     Control de Accesos
                 </div>
-            </a></li>
+            </a>
+        </li>
+        @endcan
         <li><a href="{{ asset('admin/documentos/publicados') }}">
                 <div>
                     <i class="bi bi-file-earmark-post"></i> <br>

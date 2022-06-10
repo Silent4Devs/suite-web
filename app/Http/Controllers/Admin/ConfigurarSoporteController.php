@@ -18,7 +18,7 @@ class ConfigurarSoporteController extends Controller
     {
         // $query = ConfigurarSoporteModel::with(['empleado'])->select('*')->orderByDesc('id')->get();
         // dd($query);
-        abort_if(Gate::denies('configurar_soporte_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configurar_soporte_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = ConfigurarSoporteModel::with(['empleado'])->select('*')->orderByDesc('id')->get();
             // dd($query);
@@ -28,9 +28,9 @@ class ConfigurarSoporteController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'configurar_soporte_show';
-                $editGate = 'configurar_soporte_edit';
-                $deleteGate = 'configurar_soporte_delete';
+                $viewGate = 'configurar_soporte_ver';
+                $editGate = 'configurar_soporte_editar';
+                $deleteGate = 'configurar_soporte_eliminar';
                 $crudRoutePart = 'configurar-soporte';
 
                 return view('partials.datatablesActions', compact(
@@ -86,7 +86,7 @@ class ConfigurarSoporteController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('configurar_soporte_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configurar_soporte_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ConfigurarSoporteModel = ConfigurarSoporteModel::all();
         $empleados = Empleado::alta()->get();
         $puestos = Puesto::get();
@@ -97,7 +97,7 @@ class ConfigurarSoporteController extends Controller
     // StorePartesInteresadaRequest
     public function store(Request $request)
     {
-        abort_if(Gate::denies('configurar_soporte_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configurar_soporte_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $ConfigurarSoporteModel = ConfigurarSoporteModel::create([
             'rol' => $request->rol,
@@ -117,7 +117,7 @@ class ConfigurarSoporteController extends Controller
 
     public function edit($ConfigurarSoporteModel)
     {
-        abort_if(Gate::denies('configurar_soporte_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configurar_soporte_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ConfigurarSoporteModel = ConfigurarSoporteModel::find($ConfigurarSoporteModel);
         // dd($ConfigurarSoporteModel);
         $empleados = Empleado::alta()->get();
@@ -126,21 +126,10 @@ class ConfigurarSoporteController extends Controller
         return view('admin.confSoporte.edit', compact('ConfigurarSoporteModel', 'empleados', 'puestos'));
     }
 
-    // public function show(ConfigurarSoporteModel $ConfigurarSoporteModel)
-    // {
-
-    //     abort_if(Gate::denies('configurar_soporte_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-    //     $ConfigurarSoporteModel->load('ConfigurarSoporteModel');
-
-    //     return view('admin.confSoporte.show', compact('ConfigurarSoporteModel'));
-    // }
-
     // UpdatePartesInteresadaRequest
     public function update(Request $request, ConfigurarSoporteModel $ConfigurarSoporteModel)
     {
-        abort_if(Gate::denies('configurar_soporte_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($request);
+        abort_if(Gate::denies('configurar_soporte_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ConfigurarSoporteModel->update($request->all());
 
         return redirect()->route('admin.configurar-soporte.index')->with('success', 'Editado con éxito');
@@ -148,9 +137,7 @@ class ConfigurarSoporteController extends Controller
 
     public function destroy($ConfigurarSoporteModel)
     {
-
-        // abort_if(Gate::denies('partes_interesada_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        abort_if(Gate::denies('configurar_soporte_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configurar_soporte_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ConfigurarSoporteModel = ConfigurarSoporteModel::find($ConfigurarSoporteModel);
         // dd($ConfigurarSoporteModel);
 

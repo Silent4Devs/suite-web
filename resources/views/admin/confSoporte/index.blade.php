@@ -228,7 +228,7 @@
             ];
 
 
-            @can('configurar_soporte_create')
+            @can('configurar_soporte_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva parte interesada',

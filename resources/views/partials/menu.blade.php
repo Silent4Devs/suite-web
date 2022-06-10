@@ -35,7 +35,7 @@
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca" style="color: #345183;">Menu</font>
         </li>
-        @can('mi_perfil_access')
+        @can('mi_perfil_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.inicio-Usuario.index') }}#datos"
                     class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') || request()->is('admin/competencias/*/cv') ? 'active' : '' }}">
@@ -53,7 +53,7 @@
                 </a>
             </li>
         @endcan
-        @can('timesheet_access')
+        @can('timesheet_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.timesheet-inicio') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'active' : '' }}">
@@ -62,7 +62,7 @@
                 </a>
             </li>
         @endcan
-        @can('agenda_access')
+        @can('calendario_organizacional_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.systemCalendar') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
@@ -125,7 +125,7 @@
                 </ul>
             </li>
         @endcan --}}
-        @can('documentos_publicados_respositorio_access')
+        @can('documentos_publicados_acceder')
             {{-- @can('documentos_publicados_lista_access')
                 <li class="c-sidebar-nav-item">
                     <a href="{{ route('admin.documentos.publicados') }}"
@@ -171,7 +171,7 @@
                 </a>
             </li>
         @endcan
-        @can('planes_accion_access')
+        @can('planes_de_accion_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.planes-de-accion.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/planes-de-accion') || request()->is('admin/planes-de-accion/*/edit') || request()->is('admin/planes-de-accion/create') || request()->is('admin/planes-de-accion/*') ? 'active' : '' }}">
@@ -180,7 +180,7 @@
                 </a>
             </li>
         @endcan
-        @can('centro_atencion_access')
+        @can('centro_de_atencion_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.desk.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/desk') || request()->is('admin/desk/*') ? 'active' : '' }}">
@@ -245,7 +245,7 @@
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
         </li>
-        @can('capital_humano_access')
+        @can('capital_humano_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.capital-humano.index') }}"
                     class="c-sidebar-nav-link
@@ -371,7 +371,7 @@
                 </ul>
             </li>
         @endcan
-        @can('analisis_de_riesgos_access')
+        @can('analisis_de_riesgo_integral_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.analisis-riesgos.menu') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/matriz-riesgos') || request()->is('admin/matriz-riesgos*') ? 'active' : '' }}">
@@ -421,7 +421,7 @@
 
             </ul>
         </li> --}}
-        @can('isoveinticieteuno_access')
+        @can('sistema_de_gestion_acceder')
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') ||
                 request()->is('admin/analisisdebrechas') ||
@@ -475,8 +475,8 @@
         {{-- @can('planes_accion_access') --}}
 
         {{-- @endcan --}}
-        @can('configuracion_datos_access')
-            @can('carga_masiva_de_datos_access')
+        @can('permisos_de_administracion_acceder')
+            @can('carga_masiva_datos_acceder')
                 {{-- este acceso no corresponde --}}
                 <li class="c-sidebar-nav-item">
                     <a href="{{ route('cargadocs') }}"
@@ -486,6 +486,7 @@
                     </a>
                 </li>
             @endcan
+            @can('configurar_organizacion_acceder')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                     <i class="bi bi-building iconos_menu letra_blanca"></i>
@@ -635,10 +636,11 @@
 
                 </ul>
             </li>
+            @endcan
         @endcan
 
 
-        @can('documentos_access')
+        @can('control_documentar_acceder')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                     <i class="bi bi-folder iconos_menu letra_blanca"></i>
@@ -678,7 +680,7 @@
         @endcan
 
 
-        @can('configuracion_datos_access')
+        @can('configurar_capital_humano')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                     <i class="bi bi-person-plus iconos_menu letra_blanca"></i>
@@ -761,7 +763,7 @@
                 </ul>
             </li>
         @endcan
-        @can('configurar_vistas_access')
+        @can('configurar_vistas_acceder')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                     <i class="bi bi-pc-display-horizontal iconos_menu letra_blanca"></i>
@@ -789,7 +791,7 @@
                 </ul>
             </li>
         @endcan
-        @can('user_management_access')
+        @can('ajustes_usuario_acceder')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                     <i class="bi bi-gear iconos_menu letra_blanca"></i>
@@ -935,7 +937,7 @@
             </li>
         @endcan
         {{-- @can('') este acceso no corresponde --}}
-        @can('configurar_soporte_access')
+        @can('configurar_soporte_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.configurar-soporte.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/configurar-soporte') || request()->is('admin/configurar-soporte/*') ? 'active' : '' }}">
@@ -1038,12 +1040,12 @@
             }
 
         </style>
-        <li class="botones_g_s">
-            @can('listados_soporte_access')
+        <div class="text-center botones_g_s" style="margin-top: 80px;">
+            @can('principal_soporte_acceder')
                 <a href="{{ route('admin.soporte') }}" title="Soporte" style="margin-right:14px;"><i
                         class="bi bi-headset"></i></a>
             @endcan
-            @can('glosario_access')
+            @can('principal_glosario_acceder')
                 <a href="{{ route('admin.glosarios.render') }}" title="Glosario"><i class="bi bi-book"></i></a>
             @endcan
         </li>

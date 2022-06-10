@@ -286,7 +286,7 @@
                     {
                         data: 'objetivos',
                         render: function(data, type, row, meta) {
-                            if (data.length > 0) {
+                            if (data) {
                                 if (data.length == 1) {
                                     return `<span class="badge badge-success">${data.length} objetivo asignado</span>`;
                                 } else {
@@ -311,17 +311,17 @@
                                 `/admin/recursos-humanos/evaluacion-360/objetivos/${data}/copiar`;
                             let html = `
                             <div class="d-flex">
-                            @can('objetivos_estrategicos_create')
+                            @can('objetivos_estrategicos_agregar')
                                 <a href="${urlAsignar}" title="Editar" class="btn btn-sm btn-primary">
                                     <i class="fas fa-user-tag"></i> Agregar
                                 </a>
                             @endcan
-                            @can('objetivos_estrategicos_copy')
+                            @can('objetivos_estrategicos_copiar')
                                 <button onclick="CopiarObjetivos('${urlVistaCopiarObjetivos}','${row.name}','${data}')" title="Copiar Objetivos"
                                     class="ml-2 text-white btn btn-sm" style="background:#11bb55">
                                     <i class="fas fa-copy"></i>Copiar</button>
                             @endcan
-                            @can('objetivos_estrategicos_show')
+                            @can('objetivos_estrategicos_ver')
                                 <a href="${urlShow}" title="Visualizar" class="ml-2 text-white btn btn-sm" style="background:#1da79f">
                                     <i class="fas fa-eye"></i> Ver
                                 </a>

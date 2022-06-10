@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 
+@can('lista_de_perfiles_de_puesto_agregar')
+
     {{ Breadcrumbs::render('perfil-puesto-create') }}
     <h5 class="col-12 titulo_general_funcion">Registrar: Puesto</h5>
     <div class="card mt-4">
@@ -738,7 +740,7 @@
         </div>
     </div>
 
-
+@endcan
 
 @endsection
 

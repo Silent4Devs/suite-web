@@ -98,6 +98,7 @@
 
 
 <div class="card card-body" style="margin-top:50px;">
+    @can('mi_perfil_mi_calendario_acceder')
     <div class="caja" style="margin-top:-60px;">
         <div id="lnb">
 
@@ -186,6 +187,7 @@
             <div id="calendar"></div>
         </div>
     </div>
+    @endcan
 </div>
 
 
@@ -261,7 +263,7 @@
                         <font style="font-weight: bold;">Cumpleaños:</font> ${@json(\Carbon\Carbon::parse($cumple->cumpleaños)->format('d-m'))}<br>
                         <font style="font-weight: bold;">Area:</font> ${@json($cumple->area ?$cumple->area->area:null)}<br>
                         <font style="font-weight: bold;">Puesto:</font> ${@json($cumple->puesto)}<br>
-                        
+
                     `,
                 },
             @endforeach
@@ -281,7 +283,7 @@
                         <font style="font-weight: bold;">Aniversario:</font> ${@json(\Carbon\Carbon::parse($aniversario->antiguedad)->format('d-m'))}<br>
                         <font style="font-weight: bold;">Area:</font> ${@json($aniversario->area?$aniversario->area->area:null)}<br>
                         <font style="font-weight: bold;">Puesto:</font> ${@json($aniversario->puesto)}<br>
-                        
+
                     `,
                 },
             @endforeach

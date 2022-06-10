@@ -64,7 +64,6 @@
         .display-almacenando p {
             font-size: 30px;
         }
-
     </style>
     {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
     <h5 class="col-12 titulo_general_funcion">Asignar Objetivos Estratégicos</h5>
@@ -165,7 +164,9 @@
 
 
             let dtButtons = [];
-
+            let empleado = @json($empleado);
+            let auth = @json(Auth::user()->empleado);
+            let supervisor = @json($empleado->supervisor);
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -184,10 +185,26 @@
                         return data.meta + ' ' + row.objetivo?.metrica?.definicion;
                     }
                 }, {
+                    data: 'objetivo.esta_aprobado',
+                    render: function(data, type, row, meta) {
+                        if (data == 1) {
+                            return '<span class="badge badge-success">Aprobado</span>';
+                        } else if (data == 2) {
+                            let html = `
+                            <span class="badge badge-danger">No Aprobado
+                                <i class="fas fa-comment ml-1" title="${row.objetivo.comentarios_aprobacion}"></i>
+                            </span>`;
+                            return html;
+                        } else {
+                            return '<span class="badge badge-warning">Pendiente</span>';
+                        }
+                    }
+                }, {
                     data: 'objetivo.descripcion_meta',
                 }, {
                     data: 'id',
                     render: function(data, type, row, meta) {
+
                         let urlBtnEditar =
                             `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/${row.objetivo_id}/editByEmpleado`;
                         let urlBtnActualizar =
@@ -197,11 +214,25 @@
                         let urlShow =
                             `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/lista`;
                         let botones = `
-                            <div class="btn-group">
-                                <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
-                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                                </div>
                                 `;
+                        if (row.objetivo.esta_aprobado == 0) {
+                            if (auth.id == supervisor.id) {
+                                botones +=
+                                    `<div class="col-12">
+                                        <button onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},true);" class="btn btn-small text-success"><i class="fa-solid fa-thumbs-up"></i></button>
+                                        <button onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},false);" class="btn btn-small text-danger"><i class="fa-solid fa-thumbs-down"></i></button>
+                                        </div>
+                                    </div>
+                                    `;
+                            }
+                        } else {
+                            botones += `</div>`;
+                        }
 
                         return botones;
                     }
@@ -215,6 +246,74 @@
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
             };
             window.tblObjetivos = $('.tblObjetivos').DataTable(dtOverrideGlobals);
+
+            window.aprobarObjetivoEstrategico = (objetivo, empleado, estaAprobado) => {
+                let textoAprobacion = estaAprobado ? 'Aprobar' : 'Rechazar';
+                let textoAprobado = estaAprobado ? 'Aprobado' : 'Rechazado';
+                let urlAprobacion = @json(route('admin.ev360-objetivos-empleado.aprobarRechazarObjetivo', ['empleado' => ':idEmpleado', 'objetivo' => ':idObjetivo']));
+                urlAprobacion = urlAprobacion.replace(':idEmpleado', empleado);
+                urlAprobacion = urlAprobacion.replace(':idObjetivo', objetivo);
+                console.log(urlAprobacion);
+                Swal.fire({
+                    title: `¿Está seguro de ${textoAprobacion.toLowerCase()} este objetivo estratégico?`,
+                    html: '<i class="fas fa-question-circle mr-2"></i> Razón de aceptación o rechazo',
+                    input: 'textarea',
+                    inputValidator: (value) => {
+                        if (!estaAprobado) {
+                            if (value.trim().length < 3) {
+                                return 'El campo debe tener al menos 3 caracteres'
+                            }
+                        }
+
+                    },
+                    inputAttributes: {
+                        'maxlength': 100,
+                        'autocapitalize': 'off',
+                        'autocorrect': 'off',
+                        'required': estaAprobado,
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: textoAprobacion,
+                    cancelButtonText: 'Cancelar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (comentarios_aprobacion) => {
+                        return fetch(urlAprobacion, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    esta_aprobado: estaAprobado,
+                                    objetivo,
+                                    empleado,
+                                    comentarios_aprobacion
+                                })
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                }
+                                return response.json()
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(
+                                    `Request failed: ${error}`
+                                )
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(textoAprobado, `Objetivo ${textoAprobado} con éxito`, 'success').then(
+                            () => {
+                                tblObjetivos.ajax.reload();
+                            });
+                    }
+                })
+
+            }
         });
         document.addEventListener('DOMContentLoaded', function() {
             $.ajaxSetup({
@@ -222,6 +321,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
             document.getElementById('BtnAgregarObjetivo').addEventListener('click', function(e) {
                 e.preventDefault();
                 limpiarErrores();

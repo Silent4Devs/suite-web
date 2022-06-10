@@ -1,5 +1,5 @@
 <ul class="mt-2">
-    @can('analisis_de_riesgos_amenazas_access')
+    @can('amenazas_acceder')
         <li>
             <a href="{{ route('admin.amenazas.index') }}">
                 <div>
@@ -9,7 +9,7 @@
             </a>
         </li>
     @endcan
-    @can('analisis_de_riesgos_vulnerabilidades_access')
+    @can('vulnerabilidades_acceder')
         <li>
             <a href="{{ route('admin.vulnerabilidads.index') }}">
                 <div>
@@ -19,7 +19,7 @@
             </a>
         </li>
     @endcan
-    @can('analisis_de_riesgos_matriz_riesgo_access')
+    @can('matriz_de_riesgo_acceder')
         <li>
             <a href="{{ route('admin.analisis-riesgos.index') }}">
                 <div>

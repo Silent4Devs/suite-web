@@ -163,6 +163,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@destroy')->name('ev360-conductas.destroy');
 
     Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@createByEmpleado')->name('ev360-objetivos-empleado.create');
+    Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos/{objetivo}/aprobar', 'RH\EV360ObjetivosController@aprobarRechazarObjetivo')->name('ev360-objetivos-empleado.aprobarRechazarObjetivo');
     Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos/lista', 'RH\EV360ObjetivosController@show')->name('ev360-objetivos-empleado.show');
     Route::get('recursos-humanos/evaluacion-360/objetivos/{empleado}/copiar', 'RH\EV360ObjetivosController@indexCopiar')->name('ev360-objetivos-empleado.indexCopiar');
     Route::post('recursos-humanos/evaluacion-360/objetivos/definir-nuevos', 'RH\EV360ObjetivosController@definirNuevosObjetivos')->name('ev360-objetivos-empleado.definir-nuevos');

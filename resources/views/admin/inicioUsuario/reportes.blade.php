@@ -64,12 +64,16 @@
 
                 {{-- </div> --}}
                 <div class="caja_btn_reporte">
+                    @can('mi_perfil_mis_reportes_realizar_reporte_de_incidente_de_seguridad')
                         <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}"  class="btn_reporte smargin">
                             <i class="bi bi-exclamation-octagon"></i><br/> <span>Incidente de Seguridad</span>
                         </a>
+                    @endcan
+                    @can('mi_perfil_mis_reportes_realizar_reporte_de_riesgo_identificado')
                         <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}"  class="btn_reporte smargin">
                             <i class="bi bi-shield-exclamation"></i>  <br/><span>Riesgo Identificado</span>
                         </a>
+                    @endcan
                 </div>
             </div>
         </div>
@@ -81,19 +85,26 @@
                 </div>
                 {{-- --}}
                 <div class="caja_btn_reporte">
+                @can('mi_perfil_mis_reportes_realizar_reporte_de_queja')
                     <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="btn_reporte">
                         <i class="bi bi-emoji-frown"></i> <br/><span> Queja</span>
                     </a>
-
+                @endcan
+                @can('mi_perfil_mis_reportes_realizar_reporte_de_denuncia')
                     <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="btn_reporte">
                         <i class="bi bi-flag"></i> <br/><span> Denuncia</span>
                     </a>
+                @endcan
+                @can('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora')
                     <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="btn_reporte">
                         <i class="bi bi-award"></i><br/><span> Propuesta de Mejora</span>
                     </a>
+                @endcan
+                @can('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia')
                     <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="btn_reporte">
                         <i class="bi bi-lightbulb"></i> <br/><span> Sugerencia</span>
                     </a>
+                @endcan
                 </div>
             </div>
         </div>

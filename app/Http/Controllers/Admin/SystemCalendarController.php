@@ -19,7 +19,7 @@ class SystemCalendarController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('agenda_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('calendario_corporativo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleado = auth()->user()->empleado;
         $usuario = auth()->user();

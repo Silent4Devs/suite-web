@@ -22,7 +22,7 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::get();
         $organizaciones = Organizacione::get();

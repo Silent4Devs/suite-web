@@ -520,57 +520,59 @@
                             </div>
                         </div>
                         <div class="mt-5 col-lg-12">
-                            <div class="card card-body">
-                                <h2 class="titulo-seccion mb-3" style="font-weight:normal;"><i
-                                        class="mr-3 far fa-newspaper"></i>Comunicados</h2>
-                                @forelse($comunicacionSgis as $comunicacionSgi)
-                                    <div class="comunicado" style="position:relative;">
-                                        @php
-                                            if ($comunicacionSgi->first()->count()) {
-                                                if ($comunicacionSgi->imagenes_comunicacion->first()) {
-                                                    $imagen = 'storage/imagen_comunicado_SGI/' . $comunicacionSgi->imagenes_comunicacion->first()->imagen;
+                            @can('portal_comunicacion_mostrar_comunicados')
+                                <div class="card card-body">
+                                    <h2 class="titulo-seccion mb-3" style="font-weight:normal;"><i
+                                            class="mr-3 far fa-newspaper"></i>Comunicados</h2>
+                                    @forelse($comunicacionSgis as $comunicacionSgi)
+                                        <div class="comunicado" style="position:relative;">
+                                            @php
+                                                if ($comunicacionSgi->first()->count()) {
+                                                    if ($comunicacionSgi->imagenes_comunicacion->first()) {
+                                                        $imagen = 'storage/imagen_comunicado_SGI/' . $comunicacionSgi->imagenes_comunicacion->first()->imagen;
+                                                    }
+                                                } else {
+                                                    $imagen = 'img/portal_404.png';
                                                 }
-                                            } else {
-                                                $imagen = 'img/portal_404.png';
-                                            }
 
-                                        @endphp
+                                            @endphp
 
-                                        {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
+                                            {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
 
-                                        <div class="img_comunicado"
-                                            style="background-image: url('{{ asset($imagen) }}');">
-                                        </div>
-                                        <div class="text_comunicado">
-                                            <h4 class="w-100 mb-4" style="font-size:16px;">
-                                                {{ $comunicacionSgi->titulo }}</h4>
-
-                                            <div
-                                                style="text-align:left !important; overflow:hidden; height:100px !important;  padding:0px; display:block !important; justify-content:start !important;">
-                                                {!! $comunicacionSgi->descripcion !!}
+                                            <div class="img_comunicado"
+                                                style="background-image: url('{{ asset($imagen) }}');">
                                             </div>
-                                            <a href="{{ asset('admin/comunicacion-sgis/' . $comunicacionSgi->id) }}"
-                                                style="font-size:12px;">Leer
-                                                más</a>
+                                            <div class="text_comunicado">
+                                                <h4 class="w-100 mb-4" style="font-size:16px;">
+                                                    {{ $comunicacionSgi->titulo }}</h4>
+
+                                                <div
+                                                    style="text-align:left !important; overflow:hidden; height:100px !important;  padding:0px; display:block !important; justify-content:start !important;">
+                                                    {!! $comunicacionSgi->descripcion !!}
+                                                </div>
+                                                <a href="{{ asset('admin/comunicacion-sgis/' . $comunicacionSgi->id) }}"
+                                                    style="font-size:12px;">Leer
+                                                    más</a>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <hr style="margin: 18px 0;">
-                                @empty
-                                    <div class="comunicado" style="position:relative;">
-                                        <div class="img_comunicado"
-                                            style="background-image: url('{{ asset('img/portal_404.png') }}');"></div>
-                                        <div class="text_comunicado">
-                                            <h4 class="w-100">Sin comunicados que mostar</h4>
-                                            <p class="w-100">
+                                        <hr style="margin: 18px 0;">
+                                    @empty
+                                        <div class="comunicado" style="position:relative;">
+                                            <div class="img_comunicado"
+                                                style="background-image: url('{{ asset('img/portal_404.png') }}');"></div>
+                                            <div class="text_comunicado">
+                                                <h4 class="w-100">Sin comunicados que mostar</h4>
+                                                <p class="w-100">
 
-                                            </p>
-                                            <a href=""></a>
+                                                </p>
+                                                <a href=""></a>
+                                            </div>
                                         </div>
-                                    </div>
-                                @endforelse
-                            </div>
-
+                                    @endforelse
+                                </div>
+                            @endcan
+                            @can('portal_comunicacion_mostrar_documentos_publicados')
                             <div class="card card-body">
                                 <h2 class="titulo-seccion" style="font-weight:normal;"><i
                                         class="mr-3 far fa-file-alt"></i>Documentos publicados </h2>
@@ -631,7 +633,9 @@
                                     </div>
                                 @endforelse
                             </div>
+                            @endcan
                         </div>
+
                     </div>
                 </div>
                 <div class="col-sm-3">

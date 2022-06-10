@@ -120,11 +120,11 @@
                         </a>
                     @endcan
                 @endif
-                {{-- @can('organizacion_edit') --}}
+                @can('mi_organizacion_panel_de_control')
                 <a class="btn btn-success" style="float: left;" href="{{ route('admin.panel-organizacion.index') }}">
                     Panel de Control
-                {{-- @endcan --}}
-                @can('organizacion_edit')
+                @endcan
+                @can('mi_organizacion_editar_organizacion')
                     <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}" class=' btn btn-danger'>
                         Editar Organización
                     </a>
