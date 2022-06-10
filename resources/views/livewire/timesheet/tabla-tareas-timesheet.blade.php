@@ -6,6 +6,21 @@
         .input_tarea{
             transition: 0.4s;
         }
+
+        .modal-hover-caja .modal-hover{
+            display: none;
+            position: absolute;
+            border: 1px solid #ccc;
+            font-size: 10px;
+            padding: 10px 20px;
+            background-color: #f3f3f3;
+        }
+        .modal-hover li{
+            margin-top: 7px;
+        }
+        .modal-hover-caja:hover .modal-hover{
+            display: block;
+        }
     </style>
     @can('timesheet_administrador_tareas_proyectos_create')
         <form wire:submit.prevent="create()" class="form-group w-100">
@@ -65,21 +80,22 @@
                         <tr>
                             <td wire:ignore> <input class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}" name="tarea" value="{{ $tarea->tarea }}"> </td>
                             <td> {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }} </td>
-                            <td>
-                                <select id="areas_select" class="form-control" {{$area_seleccionar ? '' : 'disabled'}} required>
+                            <td style="display:flex; align-items: center;">
+                                <select class="form-control" style="width:300px;">
                                     <option value="0" {{$tarea->todos ? 'selected' : ''}}>Todas</option>
-                                    @if ($area_seleccionar)
-                                        @foreach ($area_seleccionar as $area)
-                                            <option value="{{$area['id']}}" {{$area['id'] == $tarea->area_id ? 'selected' : ''}}>{{$area['area']}}</option>
-                                        @endforeach
-                                    @endif
-                                    falta que el select muestre si tiene leseccionado todas las areas o solo la que unica que seleccionaron y que edite al cambiar el valor dentro del selec
-                                </select>
-                                <ul style="padding-left: 15px;">
-                                    @foreach ($tarea->areas as $key => $area)
-                                        <li>{{$area->area}}</li>
+                                    @foreach ($tarea->areas as $area)
+                                        <option value="{{$area['id']}}" {{$area['id'] == $tarea->area_id ? 'selected' : ''}}>{{$area['area']}}</option>
                                     @endforeach
-                                </ul>
+                                </select>
+                                @if($tarea->todos)
+                                    <i class="fa-solid fa-eye ml-2 modal-hover-caja" style="font-size:15pt; cursor: pointer;">
+                                        <ul class="modal-hover">
+                                            @foreach ($tarea->areas as $key => $area)
+                                                <li>{{$area->area}}</li>
+                                            @endforeach
+                                        </ul>
+                                    </i>
+                                @endif 
                             </td>
                             <td>
                                 @can('timesheet_administrador_tareas_proyectos_delete')
