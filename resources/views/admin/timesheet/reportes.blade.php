@@ -246,14 +246,14 @@
                 window.location.href = url;
                 }
             };
-            
+
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 destroy: true,
-                aLengthMenu: [ 
-                    [5, 10, 50, 100, -1], 
-                    [5, 10, 50, 100, "Todos"] 
-                ], 
+                aLengthMenu: [
+                    [5, 10, 50, 100, -1],
+                    [5, 10, 50, 100, "Todos"]
+                ],
                 iDisplayLength: -1,
                 "footerCallback": function ( row, data, start, end, display ) {
                     var api = this.api();
@@ -271,7 +271,7 @@
                 // Update footer
                 $( api.column( j ).footer() ).html(pageTotal);
                         j++;
-                    } 
+                    }
                 }
             };
 
@@ -304,10 +304,7 @@
                 //         table_1.columns(3).search(this.value).draw();
                 //     }
                 // });
-        });   
-    </script>
-    <script type="text/javascript">
-        
+        });
     </script>
     <script type="text/javascript">
         $('.select2').select2({
@@ -322,8 +319,8 @@
                     firstDayOfWeek: 1,
                     weekdays: {
                       shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
-                    }, 
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    },
                     months: {
                       shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
                       longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -336,15 +333,15 @@
                 "disable": [
                     function(date) {
                         return (date.getDay() === 0 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
-                        
+
                     }
                 ],
                 locale: {
                     firstDayOfWeek: 1,
                     weekdays: {
                       shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
-                    }, 
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    },
                     months: {
                       shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
                       longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -355,15 +352,15 @@
                 "disable": [
                     function(date) {
                         return (date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
-                        
+
                     }
                 ],
                 locale: {
                     firstDayOfWeek: 1,
                     weekdays: {
                       shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
-                    }, 
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    },
                     months: {
                       shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
                       longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -374,15 +371,15 @@
                 "disable": [
                     function(date) {
                         return (date.getDay() === 0 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
-                        
+
                     }
                 ],
                 locale: {
                     firstDayOfWeek: 1,
                     weekdays: {
                       shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
-                    }, 
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    },
                     months: {
                       shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
                       longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -393,15 +390,15 @@
                 "disable": [
                     function(date) {
                         return (date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
-                        
+
                     }
                 ],
                 locale: {
                     firstDayOfWeek: 1,
                     weekdays: {
                       shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
-                    }, 
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    },
                     months: {
                       shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
                       longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],

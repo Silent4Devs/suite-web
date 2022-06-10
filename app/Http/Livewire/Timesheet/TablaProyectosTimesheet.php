@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\Sede;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoArea;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -17,7 +18,7 @@ class TablaProyectosTimesheet extends Component
 
     public $identificador;
     public $proyecto_name;
-    public $area_id;
+    public $areas_seleccionadas;
     public $cliente_id;
     public $fecha_inicio;
     public $fecha_fin;
@@ -28,6 +29,7 @@ class TablaProyectosTimesheet extends Component
     public $terminado_count;
 
     public $sedes;
+    public $areas;
 
     public function mount()
     {
@@ -55,11 +57,11 @@ class TablaProyectosTimesheet extends Component
 
     public function store()
     {
+
         $this->validate(
             [
                 'identificador' => 'required|unique:timesheet_proyectos,identificador',
                 'proyecto_name'=>'required',
-                'area_id'=>'required',
                 'fecha_inicio'=>'required|before:fecha_fin',
                 'fecha_fin'=>'required|after:fecha_inicio',
             ],
@@ -73,12 +75,18 @@ class TablaProyectosTimesheet extends Component
         $nuevo_proyecto = TimesheetProyecto::create([
             'identificador' => $this->identificador,
             'proyecto' => $this->proyecto_name,
-            'area_id' => $this->area_id,
             'cliente_id' => $this->cliente_id,
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_fin' => $this->fecha_fin,
             'sede_id' => $this->sede_id,
         ]);
+
+        foreach ($this->areas_seleccionadas as $key => $area_id) {
+            TimesheetProyectoArea::create([
+                'proyecto_id'=>$nuevo_proyecto->id,
+                'area_id'=>$area_id,
+            ]);
+        }
 
         $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
 

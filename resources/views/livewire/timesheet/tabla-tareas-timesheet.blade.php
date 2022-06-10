@@ -17,13 +17,25 @@
                         </div>
                     @endif
                     @if ($origen == 'tareas')
-                        <select class="mr-4 form-control" wire:model="proyecto_id" required>
-                            <option selected value="">Seleccione proyecto al que pertenece</option>
+                        <select id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id" required>
+                            <option value="">Seleccione proyecto al que pertenece</option>
                             @foreach ($proyectos as $proyecto)
                                 <option value="{{ $proyecto->id }}">{{ $proyecto->proyecto }}</option>
                             @endforeach
                         </select>
                     @endif
+                </div>
+                <div class="form-group w-100 mr-4">
+                    <label>Area</label>
+                    <select id="areas_select" class="form-control" {{$area_seleccionar ? '' : 'disabled'}} required>
+                        <option disabled selected value=""> - - </option>
+                        <option value="0">Todas</option>
+                        @if ($area_seleccionar)
+                            @foreach ($area_seleccionar as $area)
+                                <option value="{{$area['id']}}">{{$area['area']}}</option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
                 <div class="form-group w-100 mr-4">
                     <label><i class="fas fa-list-alt iconos-crear"></i> Tarea Nueva</label>
@@ -42,16 +54,33 @@
                 <tr>
                     <th>Tarea </th>
                     <th>Proyecto</th>
+                    <th>Area</th>
                     <th style="max-width: 150px; width: 150px;">Opciones</th>
                 </tr>
             </thead>
 
             <tbody>
                 @if ($origen == 'tareas')
-                    @foreach ($tareas as $tarea)
+                    @foreach ($tareas as $key => $tarea)
                         <tr>
                             <td wire:ignore> <input class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}" name="tarea" value="{{ $tarea->tarea }}"> </td>
                             <td> {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }} </td>
+                            <td>
+                                <select id="areas_select" class="form-control" {{$area_seleccionar ? '' : 'disabled'}} required>
+                                    <option value="0" {{$tarea->todos ? 'selected' : ''}}>Todas</option>
+                                    @if ($area_seleccionar)
+                                        @foreach ($area_seleccionar as $area)
+                                            <option value="{{$area['id']}}" {{$area['id'] == $tarea->area_id ? 'selected' : ''}}>{{$area['area']}}</option>
+                                        @endforeach
+                                    @endif
+                                    falta que el select muestre si tiene leseccionado todas las areas o solo la que unica que seleccionaron y que edite al cambiar el valor dentro del selec
+                                </select>
+                                <ul style="padding-left: 15px;">
+                                    @foreach ($tarea->areas as $key => $area)
+                                        <li>{{$area->area}}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
                             <td>
                                 @can('timesheet_administrador_tareas_proyectos_delete')
                                     @php
@@ -174,6 +203,16 @@
                     let value = elemento.value;
                     @this.actualizarNameTarea(id, value);
                 }
+            });
+
+            document.querySelector('#proyectos_select').addEventListener('change', (e)=>{
+                let proyecto_id = e.target.value;
+                @this.llenarAreas(proyecto_id);
+            });
+
+            document.querySelector('#areas_select').addEventListener('change', (e)=>{
+                let value = e.target.value;
+                @this.set('area_select', value, true);
             });
 
             Livewire.on('tarea-actualizada', (tarea)=>{

@@ -82,10 +82,6 @@
             padding: 0 5px 5px 5px !important;
         }
 
-        .select2-container {
-            margin-top: 10px !important;
-        }
-
         /*TOASTR*/
         #toast-container>div {
             opacity: 1 !important;

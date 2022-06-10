@@ -15,9 +15,12 @@ class TablaTareasTimesheet extends Component
     public $proyectos;
     public $proyecto_seleccionado;
     public $tarea_name;
+    public $area_select;
     public $proyecto_id;
     public $origen;
     public $tareas_proyecto;
+
+    public $area_seleccionar;
 
     public $tarea_name_actualizada;
 
@@ -25,6 +28,7 @@ class TablaTareasTimesheet extends Component
     {
         $this->origen = $origen;
         $this->proyecto_id = $proyecto_id;
+        $this->area_seleccionar = null;
     }
 
     public function render()
@@ -37,6 +41,7 @@ class TablaTareasTimesheet extends Component
         if ($this->origen == 'tareas-proyectos') {
             $this->proyecto_seleccionado = TimesheetProyecto::find($this->proyecto_id);
             $this->tareas_proyecto = TimesheetTarea::where('proyecto_id', $this->proyecto_id)->orderByDesc('id')->get();
+            $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         }
 
         $this->emit('scriptTabla');
@@ -49,11 +54,23 @@ class TablaTareasTimesheet extends Component
         $this->validate([
             'tarea_name'=>'required',
             'proyecto_id'=>'required',
+            'area_select'=>'required',
         ]);
 
+
+
+        if ($this->area_select == 0) {
+            $area_id = null;
+            $todos = true;
+        }else{
+            $area_id = $this->area_select;
+            $todos = false;
+        }
         $nueva_tarea = TimesheetTarea::create([
             'tarea' => $this->tarea_name,
             'proyecto_id' => $this->proyecto_id,
+            'area_id' => $area_id,
+            'todos' => $todos,
         ]);
 
         $this->alert('success', 'Registro añadido!');
@@ -67,6 +84,12 @@ class TablaTareasTimesheet extends Component
             'tarea'=>$value,
         ]);
         $this->emit('tarea-actualizada', $tarea_actualizada);
+    }
+
+    public function llenarAreas($id)
+    {
+        $this->proyecto_seleccionado = TimesheetProyecto::find($id);
+        $this->area_seleccionar = $this->proyecto_seleccionado->areas;
     }
 
     public function destroy($id)

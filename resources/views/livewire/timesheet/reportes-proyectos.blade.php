@@ -47,7 +47,7 @@
             transition: 0.3s;
         }
 
-        
+
 
         .datatable_timesheet_proyectos tr th:first-child::before,
         .datatable_timesheet_proyectos tr td:first-child::before,
@@ -123,7 +123,7 @@
                         <thead>
                             <tr>
                                 <th style="min-width:250px;">Proyecto </th>
-                                <th style="min-width:250px; text-align: right;">Área</th>
+                                <th style="min-width:250px; text-align: right;">Áreas participantes</th>
                                 <th style="min-width:250px; text-align: right;">Cliente</th>
                                 @foreach($calendario_tabla as $calendar)
                                     <th colspan="{{ $calendar['total_weeks'] }}" class="th-calendario th-año"><small>{{ $calendar['year'] }}</small></th>
@@ -205,7 +205,13 @@
                             @foreach ($proyectos_array as $proyecto)
                                 <tr>
                                     <td>{{ $proyecto['proyecto'] }} </td>
-                                    <td>{{ $proyecto['area'] }} </td>
+                                    <td>
+                                        <ul style="padding-left: 10px;">
+                                            @foreach ($proyecto['areas'] as $area)
+                                               <li>{{ $area['area'] }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
                                     <td>{{ $proyecto['cliente'] }} </td>
                                     @foreach($proyecto['calendario'] as $index=>$horas_calendar)
                                         <td style="font-size: 10px !important; text-align: center !important;">{!! $horas_calendar !!}</td>

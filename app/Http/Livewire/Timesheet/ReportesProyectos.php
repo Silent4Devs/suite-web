@@ -8,6 +8,7 @@ use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
+use App\Models\Organizacion;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -111,10 +112,10 @@ class ReportesProyectos extends Component
             $fecha_fin_complit_timesheet = $this->hoy;
         }
 
-
+        // dd($fecha_fin_complit_timesheet);
 
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
-        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday' , $this->fecha_fin ? Carbon::parse($fecha_fin_complit_timesheet) : null);
+        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday' , $fecha_fin_complit_timesheet);
         $total_months = 0;
         foreach ($semanas_complit_timesheet as $semana) {
             $semana_array = explode('|', $semana);
@@ -127,15 +128,16 @@ class ReportesProyectos extends Component
                 $year = $fecha->format('Y');
                 $month = $fecha->format('F');
                 if (!($this->buscarKeyEnArray($year, $calendario_array))) {
+
                     $calendario_array["{$year}"] = [
                         'year'=>$year,
                         'total_weeks'=>0,
                         'total_months'=>0,
                         'months'=>[
                             "{$month}"=>[
-                                'weeks'=>[],
-                            ],
-                        ],
+                                'weeks'=>[]
+                            ]
+                        ]
                     ];
 
                     if ($month == 'January') {
@@ -146,17 +148,20 @@ class ReportesProyectos extends Component
                             }
                         }
                     }
-                } else {
+
+                }else{
                     if (array_key_exists($month, $calendario_array["{$year}"]['months'])) {
                         if (!in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
-                    } else {
+                    }else{
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
+
                             if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
-                        } else {
+
+                        }else{
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
                     }
@@ -231,7 +236,7 @@ class ReportesProyectos extends Component
             $this->proyectos_array->push([
                 'id'=>$proyecto->id,
                 'proyecto'=>$proyecto->proyecto,
-                'area'=>$proyecto->area ? $proyecto->area->area : '',
+                'areas'=>$proyecto->areas,
                 'cliente'=>$proyecto->cliente ? $proyecto->cliente->nombre : '',
                 'calendario'=>$calendario_tabla_proyectos,
             ]);

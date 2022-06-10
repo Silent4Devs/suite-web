@@ -57,10 +57,9 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-4" wire:ignore>
                     <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
-                    <select name="area_id" wire:model="area_id" class="form-control" required>
-                        <option selected value="">Seleccione área</option>
+                    <select id="areas_seleccionadas" name="areas_seleccionadas" wire:model="areas_seleccionadas" class="form-control select2" required multiple required>
                         @foreach ($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
                         @endforeach
@@ -125,7 +124,7 @@
                     <th>Fecha inicio </th>
                     <th>Fecha termino</th>
                     <th>Cliente</th>
-                    <th>Área(s)</th>
+                    <th style="max-width: 250px !important;">Área(s)</th>
                     <th>Sede</th>
                     <th>Estatus</th>
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
@@ -140,7 +139,13 @@
                         <td>{{ $proyecto->fecha_inicio }} </td>
                         <td>{{ $proyecto->fecha_fin }} </td>
                         <td>{{ $proyecto->cliente_id ? $cliente->nombre : '' }} </td>
-                        <td>{{ $proyecto->area_id ? $proyecto->area->area : '' }} </td>
+                        <td>
+                            <ul style="padding-left:10px; ">
+                                @foreach($proyecto->areas as $area)
+                                    <li>{{$area->area}}</li>
+                                @endforeach
+                            </ul>
+                        </td>
                         <td>{{ $proyecto->sede_id ? $proyecto->sede->sede : '' }} </td>
                         <td>{{ $proyecto->estatus }} </td>
                         <td>
@@ -305,11 +310,13 @@
                               </div>
                               <div class="form-group col-md-6">
                                   <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
-                                  <select name="area_id" class="form-control" required>
-                                      <option selected value="{{ $proyecto->area->id }}">{{ $proyecto->area->area }}</option>
-                                      @foreach ($areas as $area)
-                                          <option value="{{ $area->id }}">{{ $area->area }}</option>
-                                      @endforeach
+                                  <select name="areas_seleccionadas[]" class="form-control select2" required multiple>
+                                    @foreach ($proyecto->areas as $area)
+                                        <option selected value="{{ $area->id }}">{{ $area->area }}</option>
+                                    @endforeach
+                                    @foreach ($areas as $area)
+                                        <option value="{{ $area->id }}">{{ $area->area }}</option>
+                                    @endforeach
                                   </select>
                               </div>
                               <div class="form-group col-md-6">
@@ -333,19 +340,28 @@
           </div>
         {{-- <div class="btn btn-danger" wire:click="click_e()">wire:click="click_e()"</div> --}}
     @endforeach
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', ()=>{
-            Livewire.on('scriptTabla', ()=>{
-                tablaLivewire('datatable_timesheet_proyectos');
+    @section('scripts')
+        @parent
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', ()=>{
+                Livewire.on('scriptTabla', ()=>{
+                    tablaLivewire('datatable_timesheet_proyectos');
+                });
+                document.getElementById('identificador_proyect').addEventListener('keyup', (e)=>{
+                    let value = e.target.value;
+                    @this.set('identificador', value, true);
+                });
+                document.getElementById('name_proyect').addEventListener('keyup', (e)=>{
+                    let value = e.target.value;
+                    @this.set('proyecto_name', value, true);
+                });
+
+                $(document.body).on("change","#areas_seleccionadas",function(){
+                    let value = $('#areas_seleccionadas').val();
+                    @this.set('areas_seleccionadas', value, true);
+                });
+
             });
-            document.getElementById('identificador_proyect').addEventListener('keyup', (e)=>{
-                let value = e.target.value;
-                @this.set('identificador', value, true);
-            });
-            document.getElementById('name_proyect').addEventListener('keyup', (e)=>{
-                let value = e.target.value;
-                @this.set('proyecto_name', value, true);
-            });
-        });
-    </script>
+        </script>
+    @endsection
 </div>

@@ -13,6 +13,7 @@ use App\Models\Timesheet;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetTarea;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -476,7 +477,6 @@ class TimesheetController extends Controller
             [
                 'identificador' => 'required|unique:timesheet_proyectos,identificador,' . $id,
                 'proyecto'=>'required',
-                'area_id'=>'required',
                 'fecha_inicio'=>'required|before:fecha_fin',
                 'fecha_fin'=>'required|after:fecha_inicio',
             ],
@@ -490,6 +490,15 @@ class TimesheetController extends Controller
         $edit_proyecto = TimesheetProyecto::find($id);
 
         $edit_proyecto->update($request->all());
+
+        $proyectos_areas_eliminados = TimesheetProyectoArea::where('proyecto_id', $edit_proyecto->id)->delete();
+
+        foreach ($request->areas_seleccionadas as $key => $area_id) {
+            TimesheetProyectoArea::create([
+                'proyecto_id'=>$edit_proyecto->id,
+                'area_id'=>$area_id,
+            ]);
+        }
 
         return back()->with('success', 'Guardado con éxito');
     }
@@ -903,6 +912,15 @@ class TimesheetController extends Controller
 
         $empleados_childern = $aprobador->children;
 
-        return view('admin.timesheet.reporte-aprobador');
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.reporte-aprobador', compact('logo_actual', 'empresa_actual'));
     }
 }
