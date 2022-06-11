@@ -34,7 +34,7 @@ class MinutasaltadireccionController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('minutasaltadireccion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('revision_por_direccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Minutasaltadireccion::with(['responsable', 'team', 'participantes', 'planes'])->orderByDesc('id')->get();
             // $table = Datatables::of($query);
@@ -95,7 +95,7 @@ class MinutasaltadireccionController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('minutasaltadireccion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->with('area')->get();
         $esta_vinculado = auth()->user()->empleado ? true : false;
         // dd($esta_vinculado);
@@ -105,6 +105,7 @@ class MinutasaltadireccionController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required',
@@ -421,7 +422,7 @@ class MinutasaltadireccionController extends Controller
 
     public function show(Minutasaltadireccion $minutasaltadireccion)
     {
-        abort_if(Gate::denies('minutasaltadireccion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $minutasaltadireccion->load('responsable', 'team');
 
@@ -430,7 +431,7 @@ class MinutasaltadireccionController extends Controller
 
     public function destroy(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {
-        abort_if(Gate::denies('minutasaltadireccion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('revision_por_direccion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $minutasaltadireccion->delete();
 

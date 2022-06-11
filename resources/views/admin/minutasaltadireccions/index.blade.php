@@ -44,7 +44,7 @@
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.index') }}
 
-    @can('minutasaltadireccion_create')
+    @can('revision_por_direccion_agregar')
 
         <h5 class="col-12 titulo_general_funcion">Revisión por dirección</h5>
         <div class="mt-5 card">
@@ -173,7 +173,7 @@
                 }
 
             ];
-            @can('minutasaltadireccion_delete')
+            @can('revision_por_direccion_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -202,7 +202,7 @@
                 }
                 //dtButtons.push(deleteButton)
             @endcan
-            @can('minutasaltadireccion_create')
+            @can('revision_por_direccion_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva minuta de Sesión con alta Dirección',
@@ -317,11 +317,18 @@
                             let urlBotonEliminar = `/admin/minutasaltadireccions/${data}`;
 
                             let htmlButtons = `
+                            @can('revision_por_direccion_editar')
                                 <a href="${urlBotonEditar}" class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
+                            @endcan
+                            @can('revision_por_direccion_ver')
                                 <a href="${urlBotonMostrar}" class="btn btn-sm" title="Visualizar"><i class="fa fa-eye"></i></a>
+                            @endcan
+                            @can('revision_por_direccion_plan_accion')
                                 ${row.planes.map(plan=>{
                                     return `<a href="/admin/planes-de-accion/${plan.id}" class="btn btn-sm" title="Plan de Acción"><i class="fa fa-stream"></i></a>`;
                                 })}
+                            @endcan
+                            @can('revision_por_direccion_visualizar_revisiones')
                                 <a class="btn btn-sm " title="Visualizar revisiones"
                                     href="/admin/minutasaltadireccions/${data}/historial-revisiones">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -333,7 +340,10 @@
                                             d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
                                     </svg>
                                 </a>
+                            @endcan
+                            @can('revision_por_direccion_eliminar')
                                 <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlBotonEliminar}','${row.tema_reunion}')"><i class="fa fa-trash-alt"></i></button>
+                            @endcan
                             `;
                             return htmlButtons;
                         }
