@@ -184,7 +184,7 @@
 
             ];
 
-            @can('tratamiento_riesgo_delete')
+            @can('tratamiento_de_los_riesgos_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar tratamiento de los riesgos',
@@ -197,7 +197,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('tratamiento_riesgo_delete')
+            @can('tratamiento_de_los_riesgos_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,

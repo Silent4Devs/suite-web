@@ -285,13 +285,13 @@
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                return `${row.reporto.email}`;
+                                return `${row.reporto?.email}`;
                             }
                         },
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                return `${row.reporto.telefono}`;
+                                return `${row.reporto?.telefono}`;
                             }
                         },
                         {
@@ -325,7 +325,10 @@
                                 let html =
                                     `
                 			<div class="botones_tabla">
-                				<a href="/admin/desk/${data}/seguridad-edit/"><i class="fas fa-edit"></i></a>`;
+                                @can('centro_atencion_incidentes_de_seguridad_editar')
+                				<a href="/admin/desk/${data}/seguridad-edit/"><i class="fas fa-edit"></i></a>
+                                @endcan
+                                `;
 
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {

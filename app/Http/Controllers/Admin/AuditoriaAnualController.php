@@ -19,7 +19,7 @@ class AuditoriaAnualController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('auditoria_anual_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('programa_anual_auditoria_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = AuditoriaAnual::with(['auditorlider', 'team'])->select(sprintf('%s.*', (new AuditoriaAnual)->table))->orderByDesc('id');
@@ -29,9 +29,9 @@ class AuditoriaAnualController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'auditoria_anual_show';
-                $editGate = 'auditoria_anual_edit';
-                $deleteGate = 'auditoria_anual_delete';
+                $viewGate = 'programa_anual_auditoria_ver';
+                $editGate = 'programa_anual_auditoria_editar';
+                $deleteGate = 'programa_anual_auditoria_eliminar';
                 $crudRoutePart = 'auditoria-anuals';
 
                 return view('partials.datatablesActions', compact(
@@ -79,7 +79,7 @@ class AuditoriaAnualController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('auditoria_anual_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('programa_anual_auditoria_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // $auditorliders = Empleado::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -91,6 +91,8 @@ class AuditoriaAnualController extends Controller
 
     public function store(StoreAuditoriaAnualRequest $request)
     {
+        abort_if(Gate::denies('programa_anual_auditoria_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $auditoriaAnual = AuditoriaAnual::create($request->all());
 
         return redirect()->route('admin.auditoria-anuals.index')->with('success', 'Guardado con éxito');
@@ -98,7 +100,7 @@ class AuditoriaAnualController extends Controller
 
     public function edit(AuditoriaAnual $auditoriaAnual)
     {
-        abort_if(Gate::denies('auditoria_anual_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('programa_anual_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -111,6 +113,8 @@ class AuditoriaAnualController extends Controller
 
     public function update(UpdateAuditoriaAnualRequest $request, AuditoriaAnual $auditoriaAnual)
     {
+        abort_if(Gate::denies('programa_anual_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $auditoriaAnual->update($request->all());
 
         return redirect()->route('admin.auditoria-anuals.index');
@@ -118,7 +122,7 @@ class AuditoriaAnualController extends Controller
 
     public function show(AuditoriaAnual $auditoriaAnual)
     {
-        abort_if(Gate::denies('auditoria_anual_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('programa_anual_auditoria_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditoriaAnual->load('auditorlider', 'team', 'fechaPlanAuditoria');
 
@@ -127,7 +131,7 @@ class AuditoriaAnualController extends Controller
 
     public function destroy(AuditoriaAnual $auditoriaAnual)
     {
-        abort_if(Gate::denies('auditoria_anual_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('programa_anual_auditoria_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditoriaAnual->delete();
 

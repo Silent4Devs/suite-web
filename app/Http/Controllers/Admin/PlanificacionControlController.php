@@ -19,7 +19,7 @@ class PlanificacionControlController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('planificacion_control_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('planificacion_y_control_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = PlanificacionControl::with(['dueno', 'team'])->select(sprintf('%s.*', (new PlanificacionControl)->table))->orderByDesc('id');
@@ -29,9 +29,9 @@ class PlanificacionControlController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'planificacion_control_show';
-                $editGate = 'planificacion_control_edit';
-                $deleteGate = 'planificacion_control_delete';
+                $viewGate = 'planificacion_y_control_ver';
+                $editGate = 'planificacion_y_control_editar';
+                $deleteGate = 'planificacion_y_control_eliminar';
                 $crudRoutePart = 'planificacion-controls';
 
                 return view('partials.datatablesActions', compact(
@@ -98,7 +98,7 @@ class PlanificacionControlController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('planificacion_control_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('planificacion_y_control_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::alta()->with('area')->get();
@@ -108,6 +108,8 @@ class PlanificacionControlController extends Controller
 
     public function store(StorePlanificacionControlRequest $request)
     {
+        abort_if(Gate::denies('planificacion_y_control_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $planificacionControl = PlanificacionControl::create($request->all());
 
         return redirect()->route('admin.planificacion-controls.index')->with('success', 'Guardado con éxito');
@@ -115,7 +117,7 @@ class PlanificacionControlController extends Controller
 
     public function edit(PlanificacionControl $planificacionControl)
     {
-        abort_if(Gate::denies('planificacion_control_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('planificacion_y_control_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -128,6 +130,8 @@ class PlanificacionControlController extends Controller
 
     public function update(UpdatePlanificacionControlRequest $request, PlanificacionControl $planificacionControl)
     {
+        abort_if(Gate::denies('planificacion_y_control_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $planificacionControl->update($request->all());
 
         return redirect()->route('admin.planificacion-controls.index')->with('success', 'Editado con éxito');
@@ -135,7 +139,7 @@ class PlanificacionControlController extends Controller
 
     public function show(PlanificacionControl $planificacionControl)
     {
-        abort_if(Gate::denies('planificacion_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('planificacion_y_control_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planificacionControl->load('dueno', 'team');
 
@@ -144,7 +148,7 @@ class PlanificacionControlController extends Controller
 
     public function destroy(PlanificacionControl $planificacionControl)
     {
-        abort_if(Gate::denies('planificacion_control_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('planificacion_y_control_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planificacionControl->delete();
 

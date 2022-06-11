@@ -466,16 +466,15 @@
             </a>
         </li> --}}
 
-        @can('administracion_access')
+        @can('permisos_de_administracion_acceder')
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca" style="color: #345183;">Administración</font>
             </li>
-        @endcan
 
         {{-- @can('planes_accion_access') --}}
 
         {{-- @endcan --}}
-        @can('permisos_de_administracion_acceder')
+
             @can('carga_masiva_datos_acceder')
                 {{-- este acceso no corresponde --}}
                 <li class="c-sidebar-nav-item">

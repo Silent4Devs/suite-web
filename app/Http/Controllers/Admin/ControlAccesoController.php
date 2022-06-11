@@ -33,9 +33,9 @@ class ControlAccesoController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'control_acceso_show';
-                $editGate = 'control_acceso_edit';
-                $deleteGate = 'control_acceso_delete';
+                $viewGate = 'control_de_accesos_ver';
+                $editGate = 'control_de_accesos_editar';
+                $deleteGate = 'control_de_accesos_eliminar';
                 $crudRoutePart = 'control-accesos';
 
                 return view('partials.datatablesActions', compact(

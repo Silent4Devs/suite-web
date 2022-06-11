@@ -37,10 +37,11 @@
     </div>
 </div>
 <div class="datatable-fix" style="width:100%">
+    @can('mi_perfil_mis_reportes_realizar_reporte_de_denuncia')
     <div class="mb-3 text-right">
         <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/denuncias')}}">Crear reporte</a>
     </div>
-
+    @endcan
    <table class="table tabla_denuncias">
    		<thead>
             <tr>
@@ -280,14 +281,18 @@
                                 let html =
                                     `
                 			<div class="botones_tabla">
-                				<a href="/admin/desk/${data}/denuncias-edit/"><i class="fas fa-edit"></i></a>`;
+                                @can('centro_atencion_denuncias_editar')
+                				<a href="/admin/desk/${data}/denuncias-edit/"><i class="fas fa-edit"></i></a>
+                                @endcan
+                                `;
 
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
-                                    html += `<button class="btn archivar" onclick='ArchivarDenuncia("/admin/desk/${data}/archivarDenuncias"); return false;' style="margin-top:-10px">
-				       						<i class="fas fa-archive" ></i></a>
-				       					</button>
+                                    html += `
+                                            <button class="btn archivar" onclick='ArchivarDenuncia("/admin/desk/${data}/archivarDenuncias"); return false;' style="margin-top:-10px">
+                                                <i class="fas fa-archive" ></i></a>
+                                            </button>
 				       					</div>`;
                                 }
                                 return html;

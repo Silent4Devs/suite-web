@@ -181,7 +181,7 @@
 
             ];
 
-            @can('planificacion_control_delete')
+            @can('planificacion_y_control_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar planificación y control',
@@ -194,7 +194,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('planificacion_control_delete')
+            @can('planificacion_y_control_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,

@@ -76,17 +76,17 @@
         <div class="caja_botones_secciones">
 
             <div class="caja_botones_menu">
-                @can('incidentes_seguridad_access')
+                @can('centro_atencion_incidentes_de_seguridad_acceder')
                     <a href="#" data-tabs="incidentes" class="btn_activo">
                         <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
                     </a>
                 @endcan
-                @can('riesgos_access')
+                @can('centro_atencion_riesgos_acceder')
                     <a href="#" data-tabs="riesgos">
                         <i class="fas fa-shield-alt"></i> Riesgos
                     </a>
                 @endcan
-                @can('quejas_access')
+                @can('centro_atencion_quejas_acceder')
                     <a href="#" data-tabs="quejas">
                         <i class="fas fa-frown"></i> Quejas
                     </a>
@@ -96,17 +96,17 @@
                     <i class="fas fa-thumbs-down"></i> Quejas Clientes
                 </a>
                 @endcan
-                @can('denuncias_access')
+                @can('centro_atencion_denuncias_acceder')
                     <a href="#" data-tabs="denuncias">
                         <i class="fas fa-hand-paper"></i> Denuncias
                     </a>
                 @endcan
-                @can('mejoras_access')
+                @can('centro_atencion_mejoras_acceder')
                     <a href="#" data-tabs="mejoras">
                         <i class="fas fa-rocket"></i> Mejoras
                     </a>
                 @endcan
-                @can('sugerencias_access')
+                @can('centro_atencion_sugerencias_acceder')
                     <a href="#" data-tabs="sugerencias">
                         <i class="fas fa-lightbulb"></i> Sugerencias
                     </a>
