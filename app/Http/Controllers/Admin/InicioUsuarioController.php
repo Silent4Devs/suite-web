@@ -537,13 +537,14 @@ class InicioUsuarioController extends Controller
 
         $sedes = Sede::get();
 
-        abort_if(Gate::denies('quejas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.inicioUsuario.formularios.quejas', compact('areas', 'procesos', 'empleados', 'activos', 'sedes'));
     }
 
     public function storeQuejas(Request $request)
     {
+        abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_queja'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $quejas = Quejas::create([
             'anonimo' => $request->anonimo,
             'empleado_quejo_id' => auth()->user()->empleado->id,
@@ -600,13 +601,14 @@ class InicioUsuarioController extends Controller
 
         $sedes = Sede::get();
 
-        abort_if(Gate::denies('denuncias_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.inicioUsuario.formularios.denuncias', compact('empleados', 'sedes'));
     }
 
     public function storeDenuncias(Request $request)
     {
+        abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_denuncia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $denuncias = Denuncias::create([
             'anonimo' => $request->anonimo,
             'empleado_denuncio_id' => auth()->user()->empleado->id,
@@ -658,13 +660,14 @@ class InicioUsuarioController extends Controller
 
         $procesos = Proceso::get();
 
-        abort_if(Gate::denies('mejoras_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.inicioUsuario.formularios.mejoras', compact('areas', 'procesos'));
     }
 
     public function storeMejoras(Request $request)
     {
+        abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $mejoras = Mejoras::create([
             'empleado_mejoro_id' => auth()->user()->empleado->id,
             'descripcion' => $request->descripcion,
@@ -695,13 +698,14 @@ class InicioUsuarioController extends Controller
 
         $procesos = Proceso::get();
 
-        abort_if(Gate::denies('sugerencias_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
     }
 
     public function storeSugerencias(Request $request)
     {
+        abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $sugerencias = Sugerencias::create([
             'empleado_sugirio_id' => auth()->user()->empleado->id,
 
@@ -737,7 +741,6 @@ class InicioUsuarioController extends Controller
 
         $subcategorias = SubcategoriaIncidente::get();
 
-        abort_if(Gate::denies('incidentes_seguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activos = Activo::get();
 
         return view('admin.inicioUsuario.formularios.seguridad', compact('activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
@@ -794,6 +797,8 @@ class InicioUsuarioController extends Controller
 
     public function riesgos()
     {
+        abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_riesgo_identificado'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $areas = Area::get();
 
         $procesos = Proceso::get();
@@ -804,13 +809,14 @@ class InicioUsuarioController extends Controller
 
         $sedes = Sede::get();
 
-        abort_if(Gate::denies('riesgos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.inicioUsuario.formularios.riesgos', compact('activos', 'areas', 'procesos', 'sedes'));
     }
 
     public function storeRiesgos(Request $request)
     {
+        abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_riesgo_identificado'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $riesgos = RiesgoIdentificado::create([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,

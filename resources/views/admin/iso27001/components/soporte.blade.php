@@ -1,4 +1,4 @@
-@can('soporte_access')
+@can('sistema_gestion_soporte_acceso')
     <div href="#" class="btn btn-secundario btn_modal_video" data-toggle="modal" data-target="#modal_guia_general"><i class="far fa-play-circle mr-2"></i> GUÍA DE USO</div>
     <ul class="mt-4">
         <li><a href="#" data-ventana="capacitacion" data-ruta="Capacitaciones" class="btn_ventana_menu">
@@ -73,12 +73,15 @@
             </a>
         </li>
         @endcan
+        @can('informacion_documentada_acceder')
         <li><a href="{{ asset('admin/documentos/publicados') }}">
                 <div>
                     <i class="bi bi-file-earmark-post"></i> <br>
                     Infomación Documentada
                 </div>
-            </a></li>
+            </a>
+        </li>
+        @endcan
     </ul>
 @else
     <div class="mt-5 row" style="margin-left: -10px">

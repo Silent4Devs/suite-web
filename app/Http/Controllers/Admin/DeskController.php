@@ -164,6 +164,8 @@ class DeskController extends Controller
 
     public function indexSeguridad()
     {
+        abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $incidentes_seguridad = IncidentesSeguridad::with('asignado', 'reporto')->where('archivado', IncidentesSeguridad::NO_ARCHIVADO)->get();
 
         return datatables()->of($incidentes_seguridad)->toJson();
@@ -171,6 +173,9 @@ class DeskController extends Controller
 
     public function editSeguridad(Request $request, $id_incidente)
     {
+        abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente))->load('evidencias_seguridad');
 
         // $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
@@ -196,6 +201,8 @@ class DeskController extends Controller
 
     public function updateSeguridad(Request $request, $id_incidente)
     {
+        abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
         $incidentesSeguridad->update([
             'titulo' => $request->titulo,
@@ -256,6 +263,7 @@ class DeskController extends Controller
 
     public function archivadoSeguridad(Request $request, $incidente)
     {
+
         if ($request->ajax()) {
             $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($incidente));
             $incidentesSeguridad->update([
@@ -268,6 +276,7 @@ class DeskController extends Controller
 
     public function archivoSeguridad()
     {
+
         $incidentes_seguridad_archivados = IncidentesSeguridad::where('archivado', IncidentesSeguridad::ARCHIVADO)->get();
 
         return view('admin.desk.seguridad.archivo', compact('incidentes_seguridad_archivados'));
@@ -275,6 +284,8 @@ class DeskController extends Controller
 
     public function indexRiesgo()
     {
+        abort_if(Gate::denies('centro_atencion_riesgos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $riesgo = RiesgoIdentificado::with('reporto')->where('archivado', false)->get();
 
         return datatables()->of($riesgo)->toJson();
@@ -282,6 +293,8 @@ class DeskController extends Controller
 
     public function indexSugerencia()
     {
+        abort_if(Gate::denies('centro_atencion_sugerencias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $riesgo = Sugerencias::with('sugirio')->where('archivado', false)->get();
 
         return datatables()->of($riesgo)->toJson();
@@ -289,6 +302,7 @@ class DeskController extends Controller
 
     public function archivadoSugerencia(Request $request, $incidente)
     {
+
         if ($request->ajax()) {
             $riesgo = Sugerencias::findOrfail(intval($incidente));
             $riesgo->update([
@@ -301,6 +315,7 @@ class DeskController extends Controller
 
     public function archivoSugerencia()
     {
+
         $sugerencias = Sugerencias::where('archivado', true)->get();
 
         return view('admin.desk.sugerencias.archivo', compact('sugerencias'));
@@ -308,6 +323,7 @@ class DeskController extends Controller
 
     public function recuperarArchivadoSugerencia($id)
     {
+
         $riesgo = Sugerencias::find($id);
         // dd($recurso);
         $riesgo->update([
@@ -319,10 +335,14 @@ class DeskController extends Controller
 
     public function editRiesgos(Request $request, $id_riesgos)
     {
+        abort_if(Gate::denies('centro_atencion_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos))->load('evidencias_riesgos');
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->where('riesgos_id', intval($id_riesgos))->first();
-
+        if(is_null($analisis)){
+            $analisis = collect();
+        }
         $procesos = Proceso::get();
 
         $activos = Activo::get();
@@ -338,6 +358,8 @@ class DeskController extends Controller
 
     public function updateRiesgos(Request $request, $id_riesgos)
     {
+        abort_if(Gate::denies('centro_atencion_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
         $riesgos->update([
             'titulo' => $request->titulo,
@@ -389,6 +411,7 @@ class DeskController extends Controller
 
     public function archivadoRiesgo(Request $request, $incidente)
     {
+
         if ($request->ajax()) {
             $riesgo = RiesgoIdentificado::findOrfail(intval($incidente));
             $riesgo->update([
@@ -401,6 +424,7 @@ class DeskController extends Controller
 
     public function archivoRiesgo()
     {
+
         $riesgos = RiesgoIdentificado::where('archivado', true)->get();
 
         return view('admin.desk.riesgos.archivo', compact('riesgos'));
@@ -408,6 +432,7 @@ class DeskController extends Controller
 
     public function recuperarArchivadoRiesgo($id)
     {
+
         $riesgo = RiesgoIdentificado::find($id);
         // dd($recurso);
         $riesgo->update([
@@ -419,6 +444,8 @@ class DeskController extends Controller
 
     public function indexQueja()
     {
+        abort_if(Gate::denies('centro_atencion_quejas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $quejas = Quejas::with('quejo')->where('archivado', false)->get();
 
         return datatables()->of($quejas)->toJson();
@@ -426,6 +453,8 @@ class DeskController extends Controller
 
     public function editQuejas(Request $request, $id_quejas)
     {
+        abort_if(Gate::denies('centro_atencion_quejas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $quejas = Quejas::findOrfail(intval($id_quejas))->load('evidencias_quejas');
 
         $procesos = Proceso::get();
@@ -445,6 +474,8 @@ class DeskController extends Controller
 
     public function updateQuejas(Request $request, $id_quejas)
     {
+        abort_if(Gate::denies('centro_atencion_quejas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $quejas = Quejas::findOrfail(intval($id_quejas));
         $quejas->update([
             'titulo' => $request->titulo,
@@ -500,6 +531,7 @@ class DeskController extends Controller
 
     public function archivadoQueja(Request $request, $incidente)
     {
+
         // dd($request);
         if ($request->ajax()) {
             $queja = Quejas::findOrfail(intval($incidente));
@@ -513,6 +545,7 @@ class DeskController extends Controller
 
     public function archivoQueja()
     {
+
         $quejas = Quejas::where('archivado', true)->get();
 
         return view('admin.desk.quejas.archivo', compact('quejas'));
@@ -531,6 +564,8 @@ class DeskController extends Controller
 
     public function indexDenuncia()
     {
+        abort_if(Gate::denies('centro_atencion_denuncias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $denuncias = Denuncias::with('denuncio', 'denunciado')->where('archivado', false)->get();
 
         return datatables()->of($denuncias)->toJson();
@@ -538,6 +573,8 @@ class DeskController extends Controller
 
     public function editDenuncias(Request $request, $id_denuncias)
     {
+        abort_if(Gate::denies('centro_atencion_denuncias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $analisis = AnalisisSeguridad::where('formulario', '=', 'denuncia')->where('denuncias_id', intval($id_denuncias))->first();
 
         $denuncias = Denuncias::findOrfail(intval($id_denuncias));
@@ -551,6 +588,8 @@ class DeskController extends Controller
 
     public function updateDenuncias(Request $request, $id_denuncias)
     {
+        abort_if(Gate::denies('centro_atencion_denuncias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $denuncias = Denuncias::findOrfail(intval($id_denuncias));
         $denuncias->update([
             'anonimo' => $request->anonimo,
@@ -600,6 +639,7 @@ class DeskController extends Controller
 
     public function archivadoDenuncia(Request $request, $incidente)
     {
+
         if ($request->ajax()) {
             $denuncia = Denuncias::findOrfail(intval($incidente));
             $denuncia->update([
@@ -612,6 +652,7 @@ class DeskController extends Controller
 
     public function archivoDenuncia()
     {
+
         $denuncias = Denuncias::where('archivado', true)->get();
 
         return view('admin.desk.denuncias.archivo', compact('denuncias'));
@@ -619,6 +660,7 @@ class DeskController extends Controller
 
     public function recuperarArchivadoDenuncia($id)
     {
+
         $queja = Denuncias::find($id);
         // dd($recurso);
         $queja->update([
@@ -630,6 +672,8 @@ class DeskController extends Controller
 
     public function indexMejora()
     {
+        abort_if(Gate::denies('centro_atencion_mejoras_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $mejoras = Mejoras::with('mejoro')->where('archivado', false)->get();
 
         return datatables()->of($mejoras)->toJson();
@@ -637,6 +681,8 @@ class DeskController extends Controller
 
     public function editMejoras(Request $request, $id_mejoras)
     {
+        abort_if(Gate::denies('centro_atencion_mejoras_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
 
         $activos = Activo::get();
@@ -654,6 +700,8 @@ class DeskController extends Controller
 
     public function updateMejoras(Request $request, $id_mejoras)
     {
+        abort_if(Gate::denies('centro_atencion_mejoras_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
         $mejoras->update([
             'estatus' => $request->estatus,
@@ -706,6 +754,7 @@ class DeskController extends Controller
 
     public function archivadoMejora(Request $request, $incidente)
     {
+
         if ($request->ajax()) {
             $mejora = Mejoras::findOrfail(intval($incidente));
             $mejora->update([
@@ -718,6 +767,7 @@ class DeskController extends Controller
 
     public function archivoMejora()
     {
+
         $mejoras = Mejoras::where('archivado', true)->get();
 
         return view('admin.desk.mejoras.archivo', compact('mejoras'));
@@ -736,6 +786,8 @@ class DeskController extends Controller
 
     public function editSugerencias(Request $request, $id_sugerencias)
     {
+        abort_if(Gate::denies('centro_atencion_sugerencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
 
         $activos = Activo::get();
@@ -753,6 +805,8 @@ class DeskController extends Controller
 
     public function updateSugerencias(Request $request, $id_sugerencias)
     {
+        abort_if(Gate::denies('centro_atencion_sugerencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
         $sugerencias->update([
             'area_sugerencias' => $request->area_sugerencias,
@@ -814,6 +868,8 @@ class DeskController extends Controller
 
     public function quejasClientes()
     {
+        abort_if(Gate::denies('centro_atencion_quejas_clientes_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $areas = Area::get();
 
         $procesos = Proceso::get();
@@ -831,6 +887,8 @@ class DeskController extends Controller
 
     public function indexQuejasClientes()
     {
+        abort_if(Gate::denies('centro_atencion_quejas_clientes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $quejasClientes = QuejasCliente::with('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos')->where('archivado', false)->get();
         // dd($quejasClientes);
         return datatables()->of($quejasClientes)->toJson();
@@ -838,6 +896,8 @@ class DeskController extends Controller
 
     public function storeQuejasClientes(Request $request)
     {
+        abort_if(Gate::denies('centro_atencion_quejas_clientes_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // dd($request->correo);
         $request->validate([
             'cliente_id' => 'required',
@@ -922,6 +982,8 @@ class DeskController extends Controller
 
     public function editQuejasClientes(Request $request, $id_quejas)
     {
+        abort_if(Gate::denies('centro_atencion_quejas_cliente_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos');
         // dd($quejasClientes);
         $procesos = Proceso::get();
@@ -947,6 +1009,8 @@ class DeskController extends Controller
 
     public function updateQuejasClientes(Request $request, $id_quejas)
     {
+        abort_if(Gate::denies('centro_atencion_quejas_cliente_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $queja_procedente = intval($request->queja_procedente) == 1 ? true : false;
         if ($queja_procedente) {
             $request->validate([
@@ -1278,6 +1342,8 @@ class DeskController extends Controller
 
     public function quejasClientesDashboard()
     {
+        abort_if(Gate::denies('centro_atencion_quejas_cliente_dashboard'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $quejasClientesSaA = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Alta')->count();
         $quejasClientesSaM = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Media')->count();
         $quejasClientesSaB = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Baja')->count();

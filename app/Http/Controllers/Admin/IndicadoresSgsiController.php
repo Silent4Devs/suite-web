@@ -19,7 +19,7 @@ class IndicadoresSgsiController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('indicadores_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('indicadores_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = IndicadoresSgsi::orderByDesc('id')->get();
@@ -29,9 +29,9 @@ class IndicadoresSgsiController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'indicadores_sgsi_show';
-                $editGate = 'indicadores_sgsi_edit';
-                $deleteGate = 'indicadores_sgsi_delete';
+                $viewGate = 'indicadores_sgsi_ver';
+                $editGate = 'indicadores_sgsi_editar';
+                $deleteGate = 'indicadores_sgsi_eliminar';
                 $crudRoutePart = 'indicadores-sgsis';
 
                 return view('partials.datatablesActions', compact(
@@ -96,7 +96,7 @@ class IndicadoresSgsiController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('indicadores_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('indicadores_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = Empleado::alta()->get();
         $procesos = Proceso::get();
@@ -106,6 +106,8 @@ class IndicadoresSgsiController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('indicadores_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $indicadoresSgsi = IndicadoresSgsi::create($request->all());
         //return redirect()->route('admin.indicadores-sgsis.index');
         return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id])->with('success', 'Guardado con éxito');
@@ -113,6 +115,8 @@ class IndicadoresSgsiController extends Controller
 
     public function edit(IndicadoresSgsi $indicadoresSgsi)
     {
+        abort_if(Gate::denies('indicadores_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $procesos = Proceso::get();
         $responsables = Empleado::alta()->get();
 
@@ -121,6 +125,8 @@ class IndicadoresSgsiController extends Controller
 
     public function update(Request $request, IndicadoresSgsi $indicadoresSgsi)
     {
+        abort_if(Gate::denies('indicadores_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $indicadoresSgsi->update($request->all());
 
         //return redirect()->route('admin.indicadores-sgsis.index');
@@ -129,12 +135,14 @@ class IndicadoresSgsiController extends Controller
 
     public function show(IndicadoresSgsi $indicadoresSgsi)
     {
+        abort_if(Gate::denies('indicadores_sgsi_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.indicadoresSgsis.show', compact('indicadoresSgsi'));
     }
 
     public function destroy(IndicadoresSgsi $indicadoresSgsi)
     {
-        abort_if(Gate::denies('indicadores_sgsi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('indicadores_sgsi_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $indicadoresSgsi->delete();
 

@@ -221,7 +221,7 @@
 
 
     <nav>
-        @can('centro_atencion_quejas_cliente_edit')
+        @can('centro_atencion_quejas_cliente_editar')
             <div class="nav nav-tabs mt-3" id="tabsCapacitaciones" role="tablist">
                 @if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id) <a class="nav-link active"
                         data-type="registro_queja" id="nav-registro-tab" data-toggle="tab" href="#nav-registro" role="tab"
@@ -232,7 +232,7 @@
                 @endif
             @endcan
 
-            @can('centro_atencion_quejas_cliente_edit')
+            @can('centro_atencion_quejas_cliente_editar')
                 @if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id) <a class="nav-link"
                         data-type="analisis_queja" id="nav-analisis-tab" href="#nav-analisis" style="position:relative">
                         <i class="mr-2 fas fa-clipboard-list"></i>
@@ -249,7 +249,7 @@
                 </a>
             @endif
 
-            @can('centro_atencion_quejas_cliente_edit')
+            @can('centro_atencion_quejas_cliente_editar')
                 @if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id)
                     <a class="menu_queja_recibida nav-link" data-type="cierre_queja" id="nav-cierre-tab" href="#nav-cierre"
                         style="display:none; position:relative">
@@ -267,7 +267,7 @@
             <input type="hidden" value="{{ $quejasClientes->id }}" name="quejas_clientes_id" />
             <div class="tab-content col-12" id="nav-tabContent">
                 {{-- @can('acceder_quejas_cliente_registro_queja') --}}
-                @can('centro_atencion_quejas_cliente_edit')
+                @can('centro_atencion_quejas_cliente_editar')
                     @if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id)
                         <div class="tab-pane fade show active" id="nav-registro" role="tabpanel"
                             aria-labelledby="nav-registro-tab">
@@ -276,7 +276,7 @@
                     @endif
                 @endcan
                 {{-- @endif --}}
-                @can('centro_atencion_quejas_cliente_edit')
+                @can('centro_atencion_quejas_cliente_editar')
                     @if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id)
                         <div class="tab-pane fade" id="nav-analisis">
                             @include('admin.desk.clientes.atencionQuejas.analisis-queja')
@@ -289,7 +289,7 @@
                         @include('admin.desk.clientes.atencionQuejas.atencion-queja')
                     </div>
                 @endcan
-                @can('centro_atencion_quejas_cliente_edit')
+                @can('centro_atencion_quejas_cliente_editar')
                     @if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id)
                         <div class="tab-pane fade" id="nav-cierre">
                             @include('admin.desk.clientes.atencionQuejas.cierre-queja')
