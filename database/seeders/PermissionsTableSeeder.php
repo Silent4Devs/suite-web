@@ -3993,9 +3993,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'evidencia_asignacion_recursos_sgsi_ver_evidencia',
                 'name' => 'Este permiso permite al usuario ver  evidencia del registro',
-            ]
-
-
+            ],
 
         ];
 
