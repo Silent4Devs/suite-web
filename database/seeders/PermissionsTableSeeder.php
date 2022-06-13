@@ -2279,6 +2279,10 @@ class PermissionsTableSeeder extends Seeder
             ],
             // Portal de comunicacion
             [
+                'title' => 'portal_de_comunicaccion_acceder',
+                'name' => 'Este permiso permite al usuario acceder al portal de comunicación',
+            ],
+            [
                 'title' => 'portal_comunicacion_mostrar_comunicados',
                 'name' => 'Este permiso permite al usuario visualizar los comunicados en el portal de comunicación',
             ],

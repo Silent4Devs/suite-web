@@ -43,7 +43,7 @@
                 </a>
             </li>
         @endcan
-        @can('portal_de_comunicacion_access')
+        @can('portal_de_comunicaccion_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.portal-comunicacion.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'active' : '' }}">
@@ -292,7 +292,7 @@
                             </a>
                         </li>
                     @endcan
-                    @can('organigrama_organizacion_access')
+                    @can('organigrama_acceder')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.organigrama.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/organigrama') || request()->is('admin/organigrama/*') ? 'c-active' : '' }}">
