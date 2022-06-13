@@ -24,7 +24,7 @@ class PortalComunicacionController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('portal_de_comunicacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $hoy = Carbon::now();
         $hoy->toDateString();
 

@@ -17,7 +17,7 @@ class OrganigramaController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('organigrama_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('organigrama_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // La construccion del arbol necesita un primer nodo (NULL)
         $organizacionTree = Empleado::exists();
         if ($request->ajax()) {
@@ -66,7 +66,7 @@ class OrganigramaController extends Controller
 
     public function exportTo()
     {
-        abort_if(Gate::denies('organigrama_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('organigrama_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return Excel::download(new EmpleadosExport, 'empleados.xlsx');
     }

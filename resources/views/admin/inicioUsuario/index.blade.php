@@ -142,12 +142,12 @@
                             class=""><i class="bi bi-file-person"></i>
                             Mis Datos</a>
                     @endcan
-                    @can('mi_calendario_access')
+                    @can('mi_perfil_mi_calendario_acceder')
                         <a href="#" id="b_calendario" onclick="almacenarMenuEnLocalStorage('calendario')"
                             data-tabs="s_calendario"><i class="bi bi-calendar3"></i>
                             Calendario</a>
                     @endcan
-                    @can('mis_actividades_access')
+                    @can('mi_perfil_mis_actividades_acceder')
                         <a href="#" id="b_actividades" onclick="almacenarMenuEnLocalStorage('actividades')"
                             data-tabs="s_actividades">
                             @if ($contador_actividades)
@@ -156,7 +156,7 @@
                             <i class="bi bi-stopwatch"></i>Actividades
                         </a>
                     @endcan
-                    @can('mis_aprobaciones_access')
+                    @can('mi_perfil_mis_aprobaciones_acceder')
                         <a href="#" id="b_aprobaciones" onclick="almacenarMenuEnLocalStorage('aprobaciones')"
                             data-tabs="s_aprobaciones">
                             @if ($contador_revisiones)
@@ -165,7 +165,7 @@
                             <i class="bi bi-check2"></i>Aprobaciones
                         </a>
                     @endcan
-                    @can('mis_capacitaciones_access')
+                    @can('mi_perfil_mis_capacitaciones_acceder')
                         <a href="#" id="b_capacitaciones" onclick="almacenarMenuEnLocalStorage('capacitaciones')"
                             data-tabs="s_capacitaciones">
                             @if ($contador_recursos >= 1)
@@ -174,7 +174,7 @@
                             <i class="bi bi-mortarboard"></i>Capacitaciones
                         </a>
                     @endcan
-                    @can('realizar_reportes_access')
+                    @can('mi_perfil_mis_reportes_acceder')
                         <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')" data-tabs="s_reportes">
                             <i class="bi bi-clipboard-check"></i>
                             Reportes</a>
