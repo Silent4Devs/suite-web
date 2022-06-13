@@ -17,7 +17,7 @@ class AlcanceSgsiController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('alcance_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('determinacion_alcance_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = AlcanceSgsi::with(['norma', 'empleado'])->select(sprintf('%s.*', (new AlcanceSgsi)->table))->orderByDesc('id');
@@ -27,9 +27,9 @@ class AlcanceSgsiController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'alcance_sgsi_show';
-                $editGate = 'alcance_sgsi_edit';
-                $deleteGate = 'alcance_sgsi_delete';
+                $viewGate = 'determinacion_alcance_ver';
+                $editGate = 'determinacion_alcance_editar';
+                $deleteGate = 'determinacion_alcance_eliminar';
                 $crudRoutePart = 'alcance-sgsis';
 
                 return view('partials.datatablesActions', compact(
@@ -87,7 +87,7 @@ class AlcanceSgsiController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('alcance_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('determinacion_alcance_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleados = Empleado::with('area')->get();
         $normas = Norma::get();
@@ -97,6 +97,7 @@ class AlcanceSgsiController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('determinacion_alcance_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'normas' => 'required|array',
         ]);
@@ -112,7 +113,7 @@ class AlcanceSgsiController extends Controller
 
     public function edit(AlcanceSgsi $alcanceSgsi)
     {
-        abort_if(Gate::denies('alcance_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $alcanceSgsi->load('normas');
         $normas_seleccionadas = $alcanceSgsi->normas->pluck('id')->toArray();
@@ -125,7 +126,7 @@ class AlcanceSgsiController extends Controller
 
     public function update(Request $request, AlcanceSgsi $alcanceSgsi)
     {
-        // dd($request->all());
+        abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'normas' => 'required|array',
         ]);
@@ -141,7 +142,7 @@ class AlcanceSgsiController extends Controller
 
     public function show(AlcanceSgsi $alcanceSgsi)
     {
-        abort_if(Gate::denies('alcance_sgsi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('determinacion_alcance_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $alcanceSgsi->load('team');
         $normas = Norma::get();
@@ -151,7 +152,7 @@ class AlcanceSgsiController extends Controller
 
     public function destroy(AlcanceSgsi $alcanceSgsi)
     {
-        abort_if(Gate::denies('alcance_sgsi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('determinacion_alcance_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $alcanceSgsi->delete();
 

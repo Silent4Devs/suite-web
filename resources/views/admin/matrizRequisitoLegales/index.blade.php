@@ -79,7 +79,7 @@
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
     <h5 class="col-12 titulo_general_funcion">Matriz de Requisitos Legales y Regulatorios</h5>
     <div class="mt-5 card">
-        @can('matriz_requisito_legale_create')
+        @can('matriz_requisitos_legales_agregar')
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Matriz de Requisitos Legales</strong></h3>
             </div> --}}
@@ -194,7 +194,7 @@
                 }
 
             ];
-            @can('matriz_requisito_legale_create')
+            @can('matriz_requisitos_legales_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva matríz de requisitos legales',
@@ -431,11 +431,18 @@
                                 `/admin/matriz-requisito-legales/planes-de-accion/create/${data}`;
                             let botones = `
                             <div class="btn-group">
+                                @can('matriz_requisitos_legales_ver')
                                 <a class="btn btn-sm" href="${urlVerMatrizRequisitoLegal}" title="Visualizar Matríz de Requisito Legal"><i class="fas fa-eye"></i></a>
+                                @endcan
+                                @can('matriz_requisitos_legales_editar')
                                 <a class="btn btn-sm" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
+                                @endcan
+                                @can('matriz_requisitos_legales_evaluar')
                                 <a class="btn btn-sm" style="color:#77C64F;" href="${urlEvaluarMatriz}" title="Evaluar Requisito Legal"><i class="fas fa-calendar-check"></i></a>
-                    
+                                @endcan
+                                @can('matriz_requisitos_legales_eliminar')
                                 <button class="btn btn-sm" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i></button>
+                                @endcan
                             </div>
                              `;
                             return botones;
