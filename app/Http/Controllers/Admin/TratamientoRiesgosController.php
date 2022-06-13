@@ -120,7 +120,6 @@ class TratamientoRiesgosController extends Controller
 
     public function edit($tratamientos)
     {
-
         abort_if(Gate::denies('tratamiento_de_los_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tratamientos = TratamientoRiesgo::find($tratamientos);

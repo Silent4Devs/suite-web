@@ -175,7 +175,6 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente))->load('evidencias_seguridad');
 
         // $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
@@ -263,7 +262,6 @@ class DeskController extends Controller
 
     public function archivadoSeguridad(Request $request, $incidente)
     {
-
         if ($request->ajax()) {
             $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($incidente));
             $incidentesSeguridad->update([
@@ -276,7 +274,6 @@ class DeskController extends Controller
 
     public function archivoSeguridad()
     {
-
         $incidentes_seguridad_archivados = IncidentesSeguridad::where('archivado', IncidentesSeguridad::ARCHIVADO)->get();
 
         return view('admin.desk.seguridad.archivo', compact('incidentes_seguridad_archivados'));
@@ -302,7 +299,6 @@ class DeskController extends Controller
 
     public function archivadoSugerencia(Request $request, $incidente)
     {
-
         if ($request->ajax()) {
             $riesgo = Sugerencias::findOrfail(intval($incidente));
             $riesgo->update([
@@ -315,7 +311,6 @@ class DeskController extends Controller
 
     public function archivoSugerencia()
     {
-
         $sugerencias = Sugerencias::where('archivado', true)->get();
 
         return view('admin.desk.sugerencias.archivo', compact('sugerencias'));
@@ -323,7 +318,6 @@ class DeskController extends Controller
 
     public function recuperarArchivadoSugerencia($id)
     {
-
         $riesgo = Sugerencias::find($id);
         // dd($recurso);
         $riesgo->update([
@@ -340,7 +334,7 @@ class DeskController extends Controller
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos))->load('evidencias_riesgos');
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->where('riesgos_id', intval($id_riesgos))->first();
-        if(is_null($analisis)){
+        if (is_null($analisis)) {
             $analisis = collect();
         }
         $procesos = Proceso::get();
@@ -411,7 +405,6 @@ class DeskController extends Controller
 
     public function archivadoRiesgo(Request $request, $incidente)
     {
-
         if ($request->ajax()) {
             $riesgo = RiesgoIdentificado::findOrfail(intval($incidente));
             $riesgo->update([
@@ -424,7 +417,6 @@ class DeskController extends Controller
 
     public function archivoRiesgo()
     {
-
         $riesgos = RiesgoIdentificado::where('archivado', true)->get();
 
         return view('admin.desk.riesgos.archivo', compact('riesgos'));
@@ -432,7 +424,6 @@ class DeskController extends Controller
 
     public function recuperarArchivadoRiesgo($id)
     {
-
         $riesgo = RiesgoIdentificado::find($id);
         // dd($recurso);
         $riesgo->update([
@@ -545,7 +536,6 @@ class DeskController extends Controller
 
     public function archivoQueja()
     {
-
         $quejas = Quejas::where('archivado', true)->get();
 
         return view('admin.desk.quejas.archivo', compact('quejas'));
@@ -639,7 +629,6 @@ class DeskController extends Controller
 
     public function archivadoDenuncia(Request $request, $incidente)
     {
-
         if ($request->ajax()) {
             $denuncia = Denuncias::findOrfail(intval($incidente));
             $denuncia->update([
@@ -652,7 +641,6 @@ class DeskController extends Controller
 
     public function archivoDenuncia()
     {
-
         $denuncias = Denuncias::where('archivado', true)->get();
 
         return view('admin.desk.denuncias.archivo', compact('denuncias'));
@@ -660,7 +648,6 @@ class DeskController extends Controller
 
     public function recuperarArchivadoDenuncia($id)
     {
-
         $queja = Denuncias::find($id);
         // dd($recurso);
         $queja->update([
@@ -754,7 +741,6 @@ class DeskController extends Controller
 
     public function archivadoMejora(Request $request, $incidente)
     {
-
         if ($request->ajax()) {
             $mejora = Mejoras::findOrfail(intval($incidente));
             $mejora->update([
@@ -767,7 +753,6 @@ class DeskController extends Controller
 
     public function archivoMejora()
     {
-
         $mejoras = Mejoras::where('archivado', true)->get();
 
         return view('admin.desk.mejoras.archivo', compact('mejoras'));

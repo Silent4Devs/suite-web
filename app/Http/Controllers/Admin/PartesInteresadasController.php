@@ -85,7 +85,7 @@ class PartesInteresadasController extends Controller
     }
 
     public function update(Request $request, $partesInteresada)
-    {   
+    {
         abort_if(Gate::denies('partes_interesadas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $partesInteresada = PartesInteresada::find($partesInteresada);
         $partesInteresada->update($request->all());
