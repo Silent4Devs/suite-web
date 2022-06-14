@@ -275,7 +275,7 @@
                 }
 
             ];
-            @can('accion_correctiva_create')
+         
                 let btnAgregar = {
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar acciones correctivas',
@@ -289,8 +289,7 @@
                     }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
-            @can('accion_correctiva_delete')
+           
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                     text: deleteButtonTrans,
@@ -327,8 +326,7 @@
                         }
                     }
                 }
-                //dtButtons.push(deleteButton)
-            @endcan
+                //dtBu@endcan
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -587,7 +585,7 @@
                 }
 
             ];
-            @can('accion_correctiva_create')
+           
                 let btnAgregarAprobacion = {
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar acciones correctivas',
@@ -601,8 +599,7 @@
                     }
                 };
                 dtButtonsAprobacion.push(btnAgregarAprobacion);
-            @endcan
-            @can('accion_correctiva_delete')
+           
                 let deleteButtonTransAprobacion = '{{ trans('global.datatables.delete') }}';
                 let deleteButtonAprobacion = {
                     text: deleteButtonTransAprobacion,
@@ -640,7 +637,7 @@
                     }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+   
 
             let dtOverrideGlobalsAprobacion = {
                 buttons: dtButtonsAprobacion,

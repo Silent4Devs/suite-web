@@ -18,7 +18,7 @@ class PanelOrganizacionController extends Controller
     public function index()
     {
         // dd("aqui");
-        abort_if(Gate::denies('configurar_vista_mi_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_panel_de_control'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.panel-organizacion.index');
     }

@@ -7,10 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreAreaRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('configuracion_area_create');
-    }
+   
 
     public function rules()
     {

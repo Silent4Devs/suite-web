@@ -8,6 +8,8 @@ use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use Illuminate\Http\Request;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class SubcategoriaActivoContoller extends Controller
 {
@@ -70,6 +72,10 @@ class SubcategoriaActivoContoller extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('subcategoria_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $request->validate([
+            'categoria_id' => 'required|int',
+        ]);
+
         $subtipos = SubcategoriaActivo::create($request->all());
         if (array_key_exists('ajax', $request->all())) {
             return response()->json(['success'=>true, 'subtipo'=>$subtipos]);
@@ -100,7 +106,7 @@ class SubcategoriaActivoContoller extends Controller
     public function show(Request $request, $subcategoria)
     {
         abort_if(Gate::denies('subcategoria_activos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $subcategoria = SubcategoriaActivo::find($subcategoria);
+        $subcategoria = SubcategoriaActivo::with('tipoactivo')->find($subcategoria);
 
         return view('admin.SubtipoActivos.show', compact('subcategoria'));
     }

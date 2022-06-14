@@ -114,7 +114,7 @@
             <div class="text-right col-lg-12" style="position:relative; z-index:1;">
                 @if (!empty($count == 1))
                 @else
-                    @can('organizacion_create')
+                    @can('mi_organizacion_agregar')
                         <a class="btn btn-danger" href="{{ route('admin.organizacions.create') }}">
                             Agregar Organización
                         </a>

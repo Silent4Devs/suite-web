@@ -7,10 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateObjetivosseguridadRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('objetivosseguridad_edit');
-    }
+  
 
     public function rules()
     {

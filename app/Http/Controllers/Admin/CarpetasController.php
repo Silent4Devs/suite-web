@@ -17,16 +17,16 @@ class CarpetasController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(
-            Gate::denies('carpetum_access')
-                && Gate::denies('documentos_publicados_respositorio_access')
-                && Gate::denies('documentos_aprobacion_respositorio_access')
-                && Gate::denies('documentos_obsoletos_respositorio_access')
-                && Gate::denies('documentos_versiones_anteriores_respositorio_access'),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden'
-        );
-
+        // abort_if(
+        //     Gate::denies('carpetum_access')
+        //         && Gate::denies('documentos_publicados_respositorio_access')
+        //         && Gate::denies('documentos_aprobacion_respositorio_access')
+        //         && Gate::denies('documentos_obsoletos_respositorio_access')
+        //         && Gate::denies('documentos_versiones_anteriores_respositorio_access'),
+        //     Response::HTTP_FORBIDDEN,
+        //     '403 Forbidden'
+        // );
+        abort_if(Gate::denies('repositorio_documental_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Carpetum::with(['team'])->select(sprintf('%s.*', (new Carpetum)->table));
             $table = Datatables::of($query);

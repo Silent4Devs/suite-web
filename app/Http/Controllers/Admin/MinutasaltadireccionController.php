@@ -311,7 +311,7 @@ class MinutasaltadireccionController extends Controller
 
     public function edit(Minutasaltadireccion $minutasaltadireccion)
     {
-        abort_if(Gate::denies('minutasaltadireccion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $minutasaltadireccion->load('participantes', 'planes', 'documentos');
         // dd($minutasaltadireccion);
         $actividades = $minutasaltadireccion->planes->first()->tasks;
@@ -351,6 +351,7 @@ class MinutasaltadireccionController extends Controller
 
     public function update(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {
+        abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->processUpdate($request, $minutasaltadireccion, true);
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -448,7 +449,7 @@ class MinutasaltadireccionController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('minutasaltadireccion_create') && Gate::denies('minutasaltadireccion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+      
 
         $model = new Minutasaltadireccion();
         $model->id = $request->input('crud_id', 0);

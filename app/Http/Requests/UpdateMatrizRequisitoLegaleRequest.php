@@ -7,11 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateMatrizRequisitoLegaleRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('matriz_requisito_legale_edit');
-    }
-
+   
     public function rules()
     {
         return [

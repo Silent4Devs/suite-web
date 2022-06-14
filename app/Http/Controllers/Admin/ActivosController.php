@@ -162,6 +162,7 @@ class ActivosController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('inventario_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // dd($request->all());
 
         $data = [];
 
