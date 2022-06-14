@@ -10,7 +10,7 @@
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="id_asignada"><i class="fas fa-layer-group iconos-crear"></i>Categoría</label>
                 <select class="form-control  {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
-                    name="categoria_id" id="categoria_id">
+                    name="categoria_id" id="categoria_id" required>
                     <option value="">Seleccione una opción</option>
                     @foreach ($tipos as $tipo)
                         <option data-puesto="{{ $tipo->tipo }}" value="{{ $tipo->id }}">
@@ -18,9 +18,9 @@
                         </option>
                     @endforeach
                 </select>
-                @if ($errors->has('tipo'))
+                @if ($errors->has('categoria_id'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('tipo') }}
+                        {{ $errors->first('categoria_id') }}
                     </div>
                 @endif
             </div>

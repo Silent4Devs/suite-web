@@ -195,8 +195,6 @@ class EvidenciasSgsiController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('evidencias_sgsi_create') && Gate::denies('evidencias_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $model = new EvidenciasSgsi();
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;

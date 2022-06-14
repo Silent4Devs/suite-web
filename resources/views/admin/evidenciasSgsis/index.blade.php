@@ -309,11 +309,14 @@
                             let archivo = "";
                             let archivos = JSON.parse(data);
                             archivo = ` 
+                           
                                <div class="container">
-                                @can('evidencia_asignacion_recursos_sgsi_ver_evidencia')
+                               
                                     <div class="mb-4 row">
                                     <div class="text-center col">
-                                        <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                        @can('evidencia_asignacion_recursos_sgsi_ver_evidencia')
+                                         <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                         @endcan
                                     </div>
                                     </div>
 
@@ -387,8 +390,8 @@
                                         </div>
                                         </div>
                                     </div>
-                                    @endcan
-                                    </div>`
+                                    </div>  
+                                    `
                             return archivo;
                         }
                     },

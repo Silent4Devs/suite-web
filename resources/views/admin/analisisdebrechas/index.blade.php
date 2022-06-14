@@ -245,11 +245,11 @@
                         data: 'enlace',
                         name: 'enlace',
                         render: function(data, type, row, meta) {
-                            return `<div class="text-center w-100">
-                                @can('analisis_de_brechas_vinculo')
+                            return `  @can('analisis_de_brechas_vinculo')
+                                <div class="text-center w-100"></div>
                                 <a href="analisis-brechas/?id=${data}" target="_blank"><i class="fas fa-file-alt fa-2x text-info"></i></a>
-                                @endcan
-                                </div>`;
+                                </div
+                                @endcan`;
                         }
                     },
                     {

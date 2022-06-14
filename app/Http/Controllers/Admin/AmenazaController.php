@@ -37,9 +37,9 @@ class AmenazaController extends AppBaseController
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'analisis_de_riesgos_amenazas_show';
-                $editGate = 'analisis_de_riesgos_amenazas_edit';
-                $deleteGate = 'analisis_de_riesgos_amenazas_delete';
+                $viewGate = 'amenazas_ver';
+                $editGate = 'amenazas_editar';
+                $deleteGate = 'amenazas_eliminar';
                 $crudRoutePart = 'amenazas';
 
                 return view('partials.datatablesActions', compact(

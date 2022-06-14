@@ -4014,7 +4014,54 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'evidencia_asignacion_recursos_sgsi_ver_evidencia',
                 'name' => 'Este permiso permite al usuario ver  evidencia del registro',
             ],
-
+            [
+                'title' => 'mi_organizacion_agregar',
+                'name' => 'Este permiso permite al usuario agregar registros',
+            ],
+            [
+                'title' => 'mi_organizacion_editar',
+                'name' => 'Este permiso permite al usuario editar registros',
+            ],
+            [
+                'title' => 'mi_organizacion_eliminar',
+                'name' => 'Este permiso permite al usuario eliminar registros',
+            ],
+            [
+                'title' => 'mi_organizacion_ver',
+                'name' => 'Este permiso permite al usuario ver registros',
+            ],
+            [
+                'title' => 'agregar_documento_crear',
+                'name' => 'Este permiso permite al usuario acceder al módulo de "Agregar Documento"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_contexto_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Contexto"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_liderazgo_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Liderazgo"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_planificacion_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Planificacion"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_soporte_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Soporte"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_operacion_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Operacion"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_evaluacion_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Evaluacion"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_mejora_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Mejora"',
+            ],
         ];
 
         // Permission::insert($permissions);

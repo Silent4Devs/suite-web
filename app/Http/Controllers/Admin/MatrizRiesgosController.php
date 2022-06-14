@@ -226,9 +226,9 @@ class MatrizRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'analisis_de_riesgos_matriz_riesgo_config_show';
-                $editGate = 'analisis_de_riesgos_matriz_riesgo_config_edit';
-                $deleteGate = 'analisis_de_riesgos_matriz_riesgo_config_delete';
+                $viewGate = 'iso_27001_ver';
+                $editGate = 'iso_27001_editar';
+                $deleteGate = 'iso_27001_eliminar';
                 $crudRoutePart = 'matriz-riesgos';
 
                 return view('partials.datatablesActions', compact(
@@ -463,9 +463,9 @@ class MatrizRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'analisis_de_riesgos_matriz_riesgo_config_show';
-                $editGate = 'analisis_de_riesgos_matriz_riesgo_config_edit';
-                $deleteGate = 'analisis_de_riesgos_matriz_riesgo_config_delete';
+                $viewGate = 'analisis_de_riesgo_integral_ver';
+                $editGate = 'analisis_de_riesgo_integral_editar';
+                $deleteGate = 'analisis_de_riesgo_integral_eliminar';
                 $crudRoutePart = 'matriz-riesgos.sistema-gestion';
 
                 return view('partials.datatablesActions', compact(
@@ -870,7 +870,7 @@ class MatrizRiesgosController extends Controller
 
     public function showSistemaGestion(MatrizRiesgo $matrizRiesgo, $id)
     {
-        abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_de_riesgo_integral_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $matrizRiesgo = MatrizRiesgosSistemaGestion::with(['controles', 'matriz_riesgos_controles_pivots', 'proceso'])->find($id);
         // dd($matrizRiesgo);

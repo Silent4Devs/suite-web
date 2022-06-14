@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Iso9001\PlanImplementacion as PlanItemIplementacion9001;
 use App\Models\PlanImplementacion;
 use Carbon\Carbon;
+use Gate;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Gate;
 use Illuminate\http\Response;
+
 class PlanesAccionController extends Controller
 {
     /**

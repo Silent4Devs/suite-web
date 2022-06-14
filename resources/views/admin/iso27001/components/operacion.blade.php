@@ -1,4 +1,4 @@
-@can('sistema_gestion_operacion_acceso')
+@can('sistema_de_gestion_operacion_acceder')
     <div href="#" class="btn btn-secundario btn_modal_video" data-toggle="modal" data-target="#modal_guia_general"><i class="far fa-play-circle mr-2"></i> GUÍA DE USO</div>
     @can('planificacion_y_control_acceder')
     <ul class="mt-4">

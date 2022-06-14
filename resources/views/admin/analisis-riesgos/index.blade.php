@@ -306,7 +306,7 @@
                 }
             };
 
-            @can('amenazas_agregar')
+            @can('matriz_de_riesgo_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
 

@@ -28,7 +28,11 @@
                             Categoría
                         </th>
                         <td>
-                            {{ $subcategoria->categoria_id }}
+                            @if($subcategoria->tipoactivo)
+                            <p>{{ $subcategoria->tipoactivo->tipo}}</p>
+                            @else
+                            No se ha definido categoria
+                            @endif
                         </td>
                     </tr>
                     <tr>
