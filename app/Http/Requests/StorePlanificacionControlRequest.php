@@ -9,7 +9,7 @@ class StorePlanificacionControlRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('planificacion_control_create');
+        return Gate::allows('planificacion_y_control_agregar');
     }
 
     public function rules()

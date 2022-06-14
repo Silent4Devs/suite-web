@@ -9,7 +9,7 @@ class UpdateComunicacionSgiRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('comunicacion_sgi_edit');
+        return Gate::allows('comunicados_generales_editar');
     }
 
     public function rules()

@@ -1064,7 +1064,7 @@ class InicioUsuarioController extends Controller
 
     public function perfilPuesto()
     {
-        abort_if(Gate::denies('perfil_de_puesto_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_de_puesto'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $puesto_id = auth()->user()->empleado->puesto_id;
         $puesto = Puesto::find($puesto_id);
 

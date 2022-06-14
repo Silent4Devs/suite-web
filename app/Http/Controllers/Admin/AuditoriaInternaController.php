@@ -179,6 +179,7 @@ class AuditoriaInternaController extends Controller
 
         $auditoriaInterna->load('clausulas', 'auditorlider', 'equipoauditoria', 'team');
 
+        // dd($auditoriaInterna);
         return view('admin.auditoriaInternas.show', compact('auditoriaInterna'));
     }
 

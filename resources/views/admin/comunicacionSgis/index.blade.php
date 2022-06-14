@@ -59,11 +59,9 @@
 
     {{ Breadcrumbs::render('admin.comunicacion-sgis.index') }}
 
-    @can('comunicacion_sgi_create')
     <h5 class="col-12 titulo_general_funcion">Comunicados Generales</h5>
 
         <div class="mt-5 card">
-        @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">

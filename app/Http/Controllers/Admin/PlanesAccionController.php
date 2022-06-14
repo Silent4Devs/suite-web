@@ -8,7 +8,8 @@ use App\Models\PlanImplementacion;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-
+use Gate;
+use Illuminate\http\Response;
 class PlanesAccionController extends Controller
 {
     /**

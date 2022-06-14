@@ -275,7 +275,7 @@ class PuestosController extends Controller
 
     public function consultaPuestos(Request $request)
     {
-        abort_if(Gate::denies('capital_humano_competencias_por_puestos_consulta_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('consulta_perfiles_de_puesto_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.puestos.consultapuestos');
     }
