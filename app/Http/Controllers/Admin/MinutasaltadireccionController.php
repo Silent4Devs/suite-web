@@ -449,8 +449,6 @@ class MinutasaltadireccionController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-      
-
         $model = new Minutasaltadireccion();
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;

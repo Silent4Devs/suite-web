@@ -195,8 +195,6 @@ class EvidenciasSgsiController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-       
-
         $model = new EvidenciasSgsi();
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;

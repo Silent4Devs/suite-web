@@ -7,8 +7,8 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\Tipoactivo;
-use Illuminate\Http\Request;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SubcategoriaActivoContoller extends Controller

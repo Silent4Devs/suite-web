@@ -462,7 +462,6 @@ class DocumentosController extends Controller
 
     public function renderHistoryReview(Documento $documento)
     {
-       
         $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento->id)->get();
 
         return view('admin.documentos.history-reviews', compact('documento', 'revisiones'));
@@ -470,7 +469,6 @@ class DocumentosController extends Controller
 
     public function renderViewDocument(Documento $documento)
     {
-        
         $path_documento = $this->getPathDocumento($documento, 'storage');
 
         if (auth()->user()->empleado) {
@@ -641,7 +639,6 @@ class DocumentosController extends Controller
 
     public function renderHistoryVersions(Documento $documento)
     {
-       
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
 
         return view('admin.documentos.versions-document', compact('documento', 'versiones'));

@@ -4029,7 +4029,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'mi_organizacion_ver',
                 'name' => 'Este permiso permite al usuario ver registros',
-            ] ,
+            ],
             [
                 'title' => 'agregar_documento_crear',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Agregar Documento"',
@@ -4061,7 +4061,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'sistema_de_gestion_mejora_acceder',
                 'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Mejora"',
-            ]
+            ],
         ];
 
         // Permission::insert($permissions);
