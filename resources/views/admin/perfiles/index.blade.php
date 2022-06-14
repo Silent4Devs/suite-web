@@ -137,8 +137,7 @@
                 }
             }
             //dtButtons.push(deleteButton)
-
-
+            @can('niveles_jerarquicos_agregar')
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nuevo',
@@ -154,7 +153,6 @@
             @can('niveles_jerarquicos_agregar')
             dtButtons.push(btnAgregar);
             @endcan
-
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,

@@ -411,7 +411,7 @@ if (!is_null($organizacion)) {
                                             @endif
                                         @endif
                                     @endcan
-                                    @can('mi_perfil_mis_datos_ver_perfil_puesto')
+                                    @can('mi_perfil_mis_datos_ver_perfil_de_puesto')
                                         @if ($usuario->empleado)
                                             <a href="{{ route('admin.inicio-Usuario.perfil-puesto') }}"
                                                 class="mt-2">

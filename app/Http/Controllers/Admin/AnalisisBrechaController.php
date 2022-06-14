@@ -11,14 +11,13 @@ use App\Models\Empleado;
 use App\Models\GapDo;
 use App\Models\GapTre;
 use App\Models\GapUno;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisBrechaController extends Controller
 {
-    
     public function index(Request $request)
     {
         abort_if(Gate::denies('analisis_de_brechas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -123,13 +122,10 @@ class AnalisisBrechaController extends Controller
         return redirect()->route('admin.analisisdebrechas.index');
     }
 
-  
     public function show(AnalisisBrecha $analisisBrecha)
     {
-       
     }
 
- 
     public function edit($id)
     {
         abort_if(Gate::denies('analisis_de_brechas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -156,7 +152,6 @@ class AnalisisBrechaController extends Controller
         return view('admin.analisisdebrechas.edit', compact('empleados', 'analisisBrecha', 'gap1porcentaje', 'gap12porcentaje', 'gap2porcentaje', 'gap2satisfactorio', 'gap2parcialmente', 'gap3porcentaje', 'gap31porcentaje', 'gap2noaplica', 'total', 'gapunoPorc', 'porcentajeGap1', 'porcentajeGap2', 'porcentajeGap3', 'cuentas'));
     }
 
-   
     public function update(Request $request, $id)
     {
         abort_if(Gate::denies('analisis_de_brechas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -174,7 +169,6 @@ class AnalisisBrechaController extends Controller
         return redirect()->route('admin.analisisdebrechas.index')->with('success', 'Editado con éxito');
     }
 
- 
     public function destroy($AnalisisBrecha)
     {
         abort_if(Gate::denies('analisis_de_brechas_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');

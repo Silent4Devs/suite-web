@@ -11,7 +11,6 @@
     <h5 class="col-12 titulo_general_funcion">Competencias para: {{ $puesto->puesto }}</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            @can('capital_humano_competencias_por_puestos_create')
                 <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
                     Asignar Competencias
                 </div>
@@ -20,7 +19,6 @@
                     @csrf
                     @include('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.competencias.form')
                 </form>
-            @endcan
             {{-- <div class="d-flex justify-content-end">
                 <button id="asignarBtn" class="mb-2 btn btn-sm btn-outline-success"><i
                         class="mr-2 fas fa-sync"></i>Asignar</button>
@@ -116,12 +114,12 @@
                             `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}`;
                         let botones = `
                             <div class="btn-group">
-                            @can('capital_humano_competencias_por_puestos_edit')
+                            @can('competencias_por_puesto_editar')
                                 <button class="btn btn-sm btn-editar" title="Editar"
                                     onclick="event.preventDefault();Editar('${urlActualizar}','${urlEditar}','${row.competencia.id}','${row.competencia.nombre}','${row.nivel_esperado}')"><i
                                         class="fas fa-edit"></i></button>
                             @endcan
-                            @can('capital_humano_competencias_por_puestos_delete')
+                            @can('competencias_por_puesto_eliminar')
                                 <button class="text-danger btn btn-sm btn-eliminar" title="Eliminar"
                                     onclick="event.preventDefault();Eliminar('${urlEliminar}')"><i class="fas fa-trash-alt"></i></button>
                             @endcan

@@ -75,12 +75,12 @@ class CalendarioOficialController extends Controller
         return redirect(route('admin.calendario-oficial.index'))->with(['success' => 'Registro guardado con exito']);
     }
 
-    public function show(CalendarioOficial $calendario)
+    public function show($calendario)
     {
-        // abort_if(Gate::denies('enlaces_ejecutar_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         abort_if(Gate::denies('dias_festivos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $fecha = CalendarioOficial::find($calendario);
 
-        return view('admin.calendario-oficial.show', compact('calendario-oficial'));
+        return view('admin.calendario-oficial.show', compact('fecha'));
     }
 
     public function edit($calendario)

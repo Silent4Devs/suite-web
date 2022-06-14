@@ -537,7 +537,6 @@ class InicioUsuarioController extends Controller
 
         $sedes = Sede::get();
 
-
         return view('admin.inicioUsuario.formularios.quejas', compact('areas', 'procesos', 'empleados', 'activos', 'sedes'));
     }
 
@@ -601,7 +600,6 @@ class InicioUsuarioController extends Controller
 
         $sedes = Sede::get();
 
-
         return view('admin.inicioUsuario.formularios.denuncias', compact('empleados', 'sedes'));
     }
 
@@ -660,7 +658,6 @@ class InicioUsuarioController extends Controller
 
         $procesos = Proceso::get();
 
-
         return view('admin.inicioUsuario.formularios.mejoras', compact('areas', 'procesos'));
     }
 
@@ -697,7 +694,6 @@ class InicioUsuarioController extends Controller
         $empleados = Empleado::alta()->get();
 
         $procesos = Proceso::get();
-
 
         return view('admin.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
     }
@@ -808,7 +804,6 @@ class InicioUsuarioController extends Controller
         $empleados = Empleado::alta()->get();
 
         $sedes = Sede::get();
-
 
         return view('admin.inicioUsuario.formularios.riesgos', compact('activos', 'areas', 'procesos', 'sedes'));
     }
@@ -1069,7 +1064,7 @@ class InicioUsuarioController extends Controller
 
     public function perfilPuesto()
     {
-        abort_if(Gate::denies('perfil_de_puesto_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_de_puesto'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $puesto_id = auth()->user()->empleado->puesto_id;
         $puesto = Puesto::find($puesto_id);
 

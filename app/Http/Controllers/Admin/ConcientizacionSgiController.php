@@ -132,7 +132,6 @@ class ConcientizacionSgiController extends Controller
 
     public function update(UpdateConcientizacionSgiRequest $request, ConcientizacionSgi $concientizacionSgi)
     {
-
         abort_if(Gate::denies('concientizacion_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $concientizacionSgi->update($request->all());

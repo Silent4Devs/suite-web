@@ -38,7 +38,9 @@
                             {{ trans('cruds.auditoriaInterna.fields.clausulas') }}
                         </th>
                         <td>
-                            {{ $auditoriaInterna->clausulas->control ?? '' }}
+                            @foreach($auditoriaInterna->clausulas as $clausula)
+                            {{ $clausula->nombre ?? '' }}
+                            @endforeach
                         </td>
                     </tr>
                     <tr>

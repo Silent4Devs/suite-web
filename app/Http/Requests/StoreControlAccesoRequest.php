@@ -9,7 +9,7 @@ class StoreControlAccesoRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('control_acceso_create');
+        return Gate::allows('control_de_accesos_agregar');
     }
 
     public function rules()

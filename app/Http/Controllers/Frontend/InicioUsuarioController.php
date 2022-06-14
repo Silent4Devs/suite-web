@@ -621,7 +621,6 @@ class InicioUsuarioController extends Controller
 
         $procesos = Proceso::get();
 
-
         return view('frontend.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
     }
 

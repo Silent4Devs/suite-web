@@ -9,7 +9,7 @@ class UpdateTratamientoRiesgoRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('tratamiento_riesgo_edit');
+        return Gate::allows('tratamiento_de_los_riesgos_editar');
     }
 
     public function rules()
