@@ -182,7 +182,7 @@ class EmpleadoController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bd_empleados_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
@@ -994,7 +994,7 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find(intval($id));
         $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();

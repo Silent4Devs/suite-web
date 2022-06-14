@@ -3,11 +3,10 @@
 
     {{ Breadcrumbs::render('admin.tratamiento-riesgos.index') }}
 
-    @can('tratamiento_riesgo_create')
+
     <h5 class="col-12 titulo_general_funcion">Tratamiento de los Riesgos</h5>
 
         <div class="mt-5 card">
-    @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">

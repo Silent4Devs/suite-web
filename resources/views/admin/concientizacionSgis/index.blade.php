@@ -75,7 +75,6 @@
 
     {{ Breadcrumbs::render('admin.concientizacion-sgis.index') }}
 
-    @can('concientizacion_sgi_create')
         <h5 class="col-12 titulo_general_funcion">Concientización SGSI</h5>
         <div class="mt-5 card">
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -88,7 +87,6 @@
             </a>
         </div>
     </div> --}}
-        @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">

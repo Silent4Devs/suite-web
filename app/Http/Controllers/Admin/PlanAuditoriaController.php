@@ -145,7 +145,7 @@ class PlanAuditoriaController extends Controller
     {
         abort_if(Gate::denies('plan_de_auditoria_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $planAuditorium->load('fecha', 'auditados', 'team');
+        $planAuditorium->load( 'auditados', 'team');
 
         return view('admin.planAuditoria.show', compact('planAuditorium'));
     }

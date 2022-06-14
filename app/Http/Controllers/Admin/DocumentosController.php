@@ -470,7 +470,7 @@ class DocumentosController extends Controller
 
     public function renderViewDocument(Documento $documento)
     {
-        abort_if(Gate::denies('documentos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('portal_comunicacion_mostrar_documentos'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $path_documento = $this->getPathDocumento($documento, 'storage');
 
         if (auth()->user()->empleado) {

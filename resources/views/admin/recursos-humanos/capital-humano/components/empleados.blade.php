@@ -148,14 +148,17 @@
                 </div>
             </a></li>
     @endcan
-    <li><a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
+    @can('capacitaciones_categorias_acceder')
+    <li>
+        <a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
             <div>
                 <i class="bi bi-person-video3"></i>
                 <br>
                 Capacitaciones
             </div>
-        </a></li>
-    @can('capacitaciones_categorias_acceder')
+        </a>
+    </li>
+
         <div class="ventana_menu" id="capacitaciones" style="color:#345183 !important">
             <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="capacitaciones"
                 style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
@@ -183,6 +186,7 @@
             </ul>
         </div>
     @endcan
+    @can('solicitudes_incidencias_acceder')
     <li>
         <a href="#">
             <div>
@@ -192,6 +196,8 @@
             </div>
         </a>
     </li>
+    @endcan
+    @can('beneficios_acceder')
     <li>
         <a href="#">
             <div>
@@ -201,7 +207,8 @@
             </div>
         </a>
     </li>
-
+    @endcan
+    @can('timesheet_acceder')
     <li>
         <a href="#">
             <div>
@@ -210,5 +217,5 @@
             </div>
         </a>
     </li>
-
+    @endcan
 </ul>

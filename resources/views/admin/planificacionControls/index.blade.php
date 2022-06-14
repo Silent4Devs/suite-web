@@ -3,11 +3,10 @@
 
     {{ Breadcrumbs::render('admin.planificacion-controls.index') }}
 
-    @can('planificacion_control_create')
+
     <h5 class="col-12 titulo_general_funcion">Planificación y Control</h5>
 
         <div class="mt-5 card">
-    @endcan
 
     @include('partials.flashMessages')
         <div class="card-body datatable-fix">

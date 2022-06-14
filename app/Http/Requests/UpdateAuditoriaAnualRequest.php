@@ -9,7 +9,7 @@ class UpdateAuditoriaAnualRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('auditoria_anual_edit');
+        return Gate::allows('programa_anual_auditoria_editar');
     }
 
     public function rules()

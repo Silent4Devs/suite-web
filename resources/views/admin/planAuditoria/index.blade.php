@@ -230,7 +230,7 @@
 
             ];
 
-            @can('plan_auditorium_create')
+            @can('plan_de_auditoria_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar plan de auditoría',

@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('Métrica') }}
+       Mostrar Tipo
     </div>
 
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.Metrica.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.Tipo.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -20,7 +20,7 @@
                            ID
                         </th>
                         <td>
-                            {{ $metricas->id }}
+                            {{ $tipos->id }}
                         </td>
                     </tr>
                     <tr>
@@ -28,14 +28,14 @@
                             Nombre
                         </th>
                         <td>
-                            {{ $metricas->definicion}}
+                            {{ $tipos->definicion}}
                         </td>
                     </tr>
 
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.Metrica.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.Tipo.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

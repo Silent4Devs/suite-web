@@ -2202,7 +2202,7 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso consiste en darle acceso al usuario para visualizar su perfil profesional, esta opción se encuentra en la pestaña "MIS DATOS" en el módulo de "MI PERFIL"',
             ],
             [
-                'title' => 'mi_perfil_mis_datos_ver_perfil_puesto ',
+                'title' => 'mi_perfil_mis_datos_ver_perfil_de_puesto',
                 'name' => 'Este permiso consiste en darle acceso al usuario para visualizar su perfil de puesto, esta opción se encuentra en la pestaña "MIS DATOS" en el módulo de "MI PERFIL"',
             ],
             [
@@ -2583,6 +2583,18 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Competencias por puesto"',
             ],
             [
+                'title' => 'competencias_por_puesto_agregar',
+                'name' => 'Este permiso permite al usuario agregar "Competencias por puesto"',
+            ],
+            [
+                'title' => 'competencias_por_puesto_editar',
+                'name' => 'Este permiso permite al usuario editar "Competencias por puesto"',
+            ],
+            [
+                'title' => 'competencias_por_puesto_eliminar',
+                'name' => 'Este permiso permite al usuario eliminar "Competencias por puesto"',
+            ],
+            [
                 'title' => 'lista_de_perfiles_de_puesto_agregar',
                 'name' => 'Este permiso permite al usuario  enlazar competencias a los perfiles de puesto',
             ],
@@ -2757,6 +2769,14 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'capacitaciones_categorias_ver',
                 'name' => 'Este permiso permite al usuario ver  detalles del registro',
+            ],
+            [
+                'title' => 'solicitudes_incidencias_acceder',
+                'name' => 'Este permiso permite al usuario acceder al módulo de "Solicitudes e Incidencias"',
+            ],
+            [
+                'title' => 'beneficios_acceder',
+                'name' => 'Este permiso permite al usuario acceder al módulo de "Beneficios"',
             ],
             [
                 'title' => 'calendario_corporativo_acceder',

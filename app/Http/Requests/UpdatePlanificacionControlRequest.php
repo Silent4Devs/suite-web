@@ -9,7 +9,7 @@ class UpdatePlanificacionControlRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('planificacion_control_edit');
+        return Gate::allows('planificacion_y_control_editar');
     }
 
     public function rules()
