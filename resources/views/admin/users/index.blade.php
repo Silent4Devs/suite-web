@@ -292,19 +292,18 @@
                                             <div class="modal-body">
                                                 <p><strong>Empleado vinculado actualmente:</strong> ${row.empleado?.name?row.empleado?.name:"Sin vincular"}</p>
                                                 <select name="n_empleado" id="n_empleado${data}" class="select2">
-                                                    <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>`
-                            empleados.forEach(empleado => {
-                                htmlBotones += `
+                                                    <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>`;
+                                                    empleados.forEach(empleado => {
+                                                        htmlBotones += `
                                                             <option value="${empleado.n_empleado}">${empleado.name}</option>
                                                         `;
-                            });
-                            `</select>
+                                                    });
+                                                htmlBotones += `</select>
                                                 <span class="text-sm n_empleado_error errores text-danger"></span>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                <button type="button" class="btn btn-primary"
-                                                    onclick="VincularEmpleado('${row.name}','${data}');">Vincular</button>
+                                                <button type="button" class="btn btn-primary" onclick="VincularEmpleado('${row.name}','${data}');">Vincular</button>
                                             </div>
                                         </div>
                                     </div>

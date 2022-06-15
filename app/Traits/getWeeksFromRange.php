@@ -16,7 +16,7 @@ trait getWeeksFromRange
         $cycles = ($actualYear - $year) + 1;
         $lastYear = $year;
         if ( $fecha_fin != null) {
-            $endActualWeek = $fecha_fin->format('Y-m-d');
+            $endActualWeek = $fecha_fin->endOfWeek(Carbon::SUNDAY)->format('Y-m-d');
             $startActualWeek = $fecha_fin->startOfWeek(Carbon::MONDAY)->format('Y-m-d');
             $actualWeek = $startActualWeek . '|' . $endActualWeek;
         }else{

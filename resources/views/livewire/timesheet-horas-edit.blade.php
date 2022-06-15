@@ -38,7 +38,7 @@
                                 <select id="select_proyectos{{ $i_hora }}" data-contador="{{ $i_hora }}" data-type="parent" name="timesheet[{{ $i_hora }}][proyecto]" class="select2">
                                     <option selected value="{{ $hora->proyecto ? $hora->proyecto->id : '' }}">{{ $hora->proyecto ? $hora->proyecto->proyecto : '' }}</option>   
                                     @foreach($proyectos as $proyecto)
-                                        <option value="{{ $proyecto->id }}">{{ $proyecto->proyecto }}</option>
+                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['proyecto'] }}</option>
                                     @endforeach 
                                 </select>   
                                 <small class="timesheet_{{ $i_hora }}_proyecto errores text-danger"></small>
@@ -104,7 +104,7 @@
                                 <select id="select_proyectos{{ $i }}" data-contador="{{ $i }}" data-type="parent" name="timesheet[{{ $i }}][proyecto]" class="select2">
                                     <option selected disabled>Seleccione proyecto</option>   
                                     @foreach($proyectos as $proyecto)
-                                        <option value="{{ $proyecto->id }}">{{ $proyecto->proyecto }}</option>
+                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['proyecto'] }}</option>
                                     @endforeach 
                                 </select>
                                 <small class="timesheet_{{ $i }}_proyecto errores text-danger"></small>

@@ -78,10 +78,12 @@
                 @if ($origen == 'tareas')
                     @foreach ($tareas as $key => $tarea)
                         <tr>
-                            <td wire:ignore> <input class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}" name="tarea" value="{{ $tarea->tarea }}"> </td>
+                            <td wire:ignore> 
+                                <input class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}" name="tarea" value="{{ $tarea->tarea }}"> 
+                            </td>
                             <td> {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }} </td>
                             <td style="display:flex; align-items: center;">
-                                <select class="form-control" style="width:300px;">
+                                <select class="form-control select_area" style="width:300px;" data-type="changeArea" data-id="{{ $tarea->id }}">
                                     <option value="0" {{$tarea->todos ? 'selected' : ''}}>Todas</option>
                                     @foreach ($tarea->areas as $area)
                                         <option value="{{$area['id']}}" {{$area['id'] == $tarea->area_id ? 'selected' : ''}}>{{$area['area']}}</option>
@@ -212,15 +214,6 @@
                 @this.set('tarea_name', value, true);
             });
 
-            document.querySelector('.tabla_time_tareas').addEventListener('change', (e)=>{
-                if (e.target.getAttribute('data-type') == 'change') {
-                    let elemento = e.target;
-                    let id = elemento.getAttribute('data-id');
-                    let value = elemento.value;
-                    @this.actualizarNameTarea(id, value);
-                }
-            });
-
             document.querySelector('#proyectos_select').addEventListener('change', (e)=>{
                 let proyecto_id = e.target.value;
                 @this.llenarAreas(proyecto_id);
@@ -229,6 +222,24 @@
             document.querySelector('#areas_select').addEventListener('change', (e)=>{
                 let value = e.target.value;
                 @this.set('area_select', value, true);
+            });
+
+            // edit dentro de tabla ----------------------------------------
+
+            document.querySelector('.tabla_time_tareas').addEventListener('change', (e)=>{
+                if (e.target.getAttribute('data-type') == 'change') {
+                    let elemento = e.target;
+                    let id = elemento.getAttribute('data-id');
+                    let value = elemento.value;
+                    @this.actualizarNameTarea(id, value);
+                }
+                
+                if (e.target.getAttribute('data-type') == 'changeArea') {
+                    let elemento = e.target;
+                    let id = elemento.getAttribute('data-id');
+                    let value = elemento.value;
+                    @this.actualizarAreaTarea(id, value);
+                }
             });
 
             Livewire.on('tarea-actualizada', (tarea)=>{
@@ -243,8 +254,15 @@
                         let value = elemento.value;
                         @this.actualizarNameTarea(id, value);
                     }
+
+                    if (e.target.getAttribute('data-type') == 'changeArea') {
+                        let elemento = e.target;
+                        let id = elemento.getAttribute('data-id');
+                        let value = elemento.value;
+                        @this.actualizarAreaTarea(id, value);
+                    }
                 });
-            });
+            });  
         });
     </script>
 </div>

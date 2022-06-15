@@ -298,14 +298,26 @@
                                         </a>
                                     </li>
                                 @endcan
-                                <li>
-                                    <a href="{{ route('admin.timesheet-reporte-aprobador', auth()->user()->empleado->id) }}">
-                                        <div>
-                                            <i class="bi bi-file-earmark-text"></i><br>
-                                            Reporte
-                                        </div>
-                                    </a>
-                                </li>
+                                @if($organizacion->fecha_registro_timesheet)
+                                    <li>
+                                        <a href="{{ route('admin.timesheet-reporte-aprobador', auth()->user()->empleado->id) }}">
+                                            <div>
+                                                <i class="bi bi-file-earmark-text"></i><br>
+                                                Reportes
+                                            </div>
+                                        </a>
+                                    </li>
+                                 @else
+                                    <li style="position:relative;">
+                                        <a href="#" style="opacity:0.6;">
+                                            <div>
+                                                <i class="bi bi-file-earmark-text"></i><br>
+                                                Reportes
+                                            </div>
+                                        </a>
+                                        <strong class="text-danger text-center" style="position:absolute; top:20px; left: 0; width: 100%;">Necesaria fecha de inicio del timesheet</strong>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     @endif
@@ -355,14 +367,26 @@
                                     </a>
                                 </li>
                             @endcan
-                            <li>
-                                <a href="{{ route('admin.timesheet-reportes') }}">
-                                    <div>
-                                        <i class="bi bi-file-earmark-text"></i><br>
-                                        Reportes
-                                    </div>
-                                </a>
-                            </li>
+                            @if($organizacion->fecha_registro_timesheet)
+                                <li>
+                                    <a href="{{ route('admin.timesheet-reportes') }}">
+                                        <div>
+                                            <i class="bi bi-file-earmark-text"></i><br>
+                                            Reportes
+                                        </div>
+                                    </a>
+                                </li>
+                             @else
+                                <li style="position:relative;">
+                                    <a href="#" style="opacity:0.6;">
+                                        <div>
+                                            <i class="bi bi-file-earmark-text"></i><br>
+                                            Reportes
+                                        </div>
+                                    </a>
+                                    <strong class="text-danger text-center" style="position:absolute; top:20px; left: 0; width: 100%;">Seleccione fecha de inicio del timesheet</strong>
+                                </li>
+                            @endif
                             <li>
                                 <a href="{{ route('admin.timesheet-dashboard') }}">
                                     <div>
@@ -392,11 +416,15 @@
             </button>
           </div>
           <div class="modal-body">
-            <form method="POST" action="{{ route('admin.timesheet-acualizarDia') }}" class="row">
+            <form method="POST" action="{{ route('admin.timesheet-actualizarDia') }}" class="row">
                 @csrf
                 <div class="col-12 form-group">
                     <label>Selecciones fecha de inicio del timesheet</label>
-                    <input class="form-control" type="date" name="fecha_registro_timesheet" value="{{ $organizacion->fecha_registro_timesheet }}">
+                    <input id="" class="form-control" type="date" name="fecha_registro_timesheet" value="{{ $organizacion->fecha_registro_timesheet }}" max="{{ $time_viejo }}">
+                </div>
+                <div class="col-12 form-group">
+                    <label>Establecer limite de semanas para registros atrasados de timesheet</label>
+                    <input id="" class="form-control" type="number" name="semanas_min_timesheet" value="{{ $organizacion->fecha_min_timesheet }}">
                 </div>
                 <div class="form-group col-12">
                     <label>Seleccione el día de inicio de la jornada laboral</label>
@@ -487,6 +515,42 @@
                 $(this).tab('show')
                 const keyTab = this.getAttribute('data-type');
                 localStorage.setItem('menu-iso27001-active', keyTab);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', ()=>{
+            $(".date_librery").flatpickr({
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                      shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    },
+                    months: {
+                      shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+                      longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    },
+                },
+                altInput: true,
+                dateFormat: 'd-m-Y',
+            });
+            $("#fecha_dia_time_organizacion_start").flatpickr({
+                "disable": [
+                    function(date) {
+
+                    }
+                ],
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                      shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    },
+                    months: {
+                      shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+                      longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    },
+                },
             });
         });
     </script>
