@@ -20,7 +20,7 @@ class CompetenciasPorPuestoController extends Controller
      */
     public function index(Request $request)
     {
-        abort_if(Gate::denies('capital_humano_competencias_por_puestos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('competencias_por_puesto_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['area' => function ($q) {
                 $q->select('id', 'area');
@@ -75,7 +75,7 @@ class CompetenciasPorPuestoController extends Controller
      */
     public function create($puesto)
     {
-        abort_if(Gate::denies('capital_humano_competencias_por_puestos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('lista_de_perfiles_de_puesto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $puesto = Puesto::find(intval($puesto));
         $competencias = Competencia::all();
 
@@ -90,7 +90,7 @@ class CompetenciasPorPuestoController extends Controller
      */
     public function store(Request $request, $puesto)
     {
-        abort_if(Gate::denies('capital_humano_competencias_por_puestos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('lista_de_perfiles_de_puesto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'competencia_id' => 'required|exists:ev360_competencias,id',
             'nivel_esperado' => 'required|numeric',
@@ -143,7 +143,7 @@ class CompetenciasPorPuestoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('capital_humano_competencias_por_puestos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('competencias_por_puesto_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nivel_esperado' => 'required|numeric',
         ]);
@@ -165,7 +165,7 @@ class CompetenciasPorPuestoController extends Controller
      */
     public function destroy($id)
     {
-        abort_if(Gate::denies('capital_humano_competencias_por_puestos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('competencias_por_puesto_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $competenciaPorPuesto = CompetenciaPuesto::find($id);
         $delete = $competenciaPorPuesto->delete();
         if ($delete) {

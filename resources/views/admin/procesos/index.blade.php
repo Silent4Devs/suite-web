@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    @can('recurso_create')
+    @can('procesos_agregar')
         <h5 class="col-12 titulo_general_funcion">Procesos</h5>
         @include('flash::message')
         <div class="mt-5 card">
@@ -109,7 +109,7 @@
 
             ];
 
-            @can('recurso_create')
+            @can('procesos_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar proceso',
@@ -180,9 +180,15 @@
                             //create buttons for show, edit, delete
                             let buttons = `
                                 <div class="btn-group" role="group" aria-label="Basic example">
+                                    @can('procesos_ver')
                                     <a href="{{ route('admin.procesos.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>
+                                    @endcan
+                                    @can('procesos_editar')
                                     <a href="{{ route('admin.procesos.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
+                                    @endcan
+                                    @can('procesos_eliminar')
                                    ${row.documento_id==null?` <button onclick="Eliminar(this)" data-url="{{ route('admin.procesos.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Ver"><i class="fas fa-trash-alt"></i></button>`:''}
+                                   @endcan
                                 </div>
                             `;
                             buttons = buttons.replaceAll(':id', data);

@@ -69,9 +69,9 @@
 
 
         /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          fill: #fff !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          height: 15px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  fill: #fff !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  height: 15px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }*/
 
 
         #workSpace {
@@ -215,7 +215,6 @@
 
             display: inline-block !important;
         }
-
     </style>
 
     {{ Breadcrumbs::render('admin.planTrabajoBase.index') }}
@@ -230,15 +229,23 @@
                     <h2 id="titlo-tab" class="text-capitalize">Diagrama Gantt</h2>
                 </div>
                 <div class="text-right col-8 caja_botones_menu">
-                    <a href="#" id="tabla_remove" data-tabs="original_gantt"
-                        onclick="loadGanttFromServer();cambiarTitulo('Gantt');" class="btn_gantt_vista boton_activo"><i
-                            class="fas fa-stream"></i>Gantt</a>
-                    <a href="#" id="tabla_gantt_click" data-tabs="tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');"
-                        class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
-                    <a href="#" data-tabs="calendario_gantt" onclick="initCalendar();cambiarTitulo('Calendario');"
-                        class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
-                    <a href="#" data-tabs="kanban_gantt" onclick="initKanban();cambiarTitulo('Kanban');"
-                        class="btn_gantt_kanban_vista"><i class="fas fa-th-large"></i>Kanban</a>
+                    @can('plan_de_implementacion_Gantt')
+                        <a href="#" id="tabla_remove" data-tabs="original_gantt"
+                            onclick="loadGanttFromServer();cambiarTitulo('Gantt');" class="btn_gantt_vista boton_activo"><i
+                                class="fas fa-stream"></i>Gantt</a>
+                    @endcan
+                    @can('plan_de_implementacion_Tabla')
+                        <a href="#" id="tabla_gantt_click" data-tabs="tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');"
+                            class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
+                    @endcan
+                    @can('plan_de_implementacion_Calendario')
+                        <a href="#" data-tabs="calendario_gantt" onclick="initCalendar();cambiarTitulo('Calendario');"
+                            class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
+                    @endcan
+                    @can('plan_de_implementacion_Kanban')
+                        <a href="#" data-tabs="kanban_gantt" onclick="initKanban();cambiarTitulo('Kanban');"
+                            class="btn_gantt_kanban_vista"><i class="fas fa-th-large"></i>Kanban</a>
+                    @endcan
                 </div>
             </div>
 

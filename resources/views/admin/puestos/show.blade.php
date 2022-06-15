@@ -10,7 +10,6 @@
     </style>
 
     {{ Breadcrumbs::render('perfil-puesto-show', $puesto) }}
-
     <h5 class="col-12 titulo_general_funcion">Perfil de Puesto</h5>
     <div>
         <div class="mt-4 row justify-content-center">
@@ -359,6 +358,7 @@
         </div>
 
     </div>
+
 
 
 

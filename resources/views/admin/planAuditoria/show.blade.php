@@ -30,7 +30,7 @@
                             {{ trans('cruds.planAuditorium.fields.fecha') }}
                         </th>
                         <td>
-                            {{ $planAuditorium->fecha->fechainicio ?? '' }}
+
                         </td>
                     </tr>
                     <tr>

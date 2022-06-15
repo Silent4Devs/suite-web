@@ -77,7 +77,7 @@
 
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
 
-    @can('politica_sgsi_create')
+    @can('politica_sistema_gestion_agregar')
 
         <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
         <div class="mt-5 card">
@@ -214,7 +214,7 @@
                 }
 
             ];
-            @can('politica_sgsi_create')
+            @can('politica_sistema_gestion_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva política SGSI',
@@ -250,7 +250,7 @@
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan
-            @can('politica_sgsi_delete')
+            @can('politica_sistema_gestion_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
                 let deleteButton = {
                 text: deleteButtonTrans,

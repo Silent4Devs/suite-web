@@ -2,7 +2,7 @@
 @section('content')
     {{ Breadcrumbs::render('admin.analisis-riesgos.index') }}
 
-    @can('matriz_riesgo_create')
+  
         <style>
             th {
                 background-color: #345183;
@@ -85,6 +85,7 @@
         <h5 class="col-12 titulo_general_funcion">Matriz de Riesgo </h5>
         <div class="mt-5 card">
             @include('partials.flashMessages')
+            @can('matriz_de_riesgo_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modalmatrizriesgo', [
@@ -93,6 +94,7 @@
                     ])
                 </div>
             </div>
+            @endcan
 
             {{-- <div style="margin-bottom:10px; margin-left:12px;" class="row">
                   <div class="col-lg-12">
@@ -101,8 +103,7 @@
                       </a>
                   </div>
               </div> --}}
-        @endcan
-
+      
 
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable datatable-AnalisisRiesgo tblCSV" id="datatable-AnalisisRiesgo">
@@ -232,6 +233,7 @@
                 }
 
             ];
+            @can('matriz_de_riesgo_eliminar')
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
@@ -268,7 +270,7 @@
                     }
                 }
             }
-            //dtButtons.push(deleteButton)
+           @endcan
 
 
             let btnAgregar = {
@@ -304,7 +306,7 @@
                 }
             };
 
-            @can('analisis_de_riesgos_matriz_riesgo_create')
+            @can('matriz_de_riesgo_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
 
@@ -404,7 +406,7 @@
                             case 'Seguridad de la información':
                             return `
                             <div class="text-center w-100" style="text-align:center">
-                                @can('analisis_de_riesgos_matriz_riesgo_config')
+                                @can('matriz_de_riesgo_vinculo')
                                     <a href="matriz-seguridad/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 @endcan
                             </div>
@@ -413,7 +415,7 @@
                             case 'Análisis de riesgo integral':
                             return `
                             <div class="text-center w-100" style="text-align:center">
-                                @can('analisis_de_riesgos_matriz_riesgo_config')
+                                @can('matriz_de_riesgo_vinculo')
                                     <a href="matriz-seguridad/sistema-gestion/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
                                 @endcan
                             </div>
@@ -422,21 +424,27 @@
                             case 'OCTAVE':
                                 return `
                                 <div class="text-center w-100" style="text-align:center">
+                                    @can('matriz_de_riesgo_vinculo')
                                     <a href="procesos-octave/${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                                    @endcan
                                 </div>
                             `;
                             break;
                             case 'ISO 31000':
                             return `
                             <div class="text-center w-100" style="text-align:center">
+                                @can('matriz_de_riesgo_vinculo')
                                 <a href="matriz-seguridad/ISO31000/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                                @endcan
                             </div>
                             `;
                             break;
                             case 'NIST':
                             return `
                             <div class="text-center w-100" style="text-align:center">
+                                @can('matriz_de_riesgo_vinculo')
                                 <a href="matriz-seguridad/NIST/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a>
+                                @endcan
                             </div>
                             `;
                             default:

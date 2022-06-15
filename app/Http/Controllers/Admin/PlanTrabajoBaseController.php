@@ -15,7 +15,7 @@ class PlanTrabajoBaseController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('plan_de_implementacion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $gantt_path = 'storage/gantt/';
         // $path = public_path($gantt_path);
         // $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);

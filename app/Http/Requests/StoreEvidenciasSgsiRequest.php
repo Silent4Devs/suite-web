@@ -9,7 +9,7 @@ class StoreEvidenciasSgsiRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('evidencias_sgsi_create');
+        return Gate::allows('evidencia_asignacion_recursos_sgsi_agregar');
     }
 
     public function rules()

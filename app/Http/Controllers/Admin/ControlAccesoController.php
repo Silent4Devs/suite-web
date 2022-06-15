@@ -23,7 +23,7 @@ class ControlAccesoController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('control_acceso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_de_accesos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = ControlAcceso::with(['team', 'documentos_controlA'])->select(sprintf('%s.*', (new ControlAcceso)->table))->orderByDesc('id');
@@ -33,9 +33,9 @@ class ControlAccesoController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'control_acceso_show';
-                $editGate = 'control_acceso_edit';
-                $deleteGate = 'control_acceso_delete';
+                $viewGate = 'control_de_accesos_ver';
+                $editGate = 'control_de_accesos_editar';
+                $deleteGate = 'control_de_accesos_eliminar';
                 $crudRoutePart = 'control-accesos';
 
                 return view('partials.datatablesActions', compact(
@@ -73,7 +73,7 @@ class ControlAccesoController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('control_acceso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_de_accesos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documentos = DocumentoControlAcceso::get();
 
         return view('admin.controlAccesos.create', compact('documentos'));
@@ -81,6 +81,7 @@ class ControlAccesoController extends Controller
 
     public function store(StoreControlAccesoRequest $request)
     {
+        abort_if(Gate::denies('control_de_accesos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($request->all());
         $controlAcceso = ControlAcceso::create($request->all());
         if ($request->hasFile('files')) {
@@ -108,7 +109,7 @@ class ControlAccesoController extends Controller
 
     public function edit(ControlAcceso $controlAcceso)
     {
-        abort_if(Gate::denies('control_acceso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_de_accesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documentos = DocumentoControlAcceso::get();
         $controlAcceso->load('team');
 
@@ -117,6 +118,8 @@ class ControlAccesoController extends Controller
 
     public function update(UpdateControlAccesoRequest $request, ControlAcceso $controlAcceso)
     {
+        abort_if(Gate::denies('control_de_accesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $controlAcceso->update($request->all());
         $files = $request->file('files');
         if ($request->hasFile('files')) {
@@ -135,7 +138,7 @@ class ControlAccesoController extends Controller
 
     public function show(ControlAcceso $controlAcceso)
     {
-        abort_if(Gate::denies('control_acceso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_de_accesos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $controlAcceso->load('team');
 
@@ -144,7 +147,7 @@ class ControlAccesoController extends Controller
 
     public function destroy(ControlAcceso $controlAcceso)
     {
-        abort_if(Gate::denies('control_acceso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_de_accesos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $controlAcceso->delete();
 
@@ -160,7 +163,7 @@ class ControlAccesoController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('control_acceso_create') && Gate::denies('control_acceso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('control_de_accesos_agregar') && Gate::denies('control_de_accesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new ControlAcceso();
         $model->id = $request->input('crud_id', 0);

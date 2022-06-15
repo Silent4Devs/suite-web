@@ -23,7 +23,7 @@ class InformacionDocumetadaController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('informacion_documetada_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('informacion_documentada_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = InformacionDocumetada::with(['politicas', 'elaboro', 'reviso', 'aprobacion', 'team'])->select(sprintf('%s.*', (new InformacionDocumetada)->table));
@@ -33,7 +33,7 @@ class InformacionDocumetadaController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'informacion_documetada_show';
+                $viewGate = 'informacion_documentada_ver';
                 $editGate = 'informacion_documetada_edit';
                 $deleteGate = 'informacion_documetada_delete';
                 $crudRoutePart = 'informacion-documetadas';
@@ -182,7 +182,7 @@ class InformacionDocumetadaController extends Controller
 
     public function show(InformacionDocumetada $informacionDocumetada)
     {
-        abort_if(Gate::denies('informacion_documetada_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('informacion_documentada_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $informacionDocumetada->load('politicas', 'elaboro', 'reviso', 'aprobacion', 'team');
 

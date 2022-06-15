@@ -42,7 +42,6 @@
             height: 32px;
         }
     }
-
 </style>
 <style>
     .circle-total-evaluaciones {
@@ -272,7 +271,6 @@
         max-height: 50px !important;
         min-height: 50px !important;
     }
-
 </style>
 
 <style>
@@ -287,7 +285,6 @@
     .pastel {
         z-index: -1;
     }
-
 </style>
 
 
@@ -404,29 +401,32 @@ if (!is_null($organizacion)) {
                                         <img src="{{ asset('img/regalo.svg') }}" class="regalo"
                                             data-toggle="modal" data-target="#modal_cumple" title="Tus felicitaciones">
                                     @endif
-
-                                    @if ($usuario->empleado)
-                                        @if ($usuario->empleado->puesto)
-                                            <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}"
-                                                style="">
-                                                Ver Perfil Profesional
+                                    @can('mi_perfil_mis_datos_ver_perfil_profesional')
+                                        @if ($usuario->empleado)
+                                            @if ($usuario->empleado->puesto)
+                                                <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}"
+                                                    style="">
+                                                    Ver Perfil Profesional
+                                                </a>
+                                            @endif
+                                        @endif
+                                    @endcan
+                                    @can('mi_perfil_mis_datos_ver_perfil_de_puesto')
+                                        @if ($usuario->empleado)
+                                            <a href="{{ route('admin.inicio-Usuario.perfil-puesto') }}"
+                                                class="mt-2">
+                                                Ver Perfil de Puesto
                                             </a>
                                         @endif
-                                    @endif
-
-                                    @if ($usuario->empleado)
-                                        <a href="{{ route('admin.inicio-Usuario.perfil-puesto') }}"
-                                            class="mt-2">
-                                            Ver Perfil de Puesto
-                                        </a>
-                                    @endif
-
-                                    @if ($usuario->empleado)
-                                        <a href="{{ route('admin.inicio-Usuario.expediente', auth()->user()->empleado->id) }}"
-                                            class="mt-2">
-                                            Mi Expediente
-                                        </a>
-                                    @endif
+                                    @endcan
+                                    @can('mi_perfil_mis_datos_ver_mi_expediente')
+                                        @if ($usuario->empleado)
+                                            <a href="{{ route('admin.inicio-Usuario.expediente', auth()->user()->empleado->id) }}"
+                                                class="mt-2">
+                                                Mi Expediente
+                                            </a>
+                                        @endif
+                                    @endcan
                                 </div>
                             </div>
                         </div>
@@ -443,73 +443,22 @@ if (!is_null($organizacion)) {
                                 </div>
                             </div>
                         </div> --}}
-                        <div class="card" x-data="{ show: false }" style="padding:20px;">
-                            <h5 class="mb-0"><i class="bi bi-people mr-2"
-                                    style="transform:scale(1.15);"></i>Mi Equipo
+                        @can('mi_perfil_mis_datos_ver_mi_equipo')
+                            <div class="card" x-data="{ show: false }" style="padding:20px;">
+                                <h5 class="mb-0"><i class="bi bi-people mr-2"
+                                        style="transform:scale(1.15);"></i>Mi Equipo
 
-                                <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
-                                        class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
-                            </h5>
-                            <hr class="hr-custom-title">
-                            <div class="row align-items-center" id="listaEquipo" x-show="show"
-                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms
-                                style="margin-top: 15px;">
-                                <div class="scroll_estilo" style="height: 500px; overflow:auto">
-                                    @forelse ($equipo_a_cargo as $empleado)
-                                        <div class="col-md-12">
-                                            <div class="card" style="position:relative;">
-                                                <div class="card-body" style="position:relative">
-                                                    <div class="text-center d-flex flex-column align-items-center">
-
-                                                        <img class="img-fluid img-profile-sm"
-                                                            style="position: relative;z-index: 1;"
-                                                            src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}">
-                                                        <div class="mt-3">
-                                                            <h5 style="font-size:1vw;font-weight: bold">
-                                                                {{ $empleado->name }}
-                                                            </h5>
-                                                            {{-- <p class="mb-1 text-secondary">
-                                                                {{ $empleado->puesto }}
-                                                            </p> --}}
-                                                        </div>
-                                                        <div>
-                                                            <div class="row mb-2">
-                                                                <a href="https://wa.me/{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}"
-                                                                    target="_blank" class="col-4 text-success">
-                                                                    <p class="m-0 fab fa-whatsapp"></p>
-                                                                </a>
-                                                                <a href="tel:{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}"
-                                                                    class="col-4">
-                                                                    <p class="m-0 fas fa-mobile-alt"></p>
-                                                                </a>
-                                                                <a href="mailto:{{ $empleado->email }}"
-                                                                    class="col-4 text-muted">
-                                                                    <p class="m-0 fas fa-envelope"></p>
-                                                                </a>
-                                                            </div>
-                                                            <a class="btn btn-sm btn-light"
-                                                                style="font-size: 10px; width:150px;"
-                                                                href="{{ route('admin.ev360-objetivos-empleado.create', $empleado) }}">
-                                                                <i class="mr-1 fas fa-dot-circle"></i>Objetivos</a>
-                                                            <a type="button"
-                                                                href="{{ route('admin.ev360-evaluaciones.evaluacionesDelEmpleado', $empleado) }}"
-                                                                class="btn btn-sm btn-light mt-2"
-                                                                style="font-size: 10px; width:150px"
-                                                                aria-current="true"><i class="fas fa-book"></i>
-                                                                Evaluaciones
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div
-                                                        style="width:100%;height: 80px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @empty
-                                        @foreach ($equipo_trabajo as $empleado)
+                                    <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
+                                            class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+                                </h5>
+                                <hr class="hr-custom-title">
+                                <div class="row align-items-center" id="listaEquipo" x-show="show"
+                                    x-transition:enter.duration.500ms x-transition:leave.duration.400ms
+                                    style="margin-top: 15px;">
+                                    <div class="scroll_estilo" style="height: 500px; overflow:auto">
+                                        @forelse ($equipo_a_cargo as $empleado)
                                             <div class="col-md-12">
-                                                <div class="card">
+                                                <div class="card" style="position:relative;">
                                                     <div class="card-body" style="position:relative">
                                                         <div class="text-center d-flex flex-column align-items-center">
 
@@ -521,21 +470,34 @@ if (!is_null($organizacion)) {
                                                                     {{ $empleado->name }}
                                                                 </h5>
                                                                 {{-- <p class="mb-1 text-secondary">
-                                                                {{ $empleado->puesto }}
-                                                            </p> --}}
+                                                                    {{ $empleado->puesto }}
+                                                                </p> --}}
                                                             </div>
-                                                            <div class="row">
-                                                                <a href="https://wa.me/{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}"
-                                                                    target="_blank" class="col-4 text-success">
-                                                                    <p class="m-0 fab fa-whatsapp"></p>
-                                                                </a>
-                                                                <a href="tel:{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}"
-                                                                    class="col-4">
-                                                                    <p class="m-0 fas fa-mobile-alt"></p>
-                                                                </a>
-                                                                <a href="mailto:{{ $empleado->email }}"
-                                                                    class="col-4 text-muted">
-                                                                    <p class="m-0 fas fa-envelope"></p>
+                                                            <div>
+                                                                <div class="row mb-2">
+                                                                    <a href="https://wa.me/{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}"
+                                                                        target="_blank" class="col-4 text-success">
+                                                                        <p class="m-0 fab fa-whatsapp"></p>
+                                                                    </a>
+                                                                    <a href="tel:{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}"
+                                                                        class="col-4">
+                                                                        <p class="m-0 fas fa-mobile-alt"></p>
+                                                                    </a>
+                                                                    <a href="mailto:{{ $empleado->email }}"
+                                                                        class="col-4 text-muted">
+                                                                        <p class="m-0 fas fa-envelope"></p>
+                                                                    </a>
+                                                                </div>
+                                                                <a class="btn btn-sm btn-light"
+                                                                    style="font-size: 10px; width:150px;"
+                                                                    href="{{ route('admin.ev360-objetivos-empleado.create', $empleado) }}">
+                                                                    <i class="mr-1 fas fa-dot-circle"></i>Objetivos</a>
+                                                                <a type="button"
+                                                                    href="{{ route('admin.ev360-evaluaciones.evaluacionesDelEmpleado', $empleado) }}"
+                                                                    class="btn btn-sm btn-light mt-2"
+                                                                    style="font-size: 10px; width:150px"
+                                                                    aria-current="true"><i class="fas fa-book"></i>
+                                                                    Evaluaciones
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -545,112 +507,156 @@ if (!is_null($organizacion)) {
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    @endforelse
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card card_margin_b_n" x-data="{ show: false }" style="padding:20px;">
-                            <h5 class="mb-0"><i class="bi bi-laptop mr-2"></i>Mis Activos
-                                <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
-                                        class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
-                            </h5>
-                            <hr class="hr-custom-title">
-                            <div class="row align-items-center" id="listaEquipo" x-show="show"
-                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
-                                <div class="container" style="padding-top: 10px;">
-                                    {{-- @if (is_null($activos)) --}}
-                                    @if (count($activos) === 0)
-                                        Sin activos asignados actualmente
-                                    @else
-                                        <div class="row" style="margin-top: 1px;">
-                                            <div class="col-12 text-muted scroll_estilo" style="overflow:auto;">
-                                                <table id="dom" class="table table-bordered w-100 datatable-glosario"
-                                                    style="width: 100%; border: none !important;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="border-bottom: none !important;">ID</th>
-                                                            <th style="border-bottom: none !important;">Activo</th>
-                                                            <th
-                                                                style="text-align: center !important; border-bottom: none !important;">
-                                                                N. Serie</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($activos as $activo)
-                                                            <tr>
-                                                                <td style="vertical-align: middle;">{{ $activo->id }}
-                                                                </td>
-                                                                <td
-                                                                    style="vertical-align: middle; text-align: left !important;">
-                                                                    {{ $activo->nombreactivo }}</td>
-                                                                <td
-                                                                    style="text-align: center !important; vertical-align: middle;">
-                                                                    {{ $activo->descripcion }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class=" card card_margin_b_n" x-data="{ show: false }" style="padding:20px;">
-                            <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
-                                <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
-                                        class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+                                        @empty
+                                            @foreach ($equipo_trabajo as $empleado)
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-body" style="position:relative">
+                                                            <div class="text-center d-flex flex-column align-items-center">
 
-                            </h5>
-                            <hr class="hr-custom-title">
-                            <div class="row align-items-center" id="listaEquipo" x-show="show"
-                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
-                                <div class="container" style="padding-top: 10px;">
-                                    @if (count($competencias) === 0)
-                                        No se han definido competencias actualmente
-                                    @else
-                                        <div class="row" style="margin-top: 1px;">
-                                            <div class="col-12 text-muted scroll_estilo" style="overflow:auto;">
-                                                <table id="dom" class="table table-bordered w-100 datatable-glosario"
-                                                    style="width: 100%; border: none !important;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="border-bottom: none !important;">Logo</th>
-                                                            <th style="border-bottom: none !important;">Competencia</th>
-                                                            <th
-                                                                style="text-align: center !important; border-bottom: none !important;">
-                                                                Nivel&nbsp;Esperado</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($competencias as $competencia)
-                                                            @if ($competencia->competencia)
-                                                                <tr data-toggle="modal"
-                                                                    data-target="#modal_competencia{{ $competencia->competencia->id }}"
-                                                                    style="cursor: pointer;">
-                                                                    <td style="vertical-align: middle;"><img
-                                                                            class="img_empleado"
-                                                                            style="transform: scale(0.7);"
-                                                                            src="{{ $competencia->competencia->imagen_ruta }}">
+                                                                <img class="img-fluid img-profile-sm"
+                                                                    style="position: relative;z-index: 1;"
+                                                                    src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}">
+                                                                <div class="mt-3">
+                                                                    <h5 style="font-size:1vw;font-weight: bold">
+                                                                        {{ $empleado->name }}
+                                                                    </h5>
+                                                                    {{-- <p class="mb-1 text-secondary">
+                                                                    {{ $empleado->puesto }}
+                                                                </p> --}}
+                                                                </div>
+                                                                <div class="row">
+                                                                    <a href="https://wa.me/{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}"
+                                                                        target="_blank" class="col-4 text-success">
+                                                                        <p class="m-0 fab fa-whatsapp"></p>
+                                                                    </a>
+                                                                    <a href="tel:{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}"
+                                                                        class="col-4">
+                                                                        <p class="m-0 fas fa-mobile-alt"></p>
+                                                                    </a>
+                                                                    <a href="mailto:{{ $empleado->email }}"
+                                                                        class="col-4 text-muted">
+                                                                        <p class="m-0 fas fa-envelope"></p>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                style="width:100%;height: 80px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endforelse
+                                    </div>
+                                </div>
+                            </div>
+                        @endcan
+                        @can('mi_perfil_mis_datos_ver_mis_activos')
+                            <div class="card card_margin_b_n" x-data="{ show: false }" style="padding:20px;">
+                                <h5 class="mb-0"><i class="bi bi-laptop mr-2"></i>Mis Activos
+                                    <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
+                                            class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+                                </h5>
+                                <hr class="hr-custom-title">
+                                <div class="row align-items-center" id="listaEquipo" x-show="show"
+                                    x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
+                                    <div class="container" style="padding-top: 10px;">
+                                        {{-- @if (is_null($activos)) --}}
+                                        @if (count($activos) === 0)
+                                            Sin activos asignados actualmente
+                                        @else
+                                            <div class="row" style="margin-top: 1px;">
+                                                <div class="col-12 text-muted scroll_estilo" style="overflow:auto;">
+                                                    <table id="dom" class="table table-bordered w-100 datatable-glosario"
+                                                        style="width: 100%; border: none !important;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="border-bottom: none !important;">ID</th>
+                                                                <th style="border-bottom: none !important;">Activo</th>
+                                                                <th
+                                                                    style="text-align: center !important; border-bottom: none !important;">
+                                                                    N. Serie</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($activos as $activo)
+                                                                <tr>
+                                                                    <td style="vertical-align: middle;">{{ $activo->id }}
                                                                     </td>
                                                                     <td
                                                                         style="vertical-align: middle; text-align: left !important;">
-                                                                        {{ $competencia->competencia->nombre }}</td>
+                                                                        {{ $activo->nombreactivo }}</td>
                                                                     <td
                                                                         style="text-align: center !important; vertical-align: middle;">
-                                                                        {{ $competencia->nivel_esperado }}</td>
+                                                                        {{ $activo->descripcion }}</td>
                                                                 </tr>
-                                                            @endif
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endcan
+                        @can('mi_perfil_mis_datos_ver_mis_competencias')
+                            <div class=" card card_margin_b_n" x-data="{ show: false }" style="padding:20px;">
+                                <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
+                                    <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
+                                            class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+
+                                </h5>
+                                <hr class="hr-custom-title">
+                                <div class="row align-items-center" id="listaEquipo" x-show="show"
+                                    x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
+                                    <div class="container" style="padding-top: 10px;">
+                                        @if (count($competencias) === 0)
+                                            No se han definido competencias actualmente
+                                        @else
+                                            <div class="row" style="margin-top: 1px;">
+                                                <div class="col-12 text-muted scroll_estilo" style="overflow:auto;">
+                                                    <table id="dom" class="table table-bordered w-100 datatable-glosario"
+                                                        style="width: 100%; border: none !important;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="border-bottom: none !important;">Logo</th>
+                                                                <th style="border-bottom: none !important;">Competencia</th>
+                                                                <th
+                                                                    style="text-align: center !important; border-bottom: none !important;">
+                                                                    Nivel&nbsp;Esperado</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($competencias as $competencia)
+                                                                @if ($competencia->competencia)
+                                                                    <tr data-toggle="modal"
+                                                                        data-target="#modal_competencia{{ $competencia->competencia->id }}"
+                                                                        style="cursor: pointer;">
+                                                                        <td style="vertical-align: middle;"><img
+                                                                                class="img_empleado"
+                                                                                style="transform: scale(0.7);"
+                                                                                src="{{ $competencia->competencia->imagen_ruta }}">
+                                                                        </td>
+                                                                        <td
+                                                                            style="vertical-align: middle; text-align: left !important;">
+                                                                            {{ $competencia->competencia->nombre }}</td>
+                                                                        <td
+                                                                            style="text-align: center !important; vertical-align: middle;">
+                                                                            {{ $competencia->nivel_esperado }}</td>
+                                                                    </tr>
+                                                                @endif
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endcan
                     </div>
                     @if (count($competencias))
                         @foreach ($competencias as $competencia)
@@ -854,6 +860,7 @@ if (!is_null($organizacion)) {
                             </div>
                         </div>
                         <div class="row gutters-sm">
+                            @can('mi_perfil_mis_datos_ver_mis_objetivos')
                             <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100">
                                     <div class="pb-personzalizado card-body" x-data="{ show: false }">
@@ -864,10 +871,15 @@ if (!is_null($organizacion)) {
                                                 </h5>
                                             </div>
                                             <div class="col-7" style="font-size: 15px;text-align: end">
-                                                <a class="mr-2 text-dark"
+                                                <a class="mr-1 text-dark"
                                                     href="{{ route('admin.ev360-objetivos-empleado.show', ['empleado' => auth()->user()->empleado->id]) }}">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
+                                                @if (auth()->user()->empleado)
+                                                    <a class="mr-1 text-dark"
+                                                        href="{{ route('admin.ev360-objetivos-empleado.create', auth()->user()->empleado->id) }}"><i
+                                                            class="fas fa-pencil"></i></a>
+                                                @endif
                                                 <span style="cursor: pointer" @click="show=!show"><i
                                                         class="fas"
                                                         :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -910,6 +922,8 @@ if (!is_null($organizacion)) {
                                     </div>
                                 </div>
                             </div>
+                            @endcan
+                            @can('mi_perfil_mis_datos_ver_mi_autoevaluacion')
                             <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100 mt-1">
                                     <div class="pb-personzalizado card-body" x-data="{ show: false }"
@@ -929,9 +943,7 @@ if (!is_null($organizacion)) {
                                         </h5>
 
                                         @if ($last_evaluacion)
-                                            @include(
-                                                'admin.inicioUsuario.info_card_evaluacion'
-                                            )
+                                            @include('admin.inicioUsuario.info_card_evaluacion')
                                         @endif
                                         <hr class="hr-custom-title">
                                         <div id="evaluacionesRealizar" x-show="show" x-transition:enter.duration.500ms
@@ -958,6 +970,8 @@ if (!is_null($organizacion)) {
                                     </div>
                                 </div>
                             </div>
+                            @endcan
+                            @can('mi_perfil_mis_datos_ver_mis_evaluaciones_a_realizar')
                             <div class="card_data_mis_datos col-sm-12">
                                 <div class="mb-0 card h-100 mt-1">
                                     <div class="pb-personzalizado mb-0 card-body" x-data="{ show: false }"
@@ -973,12 +987,11 @@ if (!is_null($organizacion)) {
                                             @endif
                                         </h5>
                                         @if ($last_evaluacion)
-                                            @include(
-                                                'admin.inicioUsuario.info_card_evaluacion'
-                                            )
+                                            @include('admin.inicioUsuario.info_card_evaluacion')
                                         @endif
                                         <hr class="hr-custom-title">
 
+                                        @can('')
                                         <div id="evaluacionesRealizar" class="row" x-show="show"
                                             x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                             @if ($evaluaciones->count())
@@ -1090,9 +1103,11 @@ if (!is_null($organizacion)) {
                                                                     @endif
                                                                 @endforeach --}}
                                         </div>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>
+                            @endcan
                         </div>
                     </div>
                 </div>

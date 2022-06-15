@@ -137,17 +137,17 @@
         <div class="col-lg-12 row caja_botones_secciones">
             @if ($usuario->empleado)
                 <div class="col-12 caja_botones_menu" style="justify-content: center !important;">
-                    @can('mis_datos_access')
+                    @can('mi_perfil_mis_datos_acceder')
                         <a href="#" id="b_misDatos" onclick="almacenarMenuEnLocalStorage('misDatos')" data-tabs="s_misDatos"
                             class=""><i class="bi bi-file-person"></i>
                             Mis Datos</a>
                     @endcan
-                    @can('mi_calendario_access')
+                    @can('mi_perfil_mi_calendario_acceder')
                         <a href="#" id="b_calendario" onclick="almacenarMenuEnLocalStorage('calendario')"
                             data-tabs="s_calendario"><i class="bi bi-calendar3"></i>
                             Calendario</a>
                     @endcan
-                    @can('mis_actividades_access')
+                    @can('mi_perfil_mis_actividades_acceder')
                         <a href="#" id="b_actividades" onclick="almacenarMenuEnLocalStorage('actividades')"
                             data-tabs="s_actividades">
                             @if ($contador_actividades)
@@ -156,7 +156,7 @@
                             <i class="bi bi-stopwatch"></i>Actividades
                         </a>
                     @endcan
-                    @can('mis_aprobaciones_access')
+                    @can('mi_perfil_mis_aprobaciones_acceder')
                         <a href="#" id="b_aprobaciones" onclick="almacenarMenuEnLocalStorage('aprobaciones')"
                             data-tabs="s_aprobaciones">
                             @if ($contador_revisiones)
@@ -165,7 +165,7 @@
                             <i class="bi bi-check2"></i>Aprobaciones
                         </a>
                     @endcan
-                    @can('mis_capacitaciones_access')
+                    @can('mi_perfil_mis_capacitaciones_acceder')
                         <a href="#" id="b_capacitaciones" onclick="almacenarMenuEnLocalStorage('capacitaciones')"
                             data-tabs="s_capacitaciones">
                             @if ($contador_recursos >= 1)
@@ -174,7 +174,7 @@
                             <i class="bi bi-mortarboard"></i>Capacitaciones
                         </a>
                     @endcan
-                    @can('realizar_reportes_access')
+                    @can('mi_perfil_mis_reportes_acceder')
                         <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')" data-tabs="s_reportes">
                             <i class="bi bi-clipboard-check"></i>
                             Reportes</a>
@@ -184,39 +184,39 @@
             <div class="caja_caja_secciones">
                 @if ($usuario->empleado)
                     <div class="caja_secciones">
-                        @can('mis_datos_access')
+                        @can('mi_perfil_mis_datos_acceder')
                             <section id="s_misDatos" data-id="datos" class="">
                                 @include('admin.inicioUsuario.mis-datos')
                             </section>
                         @endcan
-                        @can('mi_calendario_access')
+                        @can('mi_perfil_mi_calendario_acceder')
                             <section id="s_calendario" data-id="calendario">
                                 <div class="container">
                                     @include('admin.inicioUsuario.calendario')
                                 </div>
                             </section>
                         @endcan
-                        @can('mis_actividades_access')
+                        @can('mi_perfil_mis_actividades_acceder')
                             <section id="s_actividades" data-id="actividades">
                                 <div class="container">
                                     @include('admin.inicioUsuario.actividades')
                             </section>
                         @endcan
-                        @can('mis_aprobaciones_access')
+                        @can('mi_perfil_mis_aprobaciones_acceder')
                             <section id="s_aprobaciones" data-id="aprobaciones">
                                 <div class="container">
                                     @include('admin.inicioUsuario.aprobaciones')
                                 </div>
                             </section>
                         @endcan
-                        @can('mis_capacitaciones_access')
+                        @can('mi_perfil_mis_capacitaciones_acceder')
                             <section id="s_capacitaciones" data-id="capacitaciones">
                                 <div class="container">
                                     @include('admin.inicioUsuario.capacitaciones')
                                 </div>
                             </section>
                         @endcan
-                        @can('realizar_reportes_access')
+                        @can('mi_perfil_mis_reportes_acceder')
                             <section id="s_reportes" data-id="reportes">
                                 <div class="container">
                                     @include('admin.inicioUsuario.reportes')

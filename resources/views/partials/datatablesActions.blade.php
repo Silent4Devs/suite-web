@@ -83,10 +83,11 @@
 
 
     @if (Request::route()->getName() == 'admin.entendimiento-organizacions.index')
-        <button class="mr-2 rounded btn btn-sm">
-            <i class="fas fa-copy" title="Duplicar FODA" data-action="copiaFoda" data-id="{{ $row->id }}"></i>
-
-        </button>
+    @can('analisis_foda_duplicar')
+    <button class="mr-2 rounded btn btn-sm">
+        <i class="fas fa-copy" title="Duplicar FODA" data-action="copiaFoda" data-id="{{ $row->id }}"></i>
+    </button>
+    @endcan
     @endif
 
     @can($viewGate)
@@ -95,7 +96,7 @@
         </a>
     @endcan
     @if (Request::route()->getName() == 'admin.puestos.index')
-        @can('capital_humano_competencias_por_puestos_create')
+        @can('puestos_asignar_competencias')
             <a class="mr-2 rounded btn btn-sm" href="{{ route('admin.ev360-competencias-por-puesto.create', $row->id) }}">
                 {{-- {{ trans('global.view') }} --}} <i class="bi bi-bookmark-star" title="Asignar Competencias"></i>
             </a>

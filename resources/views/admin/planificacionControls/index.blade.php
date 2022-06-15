@@ -3,11 +3,10 @@
 
     {{ Breadcrumbs::render('admin.planificacion-controls.index') }}
 
-    @can('planificacion_control_create')
+
     <h5 class="col-12 titulo_general_funcion">Planificación y Control</h5>
 
         <div class="mt-5 card">
-    @endcan
 
     @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -181,7 +180,7 @@
 
             ];
 
-            @can('planificacion_control_delete')
+            @can('planificacion_y_control_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar planificación y control',
@@ -194,7 +193,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('planificacion_control_delete')
+            @can('planificacion_y_control_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,

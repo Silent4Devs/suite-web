@@ -18,7 +18,7 @@ class ObjetivosseguridadController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('objetivosseguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_del_sistema_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Objetivosseguridad::orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -27,9 +27,9 @@ class ObjetivosseguridadController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'objetivosseguridad_show';
-                $editGate = 'objetivosseguridad_edit';
-                $deleteGate = 'objetivosseguridad_delete';
+                $viewGate = 'objetivos_del_sistema_ver';
+                $editGate = 'objetivos_del_sistema_editar';
+                $deleteGate = 'objetivos_del_sistema_eliminar';
                 $crudRoutePart = 'objetivosseguridads';
 
                 return view('partials.datatablesActions', compact(
@@ -85,7 +85,7 @@ class ObjetivosseguridadController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('objetivosseguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_del_sistema_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsables = Empleado::alta()->get();
 
         return view('admin.objetivosseguridads.create', compact('responsables'));
@@ -93,7 +93,7 @@ class ObjetivosseguridadController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
+        abort_if(Gate::denies('objetivos_del_sistema_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivosseguridad = Objetivosseguridad::create($request->all());
         //return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
         return redirect()->route('admin.objetivos-seguridadsInsertar', ['id' => $objetivosseguridad->id])->with('success', 'Guardado con éxito');
@@ -101,7 +101,7 @@ class ObjetivosseguridadController extends Controller
 
     public function edit(Objetivosseguridad $objetivosseguridad)
     {
-        abort_if(Gate::denies('objetivosseguridad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_del_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = Empleado::alta()->get();
 
@@ -110,6 +110,7 @@ class ObjetivosseguridadController extends Controller
 
     public function update(UpdateObjetivosseguridadRequest $request, Objetivosseguridad $objetivosseguridad)
     {
+        abort_if(Gate::denies('objetivos_del_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivosseguridad->update($request->all());
 
         return redirect()->route('admin.objetivosseguridads.index')->with('success', 'Editado con éxito');
@@ -117,7 +118,7 @@ class ObjetivosseguridadController extends Controller
 
     public function show(Objetivosseguridad $objetivosseguridad)
     {
-        abort_if(Gate::denies('objetivosseguridad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_del_sistema_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $objetivosseguridad->load('team');
 
@@ -126,7 +127,7 @@ class ObjetivosseguridadController extends Controller
 
     public function destroy(Objetivosseguridad $objetivosseguridad)
     {
-        abort_if(Gate::denies('objetivosseguridad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_del_sistema_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $objetivosseguridad->delete();
 

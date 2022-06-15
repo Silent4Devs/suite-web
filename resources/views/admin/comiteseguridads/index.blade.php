@@ -81,7 +81,7 @@
 
     {{ Breadcrumbs::render('admin.comiteseguridads.index') }}
 
-    @can('comiteseguridad_create')
+    @can('comformacion_comite_seguridad_agregar')
         <h5 class="col-12 titulo_general_funcion">Conformación del Comité de Seguridad</h5>
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
@@ -227,7 +227,7 @@
                 }
 
             ];
-            @can('comiteseguridad_delete')
+            @can('comformacion_comite_seguridad_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -256,7 +256,7 @@
                 }
                 //dtButtons.push(deleteButton)
             @endcan
-            @can('comiteseguridad_create')
+            @can('comformacion_comite_seguridad_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nuevo comite de seguridad',

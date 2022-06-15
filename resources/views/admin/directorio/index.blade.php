@@ -1,4 +1,4 @@
-@extends('layouts.admin_glosario')
+@extends('layouts.admin')
 @section('content')
 
 

@@ -114,17 +114,17 @@
             <div class="text-right col-lg-12" style="position:relative; z-index:1;">
                 @if (!empty($count == 1))
                 @else
-                    @can('organizacion_create')
+                    @can('mi_organizacion_agregar')
                         <a class="btn btn-danger" href="{{ route('admin.organizacions.create') }}">
                             Agregar Organización
                         </a>
                     @endcan
                 @endif
-                {{-- @can('organizacion_edit') --}}
+                @can('mi_organizacion_panel_de_control')
                 <a class="btn btn-success" style="float: left;" href="{{ route('admin.panel-organizacion.index') }}">
                     Panel de Control
-                {{-- @endcan --}}
-                @can('organizacion_edit')
+                @endcan
+                @can('mi_organizacion_editar_organizacion')
                     <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}" class=' btn btn-danger'>
                         Editar Organización
                     </a>

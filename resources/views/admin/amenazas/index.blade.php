@@ -35,19 +35,20 @@
         .agregar {
             margin-right: 15px;
         }
-
     </style>
 
     <h5 class="col-12 titulo_general_funcion">Amenazas</h5>
 
     <div class="mt-5 card">
-        <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-            <div class="col-lg-12">
-                @include('csvImport.modal', [
-                    'model' => 'Amenaza',
-                    'route' => 'admin.amenazas.parseCsvImport',
-                ])
-            </div>
+        @can('amenazas_agregar')
+            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+                <div class="col-lg-12">
+                    @include('csvImport.modal', [
+                        'model' => 'Amenaza',
+                        'route' => 'admin.amenazas.parseCsvImport',
+                    ])
+                </div>
+            @endcan
         </div>
 
         @include('flash::message')
@@ -82,7 +83,7 @@
                         columns: ['th:not(:last-child):visible']
                     }
                 },
-               
+
                 {
                     extend: 'print',
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
@@ -181,52 +182,52 @@
                 }
             };
 
-            @can('analisis_de_riesgos_amenazas_create')
+            @can('amenazas_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
 
             dtButtons.push(btnExport);
             dtButtons.push(btnImport);
 
+            @can('amenazas_eliminar')
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+                let deleteButton = {
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.amenazas.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-            let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.amenazas.massDestroy') }}",
-                className: 'btn-danger',
-                action: function(e, dt, node, config) {
-                    var ids = $.map(dt.rows({
-                        selected: true
-                    }).data(), function(entry) {
-                        return entry.id
-                    });
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                    if (ids.length === 0) {
-                        alert('{{ trans('global.datatables.zero_selected') }}')
+                            return
+                        }
 
-                        return
-                    }
-
-                    if (confirm('{{ trans('global.areYouSure') }}')) {
-                        $.ajax({
-                                headers: {
-                                    'x-csrf-token': _token
-                                },
-                                method: 'POST',
-                                url: config.url,
-                                data: {
-                                    ids: ids,
-                                    _method: 'DELETE'
-                                }
-                            })
-                            .done(function() {
-                                location.reload()
-                            })
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
                     }
                 }
-            }
-            //dtButtons.push(deleteButton)
-
+                //dtButtons.push(deleteButton)
+            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -265,7 +266,7 @@
                 ],
             };
             let table = $('.datatable-amenaza').DataTable(dtOverrideGlobals);
-            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function(){
+            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
                 let titulo_tabla = `
                     <h5>
                         <strong>

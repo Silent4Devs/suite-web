@@ -30,7 +30,7 @@ class ProcesoController extends Controller
      */
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_procesos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('procesos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Proceso::get();
             $table = DataTables::of($query);
@@ -38,9 +38,9 @@ class ProcesoController extends Controller
             $table->addColumn('actions', '&nbsp;');
             $table->addIndexColumn();
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'recurso_show';
-                $editGate = 'recurso_edit';
-                $deleteGate = 'recurso_delete';
+                $viewGate = 'procesos_ver';
+                $editGate = 'procesos_editar';
+                $deleteGate = 'procesos_eliminar';
                 $crudRoutePart = 'procesos';
 
                 return view('partials.datatablesActions', compact(
@@ -83,7 +83,7 @@ class ProcesoController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('configuracion_procesos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('procesos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroproceso = DB::table('macroprocesos')->select('id', 'codigo', 'nombre')->get();
 
         return view('admin.procesos.create')->with('macroprocesos', $macroproceso);
@@ -91,6 +91,7 @@ class ProcesoController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('procesos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate(
             [
                 'codigo' => 'required|string|max:255',
@@ -104,42 +105,25 @@ class ProcesoController extends Controller
         return redirect()->route('admin.procesos.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Proceso  $proceso
-     * @return \Illuminate\Http\Response
-     */
     public function show(Proceso $proceso)
     {
-        abort_if(Gate::denies('configuracion_procesos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('procesos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.procesos.show', compact('proceso'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Proceso  $proceso
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Proceso $proceso)
     {
-        abort_if(Gate::denies('configuracion_procesos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('procesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroproceso = DB::table('macroprocesos')->select('id', 'codigo', 'nombre')->get();
 
         return view('admin.procesos.edit', compact('proceso'))->with('macroprocesos', $macroproceso);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Proceso  $proceso
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Proceso $proceso)
     {
+        abort_if(Gate::denies('procesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate(
             [
                 'codigo' => 'required|string|max:255',
@@ -154,15 +138,9 @@ class ProcesoController extends Controller
         return redirect()->route('admin.procesos.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Proceso  $proceso
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($proceso)
     {
-        abort_if(Gate::denies('configuracion_procesos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('procesos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proceso = Proceso::find($proceso);
         $proceso->delete();
         Flash::success('<h5 class="text-center">Proceso eliminado satisfactoriamente</h5>');
@@ -172,7 +150,7 @@ class ProcesoController extends Controller
 
     public function mapaProcesos()
     {
-        abort_if(Gate::denies('mapa_procesos_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('portal_comunicacion_mostrar_mapa_de_procesos'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos_mapa = Grupo::with(['macroprocesos' => function ($q) {
             $q->with('procesosWithDocumento');
         }])->orderBy('id')->get();

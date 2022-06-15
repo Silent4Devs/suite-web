@@ -88,14 +88,12 @@
 
     {{ Breadcrumbs::render('admin.control-accesos.index') }}
 
-    @can('control_acceso_create')
     <h5 class="col-12 titulo_general_funcion">Control de Acceso</h5>
 
         <div class="mt-5 card">
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Control de Acceso</strong></h3>
             </div> --}}
-    @endcan
 
 
             @include('partials.flashMessages')
@@ -207,7 +205,7 @@
 
             ];
 
-            @can('control_acceso_delete')
+            @can('control_de_accesos_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar control de acceso',
@@ -220,7 +218,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('control_acceso_delete')
+            @can('control_de_accesos_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -277,7 +275,9 @@
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
-                                        <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                        @can('control_de_accesos_vinculo')
+                                            <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                        @endcan
                                     </div>
                                     </div>
 

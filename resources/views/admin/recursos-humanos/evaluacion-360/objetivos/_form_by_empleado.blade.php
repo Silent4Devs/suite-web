@@ -8,7 +8,6 @@
     .select2-container {
         margin-top: 10px !important;
     }
-
 </style>
 
 @if (!$editar)
@@ -23,9 +22,16 @@
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                     </p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Define los objetivos estratégicos
-                        esperados
-                        para: <strong>{{ $empleado->name }}</strong></p>
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
+                        @if (auth()->user()->empleado->id == $empleado->id)
+                            Define tus objetivos, <strong>los objetivos que sean creados deberan ser aprobados por tú
+                                Jefe Inmediato
+                                ({{ $empleado->supervisor ? $empleado->supervisor->name : 'No definido' }})</strong>
+                        @else
+                            Define los objetivos estratégicos esperados para: <strong>{{ $empleado->name }}</strong>
+                        @endif
+
+                    </p>
                 </div>
             </div>
         </div>
@@ -238,9 +244,9 @@
                     <th style="vertical-align: top">
                         Meta
                     </th>
-                    {{-- <th style="vertical-align: top">
-                        Unidad
-                    </th> --}}
+                    <th style="vertical-align: top">
+                        Estatus
+                    </th>
                     <th style="vertical-align: top">
                         Descripción
                     </th>

@@ -170,7 +170,13 @@
                     data: 'puesto',
                     width: '30%',
                 }, {
-                    data: 'area.area',
+                    data: 'area',
+                    render: function(data, type, row, meta) {
+                        if(row.area){
+                            return row.area.area;
+                        }
+                        return 'Sin asignar';
+                    }
                 }, {
                     data: 'competencias',
                     render: function(data, type, row, meta) {
@@ -206,10 +212,10 @@
                             `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/create`;
                         let botones =
                             `
-                            @can('capital_humano_competencias_por_puestos_create')
+                            @can('competencias_por_puesto_agregar')
                                 <a class="btn btn-sm btn-editar btn-primary" title="Agregar competencias" href="${urlBtnAsignarCompetencias}"><i
                                         class="mr-2 fas fa-user-tag"></i> Agregar</a>
-                            @endcan                           
+                            @endcan
                             `;
                         return botones;
                     },

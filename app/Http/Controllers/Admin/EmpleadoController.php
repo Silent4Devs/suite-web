@@ -61,86 +61,86 @@ class EmpleadoController extends Controller
      */
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // if ($request->ajax()) {
-        //     $query = Empleado::orderByDesc('id')->alta()->get();
+        //     $query = Empleado::orderByDesc('id')->get();
         //     $table = DataTables::of($query);
 
         //     $table->addColumn('placeholder', '&nbsp;');
         //     $table->addColumn('actions', '&nbsp;');
         //     $table->addIndexColumn();
 
-        //     $table->editColumn('actions', function ($row) {
-        //         $viewGate = 'configuracion_empleados_show';
-        //         $editGate = 'configuracion_empleados_edit';
-        //         $deleteGate = 'configuracion_empleados_delete';
-        //         $crudRoutePart = 'empleados';
+        // $table->editColumn('actions', function ($row) {
+        //     $viewGate = 'bd_empleados_ver';
+        //     $editGate = 'bd_empleados_editar';
+        //     $deleteGate = 'bd_empleados_borrar_seleccionados';
+        //     $crudRoutePart = 'empleados';
 
-        //         return view('partials.datatablesActions', compact(
-        //             'viewGate',
-        //             'editGate',
-        //             'deleteGate',
-        //             'crudRoutePart',
-        //             'row'
-        //         ));
-        //     });
+        //             return view('partials.datatablesActions', compact(
+        //                 'viewGate',
+        //                 'editGate',
+        //                 'deleteGate',
+        //                 'crudRoutePart',
+        //                 'row'
+        //             ));
+        //         });
 
-        //     $table->editColumn('checkbox', function ($row) {
-        //         return $row->id ? $row->id : '';
-        //     });
-        //     $table->editColumn('id', function ($row) {
-        //         return $row->id ? $row->id : '';
-        //     });
-        //     $table->editColumn('name', function ($row) {
-        //         return $row->name ? $row->name : '';
-        //     });
+        //         $table->editColumn('checkbox', function ($row) {
+        //             return $row->id ? $row->id : '';
+        //         });
+        //         $table->editColumn('id', function ($row) {
+        //             return $row->id ? $row->id : '';
+        //         });
+        //         $table->editColumn('name', function ($row) {
+        //             return $row->name ? $row->name : '';
+        //         });
 
-        //     $table->editColumn('avatar', function ($row) {
-        //         return $row->avatar ? $row->avatar : '';
-        //     });
+        //         $table->editColumn('avatar', function ($row) {
+        //             return $row->avatar ? $row->avatar : '';
+        //         });
 
-        //     $table->editColumn('area', function ($row) {
-        //         return $row->area ? $row->area->area : '';
-        //     });
-        //     $table->editColumn('puesto', function ($row) {
-        //         return $row->puesto ? $row->puesto : '';
-        //     });
-        //     $table->editColumn(
-        //         'jefe',
-        //         function ($row) {
-        //             return $row->supervisor ? $row->supervisor->name : '';
-        //         }
-        //     );
-        //     $table->editColumn('antiguedad', function ($row) {
-        //         return $row->obtener_antiguedad;
-        //         // return Carbon::parse(Carbon::parse($row->obtener_antiguedad))->diffForHumans(Carbon::now()->subDays());
-        //     });
-        //     $table->editColumn('estatus', function ($row) {
-        //         return $row->estatus ? $row->estatus : '';
-        //     });
-        //     $table->editColumn('email', function ($row) {
-        //         return $row->email ? $row->email : '';
-        //     });
+        //         $table->editColumn('area', function ($row) {
+        //             return $row->area ? $row->area->area : '';
+        //         });
+        //         $table->editColumn('puesto', function ($row) {
+        //             return $row->puesto ? $row->puesto : '';
+        //         });
+        //         $table->editColumn(
+        //             'jefe',
+        //             function ($row) {
+        //                 return $row->supervisor ? $row->supervisor->name : '';
+        //             }
+        //         );
+        //         $table->editColumn('antiguedad', function ($row) {
+        //             return $row->obtener_antiguedad;
+        //             return Carbon::parse(Carbon::parse($row->obtener_antiguedad))->diffForHumans(Carbon::now()->subDays());
+        //         });
+        //         $table->editColumn('estatus', function ($row) {
+        //             return $row->estatus ? $row->estatus : '';
+        //         });
+        //         $table->editColumn('email', function ($row) {
+        //             return $row->email ? $row->email : '';
+        //         });
 
-        //     $table->editColumn('telefono', function ($row) {
-        //         return $row->telefono ? $row->telefono : '';
-        //     });
+        //         $table->editColumn('telefono', function ($row) {
+        //             return $row->telefono ? $row->telefono : '';
+        //         });
 
-        //     $table->editColumn('n_empleado', function ($row) {
-        //         return $row->n_empleado ? $row->n_empleado : '';
-        //     });
+        //         $table->editColumn('n_empleado', function ($row) {
+        //             return $row->n_empleado ? $row->n_empleado : '';
+        //         });
 
-        //     $table->editColumn('n_registro', function ($row) {
-        //         return $row->n_registro ? $row->n_registro : '';
-        //     });
+        //         $table->editColumn('n_registro', function ($row) {
+        //             return $row->n_registro ? $row->n_registro : '';
+        //         });
 
-        //     $table->editColumn('sede', function ($row) {
-        //         return $row->sede ? $row->sede->sede : '';
-        //     });
+        //         $table->editColumn('sede', function ($row) {
+        //             return $row->sede ? $row->sede->sede : '';
+        //         });
 
-        //     $table->rawColumns(['actions', 'placeholder']);
+        //         $table->rawColumns(['actions', 'placeholder']);
 
-        //     return $table->make(true);
+        //         return $table->make(true);
         // }
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
@@ -182,7 +182,7 @@ class EmpleadoController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bd_empleados_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
@@ -972,6 +972,8 @@ class EmpleadoController extends Controller
      */
     public function show($id)
     {
+        abort_if(Gate::denies('bd_empleados_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($id));
         $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
         $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
@@ -992,7 +994,7 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find(intval($id));
         $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();

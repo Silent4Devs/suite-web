@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Iso9001\PlanImplementacion as PlanItemIplementacion9001;
 use App\Models\PlanImplementacion;
 use Carbon\Carbon;
+use Gate;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\http\Response;
 
 class PlanesAccionController extends Controller
 {
@@ -43,6 +45,8 @@ class PlanesAccionController extends Controller
      */
     public function create($modulo, $referencia = null)
     {
+        abort_if(Gate::denies('planes_de_accion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $planImplementacion = new PlanImplementacion();
 
         return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo', 'referencia'));
@@ -207,6 +211,8 @@ class PlanesAccionController extends Controller
      */
     public function edit($planImplementacion)
     {
+        abort_if(Gate::denies('planes_de_accion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $planImplementacion = PlanImplementacion::find($planImplementacion);
         $referencia = null;
 
@@ -252,6 +258,8 @@ class PlanesAccionController extends Controller
      */
     public function destroy(Request $request, $planImplementacion)
     {
+        abort_if(Gate::denies('planes_de_accion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->ajax()) {
             $planImplementacion = PlanImplementacion::find($planImplementacion);
             $eliminado = $planImplementacion->delete();

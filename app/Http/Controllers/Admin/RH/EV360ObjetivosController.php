@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SolicitudAprobacionObjetivo;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\PerfilEmpleado;
@@ -12,6 +13,7 @@ use App\Models\RH\ObjetivoEmpleado;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -19,12 +21,18 @@ class EV360ObjetivosController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_estrategicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $empleados = Empleado::alta()->with(['objetivos', 'area', 'perfil'])->get();
-
-            return datatables()->of($empleados)->toJson();
+            $isAdmin = in_array('Admin', auth()->user()->roles->pluck('title')->toArray());
+            if (auth()->user()->empleado->children->count() > 0 && !$isAdmin) {
+                return datatables()->of(auth()->user()->empleado->children)->toJson();
+            } elseif ($isAdmin) {
+                return datatables()->of($empleados)->toJson();
+            } else {
+                return datatables()->of($empleados)->toJson();
+            }
         }
 
         $areas = Area::select('id', 'area')->get();
@@ -36,12 +44,14 @@ class EV360ObjetivosController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.recursos-humanos.evaluacion-360.objetivos.objetivos-negocio');
     }
 
     public function createByEmpleado(Request $request, $empleado)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = new Objetivo;
         $empleado = Empleado::find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
@@ -49,7 +59,6 @@ class EV360ObjetivosController extends Controller
                 $query->with(['tipo', 'metrica']);
             }]);
         }]);
-
         if ($request->ajax()) {
             $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
 
@@ -67,18 +76,30 @@ class EV360ObjetivosController extends Controller
 
     public function storeByEmpleado(Request $request, $empleado)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',
-            'meta' => 'required|integer',
+            'meta' => 'required|integer|min:1',
             'descripcion_meta' => 'nullable|string|max:1500',
             'tipo_id' => 'required|exists:ev360_tipo_objetivos,id',
             'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
         ]);
-        $empleado = Empleado::find(intval($empleado));
+        $empleado = Empleado::with('supervisor')->find(intval($empleado));
+
         if ($request->ajax()) {
+            if ($empleado->id == auth()->user()->empleado->id) {
+                //add esta_aprobado in $request
+                $request->merge(['esta_aprobado' => Objetivo::SIN_DEFINIR]);
+            }
             $objetivo = Objetivo::create($request->all());
+
+            //send email if who add is not supervisor
+            // if ($empleado->id == auth()->user()->empleado->id) {
+            //     if (!is_null($empleado->supervisor)) {
+            //         Mail::to($empleado->email)->send(new SolicitudAprobacionObjetivo($objetivo, $empleado));
+            //     }
+            // }
             if ($request->hasFile('foto')) {
                 Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -107,7 +128,7 @@ class EV360ObjetivosController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',
@@ -116,6 +137,7 @@ class EV360ObjetivosController extends Controller
             'tipo_id' => 'required|exists:ev360_tipo_objetivos,id',
             'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
         ]);
+
         $objetivo = Objetivo::create($request->all());
         if ($objetivo) {
             return redirect()->route('admin.ev360-objetivos.index')->with('success', 'Objetivo creado con éxito');
@@ -124,9 +146,20 @@ class EV360ObjetivosController extends Controller
         }
     }
 
+    public function aprobarRechazarObjetivo(Request $request, $empleado, $objetivo)
+    {
+        $aprobacion = $request->esta_aprobado ? Objetivo::APROBADO : Objetivo::RECHAZADO;
+        $objetivo = Objetivo::find(intval($objetivo));
+        $objetivo->update([
+            'esta_aprobado' => $aprobacion,
+            'comentarios_aprobacion' => $request->comentarios_aprobacion,
+        ]);
+
+        return response()->json(['success' => true]);
+    }
+
     public function editByEmpleado(Request $request, $empleado, $objetivo)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = Objetivo::find(intval($objetivo))->load(['tipo', 'metrica']);
         $empleado = Empleado::find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
@@ -151,7 +184,6 @@ class EV360ObjetivosController extends Controller
 
     public function edit($objetivo)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = Objetivo::find($objetivo);
         $tipo_seleccionado = $objetivo->tipo_id;
         $metrica_seleccionada = $objetivo->metrica_id;
@@ -161,7 +193,7 @@ class EV360ObjetivosController extends Controller
 
     public function updateByEmpleado(Request $request, $objetivo)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_estrategicos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',
@@ -203,7 +235,7 @@ class EV360ObjetivosController extends Controller
 
     public function show(Request $request, $empleado)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('objetivos_estrategicos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivo = new Objetivo;
         $empleado = Empleado::find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
@@ -221,6 +253,8 @@ class EV360ObjetivosController extends Controller
 
     public function indexCopiar($empleado)
     {
+        abort_if(Gate::denies('objetivos_estrategicos_copiar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $empleado = Empleado::select('id', 'name', 'foto', 'genero')->with(['objetivos' => function ($query) {
             return $query->with('objetivo');
         }])->find(intval($empleado));
@@ -236,6 +270,8 @@ class EV360ObjetivosController extends Controller
 
     public function storeCopiaObjetivos(Request $request)
     {
+        abort_if(Gate::denies('objetivos_estrategicos_copiar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate([
             'empleado_destinatario' => 'required',
             'empleado_destino' => 'required',

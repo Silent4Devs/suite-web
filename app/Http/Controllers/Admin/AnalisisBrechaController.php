@@ -12,18 +12,16 @@ use App\Models\GapDo;
 use App\Models\GapTre;
 use App\Models\GapUno;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisBrechaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
+        abort_if(Gate::denies('analisis_de_brechas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->ajax()) {
             $query = AnalisisBrecha::with(['empleado', 'gap_logro_tres', 'gap_logro_dos', 'gap_logro_unos'])->orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -32,9 +30,9 @@ class AnalisisBrechaController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'user_show';
-                $editGate = 'user_edit';
-                $deleteGate = 'user_delete';
+                $viewGate = 'analisis_de_brechas_ver';
+                $editGate = 'analisis_de_brechas_editar';
+                $deleteGate = 'analisis_de_brechas_eliminar';
                 $crudRoutePart = 'analisisdebrechas';
 
                 return view('partials.datatablesActions', compact(
@@ -99,26 +97,17 @@ class AnalisisBrechaController extends Controller
         return view('admin.analisisdebrechas.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        abort_if(Gate::denies('analisis_de_brechas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::alta()->get();
 
         return view('admin.analisisdebrechas.create', compact('empleados'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('analisis_de_brechas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $analisisBrecha = AnalisisBrecha::create($request->all());
 
         $dataCieCont = new GenerateAnalisisB();
@@ -133,25 +122,14 @@ class AnalisisBrechaController extends Controller
         return redirect()->route('admin.analisisdebrechas.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\AnalisisBrecha  $analisisBrecha
-     * @return \Illuminate\Http\Response
-     */
     public function show(AnalisisBrecha $analisisBrecha)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\AnalisisBrecha  $analisisBrecha
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
+        abort_if(Gate::denies('analisis_de_brechas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $empleados = Empleado::alta()->get();
 
         $analisisBrecha = AnalisisBrecha::find($id);
@@ -174,15 +152,10 @@ class AnalisisBrechaController extends Controller
         return view('admin.analisisdebrechas.edit', compact('empleados', 'analisisBrecha', 'gap1porcentaje', 'gap12porcentaje', 'gap2porcentaje', 'gap2satisfactorio', 'gap2parcialmente', 'gap3porcentaje', 'gap31porcentaje', 'gap2noaplica', 'total', 'gapunoPorc', 'porcentajeGap1', 'porcentajeGap2', 'porcentajeGap3', 'cuentas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AnalisisBrecha  $analisisBrecha
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
+        abort_if(Gate::denies('analisis_de_brechas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $analisisBrecha = AnalisisBrecha::find($id);
 
         $analisisBrecha->update([
@@ -196,15 +169,10 @@ class AnalisisBrechaController extends Controller
         return redirect()->route('admin.analisisdebrechas.index')->with('success', 'Editado con éxito');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\AnalisisBrecha  $analisisBrecha
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($AnalisisBrecha)
     {
-        //  abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_de_brechas_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $AnalisisBrecha = AnalisisBrecha::find($AnalisisBrecha);
         $AnalisisBrecha->delete();
 

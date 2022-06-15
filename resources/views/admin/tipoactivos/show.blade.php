@@ -9,7 +9,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.subtipoactivos.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.tipoactivos.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -20,7 +20,7 @@
                             ID
                         </th>
                         <td>
-                            {{ $subtipos->id }}
+                            {{ $tipoactivo->id }}
                         </td>
                     </tr>
                     <tr>
@@ -28,21 +28,13 @@
                             Categoría
                         </th>
                         <td>
-                            {{ $subtipos->categoria_id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                           Subcategoría
-                        </th>
-                        <td>
-                            {{ $subtipos->subcategoria }}
+                            {{ $tipoactivo->tipo }}
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.subtipoactivos.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.tipoactivos.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
