@@ -28,7 +28,22 @@ class TimesheetHorasFilas extends Component
     public function mount($origen, $timesheet_id)
     {
         $empleado = Empleado::find(auth()->user()->empleado->id);
-        $this->proyectos = TimesheetProyecto::where('area_id', $empleado->area_id)->get();
+
+        // areas proyectos
+        $proyectos_array = collect();
+        $proyectos_totales = TimesheetProyecto::get();
+        foreach ($proyectos_totales as $key => $proyecto) {
+            foreach ($proyecto->areas as $key => $area) {
+                if ($area['id'] == $empleado->area_id) {
+                    $proyectos_array->push([
+                        'id'=>$proyecto->id,
+                        'proyecto'=>$proyecto->proyecto,
+                    ]);
+                }
+            }
+        }
+        $this->proyectos = $proyectos_array->unique();
+
         $this->tareas = collect();
         $this->origen = $origen;
         $this->timesheet_id = $timesheet_id;

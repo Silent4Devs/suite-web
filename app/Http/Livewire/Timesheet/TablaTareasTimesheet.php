@@ -71,6 +71,8 @@ class TablaTareasTimesheet extends Component
             'todos' => $todos,
         ]);
 
+        $this->emit('tarea-actualizada', $nueva_tarea);
+        
         $this->alert('success', 'Registro añadido!');
     }
 
@@ -80,6 +82,25 @@ class TablaTareasTimesheet extends Component
 
         $tarea_actualizada->update([
             'tarea'=>$value,
+        ]);
+        $this->emit('tarea-actualizada', $tarea_actualizada);
+    }
+
+    public function actualizarAreaTarea($id, $value)
+    {
+        $tarea_actualizada = TimesheetTarea::find($id);
+
+        if ($value == 0) {
+            $area_id = null;
+            $todos = true;
+        }else{
+            $area_id = $value;
+            $todos = false;
+        }
+
+        $tarea_actualizada->update([
+            'area_id'=>$area_id,
+            'todos'=>$todos,
         ]);
         $this->emit('tarea-actualizada', $tarea_actualizada);
     }

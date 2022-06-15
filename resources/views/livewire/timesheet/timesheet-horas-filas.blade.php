@@ -38,7 +38,7 @@
                                 <select id="select_proyectos{{ $i }}" data-contador="{{ $i }}" data-type="parent" name="timesheet[{{ $i }}][proyecto]" class="select2">
                                     <option selected disabled>Seleccione proyecto</option>   
                                     @foreach($proyectos as $proyecto)
-                                        <option value="{{ $proyecto->id }}">{{ $proyecto->proyecto }}</option>
+                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['proyecto'] }}</option>
                                     @endforeach 
                                 </select>
                                 <small class="timesheet_{{ $i }}_proyecto errores text-danger"></small>

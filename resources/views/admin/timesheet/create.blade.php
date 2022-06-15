@@ -40,6 +40,7 @@
 
 
             $("#fecha_dia").flatpickr({
+                "minDate": "{{ $organizacion->fecha_min_timesheet }}",
                 "disable": [
                     function(date) {
 

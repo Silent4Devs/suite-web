@@ -285,9 +285,6 @@
                     <td class="cde-op"></td>
                 </tfoot>
             </table>
-            <button class="btn" wire:click="reporteGeneral()" title="Generar Reporte">
-                <i class="fa-solid fa-file-invoice" style="color:#173D59 !important;"></i>
-            </button>
         </div>
 
         <!-- Modal semanas faltantes -->

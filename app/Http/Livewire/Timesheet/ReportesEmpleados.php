@@ -106,7 +106,7 @@ class ReportesEmpleados extends Component
         if ($this->area_id) {
             $empleados_list = Empleado::where('area_id', $this->area_id)->get();
         } else {
-            $empleados_list = Empleado::get();
+            $empleados_list = Empleado::where('id', 6)->get();
         }
 
         //calendario tabla
@@ -279,7 +279,7 @@ class ReportesEmpleados extends Component
                     }
                 }
             }
-            // dump($calendario_tabla_empleado);
+            
 
             // array empleados
             $this->empleados->push([
@@ -295,6 +295,8 @@ class ReportesEmpleados extends Component
                 'calendario'=>$calendario_tabla_empleado,
             ]);
         }
+
+        // dump($this->empleados);
 
         $this->fecha_inicio_empleado = $fecha_inicio_timesheet_empleado;
         $this->fecha_fin_empleado = Carbon::parse($fecha_fin_timesheet_empleado)->format('Y-m-d');

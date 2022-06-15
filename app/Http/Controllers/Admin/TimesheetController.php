@@ -56,10 +56,12 @@ class TimesheetController extends Controller
 
         $organizacion = Organizacion::first();
 
+        $time_viejo = Timesheet::orderBy('fecha_dia')->first()->fecha_dia;
+
         $rechazos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'rechazado')->count();
         $aprobar_contador = Timesheet::where('aprobador_id', auth()->user()->empleado->id)->where('estatus', 'pendiente')->count();
 
-        return view('admin.timesheet.timesheet-inicio', compact('organizacion', 'rechazos_contador', 'aprobar_contador'));
+        return view('admin.timesheet.timesheet-inicio', compact('organizacion', 'rechazos_contador', 'aprobar_contador', 'time_viejo'));
     }
 
     public function actualizarDia(Request $request)
@@ -70,6 +72,7 @@ class TimesheetController extends Controller
             'dia_timesheet'=>$request->dia_timesheet,
             'inicio_timesheet'=>$request->inicio_timesheet,
             'fecha_registro_timesheet'=>$request->fecha_registro_timesheet,
+            'semanas_min_timesheet'=>$request->semanas_min_timesheet,
         ]);
 
         return redirect()->route('admin.timesheet-inicio')->with('success', 'Guardado con éxito');
@@ -96,7 +99,22 @@ class TimesheetController extends Controller
     public function createCopia($id)
     {
         $empleado = Empleado::find(auth()->user()->empleado->id);
-        $proyectos = TimesheetProyecto::where('area_id', $empleado->area_id)->get();
+        
+        // areas proyectos
+        $proyectos_array = collect();
+        $proyectos_totales = TimesheetProyecto::get();
+        foreach ($proyectos_totales as $key => $proyecto) {
+            foreach ($proyecto->areas as $key => $area) {
+                if ($area['id'] == $empleado->area_id) {
+                    $proyectos_array->push([
+                        'id'=>$proyecto->id,
+                        'proyecto'=>$proyecto->proyecto,
+                    ]);
+                }
+            }
+        }
+        $proyectos = $proyectos_array->unique();
+
         $tareas = TimesheetTarea::get();
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
@@ -269,7 +287,22 @@ class TimesheetController extends Controller
     public function edit($id)
     {
         $empleado = Empleado::find(auth()->user()->empleado->id);
-        $proyectos = TimesheetProyecto::where('area_id', $empleado->area_id)->get();
+        
+        // areas proyectos
+        $proyectos_array = collect();
+        $proyectos_totales = TimesheetProyecto::get();
+        foreach ($proyectos_totales as $key => $proyecto) {
+            foreach ($proyecto->areas as $key => $area) {
+                if ($area['id'] == $empleado->area_id) {
+                    $proyectos_array->push([
+                        'id'=>$proyecto->id,
+                        'proyecto'=>$proyecto->proyecto,
+                    ]);
+                }
+            }
+        }
+        $proyectos = $proyectos_array->unique();
+
         $tareas = TimesheetTarea::get();
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
