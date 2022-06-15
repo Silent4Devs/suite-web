@@ -57,12 +57,10 @@ class TablaTareasTimesheet extends Component
             'area_select'=>'required',
         ]);
 
-
-
         if ($this->area_select == 0) {
             $area_id = null;
             $todos = true;
-        }else{
+        } else {
             $area_id = $this->area_select;
             $todos = false;
         }

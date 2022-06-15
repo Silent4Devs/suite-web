@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Area;
-use App\Models\TimesheetProyectoArea;
 
 class TimesheetProyecto extends Model
 {
@@ -13,7 +11,7 @@ class TimesheetProyecto extends Model
 
     protected $table = 'timesheet_proyectos';
 
-    protected $appends =['areas'];
+    protected $appends = ['areas'];
 
     protected $fillable = [
         'proyecto',

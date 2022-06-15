@@ -4,11 +4,11 @@ namespace App\Http\Livewire\Timesheet;
 
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\Organizacion;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
-use App\Models\Organizacion;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -57,11 +57,13 @@ class ReportesProyectos extends Component
         $this->area_id = $value;
         $this->proyecto_reporte = null;
     }
+
     public function updatedFechaInicio($value)
     {
         $this->fecha_inicio = $value;
         $this->proyecto_reporte = null;
     }
+
     public function updatedFechaFin($value)
     {
         $this->fecha_fin = $value;
@@ -73,6 +75,7 @@ class ReportesProyectos extends Component
         $this->fecha_inicio_proyecto = $value;
         $this->genrarReporte($this->proyecto_reporte->id);
     }
+
     public function updatedFechaFinProyecto($value)
     {
         $this->fecha_fin_proyecto = $value;
@@ -94,10 +97,6 @@ class ReportesProyectos extends Component
         //calendario tabla
         $calendario_array = [];
 
-
-
-
-
         $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
 
         if ($this->fecha_inicio) {
@@ -108,14 +107,14 @@ class ReportesProyectos extends Component
 
         if (($this->fecha_fin) && (Carbon::parse($this->fecha_fin)->lt($this->hoy))) {
             $fecha_fin_complit_timesheet = $this->fecha_fin;
-        }else{
+        } else {
             $fecha_fin_complit_timesheet = $this->hoy;
         }
 
         // dd($fecha_fin_complit_timesheet);
 
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
-        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday' , $fecha_fin_complit_timesheet);
+        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $fecha_fin_complit_timesheet);
         $total_months = 0;
         foreach ($semanas_complit_timesheet as $semana) {
             $semana_array = explode('|', $semana);
@@ -128,16 +127,15 @@ class ReportesProyectos extends Component
                 $year = $fecha->format('Y');
                 $month = $fecha->format('F');
                 if (!($this->buscarKeyEnArray($year, $calendario_array))) {
-
                     $calendario_array["{$year}"] = [
                         'year'=>$year,
                         'total_weeks'=>0,
                         'total_months'=>0,
                         'months'=>[
                             "{$month}"=>[
-                                'weeks'=>[]
-                            ]
-                        ]
+                                'weeks'=>[],
+                            ],
+                        ],
                     ];
 
                     if ($month == 'January') {
@@ -148,20 +146,17 @@ class ReportesProyectos extends Component
                             }
                         }
                     }
-
-                }else{
+                } else {
                     if (array_key_exists($month, $calendario_array["{$year}"]['months'])) {
                         if (!in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
-                    }else{
+                    } else {
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
-
                             if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
-
-                        }else{
+                        } else {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
                     }
@@ -186,7 +181,7 @@ class ReportesProyectos extends Component
         $this->proyectos_array = collect();
         if ($this->area_id) {
             $this->proyectos = TimesheetProyecto::where('area_id', $this->area_id)->get();
-        }else{
+        } else {
             $this->proyectos = TimesheetProyecto::get();
         }
         foreach ($this->proyectos as $proyecto) {
@@ -200,7 +195,6 @@ class ReportesProyectos extends Component
             foreach ($calendario_array as $key => $año) {
                 foreach ($año['months'] as $key => $mes) {
                     foreach ($mes['weeks'] as $key => $semana) {
-
                         $dias_semana = explode('|', $semana);
                         $domingo_semana = Carbon::parse($dias_semana[1])->format('Y-m-d');
 
@@ -211,7 +205,6 @@ class ReportesProyectos extends Component
                             $fecha_dia_domingo = Carbon::parse($fecha_dia_domingo)->format('Y-m-d');
 
                             if ($fecha_dia_domingo == $domingo_semana) {
-
                                 $horas_proyecto_times += $registro_horas->horas_lunes;
                                 $horas_proyecto_times += $registro_horas->horas_martes;
                                 $horas_proyecto_times += $registro_horas->horas_miercoles;
@@ -226,7 +219,7 @@ class ReportesProyectos extends Component
 
                         if ($horas_proyecto_times > 0) {
                             array_push($calendario_tabla_proyectos, $horas_proyecto_times);
-                        }else{
+                        } else {
                             array_push($calendario_tabla_proyectos, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
                         }
                     }

@@ -15,11 +15,11 @@ trait getWeeksFromRange
         $actualYear = $now->year;
         $cycles = ($actualYear - $year) + 1;
         $lastYear = $year;
-        if ( $fecha_fin != null) {
+        if ($fecha_fin != null) {
             $endActualWeek = $fecha_fin->format('Y-m-d');
             $startActualWeek = $fecha_fin->startOfWeek(Carbon::MONDAY)->format('Y-m-d');
             $actualWeek = $startActualWeek . '|' . $endActualWeek;
-        }else{
+        } else {
             $startActualWeek = $now->startOfWeek(Carbon::MONDAY)->subDays(7)->format('Y-m-d');
             $endActualWeek = $now->endOfWeek(Carbon::SUNDAY)->format('Y-m-d');
             $actualWeek = $startActualWeek . '|' . $endActualWeek;
