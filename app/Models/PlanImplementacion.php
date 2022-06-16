@@ -28,12 +28,15 @@ class PlanImplementacion extends Model
         'plan_implementacionable_id',
         'plan_implementacionable_type',
         'archivo',
+        'es_plan_trabajo_base',
     ];
 
     protected $casts = ['tasks' => 'object'];
 
     const NORMAS = [
         'ISO 27001' => 'ISO 27001',
+        'ISO 31000' => 'ISO 31000',
+        'ISO 9001' => 'ISO 9001',
     ];
 
     // public function tasks()

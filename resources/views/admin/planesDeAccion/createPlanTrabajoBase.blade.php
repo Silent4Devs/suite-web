@@ -1,12 +1,13 @@
 @extends('layouts.admin')
 @section('content')
 
-    <h5 class="col-12 titulo_general_funcion">Registrar: Plan de Acción</h5>
+    <h5 class="col-12 titulo_general_funcion">Registrar: Plan de Trabajo Base</h5>
     <div class="mt-4 card">
         <div class="card-body">
             @can('planes_de_accion_agregar')
                 <form method="POST" action="{{ route('admin.planes-de-accion.store') }}" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="es_plan_trabajo_base" value="true">
                     <div class="row">
                         <div class="col-sm-12 col-lg-6">
                             <div class="form-group">
@@ -41,19 +42,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        {{-- <div class="col-sm-12 col-lg-6">
-                            <div class="form-group">
-                                <label for="modulo_origen">Modulo de Origen:</label>
-                                <input type="text" class="form-control {{ $errors->has('modulo_origen') ? 'is-invalid' : '' }}"
-                                    id="modulo_origen" aria-describedby="modulo_origen" name="modulo_origen"
-                                    value="{{$planImplementacion->modulo_origen}}"
-                                    autocomplete="off" required readonly>
-                                @if ($errors->has('modulo_origen'))
-                                    <span class="invalid-feedback">{{ $errors->first('modulo_origen') }}</span>
-                                @endif
-                                <span class="text-danger modulo_origen_error error-ajax"></span>
-                            </div>
-                        </div> --}}
                         <div class="col-sm-12 col-lg-6">
                             <div class="form-group">
                                 <label for="objetivo">Objetivo:</label>
