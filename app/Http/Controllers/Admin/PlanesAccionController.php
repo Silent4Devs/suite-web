@@ -51,10 +51,12 @@ class PlanesAccionController extends Controller
 
         return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo', 'referencia'));
     }
+
     public function createPlanTrabajoBase($modulo, $referencia = null)
     {
         abort_if(Gate::denies('planes_de_accion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $planImplementacion = new PlanImplementacion();
+
         return view('admin.planesDeAccion.createPlanTrabajoBase', compact('planImplementacion', 'modulo', 'referencia'));
     }
 
@@ -134,6 +136,7 @@ class PlanesAccionController extends Controller
 
         $mensaje = $request->es_plan_trabajo_base != null ? 'Plan de Trabajo Base' : 'Plan de Acción';
         $route = $request->es_plan_trabajo_base != null ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
+
         return redirect()->route($route)->with('success', $mensaje . ' ' . $planImplementacion->parent . ' creado');
     }
 
@@ -257,6 +260,7 @@ class PlanesAccionController extends Controller
         ]);
         $route = $planImplementacion->es_plan_trabajo_base ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
         $mensaje = $planImplementacion->es_plan_trabajo_base ? 'Plan de Trabajo Base Actualizado' : 'Plan de Acción Actualizado';
+
         return redirect()->route($route)->with('success', $mensaje);
     }
 

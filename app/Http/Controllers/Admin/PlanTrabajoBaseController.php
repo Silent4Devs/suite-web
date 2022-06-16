@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Storage;
 
 class PlanTrabajoBaseController extends Controller
 {
-
     public function listaDataTables()
     {
         $planes = PlanImplementacion::where('es_plan_trabajo_base', true)->with('elaborador')->get();
+
         return datatables()->of($planes)->toJson();
     }
 
