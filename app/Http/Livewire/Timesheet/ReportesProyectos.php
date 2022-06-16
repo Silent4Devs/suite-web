@@ -249,7 +249,7 @@ class ReportesProyectos extends Component
     {
         $this->proyecto_reporte = TimesheetProyecto::find($id);
 
-        $this->area_proyecto = Area::find($this->proyecto_reporte->area_id);
+        // $this->area_proyecto = Area::find($this->proyecto_reporte->area_id);
         $this->cliente_proyecto = TimesheetCliente::find($this->proyecto_reporte->cliente_id);
 
         $empleados = collect();
@@ -284,11 +284,6 @@ class ReportesProyectos extends Component
                 $h_total_tarea_total += $h_total_tarea;
 
                 $empleado = Empleado::find($hora->timesheet->empleado_id);
-                $times_horas_empleado = $hora->timesheet;
-
-                // foreach ($times_horas_empleado as $time_horas_empleado) {
-
-                // }
 
                 if (!$empleados->contains('id', $empleado->id)) {
                     $empleados->push([
@@ -311,6 +306,7 @@ class ReportesProyectos extends Component
                 }
             }
 
+
             $this->total_horas_proyecto += $h_total_tarea_total;
 
             $this->tareas_array->push([
@@ -319,9 +315,26 @@ class ReportesProyectos extends Component
                 'empleados' => $empleados,
             ]);
         }
-        $this->empleados_proyecto = $empleados->unique();
+            // dd($this->tareas_array);
 
-        $this->emit('scriptChartsProyect', $this->tareas_array);
+        foreach ($this->tareas_array as $key => $tarea_em) {
+            foreach ($tarea_em['empleados'] as $key => $emp_array) {
+                if (!($this->empleados_proyecto->contains('id', $emp_array['id']))) {
+                    $this->empleados_proyecto->push($emp_array);
+                }else{
+                    $this->empleados_proyecto = $this->empleados_proyecto->map(function ($emp_item) use ($emp_array) {
+                        if ($emp_item['id'] == $emp_array['id']) {
+                            $emp_item['horas'] += $emp_array['horas'];
+                        }
+
+                        return $emp_item;
+                    });
+                }
+
+            }
+        }
+
+        $this->emit('scriptChartsProyect', $this->tareas_array, $this->empleados_proyecto);
     }
 
     public function buscarEnArray($search, $array)

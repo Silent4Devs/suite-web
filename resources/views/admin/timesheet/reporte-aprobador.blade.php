@@ -3,6 +3,11 @@
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+
 	{{ Breadcrumbs::render('timesheet-reporte-aprobador') }}
 
 	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reporte Aprobador</font></h5>

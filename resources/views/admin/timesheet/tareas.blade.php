@@ -3,16 +3,18 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
     {{ Breadcrumbs::render('timesheet-tareas') }}
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Tareas</font>
-    </h5>
+
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Tareas</font></h5>
+
     <div class="card card-body">
         <div class="row">
+
             @livewire('timesheet.tabla-tareas-timesheet', ['proyecto_id'=>null, 'origen'=>'tareas'])
+
         </div>
     </div>
 
 @endsection
-
 
 @section('scripts')
     @parent
@@ -135,7 +137,7 @@
             setTimeout(() => {
                     tablaLivewire('tabla_time_tareas');
             }, 100);
-        });   
+        });
     </script>
 
     <script type="text/javascript">

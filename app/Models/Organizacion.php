@@ -92,7 +92,7 @@ class Organizacion extends Model
     public function getFechaMinTimesheetAttribute($value)
     {
         if ($this->semanas_min_timesheet) {
-            $fecha = Carbon::now()->startOfWeek()->subWeeks($this->semanas_min_timesheet + 1)->format('Y-m-d');
+            $fecha = Carbon::now()->startOfWeek()->subWeeks($this->semanas_min_timesheet)->format('Y-m-d');
         }else{
             $fecha = Carbon::now()->startOfWeek()->subWeeks(1000)->format('Y-m-d');
         }

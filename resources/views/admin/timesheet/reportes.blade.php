@@ -15,13 +15,15 @@
             .breadcrumb{
                 display: none !important;
             }
-            #reporte_empleado{
+            #reporte_proyecto, #reporte_empleado, #reporte_general{
                 width: 100% !important;
                 position: absolute;
                 top: 0;
                 margin: 0 !important;
                 margin-top: -150px !important;
                 padding: 0 !important;
+                background-color: #fff !important;
+                border: 1px solid #fff !important;
             }
 
         }

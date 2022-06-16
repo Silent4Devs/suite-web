@@ -195,6 +195,11 @@ class ReporteAprobador extends Component
                 $fecha_fin_timesheet_empleado = $empleado_list->estatus == 'baja' ? $empleado_list->fecha_baja : $this->hoy;
             }
 
+            $hoy_2 = now();
+            if ($hoy_2->subweeks(3)->lt($fecha_inicio_timesheet_empleado)) {
+                $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->startOfMonth()->subMonth();
+            }
+
             // horas totales por empleado
             $times_empleado_aprobados_pendientes_list = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->get();
 
@@ -203,8 +208,8 @@ class ReporteAprobador extends Component
             $times_empleado_array = [];
 
             foreach ($times_empleado_aprobados_pendientes_list as $time) {
+                $horas_semana = 0;
                 foreach ($time->horas as $hora) {
-                    $horas_semana = 0;
                     $horas_total_time += $hora->horas_lunes;
                     $horas_total_time += $hora->horas_martes;
                     $horas_total_time += $hora->horas_miercoles;
@@ -295,9 +300,6 @@ class ReporteAprobador extends Component
                 'calendario'=>$calendario_tabla_empleado,
             ]);
         }
-
-        $this->fecha_inicio_empleado = $fecha_inicio_timesheet_empleado;
-        $this->fecha_fin_empleado = Carbon::parse($fecha_fin_timesheet_empleado)->format('Y-m-d');
 
         $this->calendario_tabla = $calendario_array;
 
@@ -407,6 +409,11 @@ class ReporteAprobador extends Component
             $fecha_fin_timesheet_empleado = $this->empleado->estatus == 'baja' ? $this->empleado->fecha_baja : $this->fecha_fin_empleado;
         } else {
             $fecha_fin_timesheet_empleado = $this->empleado->estatus == 'baja' ? $this->empleado->fecha_baja : $this->hoy;
+        }
+
+        $hoy_2 = now();
+        if ($hoy_2->subweeks(3)->lt($fecha_inicio_timesheet_empleado)) {
+            $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->startOfMonth()->subMonth();
         }
 
         $this->timesheet = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->orderByDesc('fecha_dia')->get();
