@@ -6,12 +6,12 @@
     <div class="mt-4 card">
         <div class="card-body">
             @can('planes_de_accion_editar')
-                <form method="POST" action="{{ route('admin.planes-de-accion.update', $planImplementacion) }}">
+                <form method="POST" action="{{ route('admin.planTrabajoBase.update', $planImplementacion) }}">
                     @csrf
                     @method('PATCH')
-                    @include('admin.planesDeAccion._form', ['edit' => true, 'esPlanTrabajoBase' => false])
+                    @include('admin.planesDeAccion._form', ['edit' => true, 'esPlanTrabajoBase' => true])
                     <div class="d-flex justify-content-end">
-                        <a class="mr-2 btn_cancelar" href="{{ route('admin.planes-de-accion.index') }}">Cancelar</a>
+                        <a class="mr-2 btn_cancelar" href="{{ route('admin.planTrabajoBase.index') }}">Cancelar</a>
                         <input type="submit" class="btn btn-danger" value="Editar">
                     </div>
                 </form>
