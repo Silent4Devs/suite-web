@@ -29,7 +29,7 @@
         }
     </style>
 
-    <ul class="c-sidebar-nav dark_mode1" style="margin-top: -10px;">
+    <ul class="c-sidebar-nav dark_mode1">
 
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca" style="color: #345183;">Menu</font>
@@ -470,9 +470,9 @@
                 <font class="letra_blanca" style="color: #345183;">Administración</font>
             </li>
 
-        {{-- @can('planes_accion_access') --}}
+            {{-- @can('planes_accion_access') --}}
 
-        {{-- @endcan --}}
+            {{-- @endcan --}}
 
             @can('carga_masiva_datos_acceder')
                 {{-- este acceso no corresponde --}}
@@ -719,7 +719,8 @@
                                         <li class="c-sidebar-nav-item">
                                             <a href="{{ asset('admin/categoria-capacitacion') }}"
                                                 class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
-                                                <i class="ml-2 bi bi-mortarboard iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                                <i class="ml-2 bi bi-mortarboard iconos_menu letra_blanca"
+                                                    style="font-size:12pt;"></i>
                                                 <font class="letra_blanca"> Crear Categorías </font>
                                             </a>
                                         </li>
@@ -1032,7 +1033,7 @@
 
             }
         </style>
-        <div class="text-center botones_g_s" style="margin-top: 80px;">
+        <div class="text-center botones_g_s">
             @can('principal_soporte_acceder')
                 <a href="{{ route('admin.soporte') }}" title="Soporte" style="margin-right:14px;"><i
                         class="bi bi-headset"></i></a>

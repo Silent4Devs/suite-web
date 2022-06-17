@@ -285,7 +285,6 @@ class ReportesEmpleados extends Component
                 }
             }
 
-
             // array empleados
             $this->empleados->push([
                 'id'=>$empleado_list->id,

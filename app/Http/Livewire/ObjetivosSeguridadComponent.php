@@ -42,7 +42,7 @@ class ObjetivosSeguridadComponent extends Component
 
         $data = [];
         $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
-            $data[$value->variable] = '';
+            $data[$value->variable] = 0;
 
             return $data;
         })->toArray();
@@ -71,9 +71,10 @@ class ObjetivosSeguridadComponent extends Component
             array_push($variables, array_keys($v1)[0]);
             array_push($valores, array_values($v1)[0]);
         }
-
         $formula_final = str_replace($variables, $valores, $formula_sustitucion);
-        //dd($this->formSlugs, $variables, $valores, str_replace(".", "",$formula_final));
+        // dd($this->formSlugs, $variables, $valores, str_replace(".", "", $formula_final));
+        // $formula_final = str_replace(" ", "_", $formula_final);
+
         $result = eval('return ' . $formula_final . ';');
 
         $evaluaciones = EvaluacionObjetivo::create([

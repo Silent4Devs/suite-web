@@ -101,7 +101,6 @@
             box-shadow: 0 6px 0 #a1a1a1, 0 8px 10px rgba(0, 0, 0, .75);
 
         }
-
     </style>
 
     {{ Breadcrumbs::render('admin.objetivosseguridads.create') }}
@@ -139,9 +138,9 @@
                                         class="form-control select2 {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
                                         name='responsable_id' id='responsable_id'>
                                         <option value="">Seleccione un responsable</option>
-                                        @foreach ($responsables as $id => $responsable)
-                                            <option value="{{ $id }}"
-                                                {{ (old('responsable_id') ? old('responsable_id') : $objetivosseguridad->responsable_id ?? '') == $id ? 'selected' : '' }}>
+                                        @foreach ($responsables as $responsable)
+                                            <option value="{{ $responsable->id }}"
+                                                {{ old('responsable_id', $responsable->id) == $objetivosseguridad->responsable_id ? 'selected' : '' }}>
                                                 {{ $responsable->name }} </option>
                                         @endforeach
                                     </select>
@@ -157,8 +156,7 @@
                         <div class="form-group">
                             <label for="objetivoseguridad"><i
                                     class="fas fa-file-signature iconos-crear"></i>Objetivo</label>
-                            <textarea class="form-control {{ $errors->has('objetivoseguridad') ? 'is-invalid' : '' }}"
-                                name="objetivoseguridad"
+                            <textarea class="form-control {{ $errors->has('objetivoseguridad') ? 'is-invalid' : '' }}" name="objetivoseguridad"
                                 id="objetivoseguridad">{{ old('objetivoseguridad', $objetivosseguridad->objetivoseguridad) }}</textarea>
                             @if ($errors->has('objetivoseguridad'))
                                 <div class="invalid-feedback">
@@ -192,7 +190,8 @@
                                         <span id="textorojo2"></span> a <span id="textoamarillo"></span>:</label>
                                     <input class="form-control {{ $errors->has('amarillo') ? 'is-invalid' : '' }}"
                                         type="number" name="amarillo" id="amarillo"
-                                        value="{{ old('amarillo', $objetivosseguridad->amarillo) }}" min="" required>
+                                        value="{{ old('amarillo', $objetivosseguridad->amarillo) }}" min=""
+                                        required>
                                     @if ($errors->has('amarillo'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('amarillo') }}
@@ -206,9 +205,10 @@
                                 <label class="required" for="verde">
                                     <span class="dotverde"></span>
                                     De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
-                                <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}" type="number"
-                                    name="verde" id="verde" value="{{ old('verde', $objetivosseguridad->verde) }}"
-                                    placeholder="" min="" required>
+                                <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}"
+                                    type="number" name="verde" id="verde"
+                                    value="{{ old('verde', $objetivosseguridad->verde) }}" placeholder="" min=""
+                                    required>
                                 @if ($errors->has('verde'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('verde') }}
@@ -285,8 +285,8 @@
                                 <label class="required" for="ano"><i
                                         class="fas fa-calendar-alt iconos-crear"></i>Año</label>
                                 <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}"
-                                    type="text" name="ano" id="ano" value="{{ old('ano', $objetivosseguridad->ano) }}"
-                                    required>
+                                    type="text" name="ano" id="ano"
+                                    value="{{ old('ano', $objetivosseguridad->ano) }}" required>
                                 @if ($errors->has('ano'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('ano') }}
@@ -296,8 +296,9 @@
                             </div>
                         </div>
                         <h4 class="text-primary">Generación de fórmula</h4>
-                        <input id="formula" name="formula" class="form-control" type="text" placeholder="Formula generada"
-                            value="{{ old('formula', $objetivosseguridad->formula) }}" required><br>
+                        <input id="formula" name="formula" class="form-control" type="text"
+                            placeholder="Formula generada" value="{{ old('formula', $objetivosseguridad->formula) }}"
+                            required><br>
                         {{-- <button class="btn btn-info" id="abrir_generador">Abrir generador</button>&nbsp;&nbsp; --}}
                         <hr>
 
@@ -339,7 +340,8 @@
                                             value="Añadir una variable:" disabled>
                                     </div>
                                     <div class="mb-2 form-group mx-sm-3">
-                                        <input id="variable" class="form-control" type="text" placeholder="Variable"><br>
+                                        <input id="variable" class="form-control" type="text"
+                                            placeholder="Variable"><br>
                                     </div>
                                     <button id="añadir" class="btn btn-success" type="button">Añadir</button>
                                 </div>
@@ -359,8 +361,7 @@
 
                     <div class="form-group">
                         <div class="text-right form-group col-12" style="margin-left:15px;">
-                            <a href="{{ redirect()->getUrlGenerator()->previous() }}"
-                                class="btn_cancelar">Cancelar</a>
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
@@ -513,6 +514,4 @@
             });
         });
     </script>
-
-
 @endsection

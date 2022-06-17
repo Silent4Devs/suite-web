@@ -1,17 +1,9 @@
 @extends('layouts.admin')
-
-{{-- @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css"
-        integrity="sha512-3g+prZHHfmnvE1HBLwUnVuunaPOob7dpksI7/v6UnF/rnKGwHf/GdEq9K7iEN7qTtW+S0iivTcGpeTBqqB04wA=="
-        crossorigin="anonymous" />
-@endsection --}}
-
 @section('content')
     <style>
         .select2-search.select2-search--inline {
             margin-top: -20px !important;
         }
-
     </style>
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}
@@ -106,37 +98,58 @@
                     <span class="ml-1" style="font-size: 17px; font-weight: bold;">
                         Participantes</span>
                 </div>
-                <div class="pl-3 row w-100">
-                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                        <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
-                            participante<span class="text-danger">*</span></label>
-                        <input type="hidden" id="id_empleado">
-                        <input class="form-control" type="text" id="participantes_search" placeholder="Busca un empleado"
-                            style="position: relative" autocomplete="off" />
-                        <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
-                            style="position: absolute; top: 43px; right: 25px;"></i>
-                        <div id="participantes_sugeridos"></div>
-                        @if ($errors->has('participantes'))
-                            <span class="text-danger">
-                                {{ $errors->first('participantes') }}
-                            </span>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
-                    </div>
-                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                        <label for="email"><i class="fas fa-at iconos-crear"></i>Email</label>
-                        <input class="form-control" type="text" id="email" placeholder="Correo del participante" readonly
-                            style="cursor: not-allowed" />
-                    </div>
-                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                        <label for="email"><i class="fas fa-suitcase iconos-crear"></i></i>Puesto</label>
-                        <input class="form-control" type="text" id="puesto" placeholder="Puesto del participante" readonly
-                            style="cursor: not-allowed" />
-                    </div>
-                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                        <label for="area"><i class="fas fa-user-tag iconos-crear"></i></i>Área</label>
-                        <input class="form-control" type="text" id="area" placeholder="Área del participante" readonly
-                            style="cursor: not-allowed" />
+                <div class="pl-3 row w-100" x-data="{ otro: false }">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12" style="text-align: end">
+                                <p style="display: inline-block">
+                                    <i class="fas fa-users"
+                                        x-bind:class="!otro ? 'rounded border p-2 bg-primary text-white' : ''"
+                                        style="color:black"></i>
+                                </p>
+                                <p style="display: inline-block">
+                                    <i x-bind:class="otro ? 'rounded border p-2 bg-primary text-white' : ''"
+                                        class="fas fa-user-tag" style="color:black"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row" x-show="!otro">
+                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
+                                    participante<span class="text-danger">*</span></label>
+                                <input type="hidden" id="id_empleado">
+                                <input class="form-control" type="text" id="participantes_search"
+                                    placeholder="Busca un empleado" style="position: relative" autocomplete="off" />
+                                <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
+                                    style="position: absolute; top: 43px; right: 25px;"></i>
+                                <div id="participantes_sugeridos"></div>
+                                @if ($errors->has('participantes'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('participantes') }}
+                                    </span>
+                                @endif
+                                <span
+                                    class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
+                            </div>
+                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                <label for="email"><i class="fas fa-at iconos-crear"></i>Email</label>
+                                <input class="form-control" type="text" id="email" placeholder="Correo del participante"
+                                    readonly style="cursor: not-allowed" />
+                            </div>
+                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                <label for="email"><i class="fas fa-suitcase iconos-crear"></i></i>Puesto</label>
+                                <input class="form-control" type="text" id="puesto" placeholder="Puesto del participante"
+                                    readonly style="cursor: not-allowed" />
+                            </div>
+                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                <label for="area"><i class="fas fa-user-tag iconos-crear"></i></i>Área</label>
+                                <input class="form-control" type="text" id="area" placeholder="Área del participante"
+                                    readonly style="cursor: not-allowed" />
+                            </div>
+                        </div>
+                        <div class="row" x-show="otro">
+
+                        </div>
                     </div>
                 </div>
                 <div class="col-12">
