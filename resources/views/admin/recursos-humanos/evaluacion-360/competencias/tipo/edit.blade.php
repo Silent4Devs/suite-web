@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-<h5 class="col-12 titulo_general_funcion">Editar Métrica</h5>
+<h5 class="col-12 titulo_general_funcion">Editar Tipo</h5>
 <div class="card">
     <div class="card-body">
         <form method="POST" action="{{ route("admin.Tipo.update", $tipos) }}" enctype="multipart/form-data">

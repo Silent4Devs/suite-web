@@ -59,10 +59,10 @@
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     justify-content: ;
-} 
+}
 .flatpickr-disabled{
     color: #FFC5C5 !important;
-} 
+}
 
 .select-desactivo{
     position: relative;
@@ -79,7 +79,6 @@
 .delete {
     margin: auto;
     padding: 20px;
-    text-align: center;
     border-radius: 8px;
 }
 
@@ -238,26 +237,26 @@ table td .btn i{
     background-color: #f1f1f1;
 }
 .th-calendario{
-    text-align: center;
+    text-align: center !important;
     background-color: rgba(0, 0, 0, 0.1) !important;
 }
 .th-año{
-    background-color: rgba(0, 0, 0, 0.15) !important;   
+    background-color: rgba(0, 0, 0, 0.15) !important;
 }
 .th-año:nth-child(even){
-    background-color: rgba(0, 0, 0, 0.1) !important;   
+    background-color: rgba(0, 0, 0, 0.1) !important;
 }
 .th-mes{
-    background-color: rgba(0, 0, 0, 0.2) !important;   
+    background-color: rgba(0, 0, 0, 0.2) !important;
 }
 .th-mes:nth-child(even){
-    background-color: rgba(0, 0, 0, 0.25) !important;   
+    background-color: rgba(0, 0, 0, 0.25) !important;
 }
 .th-semana{
-    background-color: rgba(0, 0, 0, 0.3) !important;   
+    background-color: rgba(0, 0, 0, 0.3) !important;
 }
 .th-semana:nth-child(even){
-    background-color: rgba(0, 0, 0, 0.35) !important;   
+    background-color: rgba(0, 0, 0, 0.35) !important;
 }
 .tabla-fixed th{
     background-color: #788BAC;
@@ -286,6 +285,14 @@ table td .btn i{
 .datatable_timesheet_empleados_reportes td{
     text-align: left !important;
 }
+.separador-titulo{
+    background-color: #788BAC;
+    padding: 4px 0;
+    border-radius: 100px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+}
 
 /*reportes proyecto -------------------------------------------*/
 .caja_anima_reporte{
@@ -299,7 +306,8 @@ table td .btn i{
     min-width: 100%;
 }
 #reporte_proyecto,
-#reporte_empleado{
+#reporte_empleado,
+#reporte_general{
     background-color: #f9f9f9;
     padding: 24px;
     border-radius: 6px;
@@ -307,7 +315,7 @@ table td .btn i{
     animation: reporteProyecto 1s;
     margin-left: -100%;
     position: relative;
-    z-index: 3;
+    z-index: 7;
 }
 .caja_anima_reporte .btn-cerrar{
     position: absolute;
@@ -370,4 +378,10 @@ table td .btn i{
     .total_graf_times_inner{
         transform: scale(0.4);
     }
+}
+
+
+table.dataTable tbody tr.selected td{
+    color: unset !important;
+    box-shadow: none !important;
 }

@@ -25,7 +25,7 @@ class OrganizacionController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizacions = Organizacion::first();
 
@@ -74,7 +74,7 @@ class OrganizacionController extends Controller
 
         $count = Organizacion::get()->count();
         if ($count == 0) {
-            abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            abort_if(Gate::denies('mi_organizacion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             return view('admin.organizacions.create')->with('countEmpleados', $countEmpleados)->with('tamanoEmpresa', $tamanoEmpresa)->with('dias', $dias);
         } else {
@@ -87,7 +87,7 @@ class OrganizacionController extends Controller
     public function store(StoreOrganizacionRequest $request)
     {
         // dd($request->working);
-        abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizacions = Organizacion::create([
             'empresa' => $request->empresa,
@@ -166,7 +166,7 @@ class OrganizacionController extends Controller
             $tamanoEmpresa = 'Grande (más de 1000 empleados)';
         }
 
-        abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->load('team');
         $schedule = Organizacion::find(1)->schedules;
 
@@ -177,7 +177,7 @@ class OrganizacionController extends Controller
 
     public function update(UpdateOrganizacionRequest $request, Organizacion $organizacion)
     {
-        abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->update($request->all());
         // dd($organizacion);
 
@@ -203,7 +203,7 @@ class OrganizacionController extends Controller
 
     public function show(Organizacion $organizacion)
     {
-        abort_if(Gate::denies('organizacion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->load('team');
 
         return view('admin.organizacions.show', compact('organizacion'));
@@ -211,7 +211,7 @@ class OrganizacionController extends Controller
 
     public function destroy(Organizacion $organizacion)
     {
-        abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
@@ -219,7 +219,7 @@ class OrganizacionController extends Controller
 
     public function massDestroy(MassDestroyOrganizacionRequest $request)
     {
-        abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_organizacion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         Organizacion::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
@@ -227,8 +227,6 @@ class OrganizacionController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('organizacion_create') && Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $model = new Organizacion();
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;

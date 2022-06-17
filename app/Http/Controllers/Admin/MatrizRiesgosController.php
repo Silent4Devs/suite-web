@@ -106,7 +106,7 @@ class MatrizRiesgosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sedes = Sede::get();
         $areas = Area::get();
@@ -123,6 +123,7 @@ class MatrizRiesgosController extends Controller
 
     public function store(StoreMatrizRiesgoRequest $request)
     {
+        abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRiesgo = MatrizRiesgo::create($request->all());
 
         foreach ($request->controles_id as $item) {
@@ -143,6 +144,7 @@ class MatrizRiesgosController extends Controller
 
     public function edit(MatrizRiesgo $matrizRiesgo)
     {
+        abort_if(Gate::denies('iso_27001_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacions = Organizacion::all();
         $teams = Team::get();
         $activos = SubcategoriaActivo::get();
@@ -173,6 +175,7 @@ class MatrizRiesgosController extends Controller
 
     public function update(UpdateMatrizRiesgoRequest $request, MatrizRiesgo $matrizRiesgo)
     {
+        abort_if(Gate::denies('iso_27001_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $calculo = new Mriesgos();
 
         $matrizRiesgo->update($request->all());
@@ -187,7 +190,7 @@ class MatrizRiesgosController extends Controller
 
     public function show(MatrizRiesgo $matrizRiesgo)
     {
-        abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('iso_27001_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         /*if (!is_null($matrizRiesgo->activo_id)) {
             $matrizRiesgo->load('activo_id', 'controles');
         }*/
@@ -197,7 +200,7 @@ class MatrizRiesgosController extends Controller
 
     public function destroy(MatrizRiesgo $matrizRiesgo)
     {
-        abort_if(Gate::denies('matriz_riesgo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('iso_27001_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $matrizRiesgo->delete();
 
@@ -206,6 +209,7 @@ class MatrizRiesgosController extends Controller
 
     public function massDestroy(MassDestroyMatrizRiesgoRequest $request)
     {
+        abort_if(Gate::denies('iso_27001_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         MatrizRiesgo::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
@@ -213,7 +217,7 @@ class MatrizRiesgosController extends Controller
 
     public function SeguridadInfo(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_de_riesgo_vinculo'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots'])->where('id_analisis', '=', $request->id)->orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -222,9 +226,9 @@ class MatrizRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'analisis_de_riesgos_matriz_riesgo_config_show';
-                $editGate = 'analisis_de_riesgos_matriz_riesgo_config_edit';
-                $deleteGate = 'analisis_de_riesgos_matriz_riesgo_config_delete';
+                $viewGate = 'iso_27001_ver';
+                $editGate = 'iso_27001_editar';
+                $deleteGate = 'iso_27001_eliminar';
                 $crudRoutePart = 'matriz-riesgos';
 
                 return view('partials.datatablesActions', compact(
@@ -424,7 +428,7 @@ class MatrizRiesgosController extends Controller
 
     public function SistemaGestion(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_de_riesgo_vinculo'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizacions = Organizacion::all();
         $teams = Team::get();
@@ -450,7 +454,7 @@ class MatrizRiesgosController extends Controller
 
     public function SistemaGestionData(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_de_riesgo_vinculo'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizRiesgosSistemaGestion::with(['controles', 'matriz_riesgos_controles_pivots'])->where('id_analisis', '=', $request->id)->get();
             $table = Datatables::of($query);
@@ -459,9 +463,9 @@ class MatrizRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'analisis_de_riesgos_matriz_riesgo_config_show';
-                $editGate = 'analisis_de_riesgos_matriz_riesgo_config_edit';
-                $deleteGate = 'analisis_de_riesgos_matriz_riesgo_config_delete';
+                $viewGate = 'analisis_de_riesgo_integral_ver';
+                $editGate = 'analisis_de_riesgo_integral_editar';
+                $deleteGate = 'analisis_de_riesgo_integral_eliminar';
                 $crudRoutePart = 'matriz-riesgos.sistema-gestion';
 
                 return view('partials.datatablesActions', compact(
@@ -765,7 +769,7 @@ class MatrizRiesgosController extends Controller
 
     public function createSistemaGestion()
     {
-        abort_if(Gate::denies('matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_de_riesgo_integral_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRiesgo = new MatrizRiesgosSistemaGestion();
         $sedes = Sede::get();
         $areas = Area::get();
@@ -781,6 +785,7 @@ class MatrizRiesgosController extends Controller
 
     public function storeSistemaGestion(Request $request)
     {
+        abort_if(Gate::denies('analisis_de_riesgo_integral_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'controles_id' => 'required',
         ]);
@@ -800,6 +805,7 @@ class MatrizRiesgosController extends Controller
 
     public function editSistemaGestion(Request $request, $id)
     {
+        abort_if(Gate::denies('analisis_de_riesgo_integral_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRiesgo = MatrizRiesgosSistemaGestion::with('matriz_riesgos_controles_pivots')->find($id);
         $organizacions = Organizacion::all();
         $teams = Team::get();
@@ -832,6 +838,7 @@ class MatrizRiesgosController extends Controller
 
     public function updateSistemaGestion(Request $request, $matrizRiesgo)
     {
+        abort_if(Gate::denies('analisis_de_riesgo_integral_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRiesgo = MatrizRiesgosSistemaGestion::with('matriz_riesgos_controles_pivots')->find($matrizRiesgo);
         $calculo = new Mriesgos();
         $res = $calculo->CalculoD($request);
@@ -849,7 +856,7 @@ class MatrizRiesgosController extends Controller
 
     public function destroySistemaGestion($id)
     {
-        abort_if(Gate::denies('matriz_riesgo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_de_riesgo_integral_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRiesgo = MatrizRiesgosSistemaGestion::find($id);
         $matrizRiesgo->delete();
 
@@ -863,7 +870,7 @@ class MatrizRiesgosController extends Controller
 
     public function showSistemaGestion(MatrizRiesgo $matrizRiesgo, $id)
     {
-        abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_de_riesgo_integral_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $matrizRiesgo = MatrizRiesgosSistemaGestion::with(['controles', 'matriz_riesgos_controles_pivots', 'proceso'])->find($id);
         // dd($matrizRiesgo);

@@ -9,7 +9,7 @@ class StoreAuditoriaAnualRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('auditoria_anual_create');
+        return Gate::allows('programa_anual_auditoria_agregar');
     }
 
     public function rules()

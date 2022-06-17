@@ -33,7 +33,7 @@
     @include('partials.flashMessages')
     <div class="card card-body">
         <div class="datatable-fix">
-            @can('lista_documentos_empleados_create')
+            @can('lista_de_documentos_empleados_agregar')
                 <div class="w-100 text-right">
                     <div class="btn btn-success" data-toggle="modal" data-target="#modal_crear_doc_e">Agregar</div>
                 </div>
@@ -63,7 +63,7 @@
                                 @endif
                             </td>
                             <td>
-                                @can('lista_documentos_empleados_create')
+                                @can('lista_de_documentos_empleados_eliminar')
                                     <a href="{{ asset('admin/lista-documentos/destroy') }}/{{ $doc->id }}"><i
                                             class="fas fa-trash-alt" style="font-size:15pt; color:#ED5A5A;"></i></a>
                                 @endcan

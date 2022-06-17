@@ -1,6 +1,6 @@
 <ul class="mt-4">
     {{-- <li><a href="{{ route('admin.puestos.index') }}"> --}}
-    @can('capital_humano_competencias_access')
+    @can('competencias_acceder')
         <li>
             <a href="{{ route('admin.ev360-competencias.index') }}">
                 <div style="text-transform: capitalize">
@@ -12,7 +12,7 @@
             </a>
         </li>
     @endcan
-    @can('puesto_access')
+    @can('perfiles_de_puesto_acceder')
         <li><a href="#" data-ventana="puestos" data-ruta="Capacitaciones" class="btn_ventana_menu">
                 <div>
                     <i class="bi bi-briefcase"></i>
@@ -25,7 +25,7 @@
                 style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
             <h3 class="text-center"><strong>Perfil de Puesto</strong></h3>
             <ul>
-                @can('puesto_access')
+                @can('lista_de_perfiles_de_puesto_acceder')
                     <li><a href="{{ route('admin.puestos.index') }}">
                             <div>
                                 <i class="bi bi-briefcase"></i>
@@ -34,7 +34,7 @@
                             </div>
                         </a></li>
                 @endcan
-                @can('capital_humano_competencias_por_puestos_access')
+                @can('competencias_por_puesto_acceder')
                     <li>
                         <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}">
                             <div>
@@ -44,7 +44,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('capital_humano_competencias_por_puestos_access')
+                @can('consulta_perfiles_de_puesto_acceder')
                     <li><a href="{{ route('admin.consulta-puestos') }}">
                             <div>
                                 <i class="bi bi-person-video2"></i>
@@ -69,7 +69,7 @@
             style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
         <h3 class="text-center"><strong>Empleados</strong></h3>
         <ul>
-            @can('configuracion_empleados_access')
+            @can('bd_empleados_acceder')
                 <li><a href="{{ route('admin.empleados.index') }}">
                         <div>
                             <i class="bi bi-people"></i>
@@ -78,7 +78,7 @@
                         </div>
                     </a></li>
             @endcan
-            @can('lista_documentos_empleados_access')
+            @can('lista_de_documentos_empleados_acceder')
                 <li>
                     <a href="{{ route('admin.lista-documentos-empleados') }}">
                         <div>
@@ -89,7 +89,7 @@
                     </a>
                 </li>
             @endcan
-            @can('niveles_jerarquicos_access')
+            @can('niveles_jerarquicos_acceder')
                 <li><a href="{{ route('admin.perfiles.index') }}">
                         <div>
                             <i class="bi bi-triangle"></i>
@@ -98,7 +98,7 @@
                         </div>
                     </a></li>
             @endcan
-            @can('tipos_de_contratos_access')
+            @can('tipos_de_contrato_para_empleados_acceder')
                 <li><a href="{{ route('admin.tipos-contratos-empleados.index') }}">
                         <div>
                             <i class="bi bi-bank"></i>
@@ -107,7 +107,7 @@
                         </div>
                     </a></li>
             @endcan
-            @can('entidades_crediticias_access')
+            @can('entidades_crediticeas_acceder')
                 <li><a href="{{ route('admin.entidades-crediticias.index') }}">
                         <div>
                             <i class="bi bi-bank"></i>
@@ -120,7 +120,7 @@
         </ul>
     </div>
 
-    @can('objetivos_estrategicos_access')
+    @can('objetivos_estrategicos_acceder')
         <li>
             <a href="{{ route('admin.ev360-objetivos.index') }}">
                 <div>
@@ -130,7 +130,7 @@
             </a>
         </li>
     @endcan
-    @can('perfiles_profesionales_access')
+    @can('perfiles_profesionales_acceder')
         <li><a href="{{ route('admin.capital.expedientes-profesionales') }}">
                 <div>
                     <i class="bi bi-person-rolodex"></i>
@@ -139,7 +139,7 @@
                 </div>
             </a></li>
     @endcan
-    @can('organigrama_organizacion_access')
+    @can('organigrama_acceder')
         <li><a href="{{ route('admin.organigrama.index') }}">
                 <div>
                     <i class="bi bi-diagram-3"></i>
@@ -148,39 +148,45 @@
                 </div>
             </a></li>
     @endcan
-    <li><a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
+    @can('capacitaciones_categorias_acceder')
+    <li>
+        <a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
             <div>
                 <i class="bi bi-person-video3"></i>
                 <br>
                 Capacitaciones
             </div>
-        </a></li>
-    <div class="ventana_menu" id="capacitaciones" style="color:#345183 !important">
-        <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="capacitaciones"
-            style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
-        <h3 class="text-center"><strong>Capacitaciones</strong></h3>
-        <ul>
-            @can('categorias_capacitaciones_access')
-                <li><a href="{{ route('admin.categoria-capacitacion.index') }}">
-                        <div>
-                            <i class="fas fa-layer-group"></i>
-                            <br>
-                            Categorías
-                        </div>
-                    </a></li>
-            @endcan
-            @can('recurso_access')
-                <li><a href="{{ route('admin.recursos.index') }}">
-                        <div>
-                            <i class="fas fa-graduation-cap"></i>
-                            <br>
-                            Capacitaciones
-                        </div>
-                    </a></li>
-            @endcan
+        </a>
+    </li>
 
-        </ul>
-    </div>
+        <div class="ventana_menu" id="capacitaciones" style="color:#345183 !important">
+            <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="capacitaciones"
+                style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
+            <h3 class="text-center"><strong>Capacitaciones</strong></h3>
+            <ul>
+                @can('capacitaciones_categorias_acceder')
+                    <li><a href="{{ route('admin.categoria-capacitacion.index') }}">
+                            <div>
+                                <i class="fas fa-layer-group"></i>
+                                <br>
+                                Categorías
+                            </div>
+                        </a></li>
+                @endcan
+
+                    <li><a href="{{ route('admin.recursos.index') }}">
+                            <div>
+                                <i class="fas fa-graduation-cap"></i>
+                                <br>
+                                Capacitaciones
+                            </div>
+                        </a>
+                    </li>
+
+            </ul>
+        </div>
+    @endcan
+    @can('solicitudes_incidencias_acceder')
     <li>
         <a href="#">
             <div>
@@ -190,6 +196,8 @@
             </div>
         </a>
     </li>
+    @endcan
+    @can('beneficios_acceder')
     <li>
         <a href="#">
             <div>
@@ -199,7 +207,8 @@
             </div>
         </a>
     </li>
-
+    @endcan
+    @can('timesheet_acceder')
     <li>
         <a href="#">
             <div>
@@ -208,5 +217,5 @@
             </div>
         </a>
     </li>
-
+    @endcan
 </ul>

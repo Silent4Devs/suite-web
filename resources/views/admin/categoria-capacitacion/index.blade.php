@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    @can('recurso_create')
+
 
 
         <style>
@@ -41,6 +41,7 @@
 
         {{ Breadcrumbs::render('admin.CategoriaCapacitacion.index') }}
         <h5 class="col-12 titulo_general_funcion">Categorías de capacitaciones</h5>
+
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -48,7 +49,6 @@
                     'admin.vulnerabilidads.parseCsvImport'])
                 </div>
             </div>
-        @endcan
         <div class="card-body datatable-fix">
             <table class="table table-bordered tbl-categorias w-100">
                 <thead class="thead-dark">
@@ -142,7 +142,7 @@
 
             ];
 
-            @can('recurso_create')
+            @can('capacitaciones_categorias_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar curso y capacitación',

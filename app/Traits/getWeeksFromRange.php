@@ -8,16 +8,22 @@ use Carbon\Carbon;
 
 trait getWeeksFromRange
 {
-    public function getWeeksFromRange(int $year, String $month, String $day, array $employeeWeksTimesheet, $startWeek = 'monday', $endWeek = 'sunday')
+    public function getWeeksFromRange(int $year, String $month, String $day, array $employeeWeksTimesheet, $startWeek = 'monday', $endWeek = 'sunday', $fecha_fin = null)
     {
         $rangeArray = [];
         $now = Carbon::now();
         $actualYear = $now->year;
         $cycles = ($actualYear - $year) + 1;
         $lastYear = $year;
-        $startActualWeek = $now->startOfWeek(Carbon::MONDAY)->subDays(7)->format('Y-m-d');
-        $endActualWeek = $now->endOfWeek(Carbon::SUNDAY)->format('Y-m-d');
-        $actualWeek = $startActualWeek . '|' . $endActualWeek;
+        if ($fecha_fin != null) {
+            $endActualWeek = $fecha_fin->endOfWeek(Carbon::SUNDAY)->format('Y-m-d');
+            $startActualWeek = $fecha_fin->startOfWeek(Carbon::MONDAY)->format('Y-m-d');
+            $actualWeek = $startActualWeek . '|' . $endActualWeek;
+        } else {
+            $startActualWeek = $now->startOfWeek(Carbon::MONDAY)->subDays(7)->format('Y-m-d');
+            $endActualWeek = $now->endOfWeek(Carbon::SUNDAY)->format('Y-m-d');
+            $actualWeek = $startActualWeek . '|' . $endActualWeek;
+        }
         for ($i = 1; $i <= $cycles; $i++) {
             $firstDayOfYear = mktime(0, 0, 0, 1, 1, $year);
             $nextMonday = strtotime($startWeek, $firstDayOfYear);

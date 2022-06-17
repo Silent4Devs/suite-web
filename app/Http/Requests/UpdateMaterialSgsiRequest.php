@@ -9,7 +9,7 @@ class UpdateMaterialSgsiRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('material_sgsi_edit');
+        return Gate::allows('material_sgsi_editar');
     }
 
     public function rules()

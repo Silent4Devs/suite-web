@@ -108,9 +108,9 @@
                     window.location.href = url;
                 }
             };
-
+            @can('dias_festivos_agregar')
             dtButtons.push(btnAgregar);
-
+            @endcan
             //dtButtons.push(deleteButton)
 
             let dtOverrideGlobals = {

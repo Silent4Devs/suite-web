@@ -1,150 +1,55 @@
-@extends('layouts.admin_glosario')
+@extends('layouts.admin')
 @section('content')
-<style type="text/css">
-            table {
-                width: 100%;
-            }
+    <style>
+        div.alphabet {
+            position: relative;
+            display: table;
+            width: 100%;
+            margin-bottom: 1em;
+        }
 
-            table td {
-                text-align: justify;
-                padding: 10px;
-                border-bottom: 1px solid #ccc;
-                vertical-align: top;
-            }
+        div.alphabet span {
+            display: table-cell;
+            color: #3174c7;
+            cursor: pointer;
+            text-align: center;
+            width: 3.5%
+        }
 
-            div.alphabet {
-                position: relative;
-                display: table;
-                width: 100%;
-                margin-bottom: 1em;
-            }
+        div.alphabet span:hover {
+            text-decoration: underline;
+        }
 
-            div.alphabet span {
-                display: table-cell;
-                color: #3174c7;
-                cursor: pointer;
-                text-align: center;
-                width: 3.5%
-            }
+        div.alphabet span.active {
+            color: black;
+        }
 
-            div.alphabet span:hover {
-                text-decoration: underline;
-            }
+        div.alphabet span.empty {
+            color: red;
+        }
 
-            div.alphabet span.active {
-                color: black;
-            }
-
-            div.alphabet span.empty {
-                color: red;
-            }
-
-            div.alphabetInfo {
-                display: block;
-                position: absolute;
-                background-color: #111;
-                border-radius: 3px;
-                color: white;
-                top: 2em;
-                height: 1.8em;
-                padding-top: 0.4em;
-                text-align: center;
-                z-index: 1;
-            }
-
-            .paginate_button {
-                margin: 5px;
-                padding: 5px 10px;
-                background: #a3d6ed;
-                cursor: pointer;
-                border-radius: 4px;
-                color: #fff;
-            }
-
-            body.c-dark-theme .paginate_button {
-                background: #4488a7;
-            }
-            #dom_length label{
-                color: #ffffff;
-                margin-bottom: -1.4em;
-            }
-            .dataTables_length{
-                margin-bottom: -1.4em !important;
-            }
-            #dom_length::before {
-               content: "Mostrar";
-            }
-            #dom_length::after {
-               content: "conceptos";
-            }
-            #dom_filter label{
-                color: #ffffff;
-            }
-            #dom_filter::before {
-               content: "Buscar";
-            }
-            #dom_info{
-                color: #ffffff;
-            }
-            #dom_previous{
-                position: relative !important;
-                color: rgba(0, 0, 0, 0) !important;
-            }
-            #dom_previous::before {
-                position: absolute;
-                top: 0%;
-                left: 0%;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-               content: "Anterior";
-               color: black !important;
-            }
-            #dom_next{
-            position: relative !important;
-            color: rgba(0, 0, 0, 0) !important;
-            padding: 5px 20px !important;
-            display: inline !important;
-            }
-            #dom_next::after {
-                position: absolute;
-                top: 0%;
-                left: 0%;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-               content: "Siguiente";
-               color: black !important;
-            }
-
-            @media(max-width: 1050px) {
-                table tr {
-                    display: flex;
-                    flex-direction: column;
-                }
-            }
-
-        </style>
-    @can('glosario_create')
-
-
-
-
-        <!--
-                                                                    <div style="margin-bottom: 10px;" class="row">
-                                                                        <div class="col-lg-12">
-                                                                            <a class="btn btn-success" href="{{ route('admin.glosarios.create') }}">
-                                                                                {{ trans('global.add') }} {{ trans('cruds.glosario.title_singular') }}
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                -->
-
-    @endcan
+        div.alphabetInfo {
+            display: block;
+            position: absolute;
+            background-color: #111;
+            border-radius: 3px;
+            color: white;
+            top: 2em;
+            height: 1.8em;
+            padding-top: 0.4em;
+            text-align: center;
+            z-index: 1;
+        }
+    </style>
+    {{-- @can('glosario_create')
+    <div style="margin-bottom: 10px;" class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="{{ route('admin.glosarios.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.glosario.title_singular') }}
+            </a>
+        </div>
+    </div>
+    @endcan --}}
     <h5 class="col-12 titulo_general_funcion">Glosario</h5>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
@@ -160,37 +65,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $glosarios as $glosario )
-                    <tr>
-                        <td style="font-size: 8pt;">{{$glosario->numero}}</td>
-                        <td style="font-size: 8pt;">{{$glosario->concepto}}</td>
-                        <td style="font-size: 8pt;">{{$glosario->norma}}</td>
-                        <td style="font-size: 8pt;">{{$glosario->definicion}}</td>
-                        {{-- <td style="font-size: 8pt;">{{$glosario->explicacion}}</td> --}}
+                    @foreach ($glosarios as $glosario)
+                        <tr>
+                            <td style="font-size: 8pt;">{{ $glosario->numero }}</td>
+                            <td style="font-size: 8pt;">{{ $glosario->concepto }}</td>
+                            <td style="font-size: 8pt;">{{ $glosario->norma }}</td>
+                            <td style="font-size: 8pt;">{{ $glosario->definicion }}</td>
+                            {{-- <td style="font-size: 8pt;">{{$glosario->explicacion}}</td> --}}
 
-                    </tr>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-
-
 @endsection
 @section('scripts')
     @parent
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
     <!--Abecedario-->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-
-
     <script type="text/javascript">
-        (function() {
-
+        $(function() {
             // Search function
             $.fn.dataTable.Api.register('alphabetSearch()', function(searchTerm) {
+                console.log('si');
                 this.iterator('table', function(context) {
                     context.alphabetSearch = searchTerm;
                 });
@@ -325,19 +223,38 @@
             });
 
         }());
-
-
-        $(document).ready(function() {
-            var table = $('#dom').DataTable({
-                dom: 'Alfrtip',
-
-
-            });
+    </script>
+    <script>
+        var table = $('#dom').DataTable({
+            buttons: [],
+            retrieve: true,
+            aaSorting: [],
+            dom: 'Alfrtip',
+            alphabetSearch: true,
+            language: {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
         });
-
-        $(document).ready(function() {
-          document.getElementById('dom_info').content
-        });
-
     </script>
 @endsection

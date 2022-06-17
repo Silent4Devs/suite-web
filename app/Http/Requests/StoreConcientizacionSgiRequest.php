@@ -9,7 +9,7 @@ class StoreConcientizacionSgiRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('concientizacion_sgi_create');
+        return Gate::allows('concientizacion_sgsi_agregar');
     }
 
     public function rules()

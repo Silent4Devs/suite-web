@@ -31,7 +31,7 @@ class EV360EvaluacionesController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('evaluacion_360_seguimiento_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('seguimiento_evaluaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($this->obtenerCantidadMaximaDeObjetivos(20));
         $areas = Area::all();
         $empleados = Empleado::alta()->get();
@@ -47,7 +47,7 @@ class EV360EvaluacionesController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('evaluacion_360_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('seguimiento_evaluaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion = Evaluacion::all();
         $areas = Area::all();
         $empleados = Empleado::alta()->get();
@@ -57,7 +57,7 @@ class EV360EvaluacionesController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('evaluacion_360_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('seguimiento_evaluaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:255',
@@ -387,7 +387,7 @@ class EV360EvaluacionesController extends Controller
 
     public function evaluacion(Evaluacion $evaluacion)
     {
-        abort_if(Gate::denies('evaluacion_360_configuracion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('seguimiento_evaluaciones_evaluacion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion->load('autor');
         //close evaluation if the end date is passed and if the evaluation is not closed
         if ($evaluacion->estatus == Evaluacion::ACTIVE) {
@@ -751,7 +751,6 @@ class EV360EvaluacionesController extends Controller
 
     public function consultaPorEvaluado($evaluacion, $evaluado)
     {
-        abort_if(Gate::denies('evaluacion_360_resumen_individual_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ev360ResumenTabla = new Ev360ResumenTabla();
         $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
         $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
@@ -1177,7 +1176,7 @@ class EV360EvaluacionesController extends Controller
 
     public function resumen($evaluacion)
     {
-        abort_if(Gate::denies('evaluacion_360_resumen_general_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('seguimiento_evaluaciones_grafica'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion = Evaluacion::with('evaluados')->find(intval($evaluacion));
         $evaluados = $evaluacion->evaluados;
         $lista_evaluados = collect();
@@ -1393,6 +1392,8 @@ class EV360EvaluacionesController extends Controller
 
     public function destroy($evaluacion)
     {
+        abort_if(Gate::denies('seguimiento_evaluaciones_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $evaluacion = Evaluacion::find($evaluacion);
         $evaluacion->delete();
 

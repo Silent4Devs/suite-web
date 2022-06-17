@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    @can('recurso_create')
+    @can('macroprocesos_agregar')
         <h5 class="col-12 titulo_general_funcion">Macroprocesos</h5>
         @include('flash::message')
         <div class="mt-5 card">
@@ -17,7 +17,7 @@
                         <th>
                             Código
                         </th>
-                         <th>
+                        <th>
                             Nombre
                         </th>
                         <th>
@@ -108,16 +108,18 @@
 
             ];
 
-            @can('recurso_create')
+            @can('macroprocesos_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar macroproceso',
-                url: "{{ route('admin.macroprocesos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar macroproceso',
+                    url: "{{ route('admin.macroprocesos.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 dtButtons.push(btnAgregar);
             @endcan

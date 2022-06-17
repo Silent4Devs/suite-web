@@ -13,7 +13,7 @@ class TablaCalendarioController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('eventos_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('eventos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Calendario::orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -22,9 +22,9 @@ class TablaCalendarioController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'eventos_organizacion_show';
-                $editGate = 'eventos_organizacion_edit';
-                $deleteGate = 'eventos_organizacion_delete';
+                $viewGate = 'eventos_ver';
+                $editGate = 'eventos_editar';
+                $deleteGate = 'eventos_eliminar';
                 $crudRoutePart = 'tabla-calendario';
 
                 return view('partials.datatablesActions', compact(
@@ -62,7 +62,7 @@ class TablaCalendarioController extends Controller
 
     public function create(Request $request)
     {
-        abort_if(Gate::denies('eventos_organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('eventos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $calendario = new Calendario();
 
         return view('admin.tabla-calendario.create', compact('calendario'));
@@ -70,29 +70,30 @@ class TablaCalendarioController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('eventos_organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('eventos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $fecha = Calendario::create($request->all());
 
         return redirect(route('admin.tabla-calendario.index'))->with(['success' => 'Registro guardado con exito']);
     }
 
-    public function show(Calendario $calendario)
+    public function show($calendario)
     {
-        abort_if(Gate::denies('eventos_organizacion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('eventos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $fecha = Calendario::find($calendario);
 
-        return view('admin.tabla-calendario.show', compact('calendario'));
+        return view('admin.tabla-calendario.show', compact('fecha'));
     }
 
     public function edit(Calendario $calendario)
     {
-        abort_if(Gate::denies('eventos_organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('eventos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.tabla-calendario.edit', compact('calendario'));
     }
 
     public function update(Request $request, Calendario $calendario)
     {
-        abort_if(Gate::denies('eventos_organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('eventos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $fecha = $calendario->update($request->all());
 
         return redirect(route('admin.tabla-calendario.index'))->with(['success' => 'Registro Actualizado']);
@@ -100,7 +101,7 @@ class TablaCalendarioController extends Controller
 
     public function destroy(Calendario $calendario)
     {
-        abort_if(Gate::denies('eventos_organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('eventos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $calendario->delete();
 
         return redirect(route('admin.tabla-calendario.index'))->with(['success' => 'Registro Eliminado']);

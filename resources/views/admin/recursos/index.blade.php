@@ -39,7 +39,6 @@
 
     {{ Breadcrumbs::render('admin.recursos.index') }}
 
-    @can('recurso_create')
         <h5 class="col-12 titulo_general_funcion">Capacitaciones</h5>
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
@@ -48,7 +47,6 @@
                     'admin.vulnerabilidads.parseCsvImport'])
                 </div>
             </div>
-        @endcan
 
 
         @include('partials.flashMessages')
@@ -163,7 +161,7 @@
 
             ];
 
-            @can('recurso_create')
+            @can('capacitaciones_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar curso y capacitación',
@@ -195,7 +193,7 @@
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan
-            @can('recurso_delete')
+            @can('capacitaciones_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -328,20 +326,20 @@
                             let html =
                                 `
                                 <div class="btn-group">
-                                    @can('recurso_show')
+                                    @can('capacitaciones_ver')
                                         <a href="${urlSeguimiento }" class="btn btn-sm" title="Seguimiento de la capacitación"><i
                                                 class="fas fa-cogs mr-2"></i></a>
                                     @endcan
                                 `;
                             if (row.estatus == 'Borrador' || row.estatus == 'Cancelado') {
                                 html += `
-                                @can('recurso_edit')
+                                @can('capacitaciones_editar')
                                     <a href="${urlEditar}" class="btn btn-sm" title="Editar la capacitación"><i class="fas fa-edit mr-2"></i></a>
                                 @endcan
                                         `;
                             }
                             html += `
-                            @can('recurso_delete')
+                            @can('capacitaciones_eliminar')
                                 <button data-url="${urlEliminar}" class="btn btn-sm btn-eliminar" title="Eliminar la capacitación"><i
                                         class="fas fa-trash mr-2 text-danger"></i>
                                 </button>

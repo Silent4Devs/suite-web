@@ -23,7 +23,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('entendimiento_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_foda_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //$obtener_FODA = EntendimientoOrganizacion::first();
         // $query = EntendimientoOrganizacion::with('empleado')->get();
         // dd($query);
@@ -35,9 +35,9 @@ class EntendimientoOrganizacionController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'entendimiento_organizacion_show';
-                $editGate = 'entendimiento_organizacion_edit';
-                $deleteGate = 'entendimiento_organizacion_delete';
+                $viewGate = 'analisis_foda_ver';
+                $editGate = 'analisis_foda_editar';
+                $deleteGate = 'analisis_foda_eliminar';
                 $crudRoutePart = 'entendimiento-organizacions';
 
                 return view('partials.datatablesActions', compact(
@@ -87,7 +87,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('entendimiento_organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_foda_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $entendimientoOrganizacion = new EntendimientoOrganizacion;
         $empleados = Empleado::alta()->get();
         $isEdit = false;
@@ -98,6 +98,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function store(Request $request, EntendimientoOrganizacion $entendimientoOrganizacion)
     {
+        abort_if(Gate::denies('analisis_foda_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'analisis' => 'required|string|max:255',
             'fecha' => 'required|date',
@@ -137,7 +138,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function edit(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
-        abort_if(Gate::denies('entendimiento_organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_foda_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $entendimientoOrganizacion->load('participantes');
 
@@ -154,6 +155,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function update(Request $request, EntendimientoOrganizacion $entendimientoOrganizacion)
     {
+        abort_if(Gate::denies('analisis_foda_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'analisis' => 'required|string|max:255',
             'fecha' => 'required|date',
@@ -178,7 +180,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function show(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
-        abort_if(Gate::denies('entendimiento_organizacion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleados = Empleado::alta()->get();
         $obtener_FODA = $entendimientoOrganizacion;
@@ -192,7 +194,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function destroy(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
-        abort_if(Gate::denies('entendimiento_organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('analisis_foda_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $entendimientoOrganizacion->delete();
 

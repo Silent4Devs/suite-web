@@ -1,4 +1,4 @@
-@can('soporte_access')
+@can('sistema_de_gestion_soporte_acceder')
     <div href="#" class="btn btn-secundario btn_modal_video" data-toggle="modal" data-target="#modal_guia_general"><i class="far fa-play-circle mr-2"></i> GUÍA DE USO</div>
     <ul class="mt-4">
         <li><a href="#" data-ventana="capacitacion" data-ruta="Capacitaciones" class="btn_ventana_menu">
@@ -32,42 +32,56 @@
                     Competencias
                 </div>
             </a></li>
+        @can('concientizacion_sgsi_acceder')
         <li><a href="{{ route('admin.concientizacion-sgis.index') }}">
                 <div>
                     <i class="bi bi-window-desktop"></i> <br>
                     Concientización SGI
                 </div>
             </a></li>
+        @endcan
+        @can('material_sgsi_acceder')
         <li><a href="{{ route('admin.material-sgsis.index') }}">
                 <div>
                     <i class="bi bi-boxes"></i> <br>
                     Material SGSI
                 </div>
-            </a></li>
+            </a>
+        </li>
+        @endcan
         {{-- <li><a href="{{ route('admin.material-iso-veinticientes.index') }}">
                 <div>
                     <i class="far fa-object-ungroup"></i>
                     Material ISO 27001: 2013
                 </div>
             </a></li> --}}
+        @can('comunicados_generales_acceder')
         <li><a href="{{ route('admin.comunicacion-sgis.index') }}">
                 <div>
                     <i class="bi bi-chat-right-text"></i> <br>
                     Comunicados Generales
                 </div>
-            </a></li>
+            </a>
+        </li>
+        @endcan
+        @can('control_de_accesos_acceder')
         <li><a href="{{ route('admin.control-accesos.index') }}">
                 <div>
                     <i class="bi bi-person-badge"></i> <br>
                     Control de Accesos
                 </div>
-            </a></li>
+            </a>
+        </li>
+        @endcan
+        @can('informacion_documentada_acceder')
         <li><a href="{{ asset('admin/documentos/publicados') }}">
                 <div>
                     <i class="bi bi-file-earmark-post"></i> <br>
                     Infomación Documentada
                 </div>
-            </a></li>
+            </a>
+        </li>
+        @endcan
     </ul>
 @else
     <div class="mt-5 row" style="margin-left: -10px">

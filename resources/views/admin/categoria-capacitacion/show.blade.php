@@ -3,7 +3,7 @@
 
     <div class="card">
         <div class="card-header">
-            {{ trans('global.show') }} Categoria: {{ $categoriaCapacitacion->nombre }}
+            {{ trans('global.show') }} Categoría: {{ $categoriaCapacitacion->nombre }}
         </div>
 
         <div class="card-body">

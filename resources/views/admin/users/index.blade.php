@@ -116,7 +116,7 @@
                 }
 
             ];
-            @can('user_create')
+            @can('usuarios_agregar')
                 let btnAgregar = {
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar usuario',
@@ -131,7 +131,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('user_delete')
+            @can('usuarios_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                     text: deleteButtonTrans,
@@ -251,18 +251,30 @@
                             let htmlBotones =
                                 `
                                 <div class="btn-group">
+                                    @can('usuarios_editar')
                                     <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    @endcan
+                                    @can('usuarios_ver')
                                     <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
+                                    @endcan
+                                    @can('usuarios_vincular_empleados')
                                     <button title="${row.n_empleado?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm" onclick="AbrirModal('${data}');">
                                         <i class="fas fa-user-tag"></i>
                                     </button>
+                                    @endcan
+                                    @can('usuarios_verificacion_dos_factores')
                                     <a href="${urlButtonTwoFactor}" title="${row.two_factor?'Quitar Verificación por dos factores':'Activar verificación por dos factores'}" class="btn btn-sm">
                                         ${row.two_factor?' <i class="fas fa-key"></i>':' <i class="fas fa-key"></i>'}
                                     </a>
+                                    @endcan
+                                    @can('usuarios_bloquear_usuario')
                                     <a href="${urlButtonBloquearUsuario}" title="${row.is_active?'Bloquear usuario':'Desbloquear usuario'}" class="btn btn-sm">
                                         ${row.is_active?' <i class="fas fa-unlock"></i>':' <i class="fas fa-lock"></i>'}
                                     </a>
+                                    @endcan
+                                    @can('usuarios_eliminar')
                                     <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.name}');"><i class="fas fa-trash-alt"></i></button>
+                                    @endcan
                                 </div>
 
 
@@ -280,19 +292,18 @@
                                             <div class="modal-body">
                                                 <p><strong>Empleado vinculado actualmente:</strong> ${row.empleado?.name?row.empleado?.name:"Sin vincular"}</p>
                                                 <select name="n_empleado" id="n_empleado${data}" class="select2">
-                                                    <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>`
-                            empleados.forEach(empleado => {
-                                htmlBotones += `
+                                                    <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>`;
+                                                    empleados.forEach(empleado => {
+                                                        htmlBotones += `
                                                             <option value="${empleado.n_empleado}">${empleado.name}</option>
                                                         `;
-                            });
-                            `</select>
+                                                    });
+                                                htmlBotones += `</select>
                                                 <span class="text-sm n_empleado_error errores text-danger"></span>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                <button type="button" class="btn btn-primary"
-                                                    onclick="VincularEmpleado('${row.name}','${data}');">Vincular</button>
+                                                <button type="button" class="btn btn-primary" onclick="VincularEmpleado('${row.name}','${data}');">Vincular</button>
                                             </div>
                                         </div>
                                     </div>

@@ -193,7 +193,7 @@
                 }
 
             ];
-            @can('revision_direccion_create')
+            @can('revision_por_direccion_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar revisión por dirección',
@@ -229,7 +229,7 @@
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan
-            @can('revision_direccion_delete')
+            @can('revision_por_direccion_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,

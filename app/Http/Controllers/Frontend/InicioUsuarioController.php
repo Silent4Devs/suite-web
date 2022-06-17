@@ -621,8 +621,6 @@ class InicioUsuarioController extends Controller
 
         $procesos = Proceso::get();
 
-        abort_if(Gate::denies('sugerencias_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         return view('frontend.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
     }
 

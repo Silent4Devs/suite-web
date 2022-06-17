@@ -106,7 +106,6 @@
 
     {{ Breadcrumbs::render('admin.material-sgsis.index') }}
 
-    @can('material_sgsi_create')
         <h5 class="col-12 titulo_general_funcion">Material SGSI</h5>
         <div class="mt-5 card">
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
@@ -116,7 +115,6 @@
             </a>
         </div>
     </div> --}}
-        @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -268,7 +266,7 @@
 
             ];
 
-            @can('material_sgsi_create')
+            @can('material_sgsi_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar material SGSI',
@@ -281,7 +279,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('material_sgsi_delete')
+            @can('material_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -356,7 +354,9 @@
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
+                                        @can('material_sgsi_vinculo')
                                         <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                        @endcan
                                     </div>
                                     </div>
 

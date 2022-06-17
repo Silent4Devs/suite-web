@@ -1,6 +1,6 @@
 <div>    
     <div class="row" wire:ignore>
-        <div class="col-md-4 form-group">
+        <div class="col-md-4 form-group" style="padding-left:0px !important;">
             <label class="form-label">Área</label>
             <select class="form-control" wire:model="area_id">
                 <option selected value="0">Todas</option>
@@ -65,6 +65,7 @@
                         <th >Aprobador</th>
                         <th style="min-width:250px;">Área</th>
                         <th>Estatus</th>
+                        <th>Horas Totales</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -102,16 +103,10 @@
                                 @endif
                             </td>
                             <td>
+                                {{ $time->total_horas }} <small>h</small>
+                            </td>
+                            <td>
                                 <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
-
-                                {{-- @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
-                                    <a href="{{ asset('admin/timesheet/edit') }}/{{ $time->id }}" title="Editar" class="btn"><i class="fa-solid fa-pen-to-square"></i></a>
-                                @endif
-
-                                
-                                @if(($time->estatus == 'papelera') || ($time->estatus == 'rechazado'))
-                                    <button title="Eliminar" class="btn" style="color:red;" data-toggle="modal" data-target="#alert_time_delet_{{ $time->id }}"><i class="fa-solid fa-trash-can"></i></button>
-                                @endif --}}
                             </td>                       
                         </tr>
                     @endforeach

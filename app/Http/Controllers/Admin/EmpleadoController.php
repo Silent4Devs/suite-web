@@ -16,6 +16,7 @@ use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
 use App\Models\Language;
 use App\Models\ListaDocumentoEmpleado;
+use App\Models\Organizacion;
 use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\BeneficiariosEmpleado;
@@ -38,7 +39,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 //use Barryvdh\DomPDF\PDF as DomPDFPDF;
 
@@ -61,87 +61,7 @@ class EmpleadoController extends Controller
      */
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // if ($request->ajax()) {
-        //     $query = Empleado::orderByDesc('id')->alta()->get();
-        //     $table = DataTables::of($query);
-
-        //     $table->addColumn('placeholder', '&nbsp;');
-        //     $table->addColumn('actions', '&nbsp;');
-        //     $table->addIndexColumn();
-
-        //     $table->editColumn('actions', function ($row) {
-        //         $viewGate = 'configuracion_empleados_show';
-        //         $editGate = 'configuracion_empleados_edit';
-        //         $deleteGate = 'configuracion_empleados_delete';
-        //         $crudRoutePart = 'empleados';
-
-        //         return view('partials.datatablesActions', compact(
-        //             'viewGate',
-        //             'editGate',
-        //             'deleteGate',
-        //             'crudRoutePart',
-        //             'row'
-        //         ));
-        //     });
-
-        //     $table->editColumn('checkbox', function ($row) {
-        //         return $row->id ? $row->id : '';
-        //     });
-        //     $table->editColumn('id', function ($row) {
-        //         return $row->id ? $row->id : '';
-        //     });
-        //     $table->editColumn('name', function ($row) {
-        //         return $row->name ? $row->name : '';
-        //     });
-
-        //     $table->editColumn('avatar', function ($row) {
-        //         return $row->avatar ? $row->avatar : '';
-        //     });
-
-        //     $table->editColumn('area', function ($row) {
-        //         return $row->area ? $row->area->area : '';
-        //     });
-        //     $table->editColumn('puesto', function ($row) {
-        //         return $row->puesto ? $row->puesto : '';
-        //     });
-        //     $table->editColumn(
-        //         'jefe',
-        //         function ($row) {
-        //             return $row->supervisor ? $row->supervisor->name : '';
-        //         }
-        //     );
-        //     $table->editColumn('antiguedad', function ($row) {
-        //         return $row->obtener_antiguedad;
-        //         // return Carbon::parse(Carbon::parse($row->obtener_antiguedad))->diffForHumans(Carbon::now()->subDays());
-        //     });
-        //     $table->editColumn('estatus', function ($row) {
-        //         return $row->estatus ? $row->estatus : '';
-        //     });
-        //     $table->editColumn('email', function ($row) {
-        //         return $row->email ? $row->email : '';
-        //     });
-
-        //     $table->editColumn('telefono', function ($row) {
-        //         return $row->telefono ? $row->telefono : '';
-        //     });
-
-        //     $table->editColumn('n_empleado', function ($row) {
-        //         return $row->n_empleado ? $row->n_empleado : '';
-        //     });
-
-        //     $table->editColumn('n_registro', function ($row) {
-        //         return $row->n_registro ? $row->n_registro : '';
-        //     });
-
-        //     $table->editColumn('sede', function ($row) {
-        //         return $row->sede ? $row->sede->sede : '';
-        //     });
-
-        //     $table->rawColumns(['actions', 'placeholder']);
-
-        //     return $table->make(true);
-        // }
+        abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
 
@@ -182,7 +102,7 @@ class EmpleadoController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bd_empleados_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
@@ -203,9 +123,10 @@ class EmpleadoController extends Controller
         $empleado = new Empleado;
         $idiomas = Language::get();
         $globalCountries = new CountriesFunction;
+        $organizacion = Organizacion::first();
         $countries = $globalCountries->getCountries('ES');
 
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'idiomas'));
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'idiomas', 'organizacion'));
     }
 
     public function onlyStore($request)
@@ -407,6 +328,7 @@ class EmpleadoController extends Controller
             'salario_base_mensual' => $request->salario_base_mensual ? preg_replace('/([^0-9\.])/i', '', $request->salario_base_mensual) : null,
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
+            'semanas_min_timesheet' => $request->semanas_min_timesheet,
         ]);
         $this->createUserFromEmpleado($empleado);
         $this->assignDependenciesModel($request, $empleado);
@@ -972,6 +894,8 @@ class EmpleadoController extends Controller
      */
     public function show($id)
     {
+        abort_if(Gate::denies('bd_empleados_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($id));
         $contactos = ContactosEmergenciaEmpleado::where('empleado_id', intval($id))->get();
         $dependientes = DependientesEconomicosEmpleados::where('empleado_id', intval($id))->get();
@@ -992,7 +916,7 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find(intval($id));
         $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
@@ -1013,7 +937,7 @@ class EmpleadoController extends Controller
         $perfiles_seleccionado = $empleado->perfil_empleado_id;
         $puestos_seleccionado = $empleado->puesto_id;
         $idiomas = Language::get();
-
+        $organizacion = Organizacion::first();
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
         $isEditAdmin = true;
@@ -1058,10 +982,10 @@ class EmpleadoController extends Controller
                 'evidencia_viejo_id' => $doc_empleado_id,
             ]);
         }
-
+        $organizacion = Organizacion::first();
         // dd($lista_docs);
 
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado'));
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado', 'organizacion'));
     }
 
     public function expedienteUpdate(Request $request)
@@ -1267,6 +1191,7 @@ class EmpleadoController extends Controller
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
             'foto' => $image,
+            'semanas_min_timesheet' => $request->semanas_min_timesheet,
         ]);
         $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
         $usuario->update([

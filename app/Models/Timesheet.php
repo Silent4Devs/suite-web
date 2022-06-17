@@ -11,7 +11,7 @@ class Timesheet extends Model
 
     protected $table = 'timesheet';
 
-    protected $appends = ['semana', 'proyectos', 'semana_y'];
+    protected $appends = ['semana', 'proyectos', 'semana_y', 'semana_text', 'total_horas'];
 
     protected $fillable = [
         'fecha_semana',
@@ -54,6 +54,20 @@ class Timesheet extends Model
             <font style="font-weight: bolder !important;">' . $fin_dia . '</font>
 
             ';
+
+        return $semana_rango;
+    }
+
+    public function getSemanaTextAttribute()
+    {
+        $inicio = $this->traducirDia($this->inicio_semana);
+
+        $fin = $this->traducirDia($this->fin_semana);
+
+        $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify("last {$inicio}")->format('d/m/Y');
+        $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->format('d/m/Y');
+
+        $semana_rango = ' del ' . $inicio_dia . ' al ' . $fin_dia;
 
         return $semana_rango;
     }
@@ -115,5 +129,22 @@ class Timesheet extends Model
         }
 
         return $proyectos;
+    }
+
+    public function getTotalHorasAttribute()
+    {
+        $total_horas = 0;
+        $horas_time = TimesheetHoras::where('timesheet_id', $this->id)->get();
+        foreach ($horas_time as $key => $horas) {
+            $total_horas += $horas->horas_lunes;
+            $total_horas += $horas->horas_martes;
+            $total_horas += $horas->horas_miercoles;
+            $total_horas += $horas->horas_jueves;
+            $total_horas += $horas->horas_viernes;
+            $total_horas += $horas->horas_sabado;
+            $total_horas += $horas->horas_domingo;
+        }
+
+        return $total_horas;
     }
 }

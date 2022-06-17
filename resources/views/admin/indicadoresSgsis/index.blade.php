@@ -228,7 +228,7 @@
 
             ];
 
-            @can('indicadores_sgsi_delete')
+            @can('indicadores_sgsi_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar indicador SGSI',
@@ -241,7 +241,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('indicadores_sgsi_delete')
+            @can('indicadores_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -314,7 +314,11 @@
                         data: 'enlace',
                         name: 'enlace',
                         render: function(data, type, row, meta) {
-                            return `<div class="text-center w-100"><a href="evaluaciones-sgsisInsertar/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a></div>`;
+                            return `
+                            @can('indicadores_sgsi_vinculo')
+                            <div class="text-center w-100"><a href="evaluaciones-sgsisInsertar/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a></div>
+                            @endcan
+                            `;
                         }
                     },
                     /*{

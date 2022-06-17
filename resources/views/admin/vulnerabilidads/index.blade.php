@@ -40,6 +40,7 @@
 
     <h5 class="col-12 titulo_general_funcion">Vulnerabilidades </h5>
     <div class="mt-5 card">
+        @can('vulnerabilidades_agregar')
         <div style="margin-bottom: 10px; margin-left:10px;" class="row">
             <div class="col-lg-12">
                 @include('csvImport.modalvulnerabilidad', [
@@ -48,7 +49,7 @@
                 ])
             </div>
         </div>
-
+        @endcan
         @include('flash::message')
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -145,7 +146,7 @@
                 }
 
             ];
-
+            @can('vulnerabilidades_agregar')
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar Vulnerabilidad',
@@ -178,11 +179,11 @@
                     $('#xlsxImportModal').modal('show');
                 }
             };
-
             dtButtons.push(btnAgregar);
             dtButtons.push(btnExport);
             dtButtons.push(btnImport);
-
+            @endcan
+            @can('vulnerabilidades_eliminar')
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
@@ -220,7 +221,7 @@
                 }
             }
             //dtButtons.push(deleteButton)
-
+            @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,

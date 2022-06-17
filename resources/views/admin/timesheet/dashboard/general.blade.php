@@ -8,12 +8,18 @@
 			<canvas id="graf-registros-general" width="400" height="400"></canvas>
 			<div class="total_graf_times_inner" style="position: absolute; z-index:2; top: -10px; left:0; right:0; bottom: 0; width: 30px; margin:auto; height: 30px; color:#000;">
 				<div class="d-flex justify-content-center align-items-center" style="font-size: 50px; font-weight: lighter; margin-top: -40px;">
-					{{ $aprobados_contador + $rechazos_contador + $pendientes_contador + $borrador_contador }}
+					{{-- {{ $aprobados_contador + $rechazos_contador + $pendientes_contador + $borrador_contador }} --}}
 				</div>
 				<div class="d-flex justify-content-center align-items-center" style="font-size: 30px; margin-top:-15px; font-weight: lighter;">
-					<small style="color:#777;">Registros</small>
+					{{-- <small style="color:#777;">Registros</small> --}}
 				</div>
 			</div>
+
+			
+
+			<div class="d-flex mt-4">            	
+            	Registros totales: <strong class="ml-3"> {{ $aprobados_contador + $rechazos_contador + $pendientes_contador + $borrador_contador }}</strong>
+            </div>
 		</div>
 	</div>
 	<div class="col-md-8 p-4" style="position: relative; height: 500px;">
@@ -123,7 +129,7 @@
 	                padding: 10
 	            }
 	        },
-	         plugins: {
+	        plugins: {
 			      datalabels: {
 			        color: '#fff',
 			        display: true, 

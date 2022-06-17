@@ -82,10 +82,6 @@
             padding: 0 5px 5px 5px !important;
         }
 
-        .select2-container {
-            margin-top: 10px !important;
-        }
-
         /*TOASTR*/
         #toast-container>div {
             opacity: 1 !important;
@@ -351,7 +347,6 @@
             font-weight: normal;
             border: none !important;
         }
-
     </style>
     {{-- menu tabs --}}
     <style type="text/css">
@@ -450,7 +445,6 @@
         .scroll_estilo::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.5);
         }
-
     </style>
     {{-- Estilos Select 2 --}}
     <style>
@@ -990,7 +984,6 @@
         .table.table-striped tr {
             background-color: white !important;
         }
-
     </style>
 
     @yield('styles')
@@ -1256,13 +1249,11 @@
                 color: #fff !important;
                 padding-top: 10px;
             }
-
             #tabla_blanca_imprimir_global thead tr:first-child th:last-child,
-            #tabla_blanca_imprimir_global tbody tr td:last-child {
+            #tabla_blanca_imprimir_global tbody tr td:last-child{
                 display: none !important;
             }
         }
-
     </style>
     <div id="elementos_imprimir" class="d-none">
         <div id="contenido_imprimir">
@@ -1311,7 +1302,7 @@
                             Registros
                         </strong>
                         <font style="font-weight: lighter;">
-                            
+
                         </font>
                     </h5>
                 `) {
@@ -1382,7 +1373,6 @@
     <script src="{{ asset('js/yearpicker.js') }}"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
-    {{-- <script src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script> --}}
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
@@ -1511,10 +1501,10 @@
                     searchable: false,
                     targets: -1
                 }],
-                select: {
-                    style: 'multi+shift',
-                    selector: 'td:first-child'
-                },
+                // select: {
+                //     style: 'multi+shift',
+                //     selector: 'td:first-child'
+                // },
                 order: [],
                 scrollX: true,
                 pageLength: 5,

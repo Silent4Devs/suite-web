@@ -11,7 +11,7 @@
 
     </style>
 
-    @can('centro_atencion_quejas_clientes_create')
+    @can('centro_atencion_quejas_clientes_agregar')
         <h5 class="col-12 titulo_general_funcion">Quejas Clientes</h5>
 
         <div class="container">

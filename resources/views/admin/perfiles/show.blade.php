@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('Métrica') }}
+       Mostrar Niveles Jerárquicos
     </div>
 
     <div class="card-body">

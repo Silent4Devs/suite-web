@@ -23,7 +23,7 @@
             <h3 class="mb-2 text-center text-white"><strong>Matriz Análisis de Riesgo Integral
                 </strong></h3>
         </div>
-        @can('configuracion_sede_create')
+        @can('analisis_de_riesgo_integral_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', [
@@ -52,15 +52,15 @@
             @include('partials.flashMessages')
             <div class="card-body datatable-fix">
                 <div class="d-flex justify-content-between">
-                    @can('analisis_de_riesgos_matriz_riesgo_analisis_create')
+                    @can('analisis_de_riesgo_integral_agregar')
                         <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
                             href="{{ route('admin.matriz-riesgos.sistema-gestion.create', ['idAnalisis' => $id_matriz]) }}"
                             type="submit" name="action">Agregar nuevo</a>
                     @endcan
-                    {{-- @can('analisis_de_riesgos_matriz_riesgo_analisis_grafica_show')
+                    @can('analisis_de_riesgos_matriz_riesgo_analisis_grafica_show')
                         <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
                             href="{{ route('admin.matriz-mapa.SistemaGestion', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
-                    @endcan --}}
+                    @endcan
                 </div>
                 <table class="table table-bordered w-100 datatable datatable-Matriz" id="datatable-Matriz">
                     <thead class="thead-dark">
@@ -313,7 +313,7 @@
 
             ];
 
-            @can('configuracion_sede_create')
+            @can('analisis_de_riesgo_integral_agregar')
                 let btnAgregar = {
                     // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     // titleAttr: 'Agregar sede',
@@ -337,7 +337,7 @@
                 dtButtons.push(btnAgregar);
                 // dtButtons.push(btnImport);
             @endcan
-            @can('configuracion_sede_delete')
+            @can('analisis_de_riesgo_integral_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                     text: deleteButtonTrans,

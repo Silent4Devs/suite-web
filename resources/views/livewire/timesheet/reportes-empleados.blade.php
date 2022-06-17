@@ -2,8 +2,122 @@
     @php
         use App\Models\Organizacion;
     @endphp
-    <div class="row">
-        <div class="col-md-3 form-group">
+    <style type="text/css">
+        .cde-nombre.ver{
+            position: sticky;
+            left: 64px !important;
+        }
+        .cde-puesto.ver{
+            position: sticky;
+            left: 140px !important;
+        }
+        .cde-area.ver{
+            position: sticky;
+            left: 202px !important;
+        }
+        .cde-totalh.ver{
+        }
+        .cde-semenasf.ver{
+        }
+        .ver{
+            z-index: 2;
+        }
+
+        .cde-foto{
+            position: sticky !important;
+            left: 0px;
+            z-index: 6;
+        }
+        .cde-nombre{
+            position: sticky !important;
+            left: -50px;
+            z-index: 5;
+        }
+        .cde-puesto{
+            position: sticky !important;
+            left: 10px;
+            z-index: 4;
+        }
+        .cde-area{
+            position: sticky !important;
+            left: 60px;
+            z-index: 3;
+        }
+        .cde-estatus{
+            position: sticky !important;
+            left: 245px;
+            z-index: 2;
+        }
+        .cde-totalh{
+        }
+        .cde-semenasf{
+        }
+        .cde-op{
+            position: sticky !important;
+            right: 0px;
+            z-index: 6;
+        }
+
+        .cde-nombre,
+        .cde-puesto,
+        .cde-area,
+        .cde-estatus,
+        .cde-totalh,
+        .cde-semenasf{
+            transition: 0.3s;
+        }
+        .cde-foto::before,
+        .cde-nombre::before,
+        .cde-puesto::before,
+        .cde-area::before,
+        .cde-estatus::before{
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            top: 0 !important;
+            right: 0;
+            background-color: grey;
+         }
+        tfoot .cde-nombre::before,
+        tfoot .cde-puesto::before,
+        tfoot .cde-area::before,
+        tfoot .cde-estatus::before{
+            content: "";
+            opacity: 0 !important;
+        }
+        @media(max-width: 1200px){
+            .cde-nombre,
+            .cde-puesto,
+            .cde-area,
+            .cde-estatus,
+            .cde-totalh,
+            .cde-semenasf{
+                position: unset !important;
+            }
+        }
+
+        .dataTables_scrollHead{
+            position: sticky !important; top: 50px;
+            z-index: 7;
+        }
+
+        .cargando_fondo{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            text-align: center;
+            z-index: 10;
+        }
+    </style>
+    <div class="cargando_fondo" wire:loading>
+        <i class="fa-solid fa-spinner fa-spin-pulse" style="font-size:150px; color: #000 !important; margin-top:70px;"></i>
+    </div>
+    <div class="row print-none" style="margin: 0 !important;">
+        <div class="col-md-3 form-group" style="padding-left:0 !important;">
             <label class="form-label">Área</label>
             <select class="form-control" wire:model="area_id">
                 <option selected value="0">Todas</option>
@@ -28,113 +142,10 @@
             <label class="form-label" style="width:100%;">&nbsp;</label><br>
             <a href="" class="btn btn-info"><i class="fa-solid fa-arrow-rotate-right"></i></a>
         </div>
-        <style type="text/css">
-            .cde-nombre.ver{
-                position: sticky;
-                left: 68px !important;
-            }
-            .cde-puesto.ver{
-                position: sticky; 
-                left: 140px !important;
-            }
-            .cde-area.ver{
-                position: sticky; 
-                left: 202px !important;
-            }
-            .cde-totalh.ver{
-                position: sticky; 
-                right: 206px !important;
-            }
-            .cde-semenasf.ver{
-                position: sticky; 
-                right: 124px !important;
-            }
-            .ver{ 
-                z-index: 2; 
-            }
-            
-            .cde-foto{
-                position: sticky !important; 
-                left: 0px; 
-                z-index: 6;
-            }
-            .cde-nombre{
-                position: sticky !important;
-                left: -50px;
-                z-index: 5;
-            }
-            .cde-puesto{
-                position: sticky !important; 
-                left: 10px;
-                z-index: 4;
-            }
-            .cde-area{
-                position: sticky !important; 
-                left: 60px;
-                z-index: 3;
-            }
-            .cde-estatus{
-                position: sticky !important; 
-                left: 250px;
-                z-index: 2;
-            }
-            .cde-totalh{
-                position: sticky !important; 
-                right: 205px;
-                z-index: 3;
-            }
-            .cde-semenasf{
-                position: sticky !important; 
-                right: 124px;
-                z-index: 2;
-            }
-            .cde-op{
-                position: sticky !important; 
-                right: 0px; 
-                z-index: 6;
-            }
 
-            .cde-nombre,
-            .cde-puesto,
-            .cde-area,
-            .cde-estatus,
-            .cde-totalh,
-            .cde-semenasf{ 
-                transition: 0.3s;
-            }
-            .cde-nombre::before,
-            .cde-puesto::before,
-            .cde-area::before,
-            .cde-estatus::before{ 
-                content: "";
-                position: absolute;
-                width: 1px;
-                height: 100%;
-                top: 0;
-                right: 0;
-                background-color: grey;
-             }
-            tfoot .cde-nombre::before,
-            tfoot .cde-puesto::before,
-            tfoot .cde-area::before,
-            tfoot .cde-estatus::before{ 
-                content: "";
-                opacity: 0 !important;
-            }
-            @media(max-width: 1200px){
-                .cde-nombre,
-                .cde-puesto,
-                .cde-area,
-                .cde-estatus,
-                .cde-totalh,
-                .cde-semenasf{ 
-                    position: unset !important;
-                }
-            }
-        </style>
         <div class="datatable-fix w-100 mt-4">
             <table id="timesheet_empleados_lista" class="table w-100 datatable_timesheet_empleados_reportes tabla-fixed" data-semanas="{{ $semanas_totales_calendario }}">
-                <thead class="w-100">
+                <thead class="w-100" style="position: sticky !important; top: 250px;">
                     <tr>
                         <th class="cde-foto">Foto</th>
                         <th class="cde-nombre" style="text-align: right;">Nombre </th>
@@ -156,7 +167,46 @@
                         <th class="cde-estatus"></th>
                         @foreach($calendario_tabla as $calendar)
                             @foreach($calendar['months'] as $key=>$mes)
-                                <th colspan="{{ $mes['total_weeks'] }}" class="th-calendario th-mes"><small>{{ $key }}</small></th>
+                                @php
+                                    $mes_traducido = '';
+                                    if ($key == 'January') {
+                                        $mes_traducido = 'Enero';
+                                    }
+                                    if ($key == 'February') {
+                                        $mes_traducido = 'Febrero';
+                                    }
+                                    if ($key == 'March') {
+                                        $mes_traducido = 'Marzo';
+                                    }
+                                    if ($key == 'April') {
+                                        $mes_traducido = 'Abril';
+                                    }
+                                    if ($key == 'May') {
+                                        $mes_traducido = 'Mayo';
+                                    }
+                                    if ($key == 'June') {
+                                        $mes_traducido = 'Junio';
+                                    }
+                                    if ($key == 'July') {
+                                        $mes_traducido = 'Julio';
+                                    }
+                                    if ($key == 'August') {
+                                        $mes_traducido = 'Agosto';
+                                    }
+                                    if ($key == 'September') {
+                                        $mes_traducido = 'Septiembre';
+                                    }
+                                    if ($key == 'October') {
+                                        $mes_traducido = 'Octubre';
+                                    }
+                                    if ($key == 'November') {
+                                        $mes_traducido = 'Noviembre';
+                                    }
+                                    if ($key == 'December') {
+                                        $mes_traducido = 'Diciembre';
+                                    }
+                                @endphp
+                                <th colspan="{{ $mes['total_weeks'] }}" class="th-calendario th-mes"><small>{{ $mes_traducido }} {{ $calendar['year'] }}</small></th>
                             @endforeach
                         @endforeach
                         <th class="cde-totalh"></th>
@@ -201,13 +251,11 @@
                                 {{ $empleado_td['estatus'] }}</span>
                             </td>
                             @foreach($empleado_td['calendario'] as $index=>$horas_calendar)
-                                <td><small>{!! $horas_calendar !!}</small></td>
+                                <td style="font-size: 10px !important; text-align: center !important;">{!! $horas_calendar !!}</td>
                             @endforeach
-                            <td class="text-center cde-totalh">{{ $empleado_td['horas_totales'] }} h</td>
-                            <td class="d-flex justify-content-center cde-semenasf">
-                                <span class="span_atrasos btn" {{  ($empleado_td['times_atrasados'] > 0) ? 'style=background-color:#FF9D9D;' : 'style=background-color:#69D552;' }} data-toggle="modal" data-target="#modal_semanas_{{ $empleado_td['id'] }}">
-                                    {{ $empleado_td['times_atrasados'] }} 
-                                </span>
+                            <td class="text-center cde-totalh">{{ $empleado_td['horas_totales'] }}</td>
+                            <td class="d-flex justify-content-center cde-semenasf" style="{{  $empleado_td['times_atrasados'] > 0 ? 'background-color:#FF9D9D !important;' : 'background-color:#69D552 !important;' }} cursor: pointer;" data-toggle="modal" data-target="#modal_semanas_{{ $empleado_td['id'] }}">
+                                    {{ $empleado_td['times_atrasados'] }}
                             </td>
                             <td class="cde-op">
                                 <button class="btn" wire:click="buscarEmpleado({{ $empleado_td['id'] }})" title="Generar Reporte">
@@ -251,13 +299,20 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <div class=" d-flex justify-content-between"  style="padding: 7px;">    
+                    <div class=" d-flex justify-content-between"  style="padding: 7px;">
                         <strong> Semanas sin registrar </strong> <span class="span_atrasos" {{  ($empleado_md['times_atrasados'] > 0) ? 'style=background-color:#FF9D9D;' : 'style=background-color:#69D552;' }}>{{ $empleado_md['times_atrasados'] }} </span>
                     </div>
                     <ul class="list_times_faltantes scroll_estilo mt-3">
                         @foreach($empleado_md['times_faltantes'] as $time_f)
+                            @php
+                                $fechas_array = explode('|', $time_f);
+                                $start = $fechas_array[0];
+                                $end = $fechas_array[1];
+                                $startDate = \Carbon\Carbon::parse($start)->format('d/m/Y');
+                                $endDate = \Carbon\Carbon::parse($end)->format('d/m/Y');
+                            @endphp
                             <li>
-                                {!! $time_f !!} 
+                               Del <strong>{{ $startDate }}</strong> al <strong>{{ $endDate }}</strong>
                             </li>
                         @endforeach
                     </ul>
@@ -272,17 +327,80 @@
         @endforeach
     </div>
 
+    {{-- reporte de empleado --}}
     @if($empleado)
         <div id="reporte_empleado" class="anima_reporte">
-            <button class="btn btn-cerrar" onclick="cerrarVentana('reporte_empleado')"><i class="fa-solid fa-xmark"></i></button>
-            <div class="col-12 my-4 d-flex justify-content-between">
-                <h5 style="font-weight:bolder;">Reporte Timesheet: <font style="font-weight:lighter;">{{ $empleado->name }}</font></h5>
-                <button class="btn btn-secundario" onclick="imprimirElemento('reporte_empleado_div_imprimir')"><i class="fa-solid fa-print iconos_crear"></i> Imprimir</button>
+            @php
+                $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+                if (!is_null($organizacion)) {
+                    $logotipo = $organizacion->logotipo;
+                } else {
+                    $logotipo = 'logotipo-tabantaj.png';
+                }
+            @endphp
+            <table class="encabezado-print mt-3">
+                <tr>
+                    <td style="width: 25%;">
+                        <img src="{{ asset($logotipo) }}" class="img_logo" style="height: 70px;">
+                    </td>
+                    <td style="width: 50%;">
+                        <h4><strong>{{ $organizacion->empresa }}</strong></h4>
+                        <h5 style="font-weight: bolder;">Timesheet: <font style="font-weight:lighter;">{{ $empleado->name }}</font></h5>
+                    </td>
+                    <td style="width: 25%;"class="encabezado_print_td_no_paginas">
+                        Fecha: {{ $hoy_format }} <br>
+                    </td>
+                </tr>
+            </table>
+            <button class="btn btn-cerrar print-none" onclick="cerrarVentana('reporte_empleado')"><i class="fa-solid fa-xmark"></i></button>
+            <div class="row mt-2">
+                <div class="col-12"><h6 class="mb-3 separador-titulo">Resumen del Colaborador</h6></div>
+                <div class="col-12 text-right mt-2">
+                    <button class="btn btn-secundario print-none" onclick="print()"><i class="fa-solid fa-print iconos_crear"></i> Imprimir</button>
+                </div>
+                <div class="col-12 d-flex justify-content-between align-items-center mt-3">
+                    <div class="d-flex align-items-center">
+                        <img src="{{ $empleado->avatar_ruta }}" style="height: 100px; clip-path:circle(50px at 50% 50%);">
+                        <div class="ml-3">
+                            <span style="width: 75px; display: inline-block; font-weight: bolder;">Nombre:</span> {{ $empleado->name }}<br>
+                            <span style="width: 75px; display: inline-block; font-weight: bolder;">Puesto:</span> {{ $empleado->puesto }}<br>
+                            <span style="width: 75px; display: inline-block; font-weight: bolder;">Área:</span> {{ $empleado->area_id ? $empleado->area->area : '' }}
+                        </div>
+                    </div>
+                    <div class="d-flex ml-4">
+                        <div class="px-4 py-3" style="background-color: #859BC0; color:#fff; border-radius: 4px;">
+                            <div class="text-center">
+                                <div class="text-center">Horas&nbsp;Totales: </div>
+                                <h3 style="margin-top:0;"> {{ $horas_totales }}h</h3>
+                            </div>
+                            <div class="text-center mt-2">
+                                <div class="text-center">Importe Total ($): </div>
+                                <h3 style="margin-top:0;"> {{ $costo_total_empleado }}$</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="col-12 mt-3">
+                    <table style="border-spacing: unset;">
+                        <td style="border: 1px solid #888;padding: 3px 5px;background: #eee;">Importe Total($): </td>
+                        <td style="border: 1px solid #888;padding: 3px 5px;"> $100,000,000</td>
+                    </table>
+                </div> --}}
             </div>
-            <div class="row">
-                <div class="col-lg-9">
-                    <h5 style="font-weight:lighter;">Proyectos: </h5>
-                    <ul class="lista_general">
+            <div class="row mt-5">
+                <div class="form-group col-6">
+                    <label class="form-label">Rango inicial</label>
+                    <input id="fecha_dia_registros_inicio_empleado_reporte" type="date" name="rango_inicial" class="form-control" wire:model="fecha_inicio_empleado">
+                </div>
+                <div class="form-group col-6">
+                    <label class="form-label">Rango final</label>
+                    <input id="fecha_dia_registros_fin_empleado_reporte" type="date" name="rango_final" class="form-control" wire:model="fecha_fin_empleado">
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h6 class="separador-titulo">Horas por Proyecto </h6>
+                    {{-- <ul class="lista_general">
                         @foreach($proyectos_detalle as $proyecto)
                             <li class="general_li">
                                 <h4>{{ $proyecto['proyecto'] }}: <small style="padding:5px;">{{ $proyecto['horas'] }}h</small></h4>
@@ -294,25 +412,14 @@
                                 </ul>
                             </li>
                         @endforeach
-                    </ul>
+                    </ul> --}}
+                    <div id="caja-graf-proyectos-horas-empleado">
+                        <canvas id="graf-proyectos-horas-empleado" width="800" height="400"></canvas>
+                    </div>
                 </div>
-                <div class="col-lg-3" style="background:linear-gradient(0deg, rgba(69,125,182,1) 0%, rgba(8,170,157,1) 60%); color:#fff;">   
-                    <div class="p-4">
-                        <h5 class="text-center">Estadisticas Generales</h5>
-                        <div class="mt-3 text-center">Horas Totales</div>
-                        <h1 class="mt-3 text-center">{{ $horas_totales }}h</h1>
-                        <div class="mt-3"><strong>Puesto:</strong> {{ $empleado->puesto }}</div>
-                        <div class="mt-3"><strong>Área:</strong> {{ $empleado->area ? $empleado->area->area : ''}}</div>
-                    </div>
-                </div>              
-                <div class="col-12" style="margin-top: 55px;">
-                    <div class="col-12 d-flex justify-content-between">
-                        <h5>Registro de Horas por Semana</h5>
-                        <div class="btn_estatus_caja">
-
-                        </div>
-                    </div>
-                    <div class="datatable-fix w-100 mt-4">
+                <div class="col-12 mt-5">
+                        <h6 class="separador-titulo">Horas por Semana</h6>
+                    {{-- <div class="datatable-fix w-100 mt-4">
                         <table id="table_horas_empleado_semanas" class="table w-100">
                             <thead class="w-100">
                                 <tr>
@@ -346,10 +453,19 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>  
+                    </div> --}}
+                    <div id="caja-graf-semanas-empleado">
+                        <canvas id="graf-semanas-empleado" width="800" height="400"></canvas>
+                    </div>
                 </div>
-                <div class="col-12" style="margin-top: 55px;">
-                    <div class="col-12 d-flex justify-content-between">
+                <div class="col-12 mt-5">
+                    <h6 class="separador-titulo">Horas por Tarea</h6>
+                    <div id="caja-graf-empleado-tareas-horas">
+                        <canvas id="graf-empleado-tareas-horas" width="800" height="400"></canvas>
+                    </div>
+                </div>
+                <div class="col-12 mt-5">
+                    <div class="w-100 d-flex justify-content-between">
                         <h5 id="titulo_estatus">Todos los Registros</h5>
                         <div class="btn_estatus_caja">
                             <button class="btn btn-primary" style="background-color: #5AC3E5; border:none !important; position: relative;" id="btn_todos" wire:click="todos">
@@ -431,7 +547,7 @@
                                         </td>
                                         <td>
                                             <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
-                                        </td>                       
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -442,172 +558,199 @@
         </div>
 
         {{-- div para imprimir __________________________________________________________________________ --}}
-        @php
-            $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
-            if (!is_null($organizacion)) {
-                $logotipo = $organizacion->logotipo;
-            } else {
-                $logotipo = 'logotipo-tabantaj.png';
-            }
-        @endphp
-        <div id="reporte_empleado_div_imprimir" class="solo-print">
-            <table class="encabezado-print">
-                <tr>
-                    <td style="width: 25%;">
-                        <img src="{{ asset($logotipo) }}" class="img_logo" style="height: 70px;">
-                    </td>
-                    <td style="width: 50%;">
-                        <h4><strong>{{ $organizacion->empresa }}</strong></h4>
-                        <h5 style="font-weight: bolder;">Timesheet: <font style="font-weight:lighter;">{{ $empleado->name }}</font></h5>
-                    </td>
-                    <td style="width: 25%;"class="encabezado_print_td_no_paginas">
-                        Fecha: {{ $hoy_format }} <br>
-                    </td>
-                </tr>
-            </table>
-            <h5 style="font-weight:bolder;">Reporte Timesheet: <font style="font-weight:lighter;">{{ $empleado->name }}</font></h5>
-            <div style="width:100%; display:flex;">
-                <div>
-                    <h5 style="font-weight:lighter;">Proyectos: </h5>
-                    <ul class="lista_general">
-                        @foreach($proyectos_detalle as $proyecto)
-                            <li class="general_li" style="overflow:unset !important;">
-                                <h4>{{ $proyecto['proyecto'] }}: <small style="padding:5px;">{{ $proyecto['horas'] }}h</small></h4>
-                                <ul class="general_li_ul">
-                                    <h5>Tareas</h5>
-                                    @foreach($proyecto['tareas'] as $tarea)
-                                        <li>{{ $tarea['tarea'] }}: <small>{{ $tarea['horas'] }}h</small></li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div style="width: 20%;">
-                    <div style="background:linear-gradient(0deg, rgba(69,125,182,1) 0%, rgba(8,170,157,1) 60%); color:#fff;">   
-                        <div class="p-4">
-                            <h5 class="text-center">Estadisticas Generales</h5>
-                            <div class="mt-3 text-center">Horas Totales</div>
-                            <h1 class="mt-3 text-center">{{ $horas_totales }}h</h1>
-                            <div class="mt-3"><strong>Puesto:</strong> {{ $empleado->puesto }}</div>
-                            <div class="mt-3"><strong>Área:</strong> {{ $empleado->area ? $empleado->area->area : ''}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <h5>Registro de Horas por Semana</h5>
-            <div class="w-100 mt-4">
-                <table id="table_horas_empleado_semanas_print" class="table w-100">
-                    <thead class="w-100">
-                        <tr>
-                            <th>Semana</th>
-                            <th>Lunes</th>
-                            <th>Martes</th>
-                            <th>Miercoles</th>
-                            <th>Jueves</th>
-                            <th>Viernes</th>
-                            <th>Sabado</th>
-                            <th>Domingo</th>
-                            <th>Total de horas semanales</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach($times_empleado_horas as $time_empleado_horas)
-                            <tr>
-                                <td>{!! $time_empleado_horas['semana'] !!}</td>
-                                <td>{{ $time_empleado_horas['horas_lunes'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_martes'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_miercoles'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_jueves'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_viernes'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_sabado'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_domingo'] }} <small>h</small></td>
-                                <td>{{ $time_empleado_horas['horas_totales'] }} <small>h</small></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div> 
-            <h5>Registros del Empleado</h5>
-            <div class="w-100 mt-4">
-                <table class="table w-100">
-                    <thead class="w-100">
-                        <tr>
-                            <th>Semana </th>
-                            <th>Fecha de corte</th>
-                            <th>Empleado</th>
-                            <th>Responsable</th>
-                            <th>Aprobación</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach($times_empleado as $time)
-                            <tr class="tr_{{  $time->estatus }}">
-                                <td>
-                                    {!! $time->semana !!}
-                                </td>
-                                <td>
-                                    {{ \Carbon\Carbon::parse($time->fecha_dia)->format("d/m/Y") }}
-                                </td>
-                                <td>
-                                    {{ $time->empleado->name }}
-                                </td>
-                                <td>
-                                    {{ $time->aprobador->name }}
-                                </td>
-                                <td>
-                                    @if($time->estatus == 'aprobado')
-                                        <span class="aprobado">Aprobada</span>
-                                    @endif
-
-                                    @if($time->estatus == 'rechazado')
-                                        <span class="rechazado">Rechazada</span>
-                                    @endif
-
-                                    @if($time->estatus == 'pendiente')
-                                        <span class="pendiente">Pendiente</span>
-                                    @endif
-
-                                    @if($time->estatus == 'papelera')
-                                        <span class="papelera">Borrador</span>
-                                    @endif
-                                </td>                    
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        
     @endif
+
+    
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', ()=>{
             Livewire.on('scriptTabla', ()=>{
                 tablaLivewire('timesheet_empleados_lista');
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', ()=>{
-            Livewire.on('scriptTabla', ()=>{
                 tablaLivewire('datatable_timesheet_empleados');
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', ()=>{
-            Livewire.on('scriptTabla', ()=>{
                 tablaLivewire('table_horas_empleado_semanas');
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', ()=>{
-            Livewire.on('cerrarModal', ()=>{
+                tablaLivewire('datatable_timesheet_empleados_area_general');
                 $('.modal-backdrop').modal('hide');
+
+                $("#fecha_dia_registros_inicio_empleado_reporte").flatpickr({
+                    "disable": [
+                        function(date) {
+                            return (date.getDay() === 0 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
+
+                        }
+                    ],
+                    locale: {
+                        firstDayOfWeek: 1,
+                        weekdays: {
+                          shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                          longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                        },
+                        months: {
+                          shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+                          longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        },
+                    },
+                });
+                $("#fecha_dia_registros_fin_empleado_reporte").flatpickr({
+                    "disable": [
+                        function(date) {
+                            return (date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
+
+                        }
+                    ],
+                    locale: {
+                        firstDayOfWeek: 1,
+                        weekdays: {
+                          shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                          longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                        },
+                        months: {
+                          shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+                          longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        },
+                    },
+                });
+            });
+
+            Livewire.on('scriptCharts', (proyectos_detalle, times_empleado_horas)=>{
+                console.log(proyectos_detalle);
+                console.log(times_empleado_horas);
+
+                    initCharts();
+                    function initCharts()
+                    {
+                        // let proyectos_detalle = @json($proyectos_detalle);
+                        let labels_proyectos_detalle = [];
+                        let values_proyectos_detalle = [];
+                        let colors_proyectos_detalle = [];
+
+                        let labels_tareas = [];
+                        let values_tareas = [];
+                        let colores_tareas = [];
+
+                        proyectos_detalle.forEach(item=>{
+                            labels_proyectos_detalle.push(item.proyecto);
+                            values_proyectos_detalle.push(item.horas);
+                            colors_proyectos_detalle.push('#34DCCF');
+                            item.tareas?.forEach(tarea=>{
+                                labels_tareas.push(recotarText(tarea.tarea));
+                                values_tareas.push(tarea.horas);
+                                colores_tareas.push(getRandomcolor());
+                            });
+                        });
+
+                        let caja_graf_proyectos_horas_empleado = document.getElementById('caja-graf-proyectos-horas-empleado');
+                        caja_graf_proyectos_horas_empleado.innerHTML = '&nbsp;';
+                        $('#caja-graf-proyectos-horas-empleado').append('<canvas id="graf-proyectos-horas-empleado" width="800" height="400"></canvas>');
+                        new Chart(document.getElementById('graf-proyectos-horas-empleado'), {
+                            type: 'bar',
+                            data: {
+                                labels: labels_proyectos_detalle,
+                                datasets: [{
+                                    label: 'Horas',
+                                    data: values_proyectos_detalle,
+                                    backgroundColor: colors_proyectos_detalle,
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+
+                        // let times_empleado_horas = @json($times_empleado_horas);
+                        let labels_times_empleado_horas = [];
+                        let values_times_empleado_horas = [];
+                        let colors_times_empleado_horas = [];
+
+                        times_empleado_horas.forEach(item=>{
+                            if ((item.estatus == 'pendiente') || (item.estatus == 'aprobado')) {
+                                console.log(item);
+                                labels_times_empleado_horas.push(item.semana_y);
+                                values_times_empleado_horas.push(item.horas_totales);
+                                colors_times_empleado_horas.push('#34DCCF');
+                            }
+                        });
+
+                        let caja_graf_semanas_empleado = document.getElementById('caja-graf-semanas-empleado');
+                        caja_graf_semanas_empleado.innerHTML = '&nbsp;';
+                        $('#caja-graf-semanas-empleado').append('<canvas id="graf-semanas-empleado" width="800" height="400"></canvas>');
+                        new Chart(document.getElementById('graf-semanas-empleado'), {
+                            type: 'bar',
+                            data: {
+                                labels: labels_times_empleado_horas,
+                                datasets: [{
+                                    label: 'Horas',
+                                    data: values_times_empleado_horas,
+                                    backgroundColor: colors_times_empleado_horas,
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+
+                        let caja_graf_empleado_tareas_horas = document.getElementById('caja-graf-empleado-tareas-horas');
+                        caja_graf_empleado_tareas_horas.innerHTML = '&nbsp;';
+                        $('#caja-graf-empleado-tareas-horas').append('<canvas id="graf-empleado-tareas-horas" width="800" height="400"></canvas>');
+                        new Chart(document.getElementById('graf-empleado-tareas-horas'), {
+                            type: 'pie',
+                            data: {
+                                labels: labels_tareas,
+                                datasets: [{
+                                    label: 'Horas',
+                                    data: values_tareas,
+                                    backgroundColor: colores_tareas,
+                                }]
+                            },
+                            options: {
+                                legend: {
+                                    display:true,
+                                    position:'right',
+                                    color: '#fff',
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                },
+                                plugins: {
+                                      datalabels: {
+                                        color: '#fff',
+                                        display: true,
+                                        font:{
+                                            size:13
+                                        }
+                                    },
+                                },
+                            }
+                        });
+                    }
+
             });
         });
+        function getRandomcolor() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters [Math.floor(Math.random() * 16)];
+            }
+            console.log(color);
+            return color;
+        }
+
+        function recotarText(string, length=50){
+            var trimmedString = string.length > length ?
+                                string.substring(0, length - 3) + "..." :
+                                string;
+            return trimmedString;
+        }
     </script>
 </div>

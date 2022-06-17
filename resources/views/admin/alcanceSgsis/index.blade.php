@@ -147,7 +147,7 @@
     </style>
 
     {{ Breadcrumbs::render('admin.alcance-sgsis.index') }}
-    @can('alcance_sgsi_create')
+    @can('determinacion_alcance_agregar')
         <h5 class="col-12 titulo_general_funcion">Determinación de Alcance</h5>
         <div class="mt-5 card">
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -265,7 +265,7 @@
                 }
 
             ];
-            @can('alcance_sgsi_delete')
+            @can('determinacion_alcance_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -295,7 +295,7 @@
                 //dtButtons.push(deleteButton)
             @endcan
 
-            @can('alcance_sgsi_create')
+            @can('determinacion_alcance_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar alcance SGSIS',

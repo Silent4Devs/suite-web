@@ -10,7 +10,7 @@ class CargaDocs extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('carga_masiva_de_datos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('carga_masiva_datos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.CargaDocs.index');
     }

@@ -11,9 +11,10 @@ class TimesheetProyecto extends Model
 
     protected $table = 'timesheet_proyectos';
 
+    protected $appends = ['areas'];
+
     protected $fillable = [
         'proyecto',
-        'area_id',
         'cliente_id',
         'estatus',
         'fecha_fin',
@@ -22,9 +23,16 @@ class TimesheetProyecto extends Model
         'sede_id',
     ];
 
-    public function area()
+    public function getAreasAttribute()
     {
-        return $this->belongsTo(Area::class, 'area_id');
+        $ids_areas = TimesheetProyectoArea::where('proyecto_id', $this->id)->get();
+
+        $areas = collect();
+        foreach ($ids_areas as $key => $area_p) {
+            $areas->push(Area::find($area_p->area_id));
+        }
+
+        return $areas;
     }
 
     public function sede()

@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 @section('content')
+
+@can('lista_de_perfiles_de_puesto_editar')
     {{ Breadcrumbs::render('perfil-puesto-edit', $puesto) }}
     <h5 class="col-12 titulo_general_funcion"> Editar: Puesto</h5>
     <div class="card mt-4">
@@ -758,7 +760,7 @@
         </div>
     </div>
 
-
+@endcan
 
 @endsection
 

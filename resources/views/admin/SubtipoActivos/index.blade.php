@@ -2,7 +2,7 @@
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Subcategorías de Activos</h5>
     <div class="mt-5 card">
-        @can('configuracion_tipoactivo_create')
+        @can('subcategoria_activos_agregar')
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Categorías de Activos</strong></h3>
             </div> --}}
@@ -127,7 +127,7 @@
 
             ];
 
-            @can('configuracion_tipoactivo_create')
+            @can('subcategoria_activos_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar categoría de activos',
@@ -149,7 +149,7 @@
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
             @endcan
-            @can('configuracion_tipoactivo_delete')
+            @can('subcategoria_activos_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,

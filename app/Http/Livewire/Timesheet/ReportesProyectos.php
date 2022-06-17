@@ -4,15 +4,19 @@ namespace App\Http\Livewire\Timesheet;
 
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\Organizacion;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
+use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
 use Livewire\Component;
 
 class ReportesProyectos extends Component
 {
+    use getWeeksFromRange;
+
     public $areas;
     public $proyectos;
 
@@ -23,10 +27,62 @@ class ReportesProyectos extends Component
     public $empleados_proyecto;
     public $total_horas_proyecto;
     public $hoy_format;
+    public $proyectos_array;
+
+    public $area_id;
+
+    public $fecha_inicio;
+    public $fecha_fin;
+
+    public $hoy;
+
+    public $fecha_inicio_proyecto;
+    public $fecha_fin_proyecto;
+
+    public $horas_totales_todos_proyectos = 0;
+
+    public $semanas_totales_calendario = 0;
+
+    public $calendario_tabla;
+
+    public function mount()
+    {
+        $this->areas = Area::get();
+    }
+
+    public function updatedAreaId($value)
+    {
+        $this->area_id = $value;
+        $this->proyecto_reporte = null;
+    }
+
+    public function updatedFechaInicio($value)
+    {
+        $this->fecha_inicio = $value;
+        $this->proyecto_reporte = null;
+    }
+
+    public function updatedFechaFin($value)
+    {
+        $this->fecha_fin = $value;
+        $this->proyecto_reporte = null;
+    }
+
+    public function updatedFechaInicioProyecto($value)
+    {
+        $this->fecha_inicio_proyecto = $value;
+        $this->genrarReporte($this->proyecto_reporte->id);
+    }
+
+    public function updatedFechaFinProyecto($value)
+    {
+        $this->fecha_fin_proyecto = $value;
+        $this->genrarReporte($this->proyecto_reporte->id);
+    }
 
     public function render()
     {
-        $hoy = Carbon::now();
+        $this->hoy = Carbon::now();
 
         $this->emit('resize');
 
@@ -34,9 +90,152 @@ class ReportesProyectos extends Component
 
         $this->areas = Area::get();
 
-        $this->proyectos = TimesheetProyecto::get();
+        $this->horas_totales_todos_proyectos = 0;
 
-        $this->hoy_format = $hoy->format('d/m/Y');
+        //calendario tabla
+        $calendario_array = [];
+
+        $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
+
+        if ($this->fecha_inicio) {
+            $fecha_inicio_complit_timesheet = Carbon::parse($fecha_registro_timesheet)->lt($this->fecha_inicio) ? $this->fecha_inicio : $fecha_registro_timesheet;
+        } else {
+            $fecha_inicio_complit_timesheet = Carbon::now()->endOfMonth()->subMonth(2)->format('Y-m-d');
+        }
+
+        if (($this->fecha_fin) && (Carbon::parse($this->fecha_fin)->lt($this->hoy)) && (Carbon::parse($fecha_inicio_complit_timesheet)->lt($this->fecha_fin))) {
+            $fecha_fin_complit_timesheet = $this->fecha_fin;
+        } else {
+            $fecha_fin_complit_timesheet = $this->hoy;
+            $this->fecha_fin = Carbon::parse($fecha_fin_complit_timesheet)->format('Y-m-d');
+        }
+
+        $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
+        $fecha_fin_complit_timesheet = Carbon::parse($fecha_fin_complit_timesheet);
+        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $fecha_fin_complit_timesheet);
+        $total_months = 0;
+        foreach ($semanas_complit_timesheet as $semana) {
+            $semana_array = explode('|', $semana);
+            foreach ($semana_array as $semana_a) {
+                $fecha = Carbon::parse($semana_a);
+                $previous_month = $fecha->format('m');
+                $previous_month = intval($previous_month) - 1;
+                $previous_month = $previous_month == 0 ? 1 : $previous_month;
+                $previous_month = Carbon::create()->day(1)->month(intval($previous_month))->format('F');
+                $year = $fecha->format('Y');
+                $month = $fecha->format('F');
+                if (!($this->buscarKeyEnArray($year, $calendario_array))) {
+                    $calendario_array["{$year}"] = [
+                        'year'=>$year,
+                        'total_weeks'=>0,
+                        'total_months'=>0,
+                        'months'=>[
+                            "{$month}"=>[
+                                'weeks'=>[],
+                            ],
+                        ],
+                    ];
+
+                    if ($month == 'January') {
+                        $previous_year = $year - 1;
+                        if (array_key_exists($previous_year, $calendario_array)) {
+                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
+                                $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
+                            }
+                        }
+                    }
+                } else {
+                    if (array_key_exists($month, $calendario_array["{$year}"]['months'])) {
+                        if (!in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
+                            $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
+                        }
+                    } else {
+                        if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
+                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
+                                $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
+                            }
+                        } else {
+                            $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
+                        }
+                    }
+                }
+            }
+        }
+
+        foreach ($calendario_array as $key => &$c_year) {
+            $total_months = count($c_year['months']);
+            $total_weeks_year = 0;
+            $c_year['total_months'] = $total_months;
+
+            foreach ($c_year['months'] as $key => &$c_mes) {
+                $total_weeks = count($c_mes['weeks']);
+                $total_weeks_year += $total_weeks;
+                $c_mes['total_weeks'] = $total_weeks;
+            }
+            $c_year['total_weeks'] = $total_weeks_year;
+            $this->semanas_totales_calendario += $total_weeks_year;
+        }
+
+        $this->proyectos_array = collect();
+        if ($this->area_id) {
+            $this->proyectos = TimesheetProyecto::where('area_id', $this->area_id)->get();
+        } else {
+            $this->proyectos = TimesheetProyecto::get();
+        }
+        foreach ($this->proyectos as $proyecto) {
+
+            // registros existenetes horas a la semana
+            $registro_horas_proyecto = TimesheetHoras::where('proyecto_id', $proyecto->id)->get();
+
+            // registro de horas en calendario
+            $times_registro_horas_array = collect();
+            $calendario_tabla_proyectos = [];
+            foreach ($calendario_array as $key => $año) {
+                foreach ($año['months'] as $key => $mes) {
+                    foreach ($mes['weeks'] as $key => $semana) {
+                        $dias_semana = explode('|', $semana);
+                        $domingo_semana = Carbon::parse($dias_semana[1])->format('Y-m-d');
+
+                        $horas_proyecto_times = 0;
+
+                        foreach ($registro_horas_proyecto as $key => $registro_horas) {
+                            $fecha_dia_domingo = Carbon::parse($registro_horas->timesheet->fecha_dia)->endOfWeek();
+                            $fecha_dia_domingo = Carbon::parse($fecha_dia_domingo)->format('Y-m-d');
+
+                            if ($fecha_dia_domingo == $domingo_semana) {
+                                $horas_proyecto_times += $registro_horas->horas_lunes;
+                                $horas_proyecto_times += $registro_horas->horas_martes;
+                                $horas_proyecto_times += $registro_horas->horas_miercoles;
+                                $horas_proyecto_times += $registro_horas->horas_jueves;
+                                $horas_proyecto_times += $registro_horas->horas_viernes;
+                                $horas_proyecto_times += $registro_horas->horas_sabado;
+                                $horas_proyecto_times += $registro_horas->horas_domingo;
+                            }
+                        }
+
+                        $this->horas_totales_todos_proyectos += $horas_proyecto_times;
+
+                        if ($horas_proyecto_times > 0) {
+                            array_push($calendario_tabla_proyectos, $horas_proyecto_times);
+                        } else {
+                            array_push($calendario_tabla_proyectos, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
+                        }
+                    }
+                }
+            }
+
+            $this->proyectos_array->push([
+                'id'=>$proyecto->id,
+                'proyecto'=>$proyecto->proyecto,
+                'areas'=>$proyecto->areas,
+                'cliente'=>$proyecto->cliente ? $proyecto->cliente->nombre : '',
+                'calendario'=>$calendario_tabla_proyectos,
+            ]);
+        }
+
+        $this->calendario_tabla = $calendario_array;
+
+        $this->hoy_format = $this->hoy->format('d/m/Y');
 
         return view('livewire.timesheet.reportes-proyectos');
     }
@@ -45,7 +244,7 @@ class ReportesProyectos extends Component
     {
         $this->proyecto_reporte = TimesheetProyecto::find($id);
 
-        $this->area_proyecto = Area::find($this->proyecto_reporte->area_id);
+        // $this->area_proyecto = Area::find($this->proyecto_reporte->area_id);
         $this->cliente_proyecto = TimesheetCliente::find($this->proyecto_reporte->cliente_id);
 
         $empleados = collect();
@@ -80,11 +279,6 @@ class ReportesProyectos extends Component
                 $h_total_tarea_total += $h_total_tarea;
 
                 $empleado = Empleado::find($hora->timesheet->empleado_id);
-                $times_horas_empleado = $hora->timesheet;
-
-                // foreach ($times_horas_empleado as $time_horas_empleado) {
-
-                // }
 
                 if (!$empleados->contains('id', $empleado->id)) {
                     $empleados->push([
@@ -115,6 +309,55 @@ class ReportesProyectos extends Component
                 'empleados' => $empleados,
             ]);
         }
-        $this->empleados_proyecto = $empleados->unique();
+        // dd($this->tareas_array);
+
+        foreach ($this->tareas_array as $key => $tarea_em) {
+            foreach ($tarea_em['empleados'] as $key => $emp_array) {
+                if (!($this->empleados_proyecto->contains('id', $emp_array['id']))) {
+                    $this->empleados_proyecto->push($emp_array);
+                } else {
+                    $this->empleados_proyecto = $this->empleados_proyecto->map(function ($emp_item) use ($emp_array) {
+                        if ($emp_item['id'] == $emp_array['id']) {
+                            $emp_item['horas'] += $emp_array['horas'];
+                        }
+
+                        return $emp_item;
+                    });
+                }
+            }
+        }
+
+        $this->emit('scriptChartsProyect', $this->tareas_array, $this->empleados_proyecto);
+    }
+
+    public function buscarEnArray($search, $array)
+    {
+        foreach ($array as $value) {
+            if ($value == $search) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function buscarKeyEnArray($search, $array)
+    {
+        foreach ($array as $key=>$value) {
+            if ($key == $search) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function existsWeeksInMonth($search, $array)
+    {
+        if (in_array($search, $array)) {
+            return true;
+        }
+
+        return false;
     }
 }

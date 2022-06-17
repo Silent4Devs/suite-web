@@ -83,7 +83,7 @@ class Empleado extends Model
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
         'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo', 'saludo_completo',
-        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'es_supervisor',
+        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'es_supervisor', 'fecha_min_timesheet',
     ];
 
     //, 'jefe_inmediato', 'empleados_misma_area'
@@ -145,6 +145,7 @@ class Empleado extends Model
         'cp',
         'fecha_baja',
         'razon_baja',
+        'semanas_min_timesheet',
     ];
 
     public function getActualBirdthdayAttribute()
@@ -285,6 +286,17 @@ class Empleado extends Model
     public function getCompetenciasAsignadasAttribute()
     {
         return !is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
+    }
+
+    public function getFechaMinTimesheetAttribute($value)
+    {
+        if ($this->semanas_min_timesheet) {
+            $fecha = Carbon::now()->startOfWeek()->subWeeks($this->semanas_min_timesheet)->format('Y-m-d');
+        } else {
+            $fecha = Carbon::now()->startOfWeek()->subWeeks(1000)->format('Y-m-d');
+        }
+
+        return $fecha;
     }
 
     public function empleados()

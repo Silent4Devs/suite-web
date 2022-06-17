@@ -38,10 +38,11 @@
 </div>
 
 <div class="datatable-fix" style="width: 100%;">
+    @can('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia')
     <div class="mb-3 text-right">
         <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/sugerencias')}}">Crear reporte</a>
     </div>
-
+    @endcan
    <table class="table tabla_sugerencias">
    		<thead>
    			<tr>
@@ -157,7 +158,7 @@
                     titleAttr: 'Restaurar a estado anterior',
                 },
                 {
-                    text: '<i class="fas fa-archive" style="font-size: 1.1rem;"></i>',
+                    text:'<i class="fas fa-archive" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Archivo',
                     action: function(e, dt, node, config) {
@@ -228,13 +229,13 @@
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                return `${row.sugirio.email}`;
+                                return `${row.sugirio?.email}`;
                             }
                         },
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                return `${row.sugirio.telefono}`;
+                                return `${row.sugirio?.telefono}`;
                             }
                         },
                         {
@@ -255,12 +256,14 @@
                                 let html =
                                     `
                 			<div class="botones_tabla">
-                				<a href="/admin/desk/${data}/sugerencias-edit/"><i class="fas fa-edit"></i></a>`;
-
+                                @can('centro_atencion_sugerencias_editar')
+                				<a href="/admin/desk/${data}/sugerencias-edit/"><i class="fas fa-edit"></i></a>
+                                @endcan`;
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
-                                    html += `<button class="btn archivar" onclick='Archivar("/admin/desk/${data}/archivarSugerencia"); return false;' style="margin-top:-10px">
+                                    html += `
+                                    <button class="btn archivar" onclick='Archivar("/admin/desk/${data}/archivarSugerencia"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 				       					</div>`;

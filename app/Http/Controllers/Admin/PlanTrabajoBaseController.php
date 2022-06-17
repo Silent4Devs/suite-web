@@ -13,16 +13,16 @@ use Illuminate\Support\Facades\Storage;
 
 class PlanTrabajoBaseController extends Controller
 {
+    public function listaDataTables()
+    {
+        $planes = PlanImplementacion::where('es_plan_trabajo_base', true)->with('elaborador')->get();
+
+        return datatables()->of($planes)->toJson();
+    }
+
     public function index()
     {
-        abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $gantt_path = 'storage/gantt/';
-        // $path = public_path($gantt_path);
-        // $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
-        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        // $write_empleados = $json_code;
-        // file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
-
+        abort_if(Gate::denies('plan_de_implementacion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
         $files = glob('storage/gantt/versiones/gantt_inicial*.json');
         $archivos_gantt = [];

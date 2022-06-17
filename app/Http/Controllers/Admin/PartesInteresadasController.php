@@ -17,7 +17,7 @@ class PartesInteresadasController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('partes_interesada_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('partes_interesadas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = PartesInteresada::with('clausulas', 'expectativasNecesidadesWithNormas')->orderByDesc('id')->get();
@@ -27,9 +27,9 @@ class PartesInteresadasController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'partes_interesada_show';
-                $editGate = 'partes_interesada_edit';
-                $deleteGate = 'partes_interesada_delete';
+                $viewGate = 'partes_interesadas_ver';
+                $editGate = 'partes_interesadas_editar';
+                $deleteGate = 'partes_interesadas_eliminar';
                 $crudRoutePart = 'partes-interesadas';
 
                 return view('partials.datatablesActions', compact(
@@ -57,7 +57,7 @@ class PartesInteresadasController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('partes_interesada_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('partes_interesadas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $clausulas = Clausula::get();
 
         return view('admin.partesInteresadas.create', compact('clausulas'));
@@ -65,6 +65,7 @@ class PartesInteresadasController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('partes_interesadas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $partes = PartesInteresada::create($request->all());
         if (array_key_exists('ajax', $request->all())) {
             return response()->json(['success' => true, 'activo' => $partes]);
@@ -75,7 +76,7 @@ class PartesInteresadasController extends Controller
 
     public function edit(Request $request, $id)
     {
-        abort_if(Gate::denies('partes_interesada_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('partes_interesadas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $partesInteresada = PartesInteresada::find($id);
         $clausulas = Clausula::get();
         $partesInteresada->load('team');
@@ -85,6 +86,7 @@ class PartesInteresadasController extends Controller
 
     public function update(Request $request, $partesInteresada)
     {
+        abort_if(Gate::denies('partes_interesadas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $partesInteresada = PartesInteresada::find($partesInteresada);
         $partesInteresada->update($request->all());
         $clausulas = Clausula::get();
@@ -94,7 +96,7 @@ class PartesInteresadasController extends Controller
 
     public function show(PartesInteresada $partesInteresada)
     {
-        abort_if(Gate::denies('partes_interesada_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('partes_interesadas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $partesInteresada->load('clausulas');
 
@@ -106,7 +108,7 @@ class PartesInteresadasController extends Controller
 
     public function destroy(PartesInteresada $partesInteresada)
     {
-        abort_if(Gate::denies('partes_interesada_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('partes_interesadas_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $partesInteresada->delete();
 

@@ -150,6 +150,7 @@
                 }
 
             ];
+            @can('analisis_de_brechas_eliminar')
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
@@ -186,9 +187,10 @@
                     }
                 }
             }
+            @endcan
             //dtButtons.push(deleteButton)
 
-
+            @can('analisis_de_brechas_agregar')
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nuevo analisis de brecha',
@@ -202,6 +204,7 @@
                 }
             };
             dtButtons.push(btnAgregar);
+            @endcan
 
 
             let dtOverrideGlobals = {
@@ -242,7 +245,11 @@
                         data: 'enlace',
                         name: 'enlace',
                         render: function(data, type, row, meta) {
-                            return `<div class="text-center w-100"><a href="analisis-brechas/?id=${data}" target="_blank"><i class="fas fa-file-alt fa-2x text-info"></i></a></div>`;
+                            return `  @can('analisis_de_brechas_vinculo')
+                                <div class="text-center w-100"></div>
+                                <a href="analisis-brechas/?id=${data}" target="_blank"><i class="fas fa-file-alt fa-2x text-info"></i></a>
+                                </div
+                                @endcan`;
                         }
                     },
                     {

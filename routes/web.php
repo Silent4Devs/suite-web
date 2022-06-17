@@ -163,6 +163,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@destroy')->name('ev360-conductas.destroy');
 
     Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@createByEmpleado')->name('ev360-objetivos-empleado.create');
+    Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos/{objetivo}/aprobar', 'RH\EV360ObjetivosController@aprobarRechazarObjetivo')->name('ev360-objetivos-empleado.aprobarRechazarObjetivo');
     Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos/lista', 'RH\EV360ObjetivosController@show')->name('ev360-objetivos-empleado.show');
     Route::get('recursos-humanos/evaluacion-360/objetivos/{empleado}/copiar', 'RH\EV360ObjetivosController@indexCopiar')->name('ev360-objetivos-empleado.indexCopiar');
     Route::post('recursos-humanos/evaluacion-360/objetivos/definir-nuevos', 'RH\EV360ObjetivosController@definirNuevosObjetivos')->name('ev360-objetivos-empleado.definir-nuevos');
@@ -195,6 +196,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('portal-comunicacion', 'PortalComunicacionController');
 
     Route::get('plantTrabajoBase/{data}', 'PlanTrabajoBaseController@showTarea');
+    Route::post('plantTrabajoBase/listaDataTables', 'PlanTrabajoBaseController@listaDataTables')->name('plantTrabajoBase.listaDataTables');
     Route::post('plantTrabajoBase/bloqueo/mostrar', 'LockedPlanTrabajoController@getLockedToPlanTrabajo')->name('lockedPlan.getLockedToPlanTrabajo');
     Route::post('plantTrabajoBase/bloqueo/quitar', 'LockedPlanTrabajoController@removeLockedToPlanTrabajo')->name('lockedPlan.removeLockedToPlanTrabajo');
     Route::post('plantTrabajoBase/bloqueo/is-locked', 'LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
@@ -471,6 +473,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('timesheet/create-copia/{id}', 'TimesheetController@createCopia')->name('timesheet-create-copia');
     Route::get('timesheet/edit/{id}', 'TimesheetController@edit')->name('timesheet-edit');
     Route::get('timesheet/papelera', 'TimesheetController@papelera')->name('timesheet-papelera');
+    Route::get('timesheet/reporte-aprobador/{id}', 'TimesheetController@reporteAprobador')->name('timesheet-reporte-aprobador');
     Route::get('timesheet/eliminar/{id}', 'TimesheetController@eliminar')->name('timesheet-eliminar');
     Route::get('timesheet/aprobaciones', 'TimesheetController@aprobaciones')->name('timesheet-aprobaciones');
     Route::get('timesheet/aprobados', 'TimesheetController@aprobados')->name('timesheet-aprobados');
@@ -478,10 +481,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('timesheet/aprobar/{id}', 'TimesheetController@aprobar')->name('timesheet-aprobar');
     Route::post('timesheet/rechazar/{id}', 'TimesheetController@rechazar')->name('timesheet-rechazar');
     Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
-    Route::post('timesheet/actualizarDia', 'TimesheetController@actualizarDia')->name('timesheet-acualizarDia');
+    Route::post('timesheet/actualizarDia', 'TimesheetController@actualizarDia')->name('timesheet-actualizarDia');
     Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
 
     Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
+    Route::post('timesheet/proyectos/update/{id}', 'TimesheetController@updateProyectos')->name('timesheet-proyectos-update');
     Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
     Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
 
@@ -530,6 +534,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Planes de Acción
     Route::post('planes-de-accion/{plan}/save', 'PlanesAccionController@saveProject')->name('planes-de-accion.saveProject');
     Route::post('planes-de-accion/{plan}/load', 'PlanesAccionController@loadProject')->name('planes-de-accion.loadProject');
+    Route::get('planes-de-accion/create-plan-trabajo-base', 'PlanesAccionController@createPlanTrabajoBase')->name('planes-de-accion.createPlanTrabajoBase');
     Route::resource('planes-de-accion', 'PlanesAccionController');
 
     // Glosarios

@@ -87,33 +87,25 @@
                             </div>
                             <div style="float: right">
                                 @if ($evaluacion->estatus == App\Models\RH\Evaluacion::DRAFT)
-                                    @can('evaluacion_360_start')
                                         <button id="btnIniciarEvaluacion" class="btn btn-sm"
                                             style="background: #3ddf58;color: #fff;"><i
                                                 class="mr-2 fas fa-calendar-check"></i>Iniciar
                                             Evaluación</button>
-                                    @endcan
                                 @elseif ($evaluacion->estatus == App\Models\RH\Evaluacion::CLOSED)
-                                    @can('evaluacion_360_reset')
                                         <button id="btnPostergarEvaluacion" class="btn btn-sm"
                                             style="background: #4e59d4;color: #fff;"><i
                                                 class="mr-2 fas fa-calendar-plus"></i>Reiniciar evaluación con
                                             nueva fecha de finalización</button>
-                                    @endcan
                                 @else
-                                    @can('evaluacion_360_recordatorio_send')
                                         <button id="btnEnviarRecordatorio" class="btn btn-sm"
                                             style="background: #99faa6;color: rgb(54, 54, 54);"><i
                                                 class="mr-2 fas fa-envelope-open-text"></i>Enviar
                                             recordatorio a evaluadores</button>
-                                    @endcan
-                                    @can('evaluacion_360_close')
                                         <button id="btnCerrarEvaluacion"
                                             onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('admin.ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
                                             class="btn btn-sm" style="background: #eb4a4a;color: #fff;"><i
                                                 class="mr-2 fas fa-calendar-times"></i>Cerrar
                                             Evaluación</button>
-                                    @endcan
                                 @endif
                             </div>
                         </div>
@@ -601,9 +593,8 @@
                             let urlShow =
                                 `/admin/recursos-humanos/evaluacion-360/evaluacion/${@json($evaluacion->id)}/consulta/${data}`;
                             let html = `
-                            @can('evaluacion_360_resumen_individual_show')
                                 <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-arrow-right"></i></a>
-                            @endcan
+
                             `;
 
                             return html;

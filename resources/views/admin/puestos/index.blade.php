@@ -36,8 +36,8 @@
 </style>
 
     {{ Breadcrumbs::render('perfil-puesto') }}
-    @can('puesto_create')
-        <h5 class="col-12 titulo_general_funcion">Perfiles de Puestos </h5>
+    @can('puestos_agregar')
+        <h5 class="col-12 titulo_general_funcion">Perfiles de Puestos</h5>
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -86,21 +86,6 @@
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
@@ -178,7 +163,7 @@
 
             ];
 
-            @can('puesto_create')
+            @can('puestos_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar area',
@@ -214,7 +199,7 @@
             dtButtons.push(btnExport);
             dtButtons.push(btnImport);
             @endcan
-            @can('puesto_delete')
+            @can('puestos_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,

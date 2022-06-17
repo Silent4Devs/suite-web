@@ -38,7 +38,7 @@
     </style>
     <h5 class="col-12 titulo_general_funcion">Inventario de Activos</h5>
     <div class="mt-5 card">
-        @can('configuracion_activo_create')
+        @can('inventario_activos_agregar')
             {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Inventario de Activos</strong></h3>
             </div> --}}
@@ -253,7 +253,7 @@
                 }
 
             ];
-            @can('configuracion_activo_create')
+            @can('inventario_activos_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar inventario de activos',
@@ -289,7 +289,7 @@
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan
-            @can('configuracion_activo_delete')
+            @can('inventario_activos_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,

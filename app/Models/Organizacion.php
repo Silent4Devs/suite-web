@@ -42,7 +42,7 @@ class Organizacion extends Model
     public $cacheFor = 3600;
     protected static $flushCacheOnUpdate = true;
     protected $table = 'organizacions';
-    protected $appends = ['logotipo'];
+    protected $appends = ['logotipo', 'fecha_min_timesheet'];
     protected $casts = [
         'telefono' => 'int',
         'team_id' => 'int',
@@ -76,6 +76,7 @@ class Organizacion extends Model
         'inicio_timesheet',
         'fin_timesheet',
         'fecha_registro_timesheet',
+        'semanas_min_timesheet',
     ];
 
     public function getLogotipoAttribute($value)
@@ -86,6 +87,17 @@ class Organizacion extends Model
         }
 
         return $logotipo;
+    }
+
+    public function getFechaMinTimesheetAttribute($value)
+    {
+        if ($this->semanas_min_timesheet) {
+            $fecha = Carbon::now()->startOfWeek()->subWeeks($this->semanas_min_timesheet)->format('Y-m-d');
+        } else {
+            $fecha = Carbon::now()->startOfWeek()->subWeeks(1000)->format('Y-m-d');
+        }
+
+        return $fecha;
     }
 
     public function team()

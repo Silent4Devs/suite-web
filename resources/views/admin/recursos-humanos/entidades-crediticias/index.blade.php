@@ -1,12 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-    @can('control_documento_create')
+
         <div class="mt-3">
             {{ Breadcrumbs::render('EV360-EntidadesCrediticeas') }}
         </div>
         <h5 class="col-12 titulo_general_funcion">Entidades crediticias</h5>
         <div class="mt-5 card">
-        @endcan
         <div class="card-body datatable-fix">
             @include('partials.flashMessages')
             <table id="tblEntidadesCrediticias" class="table table-bordered w-100 datatable-ControlDocumento">
@@ -118,7 +117,7 @@
                 }
             };
 
-            @can('entidades_crediticias_create')
+            @can('entidades_crediticeas_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
             let dtOverrideGlobals = {
@@ -157,17 +156,13 @@
                             const urlShowDelete =
                                 `/admin/recursos-humanos/entidades-crediticias/${data}`;
                             const html = `
-                            @can('entidades_crediticias_edit')
+                            @can('entidades_crediticeas_editar')
                                 <a class="btn btn-sm " title="Editar" href="${urlEdit}">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             @endcan
-                                @can('entidades_crediticias_show')
-                                    <a class="btn btn-sm " title="Visualizar" href="${urlShowDelete}">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                @endcan
-                            @can('entidades_crediticias_delete')
+
+                            @can('entidades_crediticeas_eliminar')
                                 <button title="Eliminar" onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.entidad}');return false;"
                                     class="btn btn-sm text-danger">
                                     <i class="fas fa-trash-alt"></i>
