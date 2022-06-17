@@ -413,10 +413,12 @@
                             </li>
                         @endforeach
                     </ul> --}}
-                    <canvas id="graf-proyectos-horas-empleado" width="800" height="400"></canvas>
+                    <div id="caja-graf-proyectos-horas-empleado">
+                        <canvas id="graf-proyectos-horas-empleado" width="800" height="400"></canvas>
+                    </div>
                 </div>
                 <div class="col-12 mt-5">
-                    <h6 class="separador-titulo">Horas por Semana</h6>
+                        <h6 class="separador-titulo">Horas por Semana</h6>
                     {{-- <div class="datatable-fix w-100 mt-4">
                         <table id="table_horas_empleado_semanas" class="table w-100">
                             <thead class="w-100">
@@ -452,11 +454,15 @@
                             </tbody>
                         </table>
                     </div> --}}
-                    <canvas id="graf-semanas-empleado" width="800" height="400"></canvas>
+                    <div id="caja-graf-semanas-empleado">
+                        <canvas id="graf-semanas-empleado" width="800" height="400"></canvas>
+                    </div>
                 </div>
                 <div class="col-12 mt-5">
                     <h6 class="separador-titulo">Horas por Tarea</h6>
-                    <canvas id="graf-empleado-tareas-horas" width="800" height="400"></canvas>
+                    <div id="caja-graf-empleado-tareas-horas">
+                        <canvas id="graf-empleado-tareas-horas" width="800" height="400"></canvas>
+                    </div>
                 </div>
                 <div class="col-12 mt-5">
                     <div class="w-100 d-flex justify-content-between">
@@ -555,99 +561,7 @@
         
     @endif
 
-    {{-- reporte general --}}
-    @if($reporte_general)
-        <div id="reporte_general" class="anima_reporte">
-            <button class="btn btn-cerrar" onclick="cerrarVentana('reporte_general')"><i class="fa-solid fa-xmark"></i></button>
-            <div class="row mt-5">
-                <div class="col-12"><h6 class="mb-3 separador-titulo">Reporte por Área</h6></div>
-                <div class="col-12 text-right mt-2">
-                    <button class="btn btn-secundario" onclick="imprimirElemento('reporte_empleado_div_imprimir')"><i class="fa-solid fa-print iconos_crear"></i> Imprimir</button>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="form-group col-md-4">
-                    <label class="form-label">Área</label>
-                    <select class="form-control" wire:model="area_id">
-                        <option selected value="0">- -</option>
-                        @foreach($areas as $area)
-                            <option value="{{ $area->id }}">{{ $area->area }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label class="form-label">Fecha inicial</label>
-                    <input type="date" name="rango_inicial" class="form-control" wire:model="fecha_inicio_general">
-                </div>
-                <div class="form-group col-md-4">
-                    <label class="form-label">Fecha final</label>
-                    <input type="date" name="rango_final" class="form-control" wire:model="fecha_fin_general">
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-12"><h6 class="mb-3 separador-titulo">Colaboradores del Área</h6></div>
-                <div class="col-lg-8 mt-3">
-                    <div class="datatable-fix w-100">
-                        <table id="datatable_timesheet_empleados_area_general" class="table w-100">
-                            <thead class="w-100">
-                                <tr>
-                                    <th>Nombre </th>
-                                    <th>Puesto</th>
-                                    <th>Horas</th>
-                                    <th>Importe %</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {{-- @foreach($empleado_area as $empleado) --}}
-                                    <tr>
-                                        <td>{{-- {{ $empleado['name'] }} --}}</td>
-                                        <td>{{-- {{ $empleado['puesto'] }} --}}</td>
-                                        <td>{{-- {{ $empleado['horas'] }} --}}</td>
-                                        <td>{{-- {{ $empleado['importe'] }} --}}</td>
-                                    </tr>
-                                {{-- @endforeach --}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="px-4 py-3" style="background-color: #859BC0; color:#fff; border-radius: 4px;">
-                        <div class="text-center">
-                            <div class="text-center">Horas&nbsp;Totales: </div>
-                            <h3 style="margin-top:0;"> 234h</h3>
-                        </div>
-                        <div class="text-center mt-2">
-                            <div class="text-center">Colaboradores </div>
-                            <h3 style="margin-top:0;"> 234h</h3>
-                        </div>
-                        <div class="text-center mt-2">
-                            <div class="text-center">Importe Total($): </div>
-                            <h3 style="margin-top:0;"> $100,000,000</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-12">
-                    <div class="col-12"><h6 class="mb-3 separador-titulo">Horas por Proyecto</h6></div>
-                    <canvas id="graf-proyectos-horas-area-general" width="800" height="400"></canvas>
-                </div>
-                <div class="col-12 mt-5">
-                    <div class="col-12"><h6 class="mb-3 separador-titulo">Horas por Semana</h6></div>
-                    <canvas id="graf-semanas-area-general" width="800" height="400"></canvas>
-                </div>
-                <div class="col-12 mt-5">
-                    <div class="col-12"><h6 class="mb-3 separador-titulo">Horas por Semana</h6></div>
-                    <canvas id="graf-area-general-tareas-horas" width="800" height="400"></canvas>
-                </div>
-            </div>
-        </div>
-
-        {{-- div para imprimir __________________________________________________________________________ --}}
-        <div id="reporte_empleado_div_imprimir" class="solo-print">
-        </div>
-    @endif
+    
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', ()=>{
@@ -725,6 +639,9 @@
                             });
                         });
 
+                        let caja_graf_proyectos_horas_empleado = document.getElementById('caja-graf-proyectos-horas-empleado');
+                        caja_graf_proyectos_horas_empleado.innerHTML = '&nbsp;';
+                        $('#caja-graf-proyectos-horas-empleado').append('<canvas id="graf-proyectos-horas-empleado" width="800" height="400"></canvas>');
                         new Chart(document.getElementById('graf-proyectos-horas-empleado'), {
                             type: 'bar',
                             data: {
@@ -758,6 +675,9 @@
                             }
                         });
 
+                        let caja_graf_semanas_empleado = document.getElementById('caja-graf-semanas-empleado');
+                        caja_graf_semanas_empleado.innerHTML = '&nbsp;';
+                        $('#caja-graf-semanas-empleado').append('<canvas id="graf-semanas-empleado" width="800" height="400"></canvas>');
                         new Chart(document.getElementById('graf-semanas-empleado'), {
                             type: 'bar',
                             data: {
@@ -777,6 +697,9 @@
                             }
                         });
 
+                        let caja_graf_empleado_tareas_horas = document.getElementById('caja-graf-empleado-tareas-horas');
+                        caja_graf_empleado_tareas_horas.innerHTML = '&nbsp;';
+                        $('#caja-graf-empleado-tareas-horas').append('<canvas id="graf-empleado-tareas-horas" width="800" height="400"></canvas>');
                         new Chart(document.getElementById('graf-empleado-tareas-horas'), {
                             type: 'pie',
                             data: {
@@ -829,77 +752,5 @@
                                 string;
             return trimmedString;
         }
-        @if($reporte_general)
-            new Chart(document.getElementById('graf-proyectos-horas-area-general'), {
-                type: 'bar',
-                data: {
-                    labels: ['Proyect1', 'Proyect2', 'Proyect3'],
-                    datasets: [{
-                        label: 'Horas',
-                        data: [12, 45, 23],
-                        backgroundColor: ['#29CDC8', '#29CDC8', '#29CDC8'],
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-
-            new Chart(document.getElementById('graf-semanas-area-general'), {
-                type: 'bar',
-                data: {
-                    labels: ['seman1', 'seman2', 'seman3'],
-                    datasets: [{
-                        label: 'Horas',
-                        data: [12, 45, 23],
-                        backgroundColor: ['#29CDC8', '#29CDC8', '#29CDC8'],
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-
-            new Chart(document.getElementById('graf-area-general-tareas-horas'), {
-                type: 'pie',
-                data: {
-                    labels: ['tarea1', 'tarea2', 'tarea3'],
-                    datasets: [{
-                        label: 'Horas',
-                        data: [12, 45, 23],
-                        backgroundColor: ['#19CDC8', '#29CDC8', '#22CDC8'],
-                    }]
-                },
-                options: {
-                    legend: {
-                        display:true,
-                        position:'right',
-                        color: '#fff',
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
-                    plugins: {
-                          datalabels: {
-                            color: '#fff',
-                            display: true,
-                            font:{
-                                size:13
-                            }
-                        },
-                    },
-                }
-            });
-        @endif
     </script>
 </div>

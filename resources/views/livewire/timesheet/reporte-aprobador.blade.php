@@ -276,9 +276,6 @@
                     <td class="cde-op"></td>
                 </tfoot>
             </table>
-            <button class="btn" wire:click="reporteGeneral()" title="Generar Reporte">
-                <i class="fa-solid fa-file-invoice" style="color:#173D59 !important;"></i>
-            </button>
         </div>
 
         <!-- Modal semanas faltantes -->
@@ -407,7 +404,9 @@
                             </li>
                         @endforeach
                     </ul> --}}
-                    <canvas id="graf-proyectos-horas-empleado" width="800" height="400"></canvas>
+                    <div id="caja-graf-proyectos-horas-empleado">
+                        <canvas id="graf-proyectos-horas-empleado" width="800" height="400"></canvas>
+                    </div>
                 </div>
                 <div class="col-12 mt-5">
                     <h6 class="separador-titulo">Horas por Semana</h6>
@@ -446,11 +445,15 @@
                             </tbody>
                         </table>
                     </div> --}}
-                    <canvas id="graf-semanas-empleado" width="800" height="400"></canvas>
+                    <div id="caja-graf-semanas-empleado">
+                        <canvas id="graf-semanas-empleado" width="800" height="400"></canvas>
+                    </div>
                 </div>
                 <div class="col-12 mt-5">
                     <h6 class="separador-titulo">Horas por Tarea</h6>
-                    <canvas id="graf-empleado-tareas-horas" width="800" height="400"></canvas>
+                    <div id="caja-graf-empleado-tareas-horas">
+                        <canvas id="graf-empleado-tareas-horas" width="800" height="400"></canvas>
+                    </div>
                 </div>
                 <div class="col-12 mt-5">
                     <div class="w-100 d-flex justify-content-between">
@@ -719,6 +722,9 @@
                             });
                         });
 
+                        let caja_graf_proyectos_horas_empleado = document.getElementById('caja-graf-proyectos-horas-empleado');
+                        caja_graf_proyectos_horas_empleado.innerHTML = '&nbsp;';
+                        $('#caja-graf-proyectos-horas-empleado').append('<canvas id="graf-proyectos-horas-empleado" width="800" height="400"></canvas>');
                         new Chart(document.getElementById('graf-proyectos-horas-empleado'), {
                             type: 'bar',
                             data: {
@@ -752,6 +758,9 @@
                             }
                         });
 
+                        let caja_graf_semanas_empleado = document.getElementById('caja-graf-semanas-empleado');
+                        caja_graf_semanas_empleado.innerHTML = '&nbsp;';
+                        $('#caja-graf-semanas-empleado').append('<canvas id="graf-semanas-empleado" width="800" height="400"></canvas>');
                         new Chart(document.getElementById('graf-semanas-empleado'), {
                             type: 'bar',
                             data: {
@@ -771,6 +780,9 @@
                             }
                         });
 
+                        let caja_graf_empleado_tareas_horas = document.getElementById('caja-graf-empleado-tareas-horas');
+                        caja_graf_empleado_tareas_horas.innerHTML = '&nbsp;';
+                        $('#caja-graf-empleado-tareas-horas').append('<canvas id="graf-empleado-tareas-horas" width="800" height="400"></canvas>');
                         new Chart(document.getElementById('graf-empleado-tareas-horas'), {
                             type: 'pie',
                             data: {

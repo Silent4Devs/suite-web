@@ -312,8 +312,9 @@
                             </li>
                         @endforeach
                     </ul> --}}
-
-                    <canvas id="graf-tareas-horas-proyecto" width="800" height="400"></canvas>
+                    <div id="caja-graf-tareas-horas-proyecto">
+                        <canvas id="graf-tareas-horas-proyecto" width="800" height="400"></canvas>
+                    </div>
                 </div>
             </div>
             <div class="row mt-5">
@@ -337,7 +338,9 @@
                         @endforeach
                     </ul> --}}
 
-                    <canvas id="graf-empleados-horas-proyecto" width="800" height="400"></canvas>
+                    <div id="caja-graf-empleados-horas-proyecto">
+                        <canvas id="graf-empleados-horas-proyecto" width="800" height="400"></canvas>
+                    </div>
                 </div>
             </div>
             <div class="w-100 print-none">
@@ -527,6 +530,9 @@
                         colores_empleados.push('#34DCCF');
                     });
 
+                    let caja_graf_tareas_horas_proyecto = document.getElementById('caja-graf-tareas-horas-proyecto');
+                    caja_graf_tareas_horas_proyecto.innerHTML = '&nbsp;';
+                    $('#caja-graf-tareas-horas-proyecto').append('<canvas id="graf-tareas-horas-proyecto" width="800" height="400"></canvas>');
                     new Chart(document.getElementById('graf-tareas-horas-proyecto'), {
                         type: 'bar',
                         data: {
@@ -544,8 +550,11 @@
                                 }
                             }
                         }
-                    });
+                    }); 
 
+                    let caja_graf_empleados_horas_proyecto = document.getElementById('caja-graf-empleados-horas-proyecto');
+                    caja_graf_empleados_horas_proyecto.innerHTML = '&nbsp;';
+                    $('#caja-graf-empleados-horas-proyecto').append('<canvas id="graf-empleados-horas-proyecto" width="800" height="400"></canvas>');
                     new Chart(document.getElementById('graf-empleados-horas-proyecto'), {
                         type: 'bar',
                         data: {
