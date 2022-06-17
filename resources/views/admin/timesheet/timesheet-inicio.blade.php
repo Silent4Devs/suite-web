@@ -223,7 +223,7 @@
                 <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
                     aria-labelledby="nav-contexto-tab">
                     <ul class="mt-4">
-                        
+
                         @can('timesheet_create')
                             <li>
                                 <a href="{{ route('admin.timesheet-create') }}">
@@ -298,6 +298,26 @@
                                         </a>
                                     </li>
                                 @endcan
+                                @if($organizacion->fecha_registro_timesheet)
+                                    <li>
+                                        <a href="{{ route('admin.timesheet-reporte-aprobador', auth()->user()->empleado->id) }}">
+                                            <div>
+                                                <i class="bi bi-file-earmark-text"></i><br>
+                                                Reportes
+                                            </div>
+                                        </a>
+                                    </li>
+                                 @else
+                                    <li style="position:relative;">
+                                        <a href="#" style="opacity:0.6;">
+                                            <div>
+                                                <i class="bi bi-file-earmark-text"></i><br>
+                                                Reportes
+                                            </div>
+                                        </a>
+                                        <strong class="text-danger text-center" style="position:absolute; top:20px; left: 0; width: 100%;">Necesaria fecha de inicio del timesheet</strong>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     @endif
@@ -315,7 +335,7 @@
                                         </div>
                                     </a>
                             </li>
-                            
+
                             @can('timesheet_administrador_clientes_access')
                                 <li>
                                     <a href="{{ route('admin.timesheet-clientes') }}">
@@ -347,14 +367,26 @@
                                     </a>
                                 </li>
                             @endcan
-                            <li>
-                                <a href="{{ route('admin.timesheet-reportes') }}">
-                                    <div>
-                                        <i class="bi bi-file-earmark-text"></i><br>
-                                        Reportes
-                                    </div>
-                                </a>
-                            </li>
+                            @if($organizacion->fecha_registro_timesheet)
+                                <li>
+                                    <a href="{{ route('admin.timesheet-reportes') }}">
+                                        <div>
+                                            <i class="bi bi-file-earmark-text"></i><br>
+                                            Reportes
+                                        </div>
+                                    </a>
+                                </li>
+                             @else
+                                <li style="position:relative;">
+                                    <a href="#" style="opacity:0.6;">
+                                        <div>
+                                            <i class="bi bi-file-earmark-text"></i><br>
+                                            Reportes
+                                        </div>
+                                    </a>
+                                    <strong class="text-danger text-center" style="position:absolute; top:20px; left: 0; width: 100%;">Seleccione fecha de inicio del timesheet</strong>
+                                </li>
+                            @endif
                             <li>
                                 <a href="{{ route('admin.timesheet-dashboard') }}">
                                     <div>
@@ -364,7 +396,7 @@
                                 </a>
                             </li>
 
-                                
+
 
                         </ul>
                     </div>
@@ -373,7 +405,7 @@
         </div>
     </div>
 
-    
+
     <div class="modal fade" id="dia_semana_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -384,11 +416,16 @@
             </button>
           </div>
           <div class="modal-body">
-            <form method="POST" action="{{ route('admin.timesheet-acualizarDia') }}" class="row">
+            <form method="POST" action="{{ route('admin.timesheet-actualizarDia') }}" class="row">
                 @csrf
                 <div class="col-12 form-group">
                     <label>Selecciones fecha de inicio del timesheet</label>
-                    <input class="form-control" type="date" name="fecha_registro_timesheet" value="{{ $organizacion->fecha_registro_timesheet }}">
+                    <input id="" class="form-control" type="date" name="fecha_registro_timesheet" value="{{ $organizacion->fecha_registro_timesheet }}" max="{{ $time_viejo ? $time_viejo : ''  }}">
+                </div>
+                <div class="col-12 form-group">
+                    <label>Establecer limite de semanas para registros atrasados de timesheet</label>
+                    <input id="" class="form-control" type="number" name="semanas_min_timesheet" value="{{ $organizacion->semanas_min_timesheet }}" min="0">
+                    <small class="w-100 d-flex justify-content-between">Esta acción resetea el valor para toda la organización <a href="{{asset('admin/empleados')}}">Limite por empleado</a></small>
                 </div>
                 <div class="form-group col-12">
                     <label>Seleccione el día de inicio de la jornada laboral</label>
@@ -479,6 +516,42 @@
                 $(this).tab('show')
                 const keyTab = this.getAttribute('data-type');
                 localStorage.setItem('menu-iso27001-active', keyTab);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', ()=>{
+            $(".date_librery").flatpickr({
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                      shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    },
+                    months: {
+                      shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+                      longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    },
+                },
+                altInput: true,
+                dateFormat: 'd-m-Y',
+            });
+            $("#fecha_dia_time_organizacion_start").flatpickr({
+                "disable": [
+                    function(date) {
+
+                    }
+                ],
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                      shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    },
+                    months: {
+                      shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+                      longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    },
+                },
             });
         });
     </script>

@@ -116,9 +116,6 @@
                 };
                 let dtOverrideGlobals = {
                     buttons: dtButtons,
-                    order:[
-                                [0,'desc']
-                            ],
                     destroy: true,
                     render: true,
                 };
@@ -130,6 +127,11 @@
             setTimeout(() => {
                     tablaLivewire('datatable_timesheet_proyectos');
             }, 100);
-        });   
+        });
+    </script>
+    <script type="text/javascript">
+        $('.select2').select2({
+            'theme' : 'bootstrap4',
+        });
     </script>
 @endsection

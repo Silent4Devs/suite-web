@@ -17749,7 +17749,7 @@ html:not([dir="rtl"]) .c-sidebar.c-sidebar-light.c-sidebar-right,*[dir="rtl"] .c
   color: #321fdb;
 }
 .c-active font{
-  font-weight: bolder !important;  
+  font-weight: bolder !important;
 }
 .c-sidebar.c-sidebar-light .c-sidebar-nav-link:focus, .c-sidebar.c-sidebar-light .c-sidebar-nav-dropdown-toggle:focus {
   outline: none;
@@ -35070,4 +35070,10 @@ h3 {
 .nav-tabs .nav-link i{
   font-size: 20px;
   margin-right: 10px;
-} 
+}
+
+.datatable-fix .row{
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+

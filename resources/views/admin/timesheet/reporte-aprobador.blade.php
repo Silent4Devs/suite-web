@@ -1,78 +1,24 @@
 @extends('layouts.admin')
 @section('content')
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-
-    <style type="text/css">
-        #lista_proyectos_tareas li{
-            padding-top: 13px;
-        }
-        @media print{
-            #sidebar,
-            header,
-            .nav-tabs,
-            .titulo_general_funcion,
-            .breadcrumb{
-                display: none !important;
-            }
-            #reporte_proyecto, #reporte_empleado, #reporte_general{
-                width: 100% !important;
-                position: absolute;
-                top: 0;
-                margin: 0 !important;
-                margin-top: -150px !important;
-                padding: 0 !important;
-                background-color: #fff !important;
-                border: 1px solid #fff !important;
-            }
-
-        }
-    </style>
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js"></script>
 
-    {{ Breadcrumbs::render('timesheet-reportes') }}
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reportes</font> </h5>
-    <div class="mt-5 card card-body">
-        <nav class="mt-4">
-            <div class="nav nav-tabs" id="tabsIso27001" role="tablist">
-                <a class="nav-link active" id="nav-registros-tab" data-type="registros" data-toggle="tab"
-                    href="#nav-registros" role="tab" aria-controls="nav-registros" aria-selected="true">
-                    Registros Timesheet
-                </a>
-                <a class="nav-link" id="nav-empleados-tab" data-type="empleados" data-toggle="tab"
-                    href="#nav-empleados" role="tab" aria-controls="nav-empleados" aria-selected="false" style="position: relative;">
-                    Registros por Área
-                </a>
-                <a class="nav-link" id="nav-proyectos-tab" data-type="proyectos" data-toggle="tab"
-                    href="#nav-proyectos" role="tab" aria-controls="nav-proyectos" aria-selected="false">
-                    Proyectos
-                </a>
-                {{-- <a class="nav-link" id="nav-clientes-tab" data-type="clientes" data-toggle="tab"
-                    href="#nav-clientes" role="tab" aria-controls="nav-clientes" aria-selected="false">
-                    Clientes
-                </a> --}}
-            </div>
-        </nav>
 
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane mb-4 fade p-4 show active" id="nav-registros" role="tabpanel" aria-labelledby="nav-registros-tab">
-                @livewire('timesheet.reportes-registros')
-            </div>
-            <div class="tab-pane mb-4 fade p-4" id="nav-empleados" role="tabpanel" aria-labelledby="nav-empleados-tab">
-                @livewire('timesheet.reportes-empleados')
-            </div>
-            <div class="tab-pane mb-4 fade p-4" id="nav-proyectos" role="tabpanel" aria-labelledby="nav-proyectos-tab">
-                @livewire('timesheet.reportes-proyectos')
-            </div>
-            {{-- <div class="tab-pane mb-4 fade p-4" id="nav-clientes" role="tabpanel" aria-labelledby="nav-clientes-tab">
-            </div> --}}
-        </div>
-    </div>
+	{{ Breadcrumbs::render('timesheet-reporte-aprobador') }}
+
+	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reporte Aprobador</font></h5>
+
+	<div class="card card-body">
+
+		@livewire('timesheet.reporte-aprobador')
+
+	</div>
+
 @endsection
-
 
 @section('scripts')
     @parent
@@ -105,48 +51,12 @@
             $(".cde-estatus").removeClass("ver");
         });
 
-        $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").mouseover(function(){
-            $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").addClass("ver");
-        });
-        $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").mouseleave(function(){
-            $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").removeClass("ver");
-        });
-        $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)").mouseover(function(){
-            $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)").addClass("ver");
-        });
-        $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)").mouseleave(function(){
-            $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)").removeClass("ver");
-        });
-    </script>
-    <script type="text/javascript">
-        $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-            setTimeout(() => {
-                $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
-            }, 300);
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', ()=>{
-            setTimeout(() => {
-                const menuActive = localStorage.getItem('menu-iso27001-active');
-                $(`#tabsIso27001 [data-type="${menuActive}"]`).tab('show');
-
-                $('#tabsIso27001 a').on('click', function(event) {
-                    event.preventDefault()
-                    $(this).tab('show')
-                    const keyTab = this.getAttribute('data-type');
-                    localStorage.setItem('menu-iso27001-active', keyTab);
-                });
-            }, 100);
-        });
-    </script>
-    <script type="text/javascript">
+        // --------------------------------------
         function cerrarVentana(id){
             $('#' + id).remove();
         }
-    </script>
 
-    <script>
+        // -----------------------------------------
         let cont = 0;
         function tablaLivewire(id_tabla)
         {
@@ -287,34 +197,17 @@
 
             return table;
         }
+
         document.addEventListener('DOMContentLoaded', ()=>{
             let table_1 = null;
             setTimeout(() => {
                     table_1 = tablaLivewire('datatable_timesheet');
                     tablaLivewire('timesheet_empleados_lista');
                     tablaLivewire('datatable_timesheet_empleados');
-                    tablaLivewire('datatable_timesheet_proyectos');
             }, 100);
-
-                // $('#area_id_registros').on('change', function() {
-                //     console.log(table_1.columns(3));
-                //     if (this.value != null && this.value != "") {
-                //         this.style.border = "2px solid #20a4a1";
-                //         table_1.columns(3).search(this.value).draw();
-                //     } else {
-                //         this.style.border = "none";
-                //         table_1.columns(3).search(this.value).draw();
-                //     }
-                // });
         });
-    </script>
-    <script type="text/javascript">
-        $('.select2').select2({
-            'theme' : 'bootstrap4',
-        });
-    </script>
 
-    <script type="text/javascript">
+        // -------------------------------------------------
         document.addEventListener('DOMContentLoaded', ()=>{
             $(".date_librery").flatpickr({
                 locale: {
@@ -369,44 +262,11 @@
                     },
                 },
             });
-            $("#fecha_dia_registros_inicio_proyectos").flatpickr({
-                "disable": [
-                    function(date) {
-                        return (date.getDay() === 0 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
+        });
 
-                    }
-                ],
-                locale: {
-                    firstDayOfWeek: 1,
-                    weekdays: {
-                      shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                    },
-                    months: {
-                      shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
-                      longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                    },
-                },
-            });
-            $("#fecha_dia_registros_fin_proyectos").flatpickr({
-                "disable": [
-                    function(date) {
-                        return (date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
-
-                    }
-                ],
-                locale: {
-                    firstDayOfWeek: 1,
-                    weekdays: {
-                      shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                    },
-                    months: {
-                      shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
-                      longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                    },
-                },
-            });
+        //  --------------------------------------------------------
+        $('.select2').select2({
+            'theme' : 'bootstrap4',
         });
     </script>
 @endsection

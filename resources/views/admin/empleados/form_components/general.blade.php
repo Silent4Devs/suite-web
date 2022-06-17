@@ -335,6 +335,17 @@
             </div>
         @endif
     </div>
+    <div class="form-group col-sm-12" id="c_semanas_min_timesheet">
+        <label for="semanas_min_timesheet"><i class="fa-solid fa-calendar-week iconos-crear"></i>Semanas limite de registros atrasados en Timesheet</label>
+            <input class="form-control {{ $errors->has('semanas_min_timesheet') ? 'is-invalid' : '' }}" type="number"
+            name="semanas_min_timesheet" id="semanas_min_timesheet"
+            value="{{ old('semanas_min_timesheet', $empleado->semanas_min_timesheet ? $empleado->semanas_min_timesheet : $organizacion->semanas_min_timesheet) }}" min="0">
+        @if ($errors->has('semanas_min_timesheet'))
+            <div class="invalid-feedback">
+                {{ $errors->first('semanas_min_timesheet') }}
+            </div>
+        @endif
+    </div>
     <div class="form-group col-sm-6 d-none" id="c_proyecto_asignado">
         <label for="proyecto_asignado"><i class="fas fa-street-view iconos-crear"></i>Proyecto asignado
         </label>

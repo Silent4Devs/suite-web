@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
-class ReportesEmpleados extends Component
+class ReporteAprobador extends Component
 {
     use getWeeksFromRange;
     use LivewireAlert;
@@ -49,6 +49,8 @@ class ReportesEmpleados extends Component
     public $calendario_tabla;
 
     public $times_faltantes_empleado;
+
+    public $aprobador;
 
     public $semanas_totales_calendario = 0;
 
@@ -103,11 +105,9 @@ class ReportesEmpleados extends Component
         $this->hoy = Carbon::now();
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
-        if ($this->area_id) {
-            $empleados_list = Empleado::where('area_id', $this->area_id)->get();
-        } else {
-            $empleados_list = Empleado::get();
-        }
+
+        $this->aprobador = Empleado::find(auth()->user()->empleado->id);
+        $empleados_list = $this->aprobador->children;
 
         //calendario tabla
         $calendario_array = [];
@@ -202,7 +202,7 @@ class ReportesEmpleados extends Component
 
             // horas totales por empleado
             $times_empleado_aprobados_pendientes_list = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->get();
-            // dd($fecha_fin_timesheet_empleado);
+
             $horas_semana = 0;
             $times_empleado_calendario_array = [];
             $times_empleado_array = [];
@@ -284,7 +284,7 @@ class ReportesEmpleados extends Component
                     }
                 }
             }
-
+            // dump($calendario_tabla_empleado);
 
             // array empleados
             $this->empleados->push([
@@ -301,15 +301,13 @@ class ReportesEmpleados extends Component
             ]);
         }
 
-        // dump($times_empleado_aprobados_pendientes_list);
-
         $this->calendario_tabla = $calendario_array;
 
         $this->hoy_format = $this->hoy->format('d/m/Y');
 
         $this->emit('scriptTabla');
 
-        return view('livewire.timesheet.reportes-empleados');
+        return view('livewire.timesheet.reporte-aprobador');
     }
 
     public function getMonthSpanish($month)

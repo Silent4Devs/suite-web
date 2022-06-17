@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-	
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+
     {{ Breadcrumbs::render('timesheet-tareas-proyecto') }}
 
 	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Tareas</font></h5>
@@ -12,9 +13,8 @@
 
 		</div>
 	</div>
-	
-@endsection
 
+@endsection
 
 @section('scripts')
     @parent
@@ -56,7 +56,6 @@
                             let logo_actual = @json($logo_actual);
                             let empresa_actual = @json($empresa_actual);
                             let empleado = @json(auth()->user()->empleado->name);
-                            let proyecto = @json($proyecto->proyecto);
 
                             var now = new Date();
                             var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
@@ -67,7 +66,7 @@
                                     </div>
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
                                         <p>${empresa_actual}</p>
-                                        <strong style="color:#345183">Tiemsheet: Tareas del Proyecto ${proyecto}</strong>
+                                        <strong style="color:#345183">Tiemsheet: Tareas</strong>
                                     </div>
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
                                         Fecha: ${jsDate}
@@ -138,12 +137,12 @@
             setTimeout(() => {
                     tablaLivewire('tabla_time_tareas');
             }, 100);
-        });   
+        });
     </script>
 
     <script type="text/javascript">
         $('.select2').select2({
-            'theme' : 'bootstrap4',
+            'theme': 'bootstrap4',
         });
     </script>
 @endsection
