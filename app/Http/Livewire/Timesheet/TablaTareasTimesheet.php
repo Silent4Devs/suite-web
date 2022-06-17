@@ -40,7 +40,7 @@ class TablaTareasTimesheet extends Component
 
         if ($this->origen == 'tareas-proyectos') {
             $this->proyecto_seleccionado = TimesheetProyecto::find($this->proyecto_id);
-            $this->tareas_proyecto = TimesheetTarea::where('proyecto_id', $this->proyecto_id)->orderByDesc('id')->get();
+            $this->tareas = TimesheetTarea::where('proyecto_id', $this->proyecto_id)->orderByDesc('id')->get();
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         }
 
@@ -51,30 +51,27 @@ class TablaTareasTimesheet extends Component
 
     public function create()
     {
-        $this->validate([
-            'tarea_name'=>'required',
-            'proyecto_id'=>'required',
-            'area_select'=>'required',
-        ]);
-
-
 
         if ($this->area_select == 0) {
             $area_id = null;
             $todos = true;
-        }else{
+        } else {
             $area_id = $this->area_select;
             $todos = false;
         }
+        if ($this->origen == 'tareas') {
+            $proyecto_procesado = $this->proyecto_id;
+        }else {
+            $proyecto_procesado = $this->proyecto_seleccionado->id;
+        }
         $nueva_tarea = TimesheetTarea::create([
             'tarea' => $this->tarea_name,
-            'proyecto_id' => $this->proyecto_id,
+            'proyecto_id' => $proyecto_procesado,
             'area_id' => $area_id,
             'todos' => $todos,
         ]);
-
         $this->emit('tarea-actualizada', $nueva_tarea);
-        
+
         $this->alert('success', 'Registro añadido!');
     }
 

@@ -1,15 +1,21 @@
 <div class="row">
-	<div class=" col-md-4 p-4">
-		<h4 class="titulo-grafica d-flex justify-content-between">Porcentaje de participación de los empleados de este mes <a href="{{ asset('admin/timesheet/reportes') }}">Ver detalle</a></h4>
-		<canvas id="graf-empleados-participacion" width="400" height="400"></canvas>
+	<div class=" col-lg-4 p-4">
+        <div class="card card-body" style="min-height:330px !important;">
+            <h4 class="titulo-grafica d-flex justify-content-between">Empleados por área <a href="{{ asset('admin/timesheet/reportes') }}">Ver&nbsp;detalle</a></h4>
+            <canvas id="graf-empleados-area" width="400" height="400"></canvas>
+        </div>
 	</div>
-	<div class=" col-md-4 p-4">
-		<h4 class="titulo-grafica d-flex justify-content-between">Empleados con registros atrasados <a href="{{ asset('admin/timesheet/reportes') }}">Ver detalle</a></h4>
-		<canvas id="graf-empleados-atrasados" width="400" height="400"></canvas>
+	<div class=" col-lg-4 p-4">
+        <div class="card card-body"  style="min-height:330px !important;">
+            <h4 class="titulo-grafica d-flex justify-content-between">Porcentaje de participación de los empleados de este mes <a href="{{ asset('admin/timesheet/reportes') }}">Ver&nbsp;detalle</a></h4>
+            <canvas id="graf-empleados-participacion" width="400" height="400"></canvas>
+        </div>
 	</div>
-	<div class=" col-md-4 p-4">
-		<h4 class="titulo-grafica d-flex justify-content-between">Empleados por área <a href="{{ asset('admin/timesheet/reportes') }}">Ver detalle</a></h4>
-		<canvas id="graf-empleados-area" width="400" height="400"></canvas>
+	<div class=" col-lg-4 p-4">
+        <div class="card card-body" style="min-height:330px !important;">
+            <h4 class="titulo-grafica d-flex justify-content-between">Empleados con registros atrasados de este mes <a href="{{ asset('admin/timesheet/reportes') }}">Ver&nbsp;detalle</a></h4>
+            <canvas id="graf-empleados-atrasados" width="400" height="400"></canvas>
+        </div>
 	</div>
 </div>
 <script>
@@ -81,12 +87,23 @@
 	            ],
 	        }]
 	    },
-	    options: {
+	     options: {
 	        scales: {
-	            y: {
-	                beginAtZero: true
-	            }
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
 	        }
-	    }
+        },
+
+        plugins: [{
+		    /* Adjust axis labelling font size according to chart size */
+		    beforeDraw: function(c) {
+		        var chartHeight = c.chart.height;
+		        var size = chartHeight * 5 / 100;
+		        c.scales['y-axis-0'].options.ticks.minor.fontSize = size;
+		    }
+		}]
 	});
 </script>

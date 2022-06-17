@@ -117,20 +117,11 @@
         <i class="fa-solid fa-spinner fa-spin-pulse" style="font-size:150px; color: #000 !important; margin-top:70px;"></i>
     </div>
     <div class="row print-none" style="margin: 0 !important;">
-        <div class="col-md-3 form-group" style="padding-left:0 !important;">
-            <label class="form-label">Área</label>
-            <select class="form-control" wire:model="area_id">
-                <option selected value="0">Todas</option>
-                @foreach($areas as $area)
-                    <option value="{{ $area->id }}">{{ $area->area }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-3 form-group" wire:ignore>
+        <div class="col-md-4 form-group" wire:ignore>
             <label class="form-label">Fecha de inicio</label>
             <input id="fecha_dia_registros_inicio_empleados" class="form-control date_librery" type="date" name="fecha_inicio" wire:model="fecha_inicio">
         </div>
-        <div class="col-md-3 form-group" wire:ignore>
+        <div class="col-md-4 form-group" wire:ignore>
             <label class="form-label">Fecha de fin</label>
             <input id="fecha_dia_registros_fin_empleados" class="form-control date_librery" type="date" name="fecha_fin" wire:model="fecha_fin">
         </div>

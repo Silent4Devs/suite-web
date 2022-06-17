@@ -33,7 +33,7 @@
                     @endif
                     @if ($origen == 'tareas')
                         <select id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id" required>
-                            <option value="">Seleccione proyecto al que pertenece</option>
+                            <option disabled selected>Seleccione proyecto al que pertenece</option>
                             @foreach ($proyectos as $proyecto)
                                 <option value="{{ $proyecto->id }}">{{ $proyecto->proyecto }}</option>
                             @endforeach
@@ -75,133 +75,77 @@
             </thead>
 
             <tbody>
-                @if ($origen == 'tareas')
-                    @foreach ($tareas as $key => $tarea)
-                        <tr>
-                            <td wire:ignore> 
-                                <input class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}" name="tarea" value="{{ $tarea->tarea }}"> 
-                            </td>
-                            <td> {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }} </td>
-                            <td style="display:flex; align-items: center;">
-                                <select class="form-control select_area" style="width:300px;" data-type="changeArea" data-id="{{ $tarea->id }}">
-                                    <option value="0" {{$tarea->todos ? 'selected' : ''}}>Todas</option>
-                                    @foreach ($tarea->areas as $area)
-                                        <option value="{{$area['id']}}" {{$area['id'] == $tarea->area_id ? 'selected' : ''}}>{{$area['area']}}</option>
-                                    @endforeach
-                                </select>
-                                @if($tarea->todos)
-                                    <i class="fa-solid fa-eye ml-2 modal-hover-caja" style="font-size:15pt; cursor: pointer;">
-                                        <ul class="modal-hover">
-                                            @foreach ($tarea->areas as $key => $area)
-                                                <li>{{$area->area}}</li>
-                                            @endforeach
-                                        </ul>
-                                    </i>
-                                @endif 
-                            </td>
-                            <td>
-                                @can('timesheet_administrador_tareas_proyectos_delete')
-                                    @php
-                                        $time_tarea = TimesheetHoras::where('tarea_id', $tarea->id)->exists();
-                                    @endphp
-                                    @if(!$time_tarea)
-                                        <button class="btn" data-toggle="modal" data-target="#modal_tarea_eliminar_{{ $tarea->id}}" title="Eliminar">
-                                            <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"></i>
-                                        </button>
-                                     @else
-                                        <button class="btn" title="Esta tarea no puede ser eliminada debido a que está en uso">
-                                                <i class="fas fa-trash-alt" style="color: #aaa; font-size: 15pt;"></i>
-                                        </button>
-                                    @endif
-                                @endcan
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
-
-                @if ($origen == 'tareas-proyectos')
-                    @foreach ($tareas_proyecto as $tarea)
-                        <tr>
-                            <td> <input class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}" name="tarea" value="{{ $tarea->tarea }}"> </td>
-                            <td> {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }} </td>
-                            <td>
+                @foreach ($tareas as $tarea)
+                    <tr>
+                        <td wire:ignore>
+                            <input class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}" name="tarea" value="{{ $tarea->tarea }}">
+                        </td>
+                        <td> {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }} </td>
+                        <td style="display:flex; align-items: center;">
+                            <select class="form-control select_area" style="width:300px;" data-type="changeArea" data-id="{{ $tarea->id }}">
+                                <option value="0" {{$tarea->todos ? 'selected' : ''}}>Todas</option>
+                                @foreach ($tarea->areas as $area)
+                                    <option value="{{$area['id']}}" {{$area['id'] == $tarea->area_id ? 'selected' : ''}}>{{$area['area']}}</option>
+                                @endforeach
+                            </select>
+                            @if($tarea->todos)
+                                <i class="fa-solid fa-eye ml-2 modal-hover-caja" style="font-size:15pt; cursor: pointer;">
+                                    <ul class="modal-hover">
+                                        @foreach ($tarea->areas as $key => $area)
+                                            <li>{{$area->area}}</li>
+                                        @endforeach
+                                    </ul>
+                                </i>
+                            @endif
+                        </td>
+                        <td>
+                            @can('timesheet_administrador_tareas_proyectos_delete')
                                 @php
                                     $time_tarea = TimesheetHoras::where('tarea_id', $tarea->id)->exists();
                                 @endphp
                                 @if(!$time_tarea)
                                     <button class="btn" data-toggle="modal" data-target="#modal_tarea_eliminar_{{ $tarea->id}}" title="Eliminar">
-                                        <i class="fas fa-trash-alt btn" style="color: red; font-size: 15pt;"></i>
+                                        <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"></i>
                                     </button>
-                                 @else
-                                    <div class="btn">
-                                            <i class="fas fa-trash-alt" style="color: #aaa; font-size: 15pt;" title="Esta tarea no puede ser eliminada debido a que está en uso"></i>
-                                    </div>
+                                    @else
+                                    <button class="btn" title="Esta tarea no puede ser eliminada debido a que está en uso">
+                                            <i class="fas fa-trash-alt" style="color: #aaa; font-size: 15pt;"></i>
+                                    </button>
                                 @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
+                            @endcan
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
-    @if ($origen == 'tareas')
-        @foreach ($tareas as $tarea)
-            <div class="modal fade" id="modal_tarea_eliminar_{{ $tarea->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <button class="btn btn-tache-cerrar" data-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
-                            <div class="delete">
-                                <div class="text-center">
-                                    <i class="fa-solid fa-trash-can" style="color: #E34F4F; font-size:60pt;"></i>
-                                    <h1 class="my-4" style="font-size:14pt;">Eliminar Tarea: <small>{{ $tarea->tarea }}</small></h1>
-                                    <p class="parrafo">¿Desea eliminar la tarea {{ $tarea->tarea }}?</p>
-                                </div>
+    @foreach ($tareas as $tarea)
+        <div class="modal fade" id="modal_tarea_eliminar_{{ $tarea->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button class="btn btn-tache-cerrar" data-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="delete">
+                            <div class="text-center">
+                                <i class="fa-solid fa-trash-can" style="color: #E34F4F; font-size:60pt;"></i>
+                                <h1 class="my-4" style="font-size:14pt;">Eliminar Tarea: <small>{{ $tarea->tarea }}</small></h1>
+                                <p class="parrafo">¿Desea eliminar la tarea {{ $tarea->tarea }}?</p>
+                            </div>
 
-                                <div class="mt-4 d-flex justify-content-between">
-                                    <button class="btn btn_cancelar" data-dismiss="modal">
-                                        Cancelar
-                                    </button>
-                                    <button class="btn btn-info" style="border:none; background-color:#E34F4F;"  wire:click="destroy({{ $tarea->id }})" data-dismiss="modal">
-                                        Eliminar Tarea
-                                    </button>
-                                </div>
+                            <div class="mt-4 d-flex justify-content-between">
+                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                    Cancelar
+                                </button>
+                                <button class="btn btn-info" style="border:none; background-color:#E34F4F;"  wire:click="destroy({{ $tarea->id }})" data-dismiss="modal">
+                                    Eliminar Tarea
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        @endforeach
-    @endif
-    @if ($origen == 'tareas-proyectos')
-        @foreach ($tareas_proyecto as $tarea)
-            <div class="modal fade" id="modal_tarea_eliminar_{{ $tarea->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <button class="btn btn-tache-cerrar" data-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
-                            <div class="delete">
-                                <div class="text-center">
-                                    <i class="fa-solid fa-trash-can" style="color: #E34F4F; font-size:60pt;"></i>
-                                    <h1 class="my-4" style="font-size:14pt;">Eliminar Tarea: <small>{{ $tarea->tarea }}</small></h1>
-                                    <p class="parrafo">¿Desea eliminar la tarea {{ $tarea->tarea }}?</p>
-                                </div>
-
-                                <div class="mt-4 d-flex justify-content-between">
-                                    <button class="btn btn_cancelar" data-dismiss="modal">
-                                        Cancelar
-                                    </button>
-                                    <button class="btn btn-info" style="border:none; background-color:#E34F4F;"  wire:click="destroy({{ $tarea->id }})" data-dismiss="modal">
-                                        Eliminar Tarea
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @endif
+        </div>
+    @endforeach
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', ()=>{
@@ -225,7 +169,6 @@
             });
 
             // edit dentro de tabla ----------------------------------------
-
             document.querySelector('.tabla_time_tareas').addEventListener('change', (e)=>{
                 if (e.target.getAttribute('data-type') == 'change') {
                     let elemento = e.target;
@@ -233,7 +176,7 @@
                     let value = elemento.value;
                     @this.actualizarNameTarea(id, value);
                 }
-                
+
                 if (e.target.getAttribute('data-type') == 'changeArea') {
                     let elemento = e.target;
                     let id = elemento.getAttribute('data-id');
@@ -262,7 +205,7 @@
                         @this.actualizarAreaTarea(id, value);
                     }
                 });
-            });  
+            });
         });
     </script>
 </div>

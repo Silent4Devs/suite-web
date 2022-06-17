@@ -134,7 +134,7 @@ class Timesheet extends Model
     public function getTotalHorasAttribute()
     {
         $total_horas = 0;
-        $horas_time =  TimesheetHoras::where('timesheet_id', $this->id)->get();
+        $horas_time = TimesheetHoras::where('timesheet_id', $this->id)->get();
         foreach ($horas_time as $key => $horas) {
             $total_horas += $horas->horas_lunes;
             $total_horas += $horas->horas_martes;

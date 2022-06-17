@@ -32,9 +32,8 @@ class TimesheetTarea extends Model
             foreach ($this->proyecto->areas as $key => $area) {
                 array_push($areas, $area);
             }
-
-        }else{
-            $areas = array(Area::find($this->area_id));
+        } else {
+            $areas = [Area::find($this->area_id)];
         }
 
         return $areas;

@@ -19,7 +19,7 @@ trait getWeeksFromRange
             $endActualWeek = $fecha_fin->endOfWeek(Carbon::SUNDAY)->format('Y-m-d');
             $startActualWeek = $fecha_fin->startOfWeek(Carbon::MONDAY)->format('Y-m-d');
             $actualWeek = $startActualWeek . '|' . $endActualWeek;
-        }else{
+        } else {
             $startActualWeek = $now->startOfWeek(Carbon::MONDAY)->subDays(7)->format('Y-m-d');
             $endActualWeek = $now->endOfWeek(Carbon::SUNDAY)->format('Y-m-d');
             $actualWeek = $startActualWeek . '|' . $endActualWeek;

@@ -259,9 +259,13 @@
                 <div class="col-12 d-flex justify-content-between align-items-center mt-3">
                     <div class="d-flex align-items-center">
                         <div class="ml-3">
-                            <span style="width: 75px; display: inline-block; font-weight: bolder;">Proyecto:</span> {{ $total_horas_proyecto }}<br>
-                            <span style="width: 75px; display: inline-block; font-weight: bolder;">Área:</span> {{ $proyecto_reporte->area->area }}<br>
-                            <span style="width: 75px; display: inline-block; font-weight: bolder;">Área:</span> {{ $proyecto_reporte->cliente_id ? $proyecto_reporte->cliente->nombre : '' }}
+                            <span style="width: 75px; display: inline-block; font-weight: bolder;">Proyecto:</span> {{ $proyecto_reporte->proyecto }}<br>
+                            <span style="width: 300px; display: inline-block; font-weight: bolder;">Áreas participantes:</span>
+                            <ul style="padding-left:15px;">
+                                @foreach($proyecto_reporte->areas as $area)
+                                    <li>{{$area->area}}</li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                     <div class="d-flex ml-4">
@@ -356,8 +360,10 @@
                                     <td>{{ $empleado_p['name'] }}</td>
                                     <td>{{ $empleado_p['puesto'] }}</td>
                                     <td>{{ $empleado_p['area']['area'] }}</td>
-                                    <td id="horas_proyecto_empleado{{$empleado_p['id']}}"></td>
-                                    <td id="costo_proyecto_empleado{{$empleado_p['id']}}"></td>
+                                    <td id="horas_proyecto_empleado_print{{$empleado_p['id']}}">
+                                        {{$empleado_p['horas']}}
+                                    </td>
+                                    <td id="costo_proyecto_empleado_print{{$empleado_p['id']}}"></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -456,7 +462,7 @@
             </div>
         </div> --}}
 
-        <script type="text/javascript">
+        {{-- <script type="text/javascript">
             let costo_proyecto_total = 0;
             let total_horas = 0;
             let costo_proyecto_empleado = 0;
@@ -483,7 +489,7 @@
             @endforeach
             document.getElementById('costo_proyecto_total').innerHTML = '<strong>$</strong> ' + costo_proyecto_total;
             document.getElementById('costo_proyecto_total_print').innerHTML = '<strong>$</strong> ' + costo_proyecto_total;
-        </script>
+        </script> --}}
     @endif
 
 
@@ -494,7 +500,7 @@
                 tablaLivewire('datatable_timesheet_proyectos_empleados');
             });
 
-            Livewire.on('scriptChartsProyect', (tareas_detalle)=>{
+            Livewire.on('scriptChartsProyect', (tareas_detalle, detalle_empleado)=>{
                 console.log(tareas_detalle);
 
                 initCharts();
@@ -512,11 +518,13 @@
                         labels_tareas.push(item.tarea);
                         values_tareas.push(item.horas_totales);
                         colors_tareas.push('#34DCCF');
-                        item.empleados?.forEach(empleado=>{
-                            labels_empleados.push(recotarText(empleado.name));
-                            values_empleados.push(empleado.horas);
-                            colores_empleados.push(getRandomcolor());
-                        });
+                    });
+
+                    console.log(detalle_empleado);
+                    detalle_empleado.forEach(item=>{
+                        labels_empleados.push(item.name);
+                        values_empleados.push(item.horas);
+                        colores_empleados.push('#34DCCF');
                     });
 
                     new Chart(document.getElementById('graf-tareas-horas-proyecto'), {

@@ -57,7 +57,6 @@ class TablaProyectosTimesheet extends Component
 
     public function store()
     {
-
         $this->validate(
             [
                 'identificador' => 'required|unique:timesheet_proyectos,identificador',

@@ -23,7 +23,7 @@
                 </a>
                 <a class="nav-link" id="nav-proyectos-tab" data-type="proyectos" data-toggle="tab"
                     href="#nav-proyectos" role="tab" aria-controls="nav-proyectos" aria-selected="false">
-                    proyectos
+                    Proyectos
                 </a>
             </div>
         </nav>

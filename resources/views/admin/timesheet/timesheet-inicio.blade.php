@@ -223,7 +223,7 @@
                 <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
                     aria-labelledby="nav-contexto-tab">
                     <ul class="mt-4">
-                        
+
                         @can('timesheet_create')
                             <li>
                                 <a href="{{ route('admin.timesheet-create') }}">
@@ -335,7 +335,7 @@
                                         </div>
                                     </a>
                             </li>
-                            
+
                             @can('timesheet_administrador_clientes_access')
                                 <li>
                                     <a href="{{ route('admin.timesheet-clientes') }}">
@@ -396,7 +396,7 @@
                                 </a>
                             </li>
 
-                                
+
 
                         </ul>
                     </div>
@@ -405,7 +405,7 @@
         </div>
     </div>
 
-    
+
     <div class="modal fade" id="dia_semana_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -420,11 +420,12 @@
                 @csrf
                 <div class="col-12 form-group">
                     <label>Selecciones fecha de inicio del timesheet</label>
-                    <input id="" class="form-control" type="date" name="fecha_registro_timesheet" value="{{ $organizacion->fecha_registro_timesheet }}" max="{{ $time_viejo }}">
+                    <input id="" class="form-control" type="date" name="fecha_registro_timesheet" value="{{ $organizacion->fecha_registro_timesheet }}" max="{{ $time_viejo ? $time_viejo : ''  }}">
                 </div>
                 <div class="col-12 form-group">
                     <label>Establecer limite de semanas para registros atrasados de timesheet</label>
-                    <input id="" class="form-control" type="number" name="semanas_min_timesheet" value="{{ $organizacion->fecha_min_timesheet }}">
+                    <input id="" class="form-control" type="number" name="semanas_min_timesheet" value="{{ $organizacion->semanas_min_timesheet }}" min="0">
+                    <small class="w-100 d-flex justify-content-between">Esta acción resetea el valor para toda la organización <a href="{{asset('admin/empleados')}}">Limite por empleado</a></small>
                 </div>
                 <div class="form-group col-12">
                     <label>Seleccione el día de inicio de la jornada laboral</label>

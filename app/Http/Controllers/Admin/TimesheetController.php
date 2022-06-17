@@ -56,7 +56,11 @@ class TimesheetController extends Controller
 
         $organizacion = Organizacion::first();
 
-        $time_viejo = Timesheet::orderBy('fecha_dia')->first()->fecha_dia;
+        if (Timesheet::count() > 0) {
+            $time_viejo = Timesheet::orderBy('fecha_dia')->first()->fecha_dia;
+        }else {
+            $time_viejo = null;
+        }
 
         $rechazos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'rechazado')->count();
         $aprobar_contador = Timesheet::where('aprobador_id', auth()->user()->empleado->id)->where('estatus', 'pendiente')->count();
@@ -74,6 +78,13 @@ class TimesheetController extends Controller
             'fecha_registro_timesheet'=>$request->fecha_registro_timesheet,
             'semanas_min_timesheet'=>$request->semanas_min_timesheet,
         ]);
+
+        $empleados = Empleado::get();
+        foreach ($empleados as $key => $empleado) {
+            $empleado->update([
+                'semanas_min_timesheet'=>$request->semanas_min_timesheet,
+            ]);
+        }
 
         return redirect()->route('admin.timesheet-inicio')->with('success', 'Guardado con éxito');
     }
@@ -99,7 +110,7 @@ class TimesheetController extends Controller
     public function createCopia($id)
     {
         $empleado = Empleado::find(auth()->user()->empleado->id);
-        
+
         // areas proyectos
         $proyectos_array = collect();
         $proyectos_totales = TimesheetProyecto::get();
@@ -287,7 +298,7 @@ class TimesheetController extends Controller
     public function edit($id)
     {
         $empleado = Empleado::find(auth()->user()->empleado->id);
-        
+
         // areas proyectos
         $proyectos_array = collect();
         $proyectos_totales = TimesheetProyecto::get();
@@ -809,9 +820,18 @@ class TimesheetController extends Controller
             $contador_times_pendientes_areas = 0;
             $contador_times_rechazados_areas = 0;
             $contador_times_papelera_areas = 0;
-            $proyectos_area = TimesheetProyecto::where('area_id', $area->id)->get();
+            // $proyectos_area = TimesheetProyecto::where('area_id', $area->id)->get();
+            $proyectos_areas_pivot = TimesheetProyectoArea::where('area_id', $area->id)->get();
+            $proyectos_area = Collect();
+            foreach ($proyectos_areas_pivot as $key => $proyect_area_p) {
+                $proyecto_area =  TimesheetProyecto::where('id', $proyect_area_p->proyecto_id)->first();
+                $proyectos_area->push([
+                    'id'=>$proyecto_area->id,
+                ]);
+            }
+            $proyectos_area = $proyectos_area->unique();
             foreach ($proyectos_area as $pro_a) {
-                $times_horas_area = TimesheetHoras::where('proyecto_id', $pro_a->id)->with('timesheet')->get();
+                $times_horas_area = TimesheetHoras::where('proyecto_id', $pro_a['id'])->with('timesheet')->get();
 
                 foreach ($times_horas_area as $times_h_a) {
                     if ($times_h_a->timesheet->estatus == 'pendiente') {
