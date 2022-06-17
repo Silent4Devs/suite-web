@@ -63,7 +63,6 @@ class ObjetivosSeguridadComponent extends Component
 
     public function store()
     {
-
         $variables = [];
         $valores = [];
         $formula_sustitucion = $this->objetivos->formula;

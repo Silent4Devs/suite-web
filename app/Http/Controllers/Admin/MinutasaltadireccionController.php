@@ -26,7 +26,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class MinutasaltadireccionController extends Controller
 {
@@ -37,6 +36,7 @@ class MinutasaltadireccionController extends Controller
         abort_if(Gate::denies('revision_por_direccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Minutasaltadireccion::with(['responsable', 'team', 'participantes', 'planes'])->orderByDesc('id')->get();
+
             return datatables()->of($query)->toJson();
         }
 

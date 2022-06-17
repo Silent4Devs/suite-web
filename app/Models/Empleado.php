@@ -292,7 +292,7 @@ class Empleado extends Model
     {
         if ($this->semanas_min_timesheet) {
             $fecha = Carbon::now()->startOfWeek()->subWeeks($this->semanas_min_timesheet)->format('Y-m-d');
-        }else{
+        } else {
             $fecha = Carbon::now()->startOfWeek()->subWeeks(1000)->format('Y-m-d');
         }
 

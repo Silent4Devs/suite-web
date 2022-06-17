@@ -51,7 +51,6 @@ class TablaTareasTimesheet extends Component
 
     public function create()
     {
-
         if ($this->area_select == 0) {
             $area_id = null;
             $todos = true;
@@ -61,7 +60,7 @@ class TablaTareasTimesheet extends Component
         }
         if ($this->origen == 'tareas') {
             $proyecto_procesado = $this->proyecto_id;
-        }else {
+        } else {
             $proyecto_procesado = $this->proyecto_seleccionado->id;
         }
         $nueva_tarea = TimesheetTarea::create([
@@ -92,7 +91,7 @@ class TablaTareasTimesheet extends Component
         if ($value == 0) {
             $area_id = null;
             $todos = true;
-        }else{
+        } else {
             $area_id = $value;
             $todos = false;
         }

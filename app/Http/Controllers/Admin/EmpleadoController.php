@@ -16,8 +16,8 @@ use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
 use App\Models\Language;
 use App\Models\ListaDocumentoEmpleado;
-use App\Models\PerfilEmpleado;
 use App\Models\Organizacion;
+use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\BeneficiariosEmpleado;
 use App\Models\RH\ContactosEmergenciaEmpleado;
@@ -39,7 +39,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 //use Barryvdh\DomPDF\PDF as DomPDFPDF;
 

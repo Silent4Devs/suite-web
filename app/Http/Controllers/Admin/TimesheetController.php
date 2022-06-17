@@ -58,7 +58,7 @@ class TimesheetController extends Controller
 
         if (Timesheet::count() > 0) {
             $time_viejo = Timesheet::orderBy('fecha_dia')->first()->fecha_dia;
-        }else {
+        } else {
             $time_viejo = null;
         }
 
@@ -824,7 +824,7 @@ class TimesheetController extends Controller
             $proyectos_areas_pivot = TimesheetProyectoArea::where('area_id', $area->id)->get();
             $proyectos_area = Collect();
             foreach ($proyectos_areas_pivot as $key => $proyect_area_p) {
-                $proyecto_area =  TimesheetProyecto::where('id', $proyect_area_p->proyecto_id)->first();
+                $proyecto_area = TimesheetProyecto::where('id', $proyect_area_p->proyecto_id)->first();
                 $proyectos_area->push([
                     'id'=>$proyecto_area->id,
                 ]);

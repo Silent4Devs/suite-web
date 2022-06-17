@@ -112,6 +112,7 @@ class ObjetivosseguridadController extends Controller
     {
         abort_if(Gate::denies('objetivos_del_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivosseguridad->update($request->all());
+
         return redirect()->route('admin.objetivosseguridads.index')->with('success', 'Editado con éxito');
     }
 
