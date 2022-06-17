@@ -209,7 +209,7 @@ class CompetenciasController extends Controller
     {
         $empleado->load('idiomas');
         // dd($empleado);
-        abort_if(Gate::denies('visualizar_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $lista_docs = ListaDocumentoEmpleado::get();
 
         return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
@@ -217,7 +217,7 @@ class CompetenciasController extends Controller
 
     public function editarCompetencias(Empleado $empleado)
     {
-        abort_if(Gate::denies('perfil_profesional_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $isEditAdmin = false;
         $idiomas = Language::get();
 

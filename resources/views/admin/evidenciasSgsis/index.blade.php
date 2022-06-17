@@ -1,70 +1,68 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        .table tr th:nth-child(3) {
+            min-width: 600px !important;
+            text-align: center !important;
+        }
 
-<style>
+        .table tr td:nth-child(3) {
+            text-align: justify !important;
+        }
 
-    .table tr th:nth-child(3){
-    min-width:600px !important;
-    text-align:center !important;
-    }
+        .table tr th:nth-child(4) {
+            min-width: 100px !important;
+            text-align: center !important;
+        }
 
-    .table tr td:nth-child(3){
-    text-align:justify !important;
-    }
+        .table tr td:nth-child(4) {
+            text-align: center !important;
+        }
 
-    .table tr th:nth-child(4){
-    min-width:100px !important;
-    text-align:center !important;
-    }
+        .table tr th:nth-child(5) {
+            min-width: 80px !important;
+            text-align: center !important;
+        }
 
-    .table tr td:nth-child(4){
-    text-align:center !important;
-    }
+        .table tr td:nth-child(5) {
+            concien text-align: center !important;
+        }
 
-    .table tr th:nth-child(5){
-    min-width:80px !important;
-    text-align:center !important;
-    }
+        .table tr th:nth-child(6) {
+            min-width: 130px !important;
+            text-align: center !important;
+        }
 
-    .table tr td:nth-child(5){concien
-    text-align:center !important;
-    }
+        .table tr td:nth-child(6) {
+            text-align: center !important;
+        }
 
-    .table tr th:nth-child(6){
-    min-width:130px !important;
-    text-align:center !important;
-    }
+        .carousel-control-next,
+        .carousel-control-prev {
+            width: 50px;
+            height: 50px;
+            margin-top: 100px;
+        }
 
-    .table tr td:nth-child(6){
-    text-align:center !important;
-    }
-    .carousel-control-next, .carousel-control-prev {
-        width: 50px;
-        height: 50px;
-        margin-top: 100px;
-    }
+        .img-size {
+            margin-left: calc(50% - 141px);
+        }
 
-    .img-size{
-        margin-left:calc(50% - 141px);
-    }
-
-    .carousel-control-prev-icon, .carousel-control-next-icon{
-        background-color: #000;
-        filter: invert(100%);
-    }
-
-
-</style>
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: #000;
+            filter: invert(100%);
+        }
+    </style>
 
 
     {{ Breadcrumbs::render('admin.evidencias-sgsis.index') }}
 
     <h5 class="col-12 titulo_general_funcion">Evidencia de Asignación de Recursos al SGSI</h5>
 
-    @can('evidencias_sgsi_create')
+    @can('evidencia_asignacion_recursos_sgsi_agregar')
         <div class="mt-5 card">
-
-    @endcan
+        @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -127,9 +125,6 @@
             </table>
         </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -143,7 +138,7 @@
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible'],
-                        orthogonal:"empleadoText"
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -154,7 +149,7 @@
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible'],
-                        orthogonal:"empleadoText"
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -166,7 +161,7 @@
                     orientation: 'landscape',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible'],
-                        orthogonal:"empleadoText"
+                        orthogonal: "empleadoText"
                     },
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
@@ -182,7 +177,7 @@
                     titleAttr: 'Imprimir',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible'],
-                        orthogonal:"empleadoText"
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -206,45 +201,57 @@
                 }
 
             ];
-            @can('evidencias_sgsi_delete')
+            @can('evidencia_asignacion_recursos_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.evidencias-sgsis.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.evidencias-sgsis.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
-            @can('evidencias_sgsi_delete')
+            @can('evidencia_asignacion_recursos_sgsi_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nueva Evidencia de Asignación de Recursos al SGSI',
-                url: "{{ route('admin.evidencias-sgsis.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar nueva Evidencia de Asignación de Recursos al SGSI',
+                    url: "{{ route('admin.evidencias-sgsis.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 dtButtons.push(btnAgregar);
             @endcan
@@ -271,7 +278,7 @@
                         data: 'responsable_name',
                         name: 'responsable_name',
                         render: function(data, type, row, meta) {
-                            if (type==="empleadoText") {
+                            if (type === "empleadoText") {
                                 return row.empleado.name;
                             }
                             let responsablereunion = "";
@@ -298,14 +305,18 @@
                     {
                         data: 'evidencia',
                         name: 'evidencia',
-                        render:function(data,type,row,meta){
-                             let archivo="";
-                             let archivos= JSON.parse(data);
-                               archivo=` <div class="container">
-
+                        render: function(data, type, row, meta) {
+                            let archivo = "";
+                            let archivos = JSON.parse(data);
+                            archivo = ` 
+                           
+                               <div class="container">
+                               
                                     <div class="mb-4 row">
                                     <div class="text-center col">
-                                        <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                        @can('evidencia_asignacion_recursos_sgsi_ver_evidencia')
+                                         <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                         @endcan
                                     </div>
                                     </div>
 
@@ -314,8 +325,8 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                         <div class="modal-body">`;
-                                            if(archivos.length>0){
-                                                archivo+=`
+                            if (archivos.length > 0) {
+                                archivo += `
                                             <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
@@ -325,33 +336,32 @@
                                             <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                    <li
-                                                    data-target='#carouselExampleIndicators${row.id}'
-                                                    data-slide-to='${idx}'
-                                                    ></li>`
+                                                        <li
+                                                        data-target='#carouselExampleIndicators${row.id}'
+                                                        data-slide-to='${idx}'
+                                                        ></li>`
                                                     })}
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                    <div class='carousel-item ${idx==0?"active":""}'>
-                                                        <iframe seamless class='img-size' src='{{asset("storage/evidencias_sgsi")}}/${archivo.evidencia}'></iframe>
-                                                    </div>`
+                                                        <div class='carousel-item ${idx==0?"active":""}'>
+                                                            <iframe seamless class='img-size' src='{{ asset('storage/evidencias_sgsi') }}/${archivo.evidencia}'></iframe>
+                                                        </div>`
                                                     })}
 
                                             </div>
 
                                             </div>`;
-                                        }
-                                            else{
-                                                archivo+=`
+                            } else {
+                                archivo += `
                                                 <div class="text-center">
                                                     <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
-                                                    <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:500px !important">
+                                                    <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:500px !important">
                                                     </div>
                                                 `
-                                            }
-                                            archivo+=`</div>
+                            }
+                            archivo += `</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                             <a
@@ -380,7 +390,8 @@
                                         </div>
                                         </div>
                                     </div>
-                                    </div>`
+                                    </div>  
+                                    `
                             return archivo;
                         }
                     },
@@ -408,6 +419,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

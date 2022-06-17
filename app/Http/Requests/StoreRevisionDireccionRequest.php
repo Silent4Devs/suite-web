@@ -9,7 +9,7 @@ class StoreRevisionDireccionRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('revision_direccion_create');
+        return Gate::allows('revision_por_direccion_agregar');
     }
 
     public function rules()

@@ -3,7 +3,7 @@
 
     {{ Breadcrumbs::render('admin.objetivosseguridads.index') }}
 
-    @can('objetivosseguridad_create')
+    @can('objetivos_del_sistema_agregar')
     <h5 class="col-12 titulo_general_funcion">Objetivos del Sistema</h5>
         <div class="mt-5 card">
         @endcan
@@ -138,7 +138,7 @@
 
             ];
 
-            @can('objetivosseguridad_create')
+            @can('objetivos_del_sistema_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar objetivo de seguridad',
@@ -151,7 +151,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('objetivosseguridad_delete')
+            @can('objetivos_del_sistema_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -224,7 +224,11 @@
                         data: 'enlace',
                         name: 'enlace',
                         render: function(data, type, row, meta) {
-                            return `<div class="text-center w-100"><a href="evaluaciones-objetivosShow/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a></div>`;
+                            return `
+                            @can('objetivos_del_sistema_vinculo')
+                            <div class="text-center w-100"><a href="evaluaciones-objetivosShow/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a></div>
+                            @endcan`;
+                            
                         }
                     },
                     {

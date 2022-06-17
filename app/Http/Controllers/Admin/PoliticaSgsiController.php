@@ -19,7 +19,7 @@ class PoliticaSgsiController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('politica_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('politica_sistema_gestion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = PoliticaSgsi::with(['team', 'reviso'])->select(sprintf('%s.*', (new PoliticaSgsi)->table))->orderByDesc('id');
@@ -29,9 +29,9 @@ class PoliticaSgsiController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'politica_sgsi_show';
-                $editGate = 'politica_sgsi_edit';
-                $deleteGate = 'politica_sgsi_delete';
+                $viewGate = 'politica_sistema_gestion_ver';
+                $editGate = 'politica_sistema_gestion_editar';
+                $deleteGate = 'politica_sistema_gestion_eliminar';
                 $crudRoutePart = 'politica-sgsis';
 
                 return view('partials.datatablesActions', compact(
@@ -85,7 +85,7 @@ class PoliticaSgsiController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('politica_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleados = Empleado::alta()->with('area')->get();
 
@@ -94,7 +94,7 @@ class PoliticaSgsiController extends Controller
 
     public function store(StorePoliticaSgsiRequest $request)
     {
-        // dd($request->all());
+        abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $politicaSgsi = PoliticaSgsi::create($request->all());
 
         return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
@@ -102,7 +102,7 @@ class PoliticaSgsiController extends Controller
 
     public function edit(PoliticaSgsi $politicaSgsi)
     {
-        abort_if(Gate::denies('politica_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('politica_sistema_gestion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $politicaSgsi->load('team');
 
@@ -113,6 +113,7 @@ class PoliticaSgsiController extends Controller
 
     public function update(UpdatePoliticaSgsiRequest $request, PoliticaSgsi $politicaSgsi)
     {
+        abort_if(Gate::denies('politica_sistema_gestion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $politicaSgsi->update($request->all());
 
         return redirect()->route('admin.politica-sgsis.index')->with('success', 'Editado con éxito');
@@ -120,7 +121,7 @@ class PoliticaSgsiController extends Controller
 
     public function show(PoliticaSgsi $politicaSgsi)
     {
-        abort_if(Gate::denies('politica_sgsi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('politica_sistema_gestion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $politicaSgsi->load('team');
 
@@ -129,7 +130,7 @@ class PoliticaSgsiController extends Controller
 
     public function destroy(PoliticaSgsi $politicaSgsi)
     {
-        abort_if(Gate::denies('politica_sgsi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('politica_sistema_gestion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $politicaSgsi->delete();
 

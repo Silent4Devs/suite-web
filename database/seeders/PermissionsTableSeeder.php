@@ -10,7 +10,7 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         Permission::truncate();
-        $permissions = [
+        /*$permissions = [
             // CONFIGURAR VISTAS
             [
                 'name' => 'Acceder a Configurar Vistas',
@@ -2185,7 +2185,7 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Acceder a Planes de accion',
                 'title' => 'planes_accion_access',
             ],
-        ];
+        ];*/
 
         $permissions1 = [
             // CONFIGURAR VISTAS
@@ -2202,7 +2202,7 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso consiste en darle acceso al usuario para visualizar su perfil profesional, esta opción se encuentra en la pestaña "MIS DATOS" en el módulo de "MI PERFIL"',
             ],
             [
-                'title' => 'mi_perfil_mis_datos_ver_perfil_puesto ',
+                'title' => 'mi_perfil_mis_datos_ver_perfil_de_puesto',
                 'name' => 'Este permiso consiste en darle acceso al usuario para visualizar su perfil de puesto, esta opción se encuentra en la pestaña "MIS DATOS" en el módulo de "MI PERFIL"',
             ],
             [
@@ -2277,8 +2277,11 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'mi_perfil_mis_reportes_realizar_reporte_de_sugerencia',
                 'name' => 'Este permiso consiste en darle acceso al usuario para poder levantar un reporte de sugerencia desde la pestaña "REPORTES" en el módulo de "MI PERFIL"',
             ],
-
             // Portal de comunicacion
+            [
+                'title' => 'portal_de_comunicaccion_acceder',
+                'name' => 'Este permiso permite al usuario acceder al portal de comunicación',
+            ],
             [
                 'title' => 'portal_comunicacion_mostrar_comunicados',
                 'name' => 'Este permiso permite al usuario visualizar los comunicados en el portal de comunicación',
@@ -2296,7 +2299,7 @@ class PermissionsTableSeeder extends Seeder
 
             [
                 'title' => 'portal_comunicacion_mostrar_sedes',
-                'name' => '   Este permiso permite al usuario visualizar la opción "Sedes" en el menú derecho de accesos directos en el portal de comunicación',
+                'name' => 'Este permiso permite al usuario visualizar la opción "Sedes" en el menú derecho de accesos directos en el portal de comunicación',
             ],
 
             [
@@ -2321,7 +2324,7 @@ class PermissionsTableSeeder extends Seeder
 
             [
                 'title' => 'portal_comunicacion_mostrar_documentos',
-                'name' => '  Este permiso permite al usuario visualizar la opción "Documentos" en el menú derecho de accesos directos en el portal de comunicación',
+                'name' => 'Este permiso permite al usuario visualizar la opción "Documentos" en el menú derecho de accesos directos en el portal de comunicación',
             ],
 
             [
@@ -2398,6 +2401,128 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'centro_de_atencion_acceder',
                 'name' => 'Este permiso permite acceder al menú "Centro de Atención"',
             ],
+            //Centro de Atención: Incidentes de Seguridad
+            [
+                'title' => 'centro_atencion_incidentes_de_seguridad_acceder',
+                'name' => 'Este permiso permite al usuario acceder a"Incidentes de Seguridad" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_incidentes_de_seguridad_editar',
+                'name' => 'Este permiso permite al usuario editar "Incidentes de Seguridad" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_incidentes_de_seguridad_eliminar',
+                'name' => 'Este permiso permite al usuario eliminar un "Incidentes de Seguridad" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_incidentes_de_seguridad_ver',
+                'name' => 'Este permiso permite al usuario ver "Incidentes de Seguridad" en el módulo de Centro de Atención',
+            ],
+            //Centro de Atención: Riesgos
+            [
+                'title' => 'centro_atencion_riesgos_acceder',
+                'name' => 'Este permiso permite al usuario acceder a"Riesgos" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_riesgos_editar',
+                'name' => 'Este permiso permite al usuario editar "Riesgos" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_riesgos_eliminar',
+                'name' => 'Este permiso permite al usuario eliminar un "Riesgos" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_riesgos_ver',
+                'name' => 'Este permiso permite al usuario ver "Riesgos" en el módulo de Centro de Atención',
+            ],
+            //Centro de Atención: Quejas
+            [
+                'title' => 'centro_atencion_quejas_acceder',
+                'name' => 'Este permiso permite al usuario acceder a "Quejas" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_quejas_editar',
+                'name' => 'Este permiso permite al usuario editar "Quejas" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_quejas_eliminar',
+                'name' => 'Este permiso permite al usuario eliminar "Quejas" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_quejas_ver',
+                'name' => 'Este permiso permite al usuario ver "Quejas" en el módulo de Centro de Atención',
+            ],
+            //Centro de Atención: Quejas Clientes
+            [
+                'title' => 'centro_atencion_quejas_clientes_acceder',
+                'name' => 'Ese permiso permite al usuario acceder al módulo de "Centro de Atención", a la vista "Queja Cliente"',
+
+            ],
+            [
+                'title' => 'centro_atencion_quejas_clientes_agregar',
+                'name' => 'Ese permiso permite al usuario acceder al módulo de "Centro de Atención", a la vista crear de "Queja Cliente"',
+
+            ],
+            [
+                'title' => 'centro_atencion_quejas_cliente_editar',
+                'name' => 'Ese permiso permite al usuario acceder al módulo de "Centro de Atención", a la vista edit de "Queja Cliente"',
+            ],
+            [
+                'title' => 'centro_atencion_quejas_cliente_dashboard',
+                'name' => 'Ese permiso permite al usuario acceder al módulo de "Centro de Atención", a la vista dashboard de "Queja Cliente"',
+
+            ],
+            //Centro de Atención: Denuncias
+            [
+                'title' => 'centro_atencion_denuncias_acceder',
+                'name' => 'Este permiso permite al usuario acceder a "Denuncias" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_denuncias_editar',
+                'name' => 'Este permiso permite al usuario editar "Denuncias" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_denuncias_eliminar',
+                'name' => 'Este permiso permite al usuario eliminar "Denuncias" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_denuncias_ver',
+                'name' => 'Este permiso permite al usuario ver "Denuncias" en el módulo de Centro de Atención',
+            ],
+            //Centro de Atención: Mejoras
+            [
+                'title' => 'centro_atencion_mejoras_acceder',
+                'name' => 'Este permiso permite al usuario acceder a "Mejoras" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_mejoras_editar',
+                'name' => 'Este permiso permite al usuario editar "Mejoras" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_mejoras_eliminar',
+                'name' => 'Este permiso permite al usuario eliminar "Mejoras" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_mejoras_ver',
+                'name' => 'Este permiso permite al usuario ver "Mejoras" en el módulo de Centro de Atención',
+            ],
+            //Centro de Atención: Sugerencias
+            [
+                'title' => 'centro_atencion_sugerencias_acceder',
+                'name' => 'Este permiso permite al usuario acceder a "Sugerencias" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_sugerencias_editar',
+                'name' => 'Este permiso permite al usuario editar "Sugerencias" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_sugerencias_eliminar',
+                'name' => 'Este permiso permite al usuario eliminar  "Sugerencias" en el módulo de Centro de Atención',
+            ],
+            [
+                'title' => 'centro_atencion_sugerencias_ver',
+                'name' => 'Este permiso permite al usuario ver "Sugerencias" en el módulo de Centro de Atención',
+            ],
             //Capital Humano
             [
                 'title' => 'capital_humano_acceder',
@@ -2456,6 +2581,18 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'competencias_por_puesto_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Competencias por puesto"',
+            ],
+            [
+                'title' => 'competencias_por_puesto_agregar',
+                'name' => 'Este permiso permite al usuario agregar "Competencias por puesto"',
+            ],
+            [
+                'title' => 'competencias_por_puesto_editar',
+                'name' => 'Este permiso permite al usuario editar "Competencias por puesto"',
+            ],
+            [
+                'title' => 'competencias_por_puesto_eliminar',
+                'name' => 'Este permiso permite al usuario eliminar "Competencias por puesto"',
             ],
             [
                 'title' => 'lista_de_perfiles_de_puesto_agregar',
@@ -2634,6 +2771,14 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario ver  detalles del registro',
             ],
             [
+                'title' => 'solicitudes_incidencias_acceder',
+                'name' => 'Este permiso permite al usuario acceder al módulo de "Solicitudes e Incidencias"',
+            ],
+            [
+                'title' => 'beneficios_acceder',
+                'name' => 'Este permiso permite al usuario acceder al módulo de "Beneficios"',
+            ],
+            [
                 'title' => 'calendario_corporativo_acceder',
                 'name' => ' Este permiso permite al usuario acceder al módulo de "Calendario coorporativo"',
             ],
@@ -2734,7 +2879,7 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario editar registros',
             ],
             [
-                'title' => 'amenazas_elimar',
+                'title' => 'amenazas_eliminar',
                 'name' => 'Este permiso permite al usuario eliminar registros',
             ],
             [
@@ -2859,7 +3004,7 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso habilita la vista Gantt',
             ],
             [
-                'title' => 'plan_de_implementacion_Tabla ',
+                'title' => 'plan_de_implementacion_Tabla',
                 'name' => 'Este permiso habilita la vista Tabla',
             ],
             [
@@ -3027,6 +3172,10 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario ver  detalles del registro',
             ],
             [
+                'title' => 'evidencia_asignacion_recursos_sgsi_ver_evidencia',
+                'name' => 'Este permiso permite al usuario ver  evidencia del registro',
+            ],
+            [
                 'title' => 'politica_sistema_gestion_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Política del Sistema de Gestión"',
             ],
@@ -3061,6 +3210,10 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'asignacion_de_controles_agregar_aprobador',
                 'name' => 'Este permiso permite al usuario agregar aprobador',
+            ],
+            [
+                'title' => 'asignacion_de_controles_agregar_notificar',
+                'name' => 'Este permiso permite al usuario notificar controles',
             ],
             [
                 'title' => 'declaracion_de_aplicabilidad_acceder',
@@ -3170,6 +3323,11 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'comunicados_generales_vinculo',
                 'name' => 'Este permiso redirije a "Ver evidencias"',
             ],
+            //Sistema de Gestión:Soporte
+            [
+                'title' => 'sistema_gestion_soporte_acceso',
+                'name' => 'Este permiso permite al usuario acceder a la pestaña "Soporte" del módulo de Sistema de Gestión',
+            ],
             [
                 'title' => 'control_de_accesos_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Control de accesos"',
@@ -3195,16 +3353,21 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso redirije a "Ver evidencias"',
             ],
             [
-                'title' => 'informacion_docuemntada_acceder',
+                'title' => 'informacion_documentada_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Documentos de"',
             ],
             [
-                'title' => 'informacion_docuemntada_ver',
+                'title' => 'informacion_documentada_ver',
                 'name' => 'Este permiso permite al usuario ver  detalles del registro',
             ],
             [
                 'title' => 'planificacion_y_control_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Planificacion y Control"',
+            ],
+            //Sistema de gestión:Operacion
+            [
+                'title' => 'sistema_gestion_operacion_acceso',
+                'name' => 'Este permiso permite al usuario acceder a la pestaña "Operacion" del módulo de Sistema de Gestión',
             ],
             [
                 'title' => 'planificacion_y_control_agregar',
@@ -3243,6 +3406,10 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario ver  detalles del registro',
             ],
             [
+                'title' => 'sistema_gestion_evaluacion_acceso',
+                'name' => 'Este permiso permite al usuario acceder a la pestaña "Evaluación" del módulo de Sistema de Gestión',
+            ],
+            [
                 'title' => 'indicadores_sgsi_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Indicadores SGSI"',
             ],
@@ -3265,10 +3432,6 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'indicadores_sgsi_vinculo',
                 'name' => 'Este permiso redirije a "Ver indicadores"',
-            ],
-            [
-                'title' => 'incidentes_de_seguridad_acceder',
-                'name' => 'Este permiso permite al usuario acceder al módulo de "Centro de Atencion"',
             ],
             [
                 'title' => 'programa_anual_auditoria_acceder',
@@ -3349,6 +3512,11 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'revision_por_direccion_ver',
                 'name' => 'Este permiso permite al usuario ver  detalles del registro',
+            ],
+            //MEJORA SISTEMA DE GESTIÓN
+            [
+                'title' => 'sistema_gestion_mejora_acceso',
+                'name' => 'Este permiso permite al usuario acceder a la pestaña "Mejora" del módulo de Sistema de Gestión',
             ],
             [
                 'title' => 'accion_correctiva_acceder',
@@ -3440,7 +3608,7 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'title' => 'macroprocesos_agregar',
-                'name' => '   Este permiso permite al usuario agregar registros',
+                'name' => 'Este permiso permite al usuario agregar registros',
             ],
             [
                 'title' => 'macroprocesos_editar',
@@ -3467,7 +3635,7 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario editar registros',
             ],
             [
-                'title' => 'procesos_elimnar',
+                'title' => 'procesos_eliminar',
                 'name' => 'Este permiso permite al usuario eliminar registros',
             ],
             [
@@ -3527,12 +3695,12 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario editar registros',
             ],
             [
-                'title' => 'subcategoria_activos_elimnar',
+                'title' => 'subcategoria_activos_eliminar',
                 'name' => 'Este permiso permite al usuario eliminar registros',
             ],
             [
                 'title' => 'subcategoria_activos_ver',
-                'name' => 'Este permiso permite al usuario ver  detalles del registro',
+                'name' => 'Este permiso permite al usuario ver detalles del registro',
             ],
             [
                 'title' => 'inventario_activos_acceder',
@@ -3579,8 +3747,8 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario eliminar registros',
             ],
             [
-                'title' => 'control_documentar_visualizar',
-                'name' => 'documento Este permiso permite al usuario ver  documento',
+                'title' => 'control_documentar_visualizar_documento',
+                'name' => 'Este permiso permite al usuario ver  documento',
             ],
             [
                 'title' => 'control_documentar_visualizar_revisiones',
@@ -3716,7 +3884,7 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'title' => 'roles_ver',
-                'name' => 'Este permiso permite al usuario ver  detalles del registro',
+                'name' => 'Este permiso permite al usuario ver detalles del registro',
             ],
             [
                 'title' => 'roles_copiar',
@@ -3798,10 +3966,105 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'principal_soporte_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Soporte"',
             ],
-
+            [
+                'title' => 'acceder_submenu_capacitaciones',
+                'name' => 'Este permiso permite al usuario acceder al submenu de "Capacitaciones"',
+            ],
+            [
+                'title' => 'menu_analisis_riesgo_acceder',
+                'name' => 'Este permiso permite al usuario acceder al submenu de "Analisis de Amenazas"',
+            ],
+            [
+                'title' => 'acceder_submenu_areas',
+                'name' => 'Este permiso permite al usuario acceder al submenu "areas".',
+            ],
+            [
+                'title' => 'acceder_submenu_mapa_procesos',
+                'name' => 'Este permiso permite al usuario acceder al submenu "Mapa de Procesos".',
+            ],
+            [
+                'title' => 'macroprocesos_acceder',
+                'name' => 'Este permiso permite al usuario acceder al módulo de "Crear Macroprocesos.',
+            ],
+            [
+                'title' => 'acceder_submenu_activos',
+                'name' => 'Este permiso permite al usuario acceder al submenu "Activos".',
+            ],
+            [
+                'title' => 'determinacion_alcance_acceder',
+                'name' => 'Este permiso permite al usuario acceder al módulo de "Determinacion de Alcance"',
+            ],
+            [
+                'title' => 'determinacion_alcance_agregar',
+                'name' => 'Este permiso permite al usuario agregar registros',
+            ],
+            [
+                'title' => 'determinacion_alcance_editar',
+                'name' => 'Este permiso permite al usuario editar registros',
+            ],
+            [
+                'title' => 'determinacion_alcance_eliminar',
+                'name' => 'Este permiso permite al usuario eliminar registros',
+            ],
+            [
+                'title' => 'determinacion_alcance_ver',
+                'name' => 'Este permiso permite al usuario ver  detalles del registro',
+            ],
+            [
+                'title' => 'evidencia_asignacion_recursos_sgsi_ver_evidencia',
+                'name' => 'Este permiso permite al usuario ver  evidencia del registro',
+            ],
+            [
+                'title' => 'mi_organizacion_agregar',
+                'name' => 'Este permiso permite al usuario agregar registros',
+            ],
+            [
+                'title' => 'mi_organizacion_editar',
+                'name' => 'Este permiso permite al usuario editar registros',
+            ],
+            [
+                'title' => 'mi_organizacion_eliminar',
+                'name' => 'Este permiso permite al usuario eliminar registros',
+            ],
+            [
+                'title' => 'mi_organizacion_ver',
+                'name' => 'Este permiso permite al usuario ver registros',
+            ],
+            [
+                'title' => 'agregar_documento_crear',
+                'name' => 'Este permiso permite al usuario acceder al módulo de "Agregar Documento"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_contexto_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Contexto"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_liderazgo_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Liderazgo"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_planificacion_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Planificacion"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_soporte_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Soporte"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_operacion_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Operacion"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_evaluacion_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Evaluacion"',
+            ],
+            [
+                'title' => 'sistema_de_gestion_mejora_acceder',
+                'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Mejora"',
+            ],
         ];
 
-        Permission::insert($permissions);
+        // Permission::insert($permissions);
         Permission::insert($permissions1);
     }
 }

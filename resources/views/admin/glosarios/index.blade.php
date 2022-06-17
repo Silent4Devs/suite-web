@@ -1,4 +1,4 @@
-@extends('layouts.admin_glosario')
+@extends('layouts.admin')
 @section('content')
     <style type="text/css">
         table {
@@ -72,7 +72,6 @@
                 flex-direction: column;
             }
         }
-
     </style>
     <h5 class="col-12 titulo_general_funcion">Glosario</h5>
     <div class="mt-5 card">
@@ -89,32 +88,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $glosarios as $glosario )
-                    <tr>
-                        <td>{{$glosario->numero}}</td>
-                        <td>{{$glosario->concepto}}</td>
-                        <td>{{$glosario->norma}}</td>
-                        <td>{{$glosario->definicion}}</td>
-                        <td>{{$glosario->explicacion}}</td>
-                        <td>
-                            <form action="{{ route('admin.glosarios.destroy', $glosario->id) }}" method="POST">
-                                <a href="{{ route('admin.glosarios.edit',$glosario->id )}}"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.glosarios.show',$glosario->id )}}"><i class="fas fa-eye"></i></a>
+                    @foreach ($glosarios as $glosario)
+                        <tr>
+                            <td>{{ $glosario->numero }}</td>
+                            <td>{{ $glosario->concepto }}</td>
+                            <td>{{ $glosario->norma }}</td>
+                            <td>{{ Str::limit($glosario->definicion, 60, '...') }}</td>
+                            <td>{{ Str::limit($glosario->explicacion, 60, '...') }}</td>
+                            <td>
+                                <form action="{{ route('admin.glosarios.destroy', $glosario->id) }}" method="POST">
+                                    <a href="{{ route('admin.glosarios.edit', $glosario->id) }}"><i
+                                            class="fas fa-edit"></i></a>
+                                    <a href="{{ route('admin.glosarios.show', $glosario->id) }}"><i
+                                            class="fas fa-eye"></i></a>
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" title="delete" style="border: none; background-color:transparent;">
-                                    <i class="fas fa-trash text-danger"></i>
+                                    <button type="submit" title="delete"
+                                        style="border: none; background-color:transparent;">
+                                        <i class="fas fa-trash text-danger"></i>
                                     </button>
-                            </form>
-                        </td>
-                    </tr>
+                                </form>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-
-
 @endsection
 @section('scripts')
     @parent

@@ -183,7 +183,7 @@
                                             </a>
                                         @endif
                                     @endcan
-                                    @can('control_documentar_visualizar documento')
+                                    @can('control_documentar_visualizar_documento')
                                         <a class="btn btn-sm" title="Visualizar Documento"
                                             href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

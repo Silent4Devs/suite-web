@@ -152,7 +152,7 @@
                 }
 
             ];
-            @can('auditoria_interna_create')
+            @can('auditoria_interna_agregar')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar auditoría interna',
@@ -165,7 +165,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('auditoria_interna_delete')
+            @can('auditoria_interna_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,

@@ -183,7 +183,6 @@ class ComunicacionSgiController extends Controller
     public function update(UpdateComunicacionSgiRequest $request, ComunicacionSgi $comunicacionSgi)
     {
         abort_if(Gate::denies('comunicados_generales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $request->validate([
             'descripcion' => 'required',
             'publicar_en' => 'required',

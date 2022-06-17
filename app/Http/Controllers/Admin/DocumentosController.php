@@ -462,7 +462,6 @@ class DocumentosController extends Controller
 
     public function renderHistoryReview(Documento $documento)
     {
-        abort_if(Gate::denies('documentos_history_reviews'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento->id)->get();
 
         return view('admin.documentos.history-reviews', compact('documento', 'revisiones'));
@@ -470,7 +469,6 @@ class DocumentosController extends Controller
 
     public function renderViewDocument(Documento $documento)
     {
-        abort_if(Gate::denies('documentos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $path_documento = $this->getPathDocumento($documento, 'storage');
 
         if (auth()->user()->empleado) {
@@ -641,7 +639,6 @@ class DocumentosController extends Controller
 
     public function renderHistoryVersions(Documento $documento)
     {
-        abort_if(Gate::denies('documentos_versiones'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
 
         return view('admin.documentos.versions-document', compact('documento', 'versiones'));

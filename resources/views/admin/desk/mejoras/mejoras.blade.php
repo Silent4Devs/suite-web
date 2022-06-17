@@ -38,9 +38,11 @@
 </div>
 
 <div class="datatable-fix" style="width: 100%;">
+    @can('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora')
     <div class="mb-3 text-right">
         <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/mejoras')}}">Crear reporte</a>
     </div>
+    @endcan
     {{-- @foreach($mejoras as $mejora)
         {{$mejora->mejoro}}
     @endforeach --}}
@@ -236,19 +238,19 @@
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                return `${row.mejoro.puesto}`;
+                                return `${row.mejoro?.puesto}`;
                             }
                         },
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                return `${row.mejoro.email}`;
+                                return `${row.mejoro?.email}`;
                             }
                         },
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                return `${row.mejoro.telefono}`;
+                                return `${row.mejoro?.telefono}`;
                             }
                         },
                         {
@@ -279,12 +281,16 @@
                                 let html =
                                     `
                 			<div class="botones_tabla">
-                				<a href="/admin/desk/${data}/mejoras-edit/"><i class="fas fa-edit"></i></a>`;
+                                @can('centro_atencion_mejoras_editar')
+                				<a href="/admin/desk/${data}/mejoras-edit/"><i class="fas fa-edit"></i></a>
+                                @endcan
+                                `;
 
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
-                                    html += `<button class="btn archivar" onclick='ArchivarMejora("/admin/desk/${data}/archivarMejoras"); return false;' style="margin-top:-10px">
+                                    html += `
+                                        <button class="btn archivar" onclick='ArchivarMejora("/admin/desk/${data}/archivarMejoras"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 				       					</div>`;

@@ -43,9 +43,9 @@ class VulnerabilidadController extends AppBaseController
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'analisis_de_riesgos_vulnerabilidades_edit';
-                $editGate = 'analisis_de_riesgos_vulnerabilidades_show';
-                $deleteGate = 'analisis_de_riesgos_vulnerabilidades_delete';
+                $viewGate = 'vulnerabilidades_ver';
+                $editGate = 'vulnerabilidades_editar';
+                $deleteGate = 'vulnerabilidades_eliminar';
                 $crudRoutePart = 'vulnerabilidads';
 
                 return view('partials.datatablesActions', compact(

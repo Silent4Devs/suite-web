@@ -37,7 +37,7 @@
 
     {{ Breadcrumbs::render('perfil-puesto') }}
     @can('puestos_agregar')
-        <h5 class="col-12 titulo_general_funcion">Perfiles de Puestos URIEL </h5>
+        <h5 class="col-12 titulo_general_funcion">Perfiles de Puestos</h5>
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">

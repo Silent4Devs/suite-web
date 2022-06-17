@@ -22,7 +22,7 @@ class MatrizRequisitoLegalesController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('matriz_requisito_legale_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_requisitos_legales_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado', 'evaluaciones')->orderBy('id')->get();
@@ -37,7 +37,7 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('matriz_requisito_legale_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_requisitos_legales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
         $empleados = Empleado::alta()->with('area')->get();
 
@@ -46,6 +46,7 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function store(StoreMatrizRequisitoLegaleRequest $request)
     {
+        abort_if(Gate::denies('matriz_requisitos_legales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRequisitoLegale = MatrizRequisitoLegale::create($request->all());
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -69,7 +70,7 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function edit(MatrizRequisitoLegale $matrizRequisitoLegale)
     {
-        abort_if(Gate::denies('matriz_requisito_legale_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_requisitos_legales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRequisitoLegale->load('team', 'planes', 'evidencias_matriz');
         // dd($matrizRequisitoLegale);
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
@@ -89,6 +90,7 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function update(UpdateMatrizRequisitoLegaleRequest $request, MatrizRequisitoLegale $matrizRequisitoLegale)
     {
+        abort_if(Gate::denies('matriz_requisitos_legales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRequisitoLegale->update($request->all());
         $files = $request->file('files');
         if ($request->hasFile('files')) {
@@ -112,7 +114,7 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function show(MatrizRequisitoLegale $matrizRequisitoLegale)
     {
-        abort_if(Gate::denies('matriz_requisito_legale_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_requisitos_legales_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $matrizRequisitoLegale->load('team', 'planes', 'evaluaciones');
         $requisito = $matrizRequisitoLegale->id;
@@ -125,7 +127,7 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function destroy(Request $request, MatrizRequisitoLegale $matrizRequisitoLegale)
     {
-        abort_if(Gate::denies('matriz_requisito_legale_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_requisitos_legales_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $eliminado = $matrizRequisitoLegale->delete();
             if ($eliminado) {

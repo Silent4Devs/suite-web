@@ -186,7 +186,7 @@
                                     @can('procesos_editar')
                                     <a href="{{ route('admin.procesos.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
                                     @endcan
-                                    @can('procesos_eliminar)
+                                    @can('procesos_eliminar')
                                    ${row.documento_id==null?` <button onclick="Eliminar(this)" data-url="{{ route('admin.procesos.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Ver"><i class="fas fa-trash-alt"></i></button>`:''}
                                    @endcan
                                 </div>

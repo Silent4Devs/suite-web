@@ -23,7 +23,7 @@ class AuditoriaInternaController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('auditoria_interna_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('auditoria_interna_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = AuditoriaInterna::with(['clausulas', 'lider', 'equipo', 'team'])->orderByDesc('id')->get();
@@ -33,9 +33,9 @@ class AuditoriaInternaController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'auditoria_interna_show';
-                $editGate = 'auditoria_interna_edit';
-                $deleteGate = 'auditoria_interna_delete';
+                $viewGate = 'auditoria_interna_ver';
+                $editGate = 'auditoria_interna_editar';
+                $deleteGate = 'auditoria_interna_eliminar';
                 $crudRoutePart = 'auditoria-internas';
 
                 return view('partials.datatablesActions', compact(
@@ -114,7 +114,7 @@ class AuditoriaInternaController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('auditoria_interna_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('auditoria_interna_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $clausulas = Clausula::all();
 
@@ -127,6 +127,8 @@ class AuditoriaInternaController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('auditoria_interna_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate([
 
             'lider_id' => 'required|exists:empleados,id',
@@ -142,7 +144,7 @@ class AuditoriaInternaController extends Controller
 
     public function edit(AuditoriaInterna $auditoriaInterna)
     {
-        abort_if(Gate::denies('auditoria_interna_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('auditoria_interna_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team');
 
@@ -157,6 +159,8 @@ class AuditoriaInternaController extends Controller
 
     public function update(UpdateAuditoriaInternaRequest $request, AuditoriaInterna $auditoriaInterna)
     {
+        abort_if(Gate::denies('auditoria_interna_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate([
 
             'lider_id' => 'required|exists:empleados,id',
@@ -171,16 +175,17 @@ class AuditoriaInternaController extends Controller
 
     public function show(AuditoriaInterna $auditoriaInterna)
     {
-        abort_if(Gate::denies('auditoria_interna_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('auditoria_interna_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditoriaInterna->load('clausulas', 'auditorlider', 'equipoauditoria', 'team');
 
+        // dd($auditoriaInterna);
         return view('admin.auditoriaInternas.show', compact('auditoriaInterna'));
     }
 
     public function destroy(AuditoriaInterna $auditoriaInterna)
     {
-        abort_if(Gate::denies('auditoria_interna_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('auditoria_interna_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditoriaInterna->delete();
 
@@ -196,7 +201,7 @@ class AuditoriaInternaController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('auditoria_interna_create') && Gate::denies('auditoria_interna_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('auditoria_interna_agregar') && Gate::denies('auditoria_interna_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new AuditoriaInterna();
         $model->id = $request->input('crud_id', 0);

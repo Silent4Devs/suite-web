@@ -34,9 +34,9 @@ class AnalisisdeRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'analisis_de_riesgos_matriz_riesgo_show';
-                $editGate = 'analisis_de_riesgos_matriz_riesgo_edit';
-                $deleteGate = 'analisis_de_riesgos_matriz_riesgo_delete';
+                $viewGate = 'matriz_de_riesgo_ver';
+                $editGate = 'matriz_de_riesgo_editar';
+                $deleteGate = 'matriz_de_riesgo_eliminar';
                 $crudRoutePart = 'analisis-riesgos';
 
                 return view('partials.datatablesActions', compact(

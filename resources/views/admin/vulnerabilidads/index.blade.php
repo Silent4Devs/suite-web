@@ -183,7 +183,7 @@
             dtButtons.push(btnExport);
             dtButtons.push(btnImport);
             @endcan
-            @can('sedes_eliminar')
+            @can('vulnerabilidades_eliminar')
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,

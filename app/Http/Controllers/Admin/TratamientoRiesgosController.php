@@ -20,7 +20,7 @@ class TratamientoRiesgosController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('tratamiento_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tratamiento_de_los_riesgos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = TratamientoRiesgo::with(['control', 'responsable', 'team'])->select(sprintf('%s.*', (new TratamientoRiesgo)->table))->orderByDesc('id');
@@ -30,9 +30,9 @@ class TratamientoRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'tratamiento_riesgo_show';
-                $editGate = 'tratamiento_riesgo_edit';
-                $deleteGate = 'tratamiento_riesgo_delete';
+                $viewGate = 'tratamiento_de_los_riesgos_ver';
+                $editGate = 'tratamiento_de_los_riesgos_editar';
+                $deleteGate = 'tratamiento_de_los_riesgos_eliminar';
                 $crudRoutePart = 'tratamiento-riesgos';
 
                 return view('partials.datatablesActions', compact(
@@ -99,7 +99,7 @@ class TratamientoRiesgosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('tratamiento_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tratamiento_de_los_riesgos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $controls = DeclaracionAplicabilidad::with('control')->get();
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -110,6 +110,8 @@ class TratamientoRiesgosController extends Controller
 
     public function store(StoreTratamientoRiesgoRequest $request)
     {
+        abort_if(Gate::denies('tratamiento_de_los_riesgos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // dd($request);
         $tratamientoRiesgo = TratamientoRiesgo::create($request->all());
         // dd($tratamientoRiesgo);
@@ -118,7 +120,7 @@ class TratamientoRiesgosController extends Controller
 
     public function edit($tratamientos)
     {
-        abort_if(Gate::denies('tratamiento_riesgo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tratamiento_de_los_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tratamientos = TratamientoRiesgo::find($tratamientos);
         $controls = DeclaracionAplicabilidad::with('control')->get();
@@ -130,6 +132,8 @@ class TratamientoRiesgosController extends Controller
 
     public function update(UpdateTratamientoRiesgoRequest $request, TratamientoRiesgo $tratamientoRiesgo)
     {
+        abort_if(Gate::denies('tratamiento_de_los_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $tratamientoRiesgo->update($request->all());
 
         return redirect()->route('admin.tratamiento-riesgos.index')->with('success', 'Editado con éxito');
@@ -137,7 +141,7 @@ class TratamientoRiesgosController extends Controller
 
     public function show(TratamientoRiesgo $tratamientoRiesgo)
     {
-        abort_if(Gate::denies('tratamiento_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tratamiento_de_los_riesgos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tratamientoRiesgo->load('control', 'responsable', 'team');
 
@@ -146,7 +150,7 @@ class TratamientoRiesgosController extends Controller
 
     public function destroy(TratamientoRiesgo $tratamientoRiesgo)
     {
-        abort_if(Gate::denies('tratamiento_riesgo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tratamiento_de_los_riesgos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tratamientoRiesgo->delete();
 

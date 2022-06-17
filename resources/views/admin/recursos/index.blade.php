@@ -39,7 +39,6 @@
 
     {{ Breadcrumbs::render('admin.recursos.index') }}
 
-    @can('recurso_create')
         <h5 class="col-12 titulo_general_funcion">Capacitaciones</h5>
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
@@ -48,7 +47,6 @@
                     'admin.vulnerabilidads.parseCsvImport'])
                 </div>
             </div>
-        @endcan
 
 
         @include('partials.flashMessages')

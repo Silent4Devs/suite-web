@@ -10,8 +10,8 @@
 
     .table tr td:nth-child(2){
     text-align:justify !important;
-    } 
-    
+    }
+
     .table tr th:nth-child(3){
     text-align:center !important;
     }
@@ -31,7 +31,7 @@
     .modal-body {
        padding: 0;
     }
-    
+
     .carousel-control-prev-icon {
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
         width: 30px;
@@ -42,59 +42,57 @@
         width: 30px;
         height: 48px;
     }
-    
+
     .carousel-control-next {
         top: 100px;
         height: 10px;
     }
-    
+
     .carousel-control-prev {
         height: 40px;
         top: 80px;
     }
-    
+
     .table tr td:nth-child(6){
-    
+
         max-width:415px !important;
         width:415px !important;
-    
+
     }
     /* se comento por que se descuadra la cabecera de la tabla y el registro */
     /* .table tr th:nth-child(6){
-    
+
         width:415px !important;
         max-width:415px !important;
     } */
-    
+
     .table tr td:nth-child(5){
-    
+
     text-align:justify !important;
-    
-    
+
+
     }
-    
+
     .table tr td:nth-child(10){
-    
+
         text-align: center;
-    
+
     }
-    
+
     .tamaño{
-    
+
         width:168px !important;
-    
+
     }
 </style>
 
     {{ Breadcrumbs::render('admin.control-accesos.index') }}
 
-    @can('control_acceso_create')
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Control de Acceso</strong></h3>
             </div>
-    @endcan
 
 
             @include('partials.flashMessages')

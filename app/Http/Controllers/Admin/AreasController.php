@@ -245,7 +245,7 @@ class AreasController extends Controller
 
     public function renderJerarquia(Request $request)
     {
-        abort_if(Gate::denies('organizacion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $numero_grupos = Grupo::count();
 
         $areasTree = Area::exists(); //Eager loading
@@ -264,7 +264,7 @@ class AreasController extends Controller
 
     public function obtenerJerarquia(Request $request)
     {
-        abort_if(Gate::denies('organizacion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
 
