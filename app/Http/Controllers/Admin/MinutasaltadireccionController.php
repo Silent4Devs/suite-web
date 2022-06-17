@@ -37,53 +37,6 @@ class MinutasaltadireccionController extends Controller
         abort_if(Gate::denies('revision_por_direccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Minutasaltadireccion::with(['responsable', 'team', 'participantes', 'planes'])->orderByDesc('id')->get();
-            // $table = Datatables::of($query);
-
-            // $table->addColumn('placeholder', '&nbsp;');
-            // $table->addColumn('actions', '&nbsp;');
-
-            // $table->editColumn('actions', function ($row) {
-            //     $viewGate      = 'minutasaltadireccion_show';
-            //     $editGate      = 'minutasaltadireccion_edit';
-            //     $deleteGate    = 'minutasaltadireccion_delete';
-            //     $crudRoutePart = 'minutasaltadireccions';
-            //     $planes = Minutasaltadireccion::find($row->id)->planes;
-            //     return view('partials.datatablesActions', compact(
-            //         'viewGate',
-            //         'editGate',
-            //         'deleteGate',
-            //         'crudRoutePart',
-            //         'row',
-            //         'planes',
-            //         'revisiones'
-            //     ));
-            // });
-
-            // $table->editColumn('id', function ($row) {
-            //     return $row->id ? $row->id : "";
-            // });
-            // $table->addColumn('tema_reunion', function ($row) {
-            //     return $row->tema_reunion ? $row->tema_reunion : '';
-            // });
-            // $table->editColumn('fechareunion', function ($row) {
-            //     return $row->fechareunion ? $row->fechareunion : "";
-            // });
-            // $table->addColumn('responsable', function ($row) {
-            //     return $row->responsable ? ['name' => $row->responsable->name, 'avatar' => $row->responsable->avatar] : '';
-            // });
-            // $table->editColumn('participantes', function ($row) {
-            //     return $row->participantes ? $row->participantes : "";
-            // });
-            // $table->editColumn('estatus', function ($row) {
-            //     return $row->estatus_formateado ? $row->estatus_formateado : "";
-            // });
-            // // $table->editColumn('archivo', function ($row) {
-            // //     return $row->archivo ? '<a href="' . $row->archivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            // // });
-
-            // $table->rawColumns(['actions', 'placeholder', 'responsable', 'archivo']);
-
-            // return $table->make(true);
             return datatables()->of($query)->toJson();
         }
 

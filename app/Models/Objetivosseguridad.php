@@ -36,10 +36,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class Objetivosseguridad extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'objetivosseguridads';
 
     protected $dates = ['deleted_at'];

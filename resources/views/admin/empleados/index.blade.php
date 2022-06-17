@@ -61,18 +61,7 @@
                 </div>
             </div>
         @endcan
-        <div class="d-flex justify-content-between">
-            @can('bd_empleados_borrar_seleccionados')
-            <div class="p-10">
-                <button id="eliminar_todo" class="btn btn-danger btn-sm"
-                    style="text-align: right;padding-right: 20px; background-color: red !important;"><i
-                        class="fa-solid fa-trash"></i> seleccionados</button>
-                <div class="spinner-grow hide" role="status" id="loaderDiv">
-                    <span class="sr-only">Loading...</span>
-                </div>
-                <span class="sr-only">Loading...</span>
-            </div>
-            @endcan
+        <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
             @can('bd_empleados_configurar_vista_datos')
             <div class="p-2">
                 <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"
@@ -456,10 +445,10 @@
                                     <a href="{{ route('admin.empleados.show', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-eye"></i></a>
                                     @endcan
                                     @can('bd_empleados_editar')
-                                    <a href="{{ route('admin.empleados.edit', ':id') }}" class="btn rounded-0" title="Ver"><i class="fas fa-edit"></i></a>
+                                    <a href="{{ route('admin.empleados.edit', ':id') }}" class="btn rounded-0" title="Editar"><i class="fas fa-edit"></i></a>
                                    @endcan
                                    @can('bd_empleados_dar_de_baja')
-                                    <button onclick="DarDeBaja(this,'${row.name}','${row.avatar_ruta}')" data-url="{{ route('admin.empleados.destroy', ':id') }}" class="btn rounded-0 text-danger" title="Dar de Baja"><i class="fa-solid fa-user-xmark"></i></button>
+                                    <a  class="btn rounded-0" title="Dar de Baja" href="{{ route('admin.empleado.solicitud-baja',':id') }}"><i class="fas fa-trash-alt text-danger"></i></a>
                                    @endcan
                                 </div>
                             `;

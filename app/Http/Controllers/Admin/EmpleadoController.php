@@ -63,86 +63,6 @@ class EmpleadoController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // if ($request->ajax()) {
-        //     $query = Empleado::orderByDesc('id')->get();
-        //     $table = DataTables::of($query);
-
-        //     $table->addColumn('placeholder', '&nbsp;');
-        //     $table->addColumn('actions', '&nbsp;');
-        //     $table->addIndexColumn();
-
-        // $table->editColumn('actions', function ($row) {
-        //     $viewGate = 'bd_empleados_ver';
-        //     $editGate = 'bd_empleados_editar';
-        //     $deleteGate = 'bd_empleados_borrar_seleccionados';
-        //     $crudRoutePart = 'empleados';
-
-        //             return view('partials.datatablesActions', compact(
-        //                 'viewGate',
-        //                 'editGate',
-        //                 'deleteGate',
-        //                 'crudRoutePart',
-        //                 'row'
-        //             ));
-        //         });
-
-        //         $table->editColumn('checkbox', function ($row) {
-        //             return $row->id ? $row->id : '';
-        //         });
-        //         $table->editColumn('id', function ($row) {
-        //             return $row->id ? $row->id : '';
-        //         });
-        //         $table->editColumn('name', function ($row) {
-        //             return $row->name ? $row->name : '';
-        //         });
-
-        //         $table->editColumn('avatar', function ($row) {
-        //             return $row->avatar ? $row->avatar : '';
-        //         });
-
-        //         $table->editColumn('area', function ($row) {
-        //             return $row->area ? $row->area->area : '';
-        //         });
-        //         $table->editColumn('puesto', function ($row) {
-        //             return $row->puesto ? $row->puesto : '';
-        //         });
-        //         $table->editColumn(
-        //             'jefe',
-        //             function ($row) {
-        //                 return $row->supervisor ? $row->supervisor->name : '';
-        //             }
-        //         );
-        //         $table->editColumn('antiguedad', function ($row) {
-        //             return $row->obtener_antiguedad;
-        //             return Carbon::parse(Carbon::parse($row->obtener_antiguedad))->diffForHumans(Carbon::now()->subDays());
-        //         });
-        //         $table->editColumn('estatus', function ($row) {
-        //             return $row->estatus ? $row->estatus : '';
-        //         });
-        //         $table->editColumn('email', function ($row) {
-        //             return $row->email ? $row->email : '';
-        //         });
-
-        //         $table->editColumn('telefono', function ($row) {
-        //             return $row->telefono ? $row->telefono : '';
-        //         });
-
-        //         $table->editColumn('n_empleado', function ($row) {
-        //             return $row->n_empleado ? $row->n_empleado : '';
-        //         });
-
-        //         $table->editColumn('n_registro', function ($row) {
-        //             return $row->n_registro ? $row->n_registro : '';
-        //         });
-
-        //         $table->editColumn('sede', function ($row) {
-        //             return $row->sede ? $row->sede->sede : '';
-        //         });
-
-        //         $table->rawColumns(['actions', 'placeholder']);
-
-        //         return $table->make(true);
-        // }
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
 
@@ -1063,10 +983,10 @@ class EmpleadoController extends Controller
                 'evidencia_viejo_id' => $doc_empleado_id,
             ]);
         }
-
+        $organizacion = Organizacion::first();
         // dd($lista_docs);
 
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado'));
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado', 'organizacion'));
     }
 
     public function expedienteUpdate(Request $request)

@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .dotverde {
             height: 15px;
@@ -102,7 +101,6 @@
             box-shadow: 0 6px 0 #a1a1a1, 0 8px 10px rgba(0, 0, 0, .75);
 
         }
-
     </style>
 
     {{ Breadcrumbs::render('admin.objetivosseguridads.create') }}
@@ -140,7 +138,7 @@
                                         <option value="">Seleccione un responsable</option>
                                         @foreach ($responsables as $responsable)
                                             <option value="{{ $responsable->id }}">
-                                                {{ $responsable->name }} </option>
+                                                {{ $responsable->name }}{{ $responsable->id }} </option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('responsable_id'))
@@ -153,9 +151,10 @@
 
                         </div>
                         <div class="form-group">
-                            <label for="objetivoseguridad"><i class="fas fa-file-signature iconos-crear"></i>Objetivo</label>
-                            <textarea class="form-control {{ $errors->has('objetivoseguridad') ? 'is-invalid' : '' }}"
-                                name="objetivoseguridad" id="objetivoseguridad">{{ old('objetivoseguridad') }}</textarea>
+                            <label for="objetivoseguridad"><i
+                                    class="fas fa-file-signature iconos-crear"></i>Objetivo</label>
+                            <textarea class="form-control {{ $errors->has('objetivoseguridad') ? 'is-invalid' : '' }}" name="objetivoseguridad"
+                                id="objetivoseguridad">{{ old('objetivoseguridad') }}</textarea>
                             @if ($errors->has('objetivoseguridad'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('objetivoseguridad') }}
@@ -171,8 +170,8 @@
                                     <label class="required" for="rojo"><span class="dotred"></span> De 0 a
                                         <span id="textorojo"></span></label>
                                     <input class="form-control {{ $errors->has('rojo') ? 'is-invalid' : '' }}"
-                                        type="number" name="rojo" id="rojo" value="{{ old('rojo', '') }}" min="0"
-                                        required>
+                                        type="number" name="rojo" id="rojo" value="{{ old('rojo', '') }}"
+                                        min="0" required>
                                     @if ($errors->has('rojo'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('rojo') }}
@@ -202,9 +201,9 @@
                                 <label class="required" for="verde">
                                     <span class="dotverde"></span>
                                     De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
-                                <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}" type="number"
-                                    name="verde" id="verde" value="{{ old('verde', '') }}" placeholder="" min=""
-                                    required>
+                                <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}"
+                                    type="number" name="verde" id="verde" value="{{ old('verde', '') }}"
+                                    placeholder="" min="" required>
                                 @if ($errors->has('verde'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('verde') }}
@@ -234,7 +233,8 @@
                                     <label class="required" for="meta"><i
                                             class="fas fa-flag-checkered iconos-crear"></i></i></i>Meta</label>
                                     <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}"
-                                        type="text" name="meta" id="meta" value="{{ old('meta', '') }}" required>
+                                        type="text" name="meta" id="meta" value="{{ old('meta', '') }}"
+                                        required>
                                     @if ($errors->has('meta'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('meta') }}
@@ -249,8 +249,8 @@
                                     <label class="required" for="frecuencia"><i
                                             class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
                                     <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}"
-                                        type="text" name="frecuencia" id="frecuencia" value="{{ old('frecuencia', '') }}"
-                                        required>
+                                        type="text" name="frecuencia" id="frecuencia"
+                                        value="{{ old('frecuencia', '') }}" required>
                                     @if ($errors->has('frecuencia'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('frecuencia') }}
@@ -280,7 +280,8 @@
                                 <label class="required" for="ano"><i
                                         class="fas fa-calendar-alt iconos-crear"></i>Año</label>
                                 <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}"
-                                    type="text" name="ano" id="ano" value="{{ old('ano', '') }}" required>
+                                    type="text" name="ano" id="ano" value="{{ old('ano', '') }}"
+                                    required>
                                 @if ($errors->has('ano'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('ano') }}
@@ -290,8 +291,8 @@
                             </div>
                         </div>
                         <h4 class="text-primary">Generación de fórmula</h4>
-                        <input id="formula" name="formula" class="form-control" type="text" placeholder="Formula generada"
-                            required><br>
+                        <input id="formula" name="formula" class="form-control" type="text"
+                            placeholder="Formula generada" required><br>
                         {{-- <button class="btn btn-info" id="abrir_generador">Abrir generador</button>&nbsp;&nbsp; --}}
                         <hr>
 
@@ -333,7 +334,8 @@
                                             value="Añadir una variable:" disabled>
                                     </div>
                                     <div class="mb-2 form-group mx-sm-3">
-                                        <input id="variable" class="form-control" type="text" placeholder="Variable"><br>
+                                        <input id="variable" class="form-control" type="text"
+                                            placeholder="Variable"><br>
                                     </div>
                                     <button id="añadir" class="btn btn-success" type="button">Añadir</button>
                                 </div>
@@ -353,8 +355,7 @@
 
                     <div class="form-group">
                         <div class="text-right form-group col-12" style="margin-left:15px;">
-                            <a href="{{ redirect()->getUrlGenerator()->previous() }}"
-                                class="btn_cancelar">Cancelar</a>
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
@@ -506,5 +507,4 @@
             });
         });
     </script>
-
 @endsection

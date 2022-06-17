@@ -2472,19 +2472,15 @@
                                 data.message,
                                 '',
                                 'success',
-                            )
-                            if (data.from == 'curriculum') {
-                                setTimeout(() => {
-                                    window.location.href =
-                                        "{{ route('admin.miCurriculum', $empleado) }}";
-                                }, 1500);
-                            } else if (data.from == 'rh') {
-                                setTimeout(() => {
+                            ).then(()=>{
+                                if (data.from == 'curriculum') {                               
+                                window.location.href =
+                                    "{{ route('admin.miCurriculum', $empleado) }}";                               
+                                } else if (data.from == 'rh') {
                                     window.location.href =
                                         "{{ route('admin.empleados.index') }}";
-                                }, 1500);
-
-                            }
+                                }
+                            });                            
                         }
                     })
                     .catch(error => {
