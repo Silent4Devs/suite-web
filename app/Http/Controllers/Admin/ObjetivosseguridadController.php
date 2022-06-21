@@ -89,6 +89,7 @@ class ObjetivosseguridadController extends Controller
         abort_if(Gate::denies('objetivos_del_sistema_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsables = Empleado::alta()->with('area', 'puesto')->get();
         $tiposObjetivosSistemas = TiposObjetivosSistema::get();
+
         return view('admin.objetivosseguridads.create', compact('responsables', 'tiposObjetivosSistemas'));
     }
 
@@ -106,6 +107,7 @@ class ObjetivosseguridadController extends Controller
 
         $responsables = Empleado::alta()->get();
         $tiposObjetivosSistemas = TiposObjetivosSistema::get();
+
         return view('admin.objetivosseguridads.edit', compact('objetivosseguridad', 'responsables', 'tiposObjetivosSistemas'));
     }
 

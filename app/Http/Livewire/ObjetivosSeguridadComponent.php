@@ -61,6 +61,7 @@ class ObjetivosSeguridadComponent extends Component
         $data = [];
         $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
             $data[$value->variable] = null;
+
             return $data;
         })->toArray();
     }
@@ -91,10 +92,10 @@ class ObjetivosSeguridadComponent extends Component
         }
 
         $formula_sustitucion = str_replace('$', '__', $formula_sustitucion);
-        $formula_final = "";
+        $formula_final = '';
         foreach ($variables as $idx => $var) {
             $var = str_replace('$', '__', $var);
-            if ($formula_final != "") {
+            if ($formula_final != '') {
                 $formula_final = preg_replace("/\b{$var}\b/", $valores[$idx], $formula_final);
             } else {
                 $formula_final = preg_replace("/\b{$var}\b/", $valores[$idx], $formula_sustitucion);
@@ -137,10 +138,10 @@ class ObjetivosSeguridadComponent extends Component
         }
 
         $formula_sustitucion = str_replace('$', '__', $formula_sustitucion);
-        $formula_final = "";
+        $formula_final = '';
         foreach ($variables as $idx => $var) {
             $var = str_replace('$', '__', $var);
-            if ($formula_final != "") {
+            if ($formula_final != '') {
                 $formula_final = preg_replace("/\b{$var}\b/", $valores[$idx], $formula_final);
             } else {
                 $formula_final = preg_replace("/\b{$var}\b/", $valores[$idx], $formula_sustitucion);
