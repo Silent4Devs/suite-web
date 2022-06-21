@@ -4,7 +4,7 @@
     {{ Breadcrumbs::render('admin.objetivosseguridads.index') }}
 
     @can('objetivos_del_sistema_agregar')
-    <h5 class="col-12 titulo_general_funcion">Objetivos del Sistema</h5>
+    <h5 class="col-12 titulo_general_funcion">Objetivos</h5>
         <div class="mt-5 card">
         @endcan
 
@@ -17,7 +17,7 @@
                             {{ trans('cruds.objetivosseguridad.fields.id') }}
                         </th>
                         <th style="min-width:450px !important;">
-                            Objetivos&nbsp;del&nbsp;sistema
+                            Objetivos
                         </th>
                         <th style="min-width:150px !important;">
                             {{ trans('cruds.objetivosseguridad.fields.indicador') }}
@@ -228,7 +228,7 @@
                             @can('objetivos_del_sistema_vinculo')
                             <div class="text-center w-100"><a href="evaluaciones-objetivosShow/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a></div>
                             @endcan`;
-                            
+
                         }
                     },
                     {

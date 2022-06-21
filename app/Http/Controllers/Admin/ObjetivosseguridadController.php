@@ -86,8 +86,7 @@ class ObjetivosseguridadController extends Controller
     public function create()
     {
         abort_if(Gate::denies('objetivos_del_sistema_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $responsables = Empleado::alta()->get();
-
+        $responsables = Empleado::alta()->with('area', 'puesto')->get();
         return view('admin.objetivosseguridads.create', compact('responsables'));
     }
 
