@@ -91,6 +91,7 @@
                     <div class="mt-2 form-group col-4">
                         <label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
                         <select name="empleado_denunciado_id" class="form-control" id="select_empleado_denunciado">
+                            <option value="" selected disabled>Selecciona una opción</option>
                             @foreach ($empleados as $empleado)
                                 <option value="{{ $empleado->id }}" data-puesto="{{ $empleado->puesto }}"
                                     data-area="{{ $empleado->area->area }}">{{ $empleado->name }}</option>

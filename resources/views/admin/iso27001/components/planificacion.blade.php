@@ -67,7 +67,7 @@
             <li><a href="{{ route('admin.objetivosseguridads.index') }}">
                     <div>
                         <i class="bi bi-shield-lock"></i> <br>
-                        Objetivos del sistema
+                        Objetivos
                     </div>
                 </a></li>
         @endcan
