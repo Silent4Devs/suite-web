@@ -23,6 +23,7 @@ class TiposObjetivosSistemaController extends Controller
     public function getDataForDataTable()
     {
         $tipos = TiposObjetivosSistema::all();
+
         return datatables()->of($tipos)->toJson();
     }
 
@@ -35,6 +36,7 @@ class TiposObjetivosSistemaController extends Controller
     {
         // abort_if(Gate::denies('tipo_objetivo_sistema_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tiposObjetivosSistema = new TiposObjetivosSistema();
+
         return view('admin.tipos_objetivos_sistema.create', compact('tiposObjetivosSistema'));
     }
 
@@ -62,6 +64,7 @@ class TiposObjetivosSistemaController extends Controller
         ]);
 
         $tipoObjetivoSistema = TiposObjetivosSistema::create($request->all());
+
         return redirect()->route('admin.tipos-objetivos.index')->with('success', 'Tipo de objetivo del sistema creado con éxito');
     }
 
@@ -87,7 +90,7 @@ class TiposObjetivosSistemaController extends Controller
     public function edit($tiposObjetivosSistema)
     {
         $tiposObjetivosSistema = TiposObjetivosSistema::find($tiposObjetivosSistema);
-        //  abort_if(Gate::denies('tipo_objetivo_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');        
+        //  abort_if(Gate::denies('tipo_objetivo_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.tipos_objetivos_sistema.edit', compact('tiposObjetivosSistema'));
     }
 
@@ -116,6 +119,7 @@ class TiposObjetivosSistemaController extends Controller
         ]);
 
         $tiposObjetivosSistema->update($request->all());
+
         return redirect()->route('admin.tipos-objetivos.index')->with('success', 'Tipo de objetivo del sistema actualizado con éxito');
     }
 
@@ -129,6 +133,7 @@ class TiposObjetivosSistemaController extends Controller
     {
         $tiposObjetivosSistema = TiposObjetivosSistema::find($tiposObjetivosSistema);
         $tiposObjetivosSistema->delete();
+
         return response()->json(['success' => 'Tipo de objetivo del sistema eliminado con éxito', 'status' => 200]);
     }
 }

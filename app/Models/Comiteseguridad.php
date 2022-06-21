@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
-use Carbon\Carbon;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,7 +11,6 @@ class Comiteseguridad extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
     public $table = 'comite_seguridad';
-
 
     protected $fillable = [
         'nombre_comite',
@@ -27,6 +24,4 @@ class Comiteseguridad extends Model
     {
         return $this->belongsToMany(Empleado::class, 'miembros_comite_seguridad', 'comite_id', 'id_asignada')->alta()->with('area');
     }
-
-    
 }

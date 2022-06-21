@@ -13,9 +13,7 @@ class AlterComiteseguridadsTable extends Migration
      */
     public function up()
     {
-        
-            Schema::rename('comiteseguridads', 'miembros_comite_seguridad');
-        
+        Schema::rename('comiteseguridads', 'miembros_comite_seguridad');
     }
 
     /**
