@@ -93,4 +93,9 @@ class Objetivosseguridad extends Model
     {
         return $this->hasMany(EvaluacionObjetivo::class, 'id_objetivo');
     }
+
+    public function tipo_objetivo_sistema()
+    {
+        return $this->belongsTo(TiposObjetivosSistema::class, 'tipo_objetivo_sistema_id');
+    }
 }
