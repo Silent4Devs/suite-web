@@ -53,36 +53,34 @@ class CreateMiembrosComiteSeguridad extends Component
             'responsabilidades'=> $this->responsabilidades,
             'comite_id'=> $this->id_comite,
         ]);
-      
-        $this->reset('nombre_rol','colaborador','fecha_vigor','responsabilidades');
+
+        $this->reset('nombre_rol', 'colaborador', 'fecha_vigor', 'responsabilidades');
         $this->emit('render');
         $this->emit('cerrar-modal', ['editar' => false]);
     }
 
     public function edit($id)
     {
-      
         $this->view = 'edit';
         $model = MiembrosComiteSeguridad::find($id);
         // dd($model);
         $this->nombre_rol = $model->nombrerol;
-        $this->fecha_vigor =Carbon::parse( $model->fechavigor)->format('Y-m-d');
+        $this->fecha_vigor = Carbon::parse($model->fechavigor)->format('Y-m-d');
         $this->colaborador = $model->id_asignada;
         $this->responsabilidades = $model->responsabilidades;
         $this->id_comite = $model->comite_id;
         $this->miembroID = $model->id;
         $this->emit('abrir-modal');
-        $this->emit('cargar-puesto',$id);
+        $this->emit('cargar-puesto', $id);
     }
 
     public function default()
     {
-
         $this->nombre_rol = '';
         $this->fecha_vigor = '';
         $this->colaborador = '';
         $this->responsabilidades = '';
-      
+
         $this->view = 'create';
     }
 
@@ -112,6 +110,7 @@ class CreateMiembrosComiteSeguridad extends Component
     public function render()
     {
         $empleados = Empleado::alta()->with('area')->get();
+
         return view('livewire.create-miembros-comite-seguridad', compact('empleados'));
     }
 }

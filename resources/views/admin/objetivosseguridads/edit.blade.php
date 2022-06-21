@@ -112,7 +112,7 @@
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-                <div class="mt-4 card">
+                <div>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-sm-6">

@@ -81,8 +81,8 @@ class ComiteseguridadController extends Controller
         // $empleados = Empleado::alta()->with('area')->get();
         // return view('admin.comiteseguridads.create', compact('personaasignadas', 'empleados'));
         $id = new Comiteseguridad();
+
         return view('admin.comiteseguridads.create', compact('id'));
-        
     }
 
     public function store(Request $request)
@@ -91,24 +91,23 @@ class ComiteseguridadController extends Controller
         // $comiteseguridad = Comiteseguridad::create($request->all());
         // // dd($comiteseguridad);
         // return redirect()->route('admin.comiteseguridads.index')->with('success', 'Guardado con éxito');
-       
+
         $comiteseguridad = Comiteseguridad::create($request->all());
         // $id = $request->id;
-     
-        
+
         return redirect()->route('admin.comiteseguridads.edit', ['comiteseguridad'=>$comiteseguridad]);
     }
 
     public function edit(Request $request, $comiteseguridad)
     {
         abort_if(Gate::denies('comformacion_comite_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $comiteseguridad= Comiteseguridad::find($comiteseguridad);
+        $comiteseguridad = Comiteseguridad::find($comiteseguridad);
         // $personaasignadas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // $comiteseguridad->load('team');
         // $empleados = Empleado::alta()->with('area')->get();
         // return view('admin.comiteseguridads.edit', compact('personaasignadas', 'comiteseguridad', 'empleados'));
 
-        return view('admin.comiteseguridads.edit',compact('comiteseguridad'));
+        return view('admin.comiteseguridads.edit', compact('comiteseguridad'));
     }
 
     public function update(UpdateComiteseguridadRequest $request, Comiteseguridad $comiteseguridad)
@@ -124,10 +123,10 @@ class ComiteseguridadController extends Controller
         abort_if(Gate::denies('comformacion_comite_seguridad_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($comiteseguridad);
         $datas = MiembrosComiteSeguridad::where('comite_id', '=', $comiteseguridad->id)->with('asignacion')->get();
-     
+
         $comiteseguridad->load('miembros');
 
-        return view('admin.comiteseguridads.show', compact('comiteseguridad','datas'));
+        return view('admin.comiteseguridads.show', compact('comiteseguridad', 'datas'));
     }
 
     public function destroy(Comiteseguridad $comiteseguridad)

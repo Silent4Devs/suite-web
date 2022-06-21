@@ -225,19 +225,7 @@
                     [0, 'desc']
                 ]
             };
-            let table = $('.datatable-Objetivosseguridad').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+            let table = $('.datatable-Objetivosseguridad').DataTable(dtOverrideGlobals);       
         });
     </script>
 @endsection

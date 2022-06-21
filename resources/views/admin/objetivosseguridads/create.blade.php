@@ -110,7 +110,7 @@
             <form method="POST" action="{{ route('admin.objetivosseguridads.store') }}" enctype="multipart/form-data"
                 class="row">
                 @csrf
-                <div class="mt-4 card">
+                <div>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-sm-6">

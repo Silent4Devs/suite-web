@@ -13,6 +13,7 @@ class ShowMiembrosComiteSeguridad extends Component
     public function render()
     {
         $datas = MiembrosComiteSeguridad::where('comite_id', '=', $this->id_comite)->get();
-        return view('livewire.show-miembros-comite-seguridad',compact('datas'));
+
+        return view('livewire.show-miembros-comite-seguridad', compact('datas'));
     }
 }

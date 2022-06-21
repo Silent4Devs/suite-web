@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class  MiembrosComiteSeguridad extends Model
+class MiembrosComiteSeguridad extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
     public $table = 'miembros_comite_seguridad';
@@ -61,8 +61,9 @@ class  MiembrosComiteSeguridad extends Model
     {
         return $this->belongsTo(Empleado::class, 'id_asignada', 'id')->alta();
     }
+
     public function miembrosComite()
     {
-        return $this->belongsTo(MiembrosComiteSeguridad::class, 'comite_id');
+        return $this->belongsTo(self::class, 'comite_id');
     }
 }
