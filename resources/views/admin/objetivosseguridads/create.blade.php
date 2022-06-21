@@ -116,12 +116,15 @@
                             <div class="form-group col-sm-6">
                                 <label class="required" for="tipo"><i
                                         class="fas fa-file-signature iconos-crear"></i></i>Tipo</label>
-                                <input class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" type="text"
-                                    name="tipo" id="tipo" value="{{ old('tipo', '') }}"
-                                   required>
-                                @if ($errors->has('tipo'))
+                                <select class="form-control" id="tipo_id" name="tipo_objetivo_sistema_id" class="select2">
+                                    <option value="" selected disabled>-- Selecciona una opción --</option>
+                                    @foreach ($tiposObjetivosSistemas as $tipo)
+                                        <option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('tipo_objetivo_sistema_id'))
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('tipo') }}
+                                        {{ $errors->first('tipo_objetivo_sistema_id') }}
                                     </div>
                                 @endif
                                 <span class="help-block"></span>
@@ -149,10 +152,12 @@
                                             class="fas fa-user-tie iconos-crear"></i>Responsable</label>
                                     <select
                                         class="form-control select2 {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
-                                        name='responsable_id' id='responsable_id' >
+                                        name='responsable_id' id='responsable_id'>
                                         <option value="">Seleccione un responsable</option>
                                         @foreach ($responsables as $responsable)
-                                            <option value="{{ $responsable->id }}" data-area="{{$responsable->area->area}}" data-puesto="{{$responsable->puesto}}">
+                                            <option value="{{ $responsable->id }}"
+                                                data-area="{{ $responsable->area->area }}"
+                                                data-puesto="{{ $responsable->puesto }}">
                                                 {{ $responsable->name }}{{ $responsable->id }} </option>
                                         @endforeach
                                     </select>
@@ -166,13 +171,13 @@
 
                             <div class="form-group col-md-4">
                                 <label><i class="fas fa-briefcase iconos-crear"></i>Puesto<sup>*</sup></label>
-                                <div class="form-control" id="responsable_puesto" readonly ></div>
+                                <div class="form-control" id="responsable_puesto" readonly></div>
                             </div>
 
 
                             <div class="form-group col-sm-12 col-md-4 col-lg-4">
                                 <label><i class="fas fa-street-view iconos-crear"></i>Área<sup>*</sup></label>
-                                <div class="form-control" id="responsable_area" readonly ></div>
+                                <div class="form-control" id="responsable_area" readonly></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -413,11 +418,11 @@
         }
 
         function recortarTexto(texto, length = 30) {
-        let trimmedString = texto?.length > length ?
-            texto.substring(0, length - 3) + "..." :
-            texto;
-        return trimmedString;
-    }
+            let trimmedString = texto?.length > length ?
+                texto.substring(0, length - 3) + "..." :
+                texto;
+            return trimmedString;
+        }
     </script>
     <script>
         //script para rangos de valores
@@ -554,6 +559,67 @@
             $("#calculadora_generador").show("slow", function() {
                 window.scrollTo(0, document.body.scrollHeight);
                 $("#abrir_generador").hide();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#tipo_id').select2({
+                placeholder: "Seleccione un tipo",
+                allowClear: true,
+                theme: "bootstrap4"
+            });
+
+            CKEDITOR.replace('objetivoseguridad', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
+
+                ]
             });
         });
     </script>

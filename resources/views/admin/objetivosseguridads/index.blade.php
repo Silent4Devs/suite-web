@@ -13,9 +13,9 @@
             <table class="table table-bordered datatable-Objetivosseguridad" style="width: 100%">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.objetivosseguridad.fields.id') }}
-                        </th>
+                        </th> --}}
                         <th style="min-width:450px !important;">
                             Objetivos
                         </th>
@@ -43,24 +43,7 @@
                         <th>
                             Opciones
                         </th>
-                    </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
+                    </tr>                 
                 </thead>
             </table>
         </div>
@@ -188,10 +171,11 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.objetivosseguridads.index') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
+                columns: [
+                    // {
+                    //     data: 'id',
+                    //     name: 'id'
+                    // },
                     {
                         data: 'objetivoseguridad',
                         name: 'objetivoseguridad'

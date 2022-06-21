@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($evaluaciones as $evaluacion)
+        @forelse ($evaluaciones as $evaluacion)
             <tr>
                 <td>{{ $evaluacion->evaluacion }}</td>
                 <td>
@@ -17,13 +17,14 @@
                 </td>
                 <td>
                     @if ($evaluacion->resultado >= $objetivos->verde)
-                        <span class="dotverde"></span>&nbsp;&nbsp;&nbsp;{{ $evaluacion->resultado . $objetivos->unidadmedida }}
-                    @elseif ($evaluacion->resultado >= $objetivos->amarillo && $evaluacion->resultado <
-                            $objetivos->verde)
-                            <span class="dotyellow"></span>&nbsp;&nbsp;&nbsp;
-                            {{ $evaluacion->resultado . $objetivos->unidadmedida }}
-                        @else
-                            <span class="dotred"></span>&nbsp;&nbsp;&nbsp;{{ $evaluacion->resultado . $objetivos->unidadmedida }}
+                        <span
+                            class="dotverde"></span>&nbsp;&nbsp;&nbsp;{{ $evaluacion->resultado . ' ' . $objetivos->unidadmedida }}
+                    @elseif ($evaluacion->resultado >= $objetivos->amarillo && $evaluacion->resultado < $objetivos->verde)
+                        <span class="dotyellow"></span>&nbsp;&nbsp;&nbsp;
+                        {{ $evaluacion->resultado . ' ' . $objetivos->unidadmedida }}
+                    @else
+                        <span
+                            class="dotred"></span>&nbsp;&nbsp;&nbsp;{{ $evaluacion->resultado . ' ' . $objetivos->unidadmedida }}
                     @endif
 
                 </td>
@@ -34,12 +35,17 @@
 
                 </td>
                 <td>
-                    <button wire:click="delete({{ $evaluacion->id }})" class="btn btn-info" style="background-color: red !important; border: none !important; opacity: 0.7;">
+                    <button wire:click="delete({{ $evaluacion->id }})" class="btn btn-info"
+                        style="background-color: red !important; border: none !important; opacity: 0.7;">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </td>
 
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan="5" style="text-align-last:center">No hay evaluaciones</td>
+            </tr>
+        @endforelse
     </tbody>
 </table>
