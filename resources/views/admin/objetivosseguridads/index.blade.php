@@ -7,6 +7,10 @@
     <h5 class="col-12 titulo_general_funcion">Objetivos</h5>
         <div class="mt-5 card">
         @endcan
+            <div class="text-right mt-5 mr-5">
+                <a class="btn btn-danger" href="{{ asset('admin/objetivos/dashboard') }}">Dashboard</a>
+            </div>
+
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -43,7 +47,7 @@
                         <th>
                             Opciones
                         </th>
-                    </tr>                 
+                    </tr>
                 </thead>
             </table>
         </div>

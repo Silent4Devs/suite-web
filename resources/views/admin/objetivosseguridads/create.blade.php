@@ -116,18 +116,16 @@
                             <div class="form-group col-sm-6">
                                 <label class="required" for="tipo"><i
                                         class="fas fa-file-signature iconos-crear"></i></i>Tipo</label>
-                                <select class="form-control" id="tipo_id" name="tipo_objetivo_sistema_id" class="select2">
-                                    <option value="" selected disabled>-- Selecciona una opción --</option>
-                                    @foreach ($tiposObjetivosSistemas as $tipo)
-                                        <option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has('tipo_objetivo_sistema_id'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('tipo_objetivo_sistema_id') }}
-                                    </div>
-                                @endif
-                                <span class="help-block"></span>
+                                <div style="float: right;">
+                                    <button id="btnAgregarTipo" onclick="event.preventDefault();"
+                                        class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+                                        data-toggle="modal" data-target="#tipoCompetenciaModal" data-whatever="@mdo"
+                                        data-whatever="@mdo" title="Agregar Tipo Impacto"><i
+                                            class="fas fa-plus"></i></button>
+                                </div>
+                                @livewire('tipo-component')
+                                @livewire('tipo-select-component')
+
                             </div>
                             <div class="form-group col-sm-6">
                                 <label class="required" for="indicador"><i
