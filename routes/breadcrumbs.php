@@ -179,6 +179,10 @@ Breadcrumbs::for('admin.objetivosseguridads.create', function ($trail) {
     $trail->parent('admin.objetivosseguridads.index');
     $trail->push('Formulario', route('admin.objetivosseguridads.create'));
 });
+Breadcrumbs::for('admin.objetivos-seguridad-dashboard', function ($trail) {
+    $trail->parent('admin.objetivosseguridads.index');
+    $trail->push('Dashboard', route('admin.objetivos-seguridad-dashboard'));
+});
 Breadcrumbs::for('admin.CalendarioFestivo.index', function ($trail) {
     $trail->parent('capital-humano');
     $trail->push('Calendario y Comunicación');

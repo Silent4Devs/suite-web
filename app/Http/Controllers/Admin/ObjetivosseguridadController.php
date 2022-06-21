@@ -191,4 +191,9 @@ class ObjetivosseguridadController extends Controller
         return view('admin.objetivosseguridads.evaluacion')
             ->with('objetivos', $objetivos);
     }
+
+    public function objetivosDashboard()
+    {
+        return view ('admin.objetivosseguridads.dashboard');
+    }
 }
