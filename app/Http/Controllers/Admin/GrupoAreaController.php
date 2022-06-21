@@ -58,7 +58,7 @@ class GrupoAreaController extends Controller
 
     public function show(Grupo $grupoarea)
     {
-        abort_if(Gate::denies('configuracion_grupoarea_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_grupo_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $grupoarea->load('team');
 

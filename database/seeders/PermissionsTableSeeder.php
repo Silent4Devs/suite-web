@@ -3655,6 +3655,10 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario eliminar registros',
             ],
             [
+                'title' => 'crear_grupo_ver',
+                'name' => 'Este permiso permite al usuario eliminar registros',
+            ],
+            [
                 'title' => 'crear_area_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Crear Area"',
             ],

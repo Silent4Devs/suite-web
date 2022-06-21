@@ -12,52 +12,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Comiteseguridad extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    public $table = 'comiteseguridads';
+    public $table = 'comite_seguridad';
 
-    public static $searchable = [
-        'nombrerol',
-    ];
-
-    protected $dates = [
-        'fechavigor',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
 
     protected $fillable = [
-        'nombrerol',
-        'id_asignada',
-        'fechavigor',
-        'responsabilidades',
+        'nombre_comite',
+        'descripcion',
         'created_at',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
+    public function miembros()
     {
-        return $date->format('Y-m-d H:i:s');
+        return $this->belongsToMany(Empleado::class, 'miembros_comite_seguridad', 'comite_id', 'id_asignada')->alta()->with('area');
     }
 
-    public function personaasignada()
-    {
-        return $this->belongsTo(User::class, 'personaasignada_id');
-    }
-
-    public function getFechaVigorAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
-
-    public function asignacion()
-    {
-        return $this->belongsTo(Empleado::class, 'id_asignada', 'id')->alta();
-    }
+    
 }

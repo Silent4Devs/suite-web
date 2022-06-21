@@ -272,6 +272,9 @@
                         name: 'Opciones',
                         render: function(data, type, row, meta) {
                             const opciones = `
+                            @can('crear_grupo_ver')
+                                <a href="/admin/grupoarea/${data}" class="btn btn-sm"><i class="fas fa-eye" title="Ver"></i></a>
+                            @endcan
                             @can('crear_grupo_editar')
                                 <a href="/admin/grupoarea/${data}/edit" class="btn btn-sm"><i class="fas fa-edit" title="Editar"></i></a>
                             @endcan
