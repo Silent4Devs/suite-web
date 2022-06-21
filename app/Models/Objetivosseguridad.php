@@ -71,6 +71,7 @@ class Objetivosseguridad extends Model
         'frecuencia',
         'revisiones',
         'ano',
+        'tipo_objetivo_sistema_id'
     ];
 
     public function team()

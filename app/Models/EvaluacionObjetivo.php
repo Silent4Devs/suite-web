@@ -29,10 +29,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class EvaluacionObjetivo extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'evaluacion_objetivo';
 
     const CREATED_AT = 'created_at';
