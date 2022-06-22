@@ -131,13 +131,13 @@
 <input type="hidden" name="participantes" value="" id="participantes">
 
 @if ($isEdit)
-    @livewire('fortalezas-component',['foda_id'=>$entendimientoOrganizacion->id])
+    @livewire('fortalezas-component', ['foda_id' => $entendimientoOrganizacion->id])
 
-    @livewire('oportunidades-component',['foda_id'=>$entendimientoOrganizacion->id])
+    @livewire('oportunidades-component', ['foda_id' => $entendimientoOrganizacion->id])
 
-    @livewire('debilidades-component', ['foda_id'=>$entendimientoOrganizacion->id])
+    @livewire('debilidades-component', ['foda_id' => $entendimientoOrganizacion->id])
 
-    @livewire('amenazas-component',['foda_id'=>$entendimientoOrganizacion->id])
+    @livewire('amenazas-component', ['foda_id' => $entendimientoOrganizacion->id])
 @endif
 
 <div class="text-right form-group col-12"><br>
@@ -287,4 +287,6 @@
             document.getElementById('participantes').value = arrParticipantes;
         }
     </script>
+
+
 @endsection

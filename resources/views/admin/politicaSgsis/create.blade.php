@@ -7,6 +7,18 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.politica-sgsis.store") }}" enctype="multipart/form-data">
             @csrf
+
+            <div class="form-group">
+                <label for="nombre_politica"><i class="fas fa-file-invoice iconos-crear"></i>Nombre de la política</label>
+                <input class="form-control {{ $errors->has('nombre_politica') ? 'is-invalid' : '' }}" name="nombre_politica" value="{{ old('nombre_politica') }}">
+                @if($errors->has('nombre_politica'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('nombre_politica') }}
+                    </div>
+                @endif
+            </div>
+
+
             <div class="form-group">
                 <label for="politicasgsi"><i class="fas fa-landmark iconos-crear"></i>Política del Sistema de Gestión</label>
                 <textarea class="form-control {{ $errors->has('politicasgsi') ? 'is-invalid' : '' }}" name="politicasgsi" id="politicasgsi">{{ old('politicasgsi') }}</textarea>
@@ -184,16 +196,23 @@
         let area_init = reviso_politica.options[reviso_politica.selectedIndex].getAttribute('data-area');
         let puesto_init = reviso_politica.options[reviso_politica.selectedIndex].getAttribute('data-puesto');
 
-        document.getElementById('puesto_reviso').innerHTML = puesto_init;
-        document.getElementById('area_reviso').innerHTML = area_init;
+        document.getElementById('puesto_reviso').innerHTML =  recortarTexto (puesto_init);
+        document.getElementById('area_reviso').innerHTML =  recortarTexto (area_init);
         reviso_politica.addEventListener('change', function(e) {
             e.preventDefault();
             let area = this.options[this.selectedIndex].getAttribute('data-area');
             let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('puesto_reviso').innerHTML = puesto;
-            document.getElementById('area_reviso').innerHTML = area;
+            document.getElementById('puesto_reviso').innerHTML =  recortarTexto (puesto);
+            document.getElementById('area_reviso').innerHTML =  recortarTexto (area);
         })
 
     })
+
+    function recortarTexto(texto, length = 30) {
+        let trimmedString = texto?.length > length ?
+            texto.substring(0, length - 3) + "..." :
+            texto;
+        return trimmedString;
+    }
 </script>
 @endsection
