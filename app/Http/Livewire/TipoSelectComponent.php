@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\TiposObjetivosSistema;
+use Livewire\Component;
 
 class TipoSelectComponent extends Component
 {
@@ -21,7 +21,7 @@ class TipoSelectComponent extends Component
     {
         $this->tipos = TiposObjetivosSistema::get();
 
-        return view('livewire.tipo-select-component',['tipos' => $this->tipos]);
+        return view('livewire.tipo-select-component', ['tipos' => $this->tipos]);
     }
 
     public function hydrate()

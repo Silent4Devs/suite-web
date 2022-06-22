@@ -15,6 +15,9 @@
             padding: 10px 20px;
             background-color: #f3f3f3;
         }
+        tr:last-child .modal-hover-caja .modal-hover{
+            position: relative;
+        }
         .modal-hover li{
             margin-top: 7px;
         }
@@ -33,7 +36,7 @@
                     @endif
                     @if ($origen == 'tareas')
                         <select id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id" required>
-                            <option disabled selected>Seleccione proyecto al que pertenece</option>
+                            <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
                                 <option value="{{ $proyecto->id }}">{{ $proyecto->proyecto }}</option>
                             @endforeach
