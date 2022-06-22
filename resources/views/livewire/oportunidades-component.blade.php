@@ -6,8 +6,8 @@
 
     <div class="mt-2">
         <label for="oportunidad"><i class="fas fa-lightbulb iconos-crear"></i>Nombre</label>
-        <input class="form-control {{ $errors->has('oportunidad') ? 'is-invalid' : '' }}"
-            wire:model.defer="oportunidad">
+        <textarea class="form-control {{ $errors->has('oportunidad') ? 'is-invalid' : '' }}"
+            wire:model.defer="oportunidad"></textarea>
         @error('oportunidad')
             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
         @enderror

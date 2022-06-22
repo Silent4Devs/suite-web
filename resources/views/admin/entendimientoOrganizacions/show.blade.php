@@ -57,7 +57,7 @@
 
 
 <div class="print-none">
-  {{ Breadcrumbs::render('admin.entendimiento-organizacions.index') }}
+  {{ Breadcrumbs::render('admin.entendimiento-organizacions.show') }}
 </div>
 
 

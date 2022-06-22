@@ -67,7 +67,7 @@
             <li>
                 <a href="{{ route('admin.tipos-objetivos.index') }}">
                     <div>
-                        <i class="bi bi-shield-lock"></i> <br>
+                        <i class="bi bi-book"></i><br>
                         Tipos de Objetivos
                     </div>
                 </a>
