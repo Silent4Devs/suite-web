@@ -75,6 +75,4 @@ class PoliticaSgsi extends Model
     {
         return $this->belongsTo(Empleado::class, 'id_reviso_politica', 'id')->alta();
     }
-
-
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\TiposObjetivosSistema;
+use Livewire\Component;
 
 class TipoObjetivosSelect extends Component
 {

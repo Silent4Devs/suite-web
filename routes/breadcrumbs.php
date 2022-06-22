@@ -68,7 +68,6 @@ Breadcrumbs::for('admin.entendimiento-organizacions.show', function ($trail) {
     $trail->push('FODA');
 });
 
-
 Breadcrumbs::for('admin.alcance-sgsis.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
