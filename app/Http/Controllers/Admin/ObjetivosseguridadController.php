@@ -194,6 +194,6 @@ class ObjetivosseguridadController extends Controller
 
     public function objetivosDashboard()
     {
-        return view ('admin.objetivosseguridads.dashboard');
+        return view('admin.objetivosseguridads.dashboard');
     }
 }

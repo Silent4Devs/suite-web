@@ -108,7 +108,7 @@ class TablaTareasTimesheet extends Component
         if ($id) {
             $this->proyecto_seleccionado = TimesheetProyecto::find($id);
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
-        }else{
+        } else {
             $this->area_seleccionar = [];
         }
     }
