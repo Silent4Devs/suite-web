@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-use Illuminate\Support\Str;
 use App\Models\TiposObjetivosSistema;
+use Illuminate\Support\Str;
+use Livewire\Component;
 
 class TipoComponent extends Component
 {
@@ -19,11 +19,12 @@ class TipoComponent extends Component
 
     ];
 
-    public function save(){
+    public function save()
+    {
         $this->validate();
         TiposObjetivosSistema::create([
             'nombre' => $this->nombre,
-            'slug'=>Str::slug($this->nombre,'-'),
+            'slug'=>Str::slug($this->nombre, '-'),
             'descripcion' => $this->descripcion,
         ]);
         $this->emit('tipoStore');
