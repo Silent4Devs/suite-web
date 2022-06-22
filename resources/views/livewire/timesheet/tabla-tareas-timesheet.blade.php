@@ -33,7 +33,7 @@
                     @endif
                     @if ($origen == 'tareas')
                         <select id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id" required>
-                            <option disabled selected>Seleccione proyecto al que pertenece</option>
+                            <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
                                 <option value="{{ $proyecto->id }}">{{ $proyecto->proyecto }}</option>
                             @endforeach
