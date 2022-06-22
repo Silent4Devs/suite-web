@@ -2361,6 +2361,74 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'timesheet_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "TIMESHEET", permite visualizar la opción "Timesheet" en el menú del sistema',
             ],
+            [
+                'name' => 'Visualizar Mi TimeSheet (Horas Aceptadas)',
+                'title' => 'mi_timesheet_horas_aceptadas_show',
+            ],
+            [
+                'name' => 'Visualizar Mi TimeSheet (Horas Rechazadas)',
+                'title' => 'mi_timesheet_horas_rechazadas_show',
+            ],
+            [
+                'name' => 'Crear TimeSheet',
+                'title' => 'timesheet_create',
+            ],
+            [
+                'name' => 'Acceder a Proyectos Para TimeSheet',
+                'title' => 'timesheet_administrador_proyectos_access',
+            ],
+            [
+                'name' => 'Agregar Proyectos Para TimeSheet',
+                'title' => 'timesheet_administrador_proyectos_create',
+            ],
+            [
+                'name' => 'Eliminar Proyectos de TimeSheet',
+                'title' => 'timesheet_administrador_proyectos_delete',
+            ],
+            [
+                'name' => 'Acceder a Tareas a Proyectos de TimeSheet',
+                'title' => 'timesheet_administrador_tareas_proyectos_access',
+            ],
+            [
+                'name' => 'Agregar Tareas a Proyectos de TimeSheet',
+                'title' => 'timesheet_administrador_tareas_proyectos_create',
+            ],
+            [
+                'name' => 'Eliminar Tareas de Proyectos de TimeSheet',
+                'title' => 'timesheet_administrador_tareas_proyectos_delete',
+            ],
+            [
+                'name' => 'Acceder a Aprobar/Rechazar Horas TimeSheet',
+                'title' => 'timesheet_administrador_aprobar_rechazar_horas_access',
+            ],
+            [
+                'name' => 'Aprobar Horas TimeSheet',
+                'title' => 'timesheet_administrador_aprobar_horas',
+            ],
+            [
+                'name' => 'Rechazar Horas TimeSheet',
+                'title' => 'timesheet_administrador_rechazar_horas',
+            ],
+            [
+                'name' => 'Acceder a TimeSheet Clientes',
+                'title' => 'timesheet_administrador_clientes_access',
+            ],
+            [
+                'name' => 'Agregar Clientes TimeSheet',
+                'title' => 'timesheet_administrador_clientes_create',
+            ],
+            [
+                'name' => 'Editar Clientes TimeSheet',
+                'title' => 'timesheet_administrador_clientes_edit',
+            ],
+            [
+                'name' => 'Visualizar Clientes TimeSheet',
+                'title' => 'timesheet_administrador_clientes_show',
+            ],
+            [
+                'name' => 'Eliminar Clientes TimeSheet',
+                'title' => 'timesheet_administrador_clientes_delete',
+            ],
             // Calendario Organizacional
             [
                 'title' => 'calendario_organizacional_acceder',
@@ -3587,6 +3655,10 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario eliminar registros',
             ],
             [
+                'title' => 'crear_grupo_ver',
+                'name' => 'Este permiso permite al usuario eliminar registros',
+            ],
+            [
                 'title' => 'crear_area_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Crear Area"',
             ],
@@ -4061,6 +4133,26 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'sistema_de_gestion_mejora_acceder',
                 'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión-Mejora"',
+            ],
+            [
+                'name' => 'Editar Contraseña de Perfil',
+                'title' => 'profile_password_edit',
+            ],
+            [
+                'name' => 'Agregar Carta de Aceptación Riesgo',
+                'title' => 'carta_aceptacion_create',
+            ],
+            [
+                'name' => 'Editar Carta de Aceptación Riesgo',
+                'title' => 'carta_aceptacion_edit',
+            ],
+            [
+                'name' => 'Visualizar Carta de Aceptación Riesgo',
+                'title' => 'carta_aceptacion_show',
+            ],
+            [
+                'name' => 'Eliminar Carta de Aceptación Riesgo',
+                'title' => 'carta_aceptacion_delete',
             ],
         ];
 

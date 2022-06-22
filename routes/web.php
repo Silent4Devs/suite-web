@@ -591,10 +591,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Comiteseguridads
     Route::delete('comiteseguridads/destroy', 'ComiteseguridadController@massDestroy')->name('comiteseguridads.massDestroy');
-
     Route::get('comiteseguridads/visualizacion', 'ComiteseguridadController@visualizacion');
-
-    Route::resource('comiteseguridads', 'ComiteseguridadController');
+    Route::get('comiteseguridads/{comiteseguridad}/edit', 'ComiteseguridadController@edit')->name('comiteseguridads.edit');
+    Route::resource('comiteseguridads', 'ComiteseguridadController')->except('edit');
 
     // Minutasaltadireccions
     Route::get('minutasaltadireccions/descargar/{name}', 'MinutasaltadireccionController@DescargaFormato')->name('minutasaltadireccions.descargar');
@@ -633,11 +632,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('objetivosseguridads/destroy', 'ObjetivosseguridadController@massDestroy')->name('objetivosseguridads.massDestroy');
     Route::resource('objetivosseguridads', 'ObjetivosseguridadController');
     Route::get('objetivosseguridadsInsertar', 'ObjetivosseguridadController@ObjetivoInsert')->name('objetivos-seguridadsInsertar');
+    Route::get('objetivos/dashboard', 'ObjetivosseguridadController@objetivosDashboard')->name('objetivos-seguridad-dashboard');
     Route::get('evaluaciones-objetivosInsertar', 'ObjetivosseguridadController@evaluacionesInsert')->name('evaluacionesobjetivosInsert');
     Route::get('evaluaciones-objetivosShow', 'ObjetivosseguridadController@evaluacionesShow')->name('evaluacionesobjetivosShow');
 
     Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
 
+    Route::post('tipos-objetivos/datatables', 'TiposObjetivosSistemaController@getDataForDataTable')->name('tipos-objetivos.getDataForDataTable');
+    Route::resource('tipos-objetivos', 'TiposObjetivosSistemaController');
     // Recursos
     Route::post('recursos/{recurso}/asistencia-capacitacion', 'RecursosController@guardarAsistenciaCapacitacion')->name('recursos.guardarAsistenciaCapacitacion');
     Route::post('recursos/capacitacion-evaluacion', 'RecursosController@guardarEvaluacionCapacitacion')->name('recursos.guardarEvaluacionCapacitacion');

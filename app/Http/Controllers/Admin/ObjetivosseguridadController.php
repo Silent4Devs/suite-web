@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateObjetivosseguridadRequest;
 use App\Models\Empleado;
 use App\Models\Objetivosseguridad;
 use App\Models\Team;
+use App\Models\TiposObjetivosSistema;
 use App\Models\VariablesObjetivosseguridad;
 use Gate;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ class ObjetivosseguridadController extends Controller
                 return $row->id ? $row->id : '';
             });
             $table->editColumn('objetivoseguridad', function ($row) {
-                return $row->objetivoseguridad ? $row->objetivoseguridad : '';
+                return $row->objetivoseguridad ? html_entity_decode(strip_tags($row->objetivoseguridad)) : '';
             });
             $table->editColumn('indicador', function ($row) {
                 return $row->indicador ? $row->indicador : '';
@@ -86,9 +87,10 @@ class ObjetivosseguridadController extends Controller
     public function create()
     {
         abort_if(Gate::denies('objetivos_del_sistema_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::alta()->with('area', 'puesto')->get();
+        $tiposObjetivosSistemas = TiposObjetivosSistema::get();
 
-        return view('admin.objetivosseguridads.create', compact('responsables'));
+        return view('admin.objetivosseguridads.create', compact('responsables', 'tiposObjetivosSistemas'));
     }
 
     public function store(Request $request)
@@ -104,8 +106,9 @@ class ObjetivosseguridadController extends Controller
         abort_if(Gate::denies('objetivos_del_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = Empleado::alta()->get();
+        $tiposObjetivosSistemas = TiposObjetivosSistema::get();
 
-        return view('admin.objetivosseguridads.edit', compact('objetivosseguridad', 'responsables'));
+        return view('admin.objetivosseguridads.edit', compact('objetivosseguridad', 'responsables', 'tiposObjetivosSistemas'));
     }
 
     public function update(UpdateObjetivosseguridadRequest $request, Objetivosseguridad $objetivosseguridad)
@@ -183,10 +186,14 @@ class ObjetivosseguridadController extends Controller
     public function evaluacionesShow(Request $request)
     {
         $id = $request->all();
-
         $objetivos = Objetivosseguridad::find($id['id']);
 
         return view('admin.objetivosseguridads.evaluacion')
             ->with('objetivos', $objetivos);
+    }
+
+    public function objetivosDashboard()
+    {
+        return view ('admin.objetivosseguridads.dashboard');
     }
 }

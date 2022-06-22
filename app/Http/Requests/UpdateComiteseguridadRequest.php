@@ -9,13 +9,9 @@ class UpdateComiteseguridadRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombrerol'  => [
+            'nombre_comite'  => [
                 'string',
                 'required',
-            ],
-            'fechavigor' => [
-                'date',
-                'nullable',
             ],
         ];
     }

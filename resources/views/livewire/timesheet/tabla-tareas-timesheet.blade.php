@@ -158,7 +158,7 @@
                 @this.set('tarea_name', value, true);
             });
 
-            document.querySelector('#proyectos_select').addEventListener('change', (e)=>{
+            document.querySelector('#proyectos_select')?.addEventListener('change', (e)=>{
                 let proyecto_id = e.target.value;
                 @this.llenarAreas(proyecto_id);
             });

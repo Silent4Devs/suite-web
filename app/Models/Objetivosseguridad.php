@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Objetivosseguridad.
@@ -36,10 +35,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class Objetivosseguridad extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'objetivosseguridads';
 
     protected $dates = ['deleted_at'];
@@ -76,6 +71,7 @@ class Objetivosseguridad extends Model
         'frecuencia',
         'revisiones',
         'ano',
+        'tipo_objetivo_sistema_id',
     ];
 
     public function team()
@@ -96,5 +92,10 @@ class Objetivosseguridad extends Model
     public function evaluacion_objetivos()
     {
         return $this->hasMany(EvaluacionObjetivo::class, 'id_objetivo');
+    }
+
+    public function tipo_objetivo_sistema()
+    {
+        return $this->belongsTo(TiposObjetivosSistema::class, 'tipo_objetivo_sistema_id');
     }
 }
