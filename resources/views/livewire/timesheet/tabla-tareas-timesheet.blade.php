@@ -15,6 +15,9 @@
             padding: 10px 20px;
             background-color: #f3f3f3;
         }
+        tr:last-child .modal-hover-caja .modal-hover{
+            position: relative;
+        }
         .modal-hover li{
             margin-top: 7px;
         }

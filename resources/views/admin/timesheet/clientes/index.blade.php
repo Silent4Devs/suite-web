@@ -99,9 +99,12 @@
                                 <button class="btn btn_cancelar" data-dismiss="modal">
                                     Cancelar
                                 </button>
-                                <a href="{{ route('admin.timesheet-delete', $cliente->id) }}" class="btn btn-info" style="border:none; background-color:#E34F4F;">
-                                    Eliminar Cliente
-                                </a>
+                                <form action="{{ route('admin.timesheet-cliente-delete', $cliente->id) }}" method="POST">
+                                    @csrf
+                                    <button class="btn btn-info" style="border:none; background-color:#E34F4F;">
+                                        Eliminar Cliente
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>

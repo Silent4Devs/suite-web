@@ -494,7 +494,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('timesheet/clientes/edit/{id}', 'TimesheetController@clientesEdit')->name('timesheet-clientes-edit');
     Route::post('timesheet/clientes/store', 'TimesheetController@clientesStore')->name('timesheet-clientes-store');
     Route::post('timesheet/clientes/update/{id}', 'TimesheetController@clientesUpdate')->name('timesheet-clientes-update');
-    Route::post('timesheet/clientes/delete/{id}', 'TimesheetController@clientesDelete')->name('timesheet-delete');
+    Route::post('timesheet/clientes/delete/{id}', 'TimesheetController@clientesDelete')->name('timesheet-cliente-delete');
 
     Route::get('timesheet/reportes', 'TimesheetController@reportes')->name('timesheet-reportes');
     Route::get('timesheet/dashboard', 'TimesheetController@dashboard')->name('timesheet-dashboard');
