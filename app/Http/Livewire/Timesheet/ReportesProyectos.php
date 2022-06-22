@@ -98,7 +98,6 @@ class ReportesProyectos extends Component
         $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
 
         if ($this->fecha_inicio) {
-
             $fecha_inicio_complit_timesheet = Carbon::parse($fecha_registro_timesheet)->lt($this->fecha_inicio) ? $this->fecha_inicio : $fecha_registro_timesheet;
         } else {
             $fecha_inicio_complit_timesheet = Carbon::now()->endOfMonth()->subMonth(2)->format('Y-m-d');
@@ -111,10 +110,9 @@ class ReportesProyectos extends Component
             $this->fecha_fin = Carbon::parse($fecha_fin_complit_timesheet)->format('Y-m-d');
         }
 
-
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
         $fecha_fin_complit_timesheet = Carbon::parse($fecha_fin_complit_timesheet);
-        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday' ,  $fecha_fin_complit_timesheet);
+        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $fecha_fin_complit_timesheet);
         $total_months = 0;
         foreach ($semanas_complit_timesheet as $semana) {
             $semana_array = explode('|', $semana);
@@ -237,9 +235,6 @@ class ReportesProyectos extends Component
 
         $this->calendario_tabla = $calendario_array;
 
-
-
-
         $this->hoy_format = $this->hoy->format('d/m/Y');
 
         return view('livewire.timesheet.reportes-proyectos');
@@ -306,7 +301,6 @@ class ReportesProyectos extends Component
                 }
             }
 
-
             $this->total_horas_proyecto += $h_total_tarea_total;
 
             $this->tareas_array->push([
@@ -315,13 +309,13 @@ class ReportesProyectos extends Component
                 'empleados' => $empleados,
             ]);
         }
-            // dd($this->tareas_array);
+        // dd($this->tareas_array);
 
         foreach ($this->tareas_array as $key => $tarea_em) {
             foreach ($tarea_em['empleados'] as $key => $emp_array) {
                 if (!($this->empleados_proyecto->contains('id', $emp_array['id']))) {
                     $this->empleados_proyecto->push($emp_array);
-                }else{
+                } else {
                     $this->empleados_proyecto = $this->empleados_proyecto->map(function ($emp_item) use ($emp_array) {
                         if ($emp_item['id'] == $emp_array['id']) {
                             $emp_item['horas'] += $emp_array['horas'];
@@ -330,7 +324,6 @@ class ReportesProyectos extends Component
                         return $emp_item;
                     });
                 }
-
             }
         }
 
