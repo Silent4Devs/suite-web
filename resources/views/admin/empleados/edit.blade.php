@@ -7,7 +7,6 @@
             .breadcrumb {
                 margin-bottom: 0 !important;
             }
-
         </style>
         {{ Breadcrumbs::render('Editar-Curriculum', $empleado) }}
     @endif
@@ -184,7 +183,6 @@
         .collapse:not(.show) {
             display: inline;
         }
-
     </style>
     <h5 class="col-12 titulo_general_funcion">Editar: Empleado - {{ $empleado->name }}</h5>
     <div class="mt-4 card">
@@ -211,8 +209,8 @@
                             role="tab" aria-controls="nav-competencias" aria-selected="false">
                             <i class="mr-2 fas fa-award" style="font-size:20px;"></i>Perfil Profesional
                         </a>
-                        <a class="nav-link" id="nav-documentos-tab" data-toggle="tab" href="#nav-documentos"
-                            role="tab" aria-controls="nav-documentos" aria-selected="false">
+                        <a class="nav-link" id="nav-documentos-tab" data-toggle="tab" href="#nav-documentos" role="tab"
+                            aria-controls="nav-documentos" aria-selected="false">
                             <i class="mr-2 fas fa-folder-open" style="font-size:20px;"></i>Expediente
                         </a>
                     </div>
@@ -230,8 +228,7 @@
                             @include('admin.empleados.form_components.personal')
 
                         </div>
-                        <div class="tab-pane fade" id="nav-financiera" role="tabpanel"
-                            aria-labelledby="nav-financiera-tab">
+                        <div class="tab-pane fade" id="nav-financiera" role="tabpanel" aria-labelledby="nav-financiera-tab">
                             @include('admin.empleados.form_components.financiera')
 
                         </div>
@@ -239,8 +236,7 @@
                             aria-labelledby="nav-competencias-tab">
                             @include('admin.empleados.components._competencias_form')
                         </div>
-                        <div class="tab-pane fade" id="nav-documentos" role="tabpanel"
-                            aria-labelledby="nav-documentos-tab">
+                        <div class="tab-pane fade" id="nav-documentos" role="tabpanel" aria-labelledby="nav-documentos-tab">
                             @include('admin.empleados.form_components.documentos')
                         </div>
 
@@ -271,6 +267,7 @@
             </div>
         @endif
     </div>
+    <x-loading-indicator />
 @endsection
 @section('scripts')
     @parent
@@ -2450,6 +2447,7 @@
                 } else {
                     url = document.getElementById('formEmpleados').getAttribute('action');
                 }
+                document.getElementById('loaderComponent').style.display = 'block';
                 fetch(url, {
                         method: method,
                         body: formData,
@@ -2458,9 +2456,17 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                     })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json()
+                        }
+                        return response.json().then(text => {
+                            throw text;
+                        })
+                    })
                     .then(data => {
                         if (data.errors) {
+                            document.getElementById('loaderComponent').style.display = 'none';
                             $.each(data.errors, function(indexInArray, valueOfElement) {
                                 $(`#error_${indexInArray.replaceAll('.','_')}`).text(
                                     valueOfElement[0]);
@@ -2468,23 +2474,50 @@
                         }
 
                         if (data.status) {
+                            document.getElementById('loaderComponent').style.display = 'none';
                             Swal.fire(
                                 data.message,
                                 '',
                                 'success',
-                            ).then(()=>{
-                                if (data.from == 'curriculum') {                               
-                                window.location.href =
-                                    "{{ route('admin.miCurriculum', $empleado) }}";                               
+                            ).then(() => {
+                                if (data.from == 'curriculum') {
+                                    window.location.href =
+                                        "{{ route('admin.miCurriculum', $empleado) }}";
                                 } else if (data.from == 'rh') {
                                     window.location.href =
                                         "{{ route('admin.empleados.index') }}";
                                 }
-                            });                            
+                            });
                         }
                     })
                     .catch(error => {
                         console.log(error);
+                        if (error.exception == 'Swift_TransportException') {
+                            document.getElementById('loaderComponent').style.display = 'none';
+                            toastr.error(
+                                'El email de Bienvenida no fue enviado con éxito, tendrás que enviarlo manualmente, comunicate con el administrador.'
+                            );
+                            Swal.fire(
+                                'Empleado Creado',
+                                '',
+                                'success',
+                            ).then(() => {
+                                window.location.href =
+                                    "{{ route('admin.empleados.index') }}";
+
+                            })
+                        }
+
+                        if (error.message == 'The given data was invalid.') {
+                            document.getElementById('loaderComponent').style.display = 'none';
+                            $.each(error.errors, function(indexInArray, valueOfElement) {
+                                $(`#error_${indexInArray.replaceAll('.','_')}`).text(
+                                    valueOfElement[0]);
+                            });
+                            toastr.error(
+                                'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
+                            );
+                        }
                     })
             })
         });
