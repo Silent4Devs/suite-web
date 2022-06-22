@@ -46,6 +46,9 @@ class PoliticaSgsiController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
+            $table->editColumn('nombre_politica', function ($row) {
+                return $row->nombre_politica ? $row->nombre_politica : '';
+            });
             $table->editColumn('politicasgsi', function ($row) {
                 return  $row->politicasgsi ? html_entity_decode(strip_tags($row->politicasgsi), ENT_QUOTES, 'UTF-8') : '';
                 // return $row->politicasgsi ? strip_tags($row->politicasgsi) : '';

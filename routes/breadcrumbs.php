@@ -62,6 +62,13 @@ Breadcrumbs::for('admin.entendimiento-organizacions.create', function ($trail) {
     $trail->push('Formulario', route('admin.entendimiento-organizacions.create'));
 });
 
+Breadcrumbs::for('admin.entendimiento-organizacions.show', function ($trail) {
+    $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
+    $trail->push('Entendimiento Organización', route('admin.entendimiento-organizacions.index'));
+    $trail->push('FODA');
+});
+
+
 Breadcrumbs::for('admin.alcance-sgsis.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
