@@ -171,11 +171,10 @@
             color: red;
             font-size: 10pt;
         }
-
     </style>
     <h5 class="col-12 titulo_general_funcion">Registrar: Empleado</h5>
     <div class="mt-4 card">
-          @if (!$ceo_exists)
+        @if (!$ceo_exists)
             <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                 <div class="row w-100">
                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -241,114 +240,14 @@
             </form>
         </div>
     </div>
+    <x-loading-indicator />
     {{-- MODAL CROP --}}
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-
     @endsection
 
     @section('scripts')
         @parent
-        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
-        <script>
-            var $modal = $('#modal');
-            var image = document.getElementById('image');
-            var cropper;
-            $("body").on("change", ".imageCrop", function(e) {
-                console.log('si');
-                var files = e.target.files;
-                var done = function(url) {
-                    image.src = url;
-                    $modal.modal('show');
-                };
-                var reader;
-                var file;
-                var url;
-                if (files && files.length > 0) {
-                    file = files[0];
-                    if (URL) {
-                        done(URL.createObjectURL(file));
-                    } else if (FileReader) {
-                        reader = new FileReader();
-                        reader.onload = function(e) {
-                            done(reader.result);
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                }
-            });
-            $modal.on('shown.bs.modal', function() {
-                cropper = new Cropper(image, {
-                    aspectRatio: 1,
-                    viewMode: 3,
-                    preview: '.preview'
-                });
-            }).on('hidden.bs.modal', function() {
-                cropper.destroy();
-                cropper = null;
-            });
-            $("#crop").click(function() {
-                canvas = cropper.getCroppedCanvas({
-                    minWidth: 256,
-                    minHeight: 256,
-                    maxWidth: 4096,
-                    maxHeight: 4096,
-                    fillColor: '#fff',
-                    imageSmoothingEnabled: true,
-                    imageSmoothingQuality: 'high',
-                });
-                roundedCanvas = getRoundedCanvas(canvas);
 
-                roundedCanvas.toBlob(function(blob) {
-                    var url = URL.createObjectURL(blob);
-                    var reader = new FileReader();
-                    const urlRequest = `/admin/empleado/update-image-profile`;
-                    reader.readAsDataURL(blob);
-                    reader.onloadend = function() {
-                        var base64data = reader.result;
-                        $.ajax({
-                            type: "POST",
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            dataType: "json",
-                            url: urlRequest,
-                            data: {
-                                'image': base64data
-                            },
-                            success: function(data) {
-                                $modal.modal('hide');
-                                if (data.success) {
-                                    toastr.success(data.success)
-                                }
-                                if (data.error) {
-                                    toastr.error(data.error)
-                                }
-                                setTimeout(() => {
-                                    window.location.href = "/profile/password"
-                                }, 1500);
-                            }
-                        });
-                    }
-                });
-            })
-
-            function getRoundedCanvas(sourceCanvas) {
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                const width = sourceCanvas.width;
-                const height = sourceCanvas.height;
-
-                canvas.width = width;
-                canvas.height = height;
-                context.imageSmoothingEnabled = true;
-                context.drawImage(sourceCanvas, 0, 0, width, height);
-                context.globalCompositeOperation = 'destination-in';
-                context.beginPath();
-                context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
-                context.fill();
-                return canvas;
-            }
-        </script> --}}
         <script type="module">
             import {
                 formatNumber,
@@ -438,7 +337,7 @@
                     limpiarErrores();
                     const formData = new FormData(document.getElementById('formCreateEmpleado'));
                     const url = document.getElementById('formCreateEmpleado').getAttribute('action');
-
+                    document.getElementById('loaderComponent').style.display = 'block';
                     fetch(url, {
                             method: "POST",
                             body: formData,
@@ -447,9 +346,17 @@
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                         })
-                        .then(response => response.json())
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json()
+                            }
+                            return response.json().then(text => {
+                                throw text;
+                            })
+                        })
                         .then(data => {
                             if (data.errors) {
+                                document.getElementById('loaderComponent').style.display = 'none';
                                 $.each(data.errors, function(indexInArray, valueOfElement) {
                                     $(`#error_${indexInArray.replaceAll('.','_')}`).text(
                                         valueOfElement[0]);
@@ -460,19 +367,49 @@
                             }
 
                             if (data.status) {
+                                document.getElementById('loaderComponent').style.display = 'none';
                                 Swal.fire(
                                     'Empleado Creado',
                                     '',
                                     'success',
-                                )
-                                setTimeout(() => {
+                                ).then(() => {
                                     window.location.href =
                                         "{{ route('admin.empleados.index') }}";
-                                }, 1500);
+
+                                })
+                            }
+                            if (data.errors) {
+                                console.log(data.errors);
                             }
                         })
                         .catch(error => {
                             console.log(error);
+                            if (error.exception == 'Swift_TransportException') {
+                                document.getElementById('loaderComponent').style.display = 'none';
+                                toastr.error(
+                                    'El email de Bienvenida no fue enviado con éxito, tendrás que enviarlo manualmente, comunicate con el administrador.'
+                                );
+                                Swal.fire(
+                                    'Empleado Creado',
+                                    '',
+                                    'success',
+                                ).then(() => {
+                                    window.location.href =
+                                        "{{ route('admin.empleados.index') }}";
+
+                                })
+                            }
+
+                            if (error.message == 'The given data was invalid.') {
+                                document.getElementById('loaderComponent').style.display = 'none';
+                                $.each(error.errors, function(indexInArray, valueOfElement) {
+                                    $(`#error_${indexInArray.replaceAll('.','_')}`).text(
+                                        valueOfElement[0]);
+                                });
+                                toastr.error(
+                                    'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
+                                );
+                            }
                         })
                 })
             })
@@ -1107,7 +1044,4 @@
 
             })
         </script>
-
-
-
     @endsection

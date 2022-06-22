@@ -4,20 +4,24 @@
     {{ Breadcrumbs::render('admin.objetivosseguridads.index') }}
 
     @can('objetivos_del_sistema_agregar')
-    <h5 class="col-12 titulo_general_funcion">Objetivos del Sistema</h5>
+    <h5 class="col-12 titulo_general_funcion">Objetivos</h5>
         <div class="mt-5 card">
         @endcan
+            <div class="text-right mt-5 mr-5">
+                <a class="btn btn-danger" href="{{ asset('admin/objetivos/dashboard') }}">Dashboard</a>
+            </div>
+
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered datatable-Objetivosseguridad" style="width: 100%">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.objetivosseguridad.fields.id') }}
-                        </th>
+                        </th> --}}
                         <th style="min-width:450px !important;">
-                            Objetivos&nbsp;del&nbsp;sistema
+                            Objetivos
                         </th>
                         <th style="min-width:150px !important;">
                             {{ trans('cruds.objetivosseguridad.fields.indicador') }}
@@ -44,23 +48,6 @@
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
@@ -188,10 +175,11 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.objetivosseguridads.index') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
+                columns: [
+                    // {
+                    //     data: 'id',
+                    //     name: 'id'
+                    // },
                     {
                         data: 'objetivoseguridad',
                         name: 'objetivoseguridad'
@@ -228,7 +216,7 @@
                             @can('objetivos_del_sistema_vinculo')
                             <div class="text-center w-100"><a href="evaluaciones-objetivosShow/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a></div>
                             @endcan`;
-                            
+
                         }
                     },
                     {
@@ -241,19 +229,7 @@
                     [0, 'desc']
                 ]
             };
-            let table = $('.datatable-Objetivosseguridad').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+            let table = $('.datatable-Objetivosseguridad').DataTable(dtOverrideGlobals);       
         });
     </script>
 @endsection

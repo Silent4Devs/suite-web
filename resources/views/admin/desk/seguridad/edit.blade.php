@@ -151,6 +151,7 @@
                                         class="fas fa-user-tie iconos-crear"></i>Asignado</label>
                                 <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}"
                                     name="empleado_asignado_id" id="empleado_asignado_id">
+                                    <option value="" selected disabled>Selecciona una opción</option>
                                     @foreach ($empleados as $id => $empleado)
                                         <option value="{{ $empleado->id }}"
                                             {{ old('empleado_asignado_id', $incidentesSeguridad->empleado_asignado_id) == $empleado->id ? 'selected' : '' }}>

@@ -64,12 +64,22 @@
                 </div>
             </a></li> --}}
         @can('objetivos_del_sistema_acceder')
-            <li><a href="{{ route('admin.objetivosseguridads.index') }}">
+            <li>
+                <a href="{{ route('admin.tipos-objetivos.index') }}">
                     <div>
                         <i class="bi bi-shield-lock"></i> <br>
-                        Objetivos del sistema
+                        Tipos de Objetivos
                     </div>
-                </a></li>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.objetivosseguridads.index') }}">
+                    <div>
+                        <i class="bi bi-shield-lock"></i> <br>
+                        Objetivos
+                    </div>
+                </a>
+            </li>
         @endcan
     </ul>
 @else

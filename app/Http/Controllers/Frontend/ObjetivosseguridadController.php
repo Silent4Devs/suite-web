@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateObjetivosseguridadRequest;
 use App\Models\Empleado;
 use App\Models\Objetivosseguridad;
 use App\Models\Team;
+use App\Models\TiposObjetivosSistema;
 use App\Models\VariablesObjetivosseguridad;
 use Gate;
 use Illuminate\Http\Request;
@@ -87,8 +88,9 @@ class ObjetivosseguridadController extends Controller
     {
         abort_if(Gate::denies('objetivosseguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsables = Empleado::get();
+        $tiposObjetivosSistemas = TiposObjetivosSistema::get();
 
-        return view('admin.objetivosseguridads.create', compact('responsables'));
+        return view('admin.objetivosseguridads.create', compact('responsables', 'tiposObjetivosSistemas'));
     }
 
     public function store(Request $request)

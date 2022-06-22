@@ -194,7 +194,7 @@
 
     {{-- {{ Breadcrumbs::render('admin.iso27001.index') }} --}}
     <div style="display:flex; justify-content:space-between;">
-        <h5 class="titulo_general_funcion">ISO - 27001 - Seguridad de la Información</h5>
+        <h5 class="titulo_general_funcion">Sistema de Gestión</h5>
         <div class="d-flex">
             <a href="#" class="btn btn-secundario" style="width: 160px !important;" data-toggle="modal" data-target="#modal_guia_general">
                 <i class="far fa-play-circle mr-2"></i>

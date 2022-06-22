@@ -104,7 +104,7 @@
     </style>
 
     {{ Breadcrumbs::render('admin.objetivosseguridads.create') }}
-    <h5 class="col-12 titulo_general_funcion"> Editar: Objetivos del Sistema</h5>
+    <h5 class="col-12 titulo_general_funcion"> Editar: Objetivos</h5>
     <div class="mt-4 card">
         <div class="card-body">
             <form method="POST" class="row"
@@ -112,9 +112,23 @@
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-                <div class="mt-4 card">
+                <div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label class="required" for="tipo"><i
+                                        class="fas fa-file-signature iconos-crear"></i></i>Tipo</label>
+                                <div style="float: right;">
+                                    <button id="btnAgregarTipo" onclick="event.preventDefault();"
+                                        class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+                                        data-toggle="modal" data-target="#tipoCompetenciaModal" data-whatever="@mdo"
+                                        data-whatever="@mdo" title="Agregar Tipo Impacto"><i
+                                            class="fas fa-plus"></i></button>
+                                </div>
+                                @livewire('tipo-component')
+                                @livewire('tipo-select-component')
+                            </div>
+
                             <div class="form-group col-sm-6">
                                 <label class="required" for="indicador"><i
                                         class="fas fa-file-signature iconos-crear"></i></i>Nombre del
@@ -129,8 +143,10 @@
                                 @endif
                                 <span class="help-block"></span>
                             </div>
+                        </div>
 
-                            <div class="form-group col-sm-6">
+                        <div class="row">
+                            <div class="form-group col-sm-4">
                                 <div class="form-group">
                                     <label for='responsable_id'><i
                                             class="fas fa-user-tie iconos-crear"></i>Responsable</label>
@@ -140,7 +156,9 @@
                                         <option value="">Seleccione un responsable</option>
                                         @foreach ($responsables as $responsable)
                                             <option value="{{ $responsable->id }}"
-                                                {{ old('responsable_id', $responsable->id) == $objetivosseguridad->responsable_id ? 'selected' : '' }}>
+                                                {{ old('responsable_id', $responsable->id) == $objetivosseguridad->responsable_id ? 'selected' : '' }}
+                                                data-area="{{ $responsable->area->area }}"
+                                                data-puesto="{{ $responsable->puesto }}">
                                                 {{ $responsable->name }} </option>
                                         @endforeach
                                     </select>
@@ -152,6 +170,16 @@
                                 </div>
                             </div>
 
+                            <div class="form-group col-md-4">
+                                <label><i class="fas fa-briefcase iconos-crear"></i>Puesto<sup>*</sup></label>
+                                <div class="form-control" id="responsable_puesto" readonly></div>
+                            </div>
+
+
+                            <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                                <label><i class="fas fa-street-view iconos-crear"></i>Área<sup>*</sup></label>
+                                <div class="form-control" id="responsable_area" readonly></div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="objetivoseguridad"><i
@@ -207,8 +235,8 @@
                                     De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
                                 <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}"
                                     type="number" name="verde" id="verde"
-                                    value="{{ old('verde', $objetivosseguridad->verde) }}" placeholder="" min=""
-                                    required>
+                                    value="{{ old('verde', $objetivosseguridad->verde) }}" placeholder=""
+                                    min="" required>
                                 @if ($errors->has('verde'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('verde') }}
@@ -373,7 +401,32 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        if (document.querySelector('#responsable_id') != null) {
 
+            let responsable = document.querySelector('#responsable_id');
+            let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
+            let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('responsable_area').innerHTML = recortarTexto(area_init);
+
+            responsable.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = e.target.options[e.target.selectedIndex].getAttribute('data-area');
+                let puesto = e.target.options[e.target.selectedIndex].getAttribute('data-puesto');
+                console.log(e.target.options[e.target.selectedIndex]);
+                document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto)
+                document.getElementById('responsable_area').innerHTML = recortarTexto(area)
+            })
+        }
+
+        function recortarTexto(texto, length = 30) {
+            let trimmedString = texto?.length > length ?
+                texto.substring(0, length - 3) + "..." :
+                texto;
+            return trimmedString;
+        }
+    </script>
     <script>
         //script para rangos de valores
         var n = document.getElementById("rojo");
@@ -511,6 +564,67 @@
             $("#calculadora_generador").show("slow", function() {
                 window.scrollTo(0, document.body.scrollHeight);
                 $("#abrir_generador").hide();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#tipo_id').select2({
+                placeholder: "Seleccione un tipo",
+                allowClear: true,
+                theme: "bootstrap4"
+            });
+
+            CKEDITOR.replace('objetivoseguridad', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
+
+                ]
             });
         });
     </script>

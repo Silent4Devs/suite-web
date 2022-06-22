@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .table tr th:nth-child(2) {
 
@@ -77,6 +76,21 @@
             margin-right: 15px;
         }
 
+        .module {
+            width: 250px;
+            margin: 0 0 1em 0;
+            overflow: hidden;
+        }
+
+        .module p {
+            margin: 0;
+        }
+
+        .line-clamp {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
     </style>
 
     {{ Breadcrumbs::render('admin.comiteseguridads.index') }}
@@ -86,8 +100,10 @@
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modalcomitedeseguridad', ['model' => 'Vulnerabilidad', 'route' =>
-                    'admin.vulnerabilidads.parseCsvImport'])
+                    @include('csvImport.modalcomitedeseguridad', [
+                        'model' => 'Vulnerabilidad',
+                        'route' => 'admin.vulnerabilidads.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -97,20 +113,14 @@
             <table class="table table-bordered datatable-Comiteseguridad" style="width: 100%">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
-                            {{ trans('cruds.comiteseguridad.fields.id') }}
+                        <th style="min-width: 200px;">
+                            Nombre del comite
                         </th>
-                        <th>
-                            Nombre del rol
+                        <th style="min-width: 150px;">
+                            Miembros
                         </th>
-                        <th>
-                            {{ trans('cruds.comiteseguridad.fields.personaasignada') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.comiteseguridad.fields.fechavigor') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.comiteseguridad.fields.responsabilidades') }}
+                        <th style="min-width: 200px;">
+                            Descripción
                         </th>
                         <th>
                             Opciones
@@ -145,9 +155,6 @@
             </table>
         </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -230,62 +237,74 @@
             @can('comformacion_comite_seguridad_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.comiteseguridads.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.comiteseguridads.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
             @can('comformacion_comite_seguridad_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nuevo comite de seguridad',
-                url: "{{ route('admin.comiteseguridads.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar nuevo comite de seguridad',
+                    url: "{{ route('admin.comiteseguridads.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnExport = {
-                text: '<i class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-comite_seguridad') }}",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
+                    text: '<i class="fas fa-download"></i>',
+                    titleAttr: 'Descargar plantilla',
+                    className: "btn btn_cargar",
+                    url: "{{ route('descarga-comite_seguridad') }}",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnImport = {
-                text: '<i class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                $('#xlsxImportModal').modal('show');
-                }
+                    text: '<i class="fas fa-file-upload"></i>',
+                    titleAttr: 'Importar datos',
+                    className: "btn btn_cargar",
+                    action: function(e, dt, node, config) {
+                        $('#xlsxImportModal').modal('show');
+                    }
                 };
 
                 dtButtons.push(btnAgregar);
@@ -301,37 +320,44 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.comiteseguridads.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'nombrerol',
-                        name: 'nombrerol'
-                    },
-                    {
-                        data: 'asignada',
-                        name: 'asignada',
-                        render: function(data, type, row, meta) {
-                            if (type === "empleadoText") {
-                                return row.asignacion.name;
-                            }
-                            let responsablereunion = "";
-                            if (row.asignacion) {
-                                responsablereunion += `
-                            <img src="{{ asset('storage/empleados/imagenes') }}/${row.asignacion.avatar}" title="${row.asignacion.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
-                            `;
-                            }
-                            return responsablereunion;
+                        data: 'nombre_comite',
+                        name: 'nombre_comite',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
                         }
                     },
                     {
-                        data: 'fechavigor',
-                        name: 'fechavigor'
+                        data: 'miembros',
+                        name: 'miembros',
+                        render: function(data, type, row, meta) {
+                            let miembros = data;
+                            if (type === "miembroText") {
+                                let miembrosTexto = "";
+                                miembros.forEach(miembro => {
+                                    miembrosTexto += `
+                            ${miembro.name},
+                            `;
+                                });
+                                return miembrosTexto.trim();
+                            }
+                            let html = '';
+                            miembros.forEach(miembro => {
+                                html += `
+                            <img src="{{ asset('storage/empleados/imagenes/') }}/${miembro.avatar}"
+                                        class="rounded-circle" alt="${miembro.name}"
+                                        title="${miembro.name}" style="clip-path: circle(15px at 50% 50%);height: 30px;">
+                            `
+                            });
+                            return html;
+                        }
+
                     },
                     {
-                        data: 'responsabilidades',
-                        name: 'responsabilidades',
-
+                        data: 'descripcion',
+                        name: 'descripcion',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left" class="module line-clamp" ><p>${data}</p></div>`;
+                        }
                     },
                     {
                         data: 'actions',

@@ -35,14 +35,32 @@ class ObjetivosSeguridadComponent extends Component
     public $remplazo_formula;
     public $evaluacion;
 
+    protected $rules = [
+        'evaluacion' => 'required',
+        'fecha' => 'required',
+        'formSlugs' => 'required|array',
+        'formSlugs.*' => 'required',
+        'formSlugs.*.*' => 'required|numeric|min:1',
+    ];
+
+    protected $messages = [
+        'evaluacion.required' => 'El campo evaluacion es requerido',
+        'fecha.required' => 'El campo fecha es requerido',
+        'formSlugs.required' => 'El campo es requerido',
+        'formSlugs.array' => 'El campo debe ser un array',
+        'formSlugs.*.required' => 'El campo es requerido',
+        'formSlugs.*.min' => 'El campo debe ser mayor a 0',
+        'formSlugs.*.*.required' => 'El :attribute es requerido',
+        'formSlugs.*.*.numeric' => 'El :attribute debe ser un numero',
+    ];
+
     public function mount($objetivos)
     {
         $this->objetivos = $objetivos;
         $this->customFields = VariablesObjetivosseguridad::where('id_objetivo', '=', $this->objetivos->id)->get();
-
         $data = [];
         $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
-            $data[$value->variable] = 0;
+            $data[$value->variable] = null;
 
             return $data;
         })->toArray();
@@ -63,6 +81,7 @@ class ObjetivosSeguridadComponent extends Component
 
     public function store()
     {
+        $this->validate();
         $variables = [];
         $valores = [];
         $formula_sustitucion = $this->objetivos->formula;
@@ -71,16 +90,23 @@ class ObjetivosSeguridadComponent extends Component
             array_push($variables, array_keys($v1)[0]);
             array_push($valores, array_values($v1)[0]);
         }
-        $formula_final = str_replace($variables, $valores, $formula_sustitucion);
-        // dd($this->formSlugs, $variables, $valores, str_replace(".", "", $formula_final));
-        // $formula_final = str_replace(" ", "_", $formula_final);
+
+        $formula_sustitucion = str_replace('$', '__', $formula_sustitucion);
+        $formula_final = '';
+        foreach ($variables as $idx => $var) {
+            $var = str_replace('$', '__', $var);
+            if ($formula_final != '') {
+                $formula_final = preg_replace("/\b{$var}\b/", $valores[$idx], $formula_final);
+            } else {
+                $formula_final = preg_replace("/\b{$var}\b/", $valores[$idx], $formula_sustitucion);
+            }
+        }
 
         $result = eval('return ' . $formula_final . ';');
-
-        $evaluaciones = EvaluacionObjetivo::create([
+        EvaluacionObjetivo::create([
             'evaluacion' => $this->evaluacion,
             'fecha' => $this->fecha,
-            'resultado' => $result,
+            'resultado' => round($result),
             'id_objetivo' => $this->objetivos->id,
         ]);
         $this->default();
@@ -91,7 +117,8 @@ class ObjetivosSeguridadComponent extends Component
     {
         $evaluaciones = EvaluacionObjetivo::find($id);
         $this->evaluacion = $evaluaciones->evaluacion;
-        $this->fecha = $evaluaciones->fecha;
+        $this->fecha = $evaluaciones->fecha->format('Y-m-d');
+
         //$this->resultado = $evaluaciones->resultado;
         $this->view = 'edit';
         $this->id_evaluacion = $evaluaciones->id;
@@ -99,8 +126,8 @@ class ObjetivosSeguridadComponent extends Component
 
     public function update()
     {
+        $this->validate();
         $evaluaciones = EvaluacionObjetivo::find($this->id_evaluacion);
-
         $variables = [];
         $valores = [];
         $formula_sustitucion = $this->objetivos->formula;
@@ -110,14 +137,23 @@ class ObjetivosSeguridadComponent extends Component
             array_push($valores, array_values($v1)[0]);
         }
 
-        $formula_final = str_replace($variables, $valores, $formula_sustitucion);
-        //dd($this->formSlugs, $variables, $valores, str_replace(".", "",$formula_final));
+        $formula_sustitucion = str_replace('$', '__', $formula_sustitucion);
+        $formula_final = '';
+        foreach ($variables as $idx => $var) {
+            $var = str_replace('$', '__', $var);
+            if ($formula_final != '') {
+                $formula_final = preg_replace("/\b{$var}\b/", $valores[$idx], $formula_final);
+            } else {
+                $formula_final = preg_replace("/\b{$var}\b/", $valores[$idx], $formula_sustitucion);
+            }
+        }
+
         $result = eval('return ' . $formula_final . ';');
 
         $evaluaciones->update([
             'evaluacion' => $this->evaluacion,
             'fecha' => $this->fecha,
-            'resultado' => $result,
+            'resultado' => round($result),
         ]);
 
         $this->default();
@@ -136,7 +172,13 @@ class ObjetivosSeguridadComponent extends Component
         $this->evaluacion = '';
         $this->fecha = '';
 
+        foreach ($this->formSlugs as $idx => $formSlug) {
+            foreach ($formSlug as $key => $value) {
+                $this->formSlugs[$idx][$key] = null;
+            }
+        }
         $this->dispatchBrowserEvent('contentChanged');
+        $this->emit('limpiarSlugs');
 
         $this->view = 'create';
     }
