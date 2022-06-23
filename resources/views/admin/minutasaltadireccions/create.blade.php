@@ -100,8 +100,9 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-12" style="text-align: end">
-                                <i class="fas fa-users" style="color:black" @click.prevent="interno = !interno"></i>
-                                <i class="fas fa-user-tag" style="color:black" @click.prevent="externo = !externo"></i>
+                                <i class="fas fa-users bg-primary p-2 rounded text-white"></i>
+                                <i class="fas fa-user-tag" x-bind:class="externo ? 'bg-primary p-2 rounded text-white' : ''"
+                                    style="color:black" @click.prevent="externo = !externo"></i>
                             </div>
                         </div>
                         <div class="row" x-show="interno">
@@ -181,12 +182,12 @@
                                 <label for="empresaEXT"><i class="fas fa-user-tag iconos-crear"></i></i>Empresa u
                                     Organización</label>
                                 <input class="form-control" type="text" id="empresaEXT"
-                                    placeholder="Área del participante" />
+                                    placeholder="Empresa u Organización del participante" />
                             </div>
                             <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                                <button id="btn-suscribir-participanteEXT" type="submit"
+                                <button id="btn-suscribir-participanteEXT" onclick="event.preventDefault();"
                                     class="mr-3 btn btn-sm btn-outline-success" style="float: right; position: end;">
-                                    <i class="mr-1 fas fa-plus-circle"></i>
+                                    <i title="Agregar Participantes Externos" class="mr-1 fas fa-plus-circle"></i>
                                     Agregar Participante
                                 </button>
                             </div>
@@ -202,6 +203,7 @@
                                     </thead>
                                     <tbody></tbody>
                                 </table>
+                                <input type="hidden" name="participantesExt" value="" id="participantesExt">
                             </div>
 
                         </div>
@@ -366,6 +368,10 @@
             window.tblParticipantes = $('#tbl-participantes').DataTable({
                 buttons: []
             })
+            window.tblParticipantesEXT = $('#tbl-participantesEXT').DataTable({
+                buttons: []
+            })
+
             $("#cargando_participantes").hide();
             $.ajaxSetup({
                 headers: {
@@ -411,16 +417,22 @@
                 e.preventDefault();
                 suscribirParticipante()
             })
+            document.getElementById('btn-suscribir-participanteEXT').addEventListener('click', function(e) {
+                e.preventDefault();
+                suscribirParticipanteExterno()
+            })
 
             document.getElementById('btnGuardar').addEventListener('click', function(e) {
                 // e.preventDefault();
                 enviarParticipantes();
+                enviarParticipantesExternos();
                 enviarActividades();
             })
 
             document.getElementById('btnUpdateAndReview').addEventListener('click', function(e) {
                 // e.preventDefault();
                 enviarParticipantes();
+                enviarParticipantesExternos();
                 enviarActividades();
             })
 
@@ -484,6 +496,61 @@
             document.getElementById('participantes').value = arrParticipantes;
         }
 
+        function suscribirParticipanteExterno() {
+            //form-participantes
+            let email = $("#emailEXT").val();
+            let nombre = $("#nombreEXT").val();
+            if (email != '' && nombre != '') {
+
+                let participantes = tblParticipantesEXT.rows().data().toArray();
+                // console.log(tblParticipantes.rows().data().toArray());
+                let arrParticipantes = [];
+                participantes.forEach(participante => {
+                    console.log(participante);
+                    arrParticipantes.push(participante[1])
+                });
+                if (!arrParticipantes.includes(email)) {
+                    let puesto = $("#puestoEXT").val();
+                    let empresa = $("#empresaEXT").val();
+                    tblParticipantesEXT.row.add([
+                        nombre,
+                        email,
+                        puesto,
+                        empresa,
+                    ]).draw();
+
+                } else {
+                    Swal.fire('Este participante ya ha sido agregado', '', 'error')
+                }
+
+                $("#participantes_search").val('');
+                $("#nombreEXT").val('');
+                $("#puestoEXT").val('');
+                $("#emailEXT").val('');
+                $("#empresaEXT").val('');
+            } else {
+                Swal.fire('Debes de llenar los campos nombre e email', '', 'info')
+            }
+
+        }
+
+        function enviarParticipantesExternos() {
+            let participantes = tblParticipantesEXT.rows().data().toArray();
+            let arrParticipantes = [];
+            participantes.forEach(participante => {
+                let objParticipantes = {
+                    nombre: participante[0],
+                    email: participante[1],
+                    puesto: participante[2],
+                    empresa: participante[3],
+                }
+                arrParticipantes.push(objParticipantes)
+            });
+            console.log(arrParticipantes);
+            document.getElementById('participantesExt').value = JSON.stringify(arrParticipantes);
+        }
+
+
         function muestra() {
 
             return {
@@ -492,5 +559,4 @@
             }
         }
     </script>
-  
 @endsection

@@ -16,10 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Minutasaltadireccion extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     // ESTATUS MINUTAS
     const EN_ELABORACION = 1;
     const EN_REVISION = 2;
@@ -158,6 +155,11 @@ class Minutasaltadireccion extends Model implements HasMedia
     public function documentos()
     {
         return $this->hasMany(FilesRevisonDireccion::class, 'revision_id', 'id');
+    }
+
+    public function externos()
+    {
+        return $this->hasMany(ExternosMinutaDireccion::class, 'minuta_id', 'id');
     }
 
     // public function documentoss()
