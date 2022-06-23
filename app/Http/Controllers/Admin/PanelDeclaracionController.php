@@ -45,7 +45,6 @@ class PanelDeclaracionController extends Controller
             //     return $row->id ? $row->id : '';
             // });
 
-
             $table->editColumn('controles', function ($row) {
                 return $row->anexo_indice ? $row->anexo_indice : '';
             });
@@ -69,8 +68,6 @@ class PanelDeclaracionController extends Controller
 
             return $table->make(true);
         }
-
-
 
         return view('admin.panelDeclaracion.index', compact('empleados'));
     }
