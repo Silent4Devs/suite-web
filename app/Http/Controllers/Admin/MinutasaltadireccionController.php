@@ -9,6 +9,7 @@ use App\Mail\Minutas\MinutaConfirmacionSolicitud;
 use App\Mail\Minutas\MinutaRechazoPorEdicion;
 use App\Mail\Minutas\SolicitudDeAprobacion;
 use App\Models\Empleado;
+use App\Models\ExternosMinutaDireccion;
 use App\Models\FilesRevisonDireccion;
 use App\Models\HistoralRevisionMinuta;
 use App\Models\Minutasaltadireccion;
@@ -101,6 +102,9 @@ class MinutasaltadireccionController extends Controller
         // Almacenamiento de participantes relacionados
         $this->vincularParticipantes($request, $minutasaltadireccion);
 
+        if ($request->has('participantesExt')) {
+            $this->vincularParticipantesExternos($request, $minutasaltadireccion);
+        }
         //Creación del PDF
         // $actividades = json_decode($request->actividades);
         // $this->createPDF($minutasaltadireccion, $actividades);
@@ -118,6 +122,23 @@ class MinutasaltadireccionController extends Controller
             return intval($valor);
         }, $arrstrParticipantes);
         $minutasaltadireccion->participantes()->sync($participantes);
+    }
+
+    public function vincularParticipantesExternos($request, $minutasaltadireccion)
+    {
+        $arrParticipantes = json_decode($request->participantesExt);
+        foreach ($arrParticipantes as $participante) {
+            $exists = ExternosMinutaDireccion::where('minuta_id', $minutasaltadireccion->id)->where('nombreEXT', $participante->nombre)->where('emailEXT', $participante->email)->where('puestoEXT', $participante->puesto)->where('empresaEXT', $participante->empresa)->first();
+            if (!$exists) {
+                ExternosMinutaDireccion::create([
+                    'nombreEXT' => $participante->nombre,
+                    'emailEXT' => $participante->email,
+                    'puestoEXT' => $participante->puesto,
+                    'empresaEXT' => $participante->empresa,
+                    'minuta_id' => $minutasaltadireccion->id,
+                ]);
+            }
+        }
     }
 
     public function initReviews($minutasaltadireccion)
@@ -265,7 +286,7 @@ class MinutasaltadireccionController extends Controller
     public function edit(Minutasaltadireccion $minutasaltadireccion)
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $minutasaltadireccion->load('participantes', 'planes', 'documentos');
+        $minutasaltadireccion->load('participantes', 'planes', 'documentos', 'externos');
         // dd($minutasaltadireccion);
         $actividades = $minutasaltadireccion->planes->first()->tasks;
         $actividades = array_filter($actividades, function ($actividad) {
@@ -294,6 +315,9 @@ class MinutasaltadireccionController extends Controller
         $minuta = $minutasaltadireccion->update($request->all());
 
         $this->vincularParticipantes($request, $minutasaltadireccion);
+        if ($request->has('participantesExt')) {
+            $this->vincularParticipantesExternos($request, $minutasaltadireccion);
+        }
         if ($edit) {
             $plan = $minutasaltadireccion->planes->first();
             $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion, $plan, true);
