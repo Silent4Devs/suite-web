@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     {{ Breadcrumbs::render('admin.comiteseguridads.create') }}
-    <h5 class="col-12 titulo_general_funcion">Registrar: Conformación del Comité de Seguridad</h5>
+    <h5 class="col-12 titulo_general_funcion">Registrar: Conformación del Comité</h5>
     <div class="mt-4 card">
         <div class="card-body">
             <form method="POST" action="{{ route('admin.comiteseguridads.store') }}" enctype="multipart/form-data"
@@ -10,7 +10,7 @@
 
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
                     <label class="required" for="nombre_comite"><i class="fas fa-gavel iconos-crear"></i></i>Nombre del
-                        Comite</label>
+                        Comité</label>
                     <input class="form-control {{ $errors->has('nombre_comite') ? 'is-invalid' : '' }}" type="text"
                         name="nombre_comite" id="nombre_comite" value="{{ old('nombre_comite', '') }}" required>
                     @if ($errors->has('nombre_comite'))
@@ -31,7 +31,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.comiteseguridad.fields.nombrerol_helper') }}</span>
                 </div>
-               
+
                 {{-- <div class="form-group col-sm-12 col-md-8 col-lg-8">
                 <label class="required" for="nombrerol"> <i class="fas fa-user-tag iconos-crear"></i>Nombre del rol</label>
                 <input class="form-control {{ $errors->has('nombrerol') ? 'is-invalid' : '' }}" type="text" name="nombrerol" id="nombrerol" value="{{ old('nombrerol', '') }}" required>

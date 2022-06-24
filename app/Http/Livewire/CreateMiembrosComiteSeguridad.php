@@ -45,6 +45,7 @@ class CreateMiembrosComiteSeguridad extends Component
 
     public function save()
     {
+
         $this->validarMiembro();
         $model = MiembrosComiteSeguridad::create([
             'nombrerol'=> $this->nombre_rol,
@@ -71,6 +72,7 @@ class CreateMiembrosComiteSeguridad extends Component
         $this->id_comite = $model->comite_id;
         $this->miembroID = $model->id;
         $this->emit('abrir-modal');
+        $this->emit('editar-modal',$model->responsabilidades);
         $this->emit('cargar-puesto', $id);
     }
 

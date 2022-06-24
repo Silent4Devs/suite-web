@@ -109,8 +109,11 @@
 
                                             </div>
                                         </div>
+                                        <hr class="mb-5 mt-5">
+
                                     </div>
                                 @endif
+
                             @endforeach
                         </div>
 

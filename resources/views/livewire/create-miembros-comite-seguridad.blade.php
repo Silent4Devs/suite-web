@@ -11,7 +11,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        {{ $view == 'create' ? 'Agregar' : 'Actualizar' }}Miembro</h5>
+                        {{ $view == 'create' ? 'Agregar' : 'Actualizar' }} Miembro</h5>
 
                     <input id="comite_id" name="comite_id" type="hidden" value=" {{ $id_comite }}"
                         wire:model.defer="id_comite">
@@ -22,17 +22,17 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <label class="required" for="nombre_rol"> <i
-                                class="fas fa-user-tag iconos-crear"></i>Nombre del rol</label>
-                        <input class="form-control {{ $errors->has('nombre_rol') ? 'is-invalid' : '' }}" type="text"
-                            name="nombre_rol" id="nombre_rol" value="{{ old('nombrerol', '') }}"
+                        <label class="required" for="nombre_rol"> <i class="fas fa-user-tag iconos-crear"></i>Nombre del
+                            rol</label>
+                        <input class="form-control {{ $errors->has('nombre_rol') ? 'is-invalid' : '' }}"
+                            type="text" name="nombre_rol" id="nombre_rol" value="{{ old('nombrerol', '') }}"
                             wire:model.defer="nombre_rol">
                         @if ($errors->has('nombre_rol'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre_rol') }}
                             </div>
                         @endif
-                       
+
                     </div>
 
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
@@ -68,17 +68,17 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12"  wire:ignore>
                         <label for="id_puesto_asignada"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                         <div class="form-control" id="puesto_asignada" readonly></div>
 
                     </div>
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12"  wire:ignore>
                         <label for="id_area_asignada"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                         <div class="form-control" id="area_asignada" readonly></div>
                     </div>
-                    <div class="form-group col-sm-12">
+                    <div class="form-group col-sm-12" wire:ignore>
                         <label for="responsabilidades"> <i class="fas fa-business-time iconos-crear"></i>
                             {{ trans('cruds.comiteseguridad.fields.responsabilidades') }}</label>
                         <textarea class="form-control {{ $errors->has('responsabilidades') ? 'is-invalid' : '' }}" name="responsabilidades"
@@ -101,16 +101,42 @@
             </div>
         </div>
     </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             Livewire.on('cargar-puesto', (empleado) => {
                 let select = document.getElementById('id_asignada');
                 let seleccionado = select.options[select.selectedIndex];
-                let puesto= seleccionado.getAttribute('data-puesto')
-                let area= seleccionado.getAttribute('data-area')
+                let puesto = seleccionado.getAttribute('data-puesto')
+                let area = seleccionado.getAttribute('data-area')
                 console.log(seleccionado);
                 document.getElementById('puesto_asignada').innerHTML = puesto;
                 document.getElementById('area_asignada').innerHTML = area;
+            })
+
+            let editor = CKEDITOR.replace('responsabilidades', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
+            editor.on('change', function(event) {
+                console.log(event.editor.getData())
+                @this.set('responsabilidades', event.editor.getData());
+            })
+            Livewire.on('cerrar-modal',()=>{
+                CKEDITOR.instances.responsabilidades.setData('');
+            })
+            Livewire.on('editar-modal',(data)=>{
+                CKEDITOR.instances.responsabilidades.setData(data);
             })
         })
     </script>
