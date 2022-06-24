@@ -6,7 +6,7 @@
 
     <div class="mt-2">
         <label for="amenaza"><i class="fas fa-bomb iconos-crear"></i>Nombre</label>
-        <input class="form-control {{ $errors->has('amenaza') ? 'is-invalid' : '' }}" wire:model.defer="amenaza">
+        <textarea class="form-control {{ $errors->has('amenaza') ? 'is-invalid' : '' }} amenaza" id="amenaza" wire:model.defer="amenaza"></textarea>
         @error('amenaza')
             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
         @enderror
@@ -35,43 +35,47 @@
                     <th>Opciones</th>
                 </tr>
             </thead>
-            <tbody >
-                @foreach ($amenazas as $index=>$amenaza)
-                <tr>
-                    <td>
-                        {{$index+1}}
-                    </td>
-                    <td>
-                        {{$amenaza->amenaza}}
-                    </td>
-                    <td>
-                        <i wire:click="destroy({{ $amenaza->id }})" class="fas fa-trash-alt text-danger"></i>
-                        <i class="fas fa-edit text-primary ml-4" wire:click="edit({{ $amenaza->id }})"></i>
-                        <i class="text-danger ml-4 fas fa-exclamation-triangle" wire:click="$emit('modalRiesgoFoda',{{$amenaza->id}},'amenaza')" data-toggle="modal"
-                            data-target="#marcaslec" title="Asociar un Riesgo"></i>
-                    </td>
-                </tr>
+            <tbody>
+                @foreach ($amenazas as $index => $amenaza)
+                    <tr>
+                        <td>
+                            {{ $index + 1 }}
+                        </td>
+                        <td>
+                            {{ $amenaza->amenaza }}
+                        </td>
+                        <td>
+                            <i wire:click="destroy({{ $amenaza->id }})" class="fas fa-trash-alt text-danger"></i>
+                            <i class="fas fa-edit text-primary ml-4" wire:click="edit({{ $amenaza->id }})"></i>
+                            <i class="text-danger ml-4 fas fa-exclamation-triangle"
+                                wire:click="$emit('modalRiesgoFoda',{{ $amenaza->id }},'amenaza')" data-toggle="modal"
+                                data-target="#marcaslec" title="Asociar un Riesgo"></i>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-    <div class="modal fade" id="marcaslec" wire:ignore.self tabindex="-1"
-    aria-labelledby="marcaslecLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Riesgos Asociados</h5>
-            </div>
-            <div class="modal-body">
-                <div>
-                    @livewire('riesgos-foda')
+    <div class="modal fade" id="marcaslec" wire:ignore.self tabindex="-1" aria-labelledby="marcaslecLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Riesgos Asociados</h5>
                 </div>
+                <div class="modal-body">
+                    <div>
+                        @livewire('riesgos-foda')
+                    </div>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
-</div>
+
+

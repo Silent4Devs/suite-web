@@ -105,8 +105,12 @@ class TablaTareasTimesheet extends Component
 
     public function llenarAreas($id)
     {
-        $this->proyecto_seleccionado = TimesheetProyecto::find($id);
-        $this->area_seleccionar = $this->proyecto_seleccionado->areas;
+        if ($id) {
+            $this->proyecto_seleccionado = TimesheetProyecto::find($id);
+            $this->area_seleccionar = $this->proyecto_seleccionado->areas;
+        } else {
+            $this->area_seleccionar = [];
+        }
     }
 
     public function destroy($id)

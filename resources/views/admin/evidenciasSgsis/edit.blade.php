@@ -194,10 +194,16 @@
                                         </ol>
                                         <div class='carousel-inner'>
                                             @foreach ($evidenciasSgsi->evidencia_sgsi as $idx => $evidencia)
-                                                <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                    <iframe style="width:100%;height:300px;" seamless class='img-size'
-                                                        src="{{ asset('storage/evidencias_sgsi') }}/{{ $evidencia->evidencia }}"></iframe>
-                                                </div>
+                                                @if (pathinfo($evidencia->evidencia, PATHINFO_EXTENSION) == 'pdf')
+                                                    <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <embed style="width:100%;height:300px;" seamless class='img-size'
+                                                            src="{{ asset('storage/evidencias_sgsi') }}/{{ $evidencia->evidencia }}"></embed>
+                                                    </div>
+                                                @else
+                                                    <div class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <a href="{{ asset('storage/evidencias_sgsi') }}/{{ $evidencia->evidencia }}"><i class="fas fa-file-download mr-2" style="font-size:18px"></i>{{ $evidencia->evidencia }}</a>
+                                                    </div>
+                                                @endif
                                             @endforeach
 
 
@@ -305,16 +311,23 @@
             let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
             let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
 
-            document.getElementById('puesto_reviso').innerHTML = puesto_init;
-            document.getElementById('area_reviso').innerHTML = area_init;
+            document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('area_reviso').innerHTML = recortarTexto(area_init);
             responsable.addEventListener('change', function(e) {
                 e.preventDefault();
                 let area = this.options[this.selectedIndex].getAttribute('data-area');
                 let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('puesto_reviso').innerHTML = puesto;
-                document.getElementById('area_reviso').innerHTML = area;
+                document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto);
+                document.getElementById('area_reviso').innerHTML = recortarTexto(area);
             })
         });
+
+        function recortarTexto(texto, length = 30) {
+        let trimmedString = texto?.length > length ?
+            texto.substring(0, length - 3) + "..." :
+            texto;
+        return trimmedString;
+    }
     </script>
 
 @endsection

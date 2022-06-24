@@ -97,20 +97,20 @@
 
                     <div class="form-group col-sm-12 col-md-4 col-lg-4">
                         <label for="id_puesto_reviso"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                        <div class="form-control" id="puesto_reviso"></div>
+                        <div class="form-control" id="puesto_reviso" readonly></div>
                     </div>
 
 
                     <div class="form-group col-sm-12 col-md-4 col-lg-4">
                         <label for="id_area_reviso"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                        <div class="form-control" id="area_reviso"></div>
+                        <div class="form-control" id="area_reviso" readonly></div>
                     </div>
 
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>  
+                        <label for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>
                         <select
                         class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
                         name="normas[]" id="controles" multiple="multiple">
@@ -219,17 +219,24 @@
             let area_init = reviso_alcance.options[reviso_alcance.selectedIndex].getAttribute('data-area');
             let puesto_init = reviso_alcance.options[reviso_alcance.selectedIndex].getAttribute('data-puesto');
 
-            document.getElementById('puesto_reviso').innerHTML = puesto_init;
-            document.getElementById('area_reviso').innerHTML = area_init;
+            document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('area_reviso').innerHTML = recortarTexto(area_init);
             reviso_alcance.addEventListener('change', function(e) {
                 e.preventDefault();
                 let area = this.options[this.selectedIndex].getAttribute('data-area');
                 let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('puesto_reviso').innerHTML = puesto;
-                document.getElementById('area_reviso').innerHTML = area;
+                document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto);
+                document.getElementById('area_reviso').innerHTML = recortarTexto(area);
             })
 
         })
+
+        function recortarTexto(texto, length = 30) {
+        let trimmedString = texto?.length > length ?
+            texto.substring(0, length - 3) + "..." :
+            texto;
+        return trimmedString;
+    }
     </script>
 
 

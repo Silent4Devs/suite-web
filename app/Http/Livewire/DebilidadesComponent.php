@@ -14,7 +14,7 @@ class DebilidadesComponent extends Component
     public $view = 'create';
 
     protected $rules = [
-        'debilidad' => 'required|max:1050',
+        'debilidad' => 'required',
     ];
 
     public function mount($foda_id)

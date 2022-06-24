@@ -308,10 +308,10 @@
                         render: function(data, type, row, meta) {
                             let archivo = "";
                             let archivos = JSON.parse(data);
-                            archivo = ` 
-                           
+                            archivo = `
+
                                <div class="container">
-                               
+
                                     <div class="mb-4 row">
                                     <div class="text-center col">
                                         @can('evidencia_asignacion_recursos_sgsi_ver_evidencia')
@@ -344,10 +344,19 @@
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
+                                                        const [extension, ...nameParts] = archivo.evidencia.split('.').reverse();
+
+                                                        if(extension == 'pdf'){
                                                         return `
-                                                        <div class='carousel-item ${idx==0?"active":""}'>
-                                                            <iframe seamless class='img-size' src='{{ asset('storage/evidencias_sgsi') }}/${archivo.evidencia}'></iframe>
-                                                        </div>`
+                                                                <div class='carousel-item ${idx==0?"active":""}'>
+                                                                    <embed seamless class='img-size' src='{{ asset('storage/evidencias_sgsi') }}/${archivo.evidencia}'></embed>
+                                                                </div>`
+                                                    }else{
+                                                        return `
+                                                                    <div class='text-center my-5 carousel-item ${idx==0?"active":""}'>
+                                                                       <a href='{{ asset("storage/evidencias_sgsi") }}/${archivo.evidencia}'><i class="fas fa-file-download mr-2" style="font-size:18px"></i> ${archivo.evidencia}</a>
+                                                                    </div>`
+                                                    }
                                                     })}
 
                                             </div>
@@ -390,7 +399,7 @@
                                         </div>
                                         </div>
                                     </div>
-                                    </div>  
+                                    </div>
                                     `
                             return archivo;
                         }

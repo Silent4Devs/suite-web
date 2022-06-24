@@ -14,7 +14,7 @@ class AmenazasComponent extends Component
     public $view = 'create';
 
     protected $rules = [
-        'amenaza' => 'required|max:1050',
+        'amenaza' => 'required',
     ];
 
     public function mount($foda_id)

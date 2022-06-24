@@ -34,6 +34,7 @@ class PoliticaSgsi extends Model
     ];
 
     protected $fillable = [
+        'nombre_politica',
         'politicasgsi',
         'fecha_publicacion',
         'fecha_entrada',

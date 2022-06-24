@@ -193,16 +193,24 @@ document.addEventListener('DOMContentLoaded', function() {
         let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
         let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
 
-        document.getElementById('puesto_reviso').innerHTML = puesto_init;
-        document.getElementById('area_reviso').innerHTML = area_init;
+        document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto_init);
+        document.getElementById('area_reviso').innerHTML = recortarTexto(area_init);
         responsable.addEventListener('change', function(e) {
             e.preventDefault();
             let area = this.options[this.selectedIndex].getAttribute('data-area');
             let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('puesto_reviso').innerHTML = puesto;
-            document.getElementById('area_reviso').innerHTML = area;
+            document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto);
+            document.getElementById('area_reviso').innerHTML = recortarTexto(area);
         })
     });
+
+
+    function recortarTexto(texto, length = 30) {
+        let trimmedString = texto?.length > length ?
+            texto.substring(0, length - 3) + "..." :
+            texto;
+        return trimmedString;
+    }
 
 </script>
 

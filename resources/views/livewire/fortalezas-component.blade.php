@@ -7,7 +7,7 @@
 
     <div class="mt-2">
         <label for="fortaleza"><i class="fas fa-thumbs-up iconos-crear"></i>Nombre</label>
-        <input class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model.defer="fortaleza">
+        <textarea class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model.defer="fortaleza"></textarea>
         @error('fortaleza')
             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
         @enderror

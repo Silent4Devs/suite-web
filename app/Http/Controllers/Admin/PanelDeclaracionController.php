@@ -18,6 +18,7 @@ class PanelDeclaracionController extends Controller
     {
 
         // dd(Empleado::select('id','name','genero','foto')->find(9)->declaraciones_responsable);
+        $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
         if ($request->ajax()) {
             $query = DeclaracionAplicabilidad::with(['responsables', 'aprobadores'])->orderBy('id')->get();
             $table = DataTables::of($query);
@@ -43,6 +44,7 @@ class PanelDeclaracionController extends Controller
             // $table->editColumn('id', function ($row) {
             //     return $row->id ? $row->id : '';
             // });
+
             $table->editColumn('controles', function ($row) {
                 return $row->anexo_indice ? $row->anexo_indice : '';
             });
@@ -55,11 +57,9 @@ class PanelDeclaracionController extends Controller
             $table->editColumn('aprobador', function ($row) {
                 return $row->aprobadores ? $row->aprobadores : '';
             });
-            $table->editColumn('empleados', function ($row) {
-                $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
-
-                return $empleados;
-            });
+            // $table->editColumn('empleados', function ($row) use ($empleados) {
+            //     return $empleados;
+            // });
             $table->editColumn('notificar', function ($row) {
                 return $row->responsables ? $row->responsables : '';
             });
@@ -68,8 +68,6 @@ class PanelDeclaracionController extends Controller
 
             return $table->make(true);
         }
-
-        $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
 
         return view('admin.panelDeclaracion.index', compact('empleados'));
     }
