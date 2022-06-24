@@ -33,7 +33,6 @@ class TablaProyectosTimesheet extends Component
 
     public function mount()
     {
-
     }
 
     public function render()
