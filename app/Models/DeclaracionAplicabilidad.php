@@ -10,7 +10,6 @@ class DeclaracionAplicabilidad extends Model
 {
     use HasFactory;
 
-    protected static $flushCacheOnUpdate = true;
     public $table = 'declaracion_aplicabilidad';
 
     protected $fillable = [

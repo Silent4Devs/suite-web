@@ -6,8 +6,8 @@
 
     <div class="mt-2">
         <label for="oportunidad"><i class="fas fa-lightbulb iconos-crear"></i>Nombre</label>
-        <textarea class="form-control {{ $errors->has('oportunidad') ? 'is-invalid' : '' }}"
-            wire:model.defer="oportunidad"></textarea>
+        <input class="form-control {{ $errors->has('oportunidad') ? 'is-invalid' : '' }}"
+            wire:model.defer="oportunidad">
         @error('oportunidad')
             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
         @enderror
@@ -34,7 +34,7 @@
                 <tr>
                     <td>ID</td>
                     <th>Oportunidades</th>
-                    <th>Opciones</th>
+                    <th style="min-width:100px;">Opciones</th>
                 </tr>
             </thead>
             <tbody >
@@ -48,8 +48,8 @@
                     </td>
                     <td>
                         <i wire:click="destroy({{ $oportunidad->id }})" class="fas fa-trash-alt text-danger"></i>
-                        <i class="fas fa-edit text-primary ml-4" wire:click="edit({{ $oportunidad->id }})"></i>
-                        <i class="text-danger ml-4 fas fa-exclamation-triangle" wire:click="$emit('modalRiesgoFoda',{{$oportunidad->id}},'oportunidad')" data-toggle="modal"
+                        <i class="fas fa-edit text-primary ml-2" wire:click="edit({{ $oportunidad->id }})"></i>
+                        <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$emit('modalRiesgoFoda',{{$oportunidad->id}},'oportunidad')" data-toggle="modal"
                             data-target="#marcaslec" title="Asociar un Riesgo"></i>
                     </td>
                 </tr>

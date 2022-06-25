@@ -3,26 +3,31 @@
 
 
     <style>
-        .table tr td:nth-child(2) {
+         .table tr td:nth-child(2) {
             text-align: justify !important;
         }
 
         .table tr th:nth-child(2) {
+            min-width: 150px !important;
+            text-align: center !important;
+
+        }
+        .table tr td:nth-child(3) {
+            text-align: justify !important;
+        }
+
+        .table tr th:nth-child(3) {
             min-width: 900px !important;
             text-align: center !important;
 
         }
 
-        .table tr th:nth-child(3) {
-            text-align: center !important;
-        }
-
         .table tr th:nth-child(4) {
-            min-width: 70px !important;
             text-align: center !important;
         }
 
-        .table tr td:nth-child(4) {
+        .table tr th:nth-child(5) {
+            min-width: 70px !important;
             text-align: center !important;
         }
 
@@ -30,12 +35,16 @@
             text-align: center !important;
         }
 
-        .table tr th:nth-child(6) {
+        .table tr td:nth-child(6) {
+            text-align: center !important;
+        }
+
+        .table tr th:nth-child(7) {
             text-align: center !important;
             min-width: 130px !important;
         }
 
-        .table tr th:nth-child(8) {
+        .table tr th:nth-child(9) {
             text-align: center !important;
             min-width: 70px !important;
         }
@@ -99,6 +108,9 @@
                     <tr>
                         <th style="text-transform: capitalize">
                             {{ trans('cruds.politicaSgsi.fields.id') }}
+                        </th>
+                        <th>
+                            Nombre de la política
                         </th>
                         <th>
                             Política&nbsp;del&nbsp;Sistema&nbsp;de&nbsp;Gestión
@@ -292,6 +304,10 @@
                 columns: [{
                         data: 'id',
                         name: 'id'
+                    },
+                    {
+                        data: 'nombre_politica',
+                        name: 'nombre_politica'
                     },
                     {
                         data: 'politicasgsi',
