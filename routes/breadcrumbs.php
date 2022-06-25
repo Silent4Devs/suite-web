@@ -86,7 +86,7 @@ Breadcrumbs::for('admin.alcance-sgsis.create', function ($trail) {
 Breadcrumbs::for('admin.comiteseguridads.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Liderazgo', route('admin.iso27001.index') . '#liderazgo');
-    $trail->push('Conformación del Comité de Seguridad', route('admin.comiteseguridads.index'));
+    $trail->push('Conformación del Comité', route('admin.comiteseguridads.index'));
 });
 Breadcrumbs::for('admin.comiteseguridads.create', function ($trail) {
     $trail->parent('admin.comiteseguridads.index');
@@ -94,7 +94,7 @@ Breadcrumbs::for('admin.comiteseguridads.create', function ($trail) {
 });
 Breadcrumbs::for('admin.comiteseguridads.visualizacion', function ($trail) {
     $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
-    $trail->push('Comite de Seguridad');
+    $trail->push('Comité');
 });
 
 Breadcrumbs::for('admin.minutasaltadireccions.index', function ($trail) {

@@ -2,7 +2,7 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.comiteseguridads.create') }}
-<h5 class="col-12 titulo_general_funcion">Editar: Conformación del Comité de Seguridad</h5>
+<h5 class="col-12 titulo_general_funcion">Editar: Conformación del Comité</h5>
 
 <div class="mt-4 card">
     <div class="card-body">
@@ -11,7 +11,7 @@
             @csrf
             <div class="form-group col-sm-12 col-md-12 col-lg-12">
                 <label class="required" for="nombre_comite"><i class="fas fa-gavel iconos-crear"></i></i>Nombre del
-                    Comite</label>
+                    Comité</label>
                 <input class="form-control {{ $errors->has('nombre_comite') ? 'is-invalid' : '' }}" type="text"
                     name="nombre_comite" id="nombre_comite" value="{{ old('nombre_comite', $comiteseguridad->nombre_comite) }}" required>
                 @if ($errors->has('nombre_comite'))
@@ -19,7 +19,7 @@
                         {{ $errors->first('nombre_comite') }}
                     </div>
                 @endif
-           
+
             </div>
 
             <div class="form-group col-sm-12 col-md-12 col-lg-12">
@@ -30,7 +30,7 @@
                         {{ $errors->first('nombre_comite') }}
                     </div>
                 @endif
-             
+
             </div>
 
             @livewire('show-miembros-comite-seguridad',['id_comite'=>$comiteseguridad->id])
@@ -74,5 +74,7 @@
 
 
     </script>
+
+
 
 @endsection

@@ -103,12 +103,15 @@ class DeclaracionAplicabilidadController extends Controller
         $path = public_path($ISO27001_SoA_PATH);
         $lista_archivos_declaracion = glob($path . 'Analisis Inicial*.pdf');
         $empleados = Empleado::select('id', 'name', 'genero', 'foto')->alta()->get();
-        $responsables = DeclaracionAplicabilidadResponsable::get();
+        $responsables = DeclaracionAplicabilidadResponsable::orderBy('id')->get();
+        // dd($responsables);
         $aprobadores = DeclaracionAplicabilidadAprobadores::get();
-        // $empleados=Empleado::select('id','name','genero','foto')->get();
 
+        // $empleados=Empleado::select('id','name','genero','foto')->get();
         // dd(DB::getQueryLog());
         // dd($lista_archivos_declaracion);
+
+
         return view('admin.declaracionaplicabilidad.index', compact('conteoAplica', 'conteoNoaplica', 'A5', 'A5No', 'A6', 'A6No', 'A7', 'A7No', 'A8', 'A8No', 'A9', 'A9No', 'A10', 'A10No', 'A11', 'A11No', 'A12', 'A12No', 'A13', 'A13No', 'A14', 'A14No', 'A15', 'A15No', 'A16', 'A16No', 'A17', 'A17No', 'A18', 'A18No'))
             ->with('gapda6s', $gapa6)->with('gapda5s', $gapa5)
             ->with('gapda62s', $gapa62)->with('gapda71s', $gapa71)->with('gapda72s', $gapa72)
@@ -134,6 +137,7 @@ class DeclaracionAplicabilidadController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($id);
         if ($request->ajax()) {
             switch ($request->name) {
 
@@ -151,13 +155,22 @@ class DeclaracionAplicabilidadController extends Controller
                 case 'aplica':
                     try {
                         $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
-                        // $gapun->aplica = $request->value;
                         return response()->json(['success' => true, 'id' => $id]);
                     } catch (Throwable $e) {
                         return response()->json(['success' => false]);
                     }
 
                     break;
+                    case 'aplica2':
+                        try {
+                            $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
+                            // $gapun->aplica = $request->value;
+                            return response()->json(['success' => true, 'id' => $id]);
+                        } catch (Throwable $e) {
+                            return response()->json(['success' => false]);
+                        }
+
+                        break;
                 case 'estatus':
                     try {
                         $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['estatus' => $request->value]);
@@ -307,43 +320,43 @@ class DeclaracionAplicabilidadController extends Controller
         return $pdf->setPaper('a4', 'landscape')->stream();
 
         /*return view('admin.declaracionaplicabilidad.plantilla', compact(
-            'gapda6s',
-            'gapda5s',
-            'gapda62s',
-            'gapda71s',
-            'gapda72s',
-            'gapda73s',
-            'gapda81s',
-            'gapda82s',
-            'gapda83s',
-            'gapda91s',
-            'gapda92s',
-            'gapda93s',
-            'gapda94s',
-            'gapda101s',
-            'gapda111s',
-            'gapda112s',
-            'gapda121s',
-            'gapda122s',
-            'gapda123s',
-            'gapda124s',
-            'gapda125s',
-            'gapda126s',
-            'gapda127s',
-            'gapda131s',
-            'gapda132s',
-            'gapda141s',
-            'gapda142s',
-            'gapda143s',
-            'gapda151s',
-            'gapda152s',
-            'gapda161s',
-            'gapda171s',
-            'gapda172s',
-            'gapda181s',
-            'gapda182s',
-            'logotipo'
-        ));*/
+    'gapda6s',
+    'gapda5s',
+    'gapda62s',
+    'gapda71s',
+    'gapda72s',
+    'gapda73s',
+    'gapda81s',
+    'gapda82s',
+    'gapda83s',
+    'gapda91s',
+    'gapda92s',
+    'gapda93s',
+    'gapda94s',
+    'gapda101s',
+    'gapda111s',
+    'gapda112s',
+    'gapda121s',
+    'gapda122s',
+    'gapda123s',
+    'gapda124s',
+    'gapda125s',
+    'gapda126s',
+    'gapda127s',
+    'gapda131s',
+    'gapda132s',
+    'gapda141s',
+    'gapda142s',
+    'gapda143s',
+    'gapda151s',
+    'gapda152s',
+    'gapda161s',
+    'gapda171s',
+    'gapda172s',
+    'gapda181s',
+    'gapda182s',
+    'logotipo'
+    ));*/
     }
 
     public function enviarCorreo(Request $request)

@@ -132,7 +132,7 @@
                                             </td>
                                             <td>
                                                 @foreach ($responsables as $responsable)
-                                                    @if (is_null($responsable))
+                                                    @if (!is_null($responsable))
                                                     @if ($responsable->declaracion_id == $g5s->id)
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                             class="img_empleado"
@@ -159,17 +159,17 @@
                                                         $aplica = $responsable->aplica;
                                                     }
                                                 }
+                                                // dd($responsable);
                                             @endphp
-
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g5s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
 
-                                                            @if (is_null($aplica))
-                                                                <p>Sin información</p>
+                                                            @if (!isset($aplica))
+                                                            <div class="text-center"><i style="font-size:12pt" class=" fas fa-user-lock mr-2 text-danger" title="Acción no permitida"></i></div>
                                                             @else
-                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                                {{ $aplica == '1' ?'Si' : 'No' }}
                                                             @endif
 
                                                         </td>
@@ -204,8 +204,8 @@
                                                 @if ($aprobador->declaracion_id == $g5s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            @if (is_null($justificacion))
-                                                                <p>Sin información</p>
+                                                            @if (!isset($justificacion))
+                                                            <div class="text-center"><i style="font-size:12pt" class=" fas fa-user-lock mr-2 text-danger" title="Acción no permitida"></i></div>
                                                             @else
                                                                 {{ $justificacion }}
                                                             @endif
@@ -243,7 +243,7 @@
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (is_null($estatusy))
-                                                                <p>Sin revisión</p>
+                                                            <div class="text-center"><i style="font-size:12pt" class=" fas fa-user-lock mr-2 text-danger" title="Acción no permitida"></i></div>
                                                             @else
                                                                 @if ($estatusy == 1)
                                                                     <p>Pendiente de aprobar</p>
@@ -305,8 +305,8 @@
                                                 @if ($responsable->declaracion_id == $g5s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
-                                                            @if (is_null($justificacion))
-                                                                <p>Sin información</p>
+                                                            @if (!isset($comentariosx))
+                                                            <div class="text-center"><i style="font-size:12pt" class=" fas fa-user-lock mr-2 text-danger" title="Acción no permitida"></i></div>
                                                             @else
                                                                 {{ $comentariox }}
                                                             @endif
@@ -429,10 +429,10 @@
                                                 @if ($aprobador->declaracion_id == $g6s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            @if (is_null($aplica))
-                                                                <p>Sin información</p>
+                                                            @if (!isset($aplica))
+                                                            <div class="text-center"><i style="font-size:12pt" class=" fas fa-user-lock mr-2 text-danger" title="Acción no permitida"></i></div>
                                                             @else
-                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                                {{ $aplica == 1 ? 'Si' : 'No' }}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -468,7 +468,7 @@
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (is_null($justificacion))
-                                                                <p>Sin información</p>
+                                                            <div class="text-center"><i style="font-size:12pt" class=" fas fa-user-lock mr-2 text-danger" title="Acción no permitida"></i></div>
                                                             @else
                                                                 {{ $justificacion }}
                                                             @endif
@@ -505,8 +505,8 @@
                                                 @if ($responsable->declaracion_id == $g6s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            @if (is_null($estatusy))
-                                                                <p>Sin revisión</p>
+                                                            @if (!isset($estatusy))
+                                                            <div class="text-center"><i style="font-size:12pt" class=" fas fa-user-lock mr-2 text-danger" title="Acción no permitida"></i></div>
                                                             @else
                                                                 @if ($estatusy == 1)
                                                                     <p>Pendiente de aprobar</p>

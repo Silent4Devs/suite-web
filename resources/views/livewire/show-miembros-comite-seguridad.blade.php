@@ -1,9 +1,9 @@
 <div class="form-group col-md-12">
 
     <div col-12 offset-10>
-        @livewire('create-miembros-comite-seguridad',['id_comite'=>$id_comite])
+        @livewire('create-miembros-comite-seguridad', ['id_comite' => $id_comite])
     </div>
- 
+
     <table class="table">
         <thead class="head-light">
             <tr>
@@ -18,9 +18,11 @@
         <tbody>
             @foreach ($datas as $data)
                 <tr>
-                    <th style="min-width:130px;">{{ $data->id_asignada }}</th>
+                    <th style="min-width:130px;"><img class="img_empleado"
+                            src="{{ asset('storage/empleados/imagenes') }}/{{ $data->asignacion ? $data->asignacion->avatar : 'user.png' }}"
+                            title="{{ $data->asignacion->name }}"></th>
                     <th style="min-width:130px;">{{ $data->nombrerol }}</th>
-                    <td style="min-width:100px;">{{ $data->responsabilidades }}</td>
+                    <td style="min-width:100px;">{!!$data->responsabilidades!!}</td>
                     <td style="min-width:100px;">{{ $data->fechavigor }}</td>
                     {{-- <td style="min-width:40px; position:relative">
                         @if (!is_null($data->normas))
@@ -34,8 +36,8 @@
                         @endif
                     </td> --}}
                     <td style="min-width:40px;">
-                        <i class="fas fa-edit"
-                            wire:click.prevent="$emit('editarParteInteresada',{{ $data->id }})"> </i>
+                        <i class="fas fa-edit" wire:click.prevent="$emit('editarParteInteresada',{{ $data->id }})">
+                        </i>
                         {{-- <i class="fas fa-project-diagram"
                             wire:click.prevent="$emit('agregarNormas',{{ $data->id }})"> </i> --}}
                         <i class="fas fa-trash-alt text-danger"
@@ -69,9 +71,30 @@
             });
 
         })
+        Livewire.on('editarParteInteresada', () => {
+            console.log('hola');
+
+
+        });
         Livewire.on('abrirModalPartesInteresadas', () => {
             $('#NormasModal').modal('show');
-
+            setTimeout(() => {
+                CKEDITOR.replace('responsabilidades', {
+                    toolbar: [{
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent',
+                            'Indent', '-',
+                            'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-',
+                            'Bold', 'Italic'
+                        ]
+                    }, {
+                        name: 'clipboard',
+                        items: ['Link', 'Unlink']
+                    }, ]
+                });
+            }, 1500);
         })
         Livewire.on('cerrarModalPartesInteresadas', () => {
             $('#NormasModal').modal('hide');

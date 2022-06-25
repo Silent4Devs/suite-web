@@ -100,9 +100,9 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-12" style="text-align: end">
-                                <i class="fas fa-users bg-primary p-2 rounded text-white"></i>
+                                <i class="fas fa-users bg-primary p-2 rounded text-white" ></i>
                                 <i class="fas fa-user-tag" x-bind:class="externo ? 'bg-primary p-2 rounded text-white' : ''"
-                                    style="color:black" @click.prevent="externo = !externo"></i>
+                                    style="color:black" @click.prevent="externo = !externo" title="Agregar externo"></i>
                             </div>
                         </div>
                         <div class="row" x-show="interno">
@@ -235,7 +235,7 @@
 
                 {{-- <form></form>
 
-                
+
                 <form action="{{ route('admin.minutasaltadireccions.store') }}" method="POST" class="dropzone"
                     id="my-awesome-dropzone">
                 </form> --}}
