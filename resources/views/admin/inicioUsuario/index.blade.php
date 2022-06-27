@@ -132,7 +132,7 @@
 
     </style>
     @include('partials.flashMessages')
-    <div id="inicio_usuario" class="mb-5 row" style="">
+    <div id="inicio_usuario" class="row" style="">
         <h5 class="col-12 titulo_general_funcion">Mi Perfil</h5>
         <div class="col-lg-12 row caja_botones_secciones">
             @if ($usuario->empleado)
