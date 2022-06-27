@@ -3,7 +3,6 @@
         min-width: 800px !important;
         text-align: justify !important;
     }
-
 </style>
 
 
@@ -51,7 +50,8 @@
             <div class="form-group">
                 <label for="finalizacion"><i class="iconos-crear fas fa-calendar-day"></i> Finalización <span
                         class="text-danger">*</span></label><i class="fas fa-info-circle"
-                    style="font-size:12pt; float: right;" title="Fecha de finalización de la
+                    style="font-size:12pt; float: right;"
+                    title="Fecha de finalización de la
                         actividad"></i>
                 <input type="date" class="form-control" id="finalizacion" name="finalizacion">
                 {{-- <small id="finalizacionHelp" class="form-text text-muted">Fecha de finalización de la
@@ -114,6 +114,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">ID</th>
+                    <th scope="col">Estatus</th>
                     <th scope="col">Actividad</th>
                     <th scope="col">Inicio</th>
                     <th scope="col">Finalización</th>
@@ -129,6 +130,45 @@
                     @foreach ($actividades as $actividad)
                         <tr>
                             <td>{{ $actividad->id }}</td>
+                            @php
+                                $estatus = 'Completado';
+                                $color = 'rgb(0,200,117)';
+                                $textColor = 'white';
+                                switch ($actividad->status) {
+                                    case 'STATUS_ACTIVE':
+                                        $estatus = 'En Progreso';
+                                        $color = 'rgb(253, 171, 61)';
+                                        break;
+                                    case 'STATUS_DONE':
+                                        $color="rgb(0, 200, 117)";
+                                        $estatus = 'Completado';
+                                        break;
+                                    case 'STATUS_FAILED':
+                                        $estatus = 'Con Retrazo';
+                                        $color="rgb(226, 68, 92)";
+                                        break;
+                                    case 'STATUS_SUSPENDED':
+                                        $estatus = 'Suspendido';
+                                        $color="#aaaaaa";
+                                        break;
+                                    case 'STATUS_WAITING':
+                                        $estatus = 'En Espera';
+                                        $color="#F79136";
+                                
+                                        break;
+                                    case 'STATUS_UNDEFINED':
+                                        $estatus = 'Indefinido';
+                                        $color="#00b1e1";
+                                        $textColor="dark";
+                                        break;
+                                    default:
+                                        $estatus = 'Indefinido';
+                                        break;
+                                }
+                            @endphp
+                            <td style="background: {{ $color }}; color:{{ $textColor }}">
+                                {{ $estatus }}
+                            </td>
                             <td>{{ $actividad->name }}</td>
                             <td>{{ \Carbon\Carbon::parse(\Carbon\Carbon::createFromTimestamp(intval($actividad->start) / 1000)->toDateTimeString())->format('Y-m-d') }}
                             </td>

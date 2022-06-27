@@ -111,7 +111,6 @@ class DeclaracionAplicabilidadController extends Controller
         // dd(DB::getQueryLog());
         // dd($lista_archivos_declaracion);
 
-
         return view('admin.declaracionaplicabilidad.index', compact('conteoAplica', 'conteoNoaplica', 'A5', 'A5No', 'A6', 'A6No', 'A7', 'A7No', 'A8', 'A8No', 'A9', 'A9No', 'A10', 'A10No', 'A11', 'A11No', 'A12', 'A12No', 'A13', 'A13No', 'A14', 'A14No', 'A15', 'A15No', 'A16', 'A16No', 'A17', 'A17No', 'A18', 'A18No'))
             ->with('gapda6s', $gapa6)->with('gapda5s', $gapa5)
             ->with('gapda62s', $gapa62)->with('gapda71s', $gapa71)->with('gapda72s', $gapa72)
@@ -155,6 +154,7 @@ class DeclaracionAplicabilidadController extends Controller
                 case 'aplica':
                     try {
                         $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
+
                         return response()->json(['success' => true, 'id' => $id]);
                     } catch (Throwable $e) {
                         return response()->json(['success' => false]);

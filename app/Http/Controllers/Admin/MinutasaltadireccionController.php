@@ -59,6 +59,7 @@ class MinutasaltadireccionController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'objetivoreunion' => 'required',

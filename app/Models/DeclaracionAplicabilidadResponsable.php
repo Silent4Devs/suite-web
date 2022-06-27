@@ -24,8 +24,6 @@ class DeclaracionAplicabilidadResponsable extends Model
 {
     use SoftDeletes;
 
-
-
     protected $table = 'declaracion_aplicabilidad_responsables';
 
     protected $casts = [
