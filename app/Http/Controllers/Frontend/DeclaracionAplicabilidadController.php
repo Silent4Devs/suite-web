@@ -139,7 +139,6 @@ class DeclaracionAplicabilidadController extends Controller
                     break;
             }
         }
-
     }
 
     public function download(DeclaracionAplicabilidad $declaracionAplicabilidad)
