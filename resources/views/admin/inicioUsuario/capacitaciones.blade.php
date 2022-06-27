@@ -36,10 +36,9 @@
         transform: translate(-50%, -50%) rotate(45deg);
         width: 0.75rem;
     }
-
 </style>
 
-<div class="card-body datatable-fix" id="contendor-principal-capacitaciones" x-data="{show:false}">
+<div class="card-body datatable-fix" id="contendor-principal-capacitaciones" x-data="{ show: false }">
     <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
         <div class="row w-100">
             <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -58,19 +57,21 @@
         </div>
     </div>
     <div class="row mb-4 align-items-center">
-        <div class="pr-0" x-bind:class="show?'col-12':'col-10'" style="text-align:right;">
+        <div class="pr-0" x-bind:class="show ? 'col-12' : 'col-10'" style="text-align:right;">
 
-            <span class="mr-2" x-bind:class="!show?'menu-active':''" title="Visualizar Tarjetas"
+            <span class="mr-2" x-bind:class="!show ? 'menu-active' : ''" title="Visualizar Tarjetas"
                 style="font-size: 1.1rem;cursor: pointer;" x-on:click="show=false"><i class="fas fa-th"></i></span>
 
 
-            <span class="mr-2" style="font-size: 1.1rem;cursor: pointer;" x-bind:class="show?'menu-active':''"
+            <span class="mr-2" style="font-size: 1.1rem;cursor: pointer;" x-bind:class="show ? 'menu-active' : ''"
                 x-on:click="show=true" title="Visualizar Tabla"><i class="fas fa-th-list"></i></span>
 
 
-            <span x-show="!show" x-data="{archivado:false}">
+            <span x-show="!show" x-data="{ archivado: false }">
                 <span id="btnArchivo" class="mr-2" style="font-size: 1.1rem;cursor: pointer;" title="Archivo"
-                x-show="!archivado" x-on:click="archivado=true" x-transition ><a href="{{ asset('admin/inicioUsuario/capacitaciones/archivo') }}" style="color: #7c7777;text-decoration: none;"><i class="fas fa-archive"></i></a></span>
+                    x-show="!archivado" x-on:click="archivado=true" x-transition><a
+                        href="{{ asset('admin/inicioUsuario/capacitaciones/archivo') }}"
+                        style="color: #7c7777;text-decoration: none;"><i class="fas fa-archive"></i></a></span>
 
                 {{-- <span id="btnArchivo" data-url="{{ route('admin.recursos.obtenerCapacitacionesArchivadas') }}"
                     class="mr-2" style="font-size: 1.1rem;cursor: pointer;" title="Archivo"
@@ -84,7 +85,7 @@
 
 
         </div>
-        <div class="pl-0" x-bind:class="!show?'col-2':''">
+        <div class="pl-0" x-bind:class="!show ? 'col-2' : ''">
             <select class="form-control" id="selectTipoCapacitacion" x-show="!show">
                 <option value="todo" selected>Todas</option>
                 <option value="aceptadas">Aceptadas</option>
@@ -159,7 +160,6 @@
 <div>
     @foreach ($recursos as $recurso)
         @if (!($recurso->archivar == 'archivado'))
-
             <div class="modal fade" id="alert_capa{{ $recurso->id }}" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">

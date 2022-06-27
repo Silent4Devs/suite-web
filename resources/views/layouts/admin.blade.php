@@ -38,11 +38,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
         integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
         crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    {{-- <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com"> --}}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
+    {{-- <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css"> --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- PWA  -->
     <meta name="theme-color" content="#6777ef" />
@@ -54,6 +53,43 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <style type="text/css">
+        .printModal {
+            font-family: sans-serif;
+            display: flex;
+            text-align: center;
+            font-weight: 300;
+            font-size: 30px;
+            left: 0;
+            top: 0;
+            position: absolute;
+            color: #0460b5;
+            width: 100%;
+            height: 100%;
+            background-color: hsla(0, 0%, 100%, .91)
+        }
+
+        .printClose {
+            position: absolute;
+            right: 10px;
+            top: 10px
+        }
+
+        .printClose:before {
+            content: "\00D7";
+            font-family: Helvetica Neue, sans-serif;
+            font-weight: 100;
+            line-height: 1px;
+            padding-top: .5em;
+            display: block;
+            font-size: 2em;
+            text-indent: 1px;
+            overflow: hidden;
+            height: 1.25em;
+            width: 1.25em;
+            text-align: center;
+            cursor: pointer
+        }
+
         .DTFC_LeftBodyWrapper {
             top: -13px !important;
         }
@@ -1050,8 +1086,8 @@
             <ul class="ml-auto c-header-nav">
                 @if (count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
-                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                            aria-expanded="false">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
                             {{ strtoupper(app()->getLocale()) }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
@@ -1100,8 +1136,8 @@
                 <ul class="ml-auto c-header-nav">
 
                     <li class="c-header-nav-item dropdown show">
-                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                            aria-expanded="false">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
                                 @if (auth()->user()->empleado)
                                     <img class="img_empleado mr-2" style=""
@@ -1249,8 +1285,9 @@
                 color: #fff !important;
                 padding-top: 10px;
             }
+
             #tabla_blanca_imprimir_global thead tr:first-child th:last-child,
-            #tabla_blanca_imprimir_global tbody tr td:last-child{
+            #tabla_blanca_imprimir_global tbody tr td:last-child {
                 display: none !important;
             }
         }
@@ -1338,6 +1375,7 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
     </script>
@@ -1386,7 +1424,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 
     <link href="https://cdnout.com/flatpickr/themes/material_blue.css" rel="stylesheet" media="all">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css"> --}}
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="{{ asset('js/main.js') }}"></script>
@@ -1763,6 +1801,13 @@
             var id_seccion = $(".caja_botones_menu a:hover").attr('data-tabs');
             $(document.getElementById(id_seccion)).addClass("caja_tab_reveldada");
         });
+        $('.modal').on('shown.bs.modal', function (event) {
+            let modalBackDrop = document.querySelector('.modal-backdrop');
+            if (modalBackDrop) {
+                modalBackDrop.style.width="100%";
+                modalBackDrop.style.height="100%"
+            }   
+        })      
     </script>
 
 
