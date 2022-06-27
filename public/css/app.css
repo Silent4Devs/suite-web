@@ -35077,9 +35077,9 @@ h3 {
   margin-right: 0 !important;
 }
 
-@media(max-width: 2000px){
+/* @media(max-width: 2000px){
   body{
-    zoom: 80%;
+    font-size: 14px !important;
   }
-}
+} */
 
