@@ -98,9 +98,12 @@
                 </div>
                 <div class="pl-3 row w-100" x-data="muestra()">
                     <div class="col-12">
+                        <small><i class="fas fa-info-circle mr-2"></i> <strong>NOTA: </strong>Para agregar participantes
+                            externos de click en el botón que tiene el siguiente icono<i
+                                class=" ml-1 fas fa-user-tag"></i></small>
                         <div class="row">
                             <div class="col-12" style="text-align: end">
-                                <i class="fas fa-users bg-primary p-2 rounded text-white" ></i>
+                                <i class="fas fa-users bg-primary p-2 rounded text-white"></i>
                                 <i class="fas fa-user-tag" x-bind:class="externo ? 'bg-primary p-2 rounded text-white' : ''"
                                     style="color:black" @click.prevent="externo = !externo" title="Agregar externo"></i>
                             </div>

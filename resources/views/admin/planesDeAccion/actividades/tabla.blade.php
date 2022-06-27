@@ -132,32 +132,41 @@
                             <td>{{ $actividad->id }}</td>
                             @php
                                 $estatus = 'Completado';
-                                $estatus = '#';
+                                $color = 'rgb(0,200,117)';
+                                $textColor = 'white';
                                 switch ($actividad->status) {
                                     case 'STATUS_ACTIVE':
                                         $estatus = 'En Progreso';
+                                        $color = 'rgb(253, 171, 61)';
                                         break;
                                     case 'STATUS_DONE':
+                                        $color="rgb(0, 200, 117)";
                                         $estatus = 'Completado';
                                         break;
                                     case 'STATUS_FAILED':
                                         $estatus = 'Con Retrazo';
+                                        $color="rgb(226, 68, 92)";
                                         break;
                                     case 'STATUS_SUSPENDED':
                                         $estatus = 'Suspendido';
+                                        $color="#aaaaaa";
                                         break;
                                     case 'STATUS_WAITING':
                                         $estatus = 'En Espera';
+                                        $color="#F79136";
+                                
                                         break;
                                     case 'STATUS_UNDEFINED':
                                         $estatus = 'Indefinido';
+                                        $color="#00b1e1";
+                                        $textColor="dark";
                                         break;
                                     default:
                                         $estatus = 'Indefinido';
                                         break;
                                 }
                             @endphp
-                            <td class="bg-primary">
+                            <td style="background: {{ $color }}; color:{{ $textColor }}">
                                 {{ $estatus }}
                             </td>
                             <td>{{ $actividad->name }}</td>
