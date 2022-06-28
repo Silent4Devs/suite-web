@@ -327,7 +327,6 @@ class MinutasaltadireccionController extends Controller
 
     public function update(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {
-
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->processUpdate($request, $minutasaltadireccion, true);
         if ($request->hasFile('files')) {
