@@ -52,14 +52,12 @@ class MinutasaltadireccionController extends Controller
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->with('area')->get();
         $esta_vinculado = auth()->user()->empleado ? true : false;
-        // dd($esta_vinculado);
 
         return view('admin.minutasaltadireccions.create', compact('responsablereunions', 'esta_vinculado'));
     }
 
     public function store(Request $request)
     {
-        dd($request->all());
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'objetivoreunion' => 'required',
@@ -195,18 +193,19 @@ class MinutasaltadireccionController extends Controller
 
             foreach ($actividades as $actividad) {
                 $asignados = [];
+
                 if ($edit) {
-                    if (gettype($actividad[6]) == 'string') {
-                        if (str_contains($actividad[6], ',')) {
-                            $asignados = explode(',', $actividad[6]);
+                    if (gettype($actividad[7]) == 'string') {
+                        if (str_contains($actividad[7], ',')) {
+                            $asignados = explode(',', $actividad[7]);
                         } else {
-                            array_push($asignados, $actividad[6]);
+                            array_push($asignados, $actividad[7]);
                         }
                     } else {
-                        $asignados = $actividad[6];
+                        $asignados = $actividad[7];
                     }
                 } else {
-                    $asignados = $actividad[6];
+                    $asignados = $actividad[7];
                 }
                 $assigs = [];
                 foreach ($asignados as $asignado) {
@@ -222,20 +221,20 @@ class MinutasaltadireccionController extends Controller
 
                 $tasks[] = [
                     'id' => $actividad[0],
-                    'end' => strtotime($actividad[3]) * 1000,
-                    'name' => $actividad[1],
+                    'end' => strtotime($actividad[4]) * 1000,
+                    'name' => $actividad[2],
                     'level' => 1,
-                    'start' => strtotime($actividad[2]) * 1000,
+                    'start' => strtotime($actividad[3]) * 1000,
                     'canAdd' => true,
                     'status' => 'STATUS_ACTIVE',
                     'canWrite' => true,
-                    'duration' => $actividad[4],
+                    'duration' => $actividad[5],
                     'progress' => 0,
                     'canDelete' => true,
                     'collapsed' => false,
                     'relevance' => '0',
                     'canAddIssue' => true,
-                    'description' => $actividad[7],
+                    'description' => $actividad[8],
                     'endIsMilestone' => false,
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
@@ -288,7 +287,6 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $minutasaltadireccion->load('participantes', 'planes', 'documentos', 'externos');
-        // dd($minutasaltadireccion);
         $actividades = $minutasaltadireccion->planes->first()->tasks;
         $actividades = array_filter($actividades, function ($actividad) {
             return intval($actividad->level) > 0;
@@ -329,6 +327,7 @@ class MinutasaltadireccionController extends Controller
 
     public function update(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {
+
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->processUpdate($request, $minutasaltadireccion, true);
         if ($request->hasFile('files')) {
