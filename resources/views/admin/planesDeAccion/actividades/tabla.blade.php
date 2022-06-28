@@ -1,9 +1,9 @@
-<style>
+{{-- <style>
     .table tr th:nth-child(8) {
         min-width: 800px !important;
         text-align: justify !important;
     }
-</style>
+</style> --}}
 
 
 
@@ -122,50 +122,49 @@
                     <th scope="col">Responsable(s)</th>
                     <th scope="col">Responsable(s)_id</th>
                     <th scope="col">Comentarios</th>
-                    <th scope="col"></th>
+                    <th scope="col">Opciones</th>
                 </tr>
             </thead>
             <tbody>
                 @if (isset($actividades))
                     @foreach ($actividades as $actividad)
+                        @php
+                            $estatus = 'Completado';
+                            $color = 'rgb(0,200,117)';
+                            $textColor = 'white';
+                            switch ($actividad->status) {
+                                case 'STATUS_ACTIVE':
+                                    $estatus = 'En Progreso';
+                                    $color = 'rgb(253, 171, 61)';
+                                    break;
+                                case 'STATUS_DONE':
+                                    $color="rgb(0, 200, 117)";
+                                    $estatus = 'Completado';
+                                    break;
+                                case 'STATUS_FAILED':
+                                    $estatus = 'Con Retraso';
+                                    $color="rgb(226, 68, 92)";
+                                    break;
+                                case 'STATUS_SUSPENDED':
+                                    $estatus = 'Suspendido';
+                                    $color="#aaaaaa";
+                                    break;
+                                case 'STATUS_WAITING':
+                                    $estatus = 'En Espera';
+                                    $color="#F79136";
+                            
+                                    break;
+                                case 'STATUS_UNDEFINED':
+                                    $estatus = 'Indefinido';
+                                    $color="#00b1e1";
+                                    break;
+                                default:
+                                    $estatus = 'Indefinido';
+                                    break;
+                            }
+                        @endphp
                         <tr>
                             <td>{{ $actividad->id }}</td>
-                            @php
-                                $estatus = 'Completado';
-                                $color = 'rgb(0,200,117)';
-                                $textColor = 'white';
-                                switch ($actividad->status) {
-                                    case 'STATUS_ACTIVE':
-                                        $estatus = 'En Progreso';
-                                        $color = 'rgb(253, 171, 61)';
-                                        break;
-                                    case 'STATUS_DONE':
-                                        $color="rgb(0, 200, 117)";
-                                        $estatus = 'Completado';
-                                        break;
-                                    case 'STATUS_FAILED':
-                                        $estatus = 'Con Retrazo';
-                                        $color="rgb(226, 68, 92)";
-                                        break;
-                                    case 'STATUS_SUSPENDED':
-                                        $estatus = 'Suspendido';
-                                        $color="#aaaaaa";
-                                        break;
-                                    case 'STATUS_WAITING':
-                                        $estatus = 'En Espera';
-                                        $color="#F79136";
-                                
-                                        break;
-                                    case 'STATUS_UNDEFINED':
-                                        $estatus = 'Indefinido';
-                                        $color="#00b1e1";
-                                        $textColor="dark";
-                                        break;
-                                    default:
-                                        $estatus = 'Indefinido';
-                                        break;
-                                }
-                            @endphp
                             <td style="background: {{ $color }}; color:{{ $textColor }}">
                                 {{ $estatus }}
                             </td>
@@ -348,6 +347,7 @@
             if (!arrActividades.includes(actividad)) {
                 tblActividades.row.add([
                     id,
+                    'STATUS_ACTIVE',
                     name,
                     start,
                     end,
