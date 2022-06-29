@@ -172,6 +172,7 @@ class DeclaracionAplicabilidadController extends Controller
 
                         break;
                 case 'estatus':
+
                     try {
                         $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['estatus' => $request->value]);
                         $declaracionEstatus = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->first();

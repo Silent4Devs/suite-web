@@ -175,7 +175,7 @@ class AccionCorrectivaController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('accion_correctiva_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('accion_correctiva_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $nombrereportas = User::get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -202,6 +202,8 @@ class AccionCorrectivaController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('accion_correctiva_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $accionCorrectiva = AccionCorrectiva::create([
             'tema' => $request->tema,
             'fecharegistro' => $request->fecharegistro,
@@ -237,7 +239,7 @@ class AccionCorrectivaController extends Controller
     public function edit(AccionCorrectiva $accionCorrectiva)
     {
         // dd($accionCorrectiva);
-        abort_if(Gate::denies('accion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('accion_correctiva_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $nombrereportas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -285,6 +287,8 @@ class AccionCorrectivaController extends Controller
 
     public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
     {
+        abort_if(Gate::denies('accion_correctiva_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // dd($request->all());
         $accionCorrectiva->update($request->all());
         //dd($accionCorrectiva);
@@ -333,7 +337,7 @@ class AccionCorrectivaController extends Controller
 
     public function destroy(AccionCorrectiva $accionCorrectiva)
     {
-        abort_if(Gate::denies('accion_correctiva_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('accion_correctiva_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $accionCorrectiva->delete();
 
@@ -360,7 +364,7 @@ class AccionCorrectivaController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('accion_correctiva_create') && Gate::denies('accion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('accion_correctiva_crear') && Gate::denies('accion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new AccionCorrectiva();
         $model->id = $request->input('crud_id', 0);

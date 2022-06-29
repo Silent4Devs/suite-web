@@ -3591,6 +3591,22 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Accion correctiva"',
             ],
             [
+                'title' => 'accion_correctiva_crear',
+                'name' => 'Este permiso permite al usuario crear una "Accion correctiva"',
+            ],
+            [
+                'title' => 'accion_correctiva_editar',
+                'name' => 'Este permiso permite al usuario editar una "Accion correctiva"',
+            ],
+            [
+                'title' => 'accion_correctiva_eliminar',
+                'name' => 'Este permiso permite al usuario eliminar una "Accion correctiva"',
+            ],
+            [
+                'title' => 'accion_correctiva_show',
+                'name' => 'Este permiso permite al usuario ver una "Accion correctiva"',
+            ],
+            [
                 'title' => 'registro_mejora_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Rejistro Mejora"',
             ],

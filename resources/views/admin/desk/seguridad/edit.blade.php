@@ -16,7 +16,6 @@
             border-radius: 50%;
             background: #ffffff;
         }
-
     </style>
 @endsection
 {{ Breadcrumbs::render('seguridad-edit', $incidentesSeguridad) }}
@@ -28,7 +27,8 @@
             seguridad</strong>
     </div>
     <div class="caja_botones_menu" style=" justify-content: left !important;">
-        <a href="#" data-tabs="registro" class="btn_activo"><i class="mr-4 fas fa-exclamation-triangle"></i>Registro
+        <a href="#" data-tabs="registro" class="btn_activo"><i
+                class="mr-4 fas fa-exclamation-triangle"></i>Registro
             de
             Incidentes</a>
         <a href="#" data-tabs="analisis"><i class="mr-4 fas fa-clipboard-list"></i>Análisis Causa Raíz</a>
@@ -55,8 +55,8 @@
                                         </div>
                                     </div>
                                     <div class="col-11">
-                                        <p class="m-0"
-                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                            Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
                                             cada formulario dé clic en el botón guardar antes de cambiar de pestaña, de
                                             lo contrario la información capturada no será guardada.
@@ -70,8 +70,7 @@
                             </div>
 
                             <div class="mt-2 form-group col-md-2">
-                                <label class="form-label"><i
-                                        class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
+                                <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
                                 <div class="form-control" id="input_folio">{{ $incidentesSeguridad->folio }}</div>
                             </div>
 
@@ -86,8 +85,7 @@
                             <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control" id="opciones"
-                                    onchange='cambioOpciones();'>
+                                <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
                                     <option
                                         {{ old('estatus', $incidentesSeguridad->estatus) == 'nuevo' ? 'selected' : '' }}
                                         value="nuevo">Nuevo</option>
@@ -246,16 +244,27 @@
                                                                 @foreach ($incidentesSeguridad->evidencias_seguridad as $idx => $evidencia)
                                                                     <li data-target='#carouselExampleIndicators'
                                                                         data-slide-to='{{ $idx }}'
-                                                                        class='{{ $idx == 0 ? 'active' : '' }}'></li>
+                                                                        class='{{ $idx == 0 ? 'active' : '' }}'>
+                                                                    </li>
                                                                 @endforeach
                                                             </ol>
                                                             <div class='carousel-inner'>
                                                                 @foreach ($incidentesSeguridad->evidencias_seguridad as $idx => $evidencia)
-                                                                    <div
-                                                                        class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                                        <iframe class='img-size'
-                                                                            src='{{ asset('storage/evidencias_seguridad' . '/' . $evidencia->evidencia) }}'></iframe>
-                                                                    </div>
+                                                                    @if (pathinfo($evidencia->evidencia, PATHINFO_EXTENSION) == 'pdf')
+                                                                        <div
+                                                                            class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                                            <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                                                                src='{{ asset('storage/evidencias_seguridad' . '/' . $evidencia->evidencia) }}'></iframe>
+                                                                        </div>
+                                                                    @else
+                                                                        <div
+                                                                            class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                                            <a
+                                                                                href="{{ asset('storage/evidencias_seguridad') }}/{{ $evidencia->evidencia }}">
+                                                                                <i class="fas fa-file-download mr-2"
+                                                                                    style="font-size:18px"></i>{{ $evidencia->evidencia }}</a>
+                                                                        </div>
+                                                                    @endif
                                                                 @endforeach
                                                             </div>
                                                             <a class='carousel-control-prev'
@@ -302,8 +311,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <textarea name="areas_afectados" class="form-control"
-                                    id="texto_activos">{{ $incidentesSeguridad->areas_afectados }}</textarea>
+                                <textarea name="areas_afectados" class="form-control" id="texto_activos">{{ $incidentesSeguridad->areas_afectados }}</textarea>
                             </div>
 
                             <div class="mt-2 form-group col-md-4 procesos_multiselect">
@@ -316,8 +324,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <textarea name="procesos_afectados" class="form-control"
-                                    id="texto_activos">{{ $incidentesSeguridad->procesos_afectados }}</textarea>
+                                <textarea name="procesos_afectados" class="form-control" id="texto_activos">{{ $incidentesSeguridad->procesos_afectados }}</textarea>
                             </div>
 
                             <div class="mt-2 form-group col-md-4 activos_multiselect">
@@ -330,8 +337,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <textarea name="activos_afectados" class="form-control"
-                                    id="texto_activos">{{ $incidentesSeguridad->activos_afectados }}</textarea>
+                                <textarea name="activos_afectados" class="form-control" id="texto_activos">{{ $incidentesSeguridad->activos_afectados }}</textarea>
                             </div>
 
 
@@ -341,15 +347,13 @@
                             </div>
 
                             <div class="mt-0 form-group col-md-4">
-                                <label class="form-label"><i
-                                        class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                                <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
                                 <div class="form-control">
                                     {{ Str::limit($incidentesSeguridad->reporto->name, 30, '...') }}</div>
                             </div>
 
                             <div class="mt-0 form-group col-md-4">
-                                <label class="form-label"><i
-                                        class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                                <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                                 <div class="form-control">{{ $incidentesSeguridad->reporto->puesto }}</div>
                             </div>
 
@@ -366,8 +370,7 @@
                             </div>
 
                             <div class="mt-2 form-group col-md-6">
-                                <label class="form-label"><i
-                                        class="fas fa-phone iconos-crear"></i>Teléfono</label>
+                                <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
                                 <div class="form-control">{{ $incidentesSeguridad->reporto->telefono }}</div>
                             </div>
 
@@ -415,8 +418,7 @@
                             </div>
 
                             <div class="mt-2 form-group col-md-4">
-                                <label class="form-label"><i
-                                        class="fas fa-flag iconos-crear"></i>Prioridad</label>
+                                <label class="form-label"><i class="fas fa-flag iconos-crear"></i>Prioridad</label>
                                 <div class="form-control" id="prioridad"></div>
                             </div>
 
@@ -449,8 +451,8 @@
                                         </div>
                                     </div>
                                     <div class="col-11">
-                                        <p class="m-0"
-                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                            Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
                                             cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
                                             de lo contrario la información capturada no será guardada.
@@ -530,63 +532,80 @@
                                     <div id="digrama" class="caja_oculta_dinamica">
                                         <div class="mt-5 col-md-12" style="overflow: auto;">
                                             <div style="width: 100%; min-width:980px; margin-left:80px;">
-                                                    <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
-                                                        style="width:190%; margin-top:20px;">
+                                                <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
+                                                    style="width:190%; margin-top:20px;">
                                                 <div
                                                     style="top:0px;left:170px; position: absolute;height:35px; width:150px;  background-color:#63e4e4; border-radius:15px;">
-                                                    <span ><i
-                                                            class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Control</strong>
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Control</strong>
                                                 </div>
                                                 <div
-                                                style="top:0px; left:780px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
-                                                <span ><i
-                                                        class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Proceso</strong>
+                                                    style="top:0px; left:780px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Proceso</strong>
                                                 </div>
                                                 <div
-                                                style="top:0px; left:1350px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
-                                                <span ><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-users" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Personas</strong>
+                                                    style="top:0px; left:1350px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-users"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Personas</strong>
                                                 </div>
                                                 <div
-                                                style="buttom:0px; left:450px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
-                                                <span ><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Tecnología</strong>
+                                                    style="buttom:0px; left:450px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Tecnología</strong>
                                                 </div>
                                                 <div
-                                                style="buttom:0px; left:1050px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
-                                                <span ><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Métodos</strong>
+                                                    style="buttom:0px; left:1050px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Métodos</strong>
                                                 </div>
                                                 <div
-                                                style="buttom:0px;left:1670px; position: absolute;height:35px; width:150px; background-color:#63e4e4;border-radius:15px;">
-                                                <span ><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-chalkboard" style="padding-top:6px; color:#1E3A8A;"></i></span><strong style="color:#ffffff">Recursos</strong>
+                                                    style="buttom:0px;left:1670px; position: absolute;height:35px; width:150px; background-color:#63e4e4;border-radius:15px;">
+                                                    <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-chalkboard"
+                                                            style="padding-top:6px; color:#1E3A8A;"></i></span><strong
+                                                        style="color:#ffffff">Recursos</strong>
                                                 </div>
                                                 {{-- <div> --}}
-                                                <div class="col-6" style="top:55px; left:290px; position: absolute; height:30px !important;">
+                                                <div class="col-6"
+                                                    style="top:55px; left:290px; position: absolute; height:30px !important;">
                                                     <textarea style="top:20px;" name="control_a" id="analisisControl" class=" politicas_txtarea">{{ $analisis->control_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="control_b"
                                                     class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis->control_b }}</textarea> --}}
-                                                <div class="col-6" style="top:55px; left:890px; position: absolute; height:30px !important;">
+                                                <div class="col-6"
+                                                    style="top:55px; left:890px; position: absolute; height:30px !important;">
                                                     <textarea style="top:20px;" id="analisisProceso" name="proceso_a" class="procesos_txtarea">{{ $analisis->proceso_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="proceso_b" class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis->proceso_b }}</textarea> --}}
-                                                <div class="col-6" style="top:55px; left:1480px; position: absolute; height:30px !important;">
+                                                <div class="col-6"
+                                                    style="top:55px; left:1480px; position: absolute; height:30px !important;">
                                                     <textarea name="personas_a" id="analisisPersona" class="personas_txtarea">{{ $analisis->personas_a }}</textarea>
                                                 </div>
-                                                    {{-- <textarea name="personas_b" class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea> --}}
+                                                {{-- <textarea name="personas_b" class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea> --}}
                                                 {{-- </div> --}}
                                                 <div class="col-6"
-                                                style="bottom:5px; right:590px; position: absolute;">
-                                                    <textarea style="margin-top:100px;" name="tecnologia_a" id="analisisTecnologia" class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
+                                                    style="bottom:5px; right:590px; position: absolute;">
+                                                    <textarea style="margin-top:100px;" name="tecnologia_a" id="analisisTecnologia"
+                                                        class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="tecnologia_b" class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea> --}}
-                                                <div class="col-6" style="bottom:5px; left:590px; position: absolute;">
+                                                <div class="col-6"
+                                                    style="bottom:5px; left:590px; position: absolute;">
                                                     <textarea name="metodos_a" class="metodos_txtarea txt_obj_secundarios_b" id="analisisMetodos">{{ $analisis->metodos_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="metodos_b" class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea> --}}
-                                                <div class="col-6" style="bottom:5px; left:1200px; position: absolute;">
+                                                <div class="col-6"
+                                                    style="bottom:5px; left:1200px; position: absolute;">
                                                     <textarea name="ambiente_a" class="ambiente_txtarea txt_obj_secundarios_b" id="analisisAmbiente">{{ $analisis->ambiente_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="ambiente_b" class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea> --}}
-                                                <div class="col-6" style="bottom:5px; left:1800px; position: absolute;">
+                                                <div class="col-6"
+                                                    style="bottom:5px; left:1800px; position: absolute;">
                                                     <textarea name="problema_diagrama" class="problemas_txtarea" id="analisisProblema">{{ $analisis->problema_diagrama }}</textarea>
                                                 </div>
                                             </div>
@@ -651,7 +670,8 @@
                                         <div class="form-group col-md-12">
                                             <label class="form-label"><i
                                                     class="fas fa-wrench iconos-crear"></i>Actividad</label>
-                                            <input type="" name="actividad" class="form-control" id="actividad">
+                                            <input type="" name="actividad" class="form-control"
+                                                id="actividad">
                                             <span class="text-danger error_actividad errors"></span>
                                         </div>
                                         <div class="form-group col-md-6">
@@ -665,7 +685,8 @@
                                         <div class="form-group col-md-6">
                                             <label class="form-label"><i
                                                     class="fas fa-calendar-alt iconos-crear"></i>Fecha de fin</label>
-                                            <input type="date" name="fecha_fin" class="form-control" id="fecha_fin">
+                                            <input type="date" name="fecha_fin" class="form-control"
+                                                id="fecha_fin">
                                             <span class="text-danger error_fecha_fin errors"></span>
                                         </div>
                                         <div class="form-group col-md-6">

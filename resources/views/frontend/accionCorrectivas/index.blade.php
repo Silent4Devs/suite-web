@@ -307,7 +307,7 @@
                 }
 
             ];
-            @can('accion_correctiva_create')
+            @can('accion_correctiva_crear')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar acciones correctivas',
@@ -320,7 +320,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('accion_correctiva_delete')
+            @can('accion_correctiva_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
