@@ -1,10 +1,9 @@
-<style>
+{{-- <style>
     .table tr th:nth-child(8) {
         min-width: 800px !important;
         text-align: justify !important;
     }
-
-</style>
+</style> --}}
 
 
 
@@ -51,7 +50,8 @@
             <div class="form-group">
                 <label for="finalizacion"><i class="iconos-crear fas fa-calendar-day"></i> Finalización <span
                         class="text-danger">*</span></label><i class="fas fa-info-circle"
-                    style="font-size:12pt; float: right;" title="Fecha de finalización de la
+                    style="font-size:12pt; float: right;"
+                    title="Fecha de finalización de la
                         actividad"></i>
                 <input type="date" class="form-control" id="finalizacion" name="finalizacion">
                 {{-- <small id="finalizacionHelp" class="form-text text-muted">Fecha de finalización de la
@@ -114,6 +114,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">ID</th>
+                    <th scope="col">Estatus</th>
                     <th scope="col">Actividad</th>
                     <th scope="col">Inicio</th>
                     <th scope="col">Finalización</th>
@@ -121,14 +122,52 @@
                     <th scope="col">Responsable(s)</th>
                     <th scope="col">Responsable(s)_id</th>
                     <th scope="col">Comentarios</th>
-                    <th scope="col"></th>
+                    <th scope="col">Opciones</th>
                 </tr>
             </thead>
             <tbody>
                 @if (isset($actividades))
                     @foreach ($actividades as $actividad)
+                        @php
+                            $estatus = 'Completado';
+                            $color = 'rgb(0,200,117)';
+                            $textColor = 'white';
+                            switch ($actividad->status) {
+                                case 'STATUS_ACTIVE':
+                                    $estatus = 'En Progreso';
+                                    $color = 'rgb(253, 171, 61)';
+                                    break;
+                                case 'STATUS_DONE':
+                                    $color="rgb(0, 200, 117)";
+                                    $estatus = 'Completado';
+                                    break;
+                                case 'STATUS_FAILED':
+                                    $estatus = 'Con Retraso';
+                                    $color="rgb(226, 68, 92)";
+                                    break;
+                                case 'STATUS_SUSPENDED':
+                                    $estatus = 'Suspendido';
+                                    $color="#aaaaaa";
+                                    break;
+                                case 'STATUS_WAITING':
+                                    $estatus = 'En Espera';
+                                    $color="#F79136";
+                            
+                                    break;
+                                case 'STATUS_UNDEFINED':
+                                    $estatus = 'Indefinido';
+                                    $color="#00b1e1";
+                                    break;
+                                default:
+                                    $estatus = 'Indefinido';
+                                    break;
+                            }
+                        @endphp
                         <tr>
                             <td>{{ $actividad->id }}</td>
+                            <td style="background: {{ $color }}; color:{{ $textColor }}">
+                                {{ $estatus }}
+                            </td>
                             <td>{{ $actividad->name }}</td>
                             <td>{{ \Carbon\Carbon::parse(\Carbon\Carbon::createFromTimestamp(intval($actividad->start) / 1000)->toDateTimeString())->format('Y-m-d') }}
                             </td>
@@ -308,6 +347,7 @@
             if (!arrActividades.includes(actividad)) {
                 tblActividades.row.add([
                     id,
+                    'STATUS_ACTIVE',
                     name,
                     start,
                     end,

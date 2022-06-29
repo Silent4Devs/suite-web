@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\TiposObjetivosSistema;
+use App\Models\RH\TipoObjetivo;
 use Livewire\Component;
 
 class TipoObjetivosSelect extends Component
@@ -19,7 +19,7 @@ class TipoObjetivosSelect extends Component
 
     public function render()
     {
-        $this->tipos = TiposObjetivosSistema::all();
+        $this->tipos = TipoObjetivo::all();
 
         return view('livewire.tipo-objetivos-select', ['tipos' => $this->tipos]);
     }
