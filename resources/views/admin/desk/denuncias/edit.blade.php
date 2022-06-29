@@ -11,7 +11,6 @@
         ol.breadcrumb {
             margin-bottom: 0px;
         }
-
     </style>
 @endsection
 {{ Breadcrumbs::render('denuncias-create') }}
@@ -47,8 +46,8 @@
                                         </div>
                                     </div>
                                     <div class="col-11">
-                                        <p class="m-0"
-                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                            Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
                                             cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
                                             de lo contrario la información capturada no será guardada.
@@ -71,16 +70,14 @@
                             </div>
 
                             <div class="mt-2 form-group col-6">
-                                <label class="form-label"><i
-                                        class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
+                                <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
                                 <div class="form-control">{{ $denuncias->folio }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control" id="opciones"
-                                    onchange='cambioOpciones();'>
+                                <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
                                     <option {{ old('estatus', $denuncias->estatus) == 'nuevo' ? 'selected' : '' }}
                                         value="nuevo">Nuevo</option>
                                     <option {{ old('estatus', $denuncias->estatus) == 'en curso' ? 'selected' : '' }}
@@ -132,8 +129,7 @@
                                 </div>
 
                                 <div class="mt-2 form-group col-4">
-                                    <label class="form-label"><i
-                                            class="fas fa-user-tag iconos-crear"></i>Puesto</label>
+                                    <label class="form-label"><i class="fas fa-user-tag iconos-crear"></i>Puesto</label>
                                     <div class="form-control">{{ $denuncias->denuncio->puesto }}</div>
                                 </div>
 
@@ -150,8 +146,7 @@
                                 </div>
 
                                 <div class="mt-2 form-group col-6">
-                                    <label class="form-label"><i
-                                            class="fas fa-phone iconos-crear"></i>Teléfono</label>
+                                    <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
                                     <div class="form-control">{{ $denuncias->denuncio->telefono }}</div>
                                 </div>
                             @endif
@@ -163,8 +158,7 @@
                             </div>
 
                             <div class="mt-4 form-group col-4">
-                                <label class="form-label"><i
-                                        class="fas fa-user-times iconos-crear"></i>Nombre</label>
+                                <label class="form-label"><i class="fas fa-user-times iconos-crear"></i>Nombre</label>
                                 <div class="form-control">{{ Str::limit($denuncias->denunciado->name, 30, '...') }}
                                 </div>
                             </div>
@@ -184,12 +178,14 @@
                             <div class="mt-4 form-group col-12">
                                 <label class="form-label"><i class="fas fa-hand-paper iconos-crear"></i>Tipo de
                                     denuncia<sup>*</sup></label>
-                                <input type="" name="tipo" class="form-control" value="{{ $denuncias->tipo }}">
+                                <input type="" name="tipo" class="form-control"
+                                    value="{{ $denuncias->tipo }}">
                             </div>
 
                             <div class="mt-4 form-group col-12">
                                 <label class="form-label"><i class="fas fa-hand-paper iconos-crear"></i>Otro
-                                    <input type="" name="tipo" class="form-control" value="{{ $denuncias->tipo }}">
+                                    <input type="" name="tipo" class="form-control"
+                                        value="{{ $denuncias->tipo }}">
                             </div>
 
                             <div class="mt-4 form-group col-12">
@@ -220,16 +216,27 @@
                                                                 @foreach ($denuncias->evidencias_denuncias as $idx => $evidencia)
                                                                     <li data-target='#carouselExampleIndicators'
                                                                         data-slide-to='{{ $idx }}'
-                                                                        class='{{ $idx == 0 ? 'active' : '' }}'></li>
+                                                                        class='{{ $idx == 0 ? 'active' : '' }}'>
+                                                                    </li>
                                                                 @endforeach
                                                             </ol>
                                                             <div class='carousel-inner'>
                                                                 @foreach ($denuncias->evidencias_denuncias as $idx => $evidencia)
-                                                                    <div
-                                                                        class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                                        <iframe class='img-size'
-                                                                            src='{{ asset('storage/evidencias_denuncias' . '/' . $evidencia->evidencia) }}'></iframe>
-                                                                    </div>
+                                                                    @if (pathinfo($evidencia->evidencia, PATHINFO_EXTENSION) == 'pdf')
+                                                                        <div
+                                                                            class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                                            <iframe class='img-size' style="width:100%;height:300px;"
+                                                                                src='{{ asset('storage/evidencias_denuncias' . '/' . $evidencia->evidencia) }}'></iframe>
+                                                                        </div>
+                                                                    @else
+                                                                        <div
+                                                                            class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                                            <a
+                                                                                href="{{ asset('storage/evidencias_denuncias') }}/{{ $evidencia->evidencia }}">
+                                                                                <i class="fas fa-file-download mr-2"
+                                                                                    style="font-size:18px"></i>{{ $evidencia->evidencia }}</a>
+                                                                        </div>
+                                                                    @endif
                                                                 @endforeach
                                                             </div>
                                                             <a class='carousel-control-prev'
@@ -287,8 +294,8 @@
                                         </div>
                                     </div>
                                     <div class="col-11">
-                                        <p class="m-0"
-                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                            Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
                                             cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
                                             de lo contrario la información capturada no será guardada.
@@ -426,29 +433,25 @@
                                                     class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea> --}}
                                                 <div class="col-6"
                                                     style="bottom:5px; right:480px; position: absolute;">
-                                                    <textarea name="tecnologia_a" id="analisisTecnologia"
-                                                        class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
+                                                    <textarea name="tecnologia_a" id="analisisTecnologia" class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="tecnologia_b"
                                                     class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea> --}}
                                                 <div class="col-6"
                                                     style="bottom:5px; left:540px; position: absolute;">
-                                                    <textarea name="metodos_a" class="metodos_txtarea txt_obj_secundarios_b"
-                                                        id="analisisMetodos">{{ $analisis->metodos_a }}</textarea>
+                                                    <textarea name="metodos_a" class="metodos_txtarea txt_obj_secundarios_b" id="analisisMetodos">{{ $analisis->metodos_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="metodos_b"
                                                     class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea> --}}
                                                 <div class="col-6"
                                                     style="bottom:5px; left:1060px; position: absolute;">
-                                                    <textarea name="ambiente_a" class="ambiente_txtarea txt_obj_secundarios_b"
-                                                        id="analisisAmbiente">{{ $analisis->ambiente_a }}</textarea>
+                                                    <textarea name="ambiente_a" class="ambiente_txtarea txt_obj_secundarios_b" id="analisisAmbiente">{{ $analisis->ambiente_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="ambiente_b"
                                                     class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea> --}}
                                                 <div class="col-6"
                                                     style="bottom:5px; left:1600px; position: absolute;">
-                                                    <textarea name="problema_diagrama" class="problemas_txtarea"
-                                                        id="analisisProblema">{{ $analisis->problema_diagrama }}</textarea>
+                                                    <textarea name="problema_diagrama" class="problemas_txtarea" id="analisisProblema">{{ $analisis->problema_diagrama }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -513,7 +516,8 @@
                                         <div class="form-group col-md-12">
                                             <label class="form-label"><i
                                                     class="fas fa-wrench iconos-crear"></i>Actividad</label>
-                                            <input type="" name="actividad" class="form-control" id="actividad">
+                                            <input type="" name="actividad" class="form-control"
+                                                id="actividad">
                                             <span class="text-danger error_actividad errors"></span>
                                         </div>
                                         <div class="form-group col-md-6">
@@ -527,7 +531,8 @@
                                         <div class="form-group col-md-6">
                                             <label class="form-label"><i
                                                     class="fas fa-calendar-alt iconos-crear"></i>Fecha de fin</label>
-                                            <input type="date" name="fecha_fin" class="form-control" id="fecha_fin">
+                                            <input type="date" name="fecha_fin" class="form-control"
+                                                id="fecha_fin">
                                             <span class="text-danger error_fecha_fin errors"></span>
                                         </div>
                                         <div class="form-group col-md-6">

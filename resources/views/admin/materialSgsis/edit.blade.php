@@ -175,10 +175,20 @@
                                         </ol>
                                         <div class='carousel-inner'>
                                             @foreach ($materialSgsi->documentos_material as $idx => $material_id)
-                                                <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                    <iframe style="width:100%;height:300px;" seamless class='img-size'
-                                                        src="{{ asset('storage/documentos_material_sgsi') }}/{{ $material_id->documento }}"></iframe>
-                                                </div>
+                                                @if (pathinfo($material_id->documento, PATHINFO_EXTENSION) == 'pdf')
+                                                    <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                                            src="{{ asset('storage/documentos_material_sgsi') }}/{{ $material_id->documento }}"></iframe>
+                                                    </div>
+                                                @else
+                                                    <div
+                                                        class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <a
+                                                            href="{{ asset('storage/documentos_material_sgsi') }}/{{ $material_id->documento }}">
+                                                            <i class="fas fa-file-download mr-2"
+                                                                style="font-size:18px"></i>{{ $material_id->documento }}</a>
+                                                    </div>
+                                                @endif
                                             @endforeach
 
 
