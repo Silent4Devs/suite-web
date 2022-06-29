@@ -171,7 +171,7 @@
                                         <ol class='carousel-indicators'>
                                             @foreach ($comunicacionSgi->documentos_comunicacion as $idx => $documento)
                                                 <li data-target=#carouselExampleIndicators
-                                                    data-slide-to={{ $idx }}>
+                                                    data-slide-to= '{{ $idx  == 0 ? 'active' : '' }}''>
                                                 </li>
                                             @endforeach
 

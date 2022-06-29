@@ -382,10 +382,18 @@
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
+                                                        const [extension, ...nameParts] = archivo.documento.split('.').reverse();
+                                                        if(extension == 'pdf'){
                                                         return `
                                                         <div class='carousel-item ${idx==0?"active":""}'>
-                                                            <iframe seamless class='img-size' src='{{ asset('storage/documentos_material_sgsi') }}/${archivo.documento}'></iframe>
+                                                            <embed seamless class='img-size' src='{{ asset('storage/documentos_material_sgsi') }}/${archivo.documento}'></embed>
                                                         </div>`
+                                                    }else{
+                                                        return `
+                                                                    <div class='text-center my-5 carousel-item ${idx==0?"active":""}'>
+                                                                       <a href='{{ asset("storage/documentos_material_sgsi") }}/${archivo.documento}'><i class="fas fa-file-download mr-2" style="font-size:18px"></i> ${archivo.documento}</a>
+                                                                    </div>`
+                                                    }
                                                     })}
 
                                             </div>
