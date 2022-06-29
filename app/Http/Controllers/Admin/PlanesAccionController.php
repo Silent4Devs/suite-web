@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\http\Response;
+use Illuminate\Http\Response;
 
 class PlanesAccionController extends Controller
 {
