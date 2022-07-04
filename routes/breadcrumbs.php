@@ -546,6 +546,25 @@ Breadcrumbs::for('EV360-Evaluaciones-Evaluacion', function ($trail, $evaluacion)
     $trail->push('Evaluación', route('admin.ev360-evaluaciones.evaluacion', $evaluacion->id));
 });
 
+Breadcrumbs::for('Ausencias', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados', route('admin.capital-humano.index'));
+    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+});
+
+Breadcrumbs::for('Reglas-Vacaciones', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados', route('admin.capital-humano.index'));
+    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+    $trail->push('Reglas Vacaciones', route('admin.vacaciones.index'));
+});
+
+Breadcrumbs::for('Reglas-DayOff', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados', route('admin.capital-humano.index'));
+    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+    $trail->push('Reglas Days Off´s', route('admin.dayOff.index'));
+});
 Breadcrumbs::for('EV360-Competencias', function ($trail) {
     $trail->parent('capital-humano');
     $trail->push('Empleados');
