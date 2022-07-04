@@ -138,7 +138,7 @@
                         <td>{{ $proyecto->proyecto }} </td>
                         <td>{{ $proyecto->fecha_inicio }} </td>
                         <td>{{ $proyecto->fecha_fin }} </td>
-                        <td>{{ $proyecto->cliente_id ? $cliente->nombre : '' }} </td>
+                        <td>{{ $proyecto->cliente_id ? $proyecto->cliente->nombre : '' }} </td>
                         <td>
                             <ul style="padding-left:10px; ">
                                 @foreach($proyecto->areas as $area)

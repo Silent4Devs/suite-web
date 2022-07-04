@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Rennokki\QueryCache\Traits\QueryCacheable;
@@ -12,7 +11,6 @@ class DayOff extends Model
     use SoftDeletes;
     use QueryCacheable;
 
-   
     public $table = 'day_off';
 
     public $fillable = [
@@ -25,7 +23,7 @@ class DayOff extends Model
         'incremento_dias',
         'periodo_corte',
     ];
-   
+
     protected $casts = [
         'id' => 'integer',
         'nombre' => 'string',

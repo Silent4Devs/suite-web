@@ -38,22 +38,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //Modulo Capital Humano
     Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
-    
+
     //Control de Ausencias
-     Route::resource('Ausencias', 'AusenciasController');
+    Route::resource('Ausencias', 'AusenciasController');
 
-
-     //Control de Ausencias- Vacaciones
-     Route::delete('vacaciones/destroy', 'VacacionesController@massDestroy')->name('vacaciones.massDestroy');
-     Route::resource('vacaciones', 'VacacionesController')->names([
+    //Control de Ausencias- Vacaciones
+    Route::delete('vacaciones/destroy', 'VacacionesController@massDestroy')->name('vacaciones.massDestroy');
+    Route::resource('vacaciones', 'VacacionesController')->names([
         'create' => 'vacaciones.create',
         'store' => 'vacaciones.store',
         'show' => 'vacaciones.show',
         'edit' => 'vacaciones.edit',
         'update' => 'vacaciones.update',
         'destroy' => 'vacaciones.destroy',
-    ]);;
-
+    ]);
 
     //Control de Ausencias- Day-Off
     Route::delete('dayOff/destroy', 'DayOffController@massDestroy')->name('dayOff.massDestroy');
@@ -64,7 +62,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
        'edit' => 'dayOff.edit',
        'update' => 'dayOff.update',
        'destroy' => 'dayOff.destroy',
-   ]);;
+   ]);
 
     //Tipos de contratos
     Route::resource('recursos-humanos/tipos-contratos-empleados', 'RH\TipoContratoEmpleadoController');

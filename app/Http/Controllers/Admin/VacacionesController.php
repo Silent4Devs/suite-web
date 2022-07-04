@@ -11,11 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 
-use Yajra\DataTables\Facades\DataTables;
-
 class VacacionesController extends Controller
 {
-
     public function index(Request $request)
     {
         abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -61,7 +58,7 @@ class VacacionesController extends Controller
             });
             $table->editColumn('afectados', function ($row) {
                 return $row->afectados ? $row->afectados : '';
-            });   
+            });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : '';
             });
@@ -78,19 +75,18 @@ class VacacionesController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
+
         return view('admin.vacaciones.index', compact('logo_actual', 'empresa_actual'));
     }
-
 
     public function create()
     {
         $areas = Area::get();
         $vacacion = new Vacaciones();
         $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
-       
-        return view('admin.vacaciones.create', compact('vacacion', 'areas','areas_seleccionadas'));
-    }
 
+        return view('admin.vacaciones.create', compact('vacacion', 'areas', 'areas_seleccionadas'));
+    }
 
     public function store(Request $request)
     {
@@ -105,15 +101,14 @@ class VacacionesController extends Controller
             'periodo_corte' => 'required|int',
         ]);
 
-        if ($request->afectados == 2){
+        if ($request->afectados == 2) {
             $areas = array_map(function ($value) {
                 return intval($value);
             }, $request->areas);
             $vacacion = Vacaciones::create($request->all());
             $vacacion->areas()->sync($areas);
-
-        }else{
-        $vacacion = Vacaciones::create($request->all());
+        } else {
+            $vacacion = Vacaciones::create($request->all());
         }
 
         Flash::success('Regla añadida satisfactoriamente.');
@@ -121,15 +116,13 @@ class VacacionesController extends Controller
         return redirect()->route('admin.vacaciones.index');
     }
 
-
     public function show($id)
     {
         abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = Vacaciones::with('areas')->find($id);
 
-        return view('admin.vacaciones.show',compact('vacacion'));
+        return view('admin.vacaciones.show', compact('vacacion'));
     }
-
 
     public function edit($id)
     {
@@ -143,23 +136,21 @@ class VacacionesController extends Controller
         }
         $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
 
-        return view('admin.vacaciones.edit', compact('vacacion','areas','areas_seleccionadas'));
+        return view('admin.vacaciones.edit', compact('vacacion', 'areas', 'areas_seleccionadas'));
     }
-
 
     public function update(Request $request, $id)
     {
         abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = Vacaciones::find($id);
-       
-        if ($request->afectados == 2){
+
+        if ($request->afectados == 2) {
             $vacacion->update($request->all());
             $areas = array_map(function ($value) {
                 return intval($value);
             }, $request->areas);
             $vacacion->areas()->sync($areas);
-
-        }else{
+        } else {
             $vacacion->update($request->all());
         }
 
@@ -167,7 +158,6 @@ class VacacionesController extends Controller
 
         return redirect(route('admin.vacaciones.index'));
     }
-
 
     public function destroy($id)
     {
