@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\DayOff;
 use App\Models\Organizacion;
-use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 
 class DayOffController extends Controller
 {
-    
     public function index(Request $request)
     {
         abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -59,7 +58,7 @@ class DayOffController extends Controller
             });
             $table->editColumn('afectados', function ($row) {
                 return $row->afectados ? $row->afectados : '';
-            });   
+            });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : '';
             });
@@ -76,23 +75,23 @@ class DayOffController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
-        return view('admin.dayOff.index', compact('logo_actual','empresa_actual'));
+
+        return view('admin.dayOff.index', compact('logo_actual', 'empresa_actual'));
     }
 
-  
     public function create()
     {
         $areas = Area::get();
         $vacacion = new DayOff();
         $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
-        return view('admin.dayOff.create',compact('vacacion','areas','areas_seleccionadas'));
+
+        return view('admin.dayOff.create', compact('vacacion', 'areas', 'areas_seleccionadas'));
     }
 
-    
     public function store(Request $request)
     {
         abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-       
+
         $request->validate([
             'nombre' => 'required|string',
             'dias' => 'required|int',
@@ -103,32 +102,28 @@ class DayOffController extends Controller
             'periodo_corte' => 'required|int',
         ]);
 
-        if ($request->afectados == 2){
+        if ($request->afectados == 2) {
             $areas = array_map(function ($value) {
                 return intval($value);
             }, $request->areas);
             $vacacion = DayOff::create($request->all());
             $vacacion->areas()->sync($areas);
-
-        }else{
-        $vacacion = DayOff::create($request->all());
+        } else {
+            $vacacion = DayOff::create($request->all());
         }
 
-
-       Flash::success('Regla Days Off´s añadida satisfactoriamente.');
+        Flash::success('Regla Days Off´s añadida satisfactoriamente.');
 
         return redirect()->route('admin.dayOff.index');
     }
 
-  
     public function show($id)
     {
         $vacacion = DayOff::with('areas')->find($id);
 
-        return view('admin.dayOff.show',compact('vacacion'));
+        return view('admin.dayOff.show', compact('vacacion'));
     }
 
-   
     public function edit($id)
     {
         abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -141,34 +136,29 @@ class DayOffController extends Controller
         }
         $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
 
-        return view('admin.dayOff.edit',compact('vacacion','areas','areas_seleccionadas'));
-        
+        return view('admin.dayOff.edit', compact('vacacion', 'areas', 'areas_seleccionadas'));
     }
 
-  
     public function update(Request $request, $id)
     {
         abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = DayOff::find($id);
-       
-        if ($request->afectados == 2){
+
+        if ($request->afectados == 2) {
             $vacacion->update($request->all());
             $areas = array_map(function ($value) {
                 return intval($value);
             }, $request->areas);
             $vacacion->areas()->sync($areas);
-
-        }else{
+        } else {
             $vacacion->update($request->all());
         }
-
 
         Flash::success('Regla Days Off´s actualizada.');
 
         return redirect(route('admin.dayOff.index'));
     }
 
-   
     public function destroy($id)
     {
         $vacaciones = DayOff::find($id);
@@ -176,5 +166,4 @@ class DayOffController extends Controller
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
-
 }
