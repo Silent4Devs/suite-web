@@ -28,6 +28,7 @@
             display: block;
         }
     </style>
+    <x-loading-indicator />
     @can('timesheet_administrador_tareas_proyectos_create')
         <form wire:submit.prevent="create()" class="form-group w-100">
             <div class="d-flex justify-content-center w-100">
@@ -46,7 +47,7 @@
                         </select>
                     @endif
                 </div>
-                <div class="form-group w-100 mr-4">
+                <div class="form-group w-100 mr-4" style="position:relative;">
                     <label>Área</label>
                     <select id="areas_select" class="form-control" {{ $area_seleccionar ? '' : 'disabled' }} required>
                         <option disabled selected value=""> - - </option>
@@ -81,9 +82,6 @@
             </thead>
 
             <tbody style="position:relative;">
-                <div wire:loading class="w-100 text-center" style="height: 100%; position:absolute; background-color: rgba(255, 255, 255, 0.4); z-index:2;">
-                    <i class="fa-solid fa-spinner fa-spin-pulse" style="font-size:50px; color:#345183 !important; margin-top:150px;"></i>
-                </div>
                 @foreach ($tareas as $tarea)
                     <tr>
                         <td wire:ignore>

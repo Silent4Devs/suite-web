@@ -2,6 +2,7 @@
     @php
         use App\Models\TimesheetHoras;
     @endphp
+    <x-loading-indicator />
     @can('timesheet_administrador_proyectos_create')
         <div class="w-100">
             <h5 id="titulo_estatus">Crear Proyecto</h5>
@@ -146,9 +147,6 @@
             </thead>
 
             <tbody style="position:relative;">
-                <div wire:loading class="w-100 text-center" style="height: 100%; position:absolute; background-color: rgba(255, 255, 255, 0.4); z-index:2;">
-                    <i class="fa-solid fa-spinner fa-spin-pulse" style="font-size:50px; color:#345183 !important; margin-top:150px;"></i>
-                </div>
                 @foreach ($proyectos as $proyecto)
                     <tr>
                         <td>{{ $proyecto->identificador }} </td>
