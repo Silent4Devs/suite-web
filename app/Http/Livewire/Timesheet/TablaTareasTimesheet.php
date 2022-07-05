@@ -44,6 +44,7 @@ class TablaTareasTimesheet extends Component
         }
 
         $this->emit('scriptTabla');
+
         return view('livewire.timesheet.tabla-tareas-timesheet');
     }
 
