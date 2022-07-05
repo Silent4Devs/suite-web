@@ -133,5 +133,14 @@
         $('.select2').select2({
             'theme' : 'bootstrap4',
         });
+        $("#chkall").click(function(){
+            if($("#chkall").is(':checked')){
+                $(".select2 > option").prop("selected", "selected");
+                $(".select2").trigger("change");
+            } else {
+                $(".select2 option").prop("selected", "");
+                $(".select2").trigger("change");
+            }
+        });
     </script>
 @endsection

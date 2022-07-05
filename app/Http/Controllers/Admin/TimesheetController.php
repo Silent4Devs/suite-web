@@ -58,14 +58,16 @@ class TimesheetController extends Controller
 
         if (Timesheet::count() > 0) {
             $time_viejo = Timesheet::orderBy('fecha_dia')->first()->fecha_dia;
+            $time_exist = true;
         } else {
             $time_viejo = null;
+            $time_exist = false;
         }
 
         $rechazos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'rechazado')->count();
         $aprobar_contador = Timesheet::where('aprobador_id', auth()->user()->empleado->id)->where('estatus', 'pendiente')->count();
 
-        return view('admin.timesheet.timesheet-inicio', compact('organizacion', 'rechazos_contador', 'aprobar_contador', 'time_viejo'));
+        return view('admin.timesheet.timesheet-inicio', compact('organizacion', 'rechazos_contador', 'aprobar_contador', 'time_viejo', 'time_exist'));
     }
 
     public function actualizarDia(Request $request)
