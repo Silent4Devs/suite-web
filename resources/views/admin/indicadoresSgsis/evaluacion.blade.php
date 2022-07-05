@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.indicadores-sgsis.create') }}
     <h5 class="col-12 titulo_general_funcion">Registrar: Evaluaciones Indicadores SGSI</h5>
     <div class="card mt-4">
@@ -11,5 +10,4 @@
             @livewire('indicadores-sgsi-component', ['indicadoresSgsis' => $indicadoresSgsis])
         </div>
     </div>
-
 @endsection
