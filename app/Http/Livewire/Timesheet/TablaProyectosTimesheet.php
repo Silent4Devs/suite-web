@@ -66,7 +66,7 @@ class TablaProyectosTimesheet extends Component
                 'identificador.unique' => 'El ID ya esta en uso',
             ],
         );
-        if ($this->fecha_inicio || $this->fecha_fin) {
+        if ($this->fecha_inicio && $this->fecha_fin) {
             $this->validate(
                 [
                     'fecha_inicio'=>'before:fecha_fin',
