@@ -47,7 +47,7 @@
                     @endif
                 </div>
                 <div class="form-group w-100 mr-4">
-                    <label>Area</label>
+                    <label>Área</label>
                     <select id="areas_select" class="form-control" {{ $area_seleccionar ? '' : 'disabled' }} required>
                         <option disabled selected value=""> - - </option>
                         <option value="0">Todas</option>
@@ -73,19 +73,22 @@
         <table id="tabla_time_tareas" class="table w-100 tabla-animada tabla_time_tareas">
             <thead class="w-100">
                 <tr>
-                    <th>Tarea </th>
+                    <th style="min-width:600px;">Tarea </th>
                     <th>Proyecto</th>
-                    <th>Area</th>
+                    <th>Área</th>
                     <th style="max-width: 150px; width: 150px;">Opciones</th>
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody style="position:relative;">
+                <div wire:loading class="w-100 text-center" style="height: 100%; position:absolute; background-color: rgba(255, 255, 255, 0.4); z-index:2;">
+                    <i class="fa-solid fa-spinner fa-spin-pulse" style="font-size:50px; color:#345183 !important; margin-top:150px;"></i>
+                </div>
                 @foreach ($tareas as $tarea)
                     <tr>
                         <td wire:ignore>
-                            <input class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}"
-                                name="tarea" value="{{ $tarea->tarea }}">
+                            <textarea class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}"
+                                name="tarea" style="min-height: 40px !important; height:40px !important;">{{ $tarea->tarea }}</textarea>
                         </td>
                         <td> {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }} </td>
                         <td style="display:flex; align-items: center;">
@@ -204,9 +207,9 @@
             });
 
             Livewire.on('tarea-actualizada', (tarea) => {
-                document.querySelector(`input[data-id="${tarea.id}"]`).style.border = "1px solid #1FD02F";
+                document.querySelector(`[data-id="${tarea.id}"]`).style.border = "1px solid #1FD02F";
                 setTimeout(() => {
-                    document.querySelector(`input[data-id="${tarea.id}"]`).style.border =
+                    document.querySelector(`[data-id="${tarea.id}"]`).style.border =
                         "1px solid #ccc";
                 }, 1000);
                 document.querySelector('.tabla_time_tareas').addEventListener('change', (e) => {

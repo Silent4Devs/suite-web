@@ -25,7 +25,7 @@
                     <input id="name_proyect" class="form-control" required>
                 </div>
                 <div class="form-group col-md-2">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de inicio</label>
+                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de inicio <small>(opcional)</small></label>
                     <input type="date" name="fecha_inicio" wire:model="fecha_inicio" class="form-control">
                     @if ($errors->has('fecha_inicio'))
                         <div class="invalid-feedback">
@@ -37,7 +37,7 @@
                     @enderror
                 </div>
                 <div class="form-group col-md-2">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de termino</label>
+                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de fin <small>(opcional)</small></label>
                     <input type="date" name="fecha_fin" wire:model="fecha_fin" class="form-control">
                     @if ($errors->has('fecha_fin'))
                         <div class="invalid-feedback">
@@ -66,6 +66,9 @@
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
                         @endforeach
                     </select>
+                    <div class="mt-1">
+                        <input id="chkall" type="checkbox" > Seleccionar Todos
+                    </div>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="form-label"><i class="fa-solid fa-building iconos-crear"></i>Sede</label>
@@ -142,7 +145,10 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody style="position:relative;">
+                <div wire:loading class="w-100 text-center" style="height: 100%; position:absolute; background-color: rgba(255, 255, 255, 0.4); z-index:2;">
+                    <i class="fa-solid fa-spinner fa-spin-pulse" style="font-size:50px; color:#345183 !important; margin-top:150px;"></i>
+                </div>
                 @foreach ($proyectos as $proyecto)
                     <tr>
                         <td>{{ $proyecto->identificador }} </td>
