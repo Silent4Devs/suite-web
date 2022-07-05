@@ -349,7 +349,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6" wire:ignore>
                                     <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
                                     <select name="areas_seleccionadas[]" class="form-control select2" required
                                         multiple>
@@ -373,7 +373,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-6 text-right">
+                                <div class="form-group col-md-12 text-right">
                                     <div type="button" class="btn btn_cancelar" data-dismiss="modal">Cancelar</div>
                                     <button type="submit" class="btn btn-success">Guardar</button>
                                 </div>
