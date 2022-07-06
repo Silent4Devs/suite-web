@@ -311,9 +311,11 @@ if (!is_null($organizacion)) {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div style="color: #345183; font-size:13pt;" class="text-right" title="
+                    <div style="color: #345183; font-size:13pt;" class="text-right"
+                        title="
                 @foreach ($cumpleaños_felicitados_like_usuarios as $usuarios_like) {{ $usuarios_like->felicitador->name }}&#013; @endforeach
-            "><i class="fas fa-thumbs-up"></i> {{ $cumpleaños_felicitados_like_contador }}</div>
+            ">
+                        <i class="fas fa-thumbs-up"></i> {{ $cumpleaños_felicitados_like_contador }}</div>
 
                     <ul class="comentarios_felicidades">
                         <li>
@@ -398,8 +400,8 @@ if (!is_null($organizacion)) {
                                         <button class="btn btn-outline-primary">Message</button> --}}
                                     </div>
                                     @if ($cumpleaños_usuario != null && $cumpleaños_usuario == \Carbon\Carbon::now()->format('d-m'))
-                                        <img src="{{ asset('img/regalo.svg') }}" class="regalo"
-                                            data-toggle="modal" data-target="#modal_cumple" title="Tus felicitaciones">
+                                        <img src="{{ asset('img/regalo.svg') }}" class="regalo" data-toggle="modal"
+                                            data-target="#modal_cumple" title="Tus felicitaciones">
                                     @endif
                                     @can('mi_perfil_mis_datos_ver_perfil_profesional')
                                         @if ($usuario->empleado)
@@ -413,8 +415,7 @@ if (!is_null($organizacion)) {
                                     @endcan
                                     @can('mi_perfil_mis_datos_ver_perfil_de_puesto')
                                         @if ($usuario->empleado)
-                                            <a href="{{ route('admin.inicio-Usuario.perfil-puesto') }}"
-                                                class="mt-2">
+                                            <a href="{{ route('admin.inicio-Usuario.perfil-puesto') }}" class="mt-2">
                                                 Ver Perfil de Puesto
                                             </a>
                                         @endif
@@ -445,8 +446,7 @@ if (!is_null($organizacion)) {
                         </div> --}}
                         @can('mi_perfil_mis_datos_ver_mi_equipo')
                             <div class="card" x-data="{ show: false }" style="padding:20px;">
-                                <h5 class="mb-0"><i class="bi bi-people mr-2"
-                                        style="transform:scale(1.15);"></i>Mi Equipo
+                                <h5 class="mb-0"><i class="bi bi-people mr-2" style="transform:scale(1.15);"></i>Mi Equipo
 
                                     <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                             class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -568,7 +568,8 @@ if (!is_null($organizacion)) {
                                         @else
                                             <div class="row" style="margin-top: 1px;">
                                                 <div class="col-12 text-muted scroll_estilo" style="overflow:auto;">
-                                                    <table id="dom" class="table table-bordered w-100 datatable-glosario"
+                                                    <table id="dom"
+                                                        class="table table-bordered w-100 datatable-glosario"
                                                         style="width: 100%; border: none !important;">
                                                         <thead>
                                                             <tr>
@@ -582,7 +583,8 @@ if (!is_null($organizacion)) {
                                                         <tbody>
                                                             @foreach ($activos as $activo)
                                                                 <tr>
-                                                                    <td style="vertical-align: middle;">{{ $activo->id }}
+                                                                    <td style="vertical-align: middle;">
+                                                                        {{ $activo->id }}
                                                                     </td>
                                                                     <td
                                                                         style="vertical-align: middle; text-align: left !important;">
@@ -602,7 +604,7 @@ if (!is_null($organizacion)) {
                             </div>
                         @endcan
                         @can('mi_perfil_mis_datos_ver_mis_competencias')
-                            <div class=" card card_margin_b_n" x-data="{ show: false }" style="padding:20px;">
+                            <div class="card card_margin_b_n" x-data="{ show: false }" style="padding:20px;">
                                 <h5 class="mb-0"><i class="bi bi-bookmark-star mr-2"></i>Mis Competencias
                                     <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                             class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -616,13 +618,15 @@ if (!is_null($organizacion)) {
                                             No se han definido competencias actualmente
                                         @else
                                             <div class="row" style="margin-top: 1px;">
-                                                <div class="col-12 text-muted scroll_estilo" style="overflow:auto;">
-                                                    <table id="dom" class="table table-bordered w-100 datatable-glosario"
+                                                <div class="col-12 text-muted scroll_estilo" style=" max-height: 250px; overflow: auto;">
+                                                    <table id="dom"
+                                                        class="table table-bordered w-100 datatable-glosario"
                                                         style="width: 100%; border: none !important;">
                                                         <thead>
                                                             <tr>
                                                                 <th style="border-bottom: none !important;">Logo</th>
-                                                                <th style="border-bottom: none !important;">Competencia</th>
+                                                                <th style="border-bottom: none !important;">Competencia
+                                                                </th>
                                                                 <th
                                                                     style="text-align: center !important; border-bottom: none !important;">
                                                                     Nivel&nbsp;Esperado</th>
@@ -861,177 +865,178 @@ if (!is_null($organizacion)) {
                         </div>
                         <div class="row gutters-sm">
                             @can('mi_perfil_mis_datos_ver_mis_objetivos')
-                            <div class="card_data_mis_datos col-sm-12">
-                                <div class="mb-0 card h-100">
-                                    <div class="pb-personzalizado card-body" x-data="{ show: false }">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <h5 class="mb-0"><i class="bi bi-bullseye mr-2"></i>Mis
-                                                    Objetivos
-                                                </h5>
-                                            </div>
-                                            <div class="col-7" style="font-size: 15px;text-align: end">
-                                                <a class="mr-1 text-dark"
-                                                    href="{{ route('admin.ev360-objetivos-empleado.show', ['empleado' => auth()->user()->empleado->id]) }}">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                @if (auth()->user()->empleado)
-                                                    <a class="mr-1 text-dark"
-                                                        href="{{ route('admin.ev360-objetivos-empleado.create', auth()->user()->empleado->id) }}"><i
-                                                            class="fas fa-pencil"></i></a>
-                                                @endif
-                                                <span style="cursor: pointer" @click="show=!show"><i
-                                                        class="fas"
-                                                        :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
-                                            </div>
-                                        </div>
-                                        <hr class="hr-custom-title">
-                                        <div style="padding-top: 25px;" x-show="show" x-transition:enter.duration.500ms
-                                            x-transition:leave.duration.400ms>
-                                            @foreach ($mis_objetivos as $objetivo)
-                                                <div class="card" style="position:relative">
-                                                    <div class="card-body"
-                                                        style="z-index: 1;margin-top: 23px;margin-bottom: -12px; padding: 20px !important;">
-                                                        <div><strong>Meta:</strong>
-                                                            <span>{{ $objetivo->objetivo->meta }}
-                                                                {{ $objetivo->objetivo->metrica->definicion }}</span>
-                                                            <span class="px-2">|</span>
-                                                            <span>
-                                                                <span style="font-weight: bold">KPI:</span>
-                                                                {{ $objetivo->objetivo->KPI }}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div
-                                                        style="width: 100%;height: 38px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
-                                                        <div>
-                                                            <img src="{{ $objetivo->objetivo->tipo->imagen_ruta }}"
-                                                                class="d-inline-block"
-                                                                style="clip-path: circle(9px at 50% 50%);width: 18px;position: absolute;top: 9px;left: 20px;">
-                                                            <h6 class="d-inline-block"
-                                                                style="padding-left: 41px;font-weight: bold;margin-top: 10px;">
-                                                                {{ $objetivo->objetivo->nombre }}</h6>
-                                                            <span
-                                                                style="float: right;margin-top: 12px;margin-right: 7px;"
-                                                                class="badge badge-success">{{ $objetivo->objetivo->tipo->nombre }}</span>
-                                                        </div>
-                                                    </div>
+                                <div class="card_data_mis_datos col-sm-12">
+                                    <div class="mb-0 card h-100">
+                                        <div class="pb-personzalizado card-body scroll_estilo" x-data="{ show: false }">
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <h5 class="mb-0"><i class="bi bi-bullseye mr-2"></i>Mis
+                                                        Objetivos
+                                                    </h5>
                                                 </div>
-                                            @endforeach
+                                                <div class="col-7" style="font-size: 15px;text-align: end">
+                                                    <a class="mr-1 text-dark"
+                                                        href="{{ route('admin.ev360-objetivos-empleado.show', ['empleado' => auth()->user()->empleado->id]) }}">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    @if (auth()->user()->empleado)
+                                                        <a class="mr-1 text-dark"
+                                                            href="{{ route('admin.ev360-objetivos-empleado.create', auth()->user()->empleado->id) }}"><i
+                                                                class="fas fa-pencil"></i></a>
+                                                    @endif
+                                                    <span style="cursor: pointer" @click="show=!show"><i class="fas"
+                                                            :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+                                                </div>
+                                            </div>
+                                            <hr class="hr-custom-title">
+                                            <div class="scroll_estilo"
+                                                style="padding-top: 25px; max-height: 200px; overflow: auto; "
+                                                x-show="show" x-transition:enter.duration.500ms
+                                                x-transition:leave.duration.400ms>
+                                                @foreach ($mis_objetivos as $objetivo)
+                                                    <div class="card" style="position:relative">
+                                                        <div class="card-body"
+                                                            style="z-index: 1;margin-top: 23px;margin-bottom: -12px; padding: 20px !important;">
+                                                            <div><strong>Meta:</strong>
+                                                                <span>{{ $objetivo->objetivo->meta }}
+                                                                    {{ $objetivo->objetivo->metrica->definicion }}</span>
+                                                                <span class="px-2">|</span>
+                                                                <span>
+                                                                    <span style="font-weight: bold">KPI:</span>
+                                                                    {{ $objetivo->objetivo->KPI }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            style="width: 100%;height: 38px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
+                                                            <div>
+                                                                <img src="{{ $objetivo->objetivo->tipo->imagen_ruta }}"
+                                                                    class="d-inline-block"
+                                                                    style="clip-path: circle(9px at 50% 50%);width: 18px;position: absolute;top: 9px;left: 20px;">
+                                                                <h6 class="d-inline-block"
+                                                                    style="padding-left: 41px;font-weight: bold;margin-top: 10px;">
+                                                                    {{ $objetivo->objetivo->nombre }}</h6>
+                                                                <span
+                                                                    style="float: right;margin-top: 12px;margin-right: 7px;"
+                                                                    class="badge badge-success">{{ $objetivo->objetivo->tipo->nombre }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             @endcan
                             @can('mi_perfil_mis_datos_ver_mi_autoevaluacion')
-                            <div class="card_data_mis_datos col-sm-12">
-                                <div class="mb-0 card h-100 mt-1">
-                                    <div class="pb-personzalizado card-body" x-data="{ show: false }"
-                                        style="padding-top:17px !important; padding-bottom:17px !important;">
-                                        <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge mr-2"></i>Mi
-                                            Autoevaluación
-                                            @if (!is_null($mis_evaluaciones) && is_object($mis_evaluaciones))
-                                                @if (isset($mis_evaluaciones->evaluado))
-                                                    @if (!$mis_evaluaciones->evaluado)
-                                                        <div class="circle-total-evaluaciones"
-                                                            style="top:-5px !important;">
-                                                            <span style="position: absolute;top: 3px;">1</span>
-                                                        </div>
-                                                    @endif
-                                                @endif
-                                            @endif
-                                        </h5>
-
-                                        @if ($last_evaluacion)
-                                            @include('admin.inicioUsuario.info_card_evaluacion')
-                                        @endif
-                                        <hr class="hr-custom-title">
-                                        <div id="evaluacionesRealizar" x-show="show" x-transition:enter.duration.500ms
-                                            x-transition:leave.duration.400ms>
-                                            <div class="card" style="position:relative; margin-top:25px;">
-                                                <div class="card-body" style="z-index: 1;">
-                                                    @if ($last_evaluacion)
-                                                        <div class="text-center" style="margin-top:20px;">
-                                                            <a class="btn btn-sm btn-light"
-                                                                href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $last_evaluacion->id, 'evaluado' => auth()->user()->empleado->id, 'evaluador' => auth()->user()->empleado->id]) }}">
-                                                                Autoevaluarme</a>
-                                                            <a class="btn btn-sm btn-light"
-                                                                href="{{ route('admin.ev360-evaluaciones.misEvaluaciones', ['evaluacion' => $last_evaluacion->id, 'evaluado' => auth()->user()->empleado->id]) }}">Ver
-                                                                mis Autoevaluaciones</a>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                                <div
-                                                    style="width: 100%;height: 38px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
-                                                    <div></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endcan
-                            @can('mi_perfil_mis_datos_ver_mis_evaluaciones_a_realizar')
-                            <div class="card_data_mis_datos col-sm-12">
-                                <div class="mb-0 card h-100 mt-1">
-                                    <div class="pb-personzalizado mb-0 card-body" x-data="{ show: false }"
-                                        style="padding-top:17px !important; padding-bottom:17px !important;">
-                                        <h5 class="mb-0 d-inline-block"><i
-                                                class="bi bi-person-badge-fill mr-2"></i>Evaluaciones a
-                                            Realizar
-                                            @if ($evaluaciones->count() > 0)
-                                                <div class="circle-total-evaluaciones" style="top:-5px !important;">
-                                                    <span
-                                                        style="position: absolute;top: 3px;">{{ $evaluaciones->count() }}</span>
-                                                </div>
-                                            @endif
-                                        </h5>
-                                        @if ($last_evaluacion)
-                                            @include('admin.inicioUsuario.info_card_evaluacion')
-                                        @endif
-                                        <hr class="hr-custom-title">
-
-                                        @can('')
-                                        <div id="evaluacionesRealizar" class="row" x-show="show"
-                                            x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
-                                            @if ($evaluaciones->count())
-                                                <div class="text-right col-12">
-                                                    @if ($last_evaluacion)
-                                                        @if ($esLider)
-                                                            <div class="col-12">
-                                                                <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
-                                                                    class="btn btn-xs btn-light mt-3">Evaluaciones de
-                                                                    mi equipo</a>
+                                <div class="card_data_mis_datos col-sm-12">
+                                    <div class="mb-0 card h-100 mt-1">
+                                        <div class="pb-personzalizado card-body" x-data="{ show: false }"
+                                            style="padding-top:17px !important; padding-bottom:17px !important;">
+                                            <h5 class="mb-0 d-inline-block"><i class="bi bi-person-badge mr-2"></i>Mi
+                                                Autoevaluación
+                                                @if (!is_null($mis_evaluaciones) && is_object($mis_evaluaciones))
+                                                    @if (isset($mis_evaluaciones->evaluado))
+                                                        @if (!$mis_evaluaciones->evaluado)
+                                                            <div class="circle-total-evaluaciones"
+                                                                style="top:-5px !important;">
+                                                                <span style="position: absolute;top: 3px;">1</span>
                                                             </div>
                                                         @endif
                                                     @endif
+                                                @endif
+                                            </h5>
+
+                                            @if ($last_evaluacion)
+                                                @include('admin.inicioUsuario.info_card_evaluacion')
+                                            @endif
+                                            <hr class="hr-custom-title">
+                                            <div id="evaluacionesRealizar" x-show="show"
+                                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
+                                                <div class="card" style="position:relative; margin-top:25px;">
+                                                    <div class="card-body" style="z-index: 1;">
+                                                        @if ($last_evaluacion)
+                                                            <div class="text-center" style="margin-top:20px;">
+                                                                <a class="btn btn-sm btn-light"
+                                                                    href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $last_evaluacion->id, 'evaluado' => auth()->user()->empleado->id, 'evaluador' => auth()->user()->empleado->id]) }}">
+                                                                    Autoevaluarme</a>
+                                                                <a class="btn btn-sm btn-light"
+                                                                    href="{{ route('admin.ev360-evaluaciones.misEvaluaciones', ['evaluacion' => $last_evaluacion->id, 'evaluado' => auth()->user()->empleado->id]) }}">Ver
+                                                                    mis Autoevaluaciones</a>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                    <div
+                                                        style="width: 100%;height: 38px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
+                                                        <div></div>
+                                                    </div>
                                                 </div>
-                                                @foreach ($evaluaciones as $evaluacion)
-                                                    <div class="col-md-6">
-                                                        <div class="card" style="margin: ; margin-top:25px;">
-                                                            <div class="card-body"
-                                                                style="position:relative; padding: 10px !important;">
-                                                                <div
-                                                                    class="text-center d-flex flex-column align-items-center">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endcan
+                            @can('mi_perfil_mis_datos_ver_mis_evaluaciones_a_realizar')
+                                <div class="card_data_mis_datos col-sm-12">
+                                    <div class="mb-0 card h-100 mt-1">
+                                        <div class="pb-personzalizado mb-0 card-body" x-data="{ show: false }"
+                                            style="padding-top:17px !important; padding-bottom:17px !important;">
+                                            <h5 class="mb-0 d-inline-block"><i
+                                                    class="bi bi-person-badge-fill mr-2"></i>Evaluaciones a
+                                                Realizar
+                                                @if ($evaluaciones->count() > 0)
+                                                    <div class="circle-total-evaluaciones" style="top:-5px !important;">
+                                                        <span
+                                                            style="position: absolute;top: 3px;">{{ $evaluaciones->count() }}</span>
+                                                    </div>
+                                                @endif
+                                            </h5>
+                                            @if ($last_evaluacion)
+                                                @include('admin.inicioUsuario.info_card_evaluacion')
+                                            @endif
+                                            <hr class="hr-custom-title">
 
-                                                                    <img class="img-fluid img-profile-sm"
-                                                                        style="position: relative;z-index: 1;"
-                                                                        src="{{ asset('storage/empleados/imagenes') }}/{{ $evaluacion->empleado_evaluado->avatar }}">
-                                                                    <div class="mt-3">
-                                                                        <h5 style="font-size:1vw;font-weight: bold">
-
-                                                                            {{ Str::limit($evaluacion->empleado_evaluado->name, 20, '...') }}
-                                                                        </h5>
-                                                                        <p class="mb-1 text-secondary">
-
-                                                                            {{ Str::limit($evaluacion->empleado_evaluado->puesto, 20, '...') }}
-                                                                        </p>
+                                            @can('')
+                                                <div id="evaluacionesRealizar" class="row" x-show="show"
+                                                    x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
+                                                    @if ($evaluaciones->count())
+                                                        <div class="text-right col-12">
+                                                            @if ($last_evaluacion)
+                                                                @if ($esLider)
+                                                                    <div class="col-12">
+                                                                        <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
+                                                                            class="btn btn-xs btn-light mt-3">Evaluaciones de
+                                                                            mi equipo</a>
                                                                     </div>
-                                                                    <div>
-                                                                        <a class="btn btn-sm btn-light"
-                                                                            href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}">
-                                                                            Evaluar</a>
-                                                                        {{-- @if ($evaluacion->empleado_evaluado->supervisor)
+                                                                @endif
+                                                            @endif
+                                                        </div>
+                                                        @foreach ($evaluaciones as $evaluacion)
+                                                            <div class="col-md-6">
+                                                                <div class="card" style="margin: ; margin-top:25px;">
+                                                                    <div class="card-body"
+                                                                        style="position:relative; padding: 10px !important;">
+                                                                        <div
+                                                                            class="text-center d-flex flex-column align-items-center">
+
+                                                                            <img class="img-fluid img-profile-sm"
+                                                                                style="position: relative;z-index: 1;"
+                                                                                src="{{ asset('storage/empleados/imagenes') }}/{{ $evaluacion->empleado_evaluado->avatar }}">
+                                                                            <div class="mt-3">
+                                                                                <h5 style="font-size:1vw;font-weight: bold">
+
+                                                                                    {{ Str::limit($evaluacion->empleado_evaluado->name, 20, '...') }}
+                                                                                </h5>
+                                                                                <p class="mb-1 text-secondary">
+
+                                                                                    {{ Str::limit($evaluacion->empleado_evaluado->puesto, 20, '...') }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a class="btn btn-sm btn-light"
+                                                                                    href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}">
+                                                                                    Evaluar</a>
+                                                                                {{-- @if ($evaluacion->empleado_evaluado->supervisor)
                                                                                             @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->supervisor->id)
                                                                                                 <span
                                                                                                     style="position: absolute;top: 7px;z-index: 1;right: 7px;"
@@ -1049,17 +1054,17 @@ if (!is_null($organizacion)) {
                                                                                                 </span>
                                                                                             @endif
                                                                                         @endif --}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div
+                                                                            style="width:100%;height: 50px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div
-                                                                    style="width:100%;height: 50px;position: absolute;top: 0;left: 0;background: #f1f1f1;z-index: 0;">
-                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            @endif
-                                            {{-- @foreach ($evaluaciones as $evaluacion)
+                                                        @endforeach
+                                                    @endif
+                                                    {{-- @foreach ($evaluaciones as $evaluacion)
                                                                     <small>{{ $evaluacion->empleado_evaluado->name }}
                                                                         @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->id)
                                                                             <span class="badge badge-primary">Autoevaluación</span>
@@ -1102,11 +1107,11 @@ if (!is_null($organizacion)) {
                                                                         </div>
                                                                     @endif
                                                                 @endforeach --}}
+                                                </div>
+                                            @endcan
                                         </div>
-                                        @endcan
                                     </div>
                                 </div>
-                            </div>
                             @endcan
                         </div>
                     </div>

@@ -128,7 +128,7 @@
 
             ],
             success: function (response, newValue) {
-            console.log('Actualizado, response')
+            console.log('Actualizado, aplica')
             }
             });
             $(".aplica2").editable({
@@ -144,7 +144,7 @@
 
             ],
             success: function (response, newValue) {
-            console.log('Actualizado, response')
+            console.log('Actualizado, aplica2')
             }
             });
             $(".estatus").editable({

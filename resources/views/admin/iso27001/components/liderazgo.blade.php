@@ -6,7 +6,7 @@
             <li><a href="{{ route('admin.comiteseguridads.index') }}">
                     <div>
                         <i class="bi bi-shield"></i> <br>
-                        Conformación del comité de seguridad
+                        Conformación del comité
                     </div>
                 </a></li>
         @endcan

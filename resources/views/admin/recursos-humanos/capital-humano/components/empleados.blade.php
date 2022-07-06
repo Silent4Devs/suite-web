@@ -186,9 +186,9 @@
             </ul>
         </div>
     @endcan
-    @can('solicitudes_incidencias_acceder')
+  
     <li>
-        <a href="#">
+        <a href="Ausencias">
             <div>
                 <i class="bi bi-chat-square-dots"></i>
                 <br>
@@ -196,7 +196,7 @@
             </div>
         </a>
     </li>
-    @endcan
+ 
     @can('beneficios_acceder')
     <li>
         <a href="#">

@@ -96,7 +96,7 @@
     {{ Breadcrumbs::render('admin.comiteseguridads.index') }}
 
     @can('comformacion_comite_seguridad_agregar')
-        <h5 class="col-12 titulo_general_funcion">Conformación del Comité de Seguridad</h5>
+        <h5 class="col-12 titulo_general_funcion">Conformación del Comité</h5>
         <div class="mt-5 card">
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -114,7 +114,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width: 200px;">
-                            Nombre del comite
+                            Nombre del comité
                         </th>
                         <th style="min-width: 150px;">
                             Miembros

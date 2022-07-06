@@ -13,8 +13,8 @@
                 <div class="form-group col-12">
                     <label class="required" for="objetivocomunicado"><i
                             class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.objetivocomunicado') }}</label>
-                    <input class="form-control {{ $errors->has('objetivocomunicado') ? 'is-invalid' : '' }}" type="text"
-                        name="objetivocomunicado" id="objetivocomunicado"
+                    <input class="form-control {{ $errors->has('objetivocomunicado') ? 'is-invalid' : '' }}"
+                        type="text" name="objetivocomunicado" id="objetivocomunicado"
                         value="{{ old('objetivocomunicado', $concientizacionSgi->objetivocomunicado) }}" required>
                     @if ($errors->has('objetivocomunicado'))
                         <div class="invalid-feedback">
@@ -61,8 +61,7 @@
                             {{ $errors->first('arearesponsable') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.concientizacionSgi.fields.arearesponsable_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.arearesponsable_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
                     <label><i
@@ -132,23 +131,31 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 @if (count($concientizacionSgi->documentos_concientizacion))
-
                                     <!-- carousel -->
                                     <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
                                         <ol class='carousel-indicators'>
                                             @foreach ($concientizacionSgi->documentos_concientizacion as $idx => $concientSgsi_id)
                                                 <li data-target=#carouselExampleIndicators
                                                     data-slide-to={{ $idx }}></li>
-
                                             @endforeach
 
                                         </ol>
                                         <div class='carousel-inner'>
                                             @foreach ($concientizacionSgi->documentos_concientizacion as $idx => $concientSgsi_id)
-                                                <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                    <iframe style="width:100%;height:300px;" seamless class='img-size'
-                                                        src="{{ asset('storage/documentos_concientSgsi') }}/{{ $concientSgsi_id->documento }}"></iframe>
-                                                </div>
+                                                @if (pathinfo($concientSgsi_id->documento, PATHINFO_EXTENSION) == 'pdf')
+                                                    <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                                            src="{{ asset('storage/documentos_concientSgsi') }}/{{ $concientSgsi_id->documento }}"></iframe>
+                                                    </div>
+                                                @else
+                                                    <div
+                                                        class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <a
+                                                            href="{{ asset('storage/documentos_concientSgsi') }}/{{ $concientSgsi_id->documento }}">
+                                                            <i class="fas fa-file-download mr-2"
+                                                                style="font-size:18px"></i>{{ $concientSgsi_id->documento }}</a>
+                                                    </div>
+                                                @endif
                                             @endforeach
 
 

@@ -9,6 +9,7 @@ use App\Mail\Minutas\MinutaConfirmacionSolicitud;
 use App\Mail\Minutas\MinutaRechazoPorEdicion;
 use App\Mail\Minutas\SolicitudDeAprobacion;
 use App\Models\Empleado;
+use App\Models\ExternosMinutaDireccion;
 use App\Models\FilesRevisonDireccion;
 use App\Models\HistoralRevisionMinuta;
 use App\Models\Minutasaltadireccion;
@@ -51,7 +52,6 @@ class MinutasaltadireccionController extends Controller
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->with('area')->get();
         $esta_vinculado = auth()->user()->empleado ? true : false;
-        // dd($esta_vinculado);
 
         return view('admin.minutasaltadireccions.create', compact('responsablereunions', 'esta_vinculado'));
     }
@@ -101,6 +101,9 @@ class MinutasaltadireccionController extends Controller
         // Almacenamiento de participantes relacionados
         $this->vincularParticipantes($request, $minutasaltadireccion);
 
+        if ($request->has('participantesExt')) {
+            $this->vincularParticipantesExternos($request, $minutasaltadireccion);
+        }
         //Creación del PDF
         // $actividades = json_decode($request->actividades);
         // $this->createPDF($minutasaltadireccion, $actividades);
@@ -118,6 +121,23 @@ class MinutasaltadireccionController extends Controller
             return intval($valor);
         }, $arrstrParticipantes);
         $minutasaltadireccion->participantes()->sync($participantes);
+    }
+
+    public function vincularParticipantesExternos($request, $minutasaltadireccion)
+    {
+        $arrParticipantes = json_decode($request->participantesExt);
+        foreach ($arrParticipantes as $participante) {
+            $exists = ExternosMinutaDireccion::where('minuta_id', $minutasaltadireccion->id)->where('nombreEXT', $participante->nombre)->where('emailEXT', $participante->email)->where('puestoEXT', $participante->puesto)->where('empresaEXT', $participante->empresa)->first();
+            if (!$exists) {
+                ExternosMinutaDireccion::create([
+                    'nombreEXT' => $participante->nombre,
+                    'emailEXT' => $participante->email,
+                    'puestoEXT' => $participante->puesto,
+                    'empresaEXT' => $participante->empresa,
+                    'minuta_id' => $minutasaltadireccion->id,
+                ]);
+            }
+        }
     }
 
     public function initReviews($minutasaltadireccion)
@@ -173,18 +193,19 @@ class MinutasaltadireccionController extends Controller
 
             foreach ($actividades as $actividad) {
                 $asignados = [];
+
                 if ($edit) {
-                    if (gettype($actividad[6]) == 'string') {
-                        if (str_contains($actividad[6], ',')) {
-                            $asignados = explode(',', $actividad[6]);
+                    if (gettype($actividad[7]) == 'string') {
+                        if (str_contains($actividad[7], ',')) {
+                            $asignados = explode(',', $actividad[7]);
                         } else {
-                            array_push($asignados, $actividad[6]);
+                            array_push($asignados, $actividad[7]);
                         }
                     } else {
-                        $asignados = $actividad[6];
+                        $asignados = $actividad[7];
                     }
                 } else {
-                    $asignados = $actividad[6];
+                    $asignados = $actividad[7];
                 }
                 $assigs = [];
                 foreach ($asignados as $asignado) {
@@ -200,20 +221,20 @@ class MinutasaltadireccionController extends Controller
 
                 $tasks[] = [
                     'id' => $actividad[0],
-                    'end' => strtotime($actividad[3]) * 1000,
-                    'name' => $actividad[1],
+                    'end' => strtotime($actividad[4]) * 1000,
+                    'name' => $actividad[2],
                     'level' => 1,
-                    'start' => strtotime($actividad[2]) * 1000,
+                    'start' => strtotime($actividad[3]) * 1000,
                     'canAdd' => true,
                     'status' => 'STATUS_ACTIVE',
                     'canWrite' => true,
-                    'duration' => $actividad[4],
+                    'duration' => $actividad[5],
                     'progress' => 0,
                     'canDelete' => true,
                     'collapsed' => false,
                     'relevance' => '0',
                     'canAddIssue' => true,
-                    'description' => $actividad[7],
+                    'description' => $actividad[8],
                     'endIsMilestone' => false,
                     'startIsMilestone' => false,
                     'progressByWorklog' => false,
@@ -265,8 +286,7 @@ class MinutasaltadireccionController extends Controller
     public function edit(Minutasaltadireccion $minutasaltadireccion)
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $minutasaltadireccion->load('participantes', 'planes', 'documentos');
-        // dd($minutasaltadireccion);
+        $minutasaltadireccion->load('participantes', 'planes', 'documentos', 'externos');
         $actividades = $minutasaltadireccion->planes->first()->tasks;
         $actividades = array_filter($actividades, function ($actividad) {
             return intval($actividad->level) > 0;
@@ -294,6 +314,9 @@ class MinutasaltadireccionController extends Controller
         $minuta = $minutasaltadireccion->update($request->all());
 
         $this->vincularParticipantes($request, $minutasaltadireccion);
+        if ($request->has('participantesExt')) {
+            $this->vincularParticipantesExternos($request, $minutasaltadireccion);
+        }
         if ($edit) {
             $plan = $minutasaltadireccion->planes->first();
             $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion, $plan, true);

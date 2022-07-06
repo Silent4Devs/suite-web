@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.alcance-sgsis.create') }}
     <h5 class="col-12 titulo_general_funcion">Registrar: Determinación de Alcance</h5>
     <div class="mt-4 card">
@@ -9,6 +8,12 @@
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre de Alcance</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required value="{{old('nombre', $alcanceSgsi->nombre)}}">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="alcancesgsi"><i class="fas fa-shield-alt iconos-crear"></i>Alcance SGSI</label><i
                         class="fas fa-info-circle" style="font-size:12pt; float: right;"
@@ -56,8 +61,8 @@
                     <div class="form-group col-sm-4">
                         <label for="fecha_revision"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
                             revisión</label>
-                        <input class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}" type="date"
-                            name="fecha_revision" id="fecha_revision"
+                        <input class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}"
+                            type="date" name="fecha_revision" id="fecha_revision"
                             value="{{ old('fecha_revision', \Carbon\Carbon::parse($alcanceSgsi->fecha_revision)->format('Y-m-d')) }}">
                         @if ($errors->has('fecha_revision'))
                             <div class="invalid-feedback">
@@ -98,14 +103,14 @@
 
                     <div class="form-group col-sm-12 col-md-4 col-lg-4">
                         <label for="id_puesto_reviso"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                        <div class="form-control" id="puesto_reviso"></div>
+                        <div class="form-control" id="puesto_reviso" readonly></div>
 
                     </div>
 
 
                     <div class="form-group col-sm-12 col-md-4 col-lg-4">
                         <label for="id_area_reviso"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                        <div class="form-control" id="area_reviso"></div>
+                        <div class="form-control" id="area_reviso" readonly></div>
                     </div>
 
                 </div>
@@ -133,24 +138,24 @@
 
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>  
+                        <label for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>
                         <select
-                        class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
-                        name="normas[]" id="controles" multiple="multiple">
-                        <option value disabled>
-                            Selecciona una opción</option>
-                        @foreach ($normas as $norma)
-                        <option value="{{ $norma->id }}" data-area="{{ $norma->norma }}"
-                            {{ old('normas',in_array($norma->id,$normas_seleccionadas)) ? ' selected="selected"' : '' }}>
-                            {{ $norma->norma }}
-                        </option>
-                        @endforeach
+                            class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
+                            name="normas[]" id="controles" multiple="multiple">
+                            <option value disabled>
+                                Selecciona una opción</option>
+                            @foreach ($normas as $norma)
+                                <option value="{{ $norma->id }}" data-area="{{ $norma->norma }}"
+                                    {{ old('normas', in_array($norma->id, $normas_seleccionadas)) ? ' selected="selected"' : '' }}>
+                                    {{ $norma->norma }}
+                                </option>
+                            @endforeach
                         </select>
-                            @if ($errors->has('norma'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('normas') }}
-                                </div>
-                            @endif
+                        @if ($errors->has('norma'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('normas') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
 
@@ -164,15 +169,10 @@
             </form>
         </div>
     </div>
-
-
-
 @endsection
 
 
 @section('scripts')
-
-
     <script>
         $(document).ready(function() {
             CKEDITOR.replace('alcancesgsi', {
@@ -245,17 +245,23 @@
             let area_init = reviso_alcance.options[reviso_alcance.selectedIndex].getAttribute('data-area');
             let puesto_init = reviso_alcance.options[reviso_alcance.selectedIndex].getAttribute('data-puesto');
 
-            document.getElementById('puesto_reviso').innerHTML = puesto_init;
-            document.getElementById('area_reviso').innerHTML = area_init;
+            document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('area_reviso').innerHTML = recortarTexto(area_init);
             reviso_politica.addEventListener('change', function(e) {
                 e.preventDefault();
                 let area = this.options[this.selectedIndex].getAttribute('data-area');
                 let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('puesto_reviso').innerHTML = puesto;
-                document.getElementById('area_reviso').innerHTML = area;
+                document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto);
+                document.getElementById('area_reviso').innerHTML = recortarTexto(area);
             })
 
         })
-    </script>
 
+        function recortarTexto(texto, length = 30) {
+            let trimmedString = texto?.length > length ?
+                texto.substring(0, length - 3) + "..." :
+                texto;
+            return trimmedString;
+        }
+    </script>
 @endsection

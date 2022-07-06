@@ -62,6 +62,12 @@ Breadcrumbs::for('admin.entendimiento-organizacions.create', function ($trail) {
     $trail->push('Formulario', route('admin.entendimiento-organizacions.create'));
 });
 
+Breadcrumbs::for('admin.entendimiento-organizacions.show', function ($trail) {
+    $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
+    $trail->push('Entendimiento Organización', route('admin.entendimiento-organizacions.index'));
+    $trail->push('FODA');
+});
+
 Breadcrumbs::for('admin.alcance-sgsis.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
@@ -80,7 +86,7 @@ Breadcrumbs::for('admin.alcance-sgsis.create', function ($trail) {
 Breadcrumbs::for('admin.comiteseguridads.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Liderazgo', route('admin.iso27001.index') . '#liderazgo');
-    $trail->push('Conformación del Comité de Seguridad', route('admin.comiteseguridads.index'));
+    $trail->push('Conformación del Comité', route('admin.comiteseguridads.index'));
 });
 Breadcrumbs::for('admin.comiteseguridads.create', function ($trail) {
     $trail->parent('admin.comiteseguridads.index');
@@ -88,7 +94,7 @@ Breadcrumbs::for('admin.comiteseguridads.create', function ($trail) {
 });
 Breadcrumbs::for('admin.comiteseguridads.visualizacion', function ($trail) {
     $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
-    $trail->push('Comite de Seguridad');
+    $trail->push('Comité');
 });
 
 Breadcrumbs::for('admin.minutasaltadireccions.index', function ($trail) {
@@ -540,6 +546,25 @@ Breadcrumbs::for('EV360-Evaluaciones-Evaluacion', function ($trail, $evaluacion)
     $trail->push('Evaluación', route('admin.ev360-evaluaciones.evaluacion', $evaluacion->id));
 });
 
+Breadcrumbs::for('Ausencias', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados', route('admin.capital-humano.index'));
+    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+});
+
+Breadcrumbs::for('Reglas-Vacaciones', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados', route('admin.capital-humano.index'));
+    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+    $trail->push('Reglas Vacaciones', route('admin.vacaciones.index'));
+});
+
+Breadcrumbs::for('Reglas-DayOff', function ($trail) {
+    $trail->parent('capital-humano');
+    $trail->push('Empleados', route('admin.capital-humano.index'));
+    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+    $trail->push('Reglas Days Off´s', route('admin.dayOff.index'));
+});
 Breadcrumbs::for('EV360-Competencias', function ($trail) {
     $trail->parent('capital-humano');
     $trail->push('Empleados');

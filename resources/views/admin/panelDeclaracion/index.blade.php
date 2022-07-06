@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .select-revisores .select2-selection {
             height: 50px !important;
@@ -25,9 +24,8 @@
         .table tr td:nth-child(4) {
             min-width: 300px !important;
         }
-
     </style>
-     {{ Breadcrumbs::render('admin.paneldeclaracion.index') }}
+    {{ Breadcrumbs::render('admin.paneldeclaracion.index') }}
 
     @include('partials.flashMessages')
 
@@ -101,7 +99,8 @@
                                     </select> --}}
                                     <p>Realizó modificaciones en la lista de responsables. Elija una de las opciones
                                         siguientes</p>
-                                    <input type="radio" id="contactChoice1" name="contact" value="1"> Enviar actualizaciones
+                                    <input type="radio" id="contactChoice1" name="contact" value="1"> Enviar
+                                    actualizaciones
                                     solo
                                     a los responsables agregados.
                                     <br>
@@ -244,23 +243,6 @@
                     }
                 }
             }
-            //dtButtons.push(deleteButton)
-
-
-            // let btnAgregar = {
-            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-            //     titleAttr: 'Agregar nuevo',
-            //     url: "{{ route('admin.paneldeclaracion.create') }}",
-            //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-            //     action: function(e, dt, node, config) {
-            //         let {
-            //             url
-            //         } = config;
-            //         window.location.href = url;
-            //     }
-            // };
-            // dtButtons.push(btnAgregar);
-
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -285,94 +267,12 @@
                         name: 'responsable',
                         render: function(data, type, row, meta) {
                             let responsableselect = "";
-                            let responsableselects = JSON.parse(row.empleados);
+                            let responsableselects = @json($empleados);
                             //  console.log(row.empleados.declaraciones_responsable);
-                            responsableselect = `
-                            <select class="revisoresSelect" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
+                            responsableselect =
+                                `<select class="revisoresSelect responsables" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
                                 ${responsableselects?.map ((responsable,idx)=>{
-                                    return`
-                                                    <option ${responsable.declaraciones_responsable?.includes(row.id)?'selected':''} data-avatar='${responsable.avatar}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>
-                                                                    ${responsable.name }</option>`})}
-                            </select>`;
-                            $(`select#responsables${row.id}`).select2({
-                                theme: 'bootstrap4',
-                                templateResult: formatState,
-                                templateSelection: formatState
-                            });
-                            $(`select#responsables${row.id}`).on('select2:select', function(e) {
-                                const declaracion = this.getAttribute('data-id');
-                                const {
-                                    element
-                                } = e.params.data;
-                                const responsable = element.getAttribute('data-id-empleado')
-                                const url =
-                                    "{{ route('admin.paneldeclaracion.responsables') }}";
-                                const token = "{{ csrf_token() }}";
-                                const request = fetch(url, {
-                                    mode: 'cors', // this cannot be 'no-cors'
-                                    headers: {
-                                        'X-CSRF-TOKEN': token,
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json',
-                                    },
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        declaracion,
-                                        responsable
-                                    })
-                                });
-                                request.then(response => response.json()).
-                                then(data => {
-                                    if (data.estatus == 'limite_alcanzado') {
-                                        const usuarioSeleccionado = $(
-                                            `select#responsables${row.id} option[data-id-empleado="${responsable}"]`
-                                        );
-                                        usuarioSeleccionado.prop('selected', false);
-                                        $(`select#responsables${row.id}`).trigger(
-                                            'change.select2');
-                                    }
-                                    console.log(data.estatus)
-                                    if (data.estatus == 'ya_es_aprobador') {
-                                        const usuarioSeleccionadoResp = $(
-                                            `select#responsables${row.id} option[data-id-empleado="${responsable}"]`
-                                        );
-                                        usuarioSeleccionadoResp.prop('selected', false);
-                                        $(`select#responsables${row.id}`).trigger(
-                                            'change.select2');
-                                    }
-                                    toastr.success(data.message);
-                                }).
-                                catch(error => console.log)
-                            });
-                            $(`select#responsables${row.id}`).on('select2:unselect', function(e) {
-                                const declaracion = this.getAttribute('data-id');
-                                const {
-                                    element
-                                } = e.params.data;
-                                const responsable = element.getAttribute('data-id-empleado')
-                                const url =
-                                    "{{ route('admin.paneldeclaracion.responsables.quitar') }}";
-                                const token = "{{ csrf_token() }}";
-                                const request = fetch(url, {
-                                    mode: 'cors', // this cannot be 'no-cors'
-                                    headers: {
-                                        'X-CSRF-TOKEN': token,
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json',
-                                    },
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        declaracion,
-                                        responsable
-                                    })
-                                });
-                                request.then(response => response.json()).
-                                then(data => {
-                                    toastr.success(data.message);
-                                }).
-                                catch(error => console.log)
-
-                            });
+                                    return`<option ${responsable.declaraciones_responsable?.includes(row.id)?'selected':''} data-avatar='${responsable.avatar}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>${responsable.name }</option>`})}</select>`;
                             return responsableselect;
                         }
                     },
@@ -381,93 +281,13 @@
                         name: 'aprobador',
                         render: function(data, type, row, meta) {
                             let aprobadorselect = "";
-                            let aprobadoreselects = JSON.parse(row.empleados);
+                            let aprobadoreselects = @json($empleados);
                             aprobadorselect = `
-                        <select class="revisoresSelect" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple" data-id='${row.id}'>
+                        <select class="revisoresSelect aprobadores" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple" data-id='${row.id}'>
                             ${aprobadoreselects?.map ((aprobador,idx)=>{
-                                return`
-                                                            <option ${aprobador.declaraciones_aprobador?.includes(row.id)?'selected':''} data-avatar='${aprobador.avatar}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>
-                                                                ${aprobador.name }</option>`})}
+                                return`<option ${aprobador.declaraciones_aprobador?.includes(row.id)?'selected':''} data-avatar='${aprobador.avatar}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>${aprobador.name }</option>`})}
                                 </select>`;
-                            $(`select#aprobadores${row.id}`).select2({
-                                theme: 'bootstrap4',
-                                templateResult: formatState,
-                                templateSelection: formatState
-                            });
-                            $(`select#aprobadores${row.id}`).on('select2:select', function(e) {
-                                const declaracion = this.getAttribute('data-id');
-                                const {
-                                    element
-                                } = e.params.data;
-                                const aprobador = element.getAttribute('data-id-empleado')
-                                const url =
-                                    "{{ route('admin.paneldeclaracion.aprobadores') }}";
-                                const token = "{{ csrf_token() }}";
-                                const request = fetch(url, {
-                                    mode: 'cors', // this cannot be 'no-cors'
-                                    headers: {
-                                        'X-CSRF-TOKEN': token,
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json',
-                                    },
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        declaracion,
-                                        aprobador
-                                    })
-                                });
-                                request.then(response => response.json()).
-                                then(data => {
-                                    if (data.estatus == 'limite_alcanzado') {
-                                        const usuarioSeleccionado = $(
-                                            `select#aprobadores${row.id} option[data-id-empleado="${aprobador}"]`
-                                        );
-                                        usuarioSeleccionado.prop('selected', false);
-                                        $(`select#aprobadores${row.id}`).trigger(
-                                            'change.select2');
-                                    }
-                                    if (data.estatus == 'ya_es_responsable') {
-                                        const usuarioSeleccionadoAprob = $(
-                                            `select#aprobadores${row.id} option[data-id-empleado="${aprobador}"]`
-                                        );
-                                        usuarioSeleccionadoAprob.prop('selected',
-                                            false);
-                                        $(`select#aprobadores${row.id}`).trigger(
-                                            'change.select2');
-                                    }
-                                    toastr.success(data.message);
-                                }).
-                                catch(error => console.log)
-                            });
-                            $(`select#aprobadores${row.id}`).on('select2:unselect', function(e) {
-                                const declaracion = this.getAttribute('data-id');
-                                const {
-                                    element
-                                } = e.params.data;
-                                const aprobador = element.getAttribute('data-id-empleado')
-                                const url =
-                                    "{{ route('admin.paneldeclaracion.aprobadores.quitar') }}";
-                                const token = "{{ csrf_token() }}";
-                                const request = fetch(url, {
-                                    mode: 'cors', // this cannot be 'no-cors'
-                                    headers: {
-                                        'X-CSRF-TOKEN': token,
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json',
-                                    },
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        declaracion,
-                                        aprobador
-                                    })
-                                });
-                                request.then(response => response.json()).
-                                then(data => {
-                                    toastr.success(data.message);
-                                }).
-                                catch(error => console.log)
-                                console.log(declaracion, aprobador);
-                            });
+
                             return aprobadorselect;
                         }
                     }
@@ -476,23 +296,178 @@
                 order: [
                     [0, 'desc']
                 ],
-                paging: false
+                "drawCallback": function(settings) {
+                    $('select.empleado').select2({
+                        theme: 'bootstrap4',
+                        templateResult: formatState,
+                        templateSelection: formatState
+                    });
+
+                    $('.revisoresSelect').select2({
+                        theme: 'bootstrap4',
+                        templateResult: formatState,
+                        templateSelection: formatState
+                    });
+
+                    $(`select#responsables`).select2({
+                        theme: 'bootstrap4',
+                        templateResult: formatState,
+                        templateSelection: formatState
+                    });
+
+                    $(`select.aprobadores`).on('select2:select', function(e) {
+                        const declaracion = this.getAttribute('data-id');
+                        const {
+                            element
+                        } = e.params.data;
+                        const aprobador = element.getAttribute('data-id-empleado')
+                        const url =
+                            "{{ route('admin.paneldeclaracion.aprobadores') }}";
+                        const token = "{{ csrf_token() }}";
+                        const request = fetch(url, {
+                            mode: 'cors', // this cannot be 'no-cors'
+                            headers: {
+                                'X-CSRF-TOKEN': token,
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            method: 'POST',
+                            body: JSON.stringify({
+                                declaracion,
+                                aprobador
+                            })
+                        });
+                        request.then(response => response.json()).
+                        then(data => {
+                            if (data.estatus == 'limite_alcanzado') {
+                                const usuarioSeleccionado = $(
+                                    `option[data-id-empleado="${aprobador}"]`
+                                );
+                                usuarioSeleccionado.prop('selected', false);
+                                $(`select.aprobadores`).trigger(
+                                    'change.select2');
+                            }
+                            if (data.estatus == 'ya_es_responsable') {
+                                const usuarioSeleccionadoAprob = $(
+                                    `option[data-id-empleado="${aprobador}"]`
+                                );
+                                usuarioSeleccionadoAprob.prop('selected',
+                                    false);
+                                $(`select.aprobadores`).trigger(
+                                    'change.select2');
+                            }
+                            toastr.success(data.message);
+                        }).
+                        catch(error => console.log)
+                    });
+                    $(`select.aprobadores`).on('select2:unselect', function(e) {
+                        const declaracion = this.getAttribute('data-id');
+                        const {
+                            element
+                        } = e.params.data;
+                        const aprobador = element.getAttribute('data-id-empleado')
+                        const url =
+                            "{{ route('admin.paneldeclaracion.aprobadores.quitar') }}";
+                        const token = "{{ csrf_token() }}";
+                        const request = fetch(url, {
+                            mode: 'cors', // this cannot be 'no-cors'
+                            headers: {
+                                'X-CSRF-TOKEN': token,
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            method: 'POST',
+                            body: JSON.stringify({
+                                declaracion,
+                                aprobador
+                            })
+                        });
+                        request.then(response => response.json()).
+                        then(data => {
+                            toastr.success(data.message);
+                        }).
+                        catch(error => console.log)
+                        console.log(declaracion, aprobador);
+                    });
+
+                    $(`select.responsables`).on('select2:select', function(e) {
+                        const declaracion = this.getAttribute('data-id');
+                        const {
+                            element
+                        } = e.params.data;
+                        const responsable = element.getAttribute('data-id-empleado')
+                        const url =
+                            "{{ route('admin.paneldeclaracion.responsables') }}";
+                        const token = "{{ csrf_token() }}";
+                        const request = fetch(url, {
+                            mode: 'cors', // this cannot be 'no-cors'
+                            headers: {
+                                'X-CSRF-TOKEN': token,
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            method: 'POST',
+                            body: JSON.stringify({
+                                declaracion,
+                                responsable
+                            })
+                        });
+                        request.then(response => response.json()).
+                        then(data => {
+                            if (data.estatus == 'limite_alcanzado') {
+                                const usuarioSeleccionado = $(
+                                    `option[data-id-empleado="${responsable}"]`
+                                );
+                                usuarioSeleccionado.prop('selected', false);
+                                $(`.responsables`).trigger(
+                                    'change.select2');
+                            }
+                            console.log(data.estatus)
+                            if (data.estatus == 'ya_es_aprobador') {
+                                const usuarioSeleccionadoResp = $(
+                                    `option[data-id-empleado="${responsable}"]`
+                                );
+                                usuarioSeleccionadoResp.prop('selected', false);
+                                $(`.responsables`).trigger(
+                                    'change.select2');
+                            }
+                            toastr.success(data.message);
+                        }).
+                        catch(error => console.log)
+                    });
+                    $(`select.responsables`).on('select2:unselect', function(e) {
+                        const declaracion = this.getAttribute('data-id');
+                        const {
+                            element
+                        } = e.params.data;
+                        const responsable = element.getAttribute('data-id-empleado')
+                        const url =
+                            "{{ route('admin.paneldeclaracion.responsables.quitar') }}";
+                        const token = "{{ csrf_token() }}";
+                        const request = fetch(url, {
+                            mode: 'cors', // this cannot be 'no-cors'
+                            headers: {
+                                'X-CSRF-TOKEN': token,
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            method: 'POST',
+                            body: JSON.stringify({
+                                declaracion,
+                                responsable
+                            })
+                        });
+                        request.then(response => response.json()).
+                        then(data => {
+                            toastr.success(data.message);
+                        }).
+                        catch(error => console.log)
+
+                    });
+                }
+                // paging: false
             };
             let table = $('.datatable-PanelDeclaracion').DataTable(dtOverrideGlobals);
-            // buttons: dtButtons
-            // })
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
         });
 
 
@@ -503,31 +478,20 @@
                 let enviarRadio = document.getElementsByName('contact');
 
                 //false
-                let dataRadio =document.querySelector('input[name=contact]:checked').value;
-                // for (var i = 0, length = enviarRadio.length; i < length; i++) {
-                //     // for(var i = 0; i < enviarRadio.length; i++){
-                //     // Si enviarRadio es de tipo i es decir si esta marcado
-                //     if (enviarRadio[i].checked) {
-                //         //true
-                //         // do whatever you want with the checked radio
-                //         dataRadio = enviarRadio[i].value;
-                //         // only one radio can be logically checked, don't check the rest
-                //         break;
-                //     }
-                // }
+                let dataRadio = document.querySelector('input[name=contact]:checked').value;
 
                 const responsables = $(e.target.parentElement.querySelector('select')).select2('data');
                 console.log(dataRadio);
                 const array_responsables = [];
                 if (responsables) {
                     responsables.forEach(responsable => {
-                    const responsable_id = responsable.element.getAttribute('data-id-empleado')
-                    array_responsables.push(responsable_id)
-                })
+                        const responsable_id = responsable.element.getAttribute('data-id-empleado')
+                        array_responsables.push(responsable_id)
+                    })
                 }
 
-                const enviarTodos=dataRadio==1?false:true;
-                const enviarNoNotificados=dataRadio==2?false:true;
+                const enviarTodos = dataRadio == 1 ? false : true;
+                const enviarNoNotificados = dataRadio == 2 ? false : true;
                 const url = "{{ route('admin.paneldeclaracion.enviarcorreo') }}"
                 const token = "{{ csrf_token() }}";
                 const request = fetch(url, {
@@ -576,7 +540,7 @@
         });
 
         window.formatState = (opt) => {
-            if(!opt.id) {
+            if (!opt.id) {
                 return opt.text;
             }
             var optimage = $(opt.element).attr('data-avatar');
@@ -590,10 +554,5 @@
 
             return $opt;
         };
-
-
     </script>
-
-
 @endsection
-

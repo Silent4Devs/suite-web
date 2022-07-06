@@ -19,7 +19,6 @@ class TablaTareasTimesheet extends Component
     public $proyecto_id;
     public $origen;
     public $tareas_proyecto;
-
     public $area_seleccionar;
 
     public $tarea_name_actualizada;
@@ -79,7 +78,7 @@ class TablaTareasTimesheet extends Component
         $tarea_actualizada = TimesheetTarea::find($id);
 
         $tarea_actualizada->update([
-            'tarea'=>$value,
+            'tarea' => $value,
         ]);
         $this->emit('tarea-actualizada', $tarea_actualizada);
     }
@@ -97,8 +96,8 @@ class TablaTareasTimesheet extends Component
         }
 
         $tarea_actualizada->update([
-            'area_id'=>$area_id,
-            'todos'=>$todos,
+            'area_id' => $area_id,
+            'todos' => $todos,
         ]);
         $this->emit('tarea-actualizada', $tarea_actualizada);
     }

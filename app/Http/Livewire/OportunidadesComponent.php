@@ -14,7 +14,7 @@ class OportunidadesComponent extends Component
     public $view = 'create';
 
     protected $rules = [
-        'oportunidad' => 'required|max:1050',
+        'oportunidad' => 'required',
     ];
 
     public function mount($foda_id)

@@ -894,7 +894,7 @@ class DeskController extends Controller
             'area_quejado' => 'required',
             'solucion_requerida_cliente' => 'required',
             'correo_cliente' => 'required',
-            'correo'=>'required',
+            'correo' => 'required',
             'canal' => 'required',
         ]);
 
@@ -1000,7 +1000,7 @@ class DeskController extends Controller
         if ($queja_procedente) {
             $request->validate([
                 'urgencia' => 'required',
-                'impacto'=>'required',
+                'impacto' => 'required',
             ]);
         }
 
@@ -1198,9 +1198,9 @@ class DeskController extends Controller
                 'estatus' => 'Sin atender',
                 'aprobada' => false,
                 'aprobacion_contestada' => false,
-                'id_reporto'=>$request->empleado_reporto_id,
-                'otros'=>$request->otro_quejado,
-                'colaborador_quejado'=>$request->colaborador_quejado,
+                'id_reporto' => $request->empleado_reporto_id,
+                'otros' => $request->otro_quejado,
+                'colaborador_quejado' => $request->colaborador_quejado,
 
             ]);
 
@@ -1218,7 +1218,7 @@ class DeskController extends Controller
             }
         }
         if ($request->ajax()) {
-            return response()->json(['estatus'=>200]);
+            return response()->json(['estatus' => 200]);
         }
         // return redirect()->route('admin.desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
@@ -1230,7 +1230,7 @@ class DeskController extends Controller
         $quejasClientes = QuejasCliente::find(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos', 'responsableAtencion');
 
         $quejasClientes->update([
-            'responsable_atencion_queja_id'=>$request->responsable_atencion_queja_id,
+            'responsable_atencion_queja_id' => $request->responsable_atencion_queja_id,
         ]);
 
         $empleado_email = Empleado::select('name', 'email')->find($request->responsable_atencion_queja_id);
@@ -1250,7 +1250,7 @@ class DeskController extends Controller
 
         Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new SolicitarCierreQuejaEmail($quejasClientes));
 
-        return response()->json(['success' => true, 'request' => $request->all(), 'message'=>'Enviado con éxito']);
+        return response()->json(['success' => true, 'request' => $request->all(), 'message' => 'Enviado con éxito']);
     }
 
     public function updateAnalisisQuejasClientes(Request $request, $id_quejas)
@@ -1431,9 +1431,9 @@ class DeskController extends Controller
             // dd($proyecto);
             $cantidad = QuejasCliente::where('proyectos_id', $proyecto->id)->count();
             array_push($proyectosLabel, [
-                'nombre'=>$proyecto->proyecto,
-                'cliente'=>$proyecto->cliente->nombre,
-                'cantidad'=>$cantidad,
+                'nombre' => $proyecto->proyecto,
+                'cliente' => $proyecto->cliente->nombre,
+                'cantidad' => $cantidad,
             ]);
         }
 
@@ -1443,8 +1443,8 @@ class DeskController extends Controller
         foreach ($clientes as $cliente) {
             $cantidadClientes = QuejasCliente::where('cliente_id', $cliente->id)->count();
             array_push($clientesLabel, [
-                'nombre'=>$cliente->nombre,
-                'cantidad'=>$cantidadClientes,
+                'nombre' => $cliente->nombre,
+                'cantidad' => $cantidadClientes,
             ]);
         }
 

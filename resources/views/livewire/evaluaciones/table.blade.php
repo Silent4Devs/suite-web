@@ -17,13 +17,14 @@
                 </td>
                 <td>
                     @if ($evaluacion->resultado >= $indicadoresSgsis->verde)
-                        <span class="dotverde"></span>&nbsp;&nbsp;&nbsp;{{ $evaluacion->resultado . $indicadoresSgsis->unidadmedida }}
-                    @elseif ($evaluacion->resultado >= $indicadoresSgsis->amarillo && $evaluacion->resultado <
-                            $indicadoresSgsis->verde)
-                            <span class="dotyellow"></span>&nbsp;&nbsp;&nbsp;
-                            {{ $evaluacion->resultado . $indicadoresSgsis->unidadmedida }}
-                        @else
-                            <span class="dotred"></span>&nbsp;&nbsp;&nbsp;{{ $evaluacion->resultado . $indicadoresSgsis->unidadmedida }}
+                        <span
+                            class="dotverde"></span>&nbsp;&nbsp;&nbsp;{{ $evaluacion->resultado . $indicadoresSgsis->unidadmedida }}
+                    @elseif ($evaluacion->resultado >= $indicadoresSgsis->amarillo && $evaluacion->resultado < $indicadoresSgsis->verde)
+                        <span class="dotyellow"></span>&nbsp;&nbsp;&nbsp;
+                        {{ $evaluacion->resultado . ' ' . $indicadoresSgsis->unidadmedida }}
+                    @else
+                        <span
+                            class="dotred"></span>&nbsp;&nbsp;&nbsp;{{ $evaluacion->resultado . ' ' . $indicadoresSgsis->unidadmedida }}
                     @endif
 
                 </td>
@@ -35,7 +36,8 @@
 
                 </td>
                 <td>
-                    <button wire:click="delete({{ $evaluacion->id }})" class="btn" style="background-color:red; color:white; opacity:0.8;">
+                    <button wire:click="delete({{ $evaluacion->id }})" class="btn"
+                        style="background-color:red; color:white; opacity:0.8;">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </td>

@@ -71,6 +71,7 @@ class CreateMiembrosComiteSeguridad extends Component
         $this->id_comite = $model->comite_id;
         $this->miembroID = $model->id;
         $this->emit('abrir-modal');
+        $this->emit('editar-modal', $model->responsabilidades);
         $this->emit('cargar-puesto', $id);
     }
 

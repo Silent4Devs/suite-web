@@ -33,6 +33,7 @@ class TablaProyectosTimesheet extends Component
 
     public function mount()
     {
+        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
     }
 
     public function render()
@@ -40,8 +41,6 @@ class TablaProyectosTimesheet extends Component
         $this->proceso_count = TimesheetProyecto::where('estatus', 'proceso')->count();
         $this->cancelado_count = TimesheetProyecto::where('estatus', 'cancelado')->count();
         $this->terminado_count = TimesheetProyecto::where('estatus', 'terminado')->count();
-
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
 
         $this->emit('cerrarModal');
 
@@ -62,15 +61,23 @@ class TablaProyectosTimesheet extends Component
             [
                 'identificador' => 'required|unique:timesheet_proyectos,identificador',
                 'proyecto_name'=>'required',
-                'fecha_inicio'=>'required|before:fecha_fin',
-                'fecha_fin'=>'required|after:fecha_inicio',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
-                'fecha_inicio.before'=>'La fecha de incio debe ser anterior a la fecha de fin',
-                'fecha_fin.after'=>'La fecha de fin debe ser posterior a la fecha de incio',
             ],
         );
+        if ($this->fecha_inicio && $this->fecha_fin) {
+            $this->validate(
+                [
+                    'fecha_inicio'=>'before:fecha_fin',
+                    'fecha_fin'=>'after:fecha_inicio',
+                ],
+                [
+                    'fecha_inicio.before'=>'La fecha de incio debe ser anterior a la fecha de fin',
+                    'fecha_fin.after'=>'La fecha de fin debe ser posterior a la fecha de incio',
+                ],
+            );
+        }
 
         $nuevo_proyecto = TimesheetProyecto::create([
             'identificador' => $this->identificador,
@@ -88,7 +95,7 @@ class TablaProyectosTimesheet extends Component
             ]);
         }
 
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
+        $this->procesos();
 
         $this->alert('success', 'Registro añadido!');
     }
