@@ -1,5 +1,5 @@
 <div class="w-100">
-
+    <x-loading-indicator />
     <form id="form_timesheet" action="{{ route('admin.timesheet.store') }}" method="POST">
         @csrf
         <div class="form-group d-flex align-items-center" wire:ignore style="position: relative">
@@ -163,7 +163,7 @@
                                     <div title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
                                         Cancelar
                                     </div>
-                                    <button onclick="event.preventDefault();" id="enviar_aprobacion_time" class="btn_enviar_formulario btn btn-info" style="border:none; background-color:#2F96EB;">
+                                    <button data-dismiss="modal" onclick="event.preventDefault();" id="enviar_aprobacion_time" class="btn_enviar_formulario btn btn-info" style="border:none; background-color:#2F96EB;">
                                         Enviar a Aprobación
                                     </button>
                                 </div>
@@ -243,6 +243,7 @@
                 if (e.target.getAttribute('data-type') == 'borrador') {
                     formData.append('estatus', 'papelera');
                 }
+                document.getElementById('loaderComponent').style.display = 'block';
                 $.ajax({
                     type: "POST",
                     url: "{{ route('admin.timesheet.store') }}",
@@ -255,6 +256,7 @@
                     processData: false,
                     contentType: false,
                     success: function (response) {
+                        document.getElementById('loaderComponent').style.display = 'none';
                         if (response.status == 200) {
                             Swal.fire(
                               'Buen trabajo',
@@ -268,7 +270,7 @@
                         }
                     },
                     error: function(request, status, error) {
-
+                        document.getElementById('loaderComponent').style.display = 'none';
                         $('#modal_aprobar_').modal('hide');
                         $('.modal-backdrop').hide();
                         $.each(request.responseJSON.errors, function(indexInArray, valueOfElement) {
