@@ -201,7 +201,7 @@ class ReportesEmpleados extends Component
             $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
 
             if ($this->fecha_inicio) {
-                $fecha_inicio_timesheet_empleado =  $this->fecha_inicio;
+                $fecha_inicio_timesheet_empleado = $this->fecha_inicio;
             }
 
             if (($this->fecha_fin) && (Carbon::parse($this->fecha_fin)->lt($this->hoy))) {
