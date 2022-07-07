@@ -200,7 +200,6 @@ class ReportesEmpleados extends Component
                 $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->startOfMonth()->subMonth();
             }
 
-            $fecha_inicio_timesheet_empleado = Carbon::parse($fecha_inicio_timesheet_empleado);
             // horas totales por empleado
             $times_empleado_aprobados_pendientes_list = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->get();
             // dd($fecha_fin_timesheet_empleado);

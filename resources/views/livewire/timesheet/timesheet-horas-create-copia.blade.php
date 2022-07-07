@@ -1,4 +1,5 @@
 <div class="w-100">
+    <x-loading-indicator />
     <form id="form_timesheet" action="{{ route('admin.timesheet.store') }}" method="POST">
         @csrf
 
@@ -236,7 +237,7 @@
                                     <div title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
                                         Cancelar
                                     </div>
-                                    <button id="enviar_aprobacion_time" title="Rechazar" class="btn btn-info btn_enviar_formulario" style="border:none; background-color:#2F96EB;">
+                                    <button data-dismiss="modal" id="enviar_aprobacion_time" title="Rechazar" class="btn btn-info btn_enviar_formulario" style="border:none; background-color:#2F96EB;">
                                         Enviar a Aprobación
                                     </button>
                                 </div>
@@ -286,7 +287,6 @@
                 if (e.target.getAttribute('data-type') == 'parent') {
                     let contador = e.target.getAttribute('data-contador');
                     let proyecto_id = e.target.value;
-
                     $.ajax({
                         type: "post",
                         headers: {
@@ -325,6 +325,7 @@
                 if (e.target.getAttribute('data-type') == 'borrador') {
                     formData.append('estatus', 'papelera');
                 }
+                document.getElementById('loaderComponent').style.display = 'block';
                 $.ajax({
                     type: "POST",
                     url: formulario.getAttribute('action'),
@@ -338,6 +339,7 @@
                     contentType: false,
                     success: function (response) {
                         if (response.status == 200) {
+                            document.getElementById('loaderComponent').style.display = 'none';
                             Swal.fire(
                               'Buen trabajo',
                               'Timesheet Registrado',
@@ -350,7 +352,7 @@
                         }
                     },
                     error: function(request, status, error) {
-
+                        document.getElementById('loaderComponent').style.display = 'none';
                         console.log(error);
                         $('#modal_aprobar_').modal('hide');
                         $('.modal-backdrop').hide();
