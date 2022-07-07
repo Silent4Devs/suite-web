@@ -59,7 +59,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group col-md-4" wire:ignore>
+                <div class="form-group col-md-4" wire:ignore id="caja_areas_seleccionadas_create">
                     <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
                     <select id="areas_seleccionadas" name="areas_seleccionadas" wire:model="areas_seleccionadas"
                         class="form-control select2" required multiple required>
@@ -326,7 +326,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i>
-                                        Fecha de termino</label>
+                                        Fecha de fin</label>
                                     <input type="date" name="fecha_fin" class="form-control"
                                         value="{{ $proyecto->fecha_fin }}">
                                     @if ($errors->has('fecha_fin'))

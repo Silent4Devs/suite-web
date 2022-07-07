@@ -134,12 +134,12 @@
             'theme' : 'bootstrap4',
         });
         $("#chkall").click(function(){
-            if($("#chkall").is(':checked')){
-                $(".select2 > option").prop("selected", "selected");
-                $(".select2").trigger("change");
+            if($("#caja_areas_seleccionadas_create #chkall").is(':checked')){
+                $("#caja_areas_seleccionadas_create .select2 > option").prop("selected", "selected");
+                $("#caja_areas_seleccionadas_create .select2").trigger("change");
             } else {
-                $(".select2 option").prop("selected", "");
-                $(".select2").trigger("change");
+                $("#caja_areas_seleccionadas_create .select2 option").prop("selected", "");
+                $("#caja_areas_seleccionadas_create .select2").trigger("change");
             }
         });
     </script>
