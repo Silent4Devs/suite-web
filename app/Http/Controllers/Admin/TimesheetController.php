@@ -523,15 +523,24 @@ class TimesheetController extends Controller
             [
                 'identificador' => 'required|unique:timesheet_proyectos,identificador,' . $id,
                 'proyecto'=>'required',
-                'fecha_inicio'=>'required|before:fecha_fin',
-                'fecha_fin'=>'required|after:fecha_inicio',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
-                'fecha_inicio.before'=>'La fecha de incio debe ser anterior a la fecha de fin',
-                'fecha_fin.after'=>'La fecha de fin debe ser posterior a la fecha de incio',
             ],
         );
+
+        if ($request->fecha_inicio && $request->fecha_fin) {
+            $request->validate(
+                [
+                    'fecha_inicio'=>'required|before:fecha_fin',
+                    'fecha_fin'=>'required|after:fecha_inicio',
+                ],
+                [
+                    'fecha_inicio.before'=>'La fecha de incio debe ser anterior a la fecha de fin',
+                    'fecha_fin.after'=>'La fecha de fin debe ser posterior a la fecha de incio',
+                ],
+            );
+        }
 
         $edit_proyecto = TimesheetProyecto::find($id);
 
