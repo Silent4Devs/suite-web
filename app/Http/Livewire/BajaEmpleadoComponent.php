@@ -50,7 +50,6 @@ class BajaEmpleadoComponent extends Component
     {
         $this->empleado = $empleado;
         $this->empleados = $this->obtenerEmpleados();
-        $this->comites = $this->obtenerComites();
         $this->documentosQueDeboAprobar = $this->obtenerDocumentosQueDeboAprobar();
         $this->documentosQueMeDebenAprobar = $this->obtenerDocumentosQueMeDebenAprobar();
         $this->misActivos = $this->obtenerMisActivos();
