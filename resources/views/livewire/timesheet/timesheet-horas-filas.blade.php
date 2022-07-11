@@ -41,13 +41,13 @@
                                 <select id="select_proyectos{{ $i }}" data-contador="{{ $i }}" data-type="parent" name="timesheet[{{ $i }}][proyecto]" class="select2">
                                     <option selected disabled>Seleccione proyecto</option>
                                     @foreach($proyectos as $proyecto)
-                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['proyecto'] }}</option>
+                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} - {{ $proyecto['proyecto'] }}</option>
                                     @endforeach
                                 </select>
                                 <small class="timesheet_{{ $i }}_proyecto errores text-danger"></small>
                             </td>
                             <td>
-                                <select id="select_tareas{{ $i }}" data-contador="{{ $i }}" name="timesheet[{{ $i }}][tarea]" class="select2 select_tareas">
+                                <select id="select_tareas{{ $i }}" data-contador="{{ $i }}" name="timesheet[{{ $i }}][tarea]" class="select2 select_tareas" disabled>
                                     <option selected disabled>Seleccione tarea</option>
                                 </select>
                                 <small class="timesheet_{{ $i }}_tarea errores text-danger"></small>
@@ -223,6 +223,7 @@
                         },
                         success: function (response) {
                             let select = document.getElementById(`select_tareas${contador}`);
+                            select.removeAttribute('disabled');
                             let html = '<option selected disabled>Seleccione tarea</option>';
                             response.tareas.forEach(tarea=>{
                                 html += `
