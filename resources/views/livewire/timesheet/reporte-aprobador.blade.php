@@ -113,10 +113,8 @@
             z-index: 10;
         }
     </style>
-    <div class="cargando_fondo" wire:loading>
-        <i class="fa-solid fa-spinner fa-spin-pulse" style="font-size:150px; color: #000 !important; margin-top:70px;"></i>
-    </div>
     <div class="row print-none" style="margin: 0 !important;">
+        <x-loading-indicator />
         <div class="col-md-4 form-group" wire:ignore>
             <label class="form-label">Fecha de inicio</label>
             <input id="fecha_dia_registros_inicio_empleados" class="form-control date_librery" type="date" name="fecha_inicio" wire:model="fecha_inicio">

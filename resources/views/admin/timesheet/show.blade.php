@@ -82,10 +82,10 @@
 			                @foreach($horas as $index=>$hora)
 			                    <tr>
 			                        <td>
-			                            <div class="form-control">{{ $hora->proyecto->proyecto }}</div>
+			                            <div class="form-control" style="height:unset;">{{ $hora->proyecto->proyecto }}</div>
 			                        </td>
 			                        <td>
-			                            <div class="form-control">{{ $hora->tarea->tarea }}</div>
+			                            <div class="form-control" style="height:unset;">{{ $hora->tarea->tarea }}</div>
 			                        </td>
 			                        <td>
 			                        	@if($hora->facturable)
@@ -116,7 +116,7 @@
 			                            <div id="ingresar_hora_domingo_{{ $index + 1 }}"  data-dia="domingo" class="form-control">{{ $hora->horas_domingo }}</div>
 			                        </td> 
 			                        <td>
-			                            <div class="form-control">{{ $hora->descripcion }}</div>
+			                            <div class="form-control" style="height:unset; width: 250px !important">{{ $hora->descripcion }}</div>
 			                        </td>  
 			                        <td>
 			                            <div class="form-control">
