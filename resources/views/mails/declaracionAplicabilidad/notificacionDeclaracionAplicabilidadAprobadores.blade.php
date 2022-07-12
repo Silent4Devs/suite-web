@@ -15,6 +15,16 @@
     </xml>
   </noscript>
   <![endif]-->
+
+    <!--[if (gte mso 9)|(IE)]>
+ <style type="text/css">
+ table {
+ border-collapse: collapse;
+ border-spacing: 0;
+ mso-table-lspace: 0pt !important;
+ mso-table-rspace: 0pt !important; }
+ </style>
+ <![endif]-->
     <style>
         table,
         td,
@@ -25,6 +35,7 @@
         }
 
     </style>
+
 
 <style>
     /* Remove space around the email design. */
@@ -73,7 +84,7 @@
 </style>
 </head>
 
-<body style="margin:0;padding:0;">
+<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly;">
     <table role="presentation"
         style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
         <tr>
@@ -121,32 +132,20 @@
                                         <div style="margin-top:50px;">
                                             <strong
                                                 style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{$nombre}},
+                                                Estimado(a) {{ $aprobador->name }},
                                             </strong>
                                         </div>
 
                                         <div style="width: 100%; margin-top: 10px;">
-
-                                                <p style="font-size:11pt; color:#153643;">
-                                                    Le informamos que se le ha asignado la gestión de los siguientes controles del Sistema de Gestión de Seguridad de la Información (SGSI)
-                                                    en Tabantaj,
-                                                </p>
-
-                                                <ul style="font-size:11pt; color:#153643;">
-                                                    @foreach ($controles as $control)
-                                                    <li style="font-size:11pt;"><strong style="font-size:10pt;">{{$control->anexo_indice}}</strong> {{$control->anexo_politica}}
-                                                    </li>
-                                                    @endforeach
-                                                </ul>
-
-                                                <p style="font-size:11pt; color:#153643;">
-                                                    Para requisitar la información solicitada, dé clic en el siguiente botón:
-                                                </p>
-    
-                                                <div style="text-align:center; margin-top:20px">
-                                                  <span style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                    <a href="{{ route('admin.declaracion-aplicabilidad.index') }}" style="color:#fff"> Gestionar controles</a></span>
-                                                </div>
+                                            <p style="font-size:11pt; color:#153643;">
+                                                Le informamos que {{ $responsable->name}}, responsable de darle seguimiento al control {{$aplicabilidad->anexo_indice}}, ha añadido información que necesita ser aprobada.
+                                            </p>
+                                            <br>
+                                            <div style="text-align:center; margin-top:20px">
+                                                <a  href="{{route('admin.declaracion-aplicabilidad.index') }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
+                                                    Revisar Control
+                                                </a>
+                                            </div>
 
                                         </div>
                                     </td>
