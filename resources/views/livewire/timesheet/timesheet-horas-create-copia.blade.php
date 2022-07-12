@@ -287,6 +287,7 @@
                 if (e.target.getAttribute('data-type') == 'parent') {
                     let contador = e.target.getAttribute('data-contador');
                     let proyecto_id = e.target.value;
+                    document.getElementById('loaderComponent').style.display = 'block';
                     $.ajax({
                         type: "post",
                         headers: {
@@ -310,6 +311,10 @@
                                 `;
                             });
                             select.innerHTML = html;
+                            document.getElementById('loaderComponent').style.display = 'none';
+                        },
+                        error:function(error){
+                            document.getElementById('loaderComponent').style.display = 'none';
                         }
                     });
                 }
