@@ -37,10 +37,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class Organizacion extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'organizacions';
     protected $appends = ['logotipo', 'fecha_min_timesheet'];
     protected $casts = [
