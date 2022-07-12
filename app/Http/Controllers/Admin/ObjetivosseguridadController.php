@@ -10,6 +10,7 @@ use App\Models\Objetivosseguridad;
 use App\Models\Team;
 use App\Models\TiposObjetivosSistema;
 use App\Models\VariablesObjetivosseguridad;
+use App\Models\Norma;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,8 +90,10 @@ class ObjetivosseguridadController extends Controller
         abort_if(Gate::denies('objetivos_del_sistema_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsables = Empleado::alta()->with('area', 'puesto')->get();
         $tiposObjetivosSistemas = TiposObjetivosSistema::get();
+        $normas = Norma::get();
 
-        return view('admin.objetivosseguridads.create', compact('responsables', 'tiposObjetivosSistemas'));
+
+        return view('admin.objetivosseguridads.create', compact('normas','responsables', 'tiposObjetivosSistemas'));
     }
 
     public function store(Request $request)
@@ -98,23 +101,39 @@ class ObjetivosseguridadController extends Controller
         abort_if(Gate::denies('objetivos_del_sistema_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivosseguridad = Objetivosseguridad::create($request->all());
         //return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
+        
+        $normas = array_map(function ($value) {
+            return intval($value);
+        }, $request->normas);
+        $objetivosseguridad ->normas()->sync($normas);
+
         return redirect()->route('admin.objetivos-seguridadsInsertar', ['id' => $objetivosseguridad->id])->with('success', 'Guardado con éxito');
     }
 
     public function edit(Objetivosseguridad $objetivosseguridad)
     {
         abort_if(Gate::denies('objetivos_del_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $responsables = Empleado::alta()->get();
+        
         $tiposObjetivosSistemas = TiposObjetivosSistema::get();
 
-        return view('admin.objetivosseguridads.edit', compact('objetivosseguridad', 'responsables', 'tiposObjetivosSistemas'));
+        $objetivosseguridad->load('normas');
+        $normas_seleccionadas = $objetivosseguridad->normas->pluck('id')->toArray();
+
+        $normas = Norma::get();
+        $responsables = Empleado::alta()->get();
+
+
+        return view('admin.objetivosseguridads.edit', compact('normas_seleccionadas','normas','objetivosseguridad', 'responsables', 'tiposObjetivosSistemas'));
     }
 
     public function update(UpdateObjetivosseguridadRequest $request, Objetivosseguridad $objetivosseguridad)
     {
         abort_if(Gate::denies('objetivos_del_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivosseguridad->update($request->all());
+        $normas = array_map(function ($value) {
+            return intval($value);
+        }, $request->normas);
+        $objetivosseguridad->normas()->sync($normas);
 
         return redirect()->route('admin.objetivosseguridads.index')->with('success', 'Editado con éxito');
     }
