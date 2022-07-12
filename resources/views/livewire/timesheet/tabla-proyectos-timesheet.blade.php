@@ -68,7 +68,7 @@
                         @endforeach
                     </select>
                     <div class="mt-1">
-                        <input id="chkall" type="checkbox" > Seleccionar Todos
+                        <input id="chkall" type="checkbox" > Seleccionar Todas
                     </div>
                 </div>
                 <div class="form-group col-md-4">
@@ -349,7 +349,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-6" wire:ignore>
+                                <div class="form-group col-md-6" wire:ignore id="caja_areas_select_edit">
                                     <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
                                     <select name="areas_seleccionadas[]" class="form-control select2" required
                                         multiple>
@@ -391,6 +391,9 @@
             document.addEventListener('DOMContentLoaded', () => {
                 Livewire.on('scriptTabla', () => {
                     tablaLivewire('datatable_timesheet_proyectos');
+                    $('.select2').select2({
+                        'theme' : 'bootstrap4',
+                    });
                 });
                 document.getElementById('identificador_proyect').addEventListener('keyup', (e) => {
                     let value = e.target.value;
