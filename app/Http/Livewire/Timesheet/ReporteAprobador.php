@@ -60,9 +60,10 @@ class ReporteAprobador extends Component
 
     public $fecha_inicio_empleado;
     public $fecha_fin_empleado;
-
+    public $habilitarTodos = false;
     public function mount()
     {
+        $this->habilitarTodos = false;
         $this->areas = Area::get();
 
         $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(2)->format('Y-m-d');
@@ -115,15 +116,33 @@ class ReporteAprobador extends Component
         $this->buscarEmpleado($this->empleado->id);
     }
 
+    public function obtenerEquipo($childrens)
+    {
+        $equipo_a_cargo = collect();
+
+        foreach ($childrens as $evaluador) {
+            $equipo_a_cargo->push($evaluador->id);
+
+            if (count($evaluador->children)) {
+                $equipo_a_cargo->push($this->obtenerEquipo($evaluador->children));
+            }
+        }
+
+        return $equipo_a_cargo->flatten(1)->toArray();
+    }
+
     public function render()
     {
         $this->hoy = Carbon::now();
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
-        
+
         $this->aprobador = Empleado::find(auth()->user()->empleado->id);
         $empleados_list = $this->aprobador->children;
-
+        if ($this->habilitarTodos) {
+            $equipo_a_cargo = $this->obtenerEquipo($this->aprobador->children);
+            $empleados_list = Empleado::find($equipo_a_cargo);
+        }
         //calendario tabla
         $calendario_array = [];
         $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
@@ -317,7 +336,6 @@ class ReporteAprobador extends Component
         }
 
         // dump($times_empleado_aprobados_pendientes_list);
-
         $this->calendario_tabla = $calendario_array;
 
         $this->hoy_format = $this->hoy->format('d/m/Y');
@@ -433,7 +451,7 @@ class ReporteAprobador extends Component
 
             if (gettype($fecha_inicio_timesheet_empleado) == 'string') {
                 $fecha_inicio_timesheet_empleado = Carbon::parse($fecha_inicio_timesheet_empleado)->startOfMonth()->subMonth();
-            }else{
+            } else {
                 $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->startOfMonth()->subMonth();
             }
         }
