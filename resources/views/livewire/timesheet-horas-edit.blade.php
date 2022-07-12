@@ -37,9 +37,9 @@
                             <td wire:ignore>
                                 <input type="hidden" name="timesheet[{{ $i_hora }}][id_hora]" value="{{ $hora->id }}">
                                 <select id="select_proyectos{{ $i_hora }}" data-contador="{{ $i_hora }}" data-type="parent" name="timesheet[{{ $i_hora }}][proyecto]" class="select2">
-                                    <option selected value="{{ $hora->proyecto ? $hora->proyecto->id : '' }}">{{ $hora->proyecto ? $hora->proyecto->proyecto : '' }}</option>
+                                    <option selected value="{{ $hora->proyecto ? $hora->proyecto->id : '' }}">{{ $hora->proyecto ? $hora->proyecto->identificador . ' - ' . $hora->proyecto->proyecto : '' }}</option>
                                     @foreach($proyectos as $proyecto)
-                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['proyecto'] }}</option>
+                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} - {{ $proyecto['proyecto'] }}</option>
                                     @endforeach
                                 </select>
                                 <small class="timesheet_{{ $i_hora }}_proyecto errores text-danger"></small>
@@ -105,13 +105,13 @@
                                 <select id="select_proyectos{{ $i }}" data-contador="{{ $i }}" data-type="parent" name="timesheet[{{ $i }}][proyecto]" class="select2">
                                     <option selected disabled>Seleccione proyecto</option>
                                     @foreach($proyectos as $proyecto)
-                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['proyecto'] }}</option>
+                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} - {{ $proyecto['proyecto'] }}</option>
                                     @endforeach
                                 </select>
                                 <small class="timesheet_{{ $i }}_proyecto errores text-danger"></small>
                             </td>
                             <td>
-                                <select id="select_tareas{{ $i }}" data-contador="{{ $i }}" name="timesheet[{{ $i }}][tarea]" class="select2 select_tareas">
+                                <select id="select_tareas{{ $i }}" data-contador="{{ $i }}" name="timesheet[{{ $i }}][tarea]" class="select2 select_tareas" disabled>
                                     <option selected disabled>Seleccione tarea</option>
                                 </select>
                                 <small class="timesheet_{{ $i }}_tarea errores text-danger"></small>
@@ -227,7 +227,7 @@
                                     <div title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
                                         Cancelar
                                     </div>
-                                    <button id="enviar_aprobacion_time" title="Rechazar" class="btn btn-info btn_enviar_formulario" style="border:none; background-color:#2F96EB;">
+                                    <button id="enviar_aprobacion_time" title="Rechazar" class="btn btn-info btn_enviar_formulario" style="border:none; background-color:#2F96EB;" data-dismiss="modal">
                                         Enviar a Aprobación
                                     </button>
                                 </div>
@@ -293,6 +293,7 @@
                         },
                         success: function (response) {
                             let select = document.getElementById(`select_tareas${contador}`);
+                            select.removeAttribute('disabled');
                             let html = '<option selected disabled>Seleccione tarea</option>';
                             response.tareas.forEach(tarea=>{
                                 html += `

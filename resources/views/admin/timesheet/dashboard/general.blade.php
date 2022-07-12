@@ -47,7 +47,7 @@
 						<div class="progress">
 						  	<div class="progress-bar partisipacion-{{ $area_p['nivel_p'] }}" role="progressbar" style="width: {{ $area_p['partisipacion'] }}%" aria-valuenow="{{ $area_p['partisipacion'] }}" aria-valuemin="0" aria-valuemax="100"></div>
 						</div>
-						<small><strong>{{ $area_p['times_aprobados'] }}</strong> aprobados / <strong>{{ $area_p['times_esperados']}}</strong> registros esperados</small>
+						<small><strong>{{ $area_p['times_aprobados'] }}</strong> aprobados</small>
 
 						{{-- <div class="mt-2">
 							<strong>Aprobación del Área</strong><br>

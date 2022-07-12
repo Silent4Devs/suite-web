@@ -432,7 +432,12 @@ class ReportesEmpleados extends Component
 
         $hoy_2 = now();
         if ($hoy_2->subweeks(3)->lt($fecha_inicio_timesheet_empleado)) {
-            $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->startOfMonth()->subMonth();
+
+            if (gettype($fecha_inicio_timesheet_empleado) == 'string') {
+                $fecha_inicio_timesheet_empleado = Carbon::parse($fecha_inicio_timesheet_empleado)->startOfMonth()->subMonth();
+            }else{
+                $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->startOfMonth()->subMonth();
+            }
         }
 
         $this->timesheet = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->orderByDesc('fecha_dia')->get();

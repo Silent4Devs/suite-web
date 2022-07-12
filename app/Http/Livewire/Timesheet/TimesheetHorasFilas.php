@@ -37,6 +37,7 @@ class TimesheetHorasFilas extends Component
                 if ($area['id'] == $empleado->area_id) {
                     $proyectos_array->push([
                         'id'=>$proyecto->id,
+                        'identificador'=>$proyecto->identificador,
                         'proyecto'=>$proyecto->proyecto,
                     ]);
                 }
