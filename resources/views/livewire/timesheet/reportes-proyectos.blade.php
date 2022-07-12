@@ -97,6 +97,7 @@
         }
     </style>
     <div class="w-100">
+        <x-loading-indicator />
         <div class="row">
             <div class="col-md-3 form-group">
                 <label class="form-label">Área</label>

@@ -1,10 +1,11 @@
-<div>    
+<div>
+    <x-loading-indicator />
     <div class="row" wire:ignore>
         <div class="col-md-4 form-group" style="padding-left:0px !important;">
             <label class="form-label">Área</label>
             <select class="form-control" wire:model="area_id">
                 <option selected value="0">Todas</option>
-                @foreach($areas as $area)
+                @foreach ($areas as $area)
                     <option value="{{ $area->id }}">{{ $area->area }}</option>
                 @endforeach
             </select>
@@ -20,35 +21,48 @@
     </div>
     <div class="row mt-5">
         @include('partials.flashMessages')
-        <div class="col-12 d-flex justify-content-between" style="padding-left: 0 !important; padding-right: 0 !important;">
+        <div class="col-12 d-flex justify-content-between"
+            style="padding-left: 0 !important; padding-right: 0 !important;">
             <h5 id="titulo_estatus">Registros Timesheet</h5>
             <div class="btn_estatus_caja">
-                <button class="btn btn-primary" style="background-color: #5AC3E5; border:none !important; position: relative;" id="btn_todos" wire:click="todos">
-                    @if($todos_contador > 0)
+                <button class="btn btn-primary"
+                    style="background-color: #5AC3E5; border:none !important; position: relative;" id="btn_todos"
+                    wire:click="todos">
+                    @if ($todos_contador > 0)
                         <span class="indicador_numero" style="filter: contrast(200%);">{{ $todos_contador }}</span>
                     @endif
                     Todos
                 </button>
-                <button class="btn btn-primary" style="background-color: #aaa; border:none !important; position: relative;" id="btn_papelera" wire:click="papelera">
-                    @if($borrador_contador > 0)
+                <button class="btn btn-primary"
+                    style="background-color: #aaa; border:none !important; position: relative;" id="btn_papelera"
+                    wire:click="papelera">
+                    @if ($borrador_contador > 0)
                         <span class="indicador_numero" style="filter: contrast(200%);">{{ $borrador_contador }}</span>
                     @endif
                     Borrador
                 </button>
-                <button class="btn btn-primary" style="background-color: #F48C16; border:none !important; position: relative;" id="btn_pendiente" wire:click="pendientes">
-                    @if($pendientes_contador > 0)
-                        <span class="indicador_numero" style="filter: contrast(200%);">{{ $pendientes_contador }}</span>
+                <button class="btn btn-primary"
+                    style="background-color: #F48C16; border:none !important; position: relative;" id="btn_pendiente"
+                    wire:click="pendientes">
+                    @if ($pendientes_contador > 0)
+                        <span class="indicador_numero"
+                            style="filter: contrast(200%);">{{ $pendientes_contador }}</span>
                     @endif
                     Pendientes
                 </button>
-                <button class="btn btn-primary" style="background-color: #61CB5C; border:none !important; position: relative;" id="btn_aprobado" wire:click="aprobados">
-                    @if($aprobados_contador > 0)
-                        <span class="indicador_numero" style="filter: contrast(200%);">{{ $aprobados_contador }}</span>
+                <button class="btn btn-primary"
+                    style="background-color: #61CB5C; border:none !important; position: relative;" id="btn_aprobado"
+                    wire:click="aprobados">
+                    @if ($aprobados_contador > 0)
+                        <span class="indicador_numero"
+                            style="filter: contrast(200%);">{{ $aprobados_contador }}</span>
                     @endif
                     Aprobados
                 </button>
-                <button class="btn btn-primary" style="background-color: #EA7777; border:none !important; position: relative;" id="btn_rechazado" wire:click="rechazos">
-                    @if($rechazos_contador > 0)
+                <button class="btn btn-primary"
+                    style="background-color: #EA7777; border:none !important; position: relative;" id="btn_rechazado"
+                    wire:click="rechazos">
+                    @if ($rechazos_contador > 0)
                         <span class="indicador_numero" style="filter: contrast(200%);">{{ $rechazos_contador }}</span>
                     @endif
                     Rechazados
@@ -60,9 +74,9 @@
             <table id="datatable_timesheet" class="table w-100 datatable_timesheet_registros_reportes">
                 <thead class="w-100">
                     <tr>
-                        <th >Semana </th>
-                        <th >Empleado</th>
-                        <th >Aprobador</th>
+                        <th>Semana </th>
+                        <th>Empleado</th>
+                        <th>Aprobador</th>
                         <th style="min-width:250px;">Área</th>
                         <th>Estatus</th>
                         <th>Horas Totales</th>
@@ -71,11 +85,11 @@
                 </thead>
 
                 <tbody>
-                    @foreach($times as $time)
-                        <tr class="tr_{{  $time->estatus }}">
+                    @foreach ($times as $time)
+                        <tr class="tr_{{ $time->estatus }}">
                             <td>
                                 {!! $time->semana !!}
-                            </td>                            
+                            </td>
                             <td>
                                 {{ $time->empleado->name }}
                             </td>
@@ -86,19 +100,19 @@
                                 {{ $time->empleado->area->area }}
                             </td>
                             <td>
-                                @if($time->estatus == 'aprobado')
+                                @if ($time->estatus == 'aprobado')
                                     <span class="aprobado">Aprobada</span>
                                 @endif
 
-                                @if($time->estatus == 'rechazado')
+                                @if ($time->estatus == 'rechazado')
                                     <span class="rechazado">Rechazada</span>
                                 @endif
 
-                                @if($time->estatus == 'pendiente')
+                                @if ($time->estatus == 'pendiente')
                                     <span class="pendiente">Pendiente</span>
                                 @endif
 
-                                @if($time->estatus == 'papelera')
+                                @if ($time->estatus == 'papelera')
                                     <span class="papelera">Borrador</span>
                                 @endif
                             </td>
@@ -106,8 +120,9 @@
                                 {{ $time->total_horas }} <small>h</small>
                             </td>
                             <td>
-                                <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
-                            </td>                       
+                                <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar"
+                                    class="btn"><i class="fa-solid fa-eye"></i></a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -117,8 +132,8 @@
     </div>
 
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', ()=>{
-            Livewire.on('scriptTabla', ()=>{
+        document.addEventListener('DOMContentLoaded', () => {
+            Livewire.on('scriptTabla', () => {
                 tablaLivewire('datatable_timesheet');
             });
         });
