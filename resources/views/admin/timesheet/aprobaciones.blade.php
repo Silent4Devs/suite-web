@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style type="text/css">
         .aprobada {
             padding: 3px;
@@ -22,17 +21,28 @@
             color: #fff;
             border-radius: 4px;
         }
-
     </style>
 
 
     {{ Breadcrumbs::render('timesheet-aprobaciones') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Aprobaciones</font></h5>
-
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Aprobaciones</font>
+    </h5>
+    <x-loading-indicator />
     <div class="card card-body">
         <div class="row">
-
+            <div class="btn_estatus_caja mb-3" style="display: flex; justify-content: end; width: 100%">
+                <a href="{{ route('admin.timesheet-aprobaciones') }}" class="btn btn-sm mr-2"
+                    style="{{ !$habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                    id="btn_directos" title="Mostrar todos los colaboradores de los cuales eres líder directo">
+                    Directos
+                </a>
+                <a href="{{ route('admin.timesheet-aprobaciones') }}?habilitarTodos=true" class="btn btn-sm"
+                    style="{{ $habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                    id="btn_todos" title="Mostrar todos los colaboradores de los cuales eres líder">
+                    Todos
+                </a>
+            </div>
             <div class="datatable-fix w-100">
                 <table id="datatable_timesheet" class="table w-100">
                     <thead class="w-100">
@@ -49,40 +59,40 @@
                         @foreach ($aprobaciones as $aprobacion)
                             <tr>
                                 <td>
-                                    @if($aprobacion->dia_semana == 'Domingo')
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->addDay(6)->format("d/m/Y") }}
+                                    @if ($aprobacion->dia_semana == 'Domingo')
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->format('d/m/Y') }}
+                                        -
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->addDay(6)->format('d/m/Y') }}
                                     @endif
-                                    @if($aprobacion->dia_semana == 'Lunes')
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->subDay(1)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->addDay(5)->format("d/m/Y") }}
+                                    @if ($aprobacion->dia_semana == 'Lunes')
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->subDay(1)->format('d/m/Y') }}
+                                        -
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->addDay(5)->format('d/m/Y') }}
                                     @endif
-                                    @if($aprobacion->dia_semana == 'Martes')
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->subDay(2)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->addDay(4)->format("d/m/Y") }}
+                                    @if ($aprobacion->dia_semana == 'Martes')
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->subDay(2)->format('d/m/Y') }}
+                                        -
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->addDay(4)->format('d/m/Y') }}
                                     @endif
-                                    @if($aprobacion->dia_semana == 'Miércoles')
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->subDay(3)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->addDay(3)->format("d/m/Y") }}
+                                    @if ($aprobacion->dia_semana == 'Miércoles')
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->subDay(3)->format('d/m/Y') }}
+                                        -
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->addDay(3)->format('d/m/Y') }}
                                     @endif
-                                    @if($aprobacion->dia_semana == 'Jueves')
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->subDay(4)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->addDay(2)->format("d/m/Y") }}
+                                    @if ($aprobacion->dia_semana == 'Jueves')
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->subDay(4)->format('d/m/Y') }}
+                                        -
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->addDay(2)->format('d/m/Y') }}
                                     @endif
-                                    @if($aprobacion->dia_semana == 'Viernes')
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->subDay(5)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->addDay(1)->format("d/m/Y") }}
+                                    @if ($aprobacion->dia_semana == 'Viernes')
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->subDay(5)->format('d/m/Y') }}
+                                        -
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->addDay(1)->format('d/m/Y') }}
                                     @endif
-                                    @if($aprobacion->dia_semana == 'Sábado')
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->subDay(6)->format("d/m/Y") }}
-                                         -  
-                                        {{  \Carbon\Carbon::parse($aprobacion->fecha_dia)->format("d/m/Y") }}
+                                    @if ($aprobacion->dia_semana == 'Sábado')
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->subDay(6)->format('d/m/Y') }}
+                                        -
+                                        {{ \Carbon\Carbon::parse($aprobacion->fecha_dia)->format('d/m/Y') }}
                                     @endif
                                 </td>
                                 <td>
@@ -106,15 +116,29 @@
                                 </td>
                                 <td class="">
                                     @can('timesheet_administrador_aprobar_horas')
-                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $aprobacion->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
-                                        
-                                        <div class="btn" data-toggle="modal" data-target="#modal_aprobar_{{ $aprobacion->id}}"> 
-                                            <i class="fas fa-calendar-check" style="color:#3CA06C; font-size: 15pt;"></i>
-                                        </div>
+                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $aprobacion->id }}"
+                                            title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+                                        @if ($aprobacion->aprobador_id == auth()->user()->empleado->id)
+                                            <div class="btn" data-toggle="modal"
+                                                data-target="#modal_aprobar_{{ $aprobacion->id }}">
+                                                <i class="fas fa-calendar-check" style="color:#3CA06C; font-size: 15pt;"></i>
+                                            </div>
 
-                                        <div class="btn" data-toggle="modal" data-target="#modal_rechazar_{{ $aprobacion->id}}">
-                                            <i class="fa-solid fa-calendar-xmark" style="color:#F05353; font-size: 15pt;"></i>
-                                        </div>
+                                            <div class="btn" data-toggle="modal"
+                                                data-target="#modal_rechazar_{{ $aprobacion->id }}">
+                                                <i class="fa-solid fa-calendar-xmark"
+                                                    style="color:#F05353; font-size: 15pt;"></i>
+                                            </div>
+                                        @else
+                                            <div class="btn">
+                                                <i class="fas fa-calendar-check" title="No Puedes Aprobar"
+                                                    style="color:#979797d5;cursor:not-allowed; font-size: 15pt;"></i>
+                                            </div>
+                                            <div class="btn">
+                                                <i class="fa-solid fa-calendar-xmark" title="No Puedes Rechazar"
+                                                    style="color:#979797d5;cursor:not-allowed; font-size: 15pt;"></i>
+                                            </div>
+                                        @endif
                                     @endcan
                                 </td>
                             </tr>
@@ -128,7 +152,7 @@
 
     @foreach ($aprobaciones as $aprobacion)
         {{-- aprobar --}}
-        <div class="modal fade" id="modal_aprobar_{{ $aprobacion->id}}" tabindex="-1" role="dialog"
+        <div class="modal fade" id="modal_aprobar_{{ $aprobacion->id }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -139,9 +163,10 @@
                                 <h1 class="my-4" style="font-size:14pt;">Aceptar Registro</h1>
                                 <p class="parrafo">¿Está seguro que desea aceptar este registro?</p>
                             </div>
-                            
+
                             <div class="mt-4">
-                                <form action="{{ route('admin.timesheet-aprobar', ['id' => $aprobacion->id]) }}" method="POST" class="row">
+                                <form action="{{ route('admin.timesheet-aprobar', ['id' => $aprobacion->id]) }}"
+                                    method="POST" class="row">
                                     @csrf
                                     <div class="form-group col-12">
                                         <label><i class="fa-solid fa-comment-dots iconos_crear"></i> Comentarios</label>
@@ -149,10 +174,11 @@
                                         <small>Escriba sus comentarios para el solicitante (Opcional).</small>
                                     </div>
                                     <div class="col-12 text-right">
-                                         <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
+                                        <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
                                             Cancelar
                                         </button>
-                                        <button title="Rechazar" class="btn btn-info" style="border:none; background-color:#3CA06C;">
+                                        <button title="Rechazar" class="btn btn-info"
+                                            style="border:none; background-color:#3CA06C;">
                                             <i class="fas fa-calendar-check iconos_crear"></i>
                                             Aprobar Registro
                                         </button>
@@ -168,7 +194,7 @@
 
 
         {{-- rechazar --}}
-        <div class="modal fade" id="modal_rechazar_{{ $aprobacion->id}}" tabindex="-1" role="dialog"
+        <div class="modal fade" id="modal_rechazar_{{ $aprobacion->id }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -179,9 +205,10 @@
                                 <h1 class="my-4" style="font-size:14pt;">Rechazar Registro</h1>
                                 <p class="parrafo">¿Está seguro que desea rechazar este registro?</p>
                             </div>
-                            
+
                             <div class="mt-4">
-                                <form action="{{ route('admin.timesheet-rechazar', ['id' => $aprobacion->id]) }}" method="POST" class="row">
+                                <form action="{{ route('admin.timesheet-rechazar', ['id' => $aprobacion->id]) }}"
+                                    method="POST" class="row">
                                     @csrf
                                     <div class="form-group col-12">
                                         <label><i class="fa-solid fa-comment-dots iconos_crear"></i> Comentarios</label>
@@ -192,7 +219,8 @@
                                         <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
                                             Cancelar
                                         </button>
-                                        <button title="Rechazar" class="btn btn-info" style="border:none; background-color:#F05353;">
+                                        <button title="Rechazar" class="btn btn-info"
+                                            style="border:none; background-color:#F05353;">
                                             <i class="fas fa-calendar-xmark iconos_crear"></i>
                                             Rechazar Registro
                                         </button>
@@ -206,7 +234,6 @@
             </div>
         </div>
     @endforeach
-
 @endsection
 
 

@@ -1,15 +1,26 @@
 @extends('layouts.admin')
 @section('content')
-
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
     {{ Breadcrumbs::render('timesheet-rechazos') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Aprobados</font></h5>
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Aprobados</font>
+    </h5>
 
     <div class="card card-body">
         <div class="row">
-
+            <div class="btn_estatus_caja mb-3" style="display: flex; justify-content: end; width: 100%">
+                <a href="{{ route('admin.timesheet-aprobados') }}" class="btn btn-sm mr-2"
+                    style="{{ !$habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                    id="btn_directos" title="Mostrar todos los colaboradores de los cuales eres líder directo">
+                    Directos
+                </a>
+                <a href="{{ route('admin.timesheet-aprobados') }}?habilitarTodos=true" class="btn btn-sm"
+                    style="{{ $habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                    id="btn_todos" title="Mostrar todos los colaboradores de los cuales eres líder">
+                    Todos
+                </a>
+            </div>
             <div class="datatable-fix w-100">
                 <table id="datatable_timesheet" class="table w-100">
                     <thead class="w-100">
@@ -39,12 +50,22 @@
                                 </td>
                                 <td class="">
                                     @can('timesheet_administrador_aprobar_horas')
-                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $aprobado->id }}" title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
-                                        
-                                        @if($aprobado->estatus == 'aprobado')
-                                            <div class="btn" data-toggle="modal" data-target="#modal_rechazar_{{ $aprobado->id}}">
-                                                <i class="fa-solid fa-calendar-xmark" style="color:#F05353; font-size: 15pt;"></i>
-                                            </div>
+                                        <a href="{{ asset('admin/timesheet/show') }}/{{ $aprobado->id }}"
+                                            title="Visualizar" class="btn"><i class="fa-solid fa-eye"></i></a>
+
+                                        @if ($aprobado->estatus == 'aprobado')
+                                            @if ($aprobado->aprobador_id == auth()->user()->empleado->id)
+                                                <div class="btn" data-toggle="modal"
+                                                    data-target="#modal_rechazar_{{ $aprobado->id }}">
+                                                    <i class="fa-solid fa-calendar-xmark"
+                                                        style="color:#F05353; font-size: 15pt;"></i>
+                                                </div>
+                                            @else
+                                                <div class="btn">
+                                                    <i class="fa-solid fa-calendar-xmark" title="Acción no permitida"
+                                                        style="color:#b3b3b3; font-size: 15pt;cursor: not-allowed"></i>
+                                                </div>
+                                            @endif
                                         @endif
                                     @endcan
                                 </td>
@@ -58,7 +79,7 @@
 
     @foreach ($aprobados as $aprobado)
         {{-- aprobar --}}
-        <div class="modal fade" id="modal_rechazar_{{ $aprobado->id}}" tabindex="-1" role="dialog"
+        <div class="modal fade" id="modal_rechazar_{{ $aprobado->id }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -69,9 +90,10 @@
                                 <h1 class="my-4" style="font-size:14pt;">Rechazar Registro</h1>
                                 <p class="parrafo">¿Está seguro que desea rechazar este registro?</p>
                             </div>
-                            
+
                             <div class="mt-4">
-                                <form action="{{ route('admin.timesheet-rechazar', ['id' => $aprobado->id]) }}" method="POST" class="row">
+                                <form action="{{ route('admin.timesheet-rechazar', ['id' => $aprobado->id]) }}"
+                                    method="POST" class="row">
                                     @csrf
                                     <div class="form-group col-12">
                                         <label><i class="fa-solid fa-comment-dots iconos_crear"></i> Comentarios</label>
@@ -82,7 +104,8 @@
                                         <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
                                             Cancelar
                                         </button>
-                                        <button title="Rechazar" class="btn btn-info" style="border:none; background-color:#F05353;">
+                                        <button title="Rechazar" class="btn btn-info"
+                                            style="border:none; background-color:#F05353;">
                                             <i class="fas fa-calendar-xmark iconos_crear"></i>
                                             Rechazar Registro
                                         </button>
@@ -95,9 +118,7 @@
                 </div>
             </div>
         </div>
-
     @endforeach
-
 @endsection
 
 
