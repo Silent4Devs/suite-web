@@ -150,10 +150,6 @@
             $(".estatus").editable({
             dataType: 'json',
             source: [{
-            value: '1',
-            text: 'Pendiente de aprobar'
-            },
-            {
             value: '2',
             text: 'Aprobada'
             },

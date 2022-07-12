@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                             @endif
-                            <button type="button" class="btn btn-sm btn-outline-success dropdown-toggle"
+                            {{-- <button type="button" class="btn btn-sm btn-outline-success dropdown-toggle"
                                 aria-haspopup="true" aria-expanded="false" data-toggle="modal"
                                 data-target="#ResponsablesModal">
                                 <i class="far fa-file"></i>
@@ -60,7 +60,7 @@
                                 data-target="#ResponsablesModal">
                                 <i class="far fa-file"></i>
                                 Notificar responsable
-                            </button>
+                            </button> --}}
                             {{-- <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#ResponsablesModal">Notificar&nbsp;responsable</a> --}}
                         </div>
 
@@ -75,7 +75,7 @@
                                     $permisoResponsable = false;
                                 }
                             }
-
+                            
                             foreach ($aprobadores as $aprobador) {
                                 if (auth()->user()->empleado->id == $aprobador->aprobadores_id) {
                                     $permisoAprobador = true;
@@ -84,7 +84,7 @@
                                     $permisoAprobador = false;
                                 }
                             }
-
+                            
                         @endphp
                         <div class="table-responsive">
                             <table class="table" style="font-size: 12px;">
@@ -206,7 +206,6 @@
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
-
                                                                 <div class="text-center"><i style="font-size:12pt"
                                                                         class=" fas fa-user-lock mr-2 text-danger"
                                                                         title="Acción no permitida"></i>
@@ -338,7 +337,11 @@
                                                 @if ($responsable->declaracion_id == $g5s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $fecha }}
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                             @elseif($estatusy == 2)
+                                                                {{$fecha}}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -599,13 +602,23 @@
                                             @endforeach
 
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g6s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g6s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g6s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                             @elseif($estatusy == 2)
+                                                                {{$fecha}}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -714,8 +727,8 @@
                                                                 data-pk="{{ $g62s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g62s->id) }}"
                                                                 data-title="Seleccionar aplica"
-                                                                data-value="{{ $responsable->aplica }}" class="aplica2"
-                                                                data-name="aplica">
+                                                                data-value="{{ $responsable->aplica }}"
+                                                                class="aplica2" data-name="aplica">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -801,9 +814,9 @@
                                                                 data-pk="{{ $g62s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g62s->id) }}"
                                                                 data-title="Seleccionar estatus"
-                                                                data-value="{{ $aprobador->estatus }}" class="estatus"
-                                                                data-name="estatus" onchange='cambioOpciones();'
-                                                                id="opciones">
+                                                                data-value="{{ $aprobador->estatus }}"
+                                                                class="estatus" data-name="estatus"
+                                                                onchange='cambioOpciones();' id="opciones">
                                                             </a>
                                                         </td>
                                                     @endif
@@ -852,19 +865,28 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g62s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g62s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g62s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                             @elseif($estatusy == 2)
+                                                                {{$fecha}}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
+
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g62s->id)
@@ -1116,13 +1138,25 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g71s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+
+
+
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g71s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g71s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                             @elseif($estatusy == 2)
+                                                                {{$fecha}}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -1259,7 +1293,10 @@
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (is_null($justificacion))
-                                                                <p>Sin información</p>
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
+                                                                </div>
                                                             @else
                                                                 {{ $justificacion }}
                                                             @endif
@@ -1370,22 +1407,32 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id == $g72s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g72s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g72s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g72s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                             @elseif($estatusy == 2)
+                                                                {{$fecha}}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g72s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g72s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g72s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -1468,7 +1515,7 @@
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g73s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->empleado_id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
@@ -1511,7 +1558,7 @@
                                                 @if ($aprobador->declaracion_id == $g73s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            @if (is_null($justificacion))
+                                                            @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
                                                                         class=" fas fa-user-lock mr-2 text-danger"
                                                                         title="Acción no permitida"></i>
@@ -1555,10 +1602,10 @@
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td>
                                                             @if (!isset($estatusy))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                class=" fas fa-user-lock mr-2 text-danger"
-                                                                title="Acción no permitida"></i>
-                                                            </div>
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
+                                                                </div>
                                                             @else
                                                                 @if ($estatusy == 1)
                                                                     <p>Pendiente de aprobar</p>
@@ -1575,21 +1622,21 @@
 
 
                                             @foreach ($aprobadores as $aprobador)
-                                            @if ($aprobador->declaracion_id == $g73s->id)
-                                                @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                    <td style="width:15%">
-                                                        <a href="#" data-type="select"
-                                                            data-pk="{{ $g73s->id }}"
-                                                            data-url="{{ route('admin.declaracion-aplicabilidad.update', $g73s->id) }}"
-                                                            data-title="Seleccionar estatus"
-                                                            data-value="{{ $aprobador->estatus }}"
-                                                            class="estatus" data-name="estatus"
-                                                            onchange='cambioOpciones();' id="opciones">
-                                                        </a>
-                                                    </td>
+                                                @if ($aprobador->declaracion_id == $g73s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                        <td style="width:15%">
+                                                            <a href="#" data-type="select"
+                                                                data-pk="{{ $g73s->id }}"
+                                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g73s->id) }}"
+                                                                data-title="Seleccionar estatus"
+                                                                data-value="{{ $aprobador->estatus }}"
+                                                                class="estatus" data-name="estatus"
+                                                                onchange='cambioOpciones();' id="opciones">
+                                                            </a>
+                                                        </td>
+                                                    @endif
                                                 @endif
-                                            @endif
-                                        @endforeach
+                                            @endforeach
 
                                             @php
                                                 foreach ($aprobadores as $aprobador) {
@@ -1623,7 +1670,7 @@
                                                                 <div class="text-center"><i style="font-size:12pt"
                                                                         class=" fas fa-user-lock mr-2 text-danger"
                                                                         title="Acción no permitida"></i>
-                                                                    </div>
+                                                                </div>
                                                             @else
                                                                 {{ $comentariox }}
                                                             @endif
@@ -1631,6 +1678,29 @@
                                                     @endif
                                                 @endif
                                             @endforeach
+
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g73s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g73s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                             @elseif($estatusy == 2)
+                                                                {{$fecha}}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g73s->id)
@@ -1645,18 +1715,7 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g73s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g73s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1738,16 +1797,16 @@
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g81s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                    <td style="width:5%">
-                                                        @if (!isset($aplica))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i></div>
-                                                        @else
-                                                            {{ $aplica == '1' ? 'Si' : 'No' }}
-                                                        @endif
+                                                        <td style="width:5%">
+                                                            @if (!isset($aplica))
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i></div>
+                                                            @else
+                                                                {{ $aplica == '1' ? 'Si' : 'No' }}
+                                                            @endif
 
-                                                    </td>
+                                                        </td>
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -1783,8 +1842,8 @@
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 {{ $justificacion }}
@@ -1801,7 +1860,8 @@
                                                             <a href="#" data-type="textarea"
                                                                 data-pk="{{ $g81s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g81s->id) }}"
-                                                                data-title="Justificacion" data-value="{{ $responsable->justificacion }}"
+                                                                data-title="Justificacion"
+                                                                data-value="{{ $responsable->justificacion }}"
                                                                 class="justificacion" data-name="justificacion">
                                                             </a>
                                                         </td>
@@ -1840,8 +1900,8 @@
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 @if ($estatusy == 1)
@@ -1897,6 +1957,27 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g81s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g81s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g81s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
@@ -1910,18 +1991,7 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g81s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g81s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+
 
                                         </tr>
                                     @endforeach
@@ -1975,12 +2045,10 @@
                                             </td>
                                             <td>
                                                 @foreach ($responsables as $responsable)
-                                                    @if (is_null($responsable))
-                                                        @if ($responsable->declaracion_id == $g82s->id)
-                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                                class="img_empleado"
-                                                                title="{{ $responsable->empleado->name }}">
-                                                        @endif
+                                                    @if ($responsable->declaracion_id == $g82s->id)
+                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                            class="img_empleado"
+                                                            title="{{ $responsable->empleado->name }}">
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -2049,10 +2117,10 @@
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                class=" fas fa-user-lock mr-2 text-danger"
-                                                                title="Acción no permitida"></i>
-                                                            </div>
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
+                                                                </div>
                                                             @else
                                                                 {{ $justificacion }}
                                                             @endif
@@ -2165,24 +2233,32 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g82s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
 
-
-                                            @foreach ($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id == $g82s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g82s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g82s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g82s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g82s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g82s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -2310,8 +2386,8 @@
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 {{ $justificacion }}
@@ -2368,8 +2444,8 @@
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 @if ($estatusy == 1)
@@ -2425,6 +2501,29 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g83s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g83s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
+
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g83s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
@@ -2438,18 +2537,7 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g83s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g83s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -2483,228 +2571,240 @@
                                         <td colspan="10">A.9.1 Requisitos del negocio para control de acceso</td>
                                     </tr>
                                     @foreach ($gapda91s as $g91s)
-                                            <th scope="row" style="width: 5%">
-                                                {{ $g91s->anexo_indice }}
-                                            </th>
-                                            <td style="width:20%">
-                                                {{ $g91s->anexo_politica }}
-                                            </td>
-                                            <td style="width:35%">
-                                                {{ $g91s->anexo_descripcion }}
-                                            </td>
-                                            <td>
-                                                @foreach ($responsables as $responsable)
-                                                    @if ($responsable->declaracion_id == $g91s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                            <td>
-                                                @foreach ($aprobadores as $aprobador)
-                                                    @if ($aprobador->declaracion_id == $g91s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $aprobador->empleado->name }}">
-                                                        {{-- {{$aprobador->aprobadores_id}} --}}
-                                                    @endif
-                                                @endforeach
-                                            </td>
+                                        <th scope="row" style="width: 5%">
+                                            {{ $g91s->anexo_indice }}
+                                        </th>
+                                        <td style="width:20%">
+                                            {{ $g91s->anexo_politica }}
+                                        </td>
+                                        <td style="width:35%">
+                                            {{ $g91s->anexo_descripcion }}
+                                        </td>
+                                        <td>
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g91s->id)
+                                                    <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                        class="img_empleado"
+                                                        title="{{ $responsable->empleado->name }}">
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g91s->id)
+                                                    <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                        class="img_empleado"
+                                                        title="{{ $aprobador->empleado->name }}">
+                                                    {{-- {{$aprobador->aprobadores_id}} --}}
+                                                @endif
+                                            @endforeach
+                                        </td>
 
-                                            @php
-                                                foreach ($responsables as $responsable) {
-                                                    if ($responsable->declaracion_id == $g91s->id) {
-                                                        $aplica = $responsable->aplica;
-                                                    }
+                                        @php
+                                            foreach ($responsables as $responsable) {
+                                                if ($responsable->declaracion_id == $g91s->id) {
+                                                    $aplica = $responsable->aplica;
                                                 }
-                                            @endphp
+                                            }
+                                        @endphp
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g91s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:5%">
-                                                            <a href="#" data-type="select"
-                                                                data-pk="{{ $g91s->id }}"
-                                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
-                                                                data-title="Seleccionar aplica"
-                                                                data-value="{{ $responsable->aplica }}"
-                                                                class="aplica2" data-name="aplica">
-                                                            </a>
-                                                        </td>
-                                                    @endif
+                                        @foreach ($responsables as $responsable)
+                                            @if ($responsable->declaracion_id == $g91s->id)
+                                                @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    <td style="width:5%">
+                                                        <a href="#" data-type="select"
+                                                            data-pk="{{ $g91s->id }}"
+                                                            data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
+                                                            data-title="Seleccionar aplica"
+                                                            data-value="{{ $responsable->aplica }}"
+                                                            class="aplica2" data-name="aplica">
+                                                        </a>
+                                                    </td>
                                                 @endif
-                                            @endforeach
+                                            @endif
+                                        @endforeach
 
-                                            @foreach ($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id == $g91s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                        <td style="width:5%">
-                                                            @if (!isset($aplica))
-                                                                <div class="text-center"><i style="font-size:12pt"
-                                                                        class=" fas fa-user-lock mr-2 text-danger"
-                                                                        title="Acción no permitida"></i></div>
-                                                            @else
-                                                                {{ $aplica == '1' ? 'Si' : 'No' }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
+                                        @foreach ($aprobadores as $aprobador)
+                                            @if ($aprobador->declaracion_id == $g91s->id)
+                                                @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    <td style="width:5%">
+                                                        @if (!isset($aplica))
+                                                            <div class="text-center"><i style="font-size:12pt"
+                                                                    class=" fas fa-user-lock mr-2 text-danger"
+                                                                    title="Acción no permitida"></i></div>
+                                                        @else
+                                                            {{ $aplica == '1' ? 'Si' : 'No' }}
+                                                        @endif
+                                                    </td>
                                                 @endif
-                                            @endforeach
+                                            @endif
+                                        @endforeach
 
-                                            @php
-                                                foreach ($responsables as $responsable) {
-                                                    if ($responsable->declaracion_id == $g91s->id) {
-                                                        $justificacion = $responsable->justificacion;
-                                                    }
+                                        @php
+                                            foreach ($responsables as $responsable) {
+                                                if ($responsable->declaracion_id == $g91s->id) {
+                                                    $justificacion = $responsable->justificacion;
                                                 }
-                                            @endphp
-                                            @foreach ($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id == $g91s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                        <td class="text-justify">
-                                                            @if (is_null($justificacion))
-                                                                <div class="text-center"><i style="font-size:12pt"
-                                                                        class=" fas fa-user-lock mr-2 text-danger"
-                                                                        title="Acción no permitida"></i>
-                                                                </div>
-                                                            @else
-                                                                {{ $justificacion }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
+                                            }
+                                        @endphp
+                                        @foreach ($aprobadores as $aprobador)
+                                            @if ($aprobador->declaracion_id == $g91s->id)
+                                                @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    <td class="text-justify">
+                                                        @if (is_null($justificacion))
+                                                            <div class="text-center"><i style="font-size:12pt"
+                                                                    class=" fas fa-user-lock mr-2 text-danger"
+                                                                    title="Acción no permitida"></i>
+                                                            </div>
+                                                        @else
+                                                            {{ $justificacion }}
+                                                        @endif
+                                                    </td>
                                                 @endif
-                                            @endforeach
+                                            @endif
+                                        @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g91s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td class="text-justify">
-                                                            <a href="#" data-type="textarea"
-                                                                data-pk="{{ $g91s->id }}"
-                                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
-                                                                data-title="Justificacion"
-                                                                data-value="{{ $responsable->justificacion }}"
-                                                                class="justificacion" data-name="justificacion">
-                                                            </a>
-                                                        </td>
-                                                    @endif
+                                        @foreach ($responsables as $responsable)
+                                            @if ($responsable->declaracion_id == $g91s->id)
+                                                @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    <td class="text-justify">
+                                                        <a href="#" data-type="textarea"
+                                                            data-pk="{{ $g91s->id }}"
+                                                            data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
+                                                            data-title="Justificacion"
+                                                            data-value="{{ $responsable->justificacion }}"
+                                                            class="justificacion" data-name="justificacion">
+                                                        </a>
+                                                    </td>
                                                 @endif
-                                            @endforeach
+                                            @endif
+                                        @endforeach
 
-                                            @php
-                                                foreach ($aprobadores as $aprobador) {
-                                                    if ($aprobador->declaracion_id == $g91s->id) {
-                                                        $estatusy = $aprobador->estatus;
-                                                    }
+                                        @php
+                                            foreach ($aprobadores as $aprobador) {
+                                                if ($aprobador->declaracion_id == $g91s->id) {
+                                                    $estatusy = $aprobador->estatus;
                                                 }
-                                            @endphp
+                                            }
+                                        @endphp
 
-                                            @foreach ($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id == $g91s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                        <td style="width:15%">
-                                                            <a href="#" data-type="select"
-                                                                data-pk="{{ $g91s->id }}"
-                                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
-                                                                data-title="Seleccionar estatus"
-                                                                data-value="{{ $g91s->estatus }}" class="estatus"
-                                                                data-name="estatus" onchange='cambioOpciones();'
-                                                                id="opciones">
-                                                            </a>
-                                                        </td>
-                                                    @endif
+                                        @foreach ($aprobadores as $aprobador)
+                                            @if ($aprobador->declaracion_id == $g91s->id)
+                                                @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    <td style="width:15%">
+                                                        <a href="#" data-type="select"
+                                                            data-pk="{{ $g91s->id }}"
+                                                            data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
+                                                            data-title="Seleccionar estatus"
+                                                            data-value="{{ $g91s->estatus }}" class="estatus"
+                                                            data-name="estatus" onchange='cambioOpciones();'
+                                                            id="opciones">
+                                                        </a>
+                                                    </td>
                                                 @endif
-                                            @endforeach
+                                            @endif
+                                        @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g91s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%">
-                                                            @if (is_null($estatusy))
-                                                                <div class="text-center"><i style="font-size:12pt"
-                                                                        class=" fas fa-user-lock mr-2 text-danger"
-                                                                        title="Acción no permitida"></i></div>
+                                        @foreach ($responsables as $responsable)
+                                            @if ($responsable->declaracion_id == $g91s->id)
+                                                @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    <td style="width:15%">
+                                                        @if (is_null($estatusy))
+                                                            <div class="text-center"><i style="font-size:12pt"
+                                                                    class=" fas fa-user-lock mr-2 text-danger"
+                                                                    title="Acción no permitida"></i></div>
+                                                        @else
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                <p>Aprobada</p>
                                                             @else
-                                                                @if ($estatusy == 1)
-                                                                    <p>Pendiente de aprobar</p>
-                                                                @elseif($estatusy == 2)
-                                                                    <p>Aprobada</p>
-                                                                @else
-                                                                    <p>Rechazada</p>
-                                                                @endif
+                                                                <p>Rechazada</p>
                                                             @endif
-                                                        </td>
-                                                    @endif
+                                                        @endif
+                                                    </td>
                                                 @endif
-                                            @endforeach
+                                            @endif
+                                        @endforeach
 
-                                            @php
-                                                foreach ($aprobadores as $aprobador) {
-                                                    if ($aprobador->declaracion_id == $g91s->id) {
-                                                        $comentariox = $aprobador->comentarios;
-                                                    }
+                                        @php
+                                            foreach ($aprobadores as $aprobador) {
+                                                if ($aprobador->declaracion_id == $g91s->id) {
+                                                    $comentariox = $aprobador->comentarios;
                                                 }
-                                            @endphp
+                                            }
+                                        @endphp
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g91s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td class="text-justify">
-                                                            @if (!isset($comentariox))
-                                                                <div class="text-center"><i style="font-size:12pt"
-                                                                        class=" fas fa-user-lock mr-2 text-danger"
-                                                                        title="Acción no permitida"></i></div>
-                                                            @else
-                                                                {{ $comentariox }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
+                                        @foreach ($responsables as $responsable)
+                                            @if ($responsable->declaracion_id == $g91s->id)
+                                                @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    <td class="text-justify">
+                                                        @if (!isset($comentariox))
+                                                            <div class="text-center"><i style="font-size:12pt"
+                                                                    class=" fas fa-user-lock mr-2 text-danger"
+                                                                    title="Acción no permitida"></i></div>
+                                                        @else
+                                                            {{ $comentariox }}
+                                                        @endif
+                                                    </td>
                                                 @endif
-                                            @endforeach
+                                            @endif
+                                        @endforeach
 
-                                            @foreach ($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id == $g91s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                        <td class="text-justify">
-                                                            <a href="#" data-type="textarea"
-                                                                data-pk="{{ $g91s->id }}"
-                                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
-                                                                data-title="Comentarios"
-                                                                data-value="{{ $aprobador->comentarios }}"
-                                                                class="comentarios" data-name="comentarios">
-                                                            </a>
-                                                        </td>
-                                                    @endif
+                                        @foreach ($aprobadores as $aprobador)
+                                            @if ($aprobador->declaracion_id == $g91s->id)
+                                                @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    <td class="text-justify">
+                                                        <a href="#" data-type="textarea"
+                                                            data-pk="{{ $g91s->id }}"
+                                                            data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
+                                                            data-title="Comentarios"
+                                                            data-value="{{ $aprobador->comentarios }}"
+                                                            class="comentarios" data-name="comentarios">
+                                                        </a>
+                                                    </td>
                                                 @endif
-                                            @endforeach
+                                            @endif
+                                        @endforeach
 
-                                            @foreach ($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id == $g91s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g91s->id }}">
-                                                            @if ($g91s->estatus == 2)
-                                                                {{ $g91s->updated_at }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                        @php
+                                            foreach ($aprobadores as $aprobador) {
+                                                if ($aprobador->declaracion_id == $g91s->id) {
+                                                    $fecha = $aprobador->updated_at;
+                                                }
+                                            }
+                                        @endphp
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g91s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g91s->id }}">
-                                                            @if ($g91s->estatus == 2)
-                                                                {{ $g91s->updated_at }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
+                                        @foreach ($responsables as $responsable)
+                                            @if ($responsable->declaracion_id == $g91s->id)
+                                                @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                    <td style="width:15%">
+                                                        @if ($estatusy == 1)
+                                                            <p>Pendiente de aprobar</p>
+                                                        @elseif($estatusy == 2)
+                                                            {{ $fecha }}
+                                                        @endif
+                                                    </td>
                                                 @endif
-                                            @endforeach
-                                            </tr>
+                                            @endif
+                                        @endforeach
+
+
+                                        @foreach ($aprobadores as $aprobador)
+                                            @if ($aprobador->declaracion_id == $g91s->id)
+                                                @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                    <td style="width:15%"
+                                                        id="actualizacion_fecha_{{ $g91s->id }}">
+                                                        @if ($g91s->estatus == 2)
+                                                            {{ $g91s->updated_at }}
+                                                        @endif
+                                                    </td>
+                                                @endif
+                                            @endif
+                                        @endforeach
+
+
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -2937,22 +3037,32 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id == $g92s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g92s->id }}">
-                                                            @if ($g92s->estatus == 2)
-                                                                {{ $g92s->updated_at }}
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g92s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g92s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g92s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g92s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g92s->id }}">
                                                             @if ($g92s->estatus == 2)
@@ -3038,8 +3148,11 @@
                                                 @if ($aprobador->declaracion_id == $g93s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            @if (is_null($aplica))
-                                                                <p>Sin información</p>
+                                                            @if (!isset($aplica))
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
+                                                                </div>
                                                             @else
                                                                 {{ $aplica ? 'Si' : 'No' }}
                                                             @endif
@@ -3077,7 +3190,10 @@
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (is_null($justificacion))
-                                                                <p>Sin información</p>
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
+                                                                </div>
                                                             @else
                                                                 {{ $justificacion }}
                                                             @endif
@@ -3188,6 +3304,29 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g93s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g93s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
+
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g93s->id)
@@ -3202,18 +3341,6 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g93s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g93s->id }}">
-                                                            @if ($g93s->estatus == 2)
-                                                                {{ $g93s->updated_at }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
-                                                @endif
-                                            @endforeach
 
                                         </tr>
                                     @endforeach
@@ -3447,22 +3574,32 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id == $g94s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g94s->id }}">
-                                                            @if ($g94s->estatus == 2)
-                                                                {{ $g94s->updated_at }}
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g94s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g94s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g94s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g94s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g94s->id }}">
                                                             @if ($g94s->estatus == 2)
@@ -3708,6 +3845,29 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g101s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g101s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
+
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g101s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
@@ -3721,18 +3881,7 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g101s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g101s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -3900,7 +4049,8 @@
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
                                                                         class=" fas fa-user-lock mr-2 text-danger"
-                                                                        title="Acción no permitida"></i></div>
+                                                                        title="Acción no permitida"></i>
+                                                                </div>
                                                             @else
                                                                 @if ($estatusy == 1)
                                                                     <p>Pendiente de aprobar</p>
@@ -3972,22 +4122,32 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id == $g111s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g111s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g111s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g111s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g111s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g111s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g111s->id }}">
                                                             @if ($aprobador->estatus == 2)
@@ -4117,8 +4277,8 @@
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 {{ $justificacion }}
@@ -4157,10 +4317,10 @@
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                class=" fas fa-user-lock mr-2 text-danger"
-                                                                title="Acción no permitida"></i>
-                                                            </div>
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
+                                                                </div>
                                                             @else
                                                                 @if ($estatusy == 1)
                                                                     <p>Pendiente de aprobar</p>
@@ -4203,15 +4363,15 @@
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g112s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                    <td class="text-justify">
-                                                        @if (!isset($comentariox))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i></div>
-                                                        @else
-                                                            {{ $comentariox }}
-                                                        @endif
-                                                    </td>
+                                                        <td class="text-justify">
+                                                            @if (!isset($comentariox))
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i></div>
+                                                            @else
+                                                                {{ $comentariox }}
+                                                            @endif
+                                                        </td>
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -4232,6 +4392,29 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g112s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g112s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
+
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g112s->id)
@@ -4246,18 +4429,7 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g112s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g112s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -4421,8 +4593,8 @@
                                                         <td style="width:15%">
                                                             @if (is_null($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 @if ($estatusy == 1)
@@ -4499,7 +4671,7 @@
 
                                             @php
                                                 foreach ($aprobadores as $aprobador) {
-                                                    if ($aprobador->declaracion_id == $g5s->id) {
+                                                    if ($aprobador->declaracion_id == $g121s->id) {
                                                         $fecha = $aprobador->updated_at;
                                                     }
                                                 }
@@ -4508,15 +4680,17 @@
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g121s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g121s->id }}">
-                                                            @if ($g121s->estatus == 2)
-                                                                {{ $g121s->updated_at }}
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
+
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g121s->id)
@@ -4603,16 +4777,16 @@
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g122s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                    <td style="width:5%">
-                                                        @if (!isset($aplica))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
-                                                            </div>
-                                                        @else
-                                                            {{ $aplica == '1' ? 'Si' : 'No' }}
-                                                        @endif
-                                                    </td>
+                                                        <td style="width:5%">
+                                                            @if (!isset($aplica))
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
+                                                                </div>
+                                                            @else
+                                                                {{ $aplica == '1' ? 'Si' : 'No' }}
+                                                            @endif
+                                                        </td>
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -4647,8 +4821,8 @@
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 {{ $justificacion }}
@@ -4689,8 +4863,8 @@
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 @if ($estatusy == 1)
@@ -4764,6 +4938,29 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g122s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g122s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
+
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g122s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
@@ -4777,18 +4974,7 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g122s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g122s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -4906,8 +5092,8 @@
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 {{ $justificacion }}
@@ -4955,10 +5141,10 @@
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (is_null($estatusy))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                class=" fas fa-user-lock mr-2 text-danger"
-                                                                title="Acción no permitida"></i>
-                                                            </div>
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
+                                                                </div>
                                                             @else
                                                                 @if ($estatusy == 1)
                                                                     <p>Pendiente de aprobar</p>
@@ -4984,15 +5170,15 @@
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g123s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                    <td class="text-justify">
-                                                        @if (!isset($comentariox))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i></div>
-                                                        @else
-                                                            {{ $comentariox }}
-                                                        @endif
-                                                    </td>
+                                                        <td class="text-justify">
+                                                            @if (!isset($comentariox))
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i></div>
+                                                            @else
+                                                                {{ $comentariox }}
+                                                            @endif
+                                                        </td>
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -5014,6 +5200,27 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g123s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g123s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
 
 
                                             @foreach ($aprobadores as $aprobador)
@@ -5029,18 +5236,7 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g123s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g123s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -5159,8 +5355,8 @@
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 {{ $justificacion }}
@@ -5200,8 +5396,8 @@
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 @if ($estatusy == 1)
@@ -5245,15 +5441,15 @@
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g124s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                    <td class="text-justify">
-                                                        @if (!isset($comentariox))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i></div>
-                                                        @else
-                                                            {{ $comentariox }}
-                                                        @endif
-                                                    </td>
+                                                        <td class="text-justify">
+                                                            @if (!isset($comentariox))
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i></div>
+                                                            @else
+                                                                {{ $comentariox }}
+                                                            @endif
+                                                        </td>
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -5274,6 +5470,28 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g124s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g124s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g124s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
@@ -5287,18 +5505,7 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g124s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g124s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -5418,8 +5625,8 @@
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 {{ $justificacion }}
@@ -5459,8 +5666,8 @@
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 @if ($estatusy == 1)
@@ -5504,15 +5711,15 @@
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g125s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                    <td class="text-justify">
-                                                        @if (!isset($comentariox))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i></div>
-                                                        @else
-                                                            {{ $comentariox }}
-                                                        @endif
-                                                    </td>
+                                                        <td class="text-justify">
+                                                            @if (!isset($comentariox))
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i></div>
+                                                            @else
+                                                                {{ $comentariox }}
+                                                            @endif
+                                                        </td>
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -5534,23 +5741,32 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g125s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
 
-                                            @foreach ($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id == $g125s->id)
-                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g125s->id }}">
-                                                            @if ($g125s->estatus == 2)
-                                                                {{ $g125s->updated_at }}
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g125s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g125s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g125s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%"
                                                             id="actualizacion_fecha_{{ $g125s->id }}">
                                                             @if ($g125s->estatus == 2)
@@ -5638,8 +5854,8 @@
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 {{ $aplica ? 'Si' : 'No' }}
@@ -5721,8 +5937,8 @@
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 @if ($estatusy == 1)
@@ -5796,6 +6012,29 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g126s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g126s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
+
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g126s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
@@ -5809,18 +6048,6 @@
                                                 @endif
                                             @endforeach
 
-                                            @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g126s->id)
-                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g126s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
-                                                            @endif
-                                                        </td>
-                                                    @endif
-                                                @endif
-                                            @endforeach
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -5940,8 +6167,8 @@
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 {{ $justificacion }}
@@ -5981,8 +6208,8 @@
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i>
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i>
                                                                 </div>
                                                             @else
                                                                 @if ($estatusy == 1)
@@ -6027,15 +6254,15 @@
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g127s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                    <td class="text-justify">
-                                                        @if (!isset($comentariox))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i></div>
-                                                        @else
-                                                            {{ $comentariox }}
-                                                        @endif
-                                                    </td>
+                                                        <td class="text-justify">
+                                                            @if (!isset($comentariox))
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i></div>
+                                                            @else
+                                                                {{ $comentariox }}
+                                                            @endif
+                                                        </td>
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -6056,18 +6283,28 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g127s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g127s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g127s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
+
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g127s->id)
@@ -6197,8 +6434,8 @@
                                                 }
                                             @endphp
 
-                                            @foreach($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id  == $g131s->id)
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g131s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
@@ -6318,18 +6555,28 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g131s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g131s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g131s->id }}">
-                                                            @if ($g131s->estatus == 2)
-                                                                {{ $g131s->updated_at }}
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
+
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g131s->id)
@@ -6454,7 +6701,7 @@
                                             @endphp
 
                                             @foreach ($aprobadores as $aprobador)
-                                                @if ($aprobador->declaracion_id  == $g132s->id)
+                                                @if ($aprobador->declaracion_id == $g132s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
                                                             @if (!isset($justificacion))
@@ -6572,13 +6819,22 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g132s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g132s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g132s->id }}">
-                                                            @if ($g132s->estatus == 2)
-                                                                {{ $g132s->updated_at }}
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -6833,18 +7089,28 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g141s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g141s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g141s->id }}">
-                                                            @if ($g141s->estatus == 2)
-                                                                {{ $g141s->updated_at }}
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
+
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g141s->id)
@@ -7081,18 +7347,28 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g142s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g142s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g142s->id }}">
-                                                            @if ($aprobador->estatus == 2)
-                                                                {{ $aprobador->updated_at }}
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
+
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g142s->id)
@@ -7337,18 +7613,28 @@
                                             @endforeach
 
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g143s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g143s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g143s->id }}">
-                                                            @if ($g143s->estatus == 2)
-                                                                {{ $g143s->updated_at }}
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
+
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g143s->id)
@@ -7383,8 +7669,6 @@
                                             <th style="width:35%;" scope="col">COMENTARIOS</th>
                                             <th style="width:15px !important;">FECHA DE APROBACIÓN</th>
                                         @endif
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -7444,9 +7728,9 @@
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
                                                             @if (!isset($aplica))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i></div>
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i></div>
                                                             @else
                                                                 {{ $aplica == 1 ? 'Si' : 'No' }}
                                                             @endif
@@ -7602,18 +7886,28 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g151s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g151s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g151s->id }}">
-                                                            @if ($g151s->estatus == 2)
-                                                                {{ $g151s->updated_at }}
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
+
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g151s->id)
@@ -7622,7 +7916,6 @@
                                                             id="actualizacion_fecha_{{ $g151s->id }}">
                                                             @if ($g151s->estatus == 2)
                                                                 {{ $g151s->updated_at }}
-
                                                             @endif
                                                         </td>
                                                     @endif
@@ -7857,18 +8150,28 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g152s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g152s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        <td style="width:15%"
-                                                            id="actualizacion_fecha_{{ $g152s->id }}">
-                                                            @if ($g152s->estatus == 2)
-                                                                {{ $g152s->updated_at }}
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
                                                             @endif
                                                         </td>
                                                     @endif
                                                 @endif
                                             @endforeach
+
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g152s->id)
@@ -8048,7 +8351,8 @@
                                                             @if (!isset($estatusy))
                                                                 <div class="text-center"><i style="font-size:12pt"
                                                                         class=" fas fa-user-lock mr-2 text-danger"
-                                                                        title="Acción no permitida"></i></div>
+                                                                        title="Acción no permitida"></i>
+                                                                </div>
                                                             @else
                                                                 @if ($estatusy == 1)
                                                                     <p>Pendiente de aprobar</p>
@@ -8089,15 +8393,21 @@
                                             @endphp
 
 
-                                            <td class="text-justify">
-                                                @if (!isset($comentariox))
-                                                    <div class="text-center"><i style="font-size:12pt"
-                                                            class=" fas fa-user-lock mr-2 text-danger"
-                                                            title="Acción no permitida"></i></div>
-                                                @else
-                                                    {{ $comentariox }}
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g161s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td class="text-justify">
+                                                            @if (!isset($comentariox))
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i></div>
+                                                            @else
+                                                                {{ $comentariox }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
                                                 @endif
-                                            </td>
+                                            @endforeach
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g161s->id)
@@ -8115,11 +8425,41 @@
                                                 @endif
                                             @endforeach
 
-                                            <td style="width:15%" id="actualizacion_fecha_{{ $g161s->id }}">
-                                                @if ($g161s->estatus == 2)
-                                                    {{ $g161s->updated_at }}
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g161s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g161s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
                                                 @endif
-                                            </td>
+                                            @endforeach
+
+
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g161s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                        <td style="width:15%"
+                                                            id="actualizacion_fecha_{{ $g161s->id }}">
+                                                            @if ($g161s->estatus == 2)
+                                                                {{ $g161s->updated_at }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -8330,15 +8670,15 @@
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g171s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                    <td class="text-justify">
-                                                        @if (!isset($comentariox))
-                                                            <div class="text-center"><i style="font-size:12pt"
-                                                                    class=" fas fa-user-lock mr-2 text-danger"
-                                                                    title="Acción no permitida"></i></div>
-                                                        @else
-                                                            {{ $comentariox }}
-                                                        @endif
-                                                    </td>
+                                                        <td class="text-justify">
+                                                            @if (!isset($comentariox))
+                                                                <div class="text-center"><i style="font-size:12pt"
+                                                                        class=" fas fa-user-lock mr-2 text-danger"
+                                                                        title="Acción no permitida"></i></div>
+                                                            @else
+                                                                {{ $comentariox }}
+                                                            @endif
+                                                        </td>
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -8359,11 +8699,41 @@
                                                 @endif
                                             @endforeach
 
-                                            <td style="width:15%" id="actualizacion_fecha_{{ $g171s->id }}">
-                                                @if ($g171s->estatus == 2)
-                                                    {{ $g171s->updated_at }}
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g171s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g171s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{ $fecha }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
                                                 @endif
-                                            </td>
+                                            @endforeach
+
+
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g171s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                        <td style="width:15%"
+                                                            id="actualizacion_fecha_{{ $g171s->id }}">
+                                                            @if ($g171s->estatus == 2)
+                                                                {{ $g171s->updated_at }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -8611,7 +8981,11 @@
                                                 @if ($responsable->declaracion_id == $g172s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $fecha }}
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                             @elseif($estatusy == 2)
+                                                                {{$fecha}}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -8650,8 +9024,6 @@
                                             <th style="width:35%;" scope="col">COMENTARIOS</th>
                                             <th style="width:15px !important;">FECHA DE APROBACIÓN</th>
                                         @endif
-
-
 
                                     </tr>
                                 </thead>
@@ -8867,11 +9239,41 @@
                                                 @endif
                                             @endforeach
 
-                                            <td style="width:15%" id="actualizacion_fecha_{{ $g181s->id }}">
-                                                @if ($g181s->estatus == 2)
-                                                    {{ $g181s->updated_at }}
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g181s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g181s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                            <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy == 2)
+                                                                {{$fecha}}
+                                                            @endif
+                                                        </td>
+                                                    @endif
                                                 @endif
-                                            </td>
+                                            @endforeach
+
+
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g181s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                        <td style="width:15%"
+                                                            id="actualizacion_fecha_{{ $g181s->id }}">
+                                                            @if ($g181s->estatus == 2)
+                                                                {{ $g181s->updated_at }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -8905,9 +9307,9 @@
                                     </tr>
                                     @foreach ($gapda182s as $g182s)
                                         <tr>
-                                            <th scope="row" style="width: 5%">
+                                            <td scope="row" style="width: 5%">
                                                 {{ $g182s->anexo_indice }}
-                                            </th>
+                                            </td>
                                             <td style="width:20%">
                                                 {{ $g182s->anexo_politica }}
                                             </td>
@@ -8950,9 +9352,10 @@
                                                             @if (!isset($aplica))
                                                                 <div class="text-center"><i style="font-size:12pt"
                                                                         class=" fas fa-user-lock mr-2 text-danger"
-                                                                        title="Acción no permitida"></i></div>
+                                                                        title="Acción no permitida"></i>
+                                                                </div>
                                                             @else
-                                                                {{ $aplica == '1' ? 'Si' : 'No' }}
+                                                                {{ $aplica == 1 ? 'Si' : 'No' }}
                                                             @endif
                                                         </td>
                                                     @endif
@@ -9024,7 +9427,7 @@
                                             @endphp
 
                                             @foreach ($responsables as $responsable)
-                                                @if ($responsable->declaracion_id == $g5s->id)
+                                                @if ($responsable->declaracion_id == $g182s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
                                                             @if (!isset($estatusy))
@@ -9102,24 +9505,55 @@
                                                 @endif
                                             @endforeach
 
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g182s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
 
-                                            <td style="width:15%" id="actualizacion_fecha_{{ $g182s->id }}">
-                                                @if ($g182s->estatus == 2)
-                                                    {{ $g182s->updated_at }}
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g182s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                             @elseif($estatusy == 2)
+                                                                {{$fecha}}
+                                                            @endif
+                                                        </td>
+                                                    @endif
                                                 @endif
-                                            </td>
+                                            @endforeach
+
+
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g182s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                        <td style="width:15%"
+                                                            id="actualizacion_fecha_{{ $g182s->id }}">
+                                                            @if ($g182s->estatus == 2)
+                                                                {{ $g182s->updated_at }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
+
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        <div class="mt-2 col">
+                        {{-- <div class="mt-2 col">
                             <button url="{{ route('admin.declaracion-aplicabilidad.descargar') }}"
                                 onclik="generarReporte()" class="btn btn-sm btn-outline-primary generar-reporte">
                                 <i class="mr-1 fas fa-print"></i>
                                 Generar Reporte
                             </button>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

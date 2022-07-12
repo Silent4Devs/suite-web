@@ -42,4 +42,9 @@ class Norma extends Model
     {
         return $this->hasMany(AlcanceSgsi::class);
     }
+
+    public function objetivos()
+    {
+        return $this->hasMany(Objetivosseguridad::class);
+    }
 }

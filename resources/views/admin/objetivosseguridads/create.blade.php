@@ -178,6 +178,30 @@
                                 <div class="form-control" id="responsable_area" readonly></div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>
+                                <select
+                                class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
+                                name="normas[]" id="controles" multiple="multiple">
+                                <option value disabled>
+                                    Selecciona una opción</option>
+                                @foreach ($normas as $norma)
+                                <option value="{{ $norma->id }}" data-area="{{ $norma->norma }}"
+                                    {{ old('norma') == $norma->id ? ' selected="selected"' : '' }}>
+                                    {{ $norma->norma }}
+                                </option>
+                                @endforeach
+                                </select>
+                                    @if ($errors->has('norma'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('normas') }}
+                                        </div>
+                                    @endif
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="objetivoseguridad"><i
                                     class="fas fa-file-signature iconos-crear"></i>Objetivo</label>
@@ -618,6 +642,10 @@
                     '/',
 
                 ]
+            });
+
+            $('.controles-select').select2({
+                'theme': 'bootstrap4'
             });
         });
     </script>

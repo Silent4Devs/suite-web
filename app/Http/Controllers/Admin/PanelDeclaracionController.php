@@ -147,6 +147,8 @@ class PanelDeclaracionController extends Controller
                     DeclaracionAplicabilidadResponsable::create([
                         'declaracion_id' => $declaracion,
                         'empleado_id' => $responsable,
+                        'esta_correo_enviado'=>false,
+
                     ]);
 
                     return response()->json(['estatus' => 'asignado', 'message' => 'Responsable asignado'], 200);
@@ -155,7 +157,7 @@ class PanelDeclaracionController extends Controller
                 }
             } else {
                 if ($isReasignable) {
-                    DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->update(['empleado_id' => $responsable]);
+                    DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->update(['empleado_id' => $responsable,  'esta_correo_enviado'=>false]);
 
                     return response()->json(['estatus' => 'asignado', 'message' => 'Responsable asignado'], 200);
                 } else {
@@ -174,7 +176,7 @@ class PanelDeclaracionController extends Controller
 
         $exists = $registro->exists();
         if ($exists) {
-            $registro = DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->update(['empleado_id' => null]);
+            $registro = DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->update(['empleado_id' => null, 'esta_correo_enviado'=>true]);
 
             return response()->json(['message' => 'Responsable desasignado', 'request' => $request->all()], 200);
             // } else {
@@ -198,6 +200,7 @@ class PanelDeclaracionController extends Controller
                     DeclaracionAplicabilidadAprobadores::create([
                         'declaracion_id' => $declaracion,
                         'aprobadores_id' => $aprobador,
+                        'esta_correo_enviado'=>false,
                     ]);
 
                     return response()->json(['estatus' => 'asignado', 'message' => 'Aprobador asignado'], 200);
@@ -237,7 +240,8 @@ class PanelDeclaracionController extends Controller
         if ($request->enviarTodos) {
             $destinatarios = DeclaracionAplicabilidadResponsable::distinct('empleado_id')->pluck('empleado_id')->toArray();
         } elseif ($request->enviarNoNotificados) {
-            $destinatarios = DeclaracionAplicabilidadResponsable::where('notificado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
+            $destinatarios = DeclaracionAplicabilidadResponsable::where('esta_correo_enviado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
+        // dd($destinatarios);
         } else {
             $destinatarios = json_decode($request->responsables);
         }
@@ -256,9 +260,8 @@ class PanelDeclaracionController extends Controller
                 $controles->push($control->declaracion_aplicabilidad);
             }
             Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidad($empleado->name, $tipo, $controles));
-            $responsable = DeclaracionAplicabilidadResponsable::where('empleado_id', $destinatario)->each(function ($item) {
-                $item->notificado = true;
-            });
+            $responsable = DeclaracionAplicabilidadResponsable::where('empleado_id', $destinatario)->first();
+            $responsable->update(['esta_correo_enviado'=>true]);
         }
 
         return response()->json(['message' => 'Correo enviado'], 200);

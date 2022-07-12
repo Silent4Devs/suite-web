@@ -31,7 +31,16 @@
 
     <h5 class="col-12 titulo_general_funcion">Asignación Controles</h5>
     <div class="mt-5 card">
-
+        <div id="loaderComponent" style="display:none">
+            <div
+                style="display:flex; justify-content: center;align-items: center;background-color: black;position: fixed;top: 0px;left: 0px;z-index: 9999;width: 100%;height: 100%;opacity: .65;">
+                <div style="color: #9784ed" class="la-ball-scale-ripple-multiple la-3x">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
         <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -121,6 +130,7 @@
                     </div>
                 </div>
             </div>
+
 
         </div>
     </div>
@@ -490,6 +500,9 @@
                     })
                 }
 
+                document.getElementById('loaderComponent').style.display = 'block';
+
+
                 const enviarTodos = dataRadio == 1 ? false : true;
                 const enviarNoNotificados = dataRadio == 2 ? false : true;
                 const url = "{{ route('admin.paneldeclaracion.enviarcorreo') }}"
@@ -511,7 +524,19 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
+                        toastr.success('Correo(s) enviado(s) con éxito');
+                        document.getElementById('loaderComponent').style.display = 'none';
+
+                        $('#ResponsablesModal').modal('hide');
+
+                        $('.modal-backdrop').hide();
+                    })
+                    .catch(error=>{
+                        document.getElementById('loaderComponent').style.display = 'none';
+                        $('#ResponsablesModal').modal('hide');
+
+                        $('.modal-backdrop').hide();
+                        toastr.error(error);
                     })
             }
 

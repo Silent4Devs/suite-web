@@ -43,6 +43,7 @@ class DeclaracionAplicabilidadAprobadores extends Model
         'estatus',
         'comentarios',
         'fecha_aprobacion',
+        'esta_correo_enviado',
     ];
 
     public function declaracion_aplicabilidad()
@@ -59,4 +60,16 @@ class DeclaracionAplicabilidadAprobadores extends Model
     {
         return $this->hasMany(NotificacionAprobadore::class, 'aprobadores_id', 'id');
     }
+
+    public function getCreatedAtAttribute($date)
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y');
+    }
+
+    public function getUpdatedAtAttribute($date)
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y');
+    }
+
+
 }
