@@ -1839,6 +1839,28 @@ export default class OrgChart {
                 nodeWrapper.insertBefore(nodeDiv, nodeWrapper.firstChild);
               } else {
                 let tr = document.createElement('tr');
+                tr.innerHTML = `
+                <td ${childNodes ? `colspan="${childNodes.length * 2}"` : ''}>
+                </td>
+                `;
+                tr.children[0].appendChild(nodeDiv);
+                nodeWrapper.insertBefore(tr, nodeWrapper.children[0] ? nodeWrapper.children[0] : null);
+
+              }
+              if (callback) {
+                callback();
+              }
+            })
+            .catch(function (err) {
+              console.error('Failed to creat node', err);
+            });
+        } else {
+          this._createNode(nodeData, level)
+            .then(function (nodeDiv) {
+              if (isVerticalNode) {
+                nodeWrapper.insertBefore(nodeDiv, nodeWrapper.firstChild);
+              } else {
+                let tr = document.createElement('tr');
 
                 tr.innerHTML = `
                 <td ${childNodes ? `colspan="${childNodes.length * 2}"` : ''}>
@@ -1855,28 +1877,6 @@ export default class OrgChart {
               console.error('Failed to creat node', err);
             });
         }
-      } else {
-        this._createNode(nodeData, level)
-          .then(function (nodeDiv) {
-            if (isVerticalNode) {
-              nodeWrapper.insertBefore(nodeDiv, nodeWrapper.firstChild);
-            } else {
-              let tr = document.createElement('tr');
-
-              tr.innerHTML = `
-              <td ${childNodes ? `colspan="${childNodes.length * 2}"` : ''}>
-              </td>
-            `;
-              tr.children[0].appendChild(nodeDiv);
-              nodeWrapper.insertBefore(tr, nodeWrapper.children[0] ? nodeWrapper.children[0] : null);
-            }
-            if (callback) {
-              callback();
-            }
-          })
-          .catch(function (err) {
-            console.error('Failed to creat node', err);
-          });
       }
 
 
@@ -1901,25 +1901,28 @@ export default class OrgChart {
         let tr = document.createElement('tr');
 
         tr.setAttribute('class', 'lines' + isHidden);
-        tr.innerHTML = `
+        if (nodeData.only_children.length > 0 && nodeData.estatus == 'alta') {
+          tr.innerHTML = `
             <td colspan="${childNodes.length * 2}">
               <div class="downLine"></div>
             </td>
           `;
-        nodeWrapper.appendChild(tr);
+          nodeWrapper.appendChild(tr);
+        }
       }
       // draw the lines close to children nodes
       let lineLayer = document.createElement('tr');
       lineLayer.setAttribute('class', 'lines' + isHidden);
-
-      lineLayer.innerHTML = `
-          <td class="rightLine">&nbsp;</td>
-          ${childNodes.slice(1).map(() => `
-            <td class="leftLine topLine">&nbsp;</td>
-            <td class="rightLine topLine">&nbsp;</td>
-            `).join('')}
-          <td class="leftLine">&nbsp;</td>
-      `;
+      if (nodeData.only_children.length > 0 && nodeData.estatus == 'alta') {
+        lineLayer.innerHTML = `
+       <td class="rightLine">&nbsp;</td>
+       ${childNodes.slice(1).map(() => `
+         <td class="leftLine topLine">&nbsp;</td>
+         <td class="rightLine topLine">&nbsp;</td>
+         `).join('')}
+       <td class="leftLine">&nbsp;</td>
+   `;
+      }
 
 
 
