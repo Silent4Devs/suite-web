@@ -55,8 +55,14 @@
                                 <small class="timesheet_{{ $i_hora }}_proyecto errores text-danger"></small>
                             </td>
                             <td>
+                                @php
+                                    $tareas = \App\Models\TimesheetTarea::where('proyecto_id', $hora->proyecto_id)->where('id','!=',$hora->tarea->id)->get();
+                                @endphp
                                 <select id="select_tareas{{ $i_hora }}" data-contador="{{ $i_hora }}" name="timesheet[{{ $i_hora }}][tarea]" class="select2">
                                     <option selected value="{{ $hora->tarea->id }}">{{ $hora->tarea->tarea }}</option>
+                                    @foreach ($tareas as $tarea)
+                                        <option value="{{ $tarea->id }}">{{ $tarea->tarea }}</option>
+                                    @endforeach
                                 </select>
                                 <small class="timesheet_{{ $i_hora }}_tarea errores text-danger"></small>
                             </td>
