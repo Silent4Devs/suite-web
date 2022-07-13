@@ -31,7 +31,7 @@
 
         document.addEventListener('DOMContentLoaded', ()=>{
             let fechasRegistradas = @json($fechasRegistradas);
-
+            
             let dia_semana = @json($organizacion->dia_timesheet);
 
             function toISODate(d) {
