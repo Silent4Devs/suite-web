@@ -42,7 +42,8 @@
                         <select id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id" required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
-                                <option value="{{ $proyecto->id }}">{{ $proyecto->proyecto }}</option>
+                                <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
+                                    {{ $proyecto->proyecto }}</option>
                             @endforeach
                         </select>
                     @endif
@@ -71,6 +72,7 @@
         </form>
     @endcan
     <div class="datatable-fix w-100 mt-5">
+        <span><i class="fas fa-info-circle mr-2"></i>Filtrar por: Proyecto</span>
         <table id="tabla_time_tareas" class="table w-100 tabla-animada tabla_time_tareas">
             <thead class="w-100">
                 <tr>
@@ -85,8 +87,8 @@
                 @foreach ($tareas as $tarea)
                     <tr>
                         <td wire:ignore>
-                            <textarea class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}"
-                                name="tarea" style="min-height: 40px !important; height:40px !important;">{{ $tarea->tarea }}</textarea>
+                            <textarea class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}" name="tarea"
+                                style="min-height: 40px !important; height:40px !important;">{{ $tarea->tarea }}</textarea>
                         </td>
                         <td> {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }} </td>
                         <td style="display:flex; align-items: center;">

@@ -156,4 +156,9 @@ class Area extends Model
     {
         return $this->belongsTo(Empleado::class, 'empleados_id', 'id')->alta();
     }
+
+    public function indicadores_sistema_gestion()
+    {
+        return $this->hasMany(IndicadoresSgsi::class, 'id_area');
+    }
 }
