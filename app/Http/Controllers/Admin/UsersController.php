@@ -149,12 +149,23 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $request->validate([
-                'n_empleado' => ['required', new EmpleadoNoVinculado, 'exists:empleados,n_empleado'],
+                // 'n_empleado' => ['required', new EmpleadoNoVinculado, 'exists:empleados,n_empleado'],
+                'n_empleado' => ['required'],
             ]);
             $usuario = User::find(intval($request->user_id));
-            $usuario->update([
-                'n_empleado' => $request->n_empleado,
-            ]);
+            $identificador = explode('-', $request->n_empleado);
+            $tipo = $identificador[0];
+            $numero = $identificador[1];
+
+            if ($tipo == "NEMPLEADO") {
+                $usuario->update([
+                    'n_empleado' => $numero,
+                ]);
+            } else {
+                $usuario->update([
+                    'empleado_id' => $numero,
+                ]);
+            }
 
             return response()->json(['success' => true]);
         }
