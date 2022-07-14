@@ -94,7 +94,9 @@
                                 {{ $time->empleado->name }}
                             </td>
                             <td>
-                                {{ $time->aprobador->name }}
+                                @if ($time->aprobador)
+                                    {{ $time->aprobador->name }}
+                                @endif
                             </td>
                             <td>
                                 {{ $time->empleado->area->area }}
