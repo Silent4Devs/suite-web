@@ -295,7 +295,7 @@
                                                     <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>`;
                                                     empleados.forEach(empleado => {
                                                         htmlBotones += `
-                                                            <option value="${empleado.n_empleado}">${empleado.name}</option>
+                                                            <option value="${empleado.n_empleado != null ? `NEMPLEADO-${empleado.n_empleado}`:`IDEMPLEADO-${empleado.id}`}">${empleado.name}</option>
                                                         `;
                                                     });
                                                 htmlBotones += `</select>
@@ -380,8 +380,8 @@
             }
 
             window.VincularEmpleado = function(nombre, user_id) {
-                let n_empleado = $(`#n_empleado${user_id}`).val()
-                console.log(n_empleado);
+                console.log(user_id);
+                let n_empleado = document.getElementById(`n_empleado${user_id}`).value;
                 $.ajax({
                     type: "POST",
                     url: "/admin/users/vincular",
