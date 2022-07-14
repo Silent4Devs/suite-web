@@ -48,8 +48,6 @@
                                 </div>
                             @endif
                         </div>
-
-
                     </div>
 
                     <div class="row col-12">
