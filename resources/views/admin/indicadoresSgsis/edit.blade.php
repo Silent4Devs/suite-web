@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .dotverde {
             height: 15px;
@@ -102,7 +101,6 @@
             box-shadow: 0 6px 0 #a1a1a1, 0 8px 10px rgba(0, 0, 0, .75);
 
         }
-
     </style>
 
     {{ Breadcrumbs::render('admin.indicadores-sgsis.create') }}
@@ -111,11 +109,11 @@
         enctype="multipart/form-data">
         @method('PUT')
         @csrf
-        <h5 class="col-12 titulo_general_funcion">Editar: Indicadores SGSI</h5>
+        <h5 class="col-12 titulo_general_funcion">Editar: Indicadores del Sistema de Gestión</h5>
         <div class="mt-4 card">
             <div class="card-body">
                 <div class="row">
-                    <div class="form-group col-sm-4">
+                    <div class="form-group col-sm-6">
                         <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i></i>Nombre
                             del
                             indicador</label>
@@ -129,7 +127,65 @@
                         <span class="help-block"></span>
                     </div>
 
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                        <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                        <select class="form-control {{ $errors->has('id_area') ? 'is-invalid' : '' }}" name="id_area"
+                            id="id_area" >
+                            <option value="">Seleccione un responsable</option>
+                            @foreach ($areas as $area)
+                                <option value="{{ $area->id }}"  {{ old('id_area', $area->id) == $indicadoresSgsi->id_area ? 'selected' : '' }} >
+                                    {{ $area->area }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('id_area'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('id_area') }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+
+                <div class="row">
                     <div class="form-group col-sm-4">
+                        <div class="form-group">
+                            <label for='id_empleado'><i
+                                    class="fas fa-user-tie iconos-crear"></i>Responsable</label>
+                            <select
+                                class="form-control select2 {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
+                                name='id_empleado' id='responsable_id'>
+                                <option value="">Seleccione un responsable</option>
+                                @foreach ($responsables as $responsable)
+                                    <option value="{{ $responsable->id }}"
+                                        {{ old('id_empleado', $responsable->id) == $indicadoresSgsi->id_empleado ? 'selected' : '' }}
+                                        data-area="{{ $responsable->area->area }}"
+                                        data-puesto="{{ $responsable->puesto }}">
+                                        {{ $responsable->name }} </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('id_empleado'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('id_empleado') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label><i class="fas fa-briefcase iconos-crear"></i>Puesto<sup>*</sup></label>
+                        <div class="form-control" id="responsable_puesto" readonly></div>
+                    </div>
+
+
+                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                        <label><i class="fas fa-street-view iconos-crear"></i>Área<sup>*</sup></label>
+                        <div class="form-control" id="responsable_area" readonly></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-12">
                         <div class="form-group">
                             <label for="id_proceso"><i class="fas fa-cogs iconos-crear"></i></i>Proceso</label>
                             <select class="form-control select2 {{ $errors->has('id_proceso') ? 'is-invalid' : '' }}"
@@ -137,7 +193,7 @@
                                 <option value="">Seleccione un proceso</option>
                                 @foreach ($procesos as $proceso)
                                     <option value="{{ $proceso->id }}"
-                                        {{$indicadoresSgsi->id_proceso== $proceso->id ? 'selected' : '' }}>
+                                        {{ $indicadoresSgsi->id_proceso == $proceso->id ? 'selected' : '' }}>
                                         {{ $proceso->codigo }} / {{ $proceso->nombre }}</option>
                                 @endforeach
                             </select>
@@ -150,32 +206,11 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-sm-4">
-                        <div class="form-group">
-                            <label for='id_empleado'><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
-                            <select class="form-control select2 {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
-                                name='id_empleado' id='id_empleado'>
-                                <option value="">Seleccione un responsable</option>
-                                @foreach ($responsables as $responsable)
-                                    <option value="{{ $responsable->id }}"
-                                        {{ old('id_empleado', $indicadoresSgsi->id_empleado) == $responsable->id ? 'selected' : '' }}>
-                                        {{ $responsable->name }} </option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('id_empleado'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('id_empleado') }}
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-
                 </div>
                 <div class="form-group">
                     <label for="descripcion"><i
                             class="fas fa-file-signature iconos-crear"></i>{{ trans('cruds.sede.fields.descripcion') }}</label>
-                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                        name="descripcion"
+                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
                         id="descripcion">{{ old('descripcion', $indicadoresSgsi->descripcion) }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
@@ -192,7 +227,8 @@
                             <label class="required" for="rojo"><span class="dotred"></span> De 0 a <span
                                     id="textorojo"></span></label>
                             <input class="form-control {{ $errors->has('rojo') ? 'is-invalid' : '' }}" type="number"
-                                name="rojo" id="rojo" value="{{ old('rojo', $indicadoresSgsi->rojo) }}" min="0" required>
+                                name="rojo" id="rojo" value="{{ old('rojo', $indicadoresSgsi->rojo) }}"
+                                min="0" required>
                             @if ($errors->has('rojo'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('rojo') }}
@@ -223,8 +259,8 @@
                             <span class="dotverde"></span>
                             De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
                         <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}" type="number"
-                            name="verde" id="verde" value="{{ old('verde', $indicadoresSgsi->verde) }}" placeholder=""
-                            min="" required>
+                            name="verde" id="verde" value="{{ old('verde', $indicadoresSgsi->verde) }}"
+                            placeholder="" min="" required>
                         @if ($errors->has('verde'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('verde') }}
@@ -237,8 +273,8 @@
                 <div class="row">
                     <div class="form-group col-sm-6 col-md-2 col-lg-2">
                         <label class="required" for="unidad"><i class="fas fa-calculator iconos-crear"></i>Unidad</label>
-                        <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}" type="text"
-                            name="unidadmedida" id="unidadmedida"
+                        <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}"
+                            type="text" name="unidadmedida" id="unidadmedida"
                             value="{{ old('unidadmedida', $indicadoresSgsi->unidadmedida) }}" required>
                         @if ($errors->has('unidadmedida'))
                             <div class="invalid-feedback">
@@ -253,7 +289,8 @@
                             <label class="required" for="meta"><i
                                     class="fas fa-flag-checkered iconos-crear"></i></i></i>Meta</label>
                             <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" type="text"
-                                name="meta" id="meta" value="{{ old('meta', $indicadoresSgsi->meta) }}" required>
+                                name="meta" id="meta" value="{{ old('meta', $indicadoresSgsi->meta) }}"
+                                required>
                             @if ($errors->has('meta'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('meta') }}
@@ -267,8 +304,8 @@
                         <div class="form-group">
                             <label class="required" for="frecuencia"><i
                                     class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
-                            <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}" type="text"
-                                name="frecuencia" id="frecuencia"
+                            <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}"
+                                type="text" name="frecuencia" id="frecuencia"
                                 value="{{ old('frecuencia', $indicadoresSgsi->frecuencia) }}" required>
                             @if ($errors->has('frecuencia'))
                                 <div class="invalid-feedback">
@@ -296,9 +333,11 @@
                     </div>
 
                     <div class="form-group col-sm-6 col-md-2 col-lg-2">
-                        <label class="required" for="ano"><i class="fas fa-calendar-alt iconos-crear"></i>Año</label>
-                        <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}" type="text"
-                            name="ano" id="ano" value="{{ old('ano', $indicadoresSgsi->ano) }}">
+                        <label class="required" for="ano"><i
+                                class="fas fa-calendar-alt iconos-crear"></i>Año</label>
+                        <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}"
+                            type="text" name="ano" id="ano"
+                            value="{{ old('ano', $indicadoresSgsi->ano) }}">
                         @if ($errors->has('ano'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('ano') }}
@@ -369,13 +408,10 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="text-center form-group col-12" style="margin-left:15px;">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-info" type="submit">
-                        {{ trans('global.save') }}
-                    </button>
-                </div>
+            <div class="text-right form-group col-md-12">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <input type="submit" value="Guardar"
+                    class="btn btn-success btn_enviar_form_modal">
             </div>
 
         </div>
@@ -524,5 +560,30 @@
         });
     </script>
 
+<script>
+    if (document.querySelector('#responsable_id') != null) {
 
+        let responsable = document.querySelector('#responsable_id');
+        let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
+        let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
+        document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto_init);
+        document.getElementById('responsable_area').innerHTML = recortarTexto(area_init);
+
+        responsable.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = e.target.options[e.target.selectedIndex].getAttribute('data-area');
+            let puesto = e.target.options[e.target.selectedIndex].getAttribute('data-puesto');
+            console.log(e.target.options[e.target.selectedIndex]);
+            document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto)
+            document.getElementById('responsable_area').innerHTML = recortarTexto(area)
+        })
+    }
+
+    function recortarTexto(texto, length = 30) {
+        let trimmedString = texto?.length > length ?
+            texto.substring(0, length - 3) + "..." :
+            texto;
+        return trimmedString;
+    }
+</script>
 @endsection

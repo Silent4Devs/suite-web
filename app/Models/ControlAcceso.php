@@ -34,6 +34,11 @@ class ControlAcceso extends Model implements HasMedia
     protected $fillable = [
         'descripcion',
         'controlA_id',
+        'justificacion',
+        'fecha_inicio',
+        'fecha_fin',
+        'responsable_id',
+        'tipo_control_acceso_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -64,5 +69,10 @@ class ControlAcceso extends Model implements HasMedia
     public function documentos_controlA()
     {
         return $this->hasMany(DocumentoControlAcceso::class, 'controlA_id', 'id');
+    }
+
+    public function tipo_de_permiso()
+    {
+        return $this->belongsTo(TipoDePermiso::class, 'tipo_control_acceso_id');
     }
 }

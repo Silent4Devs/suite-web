@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .dotverde {
             height: 15px;
@@ -102,19 +101,19 @@
             box-shadow: 0 6px 0 #a1a1a1, 0 8px 10px rgba(0, 0, 0, .75);
 
         }
-
     </style>
 
     {{ Breadcrumbs::render('admin.indicadores-sgsis.create') }}
 
     <form method="POST" action="{{ route('admin.indicadores-sgsis.store') }}" enctype="multipart/form-data">
         @csrf
-        <h5 class="col-12 titulo_general_funcion">Registrar: Indicadores SGSI</h5>
+        <h5 class="col-12 titulo_general_funcion">Registrar: Indicadores del Sistema de Gestión</h5>
         <div class="mt-4 card">
             <div class="card-body">
                 <div class="row">
-                    <div class="form-group col-sm-4">
-                        <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i></i>Nombre del
+                    <div class="form-group col-sm-6">
+                        <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i></i>Nombre
+                            del
                             indicador</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                             name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
@@ -126,7 +125,63 @@
                         <span class="help-block"></span>
                     </div>
 
-                    <div class="form-group col-sm-4">
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                        <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                        <select class="form-control {{ $errors->has('id_area') ? 'is-invalid' : '' }}" name="id_area"
+                            id="id_area">
+                            @foreach ($areas as $area)
+                                <option value="{{ $area->id }}">
+                                    {{ $area->area }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('id_area'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('id_area') }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-4 mt-3">
+                        <div class="form-group">
+                            <label for='id_empleado'><i
+                                    class="fas fa-user-tie iconos-crear"></i>Responsable</label>
+                            <select
+                                class="form-control select2 {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
+                                name='id_empleado' id='responsable_id'>
+                                <option value="">Seleccione un responsable</option>
+                                @foreach ($responsables as $responsable)
+                                    <option value="{{ $responsable->id }}"
+                                        data-area="{{ $responsable->area->area }}"
+                                        data-puesto="{{ $responsable->puesto }}">
+                                        {{ $responsable->name }}{{ $responsable->id }} </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('responsable_id'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('responsable_id') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+    
+                    <div class="form-group col-md-4 mt-3">
+                        <label><i class="fas fa-briefcase iconos-crear"></i>Puesto<sup>*</sup></label>
+                        <div class="form-control" id="responsable_puesto" readonly></div>
+                    </div>
+    
+    
+                    <div class="form-group col-sm-12 col-md-4 col-lg-4 mt-3">
+                        <label><i class="fas fa-street-view iconos-crear"></i>Área<sup>*</sup></label>
+                        <div class="form-control" id="responsable_area" readonly></div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group col-sm-12">
                         <div class="form-group">
                             <label for="id_proceso"><i class="fas fa-cogs iconos-crear"></i></i>Proceso</label>
                             <select class="form-control select2 {{ $errors->has('id_proceso') ? 'is-invalid' : '' }}"
@@ -146,31 +201,12 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-sm-4">
-                        <div class="form-group">
-                            <label for='id_empleado'><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
-                            <select class="form-control select2 {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
-                                name='id_empleado' id='id_empleado'>
-                                <option value="">Seleccione un responsable</option>
-                                @foreach ($responsables as $responsable)
-                                    <option value="{{ $responsable->id }}">
-                                        {{ $responsable->name }} </option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('id_empleado'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('id_empleado') }}
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-
                 </div>
                 <div class="form-group">
                     <label for="descripcion"><i
                             class="fas fa-file-signature iconos-crear"></i>{{ trans('cruds.sede.fields.descripcion') }}</label>
-                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                        name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
+                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
+                        id="descripcion">{{ old('descripcion') }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -216,7 +252,8 @@
                             <span class="dotverde"></span>
                             De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
                         <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}" type="number"
-                            name="verde" id="verde" value="{{ old('verde', '') }}" placeholder="" min="" required>
+                            name="verde" id="verde" value="{{ old('verde', '') }}" placeholder="" min=""
+                            required>
                         @if ($errors->has('verde'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('verde') }}
@@ -228,9 +265,11 @@
 
                 <div class="row">
                     <div class="form-group col-sm-2">
-                        <label class="required" for="unidad"><i class="fas fa-calculator iconos-crear"></i>Unidad</label>
-                        <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}" type="text"
-                            name="unidadmedida" id="unidadmedida" value="{{ old('unidadmedida', '') }}" required>
+                        <label class="required" for="unidad"><i
+                                class="fas fa-calculator iconos-crear"></i>Unidad</label>
+                        <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}"
+                            type="text" name="unidadmedida" id="unidadmedida"
+                            value="{{ old('unidadmedida', '') }}" required>
                         @if ($errors->has('unidadmedida'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('unidadmedida') }}
@@ -241,7 +280,8 @@
 
                     <div class="form-group col-sm-2">
                         <div class="form-group">
-                            <label class="required" for="meta"><i class="fas fa-flag-checkered iconos-crear"></i></i></i>Meta</label>
+                            <label class="required" for="meta"><i
+                                    class="fas fa-flag-checkered iconos-crear"></i></i></i>Meta</label>
                             <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" type="text"
                                 name="meta" id="meta" value="{{ old('meta', '') }}" required>
                             @if ($errors->has('meta'))
@@ -255,9 +295,11 @@
 
                     <div class="form-group col-sm-6 col-md-4 col-lg-4">
                         <div class="form-group">
-                            <label class="required" for="frecuencia"><i class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
-                            <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}" type="text"
-                                name="frecuencia" id="frecuencia" value="{{ old('frecuencia', '') }}" required>
+                            <label class="required" for="frecuencia"><i
+                                    class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
+                            <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}"
+                                type="text" name="frecuencia" id="frecuencia" value="{{ old('frecuencia', '') }}"
+                                required>
                             @if ($errors->has('frecuencia'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('frecuencia') }}
@@ -269,7 +311,8 @@
 
                     <div class="form-group col-sm-2">
                         <div class="form-group">
-                            <label class="required" for="no_revisiones"><i class="fas fa-clipboard-check iconos-crear"></i>Revisiones</label>
+                            <label class="required" for="no_revisiones"><i
+                                    class="fas fa-clipboard-check iconos-crear"></i>Revisiones</label>
                             <input class="form-control {{ $errors->has('no_revisiones') ? 'is-invalid' : '' }}"
                                 type="number" name="no_revisiones" id="no_revisiones" min="0"
                                 value="{{ old('no_revisiones', '') }}" required>
@@ -283,9 +326,10 @@
                     </div>
 
                     <div class="form-group col-sm-2">
-                        <label class="required" for="ano"><i class="fas fa-calendar-alt iconos-crear"></i>Año</label>
-                        <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}" type="text"
-                            name="ano" id="ano" value="{{ old('ano', '') }}" required>
+                        <label class="required" for="ano"><i
+                                class="fas fa-calendar-alt iconos-crear"></i>Año</label>
+                        <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}"
+                            type="text" name="ano" id="ano" value="{{ old('ano', '') }}" required>
                         @if ($errors->has('ano'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('ano') }}
@@ -354,9 +398,9 @@
 
                     </div>
 
-                     <div class="mt-4 text-right form-group col-12">
+                    <div class="mt-4 text-right form-group col-12">
                         <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                        <button class="btn btn-danger" type="submit">{{ trans('global.save') }}</button>
+                        <input type="submit" value="Guardar" class="btn btn-success btn_enviar_form_modal">                    
                     </div>
                 </div>
             </div>
@@ -507,5 +551,32 @@
         });
     </script>
 
+
+<script>
+    if (document.querySelector('#responsable_id') != null) {
+
+        let responsable = document.querySelector('#responsable_id');
+        let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
+        let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
+        document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto_init);
+        document.getElementById('responsable_area').innerHTML = recortarTexto(area_init);
+
+        responsable.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = e.target.options[e.target.selectedIndex].getAttribute('data-area');
+            let puesto = e.target.options[e.target.selectedIndex].getAttribute('data-puesto');
+            console.log(e.target.options[e.target.selectedIndex]);
+            document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto)
+            document.getElementById('responsable_area').innerHTML = recortarTexto(area)
+        })
+    }
+
+    function recortarTexto(texto, length = 30) {
+        let trimmedString = texto?.length > length ?
+            texto.substring(0, length - 3) + "..." :
+            texto;
+        return trimmedString;
+    }
+</script>
 
 @endsection

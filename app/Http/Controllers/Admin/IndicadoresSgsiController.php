@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyIndicadoresSgsiRequest;
+use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\IndicadoresSgsi;
 use App\Models\Proceso;
@@ -20,9 +21,15 @@ class IndicadoresSgsiController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('indicadores_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $area_empleado = auth()->user()->empleado->area->id;
+        $isAdmin = in_array('Admin', auth()->user()->roles->pluck('title')->toArray());
         if ($request->ajax()) {
-            $query = IndicadoresSgsi::orderByDesc('id')->get();
+            if($isAdmin){
+                $query = IndicadoresSgsi::orderBy('id')->get();
+            }else{
+                $query = IndicadoresSgsi::where('id_area',$area_empleado)->orderBy('id')->get();
+            }
+           
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -49,6 +56,14 @@ class IndicadoresSgsiController extends Controller
 
             $table->editColumn('nombre', function ($row) {
                 return $row->nombre ? $row->nombre : '';
+            });
+
+            $table->editColumn('area', function ($row) {
+                return $row->area ? $row->area->area : 'n/a';
+            });
+         
+            $table->editColumn('responsable_name', function ($row) {
+                return $row->empleado ? $row->empleado  :'';
             });
 
             $table->editColumn('año', function ($row) {
@@ -99,9 +114,10 @@ class IndicadoresSgsiController extends Controller
         abort_if(Gate::denies('indicadores_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = Empleado::alta()->get();
+        $areas=Area::get();
         $procesos = Proceso::get();
 
-        return view('admin.indicadoresSgsis.create', compact('responsables', 'procesos'));
+        return view('admin.indicadoresSgsis.create', compact('areas','responsables', 'procesos'));
     }
 
     public function store(Request $request)
@@ -119,8 +135,11 @@ class IndicadoresSgsiController extends Controller
 
         $procesos = Proceso::get();
         $responsables = Empleado::alta()->get();
+        $areas=Area::get();
+        $procesos = Proceso::get();
 
-        return view('admin.indicadoresSgsis.edit', compact('procesos', 'indicadoresSgsi', 'responsables'));
+
+        return view('admin.indicadoresSgsis.edit', compact('areas','procesos', 'indicadoresSgsi', 'responsables'));
     }
 
     public function update(Request $request, IndicadoresSgsi $indicadoresSgsi)
@@ -240,5 +259,13 @@ class IndicadoresSgsiController extends Controller
 
         return view('admin.indicadoresSgsis.evaluacion')
             ->with('indicadoresSgsis', $indicadoresSgsis);
+    }
+
+    public function indicadoresDashboard(Request $request)
+    {
+        $indicadores = IndicadoresSgsi::with('evaluacion_indicadors')->get();
+
+
+        return view('admin.indicadoresSgsis.dashboard', compact('indicadores'));
     }
 }

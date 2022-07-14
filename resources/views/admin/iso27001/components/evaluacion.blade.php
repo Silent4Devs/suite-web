@@ -7,7 +7,7 @@
             <li><a href="{{ route('admin.indicadores-sgsis.index') }}">
                     <div>
                         <i class="bi bi-window-desktop"></i> <br>
-                        Indicadores SGSI
+                        Indicadores del Sistema de Gestión
                     </div>
                 </a>
             </li>
