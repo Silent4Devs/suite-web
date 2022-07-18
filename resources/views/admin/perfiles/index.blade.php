@@ -137,7 +137,7 @@
                 }
             }
             //dtButtons.push(deleteButton)
-            @can('niveles_jerarquicos_agregar')
+
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nuevo',
@@ -151,7 +151,7 @@
                 }
             };
             @can('niveles_jerarquicos_agregar')
-            dtButtons.push(btnAgregar);
+                dtButtons.push(btnAgregar);
             @endcan
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -163,8 +163,7 @@
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 ajax: "{{ route('admin.perfiles.index') }}",
-                columns: [
-                    {
+                columns: [{
                         data: 'perfil',
                         name: 'perfil'
                     },
@@ -183,22 +182,7 @@
                 ]
             };
             let table = $('.datatable-Perfiles').DataTable(dtOverrideGlobals);
-            // buttons: dtButtons
-            // })
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+
         });
     </script>
-
-
 @endsection
