@@ -4,7 +4,7 @@
         <div class="col-md-6" style="align-self: center">
             <div class="mx-4 card">
                 <div class="p-4 card-body">
-                    @if ($existsOrganizacion)
+                    @if ($organizacion)
                         <div class="text-center d-flex align-items-center justify-content-center">
                             <img class="img-fluid rounded mr-2" style="width: 100px" src="{{ $organizacion->logotipo }}" />
                             <h1>{{ trans('panel.site_title') }}</h1>
