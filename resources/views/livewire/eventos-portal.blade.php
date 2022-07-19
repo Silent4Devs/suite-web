@@ -6,23 +6,23 @@
             box-shadow: 0px 0px 0px 5000px rgba(0, 0, 0, 0.2) !important;
         }
 
-        .titulo_acordeon_eventos{
+        .titulo_acordeon_eventos {
             all: unset;
             padding: 10px;
             font-size: 16px;
-            color:#747474;
+            color: #747474;
         }
 
         .acordeon_separado {
             margin-top: 15px;
         }
 
-        .titulos_acordeon_i_name_i{
-             cursor: pointer;
-             display: flex;
-             justify-content: space-between;
-             align-items: center;
-             position: relative;
+        .titulos_acordeon_i_name_i {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
         }
 
         .titulos_acordeon_i_name_i span {
@@ -45,7 +45,6 @@
             left: 25px;
             font-size: 10px !important;
         }
-
     </style>
 
     <script src="https://cdn.ckeditor.com/4.17.1/standard-all/ckeditor.js"></script>
@@ -89,13 +88,13 @@
                     <span>Directorio</span>
                 </a>
             @endcan
-                @can('portal_comunicacion_mostrar_documentos')
+            @can('portal_comunicacion_mostrar_documentos')
                 <a class="btn-silent" href="{{ asset('admin/documentos/publicados') }}">
                     <i class="bi bi-folder2 mr-2"></i>
                     <span>Documentos</span>
                 </a>
-                @endcan
-            @if($politica_existe != 0)
+            @endcan
+            @if ($politica_existe != 0)
                 @can('portal_comunicacion_mostrar_politicas')
                     <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}">
                         <i class="bi bi-collection mr-2"></i>
@@ -103,7 +102,7 @@
                     </a>
                 @endcan
             @endif
-            @if($comite_existe != 0)
+            @if ($comite_existe != 0)
                 @can('portal_comunicacion_mostrar_comites')
                     <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}">
                         <i class="bi bi-person-bounding-box mr-2"></i>
@@ -131,54 +130,51 @@
             @can('portal_comunicacion_mostrar_nuevos_ingresos')
                 <div x-data="{ active: 1 }" class="acordeon_separado">
                     <div x-data="{
-                            id: 1,
-                            get expanded() {
-                                return this.active === this.id
-                            },
-                            set expanded(value) {
-                                this.active = value ? this.id : null
-                            },
-                        }" role="region">
-                            <div
-                                class="titulos_acordeon_i_name_i"
-                                x-on:click="expanded = !expanded"
-                                :aria-expanded="expanded">
-                                <p class="titulo_acordeon_eventos">
-                                    <i class="mr-3 far fa-user"></i>
-                                    Nuevos ingresos
-                                    <span class="indicador_numero">{{$nuevos_contador_circulo}}</span>
-                                </p>
-                                <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
-                                <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
-                            </div>
+                        id: 1,
+                        get expanded() {
+                            return this.active === this.id
+                        },
+                        set expanded(value) {
+                            this.active = value ? this.id : null
+                        },
+                    }" role="region">
+                        <div class="titulos_acordeon_i_name_i" x-on:click="expanded = !expanded" :aria-expanded="expanded">
+                            <p class="titulo_acordeon_eventos">
+                                <i class="mr-3 far fa-user"></i>
+                                Nuevos ingresos
+                                <span class="indicador_numero">{{ $nuevos_contador_circulo }}</span>
+                            </p>
+                            <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
+                            <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
+                        </div>
 
-                            <div x-show="expanded" x-collapse>
-                                <div class="caja_nuevo">
-                                    @forelse($nuevos as $nuevo)
-                                        <div class="nuevo">
-                                            <div class="img_nuevo">
-                                                <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
-                                                    class="">
-                                            </div>
-                                            <h5 class="nombre_nuevo">{{ $nuevo->name }}</h5>
-                                            <div class="datos_nuevo">
-                                                <p>{{ $nuevo->puesto }}<br>
-                                                    @if (is_null($nuevo->area->area))
-                                                        No hay Area
-                                                    @else
-                                                        {{ $nuevo->area->area }}
-                                                    @endif
-                                                </p>
-                                                <h6 class="mt-3">Fecha de ingreso</h6>
-                                                <span>{{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}</span>
-                                            </div>
+                        <div x-show="expanded" x-collapse>
+                            <div class="caja_nuevo">
+                                @forelse($nuevos as $nuevo)
+                                    <div class="nuevo">
+                                        <div class="img_nuevo">
+                                            <img src="{{ asset('storage/empleados/imagenes/' . $nuevo->avatar) }}"
+                                                class="">
                                         </div>
-                                    @empty
-                                        <div class="nuevo">No hay nuevos ingresos registrados en este mes.</div>
-                                    @endforelse
+                                        <h5 class="nombre_nuevo">{{ $nuevo->name }}</h5>
+                                        <div class="datos_nuevo">
+                                            <p>{{ $nuevo->puesto }}<br>
+                                                @if (is_null($nuevo->area->area))
+                                                    No hay Area
+                                                @else
+                                                    {{ $nuevo->area->area }}
+                                                @endif
+                                            </p>
+                                            <h6 class="mt-3">Fecha de ingreso</h6>
+                                            <span>{{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}</span>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="nuevo">No hay nuevos ingresos registrados en este mes.</div>
+                                @endforelse
 
-                                </div>
                             </div>
+                        </div>
 
                     </div>
                 </div>
@@ -188,23 +184,20 @@
             @can('portal_comunicacion_mostrar_cumpleaños')
                 <div x-data="{ active: 1 }" class="acordeon_separado">
                     <div x-data="{
-                            id: 1,
-                            get expanded() {
-                                return this.active === this.id
-                            },
-                            set expanded(value) {
-                                this.active = value ? this.id : null
-                            },
-                        }" role="region">
+                        id: 1,
+                        get expanded() {
+                            return this.active === this.id
+                        },
+                        set expanded(value) {
+                            this.active = value ? this.id : null
+                        },
+                    }" role="region">
 
-                        <div
-                            class="titulos_acordeon_i_name_i"
-                            x-on:click="expanded = !expanded"
-                            :aria-expanded="expanded">
+                        <div class="titulos_acordeon_i_name_i" x-on:click="expanded = !expanded" :aria-expanded="expanded">
                             <p class="titulo_acordeon_eventos">
                                 <i class="mr-3 fas fa-birthday-cake"></i>
                                 Cumpleaños
-                                <span class="indicador_numero">{{$cumpleaños_contador_circulo}}</span>
+                                <span class="indicador_numero">{{ $cumpleaños_contador_circulo }}</span>
                             </p>
                             <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
                             <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
@@ -215,8 +208,8 @@
                                 @forelse($cumpleaños as $cumple)
                                     <div class="nuevo">
                                         <div class="img_nuevo">
-                                                <img src="{{ asset('storage/empleados/imagenes/' . $cumple->avatar) }}"
-                                                    class="">
+                                            <img src="{{ asset('storage/empleados/imagenes/' . $cumple->avatar) }}"
+                                                class="">
 
                                         </div>
                                         <h5 class="nombre_nuevo">{{ $cumple->name }}</h5>
@@ -243,26 +236,26 @@
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', true)
                                                     ->count();
-
+                                                
                                                 $cumples_felicitados_like_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
                                                     ->where('felicitador_id', auth()->user()->empleado->id)
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', true)
                                                     ->count();
-
+                                                
                                                 $cumples_felicitados_like = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
                                                     ->where('felicitador_id', auth()->user()->empleado->id)
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', true)
                                                     ->first();
-
+                                                
                                                 $cumples_felicitados_comentarios_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
                                                     ->where('felicitador_id', auth()->user()->empleado->id)
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', false)
                                                     ->where('comentarios', '!=', null)
                                                     ->count();
-
+                                                
                                                 $cumples_felicitados_comentarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
                                                     ->where('felicitador_id', auth()->user()->empleado->id)
                                                     ->whereYear('created_at', $hoy->format('Y'))
@@ -272,10 +265,10 @@
                                             @endphp
                                             <div class="opciones_felicitar">
                                                 <button style="all:unset;"
-                                                    {{ $cumples_felicitados_like_contador == 0 ? 'wire:click=felicitarCumpleaños(' . $cumple->id . ')' : 'wire:click=felicitarCumpleañosDislike(' . $cumples_felicitados_like->id . ')'}}>
+                                                    {{ $cumples_felicitados_like_contador == 0 ? 'wire:click=felicitarCumpleaños(' . $cumple->id . ')' : 'wire:click=felicitarCumpleañosDislike(' . $cumples_felicitados_like->id . ')' }}>
 
 
-                                                    @if($cumples_felicitados_like_contador_usuarios == 0)
+                                                    @if ($cumples_felicitados_like_contador_usuarios == 0)
                                                         <i class="far fa-thumbs-up" style="color:#888;"></i>
                                                         <font style="color:#888">
                                                             {{ $cumples_felicitados_like_contador_usuarios }}
@@ -287,17 +280,19 @@
                                                         </font>
                                                     @endif
 
-                                                    <i class="fas fa-spinner fa-spin" style="font-size: 15pt; background-color: rgba(255, 255, 255, 0.3); margin-left:-30px; position: absolute;" wire:loading>
+                                                    <i class="fas fa-spinner fa-spin"
+                                                        style="font-size: 15pt; background-color: rgba(255, 255, 255, 0.3); margin-left:-30px; position: absolute;"
+                                                        wire:loading>
                                                     </i>
                                                 </button>
                                                 <i class="fas fa-comment-dots btn_modal modal_comentarios"
                                                     {{-- data-toggle="modal"
-                                                    data-target="#cumpleaños_comentarios_Modal"  --}}
-                                                    data-comentarios-contador="{{$cumples_felicitados_comentarios_contador}}"
-                                                    data-cumple-id="{{$cumple->id}}"
-                                                    data-comentarios-id="{{$cumples_felicitados_comentarios ? $cumples_felicitados_comentarios->id :  null}}"
-                                                    data-comentarios-comentarios="{{ $cumples_felicitados_comentarios ? $cumples_felicitados_comentarios->comentarios : null}}"
-                                                    data-cumple-nombre="{{$cumple->name}}"></i>
+                                                    data-target="#cumpleaños_comentarios_Modal" --}}
+                                                    data-comentarios-contador="{{ $cumples_felicitados_comentarios_contador }}"
+                                                    data-cumple-id="{{ $cumple->id }}"
+                                                    data-comentarios-id="{{ $cumples_felicitados_comentarios ? $cumples_felicitados_comentarios->id : null }}"
+                                                    data-comentarios-comentarios="{{ $cumples_felicitados_comentarios ? $cumples_felicitados_comentarios->comentarios : null }}"
+                                                    data-cumple-nombre="{{ $cumple->name }}"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -314,23 +309,21 @@
             @can('portal_comunicacion_mostrar_aniversarios')
                 <div x-data="{ active: 1 }" class="acordeon_separado">
                     <div x-data="{
-                            id: 1,
-                            get expanded() {
-                                return this.active === this.id
-                            },
-                            set expanded(value) {
-                                this.active = value ? this.id : null
-                            },
-                        }" role="region">
+                        id: 1,
+                        get expanded() {
+                            return this.active === this.id
+                        },
+                        set expanded(value) {
+                            this.active = value ? this.id : null
+                        },
+                    }" role="region">
 
-                        <div
-                            class="titulos_acordeon_i_name_i"
-                            x-on:click="expanded = !expanded"
+                        <div class="titulos_acordeon_i_name_i" x-on:click="expanded = !expanded"
                             :aria-expanded="expanded">
                             <p class="titulo_acordeon_eventos">
                                 <i class="mr-3 fas fa-medal"></i>
                                 Aniversarios
-                                <span class="indicador_numero">{{$aniversarios_contador_circulo}}</span>
+                                <span class="indicador_numero">{{ $aniversarios_contador_circulo }}</span>
                             </p>
                             <span x-show="expanded" aria-hidden="true"><i class="fas fa-chevron-up"></i></span>
                             <span x-show="!expanded" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
@@ -339,11 +332,10 @@
                         <div x-show="expanded" x-collapse>
                             <div class="caja_nuevo">
                                 @forelse($aniversarios as $aniversario)
-
                                     <div class="nuevo">
                                         <div class="img_nuevo">
-                                                <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
-                                                    class="">
+                                            <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
+                                                class="">
                                         </div>
                                         <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
                                         <div class="datos_nuevo">
@@ -371,13 +363,14 @@
             @endcan
 
 
-            <div class="modal fade" id="cumpleaños_comentarios_Modal" tabindex="-1"
-                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
+            <div class="modal fade" id="cumpleaños_comentarios_Modal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
 
-                            <label><i class="fas fa-birthday-cake iconos-crear"></i> Envia tus felicitaciones a <strong id="nombre_cumple"></strong></label>
+                            <label><i class="fas fa-birthday-cake iconos-crear"></i> Envia tus felicitaciones a <strong
+                                    id="nombre_cumple"></strong></label>
 
                             <div id="formulario_comentarios"></div>
                             <div style="background-color: rgba(255, 255, 255, 0.1); position:fixed; z-index:99999999; width: 100%; height: 100%; justify-content: center; align-items: center; top: 0; left:0;"
@@ -399,11 +392,7 @@
                     document.getElementById('contenedor_cumples').addEventListener('click', function(e) {
                         if (e.target.classList.contains('modal_comentarios')) {
 
-        document.addEventListener('DOMContentLoaded', function(){
-            document.getElementById('contenedor_cumples').addEventListener('click', function(e){
-                if (e.target.classList.contains('modal_comentarios')) {
-
-                    document.getElementById('formulario_comentarios').innerHTML = null;
+                            document.getElementById('formulario_comentarios').innerHTML = null;
 
                             const comentarios_contador = e.target.getAttribute('data-comentarios-contador');
                             const cumple_id = e.target.getAttribute('data-cumple-id');
@@ -446,13 +435,12 @@
 
 
 
-                    $('.modal').modal('show');
-                }
-            });
-
                             $('.modal').modal('show');
                         }
                     });
+
+
+
 
                     document.querySelector('.modal').addEventListener('click', function(e) {
                         if (e.target.getAttribute('id') == 'btn_guardar') {
