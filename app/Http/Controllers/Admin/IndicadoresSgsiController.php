@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyIndicadoresSgsiRequest;
 use App\Models\Area;
+use App\Models\DashboardIndicadorSG;
 use App\Models\Empleado;
 use App\Models\IndicadoresSgsi;
 use App\Models\Proceso;
@@ -265,7 +266,35 @@ class IndicadoresSgsiController extends Controller
     {
         $indicadores = IndicadoresSgsi::with('evaluacion_indicadors')->get();
 
+        $areas=Area::get();
 
-        return view('admin.indicadoresSgsis.dashboard', compact('indicadores'));
+        $porcentajeCumplimiento=DashboardIndicadorSG::first();
+
+        return view('admin.indicadoresSgsis.dashboard', compact('porcentajeCumplimiento','areas','indicadores'));
     }
+
+    public function indicadoresDashboardPorcentaje(Request $request)
+    {
+        $request->validate([
+            'porcentaje'=>'required|numeric|min:0|max:100'
+        ],[
+            'porcentaje.required'=>'Porcentaje requerido',
+            'porcentaje.min'=>'El porcentaje debe ser mayor o igual a 0',
+            'porcentaje.max'=>"El porcentaje debe ser menor o igual a 100"
+
+        ]);
+
+       $porcentajeExists=DashboardIndicadorSG::first();
+       if(is_null($porcentajeExists)){
+        DashboardIndicadorSG::create([
+            'porcentaje_cumplimiento'=>$request->porcentaje,
+        ]);
+       }else{
+        DashboardIndicadorSG::first()->update([
+            'porcentaje_cumplimiento'=>$request->porcentaje,
+        ]);
+        return response()->json(['estatus'=>200]);
+       }
+    }
+
 }
