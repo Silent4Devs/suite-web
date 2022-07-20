@@ -146,6 +146,7 @@ class Empleado extends Model
         'fecha_baja',
         'razon_baja',
         'semanas_min_timesheet',
+        'vacante_activa'
     ];
 
     public function getActualBirdthdayAttribute()
@@ -357,6 +358,11 @@ class Empleado extends Model
     public function scopeAlta($query)
     {
         return $query->where('estatus', 'alta');
+    }
+
+    public function scopeVacanteActiva($query)
+    {
+        return $query->where('vacante_activa', true);
     }
 
     public function scopeBaja($query)

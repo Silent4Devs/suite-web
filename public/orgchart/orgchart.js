@@ -545,6 +545,10 @@ export default class OrgChart {
     }
   }
 
+  // __deleteVacant(id) {
+  //   console.log(id);
+  // }
+
   _renderEmployeeInformation() {
     let dataSource = event.currentTarget.getAttribute('data-source');
     let dataSourceJSON = JSON.parse(dataSource);
@@ -619,6 +623,59 @@ export default class OrgChart {
     let c_more = document.createElement('div');
     title_info_text.classList.add('side');
     c_more.classList.add('c_more');
+
+    //Only for employees
+    window.deleteVacant = (id) => {
+      Swal.fire({
+        title: '¿Desea remover esta vacante?',
+        text: "Esta acción no se puede deshacer",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Remover',
+        cancelButtonText: 'Cancelar',
+        showLoaderOnConfirm: true,
+        preConfirm: (empleadoId) => {
+          return fetch(`empleados/baja/remover-vacante`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            body: JSON.stringify({ id })
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(response.statusText)
+              }
+              return response.json()
+            })
+            .catch(error => {
+              Swal.showValidationMessage(
+                `Request failed: ${error}`
+              )
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (result.value.status == 200) {
+            Swal.fire(
+              'Buen Trabajo',
+              result.value.message,
+              'success'
+            ).then(() => {
+              if (document.getElementById('reloadOrg')) {
+                document.getElementById('reloadOrg')?.click();
+              } else {
+                window.location.reload();
+              }
+            })
+          }
+        }
+      })
+    }
+    // end only for employees
+
     let content_more = dataSourceJSON.estatus == 'alta' ? `
         <h4 class="m-0">Información de Contácto</h4>
         <div class="row container mb-2">
@@ -636,7 +693,13 @@ export default class OrgChart {
         <p class="it_5"><i class="fas fa-info-circle" style="margin: 0 7px 0 0px;"></i>
           Teléfono: <span>${dataSourceJSON.telefono == null ? 'Sin dato' : dataSourceJSON.telefono}</span>
         </p>
-        ` : '';
+        ` : `
+        <div class="text-center">
+          <button class="btn btn-danger" onclick="event.preventDefault();deleteVacant('${dataSourceJSON.id
+    }')"><i class="fas fa-trash-alt mr-2"></i>Remover Vacante</button>
+        </div>
+        `;
+
     if (dataSourceJSON.supervisor != null) {
       let photo_s;
       if (dataSourceJSON.supervisor.foto == null) {
@@ -1831,30 +1894,8 @@ export default class OrgChart {
         childNodes = childNodes?.filter(function (item) {
           return item.estatus == 'alta' || item.es_supervisor;
         });
-        console.log(childNodes);
-        if (nodeData.estatus == 'alta' || nodeData.es_supervisor) {
-          this._createNode(nodeData, level)
-            .then(function (nodeDiv) {
-              if (isVerticalNode) {
-                nodeWrapper.insertBefore(nodeDiv, nodeWrapper.firstChild);
-              } else {
-                let tr = document.createElement('tr');
-                tr.innerHTML = `
-                <td ${childNodes ? `colspan="${childNodes.length * 2}"` : ''}>
-                </td>
-                `;
-                tr.children[0].appendChild(nodeDiv);
-                nodeWrapper.insertBefore(tr, nodeWrapper.children[0] ? nodeWrapper.children[0] : null);
 
-              }
-              if (callback) {
-                callback();
-              }
-            })
-            .catch(function (err) {
-              console.error('Failed to creat node', err);
-            });
-        } else {
+        if (nodeData.estatus == 'alta' || nodeData.es_supervisor) {
           this._createNode(nodeData, level)
             .then(function (nodeDiv) {
               if (isVerticalNode) {
@@ -1877,6 +1918,28 @@ export default class OrgChart {
               console.error('Failed to creat node', err);
             });
         }
+      } else {
+        this._createNode(nodeData, level)
+          .then(function (nodeDiv) {
+            if (isVerticalNode) {
+              nodeWrapper.insertBefore(nodeDiv, nodeWrapper.firstChild);
+            } else {
+              let tr = document.createElement('tr');
+
+              tr.innerHTML = `
+              <td ${childNodes ? `colspan="${childNodes.length * 2}"` : ''}>
+              </td>
+            `;
+              tr.children[0].appendChild(nodeDiv);
+              nodeWrapper.insertBefore(tr, nodeWrapper.children[0] ? nodeWrapper.children[0] : null);
+            }
+            if (callback) {
+              callback();
+            }
+          })
+          .catch(function (err) {
+            console.error('Failed to creat node', err);
+          });
       }
 
 
@@ -1901,28 +1964,25 @@ export default class OrgChart {
         let tr = document.createElement('tr');
 
         tr.setAttribute('class', 'lines' + isHidden);
-        if (nodeData.only_children.length > 0 && nodeData.estatus == 'alta') {
-          tr.innerHTML = `
+        tr.innerHTML = `
             <td colspan="${childNodes.length * 2}">
               <div class="downLine"></div>
             </td>
           `;
-          nodeWrapper.appendChild(tr);
-        }
+        nodeWrapper.appendChild(tr);
       }
       // draw the lines close to children nodes
       let lineLayer = document.createElement('tr');
       lineLayer.setAttribute('class', 'lines' + isHidden);
-      if (nodeData.only_children.length > 0 && nodeData.estatus == 'alta') {
-        lineLayer.innerHTML = `
-       <td class="rightLine">&nbsp;</td>
-       ${childNodes.slice(1).map(() => `
-         <td class="leftLine topLine">&nbsp;</td>
-         <td class="rightLine topLine">&nbsp;</td>
-         `).join('')}
-       <td class="leftLine">&nbsp;</td>
-   `;
-      }
+
+      lineLayer.innerHTML = `
+          <td class="rightLine">&nbsp;</td>
+          ${childNodes.slice(1).map(() => `
+            <td class="leftLine topLine">&nbsp;</td>
+            <td class="rightLine topLine">&nbsp;</td>
+            `).join('')}
+          <td class="leftLine">&nbsp;</td>
+      `;
 
 
 

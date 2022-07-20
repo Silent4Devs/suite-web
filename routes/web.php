@@ -56,13 +56,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Control de Ausencias- Day-Off
     Route::delete('dayOff/destroy', 'DayOffController@massDestroy')->name('dayOff.massDestroy');
     Route::resource('dayOff', 'DayOffController')->names([
-       'create' => 'dayOff.create',
-       'store' => 'dayOff.store',
-       'show' => 'dayOff.show',
-       'edit' => 'dayOff.edit',
-       'update' => 'dayOff.update',
-       'destroy' => 'dayOff.destroy',
-   ]);
+        'create' => 'dayOff.create',
+        'store' => 'dayOff.store',
+        'show' => 'dayOff.show',
+        'edit' => 'dayOff.edit',
+        'update' => 'dayOff.update',
+        'destroy' => 'dayOff.destroy',
+    ]);
 
     //Tipos de contratos
     Route::resource('recursos-humanos/tipos-contratos-empleados', 'RH\TipoContratoEmpleadoController');
@@ -486,7 +486,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Route::get('empleados/imprimir/{id}', 'EmpleadoController@imprimir')->name('imprimir');
 
     Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
-
+    Route::post('empleados/baja/remover-vacante', 'EmpleadoController@removerVacante')->name('empleados.removerVacante');
     Route::post('empleado/expediente/update', 'EmpleadoController@expedienteUpdate')->name('empleado.edit.expediente-update');
     Route::post('empleado/expediente/Restaurar', 'EmpleadoController@expedienteRestaurar')->name('empleado.edit.expediente-restaurar');
     Route::get('empleado/{empleado}/solicitud-baja', 'EmpleadoController@solicitudBaja')->name('empleado.solicitud-baja');
