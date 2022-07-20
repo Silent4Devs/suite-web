@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\TipoDePermiso;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class PermisoComponent extends Component
@@ -27,7 +28,7 @@ class PermisoComponent extends Component
             'descripcion' => $this->descripcion,
         ]);
         $this->emit('tipoStore');
-        $this->emit('render-tipo-select-component');
+        $this->emit('render-tipo-permiso-select-component');
     }
 
     public function render()
