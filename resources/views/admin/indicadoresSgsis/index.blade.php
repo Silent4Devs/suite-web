@@ -333,14 +333,18 @@
                         data: 'responsable_name',
                         render: function(data, type, row, meta) {
                             if (row.id_empleado != null) {
-                                let empleado = JSON.parse(row.responsable_name);
-                                if (type === "empleadoText") {
-                                    return empleado.name;
-                                } else {
-                                    let html =
-                                        `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${empleado?.avatar}" title="${empleado?.name}"></img>`;
+                                if(row.responsable_name!=null){
 
-                                    return `${empleado ? html: ''}`;
+                               
+                                    let empleado = JSON.parse(row.responsable_name);
+                                    if (type === "empleadoText") {
+                                        return empleado.name;
+                                    } else {
+                                        let html =
+                                            `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${empleado?.avatar}" title="${empleado?.name}"></img>`;
+
+                                        return `${empleado ? html: ''}`;
+                                    }
                                 }
                             }
 
