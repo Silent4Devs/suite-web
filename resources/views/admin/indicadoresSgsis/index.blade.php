@@ -333,9 +333,7 @@
                         data: 'responsable_name',
                         render: function(data, type, row, meta) {
                             if (row.id_empleado != null) {
-                                if(row.responsable_name!=null){
-
-                               
+                                if(row.responsable_name.trim()!=""){
                                     let empleado = JSON.parse(row.responsable_name);
                                     if (type === "empleadoText") {
                                         return empleado.name;
