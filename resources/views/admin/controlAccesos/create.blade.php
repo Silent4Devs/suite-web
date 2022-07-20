@@ -35,7 +35,7 @@
                                 <option value="{{ $responsable->id }}"
                                     data-area="{{ $responsable->area->area }}"
                                     data-puesto="{{ $responsable->puesto }}">
-                                    {{ $responsable->name }}{{ $responsable->id }} </option>
+                                    {{ $responsable->name }}</option>
                             @endforeach
                         </select>
                         @if ($errors->has('responsable_id'))
@@ -196,5 +196,32 @@
          return _results
      }
 }
+</script>
+
+<script>
+    if (document.querySelector('#responsable_id') != null) {
+
+        let responsable = document.querySelector('#responsable_id');
+        let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
+        let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
+        document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto_init);
+        document.getElementById('responsable_area').innerHTML = recortarTexto(area_init);
+
+        responsable.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = e.target.options[e.target.selectedIndex].getAttribute('data-area');
+            let puesto = e.target.options[e.target.selectedIndex].getAttribute('data-puesto');
+            console.log(e.target.options[e.target.selectedIndex]);
+            document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto)
+            document.getElementById('responsable_area').innerHTML = recortarTexto(area)
+        })
+    }
+
+    function recortarTexto(texto, length = 30) {
+        let trimmedString = texto?.length > length ?
+            texto.substring(0, length - 3) + "..." :
+            texto;
+        return trimmedString;
+    }
 </script>
 @endsection

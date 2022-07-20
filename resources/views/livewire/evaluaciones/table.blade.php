@@ -46,3 +46,7 @@
         @endforeach
     </tbody>
 </table>
+
+<div class="mt-4 text-right col-sm-12 col-lg-12 col-md-12">
+    <a href="{{route('admin.indicadores-sgsis.index')}}" class="btn_cancelar" type="submit">Cerrar</a>
+</div>

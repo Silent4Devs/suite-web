@@ -354,6 +354,11 @@ Breadcrumbs::for('admin.indicadores-sgsis.create', function ($trail) {
     $trail->push('Formulario', route('admin.indicadores-sgsis.create'));
 });
 
+Breadcrumbs::for('admin.indicadores-dashboard', function ($trail) {
+    $trail->parent('admin.indicadores-sgsis.index');
+    $trail->push('Dashboard', route('admin.indicadores-dashboard'));
+});
+
 Breadcrumbs::for('admin.incidentes-de-seguridads.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Evaluacion', route('admin.iso27001.index') . '#evaluacion');
