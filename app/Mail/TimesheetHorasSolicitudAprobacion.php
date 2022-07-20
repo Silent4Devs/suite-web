@@ -35,6 +35,6 @@ class TimesheetHorasSolicitudAprobacion extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.timesheet.timesheet_solicitud_aprobacion')->subject('Timesheet - Solicitud de Aprobacion de Jornada Laboral ' . $this->timesheet_nuevo->semana_text);
+        return $this->view('mails.timesheet.timesheet_solicitud_aprobacion')->subject('Timesheet - Solicitud de Aprobación de horas de la semana del ' . $this->timesheet_nuevo->semana_text);
     }
 }
