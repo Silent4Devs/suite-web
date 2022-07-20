@@ -45,8 +45,7 @@ class IndicadoresSgsi extends Model
     use SoftDeletes;
     use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    
     protected $table = 'indicadores_sgsis';
 
     protected $casts = [

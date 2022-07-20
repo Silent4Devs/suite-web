@@ -4,6 +4,7 @@
     @include('livewire.evaluacionobjetivos.form')
 
     <div class="btn-group col-sm-4">
+        
         <button id="btnGuardarCalificaciones" type="submit" class="btn-success btn green" wire:loading.attr="disabled"
             wire:target="store" wire:click.prevent="store">
             <i class="fas fa-spinner fa-pulse" wire:loading wire:target="store"></i>

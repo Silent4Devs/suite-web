@@ -22,7 +22,7 @@ class TipoPermisoSelectComponent extends Component
     {
         $this->tipos = TipoDePermiso::get();
 
-        return view('livewire.tipo-permiso-select-component');
+        return view('livewire.tipo-permiso-select-component', ['tipos' => $this->tipos]);
     }
 
     public function hydrate()
