@@ -1535,6 +1535,15 @@ class EmpleadoController extends Controller
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
 
+    public function removerVacante(Request $request)
+    {
+        $empleado = Empleado::find($request->id);
+        $empleado->update([
+            'vacante_activa' => false,
+        ]);
+        return response()->json(['status' => 200, 'message' => 'Vacante eliminada']);
+    }
+
     public function solicitudBaja(Empleado $empleado)
     {
         return view('admin.empleados.solicitudBaja', compact('empleado'));
