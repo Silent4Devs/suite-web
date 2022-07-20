@@ -40,7 +40,6 @@ export default class OrgChart {
     chart.dataset.options = JSON.stringify(opts);
     chart.setAttribute('class', 'orgchart' + (opts.chartClass !== '' ? ' ' + opts.chartClass : '') +
       (opts.direction !== 't2b' ? ' ' + opts.direction : ''));
-    // console.log("type" + typeof data);
     if (typeof data === 'object') { // local json datasource
       this.buildHierarchy(chart, opts.ajaxURL ? data : this._attachRel(data, '00'), 0);
     } else if (typeof data === 'string' && data.startsWith('#')) { // ul datasource
@@ -82,7 +81,6 @@ export default class OrgChart {
         exportBtn.style.fontSize = "14pt";
         exportCSV.title = "Exportar Organigrama a Excel/CSV";
         exportCSV.innerHTML = '<i class="fas fa-file-csv" title="Exportar"></i>';
-        // console.log(this);
         exportCSV.addEventListener('click', this._clickExportCSVButton.bind(this));
       }
       downloadBtn.setAttribute('class', 'oc-download-btn' + (opts.chartClass !== '' ? ' ' + opts.chartClass : ''));
@@ -394,7 +392,6 @@ export default class OrgChart {
     let chartContainer = document.querySelector('#chart-side');
     chartContainer.classList.add('side');
     chartContainer.classList.add('nav-shadow');
-    console.log(dataSourceJSON);
     // Close button
     let a_close = document.createElement('a');
     a_close.href = 'javascript:void(0)';
@@ -421,7 +418,6 @@ export default class OrgChart {
     let title_info_text = document.createElement('p');
     title_info_text.classList.add('side');
     // title_info_text.classList.add('title-nav');
-    console.log(dataSourceJSON.color);
     title_info_text.style.backgroundColor = `${dataSourceJSON.color}`;
     title_info_text.innerText = ``;
 
@@ -496,7 +492,6 @@ export default class OrgChart {
     else {
       photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
     }
-    // console.log(dataSourceJSON);
     photo_info.classList.add('side');
     photo_info.classList.add('img-nav');
     photo_info.style.clipPath = "circle()"
@@ -516,7 +511,6 @@ export default class OrgChart {
         <h4>Descripción</h4>
         <p class="text-justify mr-3" style="text-align: justify !important">${dataSourceJSON.descripcion}</p>
         `;
-    // console.log(dataSourceJSON.lider);
     if (dataSourceJSON.lider != null) {
       content_more += `
                 <div class="supervisor justify-content-center" style="text-align:center !important" >
@@ -544,10 +538,6 @@ export default class OrgChart {
       chartContainer.classList.remove('nav-shadow');
     }
   }
-
-  // __deleteVacant(id) {
-  //   console.log(id);
-  // }
 
   _renderEmployeeInformation() {
     let dataSource = event.currentTarget.getAttribute('data-source');
@@ -2118,7 +2108,6 @@ export default class OrgChart {
           //   }
           // }
           // let orgChart = cloneDoc.querySelector('.charContainerAll');
-          // console.log(orgChart);
           // orgChart.style.transform="scale(0.5) rotate(-90deg) rotateY(180deg)";
           // orgChart.style.background="red";
 
