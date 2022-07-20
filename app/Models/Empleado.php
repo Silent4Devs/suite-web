@@ -146,6 +146,7 @@ class Empleado extends Model
         'fecha_baja',
         'razon_baja',
         'semanas_min_timesheet',
+        'vacante_activa'
     ];
 
     public function getActualBirdthdayAttribute()
@@ -353,10 +354,19 @@ class Empleado extends Model
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
+    public function childrenOrganigrama()
+    {
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('childrenOrganigrama', 'supervisor', 'area')->vacanteActiva(); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+    }
 
     public function scopeAlta($query)
     {
         return $query->where('estatus', 'alta');
+    }
+
+    public function scopeVacanteActiva($query)
+    {
+        return $query->where('vacante_activa', true);
     }
 
     public function scopeBaja($query)
