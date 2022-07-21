@@ -20,6 +20,7 @@ class Vacaciones extends Model
         'afectados',
         'tipo_conteo',
         'inicio_conteo',
+        'fin_conteo',
         'incremento_dias',
         'periodo_corte',
     ];

@@ -38,7 +38,7 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Reglas para Days Off´s</h5>
+    <h5 class="col-12 titulo_general_funcion">Lineamientos para Days Off´s</h5>
 
     <div class="mt-5 card">
         @can('amenazas_agregar')
@@ -287,21 +287,7 @@
                                 case 2:
                                     return `
                             <div style="text-align:left">
-                                Después de 1 mes
-                            </div>
-                            `;
-                                    break;
-                                case 3:
-                                    return `
-                            <div style="text-align:left">
-                                Después de 6 meses
-                            </div>
-                            `;
-                                    break;
-                                case 4:
-                                    return `
-                            <div style="text-align:left">
-                                Después de 1 año
+                                Otro
                             </div>
                             `;
                                     break;
@@ -319,15 +305,16 @@
                         render: function(data, type, row) {
                             return `<div style="text-align:left">${data} días</div>`;
                         }
+                        
                     },
 
-                    {
-                        data: 'incremento_dias',
-                        name: 'incremento_dias',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data} días</div>`;
-                        }
-                    },
+                    // {
+                    //     data: 'incremento_dias',
+                    //     name: 'incremento_dias',
+                    //     render: function(data, type, row) {
+                    //         return `<div style="text-align:left">${data} días</div>`;
+                    //     }
+                    // },
                     {
                         data: 'periodo_corte',
                         name: 'periodo_corte',
@@ -410,7 +397,7 @@
                 let titulo_tabla = `
                 <h5>
                     <strong>
-                        Days Off´s
+                        Lineamientos para Days Off´s
                     </strong>
                 </h5>
             `;

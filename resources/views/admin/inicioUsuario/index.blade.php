@@ -140,7 +140,7 @@
                     @can('mi_perfil_mis_datos_acceder')
                         <a href="#" id="b_misDatos" onclick="almacenarMenuEnLocalStorage('misDatos')" data-tabs="s_misDatos"
                             class=""><i class="bi bi-file-person"></i>
-                            Mis Datos</a>
+                            Datos</a>
                     @endcan
                     @can('mi_perfil_mi_calendario_acceder')
                         <a href="#" id="b_calendario" onclick="almacenarMenuEnLocalStorage('calendario')"
@@ -179,6 +179,13 @@
                             <i class="bi bi-clipboard-check"></i>
                             Reportes</a>
                     @endcan
+                    @can('mi_perfil_mis_reportes_acceder')
+                    <a href="#" id="b_solicitudes" onclick="almacenarMenuEnLocalStorage('solicitudes')" data-tabs="s_solicitudes">
+                        <i class="bi bi-clipboard-check"></i>
+                        Solicitudes
+                        <span class="indicador_numero" style=" background: rgb(100, 110, 220);">{{ $solicitudes_pendientes}}</span>
+                    </a>
+                @endcan
                 </div>
             @endif
             <div class="caja_caja_secciones">
@@ -223,6 +230,13 @@
                                 </div>
                             </section>
                         @endcan
+                        @can('mi_perfil_mis_reportes_acceder')
+                        <section id="s_solicitudes" data-id="solicitudes">
+                            <div class="container">
+                                @include('admin.inicioUsuario.solicitudes')
+                            </div>
+                        </section>
+                    @endcan
                     </div>
                 @else
                     @include('admin.inicioUsuario.agenda')
