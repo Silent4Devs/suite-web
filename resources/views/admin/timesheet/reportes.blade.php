@@ -25,7 +25,6 @@
                 background-color: #fff !important;
                 border: 1px solid #fff !important;
             }
-
         }
     </style>
 

@@ -33,13 +33,15 @@ class TimesheetHorasFilas extends Component
         $proyectos_array = collect();
         $proyectos_totales = TimesheetProyecto::get();
         foreach ($proyectos_totales as $key => $proyecto) {
-            foreach ($proyecto->areas as $key => $area) {
-                if ($area['id'] == $empleado->area_id) {
-                    $proyectos_array->push([
-                        'id'=>$proyecto->id,
-                        'identificador'=>$proyecto->identificador,
-                        'proyecto'=>$proyecto->proyecto,
-                    ]);
+            if ($proyecto->estatus == 'proceso') {
+                foreach ($proyecto->areas as $key => $area) {
+                    if (($area['id'] == $empleado->area_id)) {
+                        $proyectos_array->push([
+                            'id'=>$proyecto->id,
+                            'identificador'=>$proyecto->identificador,
+                            'proyecto'=>$proyecto->proyecto,
+                        ]);
+                    }
                 }
             }
         }
