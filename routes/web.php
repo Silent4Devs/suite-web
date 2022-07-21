@@ -56,8 +56,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'edit' => 'vacaciones.edit',
         'update' => 'vacaciones.update',
         'destroy' => 'vacaciones.destroy',
-    ]);;
-
+    ]);
 
     //Control de Ausencias- Day-Off
     Route::get('vista-global-dayoff', 'DayOffController@vistaGlobal')->name('vista-global-dayoff');
@@ -574,7 +573,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Route::get('empleados/imprimir/{id}', 'EmpleadoController@imprimir')->name('imprimir');
 
     Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
-
+    Route::post('empleados/baja/remover-vacante', 'EmpleadoController@removerVacante')->name('empleados.removerVacante');
     Route::post('empleado/expediente/update', 'EmpleadoController@expedienteUpdate')->name('empleado.edit.expediente-update');
     Route::post('empleado/expediente/Restaurar', 'EmpleadoController@expedienteRestaurar')->name('empleado.edit.expediente-restaurar');
     Route::get('empleado/{empleado}/solicitud-baja', 'EmpleadoController@solicitudBaja')->name('empleado.solicitud-baja');
@@ -968,7 +967,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('indicadores-sgsisInsertar', 'IndicadoresSgsiController@IndicadorInsert')->name('indicadores-sgsisInsertar');
     Route::get('indicadores-sgsisUpdate', 'IndicadoresSgsiController@IndicadorUpdate')->name('indicadores-sgsisUpdate');
     Route::get('evaluaciones-sgsisUpdate', 'IndicadoresSgsiController@evaluacionesUpdate')->name('evaluacionesUpdate');
-
+    Route::get('indicadores/dashboard', 'IndicadoresSgsiController@indicadoresDashboard')->name('indicadores-dashboard');
+    Route::post('indicadores/porcentaje-dashboard', 'IndicadoresSgsiController@indicadoresDashboardPorcentaje')->name('indicadores-porcentaje-dashboard');
     // Indicadorincidentessis
     Route::resource('indicadorincidentessis', 'IndicadorincidentessiController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 

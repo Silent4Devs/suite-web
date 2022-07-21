@@ -48,9 +48,9 @@ class ReporteAprobador extends Component
 
     public $calendario_tabla;
 
-    public $times_faltantes_empleado;
+    public $empleados_list_global;
 
-    public $aprobador;
+    public $times_faltantes_empleado;
 
     public $semanas_totales_calendario = 0;
 
@@ -62,12 +62,14 @@ class ReporteAprobador extends Component
 
     public $fecha_inicio_empleado;
     public $fecha_fin_empleado;
-
+    public $habilitarTodos = false;
     public function mount()
     {
+        $this->habilitarTodos = false;
         $this->areas = Area::get();
 
         $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(2)->format('Y-m-d');
+        $this->fecha_fin = Carbon::now()->format('Y-m-d');
     }
 
     public function updatedAreaId($value)
@@ -79,12 +81,28 @@ class ReporteAprobador extends Component
     public function updatedFechaInicio($value)
     {
         $this->fecha_inicio = $value;
+        if ($this->fecha_inicio > now()->format('Y-m-d')) {
+            $this->alert('info', 'La fecha de inicio no puede ser posterior a la fecha de hoy', [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+            ]);
+            $this->fecha_inicio = now()->endOfMonth()->subMonths(2)->format('Y-m-d');
+        }
         $this->empleado = null;
     }
 
     public function updatedFechaFin($value)
     {
         $this->fecha_fin = $value;
+        if ($this->fecha_fin < $this->fecha_inicio) {
+            $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( ' . $this->fecha_inicio . ' )', [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+            ]);
+            $this->fecha_fin = now()->format('Y-m-d');
+        }
         $this->empleado = null;
     }
 
@@ -100,6 +118,21 @@ class ReporteAprobador extends Component
         $this->buscarEmpleado($this->empleado->id);
     }
 
+    public function obtenerEquipo($childrens)
+    {
+        $equipo_a_cargo = collect();
+
+        foreach ($childrens as $evaluador) {
+            $equipo_a_cargo->push($evaluador->id);
+
+            if (count($evaluador->children)) {
+                $equipo_a_cargo->push($this->obtenerEquipo($evaluador->children));
+            }
+        }
+
+        return $equipo_a_cargo->flatten(1)->toArray();
+    }
+
     public function render()
     {
         $this->hoy = Carbon::now();
@@ -108,7 +141,13 @@ class ReporteAprobador extends Component
 
         $this->aprobador = Empleado::find(auth()->user()->empleado->id);
         $empleados_list = $this->aprobador->children;
+        $this->empleados_list_global = $this->aprobador->children;
 
+        if ($this->habilitarTodos) {
+            $equipo_a_cargo = $this->obtenerEquipo($this->aprobador->children);
+            $empleados_list = Empleado::find($equipo_a_cargo);
+            $this->empleados_list_global = Empleado::find($equipo_a_cargo);
+        }
         //calendario tabla
         $calendario_array = [];
         $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
@@ -127,12 +166,12 @@ class ReporteAprobador extends Component
                 $month = $fecha->format('F');
                 if (!($this->buscarKeyEnArray($year, $calendario_array))) {
                     $calendario_array["{$year}"] = [
-                        'year'=>$year,
-                        'total_weeks'=>0,
-                        'total_months'=>0,
-                        'months'=>[
-                            "{$month}"=>[
-                                'weeks'=>[],
+                        'year' => $year,
+                        'total_weeks' => 0,
+                        'total_months' => 0,
+                        'months' => [
+                            "{$month}" => [
+                                'weeks' => [],
                             ],
                         ],
                     ];
@@ -184,25 +223,26 @@ class ReporteAprobador extends Component
             $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
 
             if ($this->fecha_inicio) {
-                $fecha_inicio_timesheet_empleado = Carbon::parse($empleado_list->antiguedad)->lt($this->fecha_inicio) ? $this->fecha_inicio : $empleado_list->antiguedad;
-            } else {
-                $fecha_inicio_timesheet_empleado = Carbon::parse($empleado_list->antiguedad)->lt($fecha_registro_timesheet) ? $fecha_registro_timesheet : $empleado_list->antiguedad;
+                $fecha_inicio_timesheet_empleado = $this->fecha_inicio;
             }
 
             if (($this->fecha_fin) && (Carbon::parse($this->fecha_fin)->lt($this->hoy))) {
-                $fecha_fin_timesheet_empleado = $empleado_list->estatus == 'baja' ? $empleado_list->fecha_baja : $this->fecha_fin;
+                $fecha_fin_timesheet_empleado = $this->fecha_fin;
             } else {
-                $fecha_fin_timesheet_empleado = $empleado_list->estatus == 'baja' ? $empleado_list->fecha_baja : $this->hoy;
+                $fecha_fin_timesheet_empleado = $this->hoy->format('Y-m-d');
             }
 
             $hoy_2 = now();
             if ($hoy_2->subweeks(3)->lt($fecha_inicio_timesheet_empleado)) {
+                if (gettype($fecha_inicio_timesheet_empleado == 'string')) {
+                    $fecha_inicio_timesheet_empleado = Carbon::parse($fecha_inicio_timesheet_empleado);
+                }
                 $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->startOfMonth()->subMonth();
             }
 
             // horas totales por empleado
             $times_empleado_aprobados_pendientes_list = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->get();
-
+            // dd($fecha_fin_timesheet_empleado);
             $horas_semana = 0;
             $times_empleado_calendario_array = [];
             $times_empleado_array = [];
@@ -227,9 +267,9 @@ class ReporteAprobador extends Component
                     $horas_semana += $hora->horas_domingo;
 
                     $times_empleado_calendario_array[] = [
-                        'id'=>$time->id,
-                        'semana_y'=>$time->semana_y,
-                        'horas_semana'=>$horas_semana,
+                        'id' => $time->id,
+                        'semana_y' => $time->semana_y,
+                        'horas_semana' => $horas_semana,
                     ];
                 }
             }
@@ -284,23 +324,23 @@ class ReporteAprobador extends Component
                     }
                 }
             }
-            // dump($calendario_tabla_empleado);
 
             // array empleados
             $this->empleados->push([
-                'id'=>$empleado_list->id,
-                'avatar_ruta'=>$empleado_list->avatar_ruta,
-                'estatus'=>$empleado_list->estatus,
-                'horas_totales'=>$horas_total_time,
-                'name'=>$empleado_list->name,
-                'area'=>$empleado_list->area ? $empleado_list->area->area : '',
-                'puesto'=>$empleado_list->puesto,
-                'times_atrasados'=>$times_atrasados,
-                'times_faltantes'=>$this->times_faltantes_empleado,
-                'calendario'=>$calendario_tabla_empleado,
+                'id' => $empleado_list->id,
+                'avatar_ruta' => $empleado_list->avatar_ruta,
+                'estatus' => $empleado_list->estatus,
+                'horas_totales' => $horas_total_time,
+                'name' => $empleado_list->name,
+                'area' => $empleado_list->area ? $empleado_list->area->area : '',
+                'puesto' => $empleado_list->puesto,
+                'times_atrasados' => $times_atrasados,
+                'times_faltantes' => $this->times_faltantes_empleado,
+                'calendario' => $calendario_tabla_empleado,
             ]);
         }
 
+        // dump($times_empleado_aprobados_pendientes_list);
         $this->calendario_tabla = $calendario_array;
 
         $this->hoy_format = $this->hoy->format('d/m/Y');
@@ -366,7 +406,7 @@ class ReporteAprobador extends Component
 
     public function buscarKeyEnArray($search, $array)
     {
-        foreach ($array as $key=>$value) {
+        foreach ($array as $key => $value) {
             if ($key == $search) {
                 return true;
             }
@@ -413,7 +453,12 @@ class ReporteAprobador extends Component
 
         $hoy_2 = now();
         if ($hoy_2->subweeks(3)->lt($fecha_inicio_timesheet_empleado)) {
-            $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->startOfMonth()->subMonth();
+
+            if (gettype($fecha_inicio_timesheet_empleado) == 'string') {
+                $fecha_inicio_timesheet_empleado = Carbon::parse($fecha_inicio_timesheet_empleado)->startOfMonth()->subMonth();
+            } else {
+                $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->startOfMonth()->subMonth();
+            }
         }
 
         $this->timesheet = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->orderByDesc('fecha_dia')->get();
@@ -448,18 +493,18 @@ class ReporteAprobador extends Component
             }
 
             $this->times_empleado_horas->push([
-                'fecha'=>$t->fecha_dia,
-                'estatus'=>$t->estatus,
-                'semana'=>$t->semana,
-                'semana_y'=>$t->semana_y,
-                'horas_lunes'=>$horas_semana_lunes,
-                'horas_martes'=>$horas_semana_martes,
-                'horas_miercoles'=>$horas_semana_miercoles,
-                'horas_jueves'=>$horas_semana_jueves,
-                'horas_viernes'=>$horas_semana_viernes,
-                'horas_sabado'=>$horas_semana_sabado,
-                'horas_domingo'=>$horas_semana_domingo,
-                'horas_totales'=>$horas_totales_semana,
+                'fecha' => $t->fecha_dia,
+                'estatus' => $t->estatus,
+                'semana' => $t->semana,
+                'semana_y' => $t->semana_y,
+                'horas_lunes' => $horas_semana_lunes,
+                'horas_martes' => $horas_semana_martes,
+                'horas_miercoles' => $horas_semana_miercoles,
+                'horas_jueves' => $horas_semana_jueves,
+                'horas_viernes' => $horas_semana_viernes,
+                'horas_sabado' => $horas_semana_sabado,
+                'horas_domingo' => $horas_semana_domingo,
+                'horas_totales' => $horas_totales_semana,
             ]);
         }
 
@@ -483,18 +528,18 @@ class ReporteAprobador extends Component
                 }
                 if ($horas > 0) {
                     $tareas->push([
-                        'id'=>$tarea->id,
-                        'tarea'=>$tarea->tarea,
-                        'horas'=>$horas,
+                        'id' => $tarea->id,
+                        'tarea' => $tarea->tarea,
+                        'horas' => $horas,
                     ]);
                 }
                 $horas_proyecto += $horas;
             }
             $this->proyectos_detalle->push([
-                'id'=>$proyecto,
-                'proyecto'=>TimesheetProyecto::find($proyecto)->proyecto,
-                'tareas'=>$tareas,
-                'horas'=> $this->fecha_inicio_empleado ? '50' : $horas_proyecto,
+                'id' => $proyecto,
+                'proyecto' => TimesheetProyecto::find($proyecto)->proyecto,
+                'tareas' => $tareas,
+                'horas' => $this->fecha_inicio_empleado ? '50' : $horas_proyecto,
             ]);
             $this->horas_totales += $horas_proyecto;
 
@@ -537,6 +582,26 @@ class ReporteAprobador extends Component
 
         $this->alert('success', 'Correo Enviado!');
 
+        $this->empleado = null;
+    }
+
+    public function correoMasivo()
+    {
+        foreach ($this->empleados_list_global as $empleado) {
+            $antiguedad_y = Carbon::parse($empleado->antiguedad)->format('Y');
+            $antiguedad_m = Carbon::parse($empleado->antiguedad)->format('m');
+            $antiguedad_d = Carbon::parse($empleado->antiguedad)->format('d');
+            $times_empleado = Timesheet::where('empleado_id', $empleado->id)->where('estatus', '!=', 'papelera')->where('estatus', '!=', 'rechazado')->get();
+            $times_empleado_array = [];
+
+            foreach ($times_empleado as $time) {
+                $times_empleado_array[] = $time->semana_y;
+            }
+
+            $correo = Mail::to($empleado->email)->send(new TimesheetCorreoRetraso($empleado, $this->times_faltantes_empleado));
+        }
+
+        $this->alert('success', 'Correos Enviados!');
         $this->empleado = null;
     }
 

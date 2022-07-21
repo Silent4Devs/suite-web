@@ -347,11 +347,16 @@ Breadcrumbs::for('admin.tratamiento-riesgos.create', function ($trail) {
 Breadcrumbs::for('admin.indicadores-sgsis.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Evaluacion', route('admin.iso27001.index') . '#evaluacion');
-    $trail->push('Indicadores SGSI', route('admin.indicadores-sgsis.index'));
+    $trail->push('Indicadores del Sistema de Gestión', route('admin.indicadores-sgsis.index'));
 });
 Breadcrumbs::for('admin.indicadores-sgsis.create', function ($trail) {
     $trail->parent('admin.indicadores-sgsis.index');
     $trail->push('Formulario', route('admin.indicadores-sgsis.create'));
+});
+
+Breadcrumbs::for('admin.indicadores-dashboard', function ($trail) {
+    $trail->parent('admin.indicadores-sgsis.index');
+    $trail->push('Dashboard', route('admin.indicadores-dashboard'));
 });
 
 Breadcrumbs::for('admin.incidentes-de-seguridads.index', function ($trail) {

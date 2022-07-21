@@ -367,7 +367,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @if($organizacion->fecha_registro_timesheet)
+                            @if($organizacion->fecha_registro_timesheet && $time_exist)
                                 <li>
                                     <a href="{{ route('admin.timesheet-reportes') }}">
                                         <div>

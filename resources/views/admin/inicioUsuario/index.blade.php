@@ -129,7 +129,6 @@
         .container {
             max-width: 1500px !important;
         }
-
     </style>
     @include('partials.flashMessages')
     <div id="inicio_usuario" class="row" style="">
@@ -175,7 +174,8 @@
                         </a>
                     @endcan
                     @can('mi_perfil_mis_reportes_acceder')
-                        <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')" data-tabs="s_reportes">
+                        <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')"
+                            data-tabs="s_reportes">
                             <i class="bi bi-clipboard-check"></i>
                             Reportes</a>
                     @endcan
@@ -249,8 +249,63 @@
 
 
 @section('scripts')
-
     <script>
+        $(function() {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;color:#000"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;color:#000"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
+
+            ];
+
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+            };
+            let table = $('#tblReportes').DataTable(dtOverrideGlobals);
+            setTimeout(() => {
+                table.columns.adjust().draw();
+            }, 1000);
+            document.getElementById('b_reportes').addEventListener('click', () => {
+                setTimeout(() => {
+                    table.columns.adjust().draw();
+                }, 1000);
+            })
+        });
         document.addEventListener('DOMContentLoaded', function() {
             seleccionarMenuAlIniciar();
             const btnActividades = document.getElementById('b_actividades');
@@ -276,5 +331,4 @@
             localStorage.setItem('mi-perfil-menu', menuSeleccionado);
         }
     </script>
-
 @endsection

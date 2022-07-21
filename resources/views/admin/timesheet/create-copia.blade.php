@@ -11,7 +11,7 @@
 
 	<div class="card card-body">
 		<div class="row">
-
+            <x-loading-indicator />
 			@livewire('timesheet.timesheet-horas-create-copia', ['proyectos'=>$proyectos, 'tareas'=>$tareas, 'origen'=>'create-copia', 'timesheet_id'=>$timesheet->id])
 
 		</div>
@@ -42,6 +42,7 @@
 
             $("#fecha_dia").flatpickr({
                 "minDate": "{{ auth()->user()->empleado->fecha_min_timesheet }}",
+                "maxDate": "{{ now()->endOfWeek()->format('Y-m-d') }}",
                 "disable": [
                     function(date) {
 

@@ -1,5 +1,5 @@
 <div class="w-100">
-
+    <x-loading-indicator />
     <form id="form_timesheet" action="{{ route('admin.timesheet.store') }}" method="POST">
         @csrf
         <div class="form-group d-flex align-items-center" wire:ignore style="position: relative">
@@ -41,13 +41,13 @@
                                 <select id="select_proyectos{{ $i }}" data-contador="{{ $i }}" data-type="parent" name="timesheet[{{ $i }}][proyecto]" class="select2">
                                     <option selected disabled>Seleccione proyecto</option>
                                     @foreach($proyectos as $proyecto)
-                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['proyecto'] }}</option>
+                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} - {{ $proyecto['proyecto'] }}</option>
                                     @endforeach
                                 </select>
                                 <small class="timesheet_{{ $i }}_proyecto errores text-danger"></small>
                             </td>
                             <td>
-                                <select id="select_tareas{{ $i }}" data-contador="{{ $i }}" name="timesheet[{{ $i }}][tarea]" class="select2 select_tareas">
+                                <select id="select_tareas{{ $i }}" data-contador="{{ $i }}" name="timesheet[{{ $i }}][tarea]" class="select2 select_tareas" disabled>
                                     <option selected disabled>Seleccione tarea</option>
                                 </select>
                                 <small class="timesheet_{{ $i }}_tarea errores text-danger"></small>
@@ -163,7 +163,7 @@
                                     <div title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
                                         Cancelar
                                     </div>
-                                    <button onclick="event.preventDefault();" id="enviar_aprobacion_time" class="btn_enviar_formulario btn btn-info" style="border:none; background-color:#2F96EB;">
+                                    <button data-dismiss="modal" onclick="event.preventDefault();" id="enviar_aprobacion_time" class="btn_enviar_formulario btn btn-info" style="border:none; background-color:#2F96EB;">
                                         Enviar a Aprobación
                                     </button>
                                 </div>
@@ -207,7 +207,7 @@
                 if (e.target.getAttribute('data-type') == 'parent') {
                     let contador = e.target.getAttribute('data-contador');
                     let proyecto_id = e.target.value;
-
+                    document.getElementById('loaderComponent').style.display = 'block';
                     $.ajax({
                         type: "post",
                         headers: {
@@ -223,6 +223,7 @@
                         },
                         success: function (response) {
                             let select = document.getElementById(`select_tareas${contador}`);
+                            select.removeAttribute('disabled');
                             let html = '<option selected disabled>Seleccione tarea</option>';
                             response.tareas.forEach(tarea=>{
                                 html += `
@@ -230,6 +231,10 @@
                                 `;
                             });
                             select.innerHTML = html;
+                            document.getElementById('loaderComponent').style.display = 'none';
+                        },
+                        error:function(error){
+                            document.getElementById('loaderComponent').style.display = 'none';
                         }
                     });
                 }
@@ -243,6 +248,7 @@
                 if (e.target.getAttribute('data-type') == 'borrador') {
                     formData.append('estatus', 'papelera');
                 }
+                document.getElementById('loaderComponent').style.display = 'block';
                 $.ajax({
                     type: "POST",
                     url: "{{ route('admin.timesheet.store') }}",
@@ -255,6 +261,7 @@
                     processData: false,
                     contentType: false,
                     success: function (response) {
+                        document.getElementById('loaderComponent').style.display = 'none';
                         if (response.status == 200) {
                             Swal.fire(
                               'Buen trabajo',
@@ -268,7 +275,7 @@
                         }
                     },
                     error: function(request, status, error) {
-
+                        document.getElementById('loaderComponent').style.display = 'none';
                         $('#modal_aprobar_').modal('hide');
                         $('.modal-backdrop').hide();
                         $.each(request.responseJSON.errors, function(indexInArray, valueOfElement) {

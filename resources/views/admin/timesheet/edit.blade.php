@@ -11,7 +11,7 @@
 
 	<div class="card card-body">
 		<div class="row">
-
+            <x-loading-indicator />
 			@livewire('timesheet-horas-edit', ['proyectos'=>$proyectos, 'tareas'=>$tareas, 'origen'=>'edit', 'timesheet_id'=>$timesheet->id])
 
 		</div>
@@ -31,7 +31,7 @@
 
         document.addEventListener('DOMContentLoaded', ()=>{
             let fechasRegistradas = @json($fechasRegistradas);
-
+            
             let dia_semana = @json($organizacion->dia_timesheet);
 
             function toISODate(d) {

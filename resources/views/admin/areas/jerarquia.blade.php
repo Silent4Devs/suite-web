@@ -842,7 +842,7 @@
                             'data': JSON.parse(response),
                             'depth': 999,
                             'nodeTitle': 'area',
-                            'nodeContent': 'grupo_name',
+                            'nodeContent': 'area',
                             'withImage': false,
                             // 'nodePhoto': 'foto',
                             // 'nodeRepositoryImages': repositorioImagenes,

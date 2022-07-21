@@ -25,6 +25,52 @@
         }
 
     </style>
+
+<style>
+    /* Remove space around the email design. */
+
+    html,
+
+    body {
+
+        margin: 0 auto !important;
+
+        padding: 0 !important;
+
+        height: 100% !important;
+
+        width: 100% !important;
+    }
+
+    /* Stop Outlook resizing small text. */
+    * {
+        -ms-text-size-adjust: 100%;
+    }
+
+
+    /* Stop Outlook from adding extra spacing to tables. */
+    table,
+    td {
+        mso-table-lspace: 0pt !important;
+        mso-table-rspace: 0pt !important;
+    }
+
+    /* Use a better rendering method when resizing images in Outlook IE. */
+
+    img {
+        -ms-interpolation-mode: bicubic;
+    }
+
+
+    /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+
+    a {
+
+        text-decoration: none;
+
+    }
+
+</style>
 </head>
 
 <body style="margin:0;padding:0;">
@@ -33,8 +79,8 @@
         <tr>
             <td align="center" style="padding:0;">
                 <table role="presentation"
-                    style="width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
-                    <tr>
+                    style="width:602px;border-collapse:collapse;border:.5px solid #153643;border-spacing:0;text-align:left;">
+                    {{-- <tr>
                         <td align="center" style="padding:40px 0 30px 0;background:#358765;">
                             <img src="https://image.flaticon.com/icons/png/512/4786/4786029.png" alt="" width="100"
                                 style="height:auto;display:block; margin-bottom: 10px;" />
@@ -42,59 +88,86 @@
                                 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif; color:white">
                                 Sistema de Gestión Normativa - Tabantaj</h3>
                         </td>
-                    </tr>
+                    </tr> --}}
 
                     <tr>
+
                         <td style="padding:36px 30px 42px 30px;">
                             <table role="presentation"
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
-                                    <td style="padding:0 0 36px 0;color:#153643;">
-                                        <h1
-                                            style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;color: #358765;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                                fill="#358765" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-                                            </svg> Asignación de controles
-                                        </h1>
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Buen día <strong>{{ $nombre }},</strong></p>
-                                        <p>Le informamos que se le ha asignado la gestión de los siguientes controles del Sistema de Gestión de Seguridad de la Información (SGSI)
-                                            en Tabantaj,
+                                    <hr style="margin:0;width: 100%; height: 1.5px; background-color: #153643;">
+                                    &nbsp;
+                                    </hr>
+                                    @php
+                                        use App\Models\Organizacion;
+                                        $organizacion = Organizacion::first();
+                                        $logotipo = $organizacion->logotipo;
+                                        $empresa = $organizacion->empresa;
+                                    @endphp
+                                    <h2 style="padding-top:3px; color:#153643; text-align:center">
+                                        {{ $empresa }}</h2>
+                                    <hr style="margin:0;width: 100%; height:1.5px; background-color: #153643;">
+                                    &nbsp;
+                                    </hr>
 
-                                            <ul>
-                                                @foreach ($controles as $control)
-                                                <li><strong style="color:#358765;">{{$control->anexo_indice}}</strong> {{$control->anexo_politica}}</li>
-                                                @endforeach
-                                            </ul>
+                                    <td style="padding:0 0 36px 0;">
 
-                                        </p>
+                                        <div class="caja_img_logo" style="margin-top:30px; text-align:center">
+                                            <img width="160" src="{{ asset($logotipo) }}" class="mt-2 ml-4"
+                                                style="width:160px;">
+                                        </div>
 
-                                        <p>por favor dé clic en el botón
+                                        <div style="margin-top:50px;">
+                                            <strong
+                                                style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
+                                                Estimado(a) {{$nombre}},
+                                            </strong>
+                                        </div>
 
-                                        <a
-                                            style="outline: none; text-decoration: none; font-size: small; font-family: Arial, Helvetica, sans-serif; background-color: #0b89bb; padding: 10px; border-radius: 10px; color: white;">
-                                            <span>Gestionar Controles</span>
-                                        </a>
+                                        <div style="width: 100%; margin-top: 10px;">
 
-                                        &nbsp;para requisitar la información solicitada.</p>
+                                                <p style="font-size:11pt; color:#153643;">
+                                                    Le informamos que se le ha asignado la gestión de los siguientes controles del Sistema de Gestión de Seguridad de la Información (SGSI)
+                                                    en Tabantaj,
+                                                </p>
 
+                                                <ul style="font-size:11pt; color:#153643;">
+                                                    @foreach ($controles as $control)
+                                                    <li style="font-size:11pt;"><strong style="font-size:10pt;">{{$control->anexo_indice}}</strong> {{$control->anexo_politica}}
+                                                    </li>
+                                                    @endforeach
+                                                </ul>
+
+                                                <p style="font-size:11pt; color:#153643;">
+                                                    Para requisitar la información solicitada, dé clic en el siguiente botón:
+                                                </p>
+    
+                                                <div style="text-align:center; margin-top:20px">
+                                                  <span style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
+                                                    <a href="{{ route('admin.declaracion-aplicabilidad.index') }}" style="color:#fff"> Gestionar controles</a></span>
+                                                </div>
+
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding:30px;background:#358765;">
+                        <td style="padding:10px;background:#fff;">
                             <table role="presentation"
-                                style="width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;">
+                                style="width:100%;border-collapse:collapse;border:0;border-spacing:30;font-size:9px;font-family:Arial,sans-serif;">
                                 <tr>
-                                    <td style="padding:0;width:50%;" align="left">
-                                        <p
-                                            style="margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;">
-                                            &reg; Tabantaj, SilentForBussines {{ date('Y') }}<br />
-                                        </p>
+                                    <td style="padding:0;width:30%;" align="left">
+                                        <p style="text-align:center; font-size:10pt; color:#153643;">Por favor no
+                                            responda a este correo</p>
+                                        <hr style="margin:0; width: 100%; height: 1.5px; background-color: #153643;">
+                                        &nbsp;
+                                        </hr>
+
+                                        <p style="text-align:center;font-size:10pt;font-weight: normal;color:#153643;">
+                                            SISTEMA INTEGRAL DE GESTIÓN EMPRESARIAL TABANTAJ</p>
                                     </td>
                                 </tr>
                             </table>
@@ -107,5 +180,6 @@
     </table>
 </body>
 
-</html>
 
+
+</html>

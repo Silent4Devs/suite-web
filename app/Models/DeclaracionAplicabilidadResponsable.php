@@ -37,6 +37,7 @@ class DeclaracionAplicabilidadResponsable extends Model
         'aplica',
         'justificacion',
         'notificado',
+        'esta_correo_enviado',
     ];
 
     public function declaracion_aplicabilidad()

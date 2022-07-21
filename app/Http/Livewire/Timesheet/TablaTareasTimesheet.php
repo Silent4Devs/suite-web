@@ -19,8 +19,9 @@ class TablaTareasTimesheet extends Component
     public $proyecto_id;
     public $origen;
     public $tareas_proyecto;
-
     public $area_seleccionar;
+
+    public $proyecto_filtro;
 
     public $tarea_name_actualizada;
 
@@ -31,11 +32,21 @@ class TablaTareasTimesheet extends Component
         $this->area_seleccionar = null;
     }
 
+    public function updateProyecto($value)
+    {
+        $this->proyecto_filtro = $value;
+    }
+
     public function render()
     {
         if ($this->origen == 'tareas') {
             $this->proyectos = TimesheetProyecto::get();
-            $this->tareas = TimesheetTarea::orderByDesc('id')->get();
+
+            if ($this->proyecto_filtro) {
+                $this->tareas = TimesheetTarea::where('proyecto_id', $this->proyecto_filtro)->orderByDesc('id')->get();
+            }else{
+                $this->tareas = TimesheetTarea::orderByDesc('id')->get();
+            }
         }
 
         if ($this->origen == 'tareas-proyectos') {
@@ -79,7 +90,7 @@ class TablaTareasTimesheet extends Component
         $tarea_actualizada = TimesheetTarea::find($id);
 
         $tarea_actualizada->update([
-            'tarea'=>$value,
+            'tarea' => $value,
         ]);
         $this->emit('tarea-actualizada', $tarea_actualizada);
     }
@@ -97,8 +108,8 @@ class TablaTareasTimesheet extends Component
         }
 
         $tarea_actualizada->update([
-            'area_id'=>$area_id,
-            'todos'=>$todos,
+            'area_id' => $area_id,
+            'todos' => $todos,
         ]);
         $this->emit('tarea-actualizada', $tarea_actualizada);
     }

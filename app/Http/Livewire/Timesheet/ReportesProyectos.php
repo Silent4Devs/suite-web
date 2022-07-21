@@ -12,10 +12,12 @@ use App\Models\TimesheetTarea;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ReportesProyectos extends Component
 {
     use getWeeksFromRange;
+    use LivewireAlert;
 
     public $areas;
     public $proyectos;
@@ -44,10 +46,12 @@ class ReportesProyectos extends Component
     public $semanas_totales_calendario = 0;
 
     public $calendario_tabla;
+    public $organizacion;
 
     public function mount()
     {
         $this->areas = Area::get();
+        $this->organizacion = Organizacion::first();
     }
 
     public function updatedAreaId($value)
@@ -59,12 +63,43 @@ class ReportesProyectos extends Component
     public function updatedFechaInicio($value)
     {
         $this->fecha_inicio = $value;
+
+        if ($this->fecha_inicio < $this->organizacion->fecha_registro_timesheet) {
+            $this->fecha_inicio = $this->organizacion->fecha_registro_timesheet;
+            $this->alert('info', 'La fecha de inicio no puede ser anterior a la fecha de registro de timesheet', [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+            ]);
+        } elseif ($this->fecha_inicio > $this->fecha_fin) {
+            $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(2)->format('Y-m-d');
+            $this->alert('info', 'La fecha de inicio no puede ser posterior a hoy', [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+            ]);
+        }
         $this->proyecto_reporte = null;
     }
 
     public function updatedFechaFin($value)
     {
         $this->fecha_fin = $value;
+        if ($this->fecha_fin > now()->format('Y-m-d')) {
+            $this->fecha_fin = now()->format('Y-m-d');
+            $this->alert('info', 'La fecha de fin no puede ser posterior a hoy', [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+            ]);
+        } elseif ($this->fecha_fin < $this->fecha_inicio) {
+            $this->fecha_fin = now()->format('Y-m-d');
+            $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio', [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+            ]);
+        }
         $this->proyecto_reporte = null;
     }
 
@@ -126,12 +161,12 @@ class ReportesProyectos extends Component
                 $month = $fecha->format('F');
                 if (!($this->buscarKeyEnArray($year, $calendario_array))) {
                     $calendario_array["{$year}"] = [
-                        'year'=>$year,
-                        'total_weeks'=>0,
-                        'total_months'=>0,
-                        'months'=>[
-                            "{$month}"=>[
-                                'weeks'=>[],
+                        'year' => $year,
+                        'total_weeks' => 0,
+                        'total_months' => 0,
+                        'months' => [
+                            "{$month}" => [
+                                'weeks' => [],
                             ],
                         ],
                     ];
@@ -225,16 +260,15 @@ class ReportesProyectos extends Component
             }
 
             $this->proyectos_array->push([
-                'id'=>$proyecto->id,
-                'proyecto'=>$proyecto->proyecto,
-                'areas'=>$proyecto->areas,
-                'cliente'=>$proyecto->cliente ? $proyecto->cliente->nombre : '',
-                'calendario'=>$calendario_tabla_proyectos,
+                'id' => $proyecto->id,
+                'proyecto' => $proyecto->proyecto,
+                'areas' => $proyecto->areas,
+                'cliente' => $proyecto->cliente ? $proyecto->cliente->nombre : '',
+                'calendario' => $calendario_tabla_proyectos,
             ]);
         }
 
         $this->calendario_tabla = $calendario_array;
-
         $this->hoy_format = $this->hoy->format('d/m/Y');
 
         return view('livewire.timesheet.reportes-proyectos');
@@ -282,13 +316,13 @@ class ReportesProyectos extends Component
 
                 if (!$empleados->contains('id', $empleado->id)) {
                     $empleados->push([
-                        'id'=> $empleado->id,
-                        'name'=> $empleado->name,
-                        'salario_diario'=> $empleado->salario_diario,
-                        'foto'=> $empleado->avatar_ruta,
-                        'area'=> $empleado->area,
-                        'puesto'=> $empleado->puesto,
-                        'horas'=> $h_total_tarea,
+                        'id' => $empleado->id,
+                        'name' => $empleado->name,
+                        'salario_diario' => $empleado->salario_diario,
+                        'foto' => $empleado->avatar_ruta,
+                        'area' => $empleado->area,
+                        'puesto' => $empleado->puesto,
+                        'horas' => $h_total_tarea,
                     ]);
                 } else {
                     $empleados = $empleados->map(function ($emp_item) use ($h_total_tarea, $empleado) {
@@ -304,7 +338,7 @@ class ReportesProyectos extends Component
             $this->total_horas_proyecto += $h_total_tarea_total;
 
             $this->tareas_array->push([
-                'tarea'=>$tarea->tarea,
+                'tarea' => $tarea->tarea,
                 'horas_totales' => $h_total_tarea_total,
                 'empleados' => $empleados,
             ]);
@@ -343,7 +377,7 @@ class ReportesProyectos extends Component
 
     public function buscarKeyEnArray($search, $array)
     {
-        foreach ($array as $key=>$value) {
+        foreach ($array as $key => $value) {
             if ($key == $search) {
                 return true;
             }

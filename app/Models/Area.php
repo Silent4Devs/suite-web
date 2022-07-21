@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Area.
@@ -40,7 +39,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class Area extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-   
+
     protected static $flushCacheOnUpdate = true;
     protected $table = 'areas';
 
@@ -156,5 +155,10 @@ class Area extends Model
     public function lider()
     {
         return $this->belongsTo(Empleado::class, 'empleados_id', 'id')->alta();
+    }
+
+    public function indicadores_sistema_gestion()
+    {
+        return $this->hasMany(IndicadoresSgsi::class, 'id_area');
     }
 }

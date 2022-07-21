@@ -72,6 +72,9 @@ class Objetivosseguridad extends Model
         'revisiones',
         'ano',
         'tipo_objetivo_sistema_id',
+        'norma_id',
+        'objetivo_id',
+
     ];
 
     public function team()
@@ -97,5 +100,15 @@ class Objetivosseguridad extends Model
     public function tipo_objetivo_sistema()
     {
         return $this->belongsTo(TiposObjetivosSistema::class, 'tipo_objetivo_sistema_id');
+    }
+
+    public function norma()
+    {
+        return $this->belongsTo(Norma::class);
+    }
+
+    public function normas()
+    {
+        return $this->belongsToMany(Norma::class, 'normas_objetivos', 'objetivo_id', 'norma_id');
     }
 }

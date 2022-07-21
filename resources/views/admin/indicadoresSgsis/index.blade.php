@@ -6,8 +6,41 @@
     @can('indicadores_sgsi_create')
 
     @endcan
-    <h5 class="col-12 titulo_general_funcion">Indicadores SGSI</h5>
+
+    <style>
+        .table tr th:nth-child(2) {
+            width: 150px !important;
+            max-width: 200px !important;
+            min-width: 200px !important;
+
+        }
+
+        .table tr th:nth-child(3) {
+            width: 100px !important;
+            max-width: 100px !important;
+            min-width: 100px !important;
+
+        }
+
+        .table tr td:nth-child(4) {
+            text-align: center !important;
+
+        }
+
+        .table tr th:nth-child(6) {
+            width: 400px !important;
+            max-width: 350px !important;
+            min-width: 350px !important;
+
+        }
+    </style>
+    <h5 class="col-12 titulo_general_funcion">Indicadores del Sistema de Gestión</h5>
     <div class="mt-5 card">
+
+        <div class="text-right mt-5 mr-5">
+            <a class="btn btn-danger" href="{{ asset('admin/indicadores/dashboard') }}">Dashboard</a>
+        </div>
+
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-IndicadoresSgsi">
@@ -18,6 +51,12 @@
                         </th>
                         <th>
                             Nombre del indicador
+                        </th>
+                        <th>
+                            Área
+                        </th>
+                        <th>
+                            Responsable
                         </th>
                         {{--<th>
                             Proceso
@@ -285,6 +324,30 @@
                     {
                         data: 'nombre',
                         name: 'nombre'
+                    },
+                    {
+                        data: 'area',
+                        name: 'area',
+                    },
+                    {
+                        data: 'responsable_name',
+                        render: function(data, type, row, meta) {
+                            if (row.id_empleado != null) {
+                                if(row.responsable_name.trim()!=""){
+                                    let empleado = JSON.parse(row.responsable_name);
+                                    if (type === "empleadoText") {
+                                        return empleado.name;
+                                    } else {
+                                        let html =
+                                            `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${empleado?.avatar}" title="${empleado?.name}"></img>`;
+
+                                        return `${empleado ? html: ''}`;
+                                    }
+                                }
+                            }
+
+                            return `Sin dato`;
+                        }
                     },
                     {
                         data: 'año',

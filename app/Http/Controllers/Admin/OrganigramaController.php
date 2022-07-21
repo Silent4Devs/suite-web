@@ -30,23 +30,23 @@ class OrganigramaController extends Controller
             } else {
                 if ($request->id == null) {
                     // La construccion del arbol necesita un primer nodo (NULL)
-                    $organizacionTree = Empleado::select('id', 'name', 'area_id', 'foto', 'puesto_id', 'antiguedad', 'email', 'telefono', 'estatus', 'n_registro', 'n_empleado', 'genero', 'telefono_movil')->with(['supervisor.children', 'supervisor.supervisor' => function ($queryC) {
+                    $organizacionTree = Empleado::select('id', 'name', 'area_id', 'foto', 'puesto_id', 'antiguedad', 'email', 'telefono', 'estatus', 'n_registro', 'n_empleado', 'genero', 'telefono_movil')->vacanteActiva()->with(['supervisor.childrenOrganigrama', 'supervisor.supervisor' => function ($queryC) {
                         return $queryC->select('id', 'name', 'foto', 'puesto_id', 'genero');
                     }, 'area' => function ($queryC) {
                         return $queryC->select('id', 'area');
-                    }, 'children.supervisor' => function ($queryC) {
+                    }, 'childrenOrganigrama.supervisor' => function ($queryC) {
                         return $queryC->select('id', 'name', 'foto', 'puesto_id', 'genero');
-                    }, 'children.children'])->whereNull('supervisor_id')->first(); //Eager loading
+                    }, 'childrenOrganigrama.childrenOrganigrama'])->whereNull('supervisor_id')->first(); //Eager loading
 
                     return $organizacionTree->toJson();
                 } else {
-                    $organizacionTree = Empleado::select('id', 'name', 'area_id', 'foto', 'puesto_id', 'antiguedad', 'email', 'telefono', 'estatus', 'n_registro', 'n_empleado', 'genero', 'telefono_movil')->with(['supervisor.children', 'supervisor.supervisor' => function ($queryC) {
+                    $organizacionTree = Empleado::select('id', 'name', 'area_id', 'foto', 'puesto_id', 'antiguedad', 'email', 'telefono', 'estatus', 'n_registro', 'n_empleado', 'genero', 'telefono_movil')->vacanteActiva()->with(['supervisor.childrenOrganigrama', 'supervisor.supervisor' => function ($queryC) {
                         return $queryC->select('id', 'name', 'foto', 'puesto_id', 'genero');
                     }, 'area' => function ($queryC) {
                         return $queryC->select('id', 'area');
-                    }, 'children.supervisor' => function ($queryC) {
+                    }, 'childrenOrganigrama.supervisor' => function ($queryC) {
                         return $queryC->select('id', 'name', 'foto', 'puesto_id', 'genero');
-                    }, 'children.children'])->where('id', '=', $request->id)->first(); //Eager loading
+                    }, 'childrenOrganigrama.childrenOrganigrama'])->where('id', '=', $request->id)->first(); //Eager loading
                     if ($organizacionTree != null) {
                         return $organizacionTree->toJson();
                     } else {

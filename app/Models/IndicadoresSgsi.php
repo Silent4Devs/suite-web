@@ -45,15 +45,13 @@ class IndicadoresSgsi extends Model
     use SoftDeletes;
     use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    
     protected $table = 'indicadores_sgsis';
 
     protected $casts = [
         'responsable_id' => 'int',
         'team_id' => 'int',
         'id_proceso' => 'int',
-        'id_empleado' => 'int',
     ];
 
     protected $fillable = [
@@ -65,7 +63,6 @@ class IndicadoresSgsi extends Model
         'meta',
         'no_revisiones',
         'resultado',
-        'responsable_id',
         'team_id',
         'id_proceso',
         'id_empleado',
@@ -73,6 +70,7 @@ class IndicadoresSgsi extends Model
         'amarillo',
         'rojo',
         'ano',
+        'id_area'
     ];
 
     public function getResultado()
@@ -90,11 +88,6 @@ class IndicadoresSgsi extends Model
         return $this->belongsTo(Proceso::class, 'id_proceso');
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'responsable_id');
-    }
-
     public function team()
     {
         return $this->belongsTo(Team::class);
@@ -103,5 +96,10 @@ class IndicadoresSgsi extends Model
     public function evaluacion_indicadors()
     {
         return $this->hasMany(EvaluacionIndicador::class, 'id_indicador');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo('App\Models\Area', 'id_area', 'id');
     }
 }

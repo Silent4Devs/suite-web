@@ -35,6 +35,17 @@ class IndicadoresSgsiComponent extends Component
     public $value;
     public $remplazo_formula;
     public $evaluacion;
+    protected $rules = [
+        'evaluacion' => 'required',
+        'fecha' => 'required',
+        'formSlugs.*.*'=>'required',
+    ];
+
+    protected $mesages = [
+        'evaluacion.required' => 'Debes de definir una evaluación',
+        'fecha.required'=> 'Debes seleccionar una fecha',
+        'formSlugs.*.*.required'=>'Agrega la evaluación'
+    ];
 
     public function mount($indicadoresSgsis)
     {
@@ -66,6 +77,8 @@ class IndicadoresSgsiComponent extends Component
 
     public function store()
     {
+        $this->validate();
+
         $variables = [];
         $valores = [];
         $formula_sustitucion = $this->indicadoresSgsis->formula;

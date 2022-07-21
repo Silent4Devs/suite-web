@@ -28,14 +28,23 @@
     <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('/img/logo_policromatico.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            min-height: 100%;
+        }
+    </style>
 </head>
 
 
 
-<body class="header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden login-page">
-    <div class="flex-row align-items-center">
-        <div class="container-fluid">
-            @yield("content")
+<body class="">
+    <div class="flex-row align-items-center" style="height: 100vh">
+        <div class="container-fluid" style="height: 100vh">
+            @yield('content')
         </div>
     </div>
     @yield('scripts')

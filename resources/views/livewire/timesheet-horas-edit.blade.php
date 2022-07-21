@@ -1,4 +1,5 @@
 <div class="w-100">
+    <x-loading-indicator />
     <form id="form_timesheet" action="{{ route('admin.timesheet.update', $timesheet->id) }}" method="POST">
         @csrf
         @method('PUT')
@@ -36,16 +37,22 @@
                             <td wire:ignore>
                                 <input type="hidden" name="timesheet[{{ $i_hora }}][id_hora]" value="{{ $hora->id }}">
                                 <select id="select_proyectos{{ $i_hora }}" data-contador="{{ $i_hora }}" data-type="parent" name="timesheet[{{ $i_hora }}][proyecto]" class="select2">
-                                    <option selected value="{{ $hora->proyecto ? $hora->proyecto->id : '' }}">{{ $hora->proyecto ? $hora->proyecto->proyecto : '' }}</option>   
+                                    <option selected value="{{ $hora->proyecto ? $hora->proyecto->id : '' }}">{{ $hora->proyecto ? $hora->proyecto->identificador . ' - ' . $hora->proyecto->proyecto : '' }}</option>
                                     @foreach($proyectos as $proyecto)
-                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['proyecto'] }}</option>
-                                    @endforeach 
-                                </select>   
+                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} - {{ $proyecto['proyecto'] }}</option>
+                                    @endforeach
+                                </select>
                                 <small class="timesheet_{{ $i_hora }}_proyecto errores text-danger"></small>
                             </td>
                             <td>
+                                @php
+                                    $tareas = \App\Models\TimesheetTarea::where('proyecto_id', $hora->proyecto_id)->where('id','!=',$hora->tarea->id)->get();
+                                @endphp
                                 <select id="select_tareas{{ $i_hora }}" data-contador="{{ $i_hora }}" name="timesheet[{{ $i_hora }}][tarea]" class="select2">
-                                    <option selected value="{{ $hora->tarea->id }}">{{ $hora->tarea->tarea }}</option>    
+                                    <option selected value="{{ $hora->tarea->id }}">{{ $hora->tarea->tarea }}</option>
+                                    @foreach ($tareas as $tarea)
+                                        <option value="{{ $tarea->id }}">{{ $tarea->tarea }}</option>
+                                    @endforeach
                                 </select>
                                 <small class="timesheet_{{ $i_hora }}_tarea errores text-danger"></small>
                             </td>
@@ -71,16 +78,16 @@
                             </td>
                             <td>
                                 <input type="number" name="timesheet[{{ $i_hora }}][viernes]" data-dia="viernes" data-i="{{ $i_hora }}" id="ingresar_hora_viernes_{{ $i_hora }}"  class="ingresar_horas  form-control" min="0" max="24" value="{{ $hora->horas_viernes }}">
-                            </td>   
+                            </td>
                             <td>
                                 <input type="number" name="timesheet[{{ $i_hora }}][sabado]" data-dia="sabado" data-i="{{ $i_hora }}" id="ingresar_hora_sabado_{{ $i_hora }}"  class="ingresar_horas  form-control" min="0" max="24" value="{{ $hora->horas_sabado }}">
-                            </td>   
+                            </td>
                             <td>
                                 <input type="number" name="timesheet[{{ $i_hora }}][domingo]" data-dia="domingo" data-i="{{ $i_hora }}" id="ingresar_hora_domingo_{{ $i_hora }}"  class="ingresar_horas  form-control" min="0" max="24" value="{{ $hora->horas_domingo }}">
-                            </td> 
+                            </td>
                             <td>
                                 <textarea name="timesheet[{{ $i_hora }}][descripcion]" class="form-control" style="min-height:50px !important; resize: none;">{{ $hora->descripcion }}</textarea>
-                            </td>     
+                            </td>
                             <td class="td_opciones">
                                  @if($i_hora == 1)
                                     <div class="btn btn_clear_tr" data-tr="tr_time_{{ $i_hora }}" style="color:red; font-size:20px;" title="Eliminar fila"><i class="fa-solid fa-trash-can"></i></div>
@@ -88,12 +95,12 @@
                                 @if($i_hora > 1)
                                     <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i_hora }}" style="color:red; font-size:20px;" title="Eliminar fila"><i class="fa-solid fa-trash-can"></i></div>
                                 @endif
-                            </td>  
+                            </td>
                             <td>
                                 <div class="form-control">
                                     <label id="suma_horas_fila_{{ $i_hora }}" class="total_filas"></label>
                                 </div>
-                            </td>                         
+                            </td>
                         </tr>
                     @endforeach
 
@@ -102,16 +109,16 @@
                             <input type="hidden" name="timesheet[{{ $i }}][id_hora]" value="0">
                             <td wire:ignore>
                                 <select id="select_proyectos{{ $i }}" data-contador="{{ $i }}" data-type="parent" name="timesheet[{{ $i }}][proyecto]" class="select2">
-                                    <option selected disabled>Seleccione proyecto</option>   
+                                    <option selected disabled>Seleccione proyecto</option>
                                     @foreach($proyectos as $proyecto)
-                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['proyecto'] }}</option>
-                                    @endforeach 
+                                        <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} - {{ $proyecto['proyecto'] }}</option>
+                                    @endforeach
                                 </select>
                                 <small class="timesheet_{{ $i }}_proyecto errores text-danger"></small>
                             </td>
                             <td>
-                                <select id="select_tareas{{ $i }}" data-contador="{{ $i }}" name="timesheet[{{ $i }}][tarea]" class="select2 select_tareas">
-                                    <option selected disabled>Seleccione tarea</option> 
+                                <select id="select_tareas{{ $i }}" data-contador="{{ $i }}" name="timesheet[{{ $i }}][tarea]" class="select2 select_tareas" disabled>
+                                    <option selected disabled>Seleccione tarea</option>
                                 </select>
                                 <small class="timesheet_{{ $i }}_tarea errores text-danger"></small>
                             </td>
@@ -133,16 +140,16 @@
                             </td>
                             <td>
                                 <input  type="number" name="timesheet[{{ $i }}][viernes]" data-dia="viernes" data-i="{{ $i }}" id="ingresar_hora_viernes_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
-                            </td>   
+                            </td>
                             <td>
                                 <input  type="number" name="timesheet[{{ $i }}][sabado]" data-dia="sabado" data-i="{{ $i }}" id="ingresar_hora_sabado_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
-                            </td>   
+                            </td>
                             <td>
                                 <input  type="number" name="timesheet[{{ $i }}][domingo]" data-dia="domingo" data-i="{{ $i }}" id="ingresar_hora_domingo_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
-                            </td> 
+                            </td>
                             <td>
                                 <textarea name="timesheet[{{ $i }}][descripcion]" class="form-control" style="min-height:40px !important;"></textarea>
-                            </td>    
+                            </td>
                             <td class="td_opciones">
                                  @if($i == 1)
                                     <div class="btn btn_clear_tr" data-tr="tr_time_{{ $i }}" style="color:red; font-size:20px;" title="Eliminar fila"><i class="fa-solid fa-trash-can"></i></div>
@@ -150,12 +157,12 @@
                                 @if($i > 1)
                                     <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}" style="color:red; font-size:20px;" title="Eliminar fila"><i class="fa-solid fa-trash-can"></i></div>
                                 @endif
-                            </td>  
+                            </td>
                             <td>
                                 <div class="form-control">
                                     <label id="suma_horas_fila_{{ $i }}" class="total_filas"></label>
                                 </div>
-                            </td>                     
+                            </td>
                         </tr>
                     @endfor
                     <tr wire:ignore.self>
@@ -185,9 +192,9 @@
                     </tr>
                 </tbody>
             </table>
-            
+
         </div>
-        
+
 
 
         <div class="mt-4" style="display:flex; justify-content:space-between;">
@@ -199,7 +206,7 @@
                         Guardar borrador
                     </label>
                 </button>
-                    
+
                 <div class="btn btn-success" style="position: relative;" data-toggle="modal" data-target="#modal_aprobar_">
                     <input id="estatus_pendiente" type="radio" name="estatus" value="pendiente" style="opacity:0; position: absolute;">
                     <label for="estatus_pendiente" style="width:100%; height: 100%; position:absolute; display:flex; justify-content: center; align-items: center; top:0; left:0;">
@@ -220,13 +227,13 @@
                                 <h1 class="my-4" style="font-size:14pt;">Registrar Jornada Laboral</h1>
                                 <p class="parrafo">¿Está seguro que desea enviar a aprobación este registro?</p>
                             </div>
-                            
+
                             <div class="mt-4">
                                 <div class="col-12 text-center">
                                     <div title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
                                         Cancelar
                                     </div>
-                                    <button id="enviar_aprobacion_time" title="Rechazar" class="btn btn-info btn_enviar_formulario" style="border:none; background-color:#2F96EB;">
+                                    <button id="enviar_aprobacion_time" title="Rechazar" class="btn btn-info btn_enviar_formulario" style="border:none; background-color:#2F96EB;" data-dismiss="modal">
                                         Enviar a Aprobación
                                     </button>
                                 </div>
@@ -250,8 +257,9 @@
     </script>
 
     <script type="text/javascript">
-        
+
         document.addEventListener('DOMContentLoaded', ()=>{
+
             window.initSelect2 = () => {
 
                 $('.select2').select2({
@@ -268,15 +276,15 @@
 
             });
 
-             $('#select_proyectos1').on('select2:select', function (e) { 
-                var data = e.params.data; 
+             $('#select_proyectos1').on('select2:select', function (e) {
+                var data = e.params.data;
             });
 
             $('#datatable_timesheet_create').on('change', (e)=>{
                 if (e.target.getAttribute('data-type') == 'parent') {
                     let contador = e.target.getAttribute('data-contador');
                     let proyecto_id = e.target.value;
-
+                    document.getElementById('loaderComponent').style.display = 'block';
                     $.ajax({
                         type: "post",
                         headers: {
@@ -288,10 +296,11 @@
                         },
                         dataType: "json",
                         beforeSend: function() {
-                            
+
                         },
                         success: function (response) {
                             let select = document.getElementById(`select_tareas${contador}`);
+                            select.removeAttribute('disabled');
                             let html = '<option selected disabled>Seleccione tarea</option>';
                             response.tareas.forEach(tarea=>{
                                 html += `
@@ -299,8 +308,12 @@
                                 `;
                             });
                             select.innerHTML = html;
+                            document.getElementById('loaderComponent').style.display = 'none';
+                        },
+                        error:function(error){
+                            document.getElementById('loaderComponent').style.display = 'none';
                         }
-                    }); 
+                    });
                 }
             });
 
@@ -315,6 +328,7 @@
                 if (e.target.getAttribute('data-type') == 'borrador') {
                     formData.append('estatus', 'papelera');
                 }
+                document.getElementById('loaderComponent').style.display = 'block';
                 $.ajax({
                     type: "POST",
                     url: formulario.getAttribute('action'),
@@ -325,9 +339,10 @@
                     data: formData,
                     dataType: "json",
                     processData: false,
-                    contentType: false, 
+                    contentType: false,
                     success: function (response) {
-                        if (response.status == 200) {   
+                        document.getElementById('loaderComponent').style.display = 'none';
+                        if (response.status == 200) {
                             Swal.fire(
                               'Buen trabajo',
                               'Timesheet Registrado',
@@ -340,7 +355,7 @@
                         }
                     },
                     error: function(request, status, error) {
-
+                        document.getElementById('loaderComponent').style.display = 'none';
                         console.log(error);
                         $('#modal_aprobar_').modal('hide');
                         $('.modal-backdrop').hide();
