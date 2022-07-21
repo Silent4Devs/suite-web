@@ -116,20 +116,54 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Tipo De Reporte</th>
-                        <th>Folio</th>
-                        <th>Fecha de Recepción</th>
-                        <th>Estatus</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
+        <div class="col-12 px-4">
+            <div class="card p-3">
+                <h4>Seguimiento de Reportes</h4>
+                <table class="table w-100" id="tblReportes">
+                    <thead>
+                        <tr>
+                            <th>Tipo De Reporte</th>
+                            <th>Folio</th>
+                            <th>Fecha de Recepción</th>
+                            <th>Estatus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($mis_quejas as $queja)
+                            <tr>
+                                <td>Queja</td>
+                                <td>{{ $queja->folio }}</td>
+                                <td>{{ $queja->fecha }}</td>
+                                <td>{{ $queja->estatus }}</td>
+                            </tr>
+                        @endforeach
+                        @foreach ($mis_denuncias as $denuncia)
+                            <tr>
+                                <td>Denuncia</td>
+                                <td>{{ $denuncia->folio }}</td>
+                                <td>{{ $denuncia->fecha }}</td>
+                                <td>{{ $denuncia->estatus }}</td>
+                            </tr>
+                        @endforeach
+                        @foreach ($mis_propuestas as $propuesta)
+                            <tr>
+                                <td>Propuesta</td>
+                                <td>{{ $propuesta->folio }}</td>
+                                <td>{{ $propuesta->fecha??'- -' }}</td>
+                                <td>{{ $propuesta->estatus }}</td>
+                            </tr>
+                        @endforeach
+                        @foreach ($mis_sugerencias as $sugerencia)
+                            <tr>
+                                <td>Sugerencia</td>
+                                <td>{{ $sugerencia->folio }}</td>
+                                <td>{{ $sugerencia->fecha??'- -' }}</td>
+                                <td>{{ $sugerencia->estatus }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
